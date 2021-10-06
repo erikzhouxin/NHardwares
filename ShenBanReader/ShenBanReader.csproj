@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>net40;netcoreapp3.1;</TargetFrameworks>
+		<AssemblyName>NSystem.Data.ShenBanReader</AssemblyName>
+		<RootNamespace>System.Data.ShenBanReader</RootNamespace>
+		<GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<Authors>ErikZhouXin</Authors>
+		<Version>2021.10.1</Version>
+		<AssemblyVersion>2021.10.1.826</AssemblyVersion>
+		<FileVersion>2021.10.1.826</FileVersion>
+		<Description>针对深坂科技RFID的R600进行的操作封装</Description>
+		<Copyright>©2020 ErikZhouXin</Copyright>
+		<PackageTags>r600;rfid</PackageTags>
+		<RepositoryType>git</RepositoryType>
+		<RepositoryUrl>https://code.aliyun.com/cenidea/cyms-pc.git</RepositoryUrl>
+		<PackageReleaseNotes>针对深坂科技RFID的R600进行的操作封装</PackageReleaseNotes>
+		<NeutralLanguage>zh</NeutralLanguage>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<DefineConstants>DEBUG;TRACE</DefineConstants>
+	</PropertyGroup>
+
+	<ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp3.1'">
+		<PackageReference Include="System.IO.Ports" Version="5.0.1" />
+	</ItemGroup>
+</Project>
