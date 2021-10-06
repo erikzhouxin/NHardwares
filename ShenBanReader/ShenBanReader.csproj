@@ -1,15 +1,15 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net40;netcoreapp3.1;</TargetFrameworks>
+		<TargetFrameworks>net35;net40;net45;netstandard2.1;netcoreapp3.1;</TargetFrameworks>
 		<AssemblyName>NSystem.Data.ShenBanReader</AssemblyName>
 		<RootNamespace>System.Data.ShenBanReader</RootNamespace>
 		<GenerateAssemblyInfo>true</GenerateAssemblyInfo>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<Authors>ErikZhouXin</Authors>
 		<Version>2021.10.1</Version>
-		<AssemblyVersion>2021.10.1.826</AssemblyVersion>
-		<FileVersion>2021.10.1.826</FileVersion>
+		<AssemblyVersion>2021.10.1.638</AssemblyVersion>
+		<FileVersion>2021.10.1.638</FileVersion>
 		<Description>针对深坂科技RFID的R600进行的操作封装</Description>
 		<Copyright>©2020 ErikZhouXin</Copyright>
 		<PackageTags>r600;rfid</PackageTags>
@@ -24,6 +24,9 @@
 	</PropertyGroup>
 
 	<ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp3.1'">
+		<PackageReference Include="System.IO.Ports" Version="5.0.1" />
+	</ItemGroup>
+	<ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.1'">
 		<PackageReference Include="System.IO.Ports" Version="5.0.1" />
 	</ItemGroup>
 </Project>
