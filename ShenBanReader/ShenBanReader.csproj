@@ -4,6 +4,8 @@
 		<TargetFrameworks>net35;net40;net45;netstandard2.1;netcoreapp3.1;</TargetFrameworks>
 		<AssemblyName>NSystem.Data.ShenBanReader</AssemblyName>
 		<RootNamespace>System.Data.ShenBanReader</RootNamespace>
+		<SignAssembly>true</SignAssembly>
+		<LangVersion>latest</LangVersion>
 		<GenerateAssemblyInfo>true</GenerateAssemblyInfo>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<Authors>ErikZhouXin</Authors>

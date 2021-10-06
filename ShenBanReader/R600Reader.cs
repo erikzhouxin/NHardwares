@@ -12,9 +12,13 @@ namespace System.Data.ShenBanReader
     /// </summary>
     public class R600Reader
     {
-        private IR600Talker italker;
-        private SerialPort iSerialPort;
+        private readonly IR600Talker italker;
+        private readonly SerialPort iSerialPort;
         private int m_nType = -1;
+        //记录未处理的接收数据，主要考虑接收数据分段
+        private readonly byte[] m_btAryBuffer = new byte[4096];
+        //记录未处理数据的有效长度
+        private int m_nLenth = 0;
         /// <summary>
         /// 接收回调
         /// </summary>
@@ -28,21 +32,14 @@ namespace System.Data.ShenBanReader
         /// </summary>
         public R600AnalyCallback AnalyCallback;
 
-        //记录未处理的接收数据，主要考虑接收数据分段
-        byte[] m_btAryBuffer = new byte[4096];
-        //记录未处理数据的有效长度
-        int m_nLenth = 0;
         /// <summary>
         /// 构造
         /// </summary>
         public R600Reader()
         {
             this.italker = new R600Talker();
-
             italker.MessageReceived += new R600ReceivedEventHandler(ReceivedTcpData);
-
             iSerialPort = new SerialPort();
-
             iSerialPort.DataReceived += new SerialDataReceivedEventHandler(ReceivedComData);
         }
         /// <summary>
@@ -55,12 +52,10 @@ namespace System.Data.ShenBanReader
         public int OpenCom(string strPort, int nBaudrate, out string strException)
         {
             strException = string.Empty;
-
             if (iSerialPort.IsOpen)
             {
                 iSerialPort.Close();
             }
-
             try
             {
                 iSerialPort.PortName = strPort;
@@ -73,7 +68,6 @@ namespace System.Data.ShenBanReader
                 strException = ex.Message;
                 return -1;
             }
-
             m_nType = 0;
             return 0;
         }
@@ -86,7 +80,6 @@ namespace System.Data.ShenBanReader
             {
                 iSerialPort.Close();
             }
-
             m_nType = -1;
         }
         /// <summary>
@@ -98,13 +91,10 @@ namespace System.Data.ShenBanReader
         /// <returns></returns>
         public int ConnectServer(IPAddress ipAddress, int nPort, out string strException)
         {
-            strException = string.Empty;
-
             if (!italker.Connect(ipAddress, nPort, out strException))
             {
                 return -1;
             }
-
             m_nType = 1;
             return 0;
         }
@@ -127,30 +117,20 @@ namespace System.Data.ShenBanReader
             try
             {
                 int nCount = iSerialPort.BytesToRead;
-                if (nCount == 0)
-                {
-                    return;
-                }
-
+                if (nCount == 0) { return; }
                 byte[] btAryBuffer = new byte[nCount];
                 iSerialPort.Read(btAryBuffer, 0, nCount);
 
                 RunReceiveDataCallback(btAryBuffer);
             }
-            catch (System.Exception ex)
-            {
-
-            }
+            catch { }
         }
 
         private void RunReceiveDataCallback(byte[] btAryReceiveData)
         {
             try
             {
-                if (ReceiveCallback != null)
-                {
-                    ReceiveCallback(btAryReceiveData);
-                }
+                ReceiveCallback?.Invoke(btAryReceiveData);
 
                 int nCount = btAryReceiveData.Length;
                 byte[] btAryBuffer = new byte[nCount + m_nLenth];
@@ -172,11 +152,8 @@ namespace System.Data.ShenBanReader
                                 byte[] btAryAnaly = new byte[nLen + 2];
                                 Array.Copy(btAryBuffer, nLoop, btAryAnaly, 0, nLen + 2);
 
-                                R600MessageTran msgTran = new R600MessageTran(btAryAnaly);
-                                if (AnalyCallback != null)
-                                {
-                                    AnalyCallback(msgTran);
-                                }
+                                R600Message msgTran = new(btAryAnaly);
+                                AnalyCallback?.Invoke(msgTran);
 
                                 nLoop += 1 + nLen;
                                 nIndex = nLoop + 1;
@@ -209,10 +186,7 @@ namespace System.Data.ShenBanReader
                     m_nLenth = 0;
                 }
             }
-            catch (System.Exception ex)
-            {
-
-            }
+            catch { }
         }
         /// <summary>
         /// 发送消息
@@ -231,10 +205,7 @@ namespace System.Data.ShenBanReader
 
                 iSerialPort.Write(btArySenderData, 0, btArySenderData.Length);
 
-                if (SendCallback != null)
-                {
-                    SendCallback(btArySenderData);
-                }
+                SendCallback?.Invoke(btArySenderData);
 
                 return 0;
             }
@@ -248,10 +219,7 @@ namespace System.Data.ShenBanReader
 
                 if (italker.SendMessage(btArySenderData))
                 {
-                    if (SendCallback != null)
-                    {
-                        SendCallback(btArySenderData);
-                    }
+                    SendCallback?.Invoke(btArySenderData);
 
                     return 0;
                 }
@@ -262,14 +230,14 @@ namespace System.Data.ShenBanReader
 
         private int SendMessage(byte btReadId, byte btCmd)
         {
-            R600MessageTran msgTran = new R600MessageTran(btReadId, btCmd);
+            R600Message msgTran = new(btReadId, btCmd);
 
             return SendMessage(msgTran.AryTranData);
         }
 
         private int SendMessage(byte btReadId, byte btCmd, byte[] btAryData)
         {
-            R600MessageTran msgTran = new R600MessageTran(btReadId, btCmd, btAryData);
+            R600Message msgTran = new(btReadId, btCmd, btAryData);
 
             return SendMessage(msgTran.AryTranData);
         }
@@ -280,7 +248,7 @@ namespace System.Data.ShenBanReader
         /// <returns></returns>
         public byte CheckValue(byte[] btAryData)
         {
-            R600MessageTran msgTran = new R600MessageTran();
+            R600Message msgTran = new();
 
             return msgTran.CheckSum(btAryData, 0, btAryData.Length);
         }
@@ -443,9 +411,8 @@ namespace System.Data.ShenBanReader
         public int SetUserDefineFrequency(byte btReadId, int nStartFreq, byte btFreqInterval, byte btChannelQuantity)
         {
             byte btCmd = 0x78;
-            byte[] btAryFreq = new byte[3];
             byte[] btAryData = new byte[6];
-            btAryFreq = BitConverter.GetBytes(nStartFreq);
+            byte[] btAryFreq = BitConverter.GetBytes(nStartFreq);
 
             btAryData[0] = 4;
             btAryData[1] = btFreqInterval;
@@ -591,7 +558,11 @@ namespace System.Data.ShenBanReader
 
             return nResult;
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="btReadId"></param>
+        /// <returns></returns>
         public int GetAntDetector(byte btReadId)
         {
             byte btCmd = 0x63;
@@ -600,7 +571,11 @@ namespace System.Data.ShenBanReader
 
             return nResult;
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="btReadId"></param>
+        /// <returns></returns>
         public int GetMonzaStatus(byte btReadId)
         {
             byte btCmd = 0x8e;
@@ -609,7 +584,12 @@ namespace System.Data.ShenBanReader
 
             return nResult;
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="btReadId"></param>
+        /// <param name="btMonzaStatus"></param>
+        /// <returns></returns>
         public int SetMonzaStatus(byte btReadId, byte btMonzaStatus)
         {
             byte btCmd = 0x8D;
@@ -620,7 +600,12 @@ namespace System.Data.ShenBanReader
 
             return nResult;
         }
-
+        /// <summary>
+        /// 设置配置
+        /// </summary>
+        /// <param name="btReadId"></param>
+        /// <param name="btProfile"></param>
+        /// <returns></returns>
         public int SetRadioProfile(byte btReadId, byte btProfile)
         {
             byte btCmd = 0x69;
@@ -629,6 +614,11 @@ namespace System.Data.ShenBanReader
             int nResult = SendMessage(btReadId, btCmd, btAryData);
             return nResult;
         }
+        /// <summary>
+        /// 获取配置
+        /// </summary>
+        /// <param name="btReadId"></param>
+        /// <returns></returns>
         public int GetRadioProfile(byte btReadId)
         {
             byte btCmd = 0x6A;
@@ -637,7 +627,11 @@ namespace System.Data.ShenBanReader
 
             return nResult;
         }
-
+        /// <summary>
+        /// 获取读ID
+        /// </summary>
+        /// <param name="btReadId"></param>
+        /// <returns></returns>
         public int GetReaderIdentifier(byte btReadId)
         {
             byte btCmd = 0x68;
@@ -646,7 +640,12 @@ namespace System.Data.ShenBanReader
 
             return nResult;
         }
-
+        /// <summary>
+        /// 设置读ID
+        /// </summary>
+        /// <param name="btReadId"></param>
+        /// <param name="identifier"></param>
+        /// <returns></returns>
         public int SetReaderIdentifier(byte btReadId, byte[] identifier)
         {
             byte btCmd = 0x67;
@@ -656,7 +655,12 @@ namespace System.Data.ShenBanReader
             return nResult;
         }
 
-
+        /// <summary>
+        /// 存盘
+        /// </summary>
+        /// <param name="btReadId"></param>
+        /// <param name="byRound"></param>
+        /// <returns></returns>
         public int Inventory(byte btReadId, byte byRound)
         {
             byte btCmd = 0x80;
@@ -667,7 +671,14 @@ namespace System.Data.ShenBanReader
 
             return nResult;
         }
-
+        /// <summary>
+        /// 自定义存盘
+        /// </summary>
+        /// <param name="btReadId"></param>
+        /// <param name="session"></param>
+        /// <param name="target"></param>
+        /// <param name="byRound"></param>
+        /// <returns></returns>
         public int CustomizedInventory(byte btReadId, byte session, byte target, byte byRound)
         {
             byte btCmd = 0x8B;
@@ -680,7 +691,14 @@ namespace System.Data.ShenBanReader
 
             return nResult;
         }
-
+        /// <summary>
+        /// 读标签
+        /// </summary>
+        /// <param name="btReadId"></param>
+        /// <param name="btMemBank"></param>
+        /// <param name="btWordAdd"></param>
+        /// <param name="btWordCnt"></param>
+        /// <returns></returns>
         public int ReadTag(byte btReadId, byte btMemBank, byte btWordAdd, byte btWordCnt)
         {
             byte btCmd = 0x81;
@@ -693,7 +711,16 @@ namespace System.Data.ShenBanReader
 
             return nResult;
         }
-
+        /// <summary>
+        /// 写标签
+        /// </summary>
+        /// <param name="btReadId"></param>
+        /// <param name="btAryPassWord"></param>
+        /// <param name="btMemBank"></param>
+        /// <param name="btWordAdd"></param>
+        /// <param name="btWordCnt"></param>
+        /// <param name="btAryData"></param>
+        /// <returns></returns>
         public int WriteTag(byte btReadId, byte[] btAryPassWord, byte btMemBank, byte btWordAdd, byte btWordCnt, byte[] btAryData)
         {
             byte btCmd = 0x82;
@@ -708,7 +735,14 @@ namespace System.Data.ShenBanReader
 
             return nResult;
         }
-
+        /// <summary>
+        /// 锁定标签
+        /// </summary>
+        /// <param name="btReadId"></param>
+        /// <param name="btAryPassWord"></param>
+        /// <param name="btMembank"></param>
+        /// <param name="btLockType"></param>
+        /// <returns></returns>
         public int LockTag(byte btReadId, byte[] btAryPassWord, byte btMembank, byte btLockType)
         {
             byte btCmd = 0x83;
@@ -721,7 +755,12 @@ namespace System.Data.ShenBanReader
 
             return nResult;
         }
-
+        /// <summary>
+        /// 释放标记
+        /// </summary>
+        /// <param name="btReadId"></param>
+        /// <param name="btAryPassWord"></param>
+        /// <returns></returns>
         public int KillTag(byte btReadId, byte[] btAryPassWord)
         {
             byte btCmd = 0x84;
@@ -732,7 +771,14 @@ namespace System.Data.ShenBanReader
 
             return nResult;
         }
-
+        /// <summary>
+        /// 设置EPC
+        /// </summary>
+        /// <param name="btReadId"></param>
+        /// <param name="btMode"></param>
+        /// <param name="btEpcLen"></param>
+        /// <param name="btAryEpc"></param>
+        /// <returns></returns>
         public int SetAccessEpcMatch(byte btReadId, byte btMode, byte btEpcLen, byte[] btAryEpc)
         {
             byte btCmd = 0x85;
@@ -746,7 +792,12 @@ namespace System.Data.ShenBanReader
 
             return nResult;
         }
-
+        /// <summary>
+        /// 取消EPC
+        /// </summary>
+        /// <param name="btReadId"></param>
+        /// <param name="btMode"></param>
+        /// <returns></returns>
         public int CancelAccessEpcMatch(byte btReadId, byte btMode)
         {
             byte btCmd = 0x85;
@@ -757,7 +808,11 @@ namespace System.Data.ShenBanReader
 
             return nResult;
         }
-
+        /// <summary>
+        /// 获取EPC
+        /// </summary>
+        /// <param name="btReadId"></param>
+        /// <returns></returns>
         public int GetAccessEpcMatch(byte btReadId)
         {
             byte btCmd = 0x86;
@@ -766,7 +821,12 @@ namespace System.Data.ShenBanReader
 
             return nResult;
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="btReadId"></param>
+        /// <param name="byRound"></param>
+        /// <returns></returns>
         public int InventoryReal(byte btReadId, byte byRound)
         {
             byte btCmd = 0x89;
@@ -777,7 +837,12 @@ namespace System.Data.ShenBanReader
 
             return nResult;
         }
-
+        /// <summary>
+        /// 快速存盘
+        /// </summary>
+        /// <param name="btReadId"></param>
+        /// <param name="btAryData"></param>
+        /// <returns></returns>
         public int FastSwitchInventory(byte btReadId, byte[] btAryData)
         {
             byte btCmd = 0x8A;
@@ -786,7 +851,11 @@ namespace System.Data.ShenBanReader
 
             return nResult;
         }
-
+        /// <summary>
+        /// 获取存盘
+        /// </summary>
+        /// <param name="btReadId"></param>
+        /// <returns></returns>
         public int GetInventoryBuffer(byte btReadId)
         {
             byte btCmd = 0x90;
@@ -795,7 +864,11 @@ namespace System.Data.ShenBanReader
 
             return nResult;
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="btReadId"></param>
+        /// <returns></returns>
         public int GetAndResetInventoryBuffer(byte btReadId)
         {
             byte btCmd = 0x91;
@@ -804,7 +877,11 @@ namespace System.Data.ShenBanReader
 
             return nResult;
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="btReadId"></param>
+        /// <returns></returns>
         public int GetInventoryBufferTagCount(byte btReadId)
         {
             byte btCmd = 0x92;
@@ -813,7 +890,11 @@ namespace System.Data.ShenBanReader
 
             return nResult;
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="btReadId"></param>
+        /// <returns></returns>
         public int ResetInventoryBuffer(byte btReadId)
         {
             byte btCmd = 0x93;
@@ -822,7 +903,12 @@ namespace System.Data.ShenBanReader
 
             return nResult;
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="btReadId"></param>
+        /// <param name="btInterval"></param>
+        /// <returns></returns>
         public int SetBufferDataFrameInterval(byte btReadId, byte btInterval)
         {
             byte btCmd = 0x94;
@@ -833,7 +919,11 @@ namespace System.Data.ShenBanReader
 
             return nResult;
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="btReadId"></param>
+        /// <returns></returns>
         public int GetBufferDataFrameInterval(byte btReadId)
         {
             byte btCmd = 0x95;
@@ -842,7 +932,11 @@ namespace System.Data.ShenBanReader
 
             return nResult;
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="btReadId"></param>
+        /// <returns></returns>
         public int InventoryISO18000(byte btReadId)
         {
             byte btCmd = 0xb0;
@@ -851,7 +945,14 @@ namespace System.Data.ShenBanReader
 
             return nResult;
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="btReadId"></param>
+        /// <param name="btAryUID"></param>
+        /// <param name="btWordAdd"></param>
+        /// <param name="btWordCnt"></param>
+        /// <returns></returns>
         public int ReadTagISO18000(byte btReadId, byte[] btAryUID, byte btWordAdd, byte btWordCnt)
         {
             byte btCmd = 0xb1;
@@ -865,7 +966,15 @@ namespace System.Data.ShenBanReader
 
             return nResult;
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="btReadId"></param>
+        /// <param name="btAryUID"></param>
+        /// <param name="btWordAdd"></param>
+        /// <param name="btWordCnt"></param>
+        /// <param name="btAryBuffer"></param>
+        /// <returns></returns>
         public int WriteTagISO18000(byte btReadId, byte[] btAryUID, byte btWordAdd, byte btWordCnt, byte[] btAryBuffer)
         {
             byte btCmd = 0xb2;
@@ -880,7 +989,13 @@ namespace System.Data.ShenBanReader
 
             return nResult;
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="btReadId"></param>
+        /// <param name="btAryUID"></param>
+        /// <param name="btWordAdd"></param>
+        /// <returns></returns>
         public int LockTagISO18000(byte btReadId, byte[] btAryUID, byte btWordAdd)
         {
             byte btCmd = 0xb3;
@@ -893,7 +1008,13 @@ namespace System.Data.ShenBanReader
 
             return nResult;
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="btReadId"></param>
+        /// <param name="btAryUID"></param>
+        /// <param name="btWordAdd"></param>
+        /// <returns></returns>
         public int QueryTagISO18000(byte btReadId, byte[] btAryUID, byte btWordAdd)
         {
             byte btCmd = 0xb4;
@@ -906,7 +1027,5 @@ namespace System.Data.ShenBanReader
 
             return nResult;
         }
-
-
     }
 }

@@ -55,7 +55,6 @@ namespace System.Data.ShenBanReader
         TcpClient client;
         Stream streamToTran;
         private Thread waitThread;
-
         private bool bIsConnect = false;
         /// <summary>
         /// 连接
@@ -74,9 +73,11 @@ namespace System.Data.ShenBanReader
                 streamToTran = client.GetStream();    // 获取连接至远程的流
 
                 //建立线程收取服务器发送数据
-                ThreadStart stThead = new ThreadStart(ReceivedData);
-                waitThread = new Thread(stThead);
-                waitThread.IsBackground = true;
+                ThreadStart stThead = new(ReceivedData);
+                waitThread = new Thread(stThead)
+                {
+                    IsBackground = true
+                };
                 waitThread.Start();
 
                 bIsConnect = true;
@@ -111,12 +112,8 @@ namespace System.Data.ShenBanReader
                         MessageReceived(btAryReceiveData);
                     }
                 }
-                catch (System.Exception ex)
-                {
-
-                }
+                catch { }
             }
-
         }
         /// <summary>
         /// 发送

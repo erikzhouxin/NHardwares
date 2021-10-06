@@ -8,10 +8,10 @@ namespace System.Data.ShenBanReader
     /// <summary>
     /// 消息传送
     /// </summary>
-    public class R600MessageTran
+    public class R600Message
     {
-        private byte btDataLen;        //数据包长度，数据包从‘长度’字节后面开始的字节数，不包含‘长度’字节本身
-        private byte btCheck;          //校验和，除校验和本身外所有字节的校验和
+        private readonly byte btDataLen;        //数据包长度，数据包从‘长度’字节后面开始的字节数，不包含‘长度’字节本身
+        private readonly byte btCheck;          //校验和，除校验和本身外所有字节的校验和
 
         /// <summary>
         /// 完整数据包
@@ -36,17 +36,14 @@ namespace System.Data.ShenBanReader
         /// <summary>
         /// 构造
         /// </summary>
-        public R600MessageTran()
-        {
-
-        }
+        public R600Message() { }
         /// <summary>
         /// 构造
         /// </summary>
         /// <param name="btReadId"></param>
         /// <param name="btCmd"></param>
         /// <param name="btAryData"></param>
-        public R600MessageTran(byte btReadId, byte btCmd, byte[] btAryData)
+        public R600Message(byte btReadId, byte btCmd, byte[] btAryData)
         {
             int nLen = btAryData.Length;
 
@@ -73,7 +70,7 @@ namespace System.Data.ShenBanReader
         /// </summary>
         /// <param name="btReadId"></param>
         /// <param name="btCmd"></param>
-        public R600MessageTran(byte btReadId, byte btCmd)
+        public R600Message(byte btReadId, byte btCmd)
         {
             this.PacketType = 0xA0;
             this.btDataLen = 0x03;
@@ -93,7 +90,7 @@ namespace System.Data.ShenBanReader
         /// 构造
         /// </summary>
         /// <param name="btAryTranData"></param>
-        public R600MessageTran(byte[] btAryTranData)
+        public R600Message(byte[] btAryTranData)
         {
             int nLen = btAryTranData.Length;
 

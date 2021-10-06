@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace System.Data.ShenBanReader
 {
@@ -24,7 +26,7 @@ namespace System.Data.ShenBanReader
     /// 解析数据回调
     /// </summary>
     /// <param name="msgTran"></param>
-    public delegate void R600AnalyCallback(R600MessageTran msgTran);
+    public delegate void R600AnalyCallback(R600Message msgTran);
     /// <summary>
     /// 方法操作
     /// </summary>
@@ -39,7 +41,6 @@ namespace System.Data.ShenBanReader
         {
             string[] strAryHex = strHexValue.Split(' ');
             byte[] btAryHex = new byte[strAryHex.Length];
-
             try
             {
                 int nIndex = 0;
@@ -49,11 +50,7 @@ namespace System.Data.ShenBanReader
                     nIndex++;
                 }
             }
-            catch (System.Exception ex)
-            {
-
-            }
-
+            catch { }
             return btAryHex;
         }
 
@@ -69,9 +66,7 @@ namespace System.Data.ShenBanReader
             {
                 nLen = strAryHex.Length;
             }
-
             byte[] btAryHex = new byte[nLen];
-
             try
             {
                 int nIndex = 0;
@@ -81,11 +76,7 @@ namespace System.Data.ShenBanReader
                     nIndex++;
                 }
             }
-            catch (System.Exception ex)
-            {
-
-            }
-
+            catch { }
             return btAryHex;
         }
 
@@ -102,16 +93,12 @@ namespace System.Data.ShenBanReader
             {
                 nLen = btAryHex.Length - nIndex;
             }
-
             string strResult = string.Empty;
-
             for (int nloop = nIndex; nloop < nIndex + nLen; nloop++)
             {
                 string strTemp = string.Format(" {0:X2}", btAryHex[nloop]);
-
                 strResult += strTemp;
             }
-
             return strResult;
         }
 
@@ -127,7 +114,7 @@ namespace System.Data.ShenBanReader
 
             if (!string.IsNullOrEmpty(strValue))
             {
-                System.Collections.ArrayList strListResult = new System.Collections.ArrayList();
+                ArrayList strListResult = new();
                 string strTemp = string.Empty;
                 int nTemp = 0;
 
@@ -142,7 +129,7 @@ namespace System.Data.ShenBanReader
                         nTemp++;
 
                         //校验截取的字符是否在A~F、0~9区间，不在则直接退出
-                        System.Text.RegularExpressions.Regex reg = new System.Text.RegularExpressions.Regex(@"^(([A-F])*(\d)*)$");
+                        Regex reg = new(@"^(([A-F])*(\d)*)$");
                         if (!reg.IsMatch(strValue.Substring(nloop, 1)))
                         {
                             return strAryResult;
@@ -172,142 +159,55 @@ namespace System.Data.ShenBanReader
         /// <summary>
         /// 格式化错误代码
         /// </summary>
-        /// <param name="btErrorCode"></param>
+        /// <param name="errorCode"></param>
         /// <returns></returns>
-        public static string FormatErrorCode(byte btErrorCode)
+        public static string FormatErrorCode(byte errorCode)
         {
-            string strErrorCode = "";
-            switch (btErrorCode)
+            return errorCode switch
             {
-                case 0x10:
-                    strErrorCode = "命令已执行";
-                    break;
-                case 0x11:
-                    strErrorCode = "命令执行失败";
-                    break;
-                case 0x20:
-                    strErrorCode = "CPU 复位错误";
-                    break;
-                case 0x21:
-                    strErrorCode = "打开CW 错误";
-                    break;
-                case 0x22:
-                    strErrorCode = "天线未连接";
-                    break;
-                case 0x23:
-                    strErrorCode = "写Flash 错误";
-                    break;
-                case 0x24:
-                    strErrorCode = "读Flash 错误";
-                    break;
-                case 0x25:
-                    strErrorCode = "设置发射功率错误";
-                    break;
-                case 0x31:
-                    strErrorCode = "盘存标签错误";
-                    break;
-                case 0x32:
-                    strErrorCode = "读标签错误";
-                    break;
-                case 0x33:
-                    strErrorCode = "写标签错误";
-                    break;
-                case 0x34:
-                    strErrorCode = "锁定标签错误";
-                    break;
-                case 0x35:
-                    strErrorCode = "灭活标签错误";
-                    break;
-                case 0x36:
-                    strErrorCode = "无可操作标签错误";
-                    break;
-                case 0x37:
-                    strErrorCode = "成功盘存但访问失败";
-                    break;
-                case 0x38:
-                    strErrorCode = "缓存为空";
-                    break;
-                case 0x40:
-                    strErrorCode = "访问标签错误或访问密码错误";
-                    break;
-                case 0x41:
-                    strErrorCode = "无效的参数";
-                    break;
-                case 0x42:
-                    strErrorCode = "wordCnt 参数超过规定长度";
-                    break;
-                case 0x43:
-                    strErrorCode = "MemBank 参数超出范围";
-                    break;
-                case 0x44:
-                    strErrorCode = "Lock 数据区参数超出范围";
-                    break;
-                case 0x45:
-                    strErrorCode = "LockType 参数超出范围";
-                    break;
-                case 0x46:
-                    strErrorCode = "读卡器地址无效";
-                    break;
-                case 0x47:
-                    strErrorCode = "Antenna_id 超出范围";
-                    break;
-                case 0x48:
-                    strErrorCode = "输出功率参数超出范围";
-                    break;
-                case 0x49:
-                    strErrorCode = "射频规范区域参数超出范围";
-                    break;
-                case 0x4A:
-                    strErrorCode = "波特率参数超过范围";
-                    break;
-                case 0x4B:
-                    strErrorCode = "蜂鸣器设置参数超出范围";
-                    break;
-                case 0x4C:
-                    strErrorCode = "EPC 匹配长度越界";
-                    break;
-                case 0x4D:
-                    strErrorCode = "EPC 匹配长度错误";
-                    break;
-                case 0x4E:
-                    strErrorCode = "EPC 匹配参数超出范围";
-                    break;
-                case 0x4F:
-                    strErrorCode = "频率范围设置参数错误";
-                    break;
-                case 0x50:
-                    strErrorCode = "无法接收标签的RN16";
-                    break;
-                case 0x51:
-                    strErrorCode = "DRM 设置参数错误";
-                    break;
-                case 0x52:
-                    strErrorCode = "PLL 不能锁定";
-                    break;
-                case 0x53:
-                    strErrorCode = "射频芯片无响应";
-                    break;
-                case 0x54:
-                    strErrorCode = "输出达不到指定的输出功率";
-                    break;
-                case 0x55:
-                    strErrorCode = "版权认证未通过";
-                    break;
-                case 0x56:
-                    strErrorCode = "频谱规范设置错误";
-                    break;
-                case 0x57:
-                    strErrorCode = "输出功率过低";
-                    break;
-                case 0xFF:
-                    strErrorCode = "未知错误";
-                    break;
-
-                default:
-                    break;
-            }
-
-            return strErrorCode;
+                0x10 => "命令已执行",
+                0x11 => "命令执行失败",
+                0x20 => "CPU 复位错误",
+                0x21 => "打开CW 错误",
+                0x22 => "天线未连接",
+                0x23 => "写Flash 错误",
+                0x24 => "读Flash 错误",
+                0x25 => "设置发射功率错误",
+                0x31 => "盘存标签错误",
+                0x32 => "读标签错误",
+                0x33 => "写标签错误",
+                0x34 => "锁定标签错误",
+                0x35 => "灭活标签错误",
+                0x36 => "无可操作标签错误",
+                0x37 => "成功盘存但访问失败",
+                0x38 => "缓存为空",
+                0x40 => "访问标签错误或访问密码错误",
+                0x41 => "无效的参数",
+                0x42 => "wordCnt 参数超过规定长度",
+                0x43 => "MemBank 参数超出范围",
+                0x44 => "Lock 数据区参数超出范围",
+                0x45 => "LockType 参数超出范围",
+                0x46 => "读卡器地址无效",
+                0x47 => "Antenna_id 超出范围",
+                0x48 => "输出功率参数超出范围",
+                0x49 => "射频规范区域参数超出范围",
+                0x4A => "波特率参数超过范围",
+                0x4B => "蜂鸣器设置参数超出范围",
+                0x4C => "EPC 匹配长度越界",
+                0x4D => "EPC 匹配长度错误",
+                0x4E => "EPC 匹配参数超出范围",
+                0x4F => "频率范围设置参数错误",
+                0x50 => "无法接收标签的RN16",
+                0x51 => "DRM 设置参数错误",
+                0x52 => "PLL 不能锁定",
+                0x53 => "射频芯片无响应",
+                0x54 => "输出达不到指定的输出功率",
+                0x55 => "版权认证未通过",
+                0x56 => "频谱规范设置错误",
+                0x57 => "输出功率过低",
+                0xFF => "未知错误",
+                _ => string.Empty,
+            };
         }
     }
 }
