@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--自动生成-->
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0;net40;net45;</TargetFrameworks>
+    <AssemblyName>NSystem.Data.YuShiITSSDK</AssemblyName>
+    <RootNamespace>System.Data.YuShiITSSDK</RootNamespace>
+    <NoBuild>true</NoBuild>
+    <IncludeBuildOutput>false</IncludeBuildOutput>
+    <NuspecFile>NSystem.Data.YuShiITSSDK.nuspec</NuspecFile>
+    <NuspecProperties>version=$(version);src_path=$(src_path);cb_bin_path=$(cb_bin_path);authors=$(Authors);copyright=$(Copyright);summary=$(Description)</NuspecProperties>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="beans\**" />
+    <EmbeddedResource Remove="beans\**" />
+    <None Remove="beans\**" />
+    <None Remove="Directory.Build.props" />
+  </ItemGroup>
+</Project>
