@@ -43,8 +43,8 @@ namespace YuShiITSSDK.Builder
             Exec("dotnet", "restore", Program.Src);
             Exec(@"C:\Program Files\Microsoft Visual Studio 2019\MSBuild\Current\Bin\msbuild.exe", "/p:Configuration=Release /t:pack", Program.Src);
             // 编译生成
-            var path_empty = Path.Combine(Program.Src, "_._");
-            if (!File.Exists(path_empty)) { File.WriteAllText(path_empty, ""); }
+            //var path_empty = Path.Combine(Program.Src, "_._");
+            //if (!File.Exists(path_empty)) { File.WriteAllText(path_empty, ""); }
             Exec("dotnet", "pack", Program.Src);
         }
 
@@ -148,7 +148,7 @@ namespace YuShiITSSDK.Builder
         {
             string id = "NSystem.Data.YuShiITSSDK";
             string proj = "YuShiITSSDK";
-
+            var sdks = new List<string> { "net40", "net45", "netcoreapp3.1", "netstandard2.1" };
             using (XmlWriter f = XmlWriter.Create(Path.Combine(dir_src, $"{proj}.csproj"), new XmlWriterSettings
             {
                 NewLineChars = "\n",
@@ -164,10 +164,12 @@ namespace YuShiITSSDK.Builder
 
                 f.WriteStartElement("PropertyGroup");
 
-                f.WriteElementString("TargetFrameworks", "netstandard2.0;net40;net45;");
+                f.WriteElementString("TargetFrameworks", string.Join(";", sdks));
                 f.WriteElementString("AssemblyName", id);
                 f.WriteElementString("RootNamespace", id.Substring(1));
-                f.WriteElementString("NoBuild", "true");
+                f.WriteElementString("NoBuild", "false");
+                f.WriteElementString("GenerateDocumentationFile", "true");
+                f.WriteElementString("EmbedAllSources", "true");
                 f.WriteElementString("IncludeBuildOutput", "false");
                 f.WriteElementString("NuspecFile", $"{id}.nuspec");
                 f.WriteElementString("NuspecProperties", "version=$(version);src_path=$(src_path);cb_bin_path=$(cb_bin_path);authors=$(Authors);copyright=$(Copyright);summary=$(Description)");
@@ -225,7 +227,7 @@ namespace YuShiITSSDK.Builder
                 f.WriteEndElement();
                 f.WriteStartElement("repository");
                 f.WriteAttributeString("type", "git");
-                f.WriteAttributeString("url", "https://github.com/ericsink/SQLitePCL.raw");
+                f.WriteAttributeString("url", "https://github.com/ErikZhouXin/YuShiITSSDK");
                 f.WriteEndElement(); // repository
                 f.WriteElementString("summary", "$summary$");
                 f.WriteElementString("tags", PACKAGE_TAGS);
@@ -236,13 +238,14 @@ namespace YuShiITSSDK.Builder
 
                 f.WriteStartElement("files");
 
-                var cpuTags = new List<string> { "x86", "x64", "arm", "arm64" };
+                var cpuTags = new List<string> { "win-x86", "win-x64", "win-arm", "win-arm64", "win10-x86", "win10-x64", "win10-arm", "win10-arm64", "x86", "x64" };
                 foreach (var cpuTag in cpuTags)
                 {
-                    foreach (var item in Directory.GetFiles(Path.Combine(Src, "beans", $"win-{cpuTag}")))
+                    var platform = cpuTag.IndexOf("64") > 0 ? "x64" : "x86";
+                    foreach (var item in Directory.GetFiles(Path.Combine(Src, "beans", platform)))
                     {
                         var fileName = Path.GetFileName(item);
-                        write_nuspec_file_entry(Path.Combine("$cb_bin_path$", $"win-{cpuTag}", fileName), $"runtimes\\win-{cpuTag}\\native\\{fileName}", f);
+                        write_nuspec_file_entry(Path.Combine("$cb_bin_path$", platform, fileName), $"runtimes\\{cpuTag}\\native\\{fileName}", f);
                     }
                 }
 
@@ -264,16 +267,17 @@ namespace YuShiITSSDK.Builder
                     ftar.WriteAttributeString("ToolsVersion", "4.0");
 
                     ftar.WriteStartElement("ItemGroup");
-                    ftar.WriteAttributeString("Condition", " '$(RuntimeIdentifier)' == '' AND '$(OS)' == 'Windows_NT' ");
+                    //ftar.WriteAttributeString("Condition", " '$(RuntimeIdentifier)' == '' AND '$(OS)' == 'Windows_NT' ");
 
                     foreach (var cpuTag in cpuTags)
                     {
-                        foreach (var item in Directory.GetFiles(Path.Combine(Src, "beans", $"win-{cpuTag}")))
+                        var platform = cpuTag.IndexOf("64") > 0 ? "x64" : "x86";
+                        foreach (var item in Directory.GetFiles(Path.Combine(Src, "beans", platform)))
                         {
                             var fileName = Path.GetFileName(item);
                             ftar.WriteStartElement("Content");
-                            ftar.WriteAttributeString("Include", $"$(MSBuildThisFileDirectory)..\\..\\runtimes\\win-{cpuTag}\\native\\{fileName}");
-                            ftar.WriteElementString("Link", $"runtimes\\win-{cpuTag}\\native\\{fileName}");
+                            ftar.WriteAttributeString("Include", $"$(MSBuildThisFileDirectory)..\\..\\runtimes\\{cpuTag}\\native\\{fileName}");
+                            ftar.WriteElementString("Link", $"runtimes\\{cpuTag}\\native\\{fileName}");
                             ftar.WriteElementString("CopyToOutputDirectory", "PreserveNewest");
                             ftar.WriteElementString("Pack", "false");
                             ftar.WriteEndElement(); // Content
@@ -287,20 +291,25 @@ namespace YuShiITSSDK.Builder
                     ftar.WriteEndDocument();
                 }
 
-                write_nuspec_file_entry(relpath_targets, string.Format("build\\net45"), f);
+                //write_nuspec_file_entry(relpath_targets, string.Format("build\\net45"), f);
+                //write_nuspec_file_entry(relpath_targets, string.Format("build\\net40"), f);
+                //write_nuspec_file_entry(relpath_targets, string.Format("build\\netstandard2.0"), f);
                 // 支持的SDK
-                f.WriteStartElement("file");
-                f.WriteAttributeString("src", "_._");
-                f.WriteAttributeString("target", "lib/NET40/_._");
-                f.WriteEndElement(); // file
-                f.WriteStartElement("file");
-                f.WriteAttributeString("src", "_._");
-                f.WriteAttributeString("target", "lib/NET45/_._");
-                f.WriteEndElement(); // file
-                f.WriteStartElement("file");
-                f.WriteAttributeString("src", "_._");
-                f.WriteAttributeString("target", "lib/NETSTANDARD20/_._");
-                f.WriteEndElement(); // file
+                foreach (var sdkName in sdks)
+                {
+                    try
+                    {
+                        foreach (var file in Directory.GetFiles(Path.Combine(dir_src, "bin", "Release", sdkName)))
+                        {
+                            var fileName = Path.GetFileName(file);
+                            f.WriteStartElement("file");
+                            f.WriteAttributeString("src", $"bin\\Release\\{sdkName}\\{fileName}");
+                            f.WriteAttributeString("target", $"lib/{sdkName}/{fileName}");
+                            f.WriteEndElement(); // file
+                        }
+                    }
+                    catch { }
+                }
 
                 f.WriteEndElement(); // files
 
