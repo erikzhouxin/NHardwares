@@ -13,67 +13,79 @@ namespace System.Data.ShenBanReader
         /// <summary>
         /// 键
         /// </summary>
-        public string Key { get; }
+        public string Key { get; internal set; }
         /// <summary>
         /// 
         /// </summary>
-        public byte[] PC { get; }
+        public byte[] PC { get; internal set; }
         /// <summary>
         /// 
         /// </summary>
-        public Byte[] CRC { get; }
+        public Byte[] CRC { get; internal set; }
         /// <summary>
         /// 
         /// </summary>
-        public byte[] EPC { get; }
+        public byte[] EPC { get; internal set; }
         /// <summary>
         /// 
         /// </summary>
-        public int ELen { get; }
+        public int ELen { get; internal set; }
         /// <summary>
         /// 
         /// </summary>
-        public byte RSSI { get; }
+        public byte RSSI { get; internal set; }
         /// <summary>
         /// 
         /// </summary>
-        public byte FREQ { get; }
+        public byte FREQ { get; internal set; }
         /// <summary>
         /// 
         /// </summary>
-        public int INVCNT { get; }
+        public int INVCNT { get; internal set; }
         /// <summary>
         /// 
         /// </summary>
-        public byte[] Data { get; }
+        public byte[] Data { get; internal set; }
+        /// <summary>
+        /// 标识
+        /// </summary>
+        public byte[] Tid { get; internal set; }
+        /// <summary>
+        /// 用户数据
+        /// </summary>
+        public byte[] User { get; internal set; }
+        /// <summary>
+        /// 保密区
+        /// </summary>
+        public byte[] Reserved { get; internal set; }
         /// <summary>
         /// 
         /// </summary>
-        public int DLen { get; }
+        public int DLen { get; internal set; }
         /// <summary>
         /// 
         /// </summary>
-        public byte AntId { get; }
+        public byte AntId { get; internal set; }
         /// <summary>
         /// 
         /// </summary>
-        public byte ReadCount { get; }
+        public byte ReadCount { get; internal set; }
         /// <summary>
         /// 
         /// </summary>
-        public int ANT1 { get; }
+        public int ANT1 { get; internal set; }
         /// <summary>
         /// 
         /// </summary>
-        public int ANT2 { get; }
+        public int ANT2 { get; internal set; }
         /// <summary>
         /// 
         /// </summary>
-        public int ANT3 { get; }
+        public int ANT3 { get; internal set; }
         /// <summary>
         /// 
         /// </summary>
-        public int ANT4 { get; }
+        public int ANT4 { get; internal set; }
         /// <summary>
         /// 读标签构造
         /// </summary>
@@ -95,8 +107,8 @@ namespace System.Data.ShenBanReader
                         byte[] data = new byte[nDataLen];
                         Array.Copy(aryData, 7 + nEpcLen, data, 0, nDataLen);// string strData = R600Method.ByteArrayToString(aryData, 7 + nEpcLen, nDataLen);
                         byte byAntId = (byte)((aryData[nLen - 2] & 0x03) + 1);
-
-                        this.Key = epc.GetMd5String();
+                        var pcs = pc.GetHexString();
+                        this.Key = epc.GetHexString();
                         this.PC = pc;
                         this.CRC = crc;
                         this.EPC = epc;
@@ -120,7 +132,7 @@ namespace System.Data.ShenBanReader
                         byte[] data = new byte[] { };
                         byte byAntId = (byte)((aryData[nLen - 2] & 0x03) + 1);
 
-                        this.Key = epc.GetMd5String();
+                        this.Key = epc.GetHexString();
                         this.PC = pc;
                         this.CRC = crc;
                         this.EPC = epc;
@@ -145,7 +157,7 @@ namespace System.Data.ShenBanReader
                         var rssi = aryData[nLen - 3];
                         var invcnt = aryData[nLen - 1];
 
-                        this.Key = epc.GetMd5String();
+                        this.Key = epc.GetHexString();
                         this.PC = pc;
                         this.CRC = crc;
                         this.EPC = epc;
@@ -168,7 +180,7 @@ namespace System.Data.ShenBanReader
                         byte[] data = new byte[] { };
                         byte byAntId = (byte)((aryData[nLen - 2] & 0x03) + 1);
 
-                        this.Key = epc.GetMd5String();
+                        this.Key = epc.GetHexString();
                         this.PC = pc;
                         this.CRC = crc;
                         this.EPC = epc;
@@ -192,7 +204,7 @@ namespace System.Data.ShenBanReader
                         byte[] data = new byte[] { };
                         byte byAntId = (byte)((aryData[nLen - 2] & 0x03) + 1);
 
-                        this.Key = epc.GetMd5String();
+                        this.Key = epc.GetHexString();
                         this.PC = pc;
                         this.CRC = crc;
                         this.EPC = epc;
@@ -216,7 +228,7 @@ namespace System.Data.ShenBanReader
                         byte btAntId = (byte)((btTemp & 0x03) + 1);
                         byte btFreq = (byte)(btTemp >> 2);
 
-                        this.Key = epc.GetMd5String();
+                        this.Key = epc.GetHexString();
                         this.EPC = epc;
                         this.PC = pc;
                         this.AntId = btAntId;
@@ -239,7 +251,7 @@ namespace System.Data.ShenBanReader
                         byte btAntId = (byte)((btTemp & 0x03) + 1);
                         byte btFreq = (byte)(btTemp >> 2);
 
-                        this.Key = epc.GetMd5String();
+                        this.Key = epc.GetHexString();
                         this.PC = pc;
                         this.EPC = epc;
                         this.AntId = AntId;
@@ -347,7 +359,7 @@ namespace System.Data.ShenBanReader
             var uid = new byte[8];
             Array.Copy(aryData, 1, uid, 0, 8);// string strUID = R600Method.ByteArrayToString(msgTran.AryData, 1, 8);
 
-            this.Key = uid.GetMd5String();
+            this.Key = uid.GetHexString();
             this.AntId = antId;
             this.UID = uid;
             this.Total = 1;

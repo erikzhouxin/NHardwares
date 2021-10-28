@@ -401,7 +401,7 @@ namespace System.Data.ShenBanReader
             byte byAntId = (byte)((aryData[nLen - 2] & 0x03) + 1);
             return new R600TagModel
             {
-                Key = epc.GetMd5String(),
+                Key = epc.GetHexString(),
                 PC = pc,
                 CRC = crc,
                 EPC = epc,
@@ -432,7 +432,7 @@ namespace System.Data.ShenBanReader
             var invcnt = aryData[nLen - 1];
             return new R600TagModel
             {
-                Key = epc.GetMd5String(),
+                Key = epc.GetHexString(),
                 PC = pc,
                 CRC = crc,
                 EPC = epc,
@@ -461,7 +461,7 @@ namespace System.Data.ShenBanReader
             byte byAntId = (byte)((aryData[nLen - 2] & 0x03) + 1);
             return new R600TagModel
             {
-                Key = epc.GetMd5String(),
+                Key = epc.GetHexString(),
                 PC = pc,
                 CRC = crc,
                 EPC = epc,
@@ -491,7 +491,7 @@ namespace System.Data.ShenBanReader
             byte byAntId = (byte)((aryData[nLen - 2] & 0x03) + 1);
             return new R600TagModel
             {
-                Key = epc.GetMd5String(),
+                Key = epc.GetHexString(),
                 PC = pc,
                 CRC = crc,
                 EPC = epc,
@@ -521,7 +521,7 @@ namespace System.Data.ShenBanReader
             byte byAntId = (byte)((aryData[nLen - 2] & 0x03) + 1);
             return new R600TagModel
             {
-                Key = epc.GetMd5String(),
+                Key = epc.GetHexString(),
                 PC = pc,
                 CRC = crc,
                 EPC = epc,

@@ -13,6 +13,13 @@ namespace System.Data.ShenBanReader
         /// <summary>
         /// 创建读写器
         /// </summary>
+        public static IR600Reader GetReader()
+        {
+            return new R600Reader();
+        }
+        /// <summary>
+        /// 创建读写器
+        /// </summary>
         public static IR600Reader GetReader(IR600Recall recall)
         {
             var result = new R600Reader();
@@ -22,8 +29,33 @@ namespace System.Data.ShenBanReader
         /// <summary>
         /// 创建读写器
         /// </summary>
-        [Obsolete("替代方案:GetReader")]
-        public static IR600Reader GetQueue(IR600Recall recall)
+        public static IR600Reader GetReader(IR600Callback recall)
+        {
+            var result = new R600Reader();
+            result.RegistCallback(recall);
+            return result;
+        }
+        /// <summary>
+        /// 创建队列读写器
+        /// </summary>
+        public static IR600Queue GetQueue()
+        {
+            var result = new R600Queue();
+            return result;
+        }
+        /// <summary>
+        /// 创建队列读写器
+        /// </summary>
+        public static IR600Queue GetQueue(IR600Recall recall)
+        {
+            var result = new R600Queue();
+            result.RegistCallback(recall);
+            return result;
+        }
+        /// <summary>
+        /// 创建队列读写器
+        /// </summary>
+        public static IR600Queue GetQueue(IR600Callback recall)
         {
             var result = new R600Queue();
             result.RegistCallback(recall);
@@ -31,26 +63,82 @@ namespace System.Data.ShenBanReader
         }
         #region // 辅助方法
         /// <summary>
-        /// 获取区域频率
+        /// 获取发送数据
         /// </summary>
-        /// <param name="region"></param>
-        /// <param name="start"></param>
-        /// <param name="interval"></param>
-        /// <param name="freq"></param>
+        /// <param name="readId"></param>
+        /// <param name="cmd"></param>
+        /// <param name="send"></param>
         /// <returns></returns>
-        public static double GetFreq(byte region, int start, byte interval, byte freq)
+        public static byte[] GetSendData(byte readId, R600CmdType cmd, byte[] send = null) => GetSendData(readId, (byte)cmd, send);
+        /// <summary>
+        /// 获取发送数据
+        /// </summary>
+        /// <param name="readId"></param>
+        /// <param name="cmd"></param>
+        /// <param name="send"></param>
+        /// <returns></returns>
+        public static byte[] GetSendData(byte readId, byte cmd, byte[] send = null)
         {
-            if (region == 4)
+            byte[] data;
+            if (send == null)
             {
-                return (start + freq * interval * 10) / 1000;
-            }
-            else if (freq < 0x07)
-            {
-                return 865.00 + Convert.ToInt32(freq) * 0.5;
+                data = new byte[5];
+                data[0] = 0xA0;
+                data[1] = 0x03;
+                data[2] = readId;
+                data[3] = cmd;
+                data[4] = CheckByte(data, 0, 4);
             }
             else
             {
-                return 902.00 + (Convert.ToInt32(freq) - 7) * 0.5;
+                int nLen = send.Length;
+                data = new byte[nLen + 5];
+                data[0] = 0xA0;
+                data[1] = Convert.ToByte(nLen + 3);
+                data[2] = readId;
+                data[3] = cmd;
+                send.CopyTo(data, 4);
+                data[nLen + 4] = CheckByte(data, 0, nLen + 4);
+            }
+            return data;
+        }
+        /// <summary>
+        /// 检查字节
+        /// </summary>
+        /// <param name="buffer"></param>
+        /// <param name="index"></param>
+        /// <param name="len"></param>
+        /// <returns></returns>
+        public static byte CheckByte(byte[] buffer, int index, int len)
+        {
+            byte btSum = 0x00;
+            for (int nloop = index; nloop < index + len; nloop++)
+            {
+                btSum += buffer[nloop];
+            }
+            return Convert.ToByte(((~btSum) + 1) & 0xFF);
+        }
+        /// <summary>
+        /// 获取区域频率
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="start"></param>
+        /// <param name="interval"></param>
+        /// <param name="chanelQuality"></param>
+        /// <returns></returns>
+        public static double GetFreq(R600FreqRegionType type, int start, byte interval, byte chanelQuality)
+        {
+            if (type == R600FreqRegionType.Custom)
+            {
+                return (start + chanelQuality * interval * 10) / 1000;
+            }
+            else if (chanelQuality < 0x07)
+            {
+                return 865.00 + Convert.ToInt32(chanelQuality) * 0.5;
+            }
+            else
+            {
+                return 902.00 + (Convert.ToInt32(chanelQuality) - 7) * 0.5;
             }
         }
         /// <summary>

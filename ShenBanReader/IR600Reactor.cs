@@ -7,38 +7,16 @@ using System.Text;
 namespace System.Data.ShenBanReader
 {
     /// <summary>
-    /// 调用实现类
+    /// 聚集接口
     /// </summary>
-    internal class R600Queue : IR600Queue
+    public interface IR600Reactor : IR600Reader, IR600Queue
     {
-        /// <summary>
-        /// 接收回调
-        /// </summary>
-        public Action<Byte[]> ReceiveCallback { get; internal set; }
-        /// <summary>
-        /// 发送回调
-        /// </summary>
-        public Action<Byte[]> SendCallback { get; internal set; }
-        /// <summary>
-        /// 分析回调
-        /// </summary>
-        public Action<IR600Message> AnalysisCallback { get; internal set; }
-        /// <summary>
-        /// 回调模型
-        /// </summary>
-        protected IR600Callback _recall;
-        /// <summary>
-        /// 内部链接模型
-        /// </summary>
-        internal AR600Reader.ITalkModel _talker;
-        /// <summary>
-        /// 记录未处理的接收数据，主要考虑接收数据分段
-        /// </summary>
-        protected byte[] m_btAryBuffer = new byte[4096];
-        /// <summary>
-        /// 记录未处理数据的有效长度
-        /// </summary>
-        protected int m_nLenth = 0;
+    }
+    /// <summary>
+    /// 聚集实现类
+    /// </summary>
+    internal sealed class R600Reactor : AR600Reader, IR600Reactor, IR600Reader, IR600Queue
+    {
         #region // 构造及连接
         ///// <summary>
         ///// 配置信息
@@ -47,9 +25,8 @@ namespace System.Data.ShenBanReader
         /// <summary>
         /// 构造
         /// </summary>
-        public R600Queue()
+        public R600Reactor()
         {
-            this._recall = new R600Callback();
             this._talker = new AR600Reader.TalkModel();
             this.AnalysisCallback = AnalyData;
             //_config = new R600ConfigModel();
@@ -59,7 +36,7 @@ namespace System.Data.ShenBanReader
         /// </summary>
         /// <param name="portName"></param>
         /// <param name="baudRate"></param>
-        public R600Queue(string portName, int baudRate)
+        public R600Reactor(string portName, int baudRate)
         {
             if (Connect(portName, baudRate, out string exception) == -1)
             {
@@ -72,7 +49,7 @@ namespace System.Data.ShenBanReader
         /// </summary>
         /// <param name="ip"></param>
         /// <param name="baudRate"></param>
-        public R600Queue(IPAddress ip, int baudRate)
+        public R600Reactor(IPAddress ip, int baudRate)
         {
             if (Connect(ip, baudRate, out string exception) == -1)
             {
@@ -87,7 +64,7 @@ namespace System.Data.ShenBanReader
         /// <param name="baudRate"></param>
         /// <param name="exception"></param>
         /// <returns></returns>
-        public int Connect(string portName, int baudRate, out string exception)
+        public override int Connect(string portName, int baudRate, out string exception)
         {
             _talker?.Dispose();
             _talker = new AR600Reader.SerialTalkModel();
@@ -101,7 +78,7 @@ namespace System.Data.ShenBanReader
         /// <param name="port"></param>
         /// <param name="exception"></param>
         /// <returns></returns>
-        public int Connect(IPAddress ip, int port, out string exception)
+        public override int Connect(IPAddress ip, int port, out string exception)
         {
             _talker?.Dispose();
             _talker = new AR600Reader.TcpTalkModel();
@@ -1208,11 +1185,12 @@ namespace System.Data.ShenBanReader
             _recall.AlertError(new R600AlertError(cmd, code, message, typeof(R600Reader).FullName, method, msgTran));
         }
         #endregion
+        #region // Queue实现
         /// <summary>
         /// 读GPIO值
         /// </summary>
         /// <returns></returns>
-        public virtual int ReadGpioValue(byte btReadId, Action<IR600Message, byte, byte, bool, bool> ReadGpioValue)
+        public int ReadGpioValue(byte btReadId, Action<IR600Message, byte, byte, bool, bool> ReadGpioValue)
         {
             if (ReadGpioValue != null) { _recall.ReadGpioValue = ReadGpioValue; }
             return SendMessage(btReadId, R600CmdType.ReadGpioValue);
@@ -1221,7 +1199,7 @@ namespace System.Data.ShenBanReader
         /// 写GPIO值
         /// </summary>
         /// <returns></returns>
-        public virtual int WriteGpioValue(byte btReadId, byte btChooseGpio, byte btGpioValue, Action<IR600Message> WriteGpioValue)
+        public int WriteGpioValue(byte btReadId, byte btChooseGpio, byte btGpioValue, Action<IR600Message> WriteGpioValue)
         {
             if (WriteGpioValue != null) { _recall.WriteGpioValue = WriteGpioValue; }
             return SendMessage(btReadId, R600CmdType.WriteGpioValue, new byte[2] { btChooseGpio, btGpioValue });
@@ -1230,7 +1208,7 @@ namespace System.Data.ShenBanReader
         /// 设置
         /// </summary>
         /// <returns></returns>
-        public virtual int SetAntDetector(byte btReadId, byte btDetectorStatus, Action<IR600Message> SetAntDetector)
+        public int SetAntDetector(byte btReadId, byte btDetectorStatus, Action<IR600Message> SetAntDetector)
         {
             if (SetAntDetector != null) { _recall.SetAntDetector = SetAntDetector; }
             return SendMessage(btReadId, R600CmdType.SetAntDetector, new byte[1] { btDetectorStatus });
@@ -1239,7 +1217,7 @@ namespace System.Data.ShenBanReader
         /// 
         /// </summary>
         /// <returns></returns>
-        public virtual int GetAntDetector(byte btReadId, Action<IR600Message, byte> GetAntDetector)
+        public int GetAntDetector(byte btReadId, Action<IR600Message, byte> GetAntDetector)
         {
             if (GetAntDetector != null) { _recall.GetAntDetector = GetAntDetector; }
             return SendMessage(btReadId, R600CmdType.GetAntDetector);
@@ -1248,7 +1226,7 @@ namespace System.Data.ShenBanReader
         /// 设置读ID
         /// </summary>
         /// <returns></returns>
-        public virtual int SetReaderIdentifier(byte btReadId, byte[] identifier, Action<IR600Message> SetReaderIdentifier)
+        public int SetReaderIdentifier(byte btReadId, byte[] identifier, Action<IR600Message> SetReaderIdentifier)
         {
             if (SetReaderIdentifier != null) { _recall.SetReaderIdentifier = SetReaderIdentifier; }
             return SendMessage(btReadId, R600CmdType.SetReaderIdentifier, identifier);
@@ -1257,7 +1235,7 @@ namespace System.Data.ShenBanReader
         /// 获取读ID
         /// </summary>
         /// <returns></returns>
-        public virtual int GetReaderIdentifier(byte btReadId, Action<IR600Message, byte[]> GetReaderIdentifier)
+        public int GetReaderIdentifier(byte btReadId, Action<IR600Message, byte[]> GetReaderIdentifier)
         {
             if (GetReaderIdentifier != null) { _recall.GetReaderIdentifier = GetReaderIdentifier; }
             return SendMessage(btReadId, R600CmdType.GetReaderIdentifier);
@@ -1266,7 +1244,7 @@ namespace System.Data.ShenBanReader
         /// 设置配置
         /// </summary>
         /// <returns></returns>
-        public virtual int SetLinkProfile(byte btReadId, byte btProfile, Action<IR600Message, byte> SetLinkProfile)
+        public int SetLinkProfile(byte btReadId, byte btProfile, Action<IR600Message, byte> SetLinkProfile)
         {
             if (SetLinkProfile != null) { _recall.SetLinkProfile = SetLinkProfile; }
             return SendMessage(btReadId, R600CmdType.SetLinkProfile, new byte[1] { btProfile });
@@ -1275,7 +1253,7 @@ namespace System.Data.ShenBanReader
         /// 获取配置
         /// </summary>
         /// <returns></returns>
-        public virtual int GetLinkProfile(byte btReadId, Action<IR600Message, R600LinkProfileType> GetLinkProfile)
+        public int GetLinkProfile(byte btReadId, Action<IR600Message, R600LinkProfileType> GetLinkProfile)
         {
             if (GetLinkProfile != null) { _recall.GetLinkProfile = GetLinkProfile; }
             return SendMessage(btReadId, R600CmdType.GetLinkProfile);
@@ -1284,7 +1262,7 @@ namespace System.Data.ShenBanReader
         /// 复位读写器
         /// </summary>
         /// <returns></returns>
-        public virtual int Reset(byte btReadId)
+        public int Reset(byte btReadId)
         {
             return SendMessage(btReadId, R600CmdType.Reset);
         }
@@ -1292,7 +1270,7 @@ namespace System.Data.ShenBanReader
         /// 设置非同步收发传输器波特率
         /// </summary>
         /// <returns></returns>
-        public virtual int SetUartBaudRate(byte btReadId, int nIndexBaudrate, Action<IR600Message> SetUartBaudRate)
+        public int SetUartBaudRate(byte btReadId, int nIndexBaudrate, Action<IR600Message> SetUartBaudRate)
         {
             if (SetUartBaudRate != null) { _recall.SetUartBaudRate = SetUartBaudRate; }
             return SendMessage(btReadId, R600CmdType.SetUartBaudRate, new byte[1] { Convert.ToByte(nIndexBaudrate) });
@@ -1301,7 +1279,7 @@ namespace System.Data.ShenBanReader
         /// 获取固件版本
         /// </summary>
         /// <returns></returns>
-        public virtual int GetFirmwareVersion(byte btReadId, Action<IR600Message, byte, byte> GetFirmwareVersion)
+        public int GetFirmwareVersion(byte btReadId, Action<IR600Message, byte, byte> GetFirmwareVersion)
         {
             if (GetFirmwareVersion != null) { _recall.GetFirmwareVersion = GetFirmwareVersion; }
             return SendMessage(btReadId, R600CmdType.GetFirmwareVersion);
@@ -1310,7 +1288,7 @@ namespace System.Data.ShenBanReader
         /// 设置读地址
         /// </summary>
         /// <returns></returns>
-        public virtual int SetReaderAddress(byte btReadId, byte btNewReadId, Action<IR600Message> SetReaderAddress)
+        public int SetReaderAddress(byte btReadId, byte btNewReadId, Action<IR600Message> SetReaderAddress)
         {
             if (SetReaderAddress != null) { _recall.SetReaderAddress = SetReaderAddress; }
             return SendMessage(btReadId, R600CmdType.SetReaderAddress, new byte[1] { btNewReadId });
@@ -1319,7 +1297,7 @@ namespace System.Data.ShenBanReader
         /// 设置工作天线
         /// </summary>
         /// <returns></returns>
-        public virtual int SetWorkAntenna(byte btReadId, byte btWorkAntenna, Action<IR600Message> SetWorkAntenna)
+        public int SetWorkAntenna(byte btReadId, byte btWorkAntenna, Action<IR600Message> SetWorkAntenna)
         {
             if (SetWorkAntenna != null) { _recall.SetWorkAntenna = SetWorkAntenna; }
             return SendMessage(btReadId, R600CmdType.SetWorkAntenna, new byte[1] { btWorkAntenna });
@@ -1328,7 +1306,7 @@ namespace System.Data.ShenBanReader
         /// 获取工作天线
         /// </summary>
         /// <returns></returns>
-        public virtual int GetWorkAntenna(byte btReadId, Action<IR600Message, R600AntennaType> GetWorkAntenna)
+        public int GetWorkAntenna(byte btReadId, Action<IR600Message, R600AntennaType> GetWorkAntenna)
         {
             if (GetWorkAntenna != null) { _recall.GetWorkAntenna = GetWorkAntenna; }
             return SendMessage(btReadId, R600CmdType.GetWorkAntenna);
@@ -1337,7 +1315,7 @@ namespace System.Data.ShenBanReader
         /// 设置输出性能
         /// </summary>
         /// <returns></returns>
-        public virtual int SetOutputPower(byte btReadId, byte btOutputPower, Action<IR600Message> SetOutputPower)
+        public int SetOutputPower(byte btReadId, byte btOutputPower, Action<IR600Message> SetOutputPower)
         {
             if (SetOutputPower != null) { _recall.SetOutputPower = SetOutputPower; }
             return SendMessage(btReadId, R600CmdType.SetOutputPower, new byte[1] { btOutputPower });
@@ -1346,7 +1324,7 @@ namespace System.Data.ShenBanReader
         /// 获取输出性能
         /// </summary>
         /// <returns></returns>
-        public virtual int GetOutputPower(byte btReadId, Action<IR600Message, byte> GetOutputPower)
+        public int GetOutputPower(byte btReadId, Action<IR600Message, byte> GetOutputPower)
         {
             if (GetOutputPower != null) { _recall.GetOutputPower = GetOutputPower; }
             return SendMessage(btReadId, R600CmdType.GetOutputPower);
@@ -1355,7 +1333,7 @@ namespace System.Data.ShenBanReader
         /// 设置频率区域
         /// </summary>
         /// <returns></returns>
-        public virtual int SetFrequencyRegion(byte btReadId, R600FreqRegionType btRegion, int btStart, byte btInterval, byte btChannelQuantity, Action<IR600Message> SetFrequencyRegion)
+        public int SetFrequencyRegion(byte btReadId, R600FreqRegionType btRegion, int btStart, byte btInterval, byte btChannelQuantity, Action<IR600Message> SetFrequencyRegion)
         {
             if (SetFrequencyRegion != null) { _recall.SetFrequencyRegion = SetFrequencyRegion; }
             byte[] btAryData;
@@ -1384,7 +1362,7 @@ namespace System.Data.ShenBanReader
         /// 得到频率区域
         /// </summary>
         /// <returns></returns>
-        public virtual int GetFrequencyRegion(byte btReadId, Action<IR600Message, R600FreqRegionType, int, byte, byte> GetFrequencyRegion)
+        public int GetFrequencyRegion(byte btReadId, Action<IR600Message, R600FreqRegionType, int, byte, byte> GetFrequencyRegion)
         {
             if (GetFrequencyRegion != null) { _recall.GetFrequencyRegion = GetFrequencyRegion; }
             return SendMessage(btReadId, R600CmdType.GetFrequencyRegion);
@@ -1393,7 +1371,7 @@ namespace System.Data.ShenBanReader
         /// 设置呼叫模式
         /// </summary>
         /// <returns></returns>
-        public virtual int SetBeeperMode(byte btReadId, byte btMode, Action<IR600Message> SetBeeperMode)
+        public int SetBeeperMode(byte btReadId, byte btMode, Action<IR600Message> SetBeeperMode)
         {
             if (SetBeeperMode != null) { _recall.SetBeeperMode = SetBeeperMode; }
             return SendMessage(btReadId, R600CmdType.SetBeeperMode, new byte[1] { btMode });
@@ -1402,7 +1380,7 @@ namespace System.Data.ShenBanReader
         /// 得到工作温度
         /// </summary>
         /// <returns></returns>
-        public virtual int GetReaderTemperature(byte btReadId, Action<IR600Message, int> GetReaderTemperature)
+        public int GetReaderTemperature(byte btReadId, Action<IR600Message, int> GetReaderTemperature)
         {
             if (GetReaderTemperature != null) { _recall.GetReaderTemperature = GetReaderTemperature; }
             return SendMessage(btReadId, R600CmdType.GetReaderTemperature);
@@ -1411,7 +1389,7 @@ namespace System.Data.ShenBanReader
         /// 设置DRM模式
         /// </summary>
         /// <returns></returns>
-        public virtual int SetDrmMode(byte btReadId, byte btDrmMode, Action<IR600Message> SetDrmMode)
+        public int SetDrmMode(byte btReadId, byte btDrmMode, Action<IR600Message> SetDrmMode)
         {
             if (SetDrmMode != null) { _recall.SetDrmMode = SetDrmMode; }
             return SendMessage(btReadId, R600CmdType.SetDrmMode, new byte[1] { btDrmMode });
@@ -1420,7 +1398,7 @@ namespace System.Data.ShenBanReader
         /// 获取DRM模式
         /// </summary>
         /// <returns></returns>
-        public virtual int GetDrmMode(byte btReadId, Action<IR600Message, bool> GetDrmMode)
+        public int GetDrmMode(byte btReadId, Action<IR600Message, bool> GetDrmMode)
         {
             if (GetDrmMode != null) { _recall.GetDrmMode = GetDrmMode; }
             return SendMessage(btReadId, R600CmdType.GetDrmMode);
@@ -1430,7 +1408,7 @@ namespace System.Data.ShenBanReader
         /// </summary>
         /// <returns></returns>
         [Obsolete("替代方案:GetAntImpedanceMatch")]
-        public virtual int MeasureReturnLoss(byte btReadId, byte btFrequency, Action<IR600Message, byte> GetImpedanceMatch)
+        public int MeasureReturnLoss(byte btReadId, byte btFrequency, Action<IR600Message, byte> GetImpedanceMatch)
         {
             if (GetImpedanceMatch != null) { _recall.GetImpedanceMatch = GetImpedanceMatch; }
             return SendMessage(btReadId, R600CmdType.GetAntImpedanceMatch, new byte[1] { btFrequency });
@@ -1439,7 +1417,7 @@ namespace System.Data.ShenBanReader
         /// 获得阻抗匹配
         /// </summary>
         /// <returns></returns>
-        public virtual int GetImpedanceMatch(byte btReadId, byte btFrequency, Action<IR600Message, byte> GetImpedanceMatch)
+        public int GetImpedanceMatch(byte btReadId, byte btFrequency, Action<IR600Message, byte> GetImpedanceMatch)
         {
             if (GetImpedanceMatch != null) { _recall.GetImpedanceMatch = GetImpedanceMatch; }
             return SendMessage(btReadId, R600CmdType.GetAntImpedanceMatch, new byte[1] { btFrequency });
@@ -1448,7 +1426,7 @@ namespace System.Data.ShenBanReader
         /// 盘存
         /// </summary>
         /// <returns></returns>
-        public virtual int Inventory(byte btReadId, byte byRound, Action<IR600Message, byte, int, int, int, int> Inventory)
+        public int Inventory(byte btReadId, byte byRound, Action<IR600Message, byte, int, int, int, int> Inventory)
         {
             if (Inventory != null) { _recall.Inventory = Inventory; }
             return SendMessage(btReadId, R600CmdType.Inventory, new byte[1] { byRound });
@@ -1457,7 +1435,7 @@ namespace System.Data.ShenBanReader
         /// 读标签
         /// </summary>
         /// <returns></returns>
-        public virtual int ReadTag(byte btReadId, byte btMemBank, byte btWordAdd, byte btWordCnt, Action<IR600Message, R600TagInfo> ReadTag)
+        public int ReadTag(byte btReadId, byte btMemBank, byte btWordAdd, byte btWordCnt, Action<IR600Message, R600TagInfo> ReadTag)
         {
             if (ReadTag != null) { _recall.ReadTag = ReadTag; }
             return SendMessage(btReadId, R600CmdType.ReadTag, new byte[3] { btMemBank, btWordAdd, btWordCnt });
@@ -1466,7 +1444,7 @@ namespace System.Data.ShenBanReader
         /// 写标签
         /// </summary>
         /// <returns></returns>
-        public virtual int WriteTag(byte btReadId, byte[] btAryPassWord, byte btMemBank, byte btWordAdd, byte btWordCnt, byte[] btAryData, Action<IR600Message, R600TagInfo> WriteTag)
+        public int WriteTag(byte btReadId, byte[] btAryPassWord, byte btMemBank, byte btWordAdd, byte btWordCnt, byte[] btAryData, Action<IR600Message, R600TagInfo> WriteTag)
         {
             if (WriteTag != null) { _recall.WriteTag = WriteTag; }
             byte[] btAryBuffer = new byte[btAryData.Length + 7];
@@ -1481,7 +1459,7 @@ namespace System.Data.ShenBanReader
         /// 锁定标签
         /// </summary>
         /// <returns></returns>
-        public virtual int LockTag(byte btReadId, byte[] btAryPassWord, byte btMembank, byte btLockType, Action<IR600Message, R600TagInfo> LockTag)
+        public int LockTag(byte btReadId, byte[] btAryPassWord, byte btMembank, byte btLockType, Action<IR600Message, R600TagInfo> LockTag)
         {
             if (LockTag != null) { _recall.LockTag = LockTag; }
             byte[] btAryData = new byte[6];
@@ -1494,7 +1472,7 @@ namespace System.Data.ShenBanReader
         /// 释放标记
         /// </summary>
         /// <returns></returns>
-        public virtual int KillTag(byte btReadId, byte[] btAryPassWord, Action<IR600Message, R600TagInfo> KillTag)
+        public int KillTag(byte btReadId, byte[] btAryPassWord, Action<IR600Message, R600TagInfo> KillTag)
         {
             if (KillTag != null) { _recall.KillTag = KillTag; }
             byte[] btAryData = new byte[4];
@@ -1505,7 +1483,7 @@ namespace System.Data.ShenBanReader
         /// 设置EPC(len=0为取消)
         /// </summary>
         /// <returns></returns>
-        public virtual int SetAccessEpcMatch(byte btReadId, byte btMode, byte btEpcLen, byte[] btAryEpc, Action<IR600Message> SetAccessEpcMatch)
+        public int SetAccessEpcMatch(byte btReadId, byte btMode, byte btEpcLen, byte[] btAryEpc, Action<IR600Message> SetAccessEpcMatch)
         {
             if (SetAccessEpcMatch != null) { _recall.SetAccessEpcMatch = SetAccessEpcMatch; }
             if (btEpcLen == 0)
@@ -1523,7 +1501,7 @@ namespace System.Data.ShenBanReader
         /// 获取EPC
         /// </summary>
         /// <returns></returns>
-        public virtual int GetAccessEpcMatch(byte btReadId, Action<IR600Message, byte[]> GetAccessEpcMatch)
+        public int GetAccessEpcMatch(byte btReadId, Action<IR600Message, byte[]> GetAccessEpcMatch)
         {
             if (GetAccessEpcMatch != null) { _recall.GetAccessEpcMatch = GetAccessEpcMatch; }
             return SendMessage(btReadId, R600CmdType.GetAccessEpcMatch);
@@ -1532,7 +1510,7 @@ namespace System.Data.ShenBanReader
         /// 
         /// </summary>
         /// <returns></returns>
-        public virtual int InventoryReal(byte btReadId, byte byRound, Action<IR600Message, R600TagInfo> InventoryReal, Action<IR600Message, int, int> InventoryRealEnd)
+        public int InventoryReal(byte btReadId, byte byRound, Action<IR600Message, R600TagInfo> InventoryReal, Action<IR600Message, int, int> InventoryRealEnd)
         {
             if (InventoryReal != null) { _recall.InventoryReal = InventoryReal; }
             if (InventoryRealEnd != null) { _recall.InventoryRealEnd = InventoryRealEnd; }
@@ -1542,7 +1520,7 @@ namespace System.Data.ShenBanReader
         /// 快速存盘
         /// </summary>
         /// <returns></returns>
-        public virtual int FastSwitchInventory(byte btReadId, byte[] btAryData, Action<IR600Message, R600TagInfo> FastSwitchInventory, Action<IR600Message, int, int> FastSwitchInventoryEnd)
+        public int FastSwitchInventory(byte btReadId, byte[] btAryData, Action<IR600Message, R600TagInfo> FastSwitchInventory, Action<IR600Message, int, int> FastSwitchInventoryEnd)
         {
             if (FastSwitchInventory != null) { _recall.FastSwitchInventory = FastSwitchInventory; }
             if (FastSwitchInventoryEnd != null) { _recall.FastSwitchInventoryEnd = FastSwitchInventoryEnd; }
@@ -1552,7 +1530,7 @@ namespace System.Data.ShenBanReader
         /// 自定义存盘
         /// </summary>
         /// <returns></returns>
-        public virtual int CustomizedInventory(byte btReadId, byte session, byte target, byte byRound)
+        public int CustomizedInventory(byte btReadId, byte session, byte target, byte byRound)
         {
             return SendMessage(btReadId, R600CmdType.CustomizedInventory, new byte[3] { session, target, byRound });
         }
@@ -1560,7 +1538,7 @@ namespace System.Data.ShenBanReader
         /// 
         /// </summary>
         /// <returns></returns>
-        public virtual int GetMonzaStatus(byte btReadId, Action<IR600Message, byte> GetMonzaStatus)
+        public int GetMonzaStatus(byte btReadId, Action<IR600Message, byte> GetMonzaStatus)
         {
             if (GetMonzaStatus != null) { _recall.GetMonzaStatus = GetMonzaStatus; }
             return SendMessage(btReadId, R600CmdType.GetMonzaStatus);
@@ -1569,7 +1547,7 @@ namespace System.Data.ShenBanReader
         /// 
         /// </summary>
         /// <returns></returns>
-        public virtual int SetMonzaStatus(byte btReadId, byte btMonzaStatus, Action<IR600Message, byte> SetMonzaStatus)
+        public int SetMonzaStatus(byte btReadId, byte btMonzaStatus, Action<IR600Message, byte> SetMonzaStatus)
         {
             if (SetMonzaStatus != null) { _recall.SetMonzaStatus = SetMonzaStatus; }
             return SendMessage(btReadId, R600CmdType.SetMonzaStatus, new byte[1] { btMonzaStatus });
@@ -1578,7 +1556,7 @@ namespace System.Data.ShenBanReader
         /// 获取存盘
         /// </summary>
         /// <returns></returns>
-        public virtual int GetInventoryBuffer(byte btReadId, Action<IR600Message, R600TagInfo> GetInventoryBuffer)
+        public int GetInventoryBuffer(byte btReadId, Action<IR600Message, R600TagInfo> GetInventoryBuffer)
         {
             if (GetInventoryBuffer != null) { _recall.GetInventoryBuffer = GetInventoryBuffer; }
             return SendMessage(btReadId, R600CmdType.GetInventoryBuffer);
@@ -1587,7 +1565,7 @@ namespace System.Data.ShenBanReader
         /// 
         /// </summary>
         /// <returns></returns>
-        public virtual int GetAndResetInventoryBuffer(byte btReadId, Action<IR600Message, R600TagInfo> GetAndResetInventoryBuffer)
+        public int GetAndResetInventoryBuffer(byte btReadId, Action<IR600Message, R600TagInfo> GetAndResetInventoryBuffer)
         {
             if (GetAndResetInventoryBuffer != null) { _recall.GetAndResetInventoryBuffer = GetAndResetInventoryBuffer; }
             return SendMessage(btReadId, R600CmdType.GetAndResetInventoryBuffer);
@@ -1596,7 +1574,7 @@ namespace System.Data.ShenBanReader
         /// 
         /// </summary>
         /// <returns></returns>
-        public virtual int GetInventoryBufferTagCount(byte btReadId, Action<IR600Message, int> GetInventoryBufferTagCount)
+        public int GetInventoryBufferTagCount(byte btReadId, Action<IR600Message, int> GetInventoryBufferTagCount)
         {
             if (GetInventoryBufferTagCount != null) { _recall.GetInventoryBufferTagCount = GetInventoryBufferTagCount; }
             return SendMessage(btReadId, R600CmdType.GetInventoryBufferTagCount);
@@ -1605,7 +1583,7 @@ namespace System.Data.ShenBanReader
         /// 
         /// </summary>
         /// <returns></returns>
-        public virtual int ResetInventoryBuffer(byte btReadId, Action<IR600Message> ResetInventoryBuffer)
+        public int ResetInventoryBuffer(byte btReadId, Action<IR600Message> ResetInventoryBuffer)
         {
             if (ResetInventoryBuffer != null) { _recall.ResetInventoryBuffer = ResetInventoryBuffer; }
             return SendMessage(btReadId, R600CmdType.ResetInventoryBuffer);
@@ -1616,7 +1594,7 @@ namespace System.Data.ShenBanReader
         /// <param name="btReadId"></param>
         /// <param name="btInterval"></param>
         /// <returns></returns>
-        public virtual int SetBufferDataFrameInterval(byte btReadId, byte btInterval)
+        public override int SetBufferDataFrameInterval(byte btReadId, byte btInterval)
         {
             return SendMessage(btReadId, R600CmdType.SetBufferDataFrameInterval, new byte[1] { btInterval });
         }
@@ -1625,7 +1603,7 @@ namespace System.Data.ShenBanReader
         /// </summary>
         /// <param name="btReadId"></param>
         /// <returns></returns>
-        public virtual int GetBufferDataFrameInterval(byte btReadId)
+        public override int GetBufferDataFrameInterval(byte btReadId)
         {
             return SendMessage(btReadId, R600CmdType.GetBufferDataFrameInterval);
         }
@@ -1633,7 +1611,7 @@ namespace System.Data.ShenBanReader
         /// 
         /// </summary>
         /// <returns></returns>
-        public virtual int InventoryISO18000(byte btReadId, Action<IR600Message, R600TagInfoIso18000> InventoryISO18000, Action<IR600Message, int> InventoryISO18000End)
+        public int InventoryISO18000(byte btReadId, Action<IR600Message, R600TagInfoIso18000> InventoryISO18000, Action<IR600Message, int> InventoryISO18000End)
         {
             if (InventoryISO18000 != null) { _recall.InventoryISO18000 = InventoryISO18000; }
             return SendMessage(btReadId, R600CmdType.InventoryISO18000);
@@ -1642,7 +1620,7 @@ namespace System.Data.ShenBanReader
         /// 
         /// </summary>
         /// <returns></returns>
-        public virtual int ReadTagISO18000(byte btReadId, byte[] btAryUID, byte btWordAdd, byte btWordCnt, Action<IR600Message, byte, byte[]> ReadTagISO18000)
+        public int ReadTagISO18000(byte btReadId, byte[] btAryUID, byte btWordAdd, byte btWordCnt, Action<IR600Message, byte, byte[]> ReadTagISO18000)
         {
             if (ReadTagISO18000 != null) { _recall.ReadTagISO18000 = ReadTagISO18000; }
             int nLen = btAryUID.Length + 2;
@@ -1656,7 +1634,7 @@ namespace System.Data.ShenBanReader
         /// 
         /// </summary>
         /// <returns></returns>
-        public virtual int WriteTagISO18000(byte btReadId, byte[] btAryUID, byte btWordAdd, byte btWordCnt, byte[] btAryBuffer, Action<IR600Message, byte, byte> WriteTagISO18000)
+        public int WriteTagISO18000(byte btReadId, byte[] btAryUID, byte btWordAdd, byte btWordCnt, byte[] btAryBuffer, Action<IR600Message, byte, byte> WriteTagISO18000)
         {
             if (WriteTagISO18000 != null) { _recall.WriteTagISO18000 = WriteTagISO18000; }
             int nLen = btAryUID.Length + 2 + btAryBuffer.Length;
@@ -1671,7 +1649,7 @@ namespace System.Data.ShenBanReader
         /// 
         /// </summary>
         /// <returns></returns>
-        public virtual int LockTagISO18000(byte btReadId, byte[] btAryUID, byte btWordAdd, Action<IR600Message, byte, R600LockTagStatus> LockTagISO18000)
+        public int LockTagISO18000(byte btReadId, byte[] btAryUID, byte btWordAdd, Action<IR600Message, byte, R600LockTagStatus> LockTagISO18000)
         {
             if (LockTagISO18000 != null) { _recall.LockTagISO18000 = LockTagISO18000; }
             int nLen = btAryUID.Length + 1;
@@ -1684,7 +1662,7 @@ namespace System.Data.ShenBanReader
         /// 
         /// </summary>
         /// <returns></returns>
-        public virtual int QueryTagISO18000(byte btReadId, byte[] btAryUID, byte btWordAdd, Action<IR600Message, byte, R600LockTagStatus> QueryTagISO18000)
+        public int QueryTagISO18000(byte btReadId, byte[] btAryUID, byte btWordAdd, Action<IR600Message, byte, R600LockTagStatus> QueryTagISO18000)
         {
             if (QueryTagISO18000 != null) { _recall.QueryTagISO18000 = QueryTagISO18000; }
             int nLen = btAryUID.Length + 1;
@@ -1693,100 +1671,6 @@ namespace System.Data.ShenBanReader
             btAryData[nLen - 1] = btWordAdd;
             return SendMessage(btReadId, R600CmdType.QueryTagISO18000, btAryData);
         }
-        /// <summary>
-        /// 发送信息
-        /// </summary>
-        /// <param name="btReadId"></param>
-        /// <param name="btCmd"></param>
-        /// <param name="btAryData"></param>
-        /// <returns></returns>
-        public virtual int SendMessage(byte btReadId, R600CmdType btCmd, byte[] btAryData = null)
-        {
-            return SendMessage(btReadId, (byte)btCmd, btAryData);
-        }
-        /// <summary>
-        /// 发送信息
-        /// </summary>
-        /// <param name="btReadId"></param>
-        /// <param name="btCmd"></param>
-        /// <param name="btAryData"></param>
-        /// <returns></returns>
-        public virtual int SendMessage(byte btReadId, byte btCmd, byte[] btAryData = null)
-        {
-            byte[] data;
-            if (btAryData == null)
-            {
-                data = new byte[5];
-                data[0] = 0xA0;
-                data[1] = 0x03;
-                data[2] = btReadId;
-                data[3] = btCmd;
-                data[4] = R600Builder.CheckByte(data, 0, 4);
-            }
-            else
-            {
-                int nLen = btAryData.Length;
-                data = new byte[nLen + 5];
-                data[0] = 0xA0;
-                data[1] = Convert.ToByte(nLen + 3);
-                data[2] = btReadId;
-                data[3] = btCmd;
-                btAryData.CopyTo(data, 4);
-                data[nLen + 4] = R600Builder.CheckByte(data, 0, nLen + 4);
-            }
-            if (_talker.Send(data))
-            {
-                SendCallback?.Invoke(data);
-                return 0;
-            }
-            return -1;
-        }
-        /// <summary>
-        /// 正在连接
-        /// </summary>
-        /// <returns></returns>
-        public virtual bool IsConnecting()
-        {
-            return _talker.IsConnect();
-        }
-        /// <summary>
-        /// 关闭
-        /// </summary>
-        public virtual void Close()
-        {
-            _talker.Dispose();
-        }
-        /// <summary>
-        /// 释放
-        /// 1.断开连接
-        /// </summary>
-        public virtual void Dispose()
-        {
-            Close();
-        }
-        /// <summary>
-        /// 注册回调
-        /// </summary>
-        public virtual void RegistCallback(IR600Recall model)
-        {
-            if (model != null)
-            {
-                _recall = new R600Callback(model);
-                SendCallback = model.SendCallback;
-                ReceiveCallback = model.ReceiveCallback;
-            }
-        }
-        /// <summary>
-        /// 注册回调
-        /// </summary>
-        public virtual void RegistCallback(IR600Callback model)
-        {
-            if (model != null)
-            {
-                _recall = model;
-                SendCallback = model.SendCallback;
-                ReceiveCallback = model.ReceiveCallback;
-            }
-        }
+        #endregion
     }
 }

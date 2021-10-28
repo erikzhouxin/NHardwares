@@ -30,6 +30,21 @@ namespace System.Data.ShenBanReader
             Method = method;
             Data = data;
         }
+        /// <summary>
+        /// 成功构造
+        /// </summary>
+        /// <param name="cmd"></param>
+        /// <param name="data"></param>
+        public R600AlertModel(R600CmdType cmd, T data)
+        {
+            IsSuccess = true;
+            Cmd = cmd;
+            Code = 200;
+            Message = string.Empty;
+            Clazz = string.Empty;
+            Method = cmd.ToString();
+            Data = data;
+        }
 
         /// <summary>
         /// 是成功

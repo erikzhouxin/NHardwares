@@ -81,8 +81,12 @@ namespace System.Data.ShenBanReader
             int nLen = aryData.Length;
             this.TranData = new byte[nLen];
             aryData.CopyTo(this.TranData, 0);
-            byte btCK = R600Reader.CheckByte(this.TranData, 0, this.TranData.Length - 1);
-            if (btCK != aryData[nLen - 1]) { return; }
+            byte btCK = R600Builder.CheckByte(this.TranData, 0, this.TranData.Length - 1);
+            if (btCK != aryData[nLen - 1])
+            {
+                AryData = new byte[] { };
+                return;
+            }
 
             this.PacketType = aryData[0];
             this.DataLen = aryData[1];
@@ -98,6 +102,43 @@ namespace System.Data.ShenBanReader
                     this.AryData[nloop] = aryData[4 + nloop];
                 }
             }
+        }
+        public static R600Message[] Analysis(byte[] received)
+        {
+            if (received == null || received.Length == 0) { return new R600Message[] { }; }
+            var result = new List<R600Message>();
+            for (int i = 0; i < received.Length; i++)
+            {
+                var item = received[i];
+                if (item == 0xA0)
+                {
+                    if (i + 1 < received.Length)
+                    {
+                        var currLen = received[i + 1];
+                        var len = currLen + 2;
+                        var index = i + len;
+                        if (index > received.Length)
+                        {
+                            var data = new byte[received.Length - i + 1];
+                            Array.Copy(received, i, data, 0, data.Length);
+                            result.Add(new R600Message(data));
+                            i = received.Length;
+                        }
+                        else
+                        {
+                            var data = new byte[len];
+                            Array.Copy(received, i, data, 0, len);
+                            result.Add(new R600Message(data));
+                            i = index - 1;
+                        }
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+            }
+            return result.ToArray();
         }
     }
 }
