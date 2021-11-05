@@ -130,7 +130,7 @@ namespace System.Data.ShenBanReader
                                 continue;
                             }
                             var tag = new R600TagInfo(R600TagInfo.InitType.Real, msgTran.AryData);
-                            model.TryAddTag(tag);
+                            model.TryAddRealTag(tag);
                         }
                     }
                     return new R600AlertModel<T>(R600CmdType.InventoryReal, model);
@@ -169,7 +169,7 @@ namespace System.Data.ShenBanReader
                                 continue;
                             }
                             var tag = new R600TagInfo(R600TagInfo.InitType.Fast, msgTran.AryData);
-                            model.TryAddTag(tag);
+                            model.TryAddFastTag(tag);
                         }
                     }
                     return new R600AlertModel<T>(R600CmdType.FastSwitchInventory, model);
@@ -180,13 +180,14 @@ namespace System.Data.ShenBanReader
         }
         /// <summary>
         /// 快速四天线盘存
+        /// new { 0, 1, 1, 1, 2, 1, 3, 1, 0, 1 }四天线各轮询一次,延时0,次数1次
         /// <see cref="R600CmdType.FastSwitchInventory"/>
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
         public R600AlertModel<T> FastSwitchInventory<T>(byte readId, ref T model) where T : R2000Interfaces.FastSwitchInventory
         {
-            return FastSwitchInventory<T>(readId, new byte[10] { 0, 1, 1, 1, 2, 1, 3, 1, 0, 1 }, ref model);
+            return FastSwitchInventory<T>(readId, new byte[10] { 0, 1, 1, 1, 2, 1, 3, 1, 0, 2 }, ref model);
         }
         /// <summary>
         /// 设置工作天线
@@ -278,6 +279,19 @@ namespace System.Data.ShenBanReader
             return ReadTag<T>(readId, R600AreaType.TID, start, length, ref model);
         }
         /// <summary>
+        /// 读取选定标签TID
+        /// <see cref="R600CmdType.ReadTag"/>
+        /// </summary>
+        /// <param name="readId"></param>
+        /// <param name="start"></param>
+        /// <param name="length"></param>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public R600AlertModel<R600TagInfo> ReadTagTid(byte readId, byte start, byte length, ref R600TagInfo model)
+        {
+            return ReadTag(readId, R600AreaType.TID, start, length, ref model);
+        }
+        /// <summary>
         /// 读取选定标签User
         /// <see cref="R600CmdType.ReadTag"/>
         /// </summary>
@@ -290,6 +304,19 @@ namespace System.Data.ShenBanReader
         public R600AlertModel<T> ReadTagUser<T>(byte readId, byte start, byte length, ref T model) where T : R2000Interfaces.ReadTag
         {
             return ReadTag<T>(readId, R600AreaType.User, start, length, ref model);
+        }
+        /// <summary>
+        /// 读取选定标签User
+        /// <see cref="R600CmdType.ReadTag"/>
+        /// </summary>
+        /// <param name="readId"></param>
+        /// <param name="start"></param>
+        /// <param name="length"></param>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public R600AlertModel<R600TagInfo> ReadTagUser(byte readId, byte start, byte length, ref R600TagInfo model)
+        {
+            return ReadTag(readId, R600AreaType.User, start, length, ref model);
         }
         /// <summary>
         /// 读取选定标签
@@ -328,12 +355,57 @@ namespace System.Data.ShenBanReader
                         default:
                             break;
                     }
-                    model.TryAddReadTag(tag, area);
+                    model.TryAddReadTag(tag);
                     return new R600AlertModel<T>(R600CmdType.ReadTag, model);
                 }
                 int code = 0;
                 string message = msgTran.AryData.Length == 1 ? R600Builder.FormatErrorCode(msgTran.AryData[0], out code) : "未知错误";
                 return GetAlertError<T>(R600CmdType.ReadTag, code, $"读标签失败，失败原因：{message}", model);
+            }
+            return GetAlert404(R600CmdType.ReadTag, exception, model);
+        }
+
+        /// <summary>
+        /// 读取选定标签
+        /// <see cref="R600CmdType.ReadTag"/>
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="readId"></param>
+        /// <param name="area"></param>
+        /// <param name="start"></param>
+        /// <param name="length"></param>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public R600AlertModel<R600TagInfo> ReadTag(byte readId, R600AreaType area, byte start, byte length, ref R600TagInfo model)
+        {
+            byte[] data = R600Builder.GetSendData(readId, R600CmdType.ReadTag, new byte[3] { (byte)area, start, length });
+            if (_talker.Send(data, out byte[] received, out Exception exception))
+            {
+                var msgTran = new R600Message(received);
+                if (msgTran.AryData.Length > 1)
+                {
+                    var tag = new R600TagInfo(R600TagInfo.InitType.Read, msgTran.AryData);
+                    switch (area)
+                    {
+                        case R600AreaType.Reserved:
+                            tag.Reserved = tag.Data;
+                            break;
+                        case R600AreaType.TID:
+                            tag.Tid = tag.Data;
+                            break;
+                        case R600AreaType.User:
+                            tag.User = tag.Data;
+                            break;
+                        case R600AreaType.EPC:
+                        default:
+                            break;
+                    }
+                    model.CombiReadTag(tag);
+                    return new R600AlertModel<R600TagInfo>(R600CmdType.ReadTag, model);
+                }
+                int code = 0;
+                string message = msgTran.AryData.Length == 1 ? R600Builder.FormatErrorCode(msgTran.AryData[0], out code) : "未知错误";
+                return GetAlertError<R600TagInfo>(R600CmdType.ReadTag, code, $"读标签失败，失败原因：{message}", model);
             }
             return GetAlert404(R600CmdType.ReadTag, exception, model);
         }
@@ -403,12 +475,12 @@ namespace System.Data.ShenBanReader
             /// 轮询间隔(毫秒)
             /// 发送命令开始直至收到结果或者异常或者超过此时间
             /// </summary>
-            public static int PollInterval { get; set; } = 500;
+            public static int PollInterval { get; set; } = 800;
             /// <summary>
             /// 轮询次数(毫秒)
             /// 发送命令开始直至收到结果但收到的长度为0;
             /// </summary>
-            public static int PollTimes { get; set; } = 5;
+            public static int PollTimes { get; set; } = 10;
             /// <summary>
             /// 轮询等待时间
             /// 发送成功后等待时间
@@ -725,10 +797,10 @@ namespace System.Data.ShenBanReader
                 }
                 catch (IOException)
                 {
-                    message = $"端口{portName}已经打开";
+                    message = $"端口{portName}不可用";
                     return false;
                 }
-                catch (System.Exception ex)
+                catch (Exception ex)
                 {
                     message = ex.Message;
                     return false;
@@ -754,7 +826,6 @@ namespace System.Data.ShenBanReader
                     }
                     try
                     {
-                        serialPort.ReadTimeout = PollInterval;
                         serialPort.Write(aryBuffer, 0, aryBuffer.Length);
                     }
                     catch (Exception ex)
@@ -819,10 +890,10 @@ namespace System.Data.ShenBanReader
                                     }
                                 }
                             }
-                            times = PollTimes;
                             serialPort.Read(result, len, nCount);
                             len += nCount;
-                            Thread.Sleep(10);
+                            times = PollTimes;
+                            Thread.Sleep(PollWaiter);
                         }
                     }
                     catch (Exception ex)

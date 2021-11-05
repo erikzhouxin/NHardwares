@@ -60,73 +60,82 @@ namespace System.Data.ShenBanReader
         /// </summary>
         /// <param name="epc"></param>
         /// <returns></returns>
-        public bool EqualCurrentEpc(byte[] epc)
-        {
-            if (epc == null || CurrentEpc == null) { return false; }
-            if (epc.Length != CurrentEpc.Length) { return false; }
-            for (int i = 0; i < epc.Length; i++)
-            {
-                if (epc[i] != CurrentEpc[i])
-                {
-                    return false;
-                }
-            }
-            return true;
-        }
+        public bool EqualCurrentEpc(byte[] epc) => R600Builder.EqualBytes(CurrentEpc, epc, false);
 
         /// <summary>
         /// 尝试添加读标签内容
         /// </summary>
         /// <param name="tag"></param>
-        /// <param name="area"></param>
-        public bool TryAddReadTag(R600TagInfo tag, R600AreaType area)
+        public bool TryAddReadTag(R600TagInfo tag)
         {
             if (CurrentTags.TryGetValue(tag.Key, out R600TagInfo tagInfo))
             {
                 tagInfo.AntId = tag.AntId;
                 tagInfo.CRC = tag.CRC;
-                switch (area)
+                tagInfo.Data = tag.Data;
+                tagInfo.ANT1 += tag.ANT1;
+                tagInfo.ANT2 += tag.ANT2;
+                tagInfo.ANT3 += tag.ANT3;
+                tagInfo.ANT4 += tag.ANT4;
+                if(tag.User != null && tag.User.Length > 0)
                 {
-                    case R600AreaType.Reserved:
-                        tagInfo.Reserved = tag.Data;
-                        break;
-                    case R600AreaType.TID:
-                        tagInfo.Tid = tag.Data;
-                        break;
-                    case R600AreaType.User:
-                        tagInfo.User = tag.Data;
-                        break;
-                    case R600AreaType.EPC:
-                    default:
-                        break;
+                    tagInfo.User = tag.User;
                 }
-                return true;
+                if(tag.Tid != null && tag.Tid.Length > 0)
+                {
+                    tagInfo.Tid = tag.Tid;
+                }
+                if(tag.Reserved != null && tag.Reserved.Length > 0)
+                {
+                    tagInfo.Reserved = tag.Reserved;
+                }
+                return false;
             }
             CurrentTags[tag.Key] = tag;
-            return false;
+            return true;
         }
 
         /// <summary>
-        /// 尝试添加
+        /// 尝试添加盘存标签
         /// </summary>
         /// <param name="tag"></param>
         /// <returns></returns>
-        public bool TryAddTag(R600TagInfo tag)
+        public bool TryAddRealTag(R600TagInfo tag)
         {
-            if (Monitor.TryEnter(CurrentTags, TimeSpan.FromSeconds(1)))
+            if (CurrentTags.TryGetValue(tag.Key, out R600TagInfo model))
             {
-                if (CurrentTags.TryGetValue(tag.Key, out R600TagInfo model))
-                {
-                    // todo:更新值
-                }
-                else
-                {
-                    CurrentTags[tag.Key] = tag;
-                }
-                Monitor.Exit(CurrentTags);
-                return true;
+                model.PC = tag.PC;
+                model.AntId = tag.AntId;
+                model.INVCNT = tag.INVCNT;
+                model.FREQ = tag.FREQ;
+                model.RSSI = tag.RSSI;
+                return false;
             }
-            return false;
+            CurrentTags[tag.Key] = tag;
+            return true;
+        }
+        /// <summary>
+        /// 尝试添加快速标签
+        /// </summary>
+        /// <param name="tag"></param>
+        /// <returns></returns>
+        public bool TryAddFastTag(R600TagInfo tag)
+        {
+            if (CurrentTags.TryGetValue(tag.Key, out R600TagInfo model))
+            {
+                model.PC = tag.PC;
+                model.AntId = tag.AntId;
+                model.INVCNT = tag.INVCNT;
+                model.FREQ = tag.FREQ;
+                model.RSSI = tag.RSSI;
+                model.ANT1 += tag.ANT1;
+                model.ANT2 += tag.ANT2;
+                model.ANT3 += tag.ANT3;
+                model.ANT4 += tag.ANT4;
+                return false;
+            }
+            CurrentTags[tag.Key] = tag;
+            return true;
         }
     }
 }

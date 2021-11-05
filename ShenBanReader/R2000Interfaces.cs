@@ -61,15 +61,32 @@ namespace System.Data.ShenBanReader
             /// 尝试添加标签
             /// </summary>
             /// <param name="tag"></param>
-            bool TryAddTag(R600TagInfo tag);
+            bool TryAddRealTag(R600TagInfo tag);
         }
         /// <summary>
         /// 快速四天线盘存
         /// <see cref="R600CmdType.FastSwitchInventory"/>
         /// </summary>
-        public interface FastSwitchInventory : InventoryReal, IReceiveMessage
+        public interface FastSwitchInventory : IReceiveMessage
         {
-
+            /// <summary>
+            /// 读取速率
+            /// </summary>
+            int CurrentReadRate { get; set; }
+            /// <summary>
+            /// 读取计数
+            /// </summary>
+            int CurrentReadCount { get; set; }
+            /// <summary>
+            /// 当前标签列表
+            /// </summary>
+            Dictionary<string, R600TagInfo> CurrentTags { get; }
+            /// <summary>
+            /// 尝试添加快速读标签
+            /// </summary>
+            /// <param name="tag"></param>
+            /// <returns></returns>
+            bool TryAddFastTag(R600TagInfo tag);
         }
         /// <summary>
         /// 读标签
@@ -85,8 +102,7 @@ namespace System.Data.ShenBanReader
             /// 尝试添加标签
             /// </summary>
             /// <param name="tag"></param>
-            /// <param name="area"></param>
-            bool TryAddReadTag(R600TagInfo tag, R600AreaType area);
+            bool TryAddReadTag(R600TagInfo tag);
         }
         /// <summary>
         /// 取得选定标签
@@ -116,7 +132,7 @@ namespace System.Data.ShenBanReader
         /// 设置工作天线
         /// <see cref="R600CmdType.SetWorkAntenna"/>
         /// </summary>
-        public interface SetWorkAntenna: IReceiveMessage
+        public interface SetWorkAntenna : IReceiveMessage
         {
             /// <summary>
             /// 工作天线

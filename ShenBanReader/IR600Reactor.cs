@@ -1259,14 +1259,6 @@ namespace System.Data.ShenBanReader
             return SendMessage(btReadId, R600CmdType.GetLinkProfile);
         }
         /// <summary>
-        /// 复位读写器
-        /// </summary>
-        /// <returns></returns>
-        public int Reset(byte btReadId)
-        {
-            return SendMessage(btReadId, R600CmdType.Reset);
-        }
-        /// <summary>
         /// 设置非同步收发传输器波特率
         /// </summary>
         /// <returns></returns>
@@ -1525,14 +1517,6 @@ namespace System.Data.ShenBanReader
             if (FastSwitchInventory != null) { _recall.FastSwitchInventory = FastSwitchInventory; }
             if (FastSwitchInventoryEnd != null) { _recall.FastSwitchInventoryEnd = FastSwitchInventoryEnd; }
             return SendMessage(btReadId, R600CmdType.FastSwitchInventory, btAryData);
-        }
-        /// <summary>
-        /// 自定义存盘
-        /// </summary>
-        /// <returns></returns>
-        public int CustomizedInventory(byte btReadId, byte session, byte target, byte byRound)
-        {
-            return SendMessage(btReadId, R600CmdType.CustomizedInventory, new byte[3] { session, target, byRound });
         }
         /// <summary>
         /// 

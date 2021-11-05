@@ -11,41 +11,47 @@ namespace System.Data.ShenBanReader
     public class R600TagInfo
     {
         /// <summary>
-        /// 键
+        /// 键EPC的16进制值
         /// </summary>
         public string Key { get; internal set; }
         /// <summary>
-        /// 
+        /// PC内容
         /// </summary>
         public byte[] PC { get; internal set; }
         /// <summary>
-        /// 
+        /// CRC内容
         /// </summary>
         public Byte[] CRC { get; internal set; }
         /// <summary>
-        /// 
+        /// EPC标签内容
         /// </summary>
         public byte[] EPC { get; internal set; }
         /// <summary>
-        /// 
+        /// EPC长度
         /// </summary>
+        [Obsolete("替代方案:EPC.Length")]
         public int ELen { get; internal set; }
         /// <summary>
-        /// 
+        /// 信号强度
         /// </summary>
         public byte RSSI { get; internal set; }
         /// <summary>
-        /// 
+        /// 读取频率
         /// </summary>
         public byte FREQ { get; internal set; }
         /// <summary>
-        /// 
+        /// 盘点次数
         /// </summary>
         public int INVCNT { get; internal set; }
         /// <summary>
-        /// 
+        /// 数据(Tid,User,Reserved)根据类型不同
         /// </summary>
         public byte[] Data { get; internal set; }
+        /// <summary>
+        /// 数据长度
+        /// </summary>
+        [Obsolete("替代方案:Data.Length")]
+        public int DLen { get; internal set; }
         /// <summary>
         /// 标识
         /// </summary>
@@ -59,31 +65,27 @@ namespace System.Data.ShenBanReader
         /// </summary>
         public byte[] Reserved { get; internal set; }
         /// <summary>
-        /// 
+        /// 当前天线
         /// </summary>
-        public int DLen { get; internal set; }
+        public R600AntennaType AntId { get; internal set; }
         /// <summary>
-        /// 
-        /// </summary>
-        public byte AntId { get; internal set; }
-        /// <summary>
-        /// 
+        /// 读取次数
         /// </summary>
         public byte ReadCount { get; internal set; }
         /// <summary>
-        /// 
+        /// 天线一次数
         /// </summary>
         public int ANT1 { get; internal set; }
         /// <summary>
-        /// 
+        /// 天线二次数
         /// </summary>
         public int ANT2 { get; internal set; }
         /// <summary>
-        /// 
+        /// 天线三次数
         /// </summary>
         public int ANT3 { get; internal set; }
         /// <summary>
-        /// 
+        /// 天线四次数
         /// </summary>
         public int ANT4 { get; internal set; }
         /// <summary>
@@ -106,7 +108,7 @@ namespace System.Data.ShenBanReader
                         Array.Copy(aryData, 5 + nEpcLen, crc, 0, 2);// string strCRC = R600Method.ByteArrayToString(aryData, 5 + nEpcLen, 2);
                         byte[] data = new byte[nDataLen];
                         Array.Copy(aryData, 7 + nEpcLen, data, 0, nDataLen);// string strData = R600Method.ByteArrayToString(aryData, 7 + nEpcLen, nDataLen);
-                        byte byAntId = (byte)((aryData[nLen - 2] & 0x03) + 1);
+                        byte byAntId = (byte)(aryData[nLen - 2] & 0x03);
                         var pcs = pc.GetHexString();
                         this.Key = epc.GetHexString();
                         this.PC = pc;
@@ -115,7 +117,7 @@ namespace System.Data.ShenBanReader
                         this.ELen = nEpcLen;
                         this.Data = data;
                         this.DLen = nDataLen;
-                        this.AntId = byAntId;
+                        this.AntId = (R600AntennaType)byAntId;
                         this.ReadCount = aryData[nLen - 1];
                     }
                     break;
@@ -130,7 +132,7 @@ namespace System.Data.ShenBanReader
                         byte[] crc = new byte[2];
                         Array.Copy(aryData, 5 + nEpcLen, crc, 0, 2);// string strCRC = R600Method.ByteArrayToString(aryData, 5 + nEpcLen, 2);
                         byte[] data = new byte[] { };
-                        byte byAntId = (byte)((aryData[nLen - 2] & 0x03) + 1);
+                        byte byAntId = (byte)(aryData[nLen - 2] & 0x03);
 
                         this.Key = epc.GetHexString();
                         this.PC = pc;
@@ -139,7 +141,7 @@ namespace System.Data.ShenBanReader
                         this.ELen = nEpcLen;
                         this.Data = data;
                         this.DLen = 0;
-                        this.AntId = byAntId;
+                        this.AntId = (R600AntennaType)byAntId;
                         this.ReadCount = aryData[nLen - 1];
                     }
                     break;
@@ -153,7 +155,7 @@ namespace System.Data.ShenBanReader
                         Array.Copy(aryData, 5, epc, 0, nEpcLen); // string strEpc = R600Method.ByteArrayToString(aryData, 5, nEpcLen);
                         byte[] crc = new byte[2];
                         Array.Copy(aryData, 5 + nEpcLen, crc, 0, 2);// string strCRC = R600Method.ByteArrayToString(aryData, 5 + nEpcLen, 2);
-                        byte byAntId = (byte)((aryData[nLen - 2] & 0x03) + 1);
+                        byte byAntId = (byte)(aryData[nLen - 2] & 0x03);
                         var rssi = aryData[nLen - 3];
                         var invcnt = aryData[nLen - 1];
 
@@ -162,7 +164,7 @@ namespace System.Data.ShenBanReader
                         this.CRC = crc;
                         this.EPC = epc;
                         this.ELen = nEpcLen;
-                        this.AntId = byAntId;
+                        this.AntId = (R600AntennaType)byAntId;
                         this.RSSI = rssi;
                         this.INVCNT = invcnt;
                     }
@@ -178,7 +180,7 @@ namespace System.Data.ShenBanReader
                         byte[] crc = new byte[2];
                         Array.Copy(aryData, 5 + nEpcLen, crc, 0, 2); // string strCRC = R600Method.ByteArrayToString(aryData, 5 + nEpcLen, 2);
                         byte[] data = new byte[] { };
-                        byte byAntId = (byte)((aryData[nLen - 2] & 0x03) + 1);
+                        byte byAntId = (byte)(aryData[nLen - 2] & 0x03);
 
                         this.Key = epc.GetHexString();
                         this.PC = pc;
@@ -187,7 +189,7 @@ namespace System.Data.ShenBanReader
                         this.ELen = nEpcLen;
                         this.Data = data;
                         this.DLen = 0;
-                        this.AntId = byAntId;
+                        this.AntId = (R600AntennaType)byAntId;
                         this.ReadCount = aryData[nLen - 1];
                     }
                     break;
@@ -202,7 +204,7 @@ namespace System.Data.ShenBanReader
                         byte[] crc = new byte[2];
                         Array.Copy(aryData, 5 + nEpcLen, crc, 0, 2); // string strCRC = R600Method.ByteArrayToString(aryData, 5 + nEpcLen, 2);
                         byte[] data = new byte[] { };
-                        byte byAntId = (byte)((aryData[nLen - 2] & 0x03) + 1);
+                        byte byAntId = (byte)(aryData[nLen - 2] & 0x03);
 
                         this.Key = epc.GetHexString();
                         this.PC = pc;
@@ -211,7 +213,7 @@ namespace System.Data.ShenBanReader
                         this.ELen = nEpcLen;
                         this.Data = data;
                         this.DLen = 0;
-                        this.AntId = byAntId;
+                        this.AntId = (R600AntennaType)byAntId;
                         this.ReadCount = aryData[nLen - 1];
                     }
                     break;
@@ -225,13 +227,13 @@ namespace System.Data.ShenBanReader
                         Array.Copy(aryData, 1, pc, 0, 2); // string strPC = R600Method.ByteArrayToString(msgTran.AryData, 1, 2);
                         var rssi = aryData[nLength - 1];
                         byte btTemp = aryData[0];
-                        byte btAntId = (byte)((btTemp & 0x03) + 1);
+                        byte btAntId = (byte)(btTemp & 0x03);
                         byte btFreq = (byte)(btTemp >> 2);
 
                         this.Key = epc.GetHexString();
                         this.EPC = epc;
                         this.PC = pc;
-                        this.AntId = btAntId;
+                        this.AntId = (R600AntennaType)btAntId;
                         this.RSSI = rssi;
                         this.INVCNT = 1;
                         this.FREQ = btFreq;
@@ -248,28 +250,28 @@ namespace System.Data.ShenBanReader
                         Array.Copy(aryData, 1, pc, 0, 2); // string strPC = R600Method.ByteArrayToString(msgTran.AryData, 1, 2);
                         var rssi = aryData[nLength - 1];
                         byte btTemp = aryData[0];
-                        byte btAntId = (byte)((btTemp & 0x03) + 1);
+                        byte btAntId = (byte)(btTemp & 0x03);
                         byte btFreq = (byte)(btTemp >> 2);
 
                         this.Key = epc.GetHexString();
                         this.PC = pc;
                         this.EPC = epc;
-                        this.AntId = AntId;
+                        this.AntId = (R600AntennaType)btAntId;
                         this.INVCNT = 1;
                         this.RSSI = rssi;
                         this.FREQ = btFreq;
                         switch (btAntId)
                         {
-                            case 0x01:
+                            case 0x00:
                                 this.ANT1 = 1;
                                 break;
-                            case 0x02:
+                            case 0x01:
                                 this.ANT2 = 1;
                                 break;
-                            case 0x03:
+                            case 0x02:
                                 this.ANT3 = 1;
                                 break;
-                            case 0x04:
+                            case 0x03:
                                 this.ANT4 = 1;
                                 break;
                             default:
@@ -310,6 +312,29 @@ namespace System.Data.ShenBanReader
             /// 快速4天
             /// </summary>
             Fast,
+        }
+
+        internal void CombiReadTag(R600TagInfo tag)
+        {
+            AntId = tag.AntId;
+            CRC = tag.CRC;
+            Data = tag.Data;
+            ANT1 += tag.ANT1;
+            ANT2 += tag.ANT2;
+            ANT3 += tag.ANT3;
+            ANT4 += tag.ANT4;
+            if (tag.User?.Length > 0)
+            {
+                User = tag.User;
+            }
+            if (tag.Tid?.Length > 0)
+            {
+                Tid = tag.Tid;
+            }
+            if (tag.Reserved?.Length > 0)
+            {
+                Reserved = tag.Reserved;
+            }
         }
     }
     /// <summary>

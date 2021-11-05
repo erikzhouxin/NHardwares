@@ -332,6 +332,27 @@ namespace System.Data.ShenBanReader
         #endregion
         #region // 内部方法
         /// <summary>
+        /// 字节相等
+        /// </summary>
+        /// <param name="curr"></param>
+        /// <param name="tag"></param>
+        /// <param name="isNull"></param>
+        /// <returns></returns>
+        internal static bool EqualBytes(byte[] curr, byte[] tag, bool isNull = true)
+        {
+            if (tag == null && curr == null) { return isNull; }
+            if (tag == null || curr == null) { return false; }
+            if (tag.Length != curr.Length) { return false; }
+            for (int i = 0; i < tag.Length; i++)
+            {
+                if (tag[i] != curr[i])
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+        /// <summary>
         /// 获取MD5加密值
         /// </summary>
         /// <param name="bytes"></param>
