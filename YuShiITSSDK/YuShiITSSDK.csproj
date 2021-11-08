@@ -5,7 +5,7 @@
     <TargetFrameworks>net40;net45;netcoreapp3.1;netstandard2.1</TargetFrameworks>
     <AssemblyName>NSystem.Data.YuShiITSSDK</AssemblyName>
     <RootNamespace>System.Data.YuShiITSSDK</RootNamespace>
-    <NoBuild>false</NoBuild>
+    <NoBuild>true</NoBuild>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <EmbedAllSources>true</EmbedAllSources>
     <IncludeBuildOutput>false</IncludeBuildOutput>

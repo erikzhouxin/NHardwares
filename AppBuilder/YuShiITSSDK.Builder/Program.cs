@@ -167,7 +167,7 @@ namespace YuShiITSSDK.Builder
                 f.WriteElementString("TargetFrameworks", string.Join(";", sdks));
                 f.WriteElementString("AssemblyName", id);
                 f.WriteElementString("RootNamespace", id.Substring(1));
-                f.WriteElementString("NoBuild", "false");
+                f.WriteElementString("NoBuild", "true");
                 f.WriteElementString("GenerateDocumentationFile", "true");
                 f.WriteElementString("EmbedAllSources", "true");
                 f.WriteElementString("IncludeBuildOutput", "false");

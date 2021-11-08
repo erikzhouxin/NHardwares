@@ -475,12 +475,12 @@ namespace System.Data.ShenBanReader
             /// 轮询间隔(毫秒)
             /// 发送命令开始直至收到结果或者异常或者超过此时间
             /// </summary>
-            public static int PollInterval { get; set; } = 800;
+            public static int PollInterval { get; set; } = 500;
             /// <summary>
             /// 轮询次数(毫秒)
             /// 发送命令开始直至收到结果但收到的长度为0;
             /// </summary>
-            public static int PollTimes { get; set; } = 10;
+            public static int PollTimes { get; set; } = 5;
             /// <summary>
             /// 轮询等待时间
             /// 发送成功后等待时间
