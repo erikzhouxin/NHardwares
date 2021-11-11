@@ -369,7 +369,6 @@ namespace System.Data.ShenBanReader
         /// 读取选定标签
         /// <see cref="R600CmdType.ReadTag"/>
         /// </summary>
-        /// <typeparam name="T"></typeparam>
         /// <param name="readId"></param>
         /// <param name="area"></param>
         /// <param name="start"></param>
@@ -584,12 +583,13 @@ namespace System.Data.ShenBanReader
                 message = string.Empty;
                 try
                 {
+                    _ip = ipAddress;
+                    _port = port;
                     _client = new TcpClient();
                     _client.Connect(ipAddress, port);
                     _stream = _client.GetStream();    // 获取连接至远程的流
 
-                    _isConnected = true;
-                    return true;
+                    return _isConnected = true;
                 }
                 catch (Exception ex)
                 {
@@ -612,7 +612,7 @@ namespace System.Data.ShenBanReader
                 {
                     try
                     {
-                        if (!_isConnected || !IsConnected) // 未连接就退出
+                        if (!_isConnected) // 未连接就退出
                         {
                             exception = new Exception("未连接或已经断开连接");
                             received = null;
@@ -817,7 +817,7 @@ namespace System.Data.ShenBanReader
                 // 获取锁定发送
                 if (Monitor.TryEnter(LockObject, TimeSpan.FromMilliseconds(PollInterval)))
                 {
-                    if (serialPort == null || !serialPort.IsOpen)
+                    if (!serialPort.IsOpen)
                     {
                         received = null;
                         exception = new Exception("串口通信未初始化或未打开串口");

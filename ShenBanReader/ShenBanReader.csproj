@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net40;net45;netstandard2.1;netcoreapp3.1;</TargetFrameworks>
+		<TargetFrameworks>net40;net45;netstandard2.1;netcoreapp3.1;net6.0</TargetFrameworks>
 		<AssemblyName>NSystem.Data.ShenBanReader</AssemblyName>
 		<RootNamespace>System.Data.ShenBanReader</RootNamespace>
 		<SignAssembly>true</SignAssembly>
@@ -25,7 +25,9 @@
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
 		<DefineConstants>DEBUG;TRACE</DefineConstants>
 	</PropertyGroup>
-
+	<ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
+		<PackageReference Include="System.IO.Ports" Version="5.0.1" />
+	</ItemGroup>
 	<ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp3.1'">
 		<PackageReference Include="System.IO.Ports" Version="5.0.1" />
 	</ItemGroup>
