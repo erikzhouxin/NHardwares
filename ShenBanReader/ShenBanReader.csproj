@@ -17,7 +17,6 @@
 		<PackageTags>r600;rfid</PackageTags>
 		<RepositoryUrl>https://code.aliyun.com/cenidea/cyms-pc.git</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
-		<EmbedAllSources>true</EmbedAllSources>
 		<PackageReleaseNotes>针对深坂科技RFID的R600进行的操作封装</PackageReleaseNotes>
 		<NeutralLanguage>zh</NeutralLanguage>
 	</PropertyGroup>

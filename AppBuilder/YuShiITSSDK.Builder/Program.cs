@@ -13,13 +13,14 @@ namespace YuShiITSSDK.Builder
     static class Program
     {
         public static String Src { get; private set; }
-        static string NUSPEC_VERSION { get; } = string.Format("{0:yyyy.M.d}", DateTime.Now);
-        static string ASSEMBLY_VERSION { get; } = string.Format("{0:yyyy.M.d}.{1}", DateTime.Now, (int)(DateTime.Now - new DateTime(2020, 1, 1)).TotalDays);
+        static string NUSPEC_VERSION { get; } = string.Format("2021.11.11", DateTime.Now);
+        static string ASSEMBLY_VERSION { get; } = string.Format("{0}.{1}", NUSPEC_VERSION, (int)(DateTime.Now - new DateTime(2020, 1, 1)).TotalDays);
         static string COPYRIGHT { get; } = $"Copyright 2020-{DateTime.Now.Year}";
         static string AUTHORS { get; } = "ErikZhouXin";
         static string SUMMARY { get; } = "宇视SDK集成项目";
         static string PACKAGE_TAGS { get; } = "宇视;宇视SDK;ITSSDK;";
         public static String Proj_Name { get; private set; }
+        public static String Config = "Debug";
 
         static void Main(string[] args)
         {
@@ -38,10 +39,10 @@ namespace YuShiITSSDK.Builder
             GenNuspecLib(Src);
             // 编译生成版本
             ReplaceVersion(Path.GetFullPath(Path.Combine(Src, $"{Proj_Name}.csproj")));
-            Exec("dotnet", "pack -c Release", Program.Src);
+            Exec("dotnet", $"pack -c {Config}", Program.Src);
             // 还原包内容
             Exec("dotnet", "restore", Program.Src);
-            Exec(@"C:\Program Files\Microsoft Visual Studio 2019\MSBuild\Current\Bin\msbuild.exe", "/p:Configuration=Release /t:pack", Program.Src);
+            Exec(@"C:\Program Files\Microsoft Visual Studio 2019\MSBuild\Current\Bin\msbuild.exe", $"/p:Configuration={Config} /t:pack", Program.Src);
             // 编译生成
             //var path_empty = Path.Combine(Program.Src, "_._");
             //if (!File.Exists(path_empty)) { File.WriteAllText(path_empty, ""); }
@@ -148,7 +149,7 @@ namespace YuShiITSSDK.Builder
         {
             string id = "NSystem.Data.YuShiITSSDK";
             string proj = "YuShiITSSDK";
-            var sdks = new List<string> { "net40", "net45", "netcoreapp3.1", "netstandard2.1" };
+            var sdks = new List<string> { "net40", "net45", "netstandard2.1", "netcoreapp3.1", "net6.0" };
             using (XmlWriter f = XmlWriter.Create(Path.Combine(dir_src, $"{proj}.csproj"), new XmlWriterSettings
             {
                 NewLineChars = "\n",
@@ -299,11 +300,11 @@ namespace YuShiITSSDK.Builder
                 {
                     try
                     {
-                        foreach (var file in Directory.GetFiles(Path.Combine(dir_src, "bin", "Release", sdkName)))
+                        foreach (var file in Directory.GetFiles(Path.Combine(dir_src, "bin", Config, sdkName)))
                         {
                             var fileName = Path.GetFileName(file);
                             f.WriteStartElement("file");
-                            f.WriteAttributeString("src", $"bin\\Release\\{sdkName}\\{fileName}");
+                            f.WriteAttributeString("src", $"bin\\{Config}\\{sdkName}\\{fileName}");
                             f.WriteAttributeString("target", $"lib/{sdkName}/{fileName}");
                             f.WriteEndElement(); // file
                         }

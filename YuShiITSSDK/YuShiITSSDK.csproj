@@ -2,7 +2,7 @@
 <!--自动生成-->
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net40;net45;netcoreapp3.1;netstandard2.1</TargetFrameworks>
+    <TargetFrameworks>net40;net45;netstandard2.1;netcoreapp3.1;net6.0</TargetFrameworks>
     <AssemblyName>NSystem.Data.YuShiITSSDK</AssemblyName>
     <RootNamespace>System.Data.YuShiITSSDK</RootNamespace>
     <NoBuild>true</NoBuild>

@@ -187,7 +187,7 @@ namespace System.Data.ShenBanReader
         /// <returns></returns>
         public R600AlertModel<T> FastSwitchInventory<T>(byte readId, ref T model) where T : R2000Interfaces.FastSwitchInventory
         {
-            return FastSwitchInventory<T>(readId, new byte[10] { 0, 1, 1, 1, 2, 1, 3, 1, 0, 2 }, ref model);
+            return FastSwitchInventory<T>(readId, new byte[10] { 0, 1, 1, 1, 2, 1, 3, 1, 0, 1 }, ref model);
         }
         /// <summary>
         /// 设置工作天线
@@ -415,7 +415,7 @@ namespace System.Data.ShenBanReader
         }
         private R600AlertModel<T> GetAlert404<T>(R600CmdType cmd, Exception exception, T model)
         {
-            return new R600AlertModel<T>(cmd, 404, $"发送或读取内容失败，原因是{exception.Message}", nameof(R2000Queue), R600CmdType.GetFrequencyRegion.ToString(), model);
+            return new R600AlertModel<T>(cmd, 404, $"发送或读取内容失败，原因是{exception.Message}", nameof(R2000Queue), cmd.ToString(), model);
         }
 
         #endregion
@@ -570,6 +570,7 @@ namespace System.Data.ShenBanReader
             {
                 _ip = IPAddress.Parse("192.168.0.178");
                 _port = 4001;
+                _client = new TcpClient();
             }
             /// <summary>
             /// 连接
@@ -580,24 +581,42 @@ namespace System.Data.ShenBanReader
             /// <returns></returns>
             public override bool Connect(IPAddress ipAddress, int port, out string message)
             {
-                message = string.Empty;
+                if (TryConnect(ipAddress, port, out Exception exception))
+                {
+                    message = String.Empty;
+                    return true;
+                }
+                message = exception.Message;
+                return false;
+            }
+
+            private bool TryConnect(IPAddress ipAddress, int port, out Exception exception)
+            {
+                try
+                {
+                    _client.Close();
+                }
+                catch { }
                 try
                 {
                     _ip = ipAddress;
                     _port = port;
                     _client = new TcpClient();
+                    _client.ReceiveTimeout = PollInterval;
+                    _client.SendTimeout = PollInterval;
                     _client.Connect(ipAddress, port);
                     _stream = _client.GetStream();    // 获取连接至远程的流
-
+                    exception = null;
                     return _isConnected = true;
                 }
                 catch (Exception ex)
                 {
-                    message = ex.Message;
+                    exception = ex;
                     _isConnected = false;
                     return false;
                 }
             }
+
             /// <summary>
             /// 发送
             /// </summary>
@@ -610,15 +629,17 @@ namespace System.Data.ShenBanReader
                 // 获取锁定发送
                 if (Monitor.TryEnter(LockObject, TimeSpan.FromMilliseconds(PollInterval)))
                 {
-                    try
+                    if (!IsConnected) // 未连接重连尝试
                     {
-                        if (!_isConnected) // 未连接就退出
+                        if (!TryConnect(_ip, _port, out exception))
                         {
-                            exception = new Exception("未连接或已经断开连接");
                             received = null;
                             Monitor.Exit(LockObject);
                             return false;
                         }
+                    }
+                    try
+                    {
                         lock (_stream)
                         {
                             _stream.Write(send, 0, send.Length);
@@ -626,83 +647,49 @@ namespace System.Data.ShenBanReader
                     }
                     catch (Exception ex)
                     {
-                        exception = ex;
+                        exception = new Exception("未连接或已经断开连接", ex);
                         received = null;
                         Monitor.Exit(LockObject);
                         return false;
                     }
-                    Thread.Sleep(PollWaiter); // 发送成功后等100毫秒,确保已经开始接收,减少出错
+                    Thread.Sleep(PollWaiter * 2); // 发送成功后确保已经开始接收,减少出错
+                    var len = 0;
+                    var buffer = new byte[PollLength];
                     try
                     {
-                        var now = DateTime.Now;
-                        byte[] buffer = new byte[PollLength];
-                        byte[] result = new byte[PollLength];
-                        var len = 0;
-                        var times = PollTimes; // 确保数据完整的次数
-                        while (true)
+                        len = _stream.Read(buffer, 0, buffer.Length);
+                        if (len > 0)
                         {
-                            if ((DateTime.Now - now).TotalMilliseconds > PollInterval)
-                            {
-                                bool res;
-                                if (len > 0)
-                                {
-                                    received = new byte[len];
-                                    Array.Copy(result, received, len);
-                                    res = true;
-                                    exception = new Exception($"已超过轮询时间{PollInterval}毫秒，数据可能不完整");
-                                }
-                                else
-                                {
-                                    res = false;
-                                    received = null;
-                                    exception = new Exception($"已超过轮询时间{PollInterval}毫秒，未读取到数据");
-                                }
-                                Monitor.Exit(LockObject);
-                                return res;
-                            }
-                            try
-                            {
-                                int readLen = _stream.Read(buffer, 0, buffer.Length);
-                                if (readLen == 0)
-                                {
-                                    if (times-- > 0)
-                                    {
-                                        Thread.Sleep(10);
-                                        continue;
-                                    }
-                                    else
-                                    {
-                                        if (len > 0) // 即使不完整也该返回此内容
-                                        {
-                                            exception = new Exception($"已超过轮询{PollTimes}次，数据可能不完整");
-                                            received = new byte[len];
-                                            Array.Copy(result, received, len);
-                                            Monitor.Exit(LockObject);
-                                            return true;
-                                        }
-                                        else
-                                        {
-                                            exception = new Exception($"已超过轮询{PollTimes}次，未获得数据");
-                                            received = null;
-                                            Monitor.Exit(LockObject);
-                                            return false;
-                                        }
-                                    }
-                                }
-                                Array.Copy(buffer, 0, result, len, readLen);
-                                len += readLen;
-                                times = PollTimes;
-                            }
-                            catch { }
-                            Thread.Sleep(10);//防止太快导致始终读取不全
+                            exception = new Exception($"已完成数据接收");
+                            received = new byte[len];
+                            Array.Copy(buffer, received, len);
+                            Monitor.Exit(LockObject);
+                            return true;
+                        }
+                        else
+                        {
+                            exception = new Exception($"未完成数据接收");
+                            received = null;
+                            Monitor.Exit(LockObject);
+                            return false;
                         }
                     }
                     catch (Exception ex)
                     {
                         exception = ex;
-                        received = null;
-                        Monitor.Exit(LockObject);
-                        return false;
+                        if (len > 0)
+                        {
+                            received = new byte[len];
+                            Array.Copy(buffer, received, len);
+                            Monitor.Exit(LockObject);
+                            return true; // 有数据就走成功逻辑
+                        }
+                        else
+                        {
+                            received = null;
+                            Monitor.Exit(LockObject);
+                            return false;
+                        }
                     }
                 }
                 else
@@ -716,7 +703,7 @@ namespace System.Data.ShenBanReader
             /// 是连接
             /// </summary>
             /// <returns></returns>
-            public override bool IsConnected { get => _isConnected && (_client == null ? false : _client.Connected); }
+            public override bool IsConnected { get => _isConnected && _client.Connected; }
             /// <summary>
             /// 断开连接
             /// </summary>
@@ -837,9 +824,8 @@ namespace System.Data.ShenBanReader
                     }
                     Thread.Sleep(PollWaiter); // 发送成功后等100毫秒,确保已经开始接收,减少出错
                     var len = 0;
-                    var result = new byte[PollLength];
+                    var buffer = new byte[PollLength];
                     var now = DateTime.Now;
-                    var times = PollTimes;
                     try
                     {
                         while (true)
@@ -850,7 +836,7 @@ namespace System.Data.ShenBanReader
                                 if (len > 0)
                                 {
                                     received = new byte[len];
-                                    Array.Copy(result, received, len);
+                                    Array.Copy(buffer, received, len);
                                     res = true;
                                     exception = new Exception($"已超过轮询时间{PollInterval}毫秒，数据可能不完整");
                                 }
@@ -866,33 +852,24 @@ namespace System.Data.ShenBanReader
                             int nCount = serialPort.BytesToRead;
                             if (nCount == 0)
                             {
-                                if (times-- > 0)
+                                if (len > 0)
                                 {
-                                    Thread.Sleep(10);
-                                    continue;
+                                    exception = new Exception($"已完成数据接收");
+                                    received = new byte[len];
+                                    Array.Copy(buffer, received, len);
+                                    Monitor.Exit(LockObject);
+                                    return true;
                                 }
                                 else
                                 {
-                                    if (len > 0) // 即使不完整也该返回此内容
-                                    {
-                                        exception = new Exception($"已超过轮询{PollTimes}次，数据可能不完整");
-                                        received = new byte[len];
-                                        Array.Copy(result, received, len);
-                                        Monitor.Exit(LockObject);
-                                        return true;
-                                    }
-                                    else
-                                    {
-                                        exception = new Exception($"已超过轮询{PollTimes}次，未获得数据");
-                                        received = null;
-                                        Monitor.Exit(LockObject);
-                                        return false;
-                                    }
+                                    exception = new Exception($"未完成数据接收");
+                                    received = null;
+                                    Monitor.Exit(LockObject);
+                                    return false;
                                 }
                             }
-                            serialPort.Read(result, len, nCount);
+                            serialPort.Read(buffer, len, nCount);
                             len += nCount;
-                            times = PollTimes;
                             Thread.Sleep(PollWaiter);
                         }
                     }
@@ -902,14 +879,16 @@ namespace System.Data.ShenBanReader
                         if (len > 0)
                         {
                             received = new byte[len];
-                            Array.Copy(result, received, len);
+                            Array.Copy(buffer, received, len);
+                            Monitor.Exit(LockObject);
+                            return true; // 有数据就走成功逻辑
                         }
                         else
                         {
                             received = null;
+                            Monitor.Exit(LockObject);
+                            return false;
                         }
-                        Monitor.Exit(LockObject);
-                        return false;
                     }
                 }
                 else
