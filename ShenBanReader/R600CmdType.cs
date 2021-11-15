@@ -205,4 +205,73 @@ namespace System.Data.ShenBanReader
         /// </summary>
         QueryTagISO18000 = 0xB4,
     }
+    /// <summary>
+    /// 命令调用
+    /// </summary>
+    public static class R600CmdTypeCaller
+    {
+        /// <summary>
+        /// 获取Enum名称
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public static String ToEnumName(this R600CmdType type) => type switch
+        {
+            R600CmdType.Unknown => nameof(R600CmdType.Unknown),
+            R600CmdType.ReadGpioValue => nameof(R600CmdType.ReadGpioValue),
+            R600CmdType.WriteGpioValue => nameof(R600CmdType.WriteGpioValue),
+            R600CmdType.SetAntDetector => nameof(R600CmdType.SetAntDetector),
+            R600CmdType.GetAntDetector => nameof(R600CmdType.GetAntDetector),
+            R600CmdType.SetReaderIdentifier => nameof(R600CmdType.SetReaderIdentifier),
+            R600CmdType.GetReaderIdentifier => nameof(R600CmdType.GetReaderIdentifier),
+            R600CmdType.SetLinkProfile => nameof(R600CmdType.SetLinkProfile),
+            R600CmdType.GetLinkProfile => nameof(R600CmdType.GetLinkProfile),
+            R600CmdType.Reset => nameof(R600CmdType.Reset),
+            R600CmdType.SetUartBaudRate => nameof(R600CmdType.SetUartBaudRate),
+            R600CmdType.GetFirmwareVersion => nameof(R600CmdType.GetFirmwareVersion),
+            R600CmdType.SetReaderAddress => nameof(R600CmdType.SetReaderAddress),
+            R600CmdType.SetWorkAntenna => nameof(R600CmdType.SetWorkAntenna),
+            R600CmdType.GetWorkAntenna => nameof(R600CmdType.GetWorkAntenna),
+            R600CmdType.SetOutputPower => nameof(R600CmdType.SetOutputPower),
+            R600CmdType.GetOutputPower => nameof(R600CmdType.GetOutputPower),
+            R600CmdType.SetFrequencyRegion => nameof(R600CmdType.SetFrequencyRegion),
+            R600CmdType.GetFrequencyRegion => nameof(R600CmdType.GetFrequencyRegion),
+            R600CmdType.SetBeeperMode => nameof(R600CmdType.SetBeeperMode),
+            R600CmdType.GetReaderTemperature => nameof(R600CmdType.GetReaderTemperature),
+            R600CmdType.SetDrmMode => nameof(R600CmdType.SetDrmMode),
+            R600CmdType.GetDrmMode => nameof(R600CmdType.GetDrmMode),
+            R600CmdType.GetAntImpedanceMatch => nameof(R600CmdType.GetAntImpedanceMatch),
+            R600CmdType.Inventory => nameof(R600CmdType.Inventory),
+            R600CmdType.ReadTag => nameof(R600CmdType.ReadTag),
+            R600CmdType.WriteTag => nameof(R600CmdType.WriteTag),
+            R600CmdType.LockTag => nameof(R600CmdType.LockTag),
+            R600CmdType.KillTag => nameof(R600CmdType.KillTag),
+            R600CmdType.SetAccessEpcMatch => nameof(R600CmdType.SetAccessEpcMatch),
+            R600CmdType.GetAccessEpcMatch => nameof(R600CmdType.GetAccessEpcMatch),
+            R600CmdType.InventoryReal => nameof(R600CmdType.InventoryReal),
+            R600CmdType.FastSwitchInventory => nameof(R600CmdType.FastSwitchInventory),
+            R600CmdType.CustomizedInventory => nameof(R600CmdType.CustomizedInventory),
+            R600CmdType.SetMonzaStatus => nameof(R600CmdType.SetMonzaStatus),
+            R600CmdType.GetMonzaStatus => nameof(R600CmdType.GetMonzaStatus),
+            R600CmdType.GetInventoryBuffer => nameof(R600CmdType.GetInventoryBuffer),
+            R600CmdType.GetAndResetInventoryBuffer => nameof(R600CmdType.GetAndResetInventoryBuffer),
+            R600CmdType.GetInventoryBufferTagCount => nameof(R600CmdType.GetInventoryBufferTagCount),
+            R600CmdType.ResetInventoryBuffer => nameof(R600CmdType.ResetInventoryBuffer),
+            R600CmdType.SetBufferDataFrameInterval => nameof(R600CmdType.SetBufferDataFrameInterval),
+            R600CmdType.GetBufferDataFrameInterval => nameof(R600CmdType.GetBufferDataFrameInterval),
+            R600CmdType.InventoryISO18000 => nameof(R600CmdType.InventoryISO18000),
+            R600CmdType.ReadTagISO18000 => nameof(R600CmdType.ReadTagISO18000),
+            R600CmdType.WriteTagISO18000 => nameof(R600CmdType.WriteTagISO18000),
+            R600CmdType.LockTagISO18000 => nameof(R600CmdType.LockTagISO18000),
+            R600CmdType.QueryTagISO18000 => nameof(R600CmdType.QueryTagISO18000),
+            _ => nameof(R600CmdType.Unknown),
+        };
+        /// <summary>
+        /// 获取Enum名称
+        /// <see cref="ToEnumName(R600CmdType)"/>
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public static String GetEnumName(this R600CmdType type) => ToEnumName(type);
+    }
 }

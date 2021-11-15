@@ -185,10 +185,8 @@ namespace System.Data.ShenBanReader
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public R600AlertModel<T> FastSwitchInventory<T>(byte readId, ref T model) where T : R2000Interfaces.FastSwitchInventory
-        {
-            return FastSwitchInventory<T>(readId, new byte[10] { 0, 1, 1, 1, 2, 1, 3, 1, 0, 1 }, ref model);
-        }
+        public R600AlertModel<T> FastSwitchInventory<T>(byte readId, ref T model) where T : R2000Interfaces.FastSwitchInventory 
+            => FastSwitchInventory<T>(readId, new byte[10] { 0, 1, 1, 1, 2, 1, 3, 1, 0, 1 }, ref model);
         /// <summary>
         /// 设置工作天线
         /// <see cref="R600CmdType.SetWorkAntenna"/>
@@ -260,10 +258,8 @@ namespace System.Data.ShenBanReader
         /// <param name="length"></param>
         /// <param name="model"></param>
         /// <returns></returns>
-        public R600AlertModel<T> ReadTagEpc<T>(byte readId, byte start, byte length, ref T model) where T : R2000Interfaces.ReadTag
-        {
-            return ReadTag<T>(readId, R600AreaType.EPC, start, length, ref model);
-        }
+        public R600AlertModel<T> ReadTagEpc<T>(byte readId, byte start, byte length, ref T model) where T : R2000Interfaces.ReadTag 
+            => ReadTag<T>(readId, R600AreaType.EPC, start, length, ref model);
         /// <summary>
         /// 读取选定标签TID
         /// <see cref="R600CmdType.ReadTag"/>
@@ -274,10 +270,8 @@ namespace System.Data.ShenBanReader
         /// <param name="length"></param>
         /// <param name="model"></param>
         /// <returns></returns>
-        public R600AlertModel<T> ReadTagTid<T>(byte readId, byte start, byte length, ref T model) where T : R2000Interfaces.ReadTag
-        {
-            return ReadTag<T>(readId, R600AreaType.TID, start, length, ref model);
-        }
+        public R600AlertModel<T> ReadTagTid<T>(byte readId, byte start, byte length, ref T model) where T : R2000Interfaces.ReadTag 
+            => ReadTag<T>(readId, R600AreaType.TID, start, length, ref model);
         /// <summary>
         /// 读取选定标签TID
         /// <see cref="R600CmdType.ReadTag"/>
@@ -287,10 +281,8 @@ namespace System.Data.ShenBanReader
         /// <param name="length"></param>
         /// <param name="model"></param>
         /// <returns></returns>
-        public R600AlertModel<R600TagInfo> ReadTagTid(byte readId, byte start, byte length, ref R600TagInfo model)
-        {
-            return ReadTag(readId, R600AreaType.TID, start, length, ref model);
-        }
+        public R600AlertModel<R600TagInfo> ReadTagTid(byte readId, byte start, byte length, ref R600TagInfo model) 
+            => ReadTag(readId, R600AreaType.TID, start, length, ref model);
         /// <summary>
         /// 读取选定标签User
         /// <see cref="R600CmdType.ReadTag"/>
@@ -301,10 +293,8 @@ namespace System.Data.ShenBanReader
         /// <param name="length"></param>
         /// <param name="model"></param>
         /// <returns></returns>
-        public R600AlertModel<T> ReadTagUser<T>(byte readId, byte start, byte length, ref T model) where T : R2000Interfaces.ReadTag
-        {
-            return ReadTag<T>(readId, R600AreaType.User, start, length, ref model);
-        }
+        public R600AlertModel<T> ReadTagUser<T>(byte readId, byte start, byte length, ref T model) where T : R2000Interfaces.ReadTag 
+            => ReadTag<T>(readId, R600AreaType.User, start, length, ref model);
         /// <summary>
         /// 读取选定标签User
         /// <see cref="R600CmdType.ReadTag"/>
@@ -314,10 +304,8 @@ namespace System.Data.ShenBanReader
         /// <param name="length"></param>
         /// <param name="model"></param>
         /// <returns></returns>
-        public R600AlertModel<R600TagInfo> ReadTagUser(byte readId, byte start, byte length, ref R600TagInfo model)
-        {
-            return ReadTag(readId, R600AreaType.User, start, length, ref model);
-        }
+        public R600AlertModel<R600TagInfo> ReadTagUser(byte readId, byte start, byte length, ref R600TagInfo model) 
+            => ReadTag(readId, R600AreaType.User, start, length, ref model);
         /// <summary>
         /// 读取选定标签
         /// <see cref="R600CmdType.ReadTag"/>
@@ -411,11 +399,11 @@ namespace System.Data.ShenBanReader
 
         private R600AlertModel<T> GetAlertError<T>(R600CmdType cmd, int code, string message, T model)
         {
-            return new R600AlertModel<T>(cmd, code, message, nameof(R2000Queue), cmd.ToString(), model);
+            return new R600AlertModel<T>(cmd, code, message, nameof(R2000Queue), cmd.ToEnumName(), model);
         }
         private R600AlertModel<T> GetAlert404<T>(R600CmdType cmd, Exception exception, T model)
         {
-            return new R600AlertModel<T>(cmd, 404, $"发送或读取内容失败，原因是{exception.Message}", nameof(R2000Queue), cmd.ToString(), model);
+            return new R600AlertModel<T>(cmd, 404, $"发送或读取内容失败，原因是{exception.Message}", nameof(R2000Queue), cmd.ToEnumName(), model);
         }
 
         #endregion
