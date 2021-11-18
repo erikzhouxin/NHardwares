@@ -7,7 +7,6 @@
     <RootNamespace>System.Data.YuShiITSSDK</RootNamespace>
     <NoBuild>true</NoBuild>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <EmbedAllSources>true</EmbedAllSources>
     <IncludeBuildOutput>false</IncludeBuildOutput>
     <NuspecFile>NSystem.Data.YuShiITSSDK.nuspec</NuspecFile>
     <NuspecProperties>version=$(version);src_path=$(src_path);cb_bin_path=$(cb_bin_path);authors=$(Authors);copyright=$(Copyright);summary=$(Description)</NuspecProperties>

@@ -170,7 +170,6 @@ namespace YuShiITSSDK.Builder
                 f.WriteElementString("RootNamespace", id.Substring(1));
                 f.WriteElementString("NoBuild", "true");
                 f.WriteElementString("GenerateDocumentationFile", "true");
-                f.WriteElementString("EmbedAllSources", "true");
                 f.WriteElementString("IncludeBuildOutput", "false");
                 f.WriteElementString("NuspecFile", $"{id}.nuspec");
                 f.WriteElementString("NuspecProperties", "version=$(version);src_path=$(src_path);cb_bin_path=$(cb_bin_path);authors=$(Authors);copyright=$(Copyright);summary=$(Description)");
@@ -228,7 +227,7 @@ namespace YuShiITSSDK.Builder
                 f.WriteEndElement();
                 f.WriteStartElement("repository");
                 f.WriteAttributeString("type", "git");
-                f.WriteAttributeString("url", "https://github.com/ErikZhouXin/YuShiITSSDK");
+                f.WriteAttributeString("url", "https://www.gitee.com/ErikZhouXin/NHardwares");
                 f.WriteEndElement(); // repository
                 f.WriteElementString("summary", "$summary$");
                 f.WriteElementString("tags", PACKAGE_TAGS);
