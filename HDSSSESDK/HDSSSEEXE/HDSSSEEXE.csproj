@@ -1,0 +1,43 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<TargetFrameworks>net40;net45;netcoreapp3.1;net5.0;net6.0</TargetFrameworks>
+		<AssemblyName>NSystem.Data.HDSSSEEXE</AssemblyName>
+		<PlatformTarget>x86</PlatformTarget>
+		<RootNamespace>System.Data.HDSSSEEXE</RootNamespace>
+		<Description>命名管道打通华大HD100的HDSSSE32读写器32位SDK</Description>
+		<Authors>ErikZhouXin</Authors>
+		<SignAssembly>true</SignAssembly>
+		<LangVersion>latest</LangVersion>
+		<PackageReleaseNotes>Copyright © 2020 版权所有</PackageReleaseNotes>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+		<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+		<TargetLatestRuntimePatch>true</TargetLatestRuntimePatch>
+		<GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<Version>2021.11.11</Version>
+		<FileVersion>2021.11.11.666</FileVersion>
+		<AssemblyVersion>2021.11.11.666</AssemblyVersion>
+		<RepositoryUrl>https://gitee.com/erikzhouxin/NHardwares.git</RepositoryUrl>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageTags>华大;HD-100;HDSSSE;</PackageTags>
+		<PackageDescription>命名管道打通华大HD100的HDSSSE32读写器32位SDK</PackageDescription>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Costura.Fody" Version="5.7.0">
+		  <PrivateAssets>all</PrivateAssets>
+		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Fody" Version="6.6.0">
+		  <PrivateAssets>all</PrivateAssets>
+		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+	</ItemGroup>
+
+	<Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+	  <Exec Command="xcopy $(ProjectDir)..\Beans\HDSSSE32.dll $(TargetDir) /Y" />
+	</Target>
+</Project>

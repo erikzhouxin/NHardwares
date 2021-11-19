@@ -95,7 +95,6 @@ namespace YuShiITSSDK.Builder
         }
         #endregion
         #region // Version
-
         private static void GenDirectoryBuildProps(string root)
         {
             using (XmlWriter f = XmlWriter.Create(Path.Combine(root, "Directory.Build.props"), new XmlWriterSettings
@@ -122,7 +121,7 @@ namespace YuShiITSSDK.Builder
                 f.WriteElementString("PackageLicenseExpression", "MIT");
                 f.WriteElementString("PackageRequireLicenseAcceptance", "false");
                 f.WriteElementString("PackageTags", PACKAGE_TAGS);
-                f.WriteElementString("RepositoryUrl", "https://github.com/ErikZhouXin/YuShiITSSDK");
+                f.WriteElementString("RepositoryUrl", "https://www.gitee.com/ErikZhouXin/NHardwares");
                 f.WriteElementString("RepositoryType", "git");
                 f.WriteElementString("PackageOutputPath", "$([System.IO.Path]::Combine($(MSBuildThisFileDirectory), 'bin'))");
 
@@ -170,7 +169,7 @@ namespace YuShiITSSDK.Builder
                 f.WriteElementString("RootNamespace", id.Substring(1));
                 f.WriteElementString("NoBuild", "true");
                 f.WriteElementString("GenerateDocumentationFile", "true");
-                f.WriteElementString("IncludeBuildOutput", "false");
+                f.WriteElementString("IncludeBuildOutput", "true");
                 f.WriteElementString("NuspecFile", $"{id}.nuspec");
                 f.WriteElementString("NuspecProperties", "version=$(version);src_path=$(src_path);cb_bin_path=$(cb_bin_path);authors=$(Authors);copyright=$(Copyright);summary=$(Description)");
 
@@ -295,21 +294,21 @@ namespace YuShiITSSDK.Builder
                 //write_nuspec_file_entry(relpath_targets, string.Format("build\\net40"), f);
                 //write_nuspec_file_entry(relpath_targets, string.Format("build\\netstandard2.0"), f);
                 // 支持的SDK
-                foreach (var sdkName in sdks)
-                {
-                    try
-                    {
-                        foreach (var file in Directory.GetFiles(Path.Combine(dir_src, "bin", Config, sdkName)))
-                        {
-                            var fileName = Path.GetFileName(file);
-                            f.WriteStartElement("file");
-                            f.WriteAttributeString("src", $"bin\\{Config}\\{sdkName}\\{fileName}");
-                            f.WriteAttributeString("target", $"lib/{sdkName}/{fileName}");
-                            f.WriteEndElement(); // file
-                        }
-                    }
-                    catch { }
-                }
+                //foreach (var sdkName in sdks)
+                //{
+                //    try
+                //    {
+                //        foreach (var file in Directory.GetFiles(Path.Combine(dir_src, "bin", Config, sdkName)))
+                //        {
+                //            var fileName = Path.GetFileName(file);
+                //            f.WriteStartElement("file");
+                //            f.WriteAttributeString("src", $"bin\\{Config}\\{sdkName}\\{fileName}");
+                //            f.WriteAttributeString("target", $"lib/{sdkName}/{fileName}");
+                //            f.WriteEndElement(); // file
+                //        }
+                //    }
+                //    catch { }
+                //}
 
                 f.WriteEndElement(); // files
 
