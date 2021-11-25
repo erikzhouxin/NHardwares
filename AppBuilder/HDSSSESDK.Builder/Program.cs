@@ -13,7 +13,7 @@ namespace HDSSSESDK.Builder
         public static String Proj_Name { get; } = "HDSSSESDK";
         public static String SrcDir { get; } = Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), "..", "..", "..", "..", "..", Proj_Name));
         public static String ProjDir { get; } = Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), "..", "..", "..", "..", "..", Proj_Name, Proj_Name));
-        static string NUSPEC_VERSION { get; } = string.Format("2021.11.11", DateTime.Now);
+        static string NUSPEC_VERSION { get; } = string.Format("2021.12.12", DateTime.Now);
         static string ASSEMBLY_VERSION { get; } = string.Format("{0}.{1}", NUSPEC_VERSION, (int)(DateTime.Now - new DateTime(2020, 1, 1)).TotalDays);
         static string COPYRIGHT { get; } = $"Copyright 2020-{DateTime.Now.Year}";
         static string AUTHORS { get; } = "ErikZhouXin";
@@ -208,6 +208,15 @@ namespace HDSSSESDK.Builder
                 f.WriteElementString("tags", PACKAGE_TAGS);
 
                 f.WriteElementString("description", SUMMARY);
+
+                f.WriteStartElement("dependencies");
+
+                f.WriteStartElement("dependency");
+                f.WriteAttributeString("id", "Newtonsoft.Json");
+                f.WriteAttributeString("version", "13.0.1");
+                f.WriteEndElement();
+
+                f.WriteEndElement(); // dependencies
 
                 f.WriteEndElement(); // metadata
 

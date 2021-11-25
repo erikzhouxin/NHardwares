@@ -11,9 +11,9 @@
     <Copyright>Copyright 2020-2021</Copyright>
     <Company>EZhouXin</Company>
     <Authors>ErikZhouXin</Authors>
-    <Version>2021.11.11</Version>
-    <AssemblyVersion>2021.11.11.687</AssemblyVersion>
-    <FileVersion>2021.11.11.687</FileVersion>
+    <Version>2021.12.12</Version>
+    <AssemblyVersion>2021.12.12.688</AssemblyVersion>
+    <FileVersion>2021.12.12.688</FileVersion>
     <Description>华大HD100的HDSSSE32读写器命名管道实现64位使用32位SDK</Description>
     <ProviderLangVersion>7.3</ProviderLangVersion>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>

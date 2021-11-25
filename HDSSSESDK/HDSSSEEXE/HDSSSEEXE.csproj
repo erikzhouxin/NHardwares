@@ -36,8 +36,4 @@
 		</PackageReference>
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
 	</ItemGroup>
-
-	<Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-	  <Exec Command="xcopy $(ProjectDir)..\Beans\HDSSSE32.dll $(TargetDir) /Y" />
-	</Target>
 </Project>

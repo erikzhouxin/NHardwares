@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-	  <PackageReference Include="NSystem.Data.HDSSSESDK" Version="2021.11.11" />
+	  <PackageReference Include="NSystem.Data.HDSSSESDK" Version="2021.12.12" />
 	  <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
 
