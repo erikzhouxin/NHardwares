@@ -282,6 +282,24 @@ namespace System.Data.ShenBanReader
                 default: throw new NotImplementedException();
             }
         }
+        /// <summary>
+        /// 获取取Epc内容指定长度
+        /// </summary>
+        /// <param name="len"></param>
+        /// <returns></returns>
+        public bool TakeEpc(int len)
+        {
+            if (len == EPC.Length) { return true; }
+            if (len > EPC.Length) { return false; }
+            FEPC = EPC;
+            EPC = new byte[len];
+            Array.Copy(FEPC, 0, EPC, 0, len);
+            return true;
+        }
+        /// <summary>
+        /// 全部的EPC
+        /// </summary>
+        public byte[] FEPC { get; private set; }
         internal enum InitType
         {
             /// <summary>
