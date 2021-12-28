@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <AssemblyName>NSystem.Data.ShenBanReader.WinForm</AssemblyName>
+    <RootNamespace>System.Data.ShenBanReader.WinForm</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\EZhouXin.Tools\FakeHuaMuLan\WinFormControl\FakeHuaMuLan.WinFormControl.csproj" />
+    <ProjectReference Include="..\..\..\ShenBanReader\ShenBanReader.csproj" />
+  </ItemGroup>
+
+</Project>

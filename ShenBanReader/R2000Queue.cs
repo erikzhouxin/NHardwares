@@ -459,25 +459,6 @@ namespace System.Data.ShenBanReader
         internal class TalkModel : ITalkModel
         {
             /// <summary>
-            /// 轮询间隔(毫秒)
-            /// 发送命令开始直至收到结果或者异常或者超过此时间
-            /// </summary>
-            public static int PollInterval { get; set; } = 500;
-            /// <summary>
-            /// 轮询次数(毫秒)
-            /// 发送命令开始直至收到结果但收到的长度为0;
-            /// </summary>
-            public static int PollTimes { get; set; } = 5;
-            /// <summary>
-            /// 轮询等待时间
-            /// 发送成功后等待时间
-            /// </summary>
-            public static int PollWaiter { get; set; } = 50;
-            /// <summary>
-            /// 缓存长度(默认4096)
-            /// </summary>
-            public static int PollLength { get; set; } = 4096;
-            /// <summary>
             /// 锁定对象
             /// </summary>
             public static object LockObject { get; } = new object();
@@ -590,8 +571,7 @@ namespace System.Data.ShenBanReader
                     _ip = ipAddress;
                     _port = port;
                     _client = new TcpClient();
-                    _client.ReceiveTimeout = PollInterval;
-                    _client.SendTimeout = PollInterval;
+                    _client.ReceiveTimeout = _client.SendTimeout = ReaderSetter.Current.ReadPollTimeout;
                     _client.Connect(ipAddress, port);
                     _stream = _client.GetStream();    // 获取连接至远程的流
                     exception = null;
@@ -614,8 +594,11 @@ namespace System.Data.ShenBanReader
             /// <returns></returns>
             public override bool Send(byte[] send, out byte[] received, out Exception exception)
             {
+                var interval = ReaderSetter.Current.ReadPollTimeout;
+                var waiter = ReaderSetter.Current.ReadPollTimeWaiter;
+                var buffLen = ReaderSetter.Current.ReadPollBuffLength;
                 // 获取锁定发送
-                if (Monitor.TryEnter(LockObject, TimeSpan.FromMilliseconds(PollInterval)))
+                if (Monitor.TryEnter(LockObject, TimeSpan.FromMilliseconds(interval)))
                 {
                     if (!IsConnected) // 未连接重连尝试
                     {
@@ -640,9 +623,9 @@ namespace System.Data.ShenBanReader
                         Monitor.Exit(LockObject);
                         return false;
                     }
-                    Thread.Sleep(PollWaiter * 2); // 发送成功后确保已经开始接收,减少出错
+                    Thread.Sleep(waiter * 2); // 发送成功后等待,确保已经开始接收,减少出错
                     var len = 0;
-                    var buffer = new byte[PollLength];
+                    var buffer = new byte[buffLen];
                     try
                     {
                         len = _stream.Read(buffer, 0, buffer.Length);
@@ -682,7 +665,7 @@ namespace System.Data.ShenBanReader
                 }
                 else
                 {
-                    exception = new TimeoutException($"已超过轮询时间{PollInterval}毫秒未获取到资源");
+                    exception = new TimeoutException($"已超过轮询时间{interval}毫秒未获取到资源");
                     received = null;
                     return false;
                 }
@@ -747,7 +730,7 @@ namespace System.Data.ShenBanReader
                     }
                     serialPort.PortName = portName;
                     serialPort.BaudRate = bautRate;
-                    serialPort.ReadTimeout = PollInterval;
+                    serialPort.ReadTimeout = ReaderSetter.Current.ReadPollTimeout;
                     serialPort.Open();
                 }
                 catch (UnauthorizedAccessException)
@@ -789,8 +772,11 @@ namespace System.Data.ShenBanReader
 
             public override bool Send(byte[] aryBuffer, out byte[] received, out Exception exception)
             {
+                var interval = ReaderSetter.Current.ReadPollTimeout;
+                var waiter = ReaderSetter.Current.ReadPollTimeWaiter;
+                var buffLen = ReaderSetter.Current.ReadPollBuffLength;
                 // 获取锁定发送
-                if (Monitor.TryEnter(LockObject, TimeSpan.FromMilliseconds(PollInterval)))
+                if (Monitor.TryEnter(LockObject, TimeSpan.FromMilliseconds(interval)))
                 {
                     if (!serialPort.IsOpen)
                     {
@@ -810,15 +796,15 @@ namespace System.Data.ShenBanReader
                         Monitor.Exit(LockObject);
                         return false;
                     }
-                    Thread.Sleep(PollWaiter); // 发送成功后等100毫秒,确保已经开始接收,减少出错
+                    Thread.Sleep(waiter * 2); // 发送成功后等待,确保已经开始接收,减少出错
                     var len = 0;
-                    var buffer = new byte[PollLength];
+                    var buffer = new byte[buffLen];
                     var now = DateTime.Now;
                     try
                     {
                         while (true)
                         {
-                            if ((DateTime.Now - now).TotalMilliseconds > PollInterval)
+                            if ((DateTime.Now - now).TotalMilliseconds > interval)
                             {
                                 bool res;
                                 if (len > 0)
@@ -826,13 +812,13 @@ namespace System.Data.ShenBanReader
                                     received = new byte[len];
                                     Array.Copy(buffer, received, len);
                                     res = true;
-                                    exception = new Exception($"已超过轮询时间{PollInterval}毫秒，数据可能不完整");
+                                    exception = new Exception($"已超过轮询时间{interval}毫秒，数据可能不完整");
                                 }
                                 else
                                 {
                                     res = false;
                                     received = null;
-                                    exception = new Exception($"已超过轮询时间{PollInterval}毫秒，未读取到数据");
+                                    exception = new Exception($"已超过轮询时间{interval}毫秒，未读取到数据");
                                 }
                                 Monitor.Exit(LockObject);
                                 return res;
@@ -858,7 +844,7 @@ namespace System.Data.ShenBanReader
                             }
                             serialPort.Read(buffer, len, nCount);
                             len += nCount;
-                            Thread.Sleep(PollWaiter);
+                            Thread.Sleep(waiter);
                         }
                     }
                     catch (Exception ex)
@@ -881,7 +867,7 @@ namespace System.Data.ShenBanReader
                 }
                 else
                 {
-                    exception = new TimeoutException($"已超过轮询时间{PollInterval}毫秒未获取到资源");
+                    exception = new TimeoutException($"已超过轮询时间{interval}毫秒未获取到资源");
                     received = null;
                     return false;
                 }
