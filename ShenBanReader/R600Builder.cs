@@ -7,12 +7,14 @@ namespace System.Data.ShenBanReader
 {
     /// <summary>
     /// 深坂R600读写代理
+    /// <see cref="ReaderBuilder"/>
     /// </summary>
     public static class R600Builder
     {
         /// <summary>
         /// 创建读写器
         /// </summary>
+        [Obsolete("替代方案:ReaderBuilder")]
         public static IR600Reader GetReader()
         {
             return new R600Reader();
@@ -20,6 +22,7 @@ namespace System.Data.ShenBanReader
         /// <summary>
         /// 创建读写器
         /// </summary>
+        [Obsolete("替代方案:ReaderBuilder")]
         public static IR600Reader GetReader(IR600Recall recall)
         {
             var result = new R600Reader();
@@ -29,6 +32,7 @@ namespace System.Data.ShenBanReader
         /// <summary>
         /// 创建读写器
         /// </summary>
+        [Obsolete("替代方案:ReaderBuilder")]
         public static IR600Reader GetReader(IR600Callback recall)
         {
             var result = new R600Reader();
@@ -38,6 +42,7 @@ namespace System.Data.ShenBanReader
         /// <summary>
         /// 创建队列读写器
         /// </summary>
+        [Obsolete("替代方案:ReaderBuilder")]
         public static IR600Queue GetQueue()
         {
             var result = new R600Queue();
@@ -46,6 +51,7 @@ namespace System.Data.ShenBanReader
         /// <summary>
         /// 创建队列读写器
         /// </summary>
+        [Obsolete("替代方案:ReaderBuilder")]
         public static IR600Queue GetQueue(IR600Recall recall)
         {
             var result = new R600Queue();
@@ -55,6 +61,7 @@ namespace System.Data.ShenBanReader
         /// <summary>
         /// 创建队列读写器
         /// </summary>
+        [Obsolete("替代方案:ReaderBuilder")]
         public static IR600Queue GetQueue(IR600Callback recall)
         {
             var result = new R600Queue();

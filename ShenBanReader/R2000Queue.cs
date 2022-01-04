@@ -23,7 +23,6 @@ namespace System.Data.ShenBanReader
         {
             _talker = new TalkModel();
         }
-
         /// <summary>
         /// 打开串口
         /// </summary>
@@ -96,7 +95,6 @@ namespace System.Data.ShenBanReader
             }
             return GetAlert404(R600CmdType.GetFrequencyRegion, exception, model);
         }
-
         /// <summary>
         /// 盘存结余
         /// <see cref="R600CmdType.InventoryReal"/>

@@ -38,10 +38,7 @@ namespace System.Data.ShenBanReader
         /// <param name="baudRate"></param>
         public R600Reactor(string portName, int baudRate)
         {
-            if (Connect(portName, baudRate, out string exception) == -1)
-            {
-                throw new Exception(exception);
-            }
+            Connect(portName, baudRate, out string exception);
             this.AnalysisCallback = AnalyData;
         }
         /// <summary>
@@ -51,10 +48,7 @@ namespace System.Data.ShenBanReader
         /// <param name="baudRate"></param>
         public R600Reactor(IPAddress ip, int baudRate)
         {
-            if (Connect(ip, baudRate, out string exception) == -1)
-            {
-                throw new Exception(exception);
-            }
+            Connect(ip, baudRate, out string exception);
             this.AnalysisCallback = AnalyData;
         }
         /// <summary>
@@ -64,12 +58,12 @@ namespace System.Data.ShenBanReader
         /// <param name="baudRate"></param>
         /// <param name="exception"></param>
         /// <returns></returns>
-        public override int Connect(string portName, int baudRate, out string exception)
+        public override bool Connect(string portName, int baudRate, out string exception)
         {
             _talker?.Dispose();
             _talker = new AR600Reader.SerialTalkModel();
             _talker.Received += RunReceiveDataCallback;
-            return _talker.Connect(portName, baudRate, out exception) ? 0 : -1;
+            return _talker.Connect(portName, baudRate, out exception);
         }
         /// <summary>
         /// 连接网口
@@ -78,12 +72,12 @@ namespace System.Data.ShenBanReader
         /// <param name="port"></param>
         /// <param name="exception"></param>
         /// <returns></returns>
-        public override int Connect(IPAddress ip, int port, out string exception)
+        public override bool Connect(IPAddress ip, int port, out string exception)
         {
             _talker?.Dispose();
             _talker = new AR600Reader.TcpTalkModel();
             _talker.Received += RunReceiveDataCallback;
-            return _talker.Connect(ip, port, out exception) ? 0 : -1;
+            return _talker.Connect(ip, port, out exception);
         }
         #endregion
         #region // 接收及分析

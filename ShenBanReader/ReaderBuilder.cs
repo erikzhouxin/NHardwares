@@ -26,5 +26,57 @@ namespace System.Data.ShenBanReader
         {
             return new R2000Queue();
         }
+
+        /// <summary>
+        /// 创建读写器
+        /// </summary>
+        public static IR600Reader GetReader()
+        {
+            return new R600Reader();
+        }
+        /// <summary>
+        /// 创建读写器
+        /// </summary>
+        public static IR600Reader GetReader(IR600Recall recall)
+        {
+            var result = new R600Reader();
+            result.RegistCallback(recall);
+            return result;
+        }
+        /// <summary>
+        /// 创建读写器
+        /// </summary>
+        public static IR600Reader GetReader(IR600Callback recall)
+        {
+            var result = new R600Reader();
+            result.RegistCallback(recall);
+            return result;
+        }
+        /// <summary>
+        /// 创建队列读写器
+        /// </summary>
+        public static IR600Queue GetQueue()
+        {
+            var result = new R600Queue();
+            return result;
+        }
+        /// <summary>
+        /// 创建队列读写器
+        /// </summary>
+        public static IR600Queue GetQueue(IR600Recall recall)
+        {
+            var result = new R600Queue();
+            result.RegistCallback(recall);
+            return result;
+        }
+        /// <summary>
+        /// 创建队列读写器
+        /// </summary>
+        public static IR600Queue GetQueue(IR600Callback recall)
+        {
+            var result = new R600Queue();
+            result.RegistCallback(recall);
+            return result;
+        }
     }
 }

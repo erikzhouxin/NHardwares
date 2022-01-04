@@ -1,4 +1,6 @@
-﻿namespace System.Data.ShenBanReader
+﻿using System;
+
+namespace System.Data.ShenBanReader
 {
     /// <summary>
     /// 回调委托接口
@@ -207,7 +209,7 @@
         Action<IR600Message, byte, R600LockTagStatus> QueryTagISO18000 { get; set; }
     }
     /// <summary>
-    /// 
+    /// 回调委托接口
     /// </summary>
     public class R600Callback : IR600Callback
     {
@@ -483,66 +485,11 @@
         /// <summary>
         /// 默认构造
         /// </summary>
-        public AR600Callback() : base()
-        {
-        }
+        public AR600Callback() : base() { }
         /// <summary>
         /// 构造
         /// </summary>
-        public AR600Callback(IR600Recall model) : base(model)
-        {
-            if (model == null) { return; }
-            this.SendCallback = model.SendCallback;
-            this.ReceiveCallback = model.ReceiveCallback;
-            this.AlertUnknownPacketType = model.AlertUnknownPacketType;
-            this.AlertError = model.AlertError;
-            this.AlertCallbackError = model.AlertCallbackError;
-            this.ReadGpioValue = model.ReadGpioValue;
-            this.WriteGpioValue = model.WriteGpioValue;
-            this.SetAntDetector = model.SetAntDetector;
-            this.GetAntDetector = model.GetAntDetector;
-            this.SetReaderIdentifier = model.SetReaderIdentifier;
-            this.GetReaderIdentifier = model.GetReaderIdentifier;
-            this.SetLinkProfile = model.SetLinkProfile;
-            this.GetLinkProfile = model.GetLinkProfile;
-            this.SetUartBaudRate = model.SetUartBaudRate;
-            this.GetFirmwareVersion = model.GetFirmwareVersion;
-            this.SetReaderAddress = model.SetReaderAddress;
-            this.SetWorkAntenna = model.SetWorkAntenna;
-            this.GetWorkAntenna = model.GetWorkAntenna;
-            this.SetOutputPower = model.SetOutputPower;
-            this.GetOutputPower = model.GetOutputPower;
-            this.SetFrequencyRegion = model.SetFrequencyRegion;
-            this.GetFrequencyRegion = model.GetFrequencyRegion;
-            this.SetBeeperMode = model.SetBeeperMode;
-            this.GetReaderTemperature = model.GetReaderTemperature;
-            this.SetDrmMode = model.SetDrmMode;
-            this.GetDrmMode = model.GetDrmMode;
-            this.GetImpedanceMatch = model.GetImpedanceMatch;
-            this.Inventory = model.Inventory;
-            this.ReadTag = model.ReadTag;
-            this.WriteTag = model.WriteTag;
-            this.LockTag = model.LockTag;
-            this.KillTag = model.KillTag;
-            this.SetAccessEpcMatch = model.SetAccessEpcMatch;
-            this.GetAccessEpcMatch = model.GetAccessEpcMatch;
-            this.InventoryReal = model.InventoryReal;
-            this.InventoryRealEnd = model.InventoryRealEnd;
-            this.FastSwitchInventory = model.FastSwitchInventory;
-            this.FastSwitchInventoryEnd = model.FastSwitchInventoryEnd;
-            this.SetMonzaStatus = model.SetMonzaStatus;
-            this.GetMonzaStatus = model.GetMonzaStatus;
-            this.GetInventoryBuffer = model.GetInventoryBuffer;
-            this.GetAndResetInventoryBuffer = model.GetAndResetInventoryBuffer;
-            this.GetInventoryBufferTagCount = model.GetInventoryBufferTagCount;
-            this.ResetInventoryBuffer = model.ResetInventoryBuffer;
-            this.InventoryISO18000 = model.InventoryISO18000;
-            this.InventoryISO18000End = model.InventoryISO18000End;
-            this.ReadTagISO18000 = model.ReadTagISO18000;
-            this.WriteTagISO18000 = model.WriteTagISO18000;
-            this.LockTagISO18000 = model.LockTagISO18000;
-            this.QueryTagISO18000 = model.QueryTagISO18000;
-        }
+        public AR600Callback(IR600Recall model) : base(model) { }
         #region // 回调方法接口
         /// <summary>
         /// 发送回调
