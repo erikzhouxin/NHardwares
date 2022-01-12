@@ -21,7 +21,7 @@ namespace System.Data.ShenBanReader
         /// <summary>
         /// 当前消息
         /// </summary>
-        public virtual IR600Message Current { get; set; }
+        public virtual IReadMessage Current { get; set; }
         /// <summary>
         /// 阅读器标识
         /// </summary>
@@ -29,7 +29,7 @@ namespace System.Data.ShenBanReader
         /// <summary>
         /// 射频类型
         /// </summary>
-        public virtual R600FreqRegionType FreqType { get; set; }
+        public virtual ReadFreqRegionType FreqType { get; set; }
         /// <summary>
         /// 射频值
         /// </summary>
@@ -53,14 +53,14 @@ namespace System.Data.ShenBanReader
         /// <summary>
         /// 工作天线
         /// </summary>
-        public R600AntennaType CurrentAnt { get; set; }
+        public ReadAntennaType CurrentAnt { get; set; }
 
         /// <summary>
         /// 比较当前EPC相等
         /// </summary>
         /// <param name="epc"></param>
         /// <returns></returns>
-        public bool EqualCurrentEpc(byte[] epc) => R600Builder.EqualBytes(CurrentEpc, epc, false);
+        public bool EqualCurrentEpc(byte[] epc) => ReaderCaller.EqualBytes(CurrentEpc, epc, false);
 
         /// <summary>
         /// 尝试添加读标签内容

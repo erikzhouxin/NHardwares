@@ -134,7 +134,7 @@ namespace System.Data.ShenBanReader
         /// <summary>
         /// 射频通讯链路枚举
         /// </summary>
-        public R600LinkProfileType R600LinkProfileType;
+        public ReadLinkProfileType R600LinkProfileType;
         /// <summary>
         /// 固件版本
         /// </summary>

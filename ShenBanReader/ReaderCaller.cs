@@ -1,4 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -6,69 +9,10 @@ using System.Text.RegularExpressions;
 namespace System.Data.ShenBanReader
 {
     /// <summary>
-    /// 深坂R600读写代理
-    /// <see cref="ReaderBuilder"/>
+    /// 读写器调用
     /// </summary>
-    public static class R600Builder
+    public static class ReaderCaller
     {
-        /// <summary>
-        /// 创建读写器
-        /// </summary>
-        [Obsolete("替代方案:ReaderBuilder")]
-        public static IR600Reader GetReader()
-        {
-            return new R600Reader();
-        }
-        /// <summary>
-        /// 创建读写器
-        /// </summary>
-        [Obsolete("替代方案:ReaderBuilder")]
-        public static IR600Reader GetReader(IR600Recall recall)
-        {
-            var result = new R600Reader();
-            result.RegistCallback(recall);
-            return result;
-        }
-        /// <summary>
-        /// 创建读写器
-        /// </summary>
-        [Obsolete("替代方案:ReaderBuilder")]
-        public static IR600Reader GetReader(IR600Callback recall)
-        {
-            var result = new R600Reader();
-            result.RegistCallback(recall);
-            return result;
-        }
-        /// <summary>
-        /// 创建队列读写器
-        /// </summary>
-        [Obsolete("替代方案:ReaderBuilder")]
-        public static IR600Queue GetQueue()
-        {
-            var result = new R600Queue();
-            return result;
-        }
-        /// <summary>
-        /// 创建队列读写器
-        /// </summary>
-        [Obsolete("替代方案:ReaderBuilder")]
-        public static IR600Queue GetQueue(IR600Recall recall)
-        {
-            var result = new R600Queue();
-            result.RegistCallback(recall);
-            return result;
-        }
-        /// <summary>
-        /// 创建队列读写器
-        /// </summary>
-        [Obsolete("替代方案:ReaderBuilder")]
-        public static IR600Queue GetQueue(IR600Callback recall)
-        {
-            var result = new R600Queue();
-            result.RegistCallback(recall);
-            return result;
-        }
-        #region // 辅助方法
         /// <summary>
         /// 获取发送数据
         /// </summary>
@@ -76,7 +20,7 @@ namespace System.Data.ShenBanReader
         /// <param name="cmd"></param>
         /// <param name="send"></param>
         /// <returns></returns>
-        public static byte[] GetSendData(byte readId, R600CmdType cmd, byte[] send = null) => GetSendData(readId, (byte)cmd, send);
+        public static byte[] GetSendData(byte readId, ReadCmdType cmd, byte[] send = null) => GetSendData(readId, (byte)cmd, send);
         /// <summary>
         /// 获取发送数据
         /// </summary>
@@ -133,9 +77,9 @@ namespace System.Data.ShenBanReader
         /// <param name="interval"></param>
         /// <param name="chanelQuality"></param>
         /// <returns></returns>
-        public static double GetFreq(R600FreqRegionType type, int start, byte interval, byte chanelQuality)
+        public static double GetFreq(ReadFreqRegionType type, int start, byte interval, byte chanelQuality)
         {
-            if (type == R600FreqRegionType.Custom)
+            if (type == ReadFreqRegionType.Custom)
             {
                 return (start + chanelQuality * interval * 10) / 1000;
             }
@@ -336,7 +280,6 @@ namespace System.Data.ShenBanReader
                 _ => string.Empty,
             };
         }
-        #endregion
         #region // 内部方法
         /// <summary>
         /// 字节相等

@@ -18,7 +18,7 @@ namespace System.Data.ShenBanReader
             /// <summary>
             /// 当前消息
             /// </summary>
-            IR600Message Current { get; set; }
+            IReadMessage Current { get; set; }
             /// <summary>
             /// 阅读器标识
             /// </summary>
@@ -26,14 +26,14 @@ namespace System.Data.ShenBanReader
         }
         /// <summary>
         /// 获取射频规范结果
-        /// <see cref="R600CmdType.GetFrequencyRegion"/>
+        /// <see cref="ReadCmdType.GetFrequencyRegion"/>
         /// </summary>
         public interface GetFrequencyRegion : IReceiveMessage
         {
             /// <summary>
             /// 射频类型
             /// </summary>
-            R600FreqRegionType FreqType { get; set; }
+            ReadFreqRegionType FreqType { get; set; }
             /// <summary>
             /// 频率值
             /// </summary>
@@ -41,7 +41,7 @@ namespace System.Data.ShenBanReader
         }
         /// <summary>
         /// 盘点结存
-        /// <see cref="R600CmdType.InventoryReal"/>
+        /// <see cref="ReadCmdType.InventoryReal"/>
         /// </summary>
         public interface InventoryReal : IReceiveMessage
         {
@@ -65,7 +65,7 @@ namespace System.Data.ShenBanReader
         }
         /// <summary>
         /// 快速四天线盘存
-        /// <see cref="R600CmdType.FastSwitchInventory"/>
+        /// <see cref="ReadCmdType.FastSwitchInventory"/>
         /// </summary>
         public interface FastSwitchInventory : IReceiveMessage
         {
@@ -90,7 +90,7 @@ namespace System.Data.ShenBanReader
         }
         /// <summary>
         /// 读标签
-        /// <see cref="R600CmdType.ReadTag"/>
+        /// <see cref="ReadCmdType.ReadTag"/>
         /// </summary>
         public interface ReadTag : IReceiveMessage
         {
@@ -106,7 +106,7 @@ namespace System.Data.ShenBanReader
         }
         /// <summary>
         /// 取得选定标签
-        /// <see cref="R600CmdType.GetAccessEpcMatch"/>
+        /// <see cref="ReadCmdType.GetAccessEpcMatch"/>
         /// </summary>
         public interface GetAccessEpcTag : IReceiveMessage
         {
@@ -123,21 +123,21 @@ namespace System.Data.ShenBanReader
         }
         /// <summary>
         /// 设置选定标签
-        /// <see cref="R600CmdType.SetAccessEpcMatch"/>
+        /// <see cref="ReadCmdType.SetAccessEpcMatch"/>
         /// </summary>
         public interface SetAccessEpcMatch : GetAccessEpcTag
         {
         }
         /// <summary>
         /// 设置工作天线
-        /// <see cref="R600CmdType.SetWorkAntenna"/>
+        /// <see cref="ReadCmdType.SetWorkAntenna"/>
         /// </summary>
         public interface SetWorkAntenna : IReceiveMessage
         {
             /// <summary>
             /// 工作天线
             /// </summary>
-            R600AntennaType CurrentAnt { get; set; }
+            ReadAntennaType CurrentAnt { get; set; }
         }
     }
 }

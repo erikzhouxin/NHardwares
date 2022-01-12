@@ -22,15 +22,14 @@ namespace System.Data.ShenBanReader
         /// 获取顺序读内容
         /// </summary>
         /// <returns></returns>
-        public static R2000Queue GetR2000Queue()
+        public static IR2000Queue GetR2000Queue()
         {
             return new R2000Queue();
         }
-
         /// <summary>
         /// 创建读写器
         /// </summary>
-        public static IR600Reader GetReader()
+        public static IR600Reader GetR2000Reader()
         {
             return new R600Reader();
         }

@@ -9,7 +9,7 @@ namespace System.Data.ShenBanReader
     /// R600提示结果类
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class R600AlertModel<T>
+    public class ReadAlertModel<T>
     {
         /// <summary>
         /// 错误构造
@@ -20,7 +20,7 @@ namespace System.Data.ShenBanReader
         /// <param name="clazz"></param>
         /// <param name="method"></param>
         /// <param name="data"></param>
-        public R600AlertModel(R600CmdType cmd, int code, string message, string clazz, string method, T data)
+        public ReadAlertModel(ReadCmdType cmd, int code, string message, string clazz, string method, T data)
         {
             IsSuccess = false;
             Cmd = cmd;
@@ -35,7 +35,7 @@ namespace System.Data.ShenBanReader
         /// </summary>
         /// <param name="cmd"></param>
         /// <param name="data"></param>
-        public R600AlertModel(R600CmdType cmd, T data)
+        public ReadAlertModel(ReadCmdType cmd, T data)
         {
             IsSuccess = true;
             Cmd = cmd;
@@ -73,12 +73,12 @@ namespace System.Data.ShenBanReader
         /// <summary>
         /// 命令
         /// </summary>
-        public R600CmdType Cmd { get; }
+        public ReadCmdType Cmd { get; }
     }
     /// <summary>
     /// R600提示结果类
     /// </summary>
-    public class R600AlertError : R600AlertModel<IR600Message>
+    public class ReadAlertError : ReadAlertModel<IReadMessage>
     {
         /// <summary>
         /// 错误构造
@@ -89,7 +89,7 @@ namespace System.Data.ShenBanReader
         /// <param name="clazz"></param>
         /// <param name="method"></param>
         /// <param name="data"></param>
-        public R600AlertError(R600CmdType cmd, int code, string message, string clazz, string method, IR600Message data) : base(cmd, code, message, clazz, method, data)
+        public ReadAlertError(ReadCmdType cmd, int code, string message, string clazz, string method, IReadMessage data) : base(cmd, code, message, clazz, method, data)
         {
 
         }

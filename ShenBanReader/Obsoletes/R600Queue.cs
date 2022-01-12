@@ -1,20 +1,15 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.IO;
-using System.IO.Ports;
 using System.Linq;
 using System.Net;
-using System.Net.Sockets;
 using System.Text;
-using System.Threading;
 
 namespace System.Data.ShenBanReader
 {
     /// <summary>
-    /// R600读写器接口
+    /// 响应接口
     /// </summary>
-    public interface IR600Reader : IDisposable
+    public interface IR600Queue : IDisposable
     {
         /// <summary>
         /// 接收回调
@@ -25,7 +20,7 @@ namespace System.Data.ShenBanReader
         /// </summary>
         Action<Byte[]> SendCallback { get; }
         /// <summary>
-        /// 是连接
+        /// 是连接状态
         /// </summary>
         bool IsConnected { get; }
         /// <summary>
@@ -56,238 +51,204 @@ namespace System.Data.ShenBanReader
         void RegistCallback(IR600Callback model);
         /// <summary>
         /// 读GPIO值
+        /// <see cref="IR600Callback.ReadGpioValue"/>
         /// </summary>
-        /// <param name="btReadId"></param>
         /// <returns></returns>
-        int ReadGpioValue(byte btReadId);
+        int ReadGpioValue(byte btReadId, Action<IReadMessage, byte, byte, bool, bool> ReadGpioValue);
         /// <summary>
         /// 写GPIO值
+        /// <see cref="IR600Callback.WriteGpioValue"/>
         /// </summary>
-        /// <param name="btReadId"></param>
-        /// <param name="btChooseGpio"></param>
-        /// <param name="btGpioValue"></param>
         /// <returns></returns>
-        int WriteGpioValue(byte btReadId, byte btChooseGpio, byte btGpioValue);
+        int WriteGpioValue(byte btReadId, byte btChooseGpio, byte btGpioValue, Action<IReadMessage> WriteGpioValue);
         /// <summary>
-        /// 设置
+        /// 设置天线连接检测阈值
         /// </summary>
-        /// <param name="btReadId"></param>
-        /// <param name="btDetectorStatus"></param>
         /// <returns></returns>
-        int SetAntDetector(byte btReadId, byte btDetectorStatus);
+        /// <see cref="IR600Callback.SetAntDetector"/>
+        int SetAntDetector(byte btReadId, byte btDetectorStatus, Action<IReadMessage> SetAntDetector);
         /// <summary>
         /// 读取天线连接检测阈值
+        /// <see cref="IR600Callback.GetAntDetector"/>
         /// </summary>
-        /// <param name="btReadId"></param>
         /// <returns></returns>
-        int GetAntDetector(byte btReadId);
+        int GetAntDetector(byte btReadId, Action<IReadMessage, byte> GetAntDetector);
         /// <summary>
         /// 设置读ID
+        /// <see cref="IR600Callback.SetReaderIdentifier"/>
         /// </summary>
-        /// <param name="btReadId"></param>
-        /// <param name="identifier"></param>
         /// <returns></returns>
-        int SetReaderIdentifier(byte btReadId, byte[] identifier);
+        int SetReaderIdentifier(byte btReadId, byte[] identifier, Action<IReadMessage> SetReaderIdentifier);
         /// <summary>
         /// 获取读ID
+        /// <see cref="IR600Callback.GetReaderIdentifier"/>
         /// </summary>
-        /// <param name="btReadId"></param>
         /// <returns></returns>
-        int GetReaderIdentifier(byte btReadId);
+        int GetReaderIdentifier(byte btReadId, Action<IReadMessage, byte[]> GetReaderIdentifier);
         /// <summary>
         /// 设置配置
+        /// <see cref="IR600Callback.SetLinkProfile"/>
         /// </summary>
-        /// <param name="btReadId"></param>
-        /// <param name="btProfile"></param>
         /// <returns></returns>
-        int SetLinkProfile(byte btReadId, byte btProfile);
+        int SetLinkProfile(byte btReadId, byte btProfile, Action<IReadMessage, byte> SetLinkProfile);
         /// <summary>
         /// 获取配置
+        /// <see cref="IR600Callback.GetLinkProfile"/>
         /// </summary>
-        /// <param name="btReadId"></param>
         /// <returns></returns>
-        int GetLinkProfile(byte btReadId);
+        int GetLinkProfile(byte btReadId, Action<IReadMessage, ReadLinkProfileType> GetLinkProfile);
         /// <summary>
         /// 重置
         /// </summary>
-        /// <param name="btReadId"></param>
         /// <returns></returns>
         int Reset(byte btReadId);
         /// <summary>
         /// 设置非同步收发传输器波特率
+        /// <see cref="IR600Callback.SetUartBaudRate"/>
         /// </summary>
-        /// <param name="btReadId"></param>
-        /// <param name="nIndexBaudrate"></param>
         /// <returns></returns>
-        int SetUartBaudRate(byte btReadId, int nIndexBaudrate);
+        int SetUartBaudRate(byte btReadId, int nIndexBaudrate, Action<IReadMessage> SetUartBaudRate);
         /// <summary>
         /// 获取固件版本
+        /// <see cref="IR600Callback.GetFirmwareVersion"/>
         /// </summary>
-        /// <param name="btReadId"></param>
         /// <returns></returns>
-        int GetFirmwareVersion(byte btReadId);
+        int GetFirmwareVersion(byte btReadId, Action<IReadMessage, byte, byte> GetFirmwareVersion);
         /// <summary>
         /// 设置读地址
+        /// <see cref="IR600Callback.SetReaderAddress"/>
         /// </summary>
-        /// <param name="btReadId"></param>
-        /// <param name="btNewReadId"></param>
         /// <returns></returns>
-        int SetReaderAddress(byte btReadId, byte btNewReadId);
+        int SetReaderAddress(byte btReadId, byte btNewReadId, Action<IReadMessage> SetReaderAddress);
         /// <summary>
         /// 设置工作天线
+        /// <see cref="IR600Callback.SetWorkAntenna"/>
         /// </summary>
-        /// <param name="btReadId"></param>
-        /// <param name="btWorkAntenna"></param>
         /// <returns></returns>
-        int SetWorkAntenna(byte btReadId, byte btWorkAntenna);
+        int SetWorkAntenna(byte btReadId, byte btWorkAntenna, Action<IReadMessage> SetWorkAntenna);
         /// <summary>
         /// 获取工作天线
+        /// <see cref="IR600Callback.GetWorkAntenna"/>
         /// </summary>
-        /// <param name="btReadId"></param>
         /// <returns></returns>
-        int GetWorkAntenna(byte btReadId);
+        int GetWorkAntenna(byte btReadId, Action<IReadMessage, ReadAntennaType> GetWorkAntenna);
         /// <summary>
-        /// 设置输出性能
+        /// 设置输出功率
+        /// <see cref="IR600Callback.SetOutputPower"/>
         /// </summary>
-        /// <param name="btReadId"></param>
-        /// <param name="btOutputPower"></param>
         /// <returns></returns>
-        int SetOutputPower(byte btReadId, byte btOutputPower);
+        int SetOutputPower(byte btReadId, byte btOutputPower, Action<IReadMessage> SetOutputPower);
         /// <summary>
-        /// 获取输出性能
+        /// 获取输出功率
+        /// <see cref="IR600Callback.GetOutputPower"/>
         /// </summary>
-        /// <param name="btReadId"></param>
         /// <returns></returns>
-        int GetOutputPower(byte btReadId);
+        int GetOutputPower(byte btReadId, Action<IReadMessage, byte> GetOutputPower);
         /// <summary>
         /// 设置频率区域
+        /// <see cref="IR600Callback.SetFrequencyRegion"/>
         /// </summary>
-        /// <param name="btReadId"></param>
-        /// <param name="btRegion"></param>
-        /// <param name="btStart"></param>
-        /// <param name="btInterval"></param>
-        /// <param name="btChannelQuantity"></param>
         /// <returns></returns>
-        int SetFrequencyRegion(byte btReadId, R600FreqRegionType btRegion, int btStart, byte btInterval, byte btChannelQuantity);
+        int SetFrequencyRegion(byte btReadId, ReadFreqRegionType btRegion, int btStart, byte btInterval, byte btChanelQuality, Action<IReadMessage> SetFrequencyRegion);
         /// <summary>
         /// 得到频率区域
+        /// <see cref="IR600Callback.GetFrequencyRegion"/>
         /// </summary>
-        /// <param name="btReadId"></param>
         /// <returns></returns>
-        int GetFrequencyRegion(byte btReadId);
+        int GetFrequencyRegion(byte btReadId, Action<IReadMessage, ReadFreqRegionType, int, byte, byte> GetFrequencyRegion);
         /// <summary>
         /// 设置呼叫模式
+        /// <see cref="IR600Callback.SetBeeperMode"/>
         /// </summary>
-        /// <param name="btReadId"></param>
-        /// <param name="btMode"></param>
         /// <returns></returns>
-        int SetBeeperMode(byte btReadId, byte btMode);
+        int SetBeeperMode(byte btReadId, byte btMode, Action<IReadMessage> SetBeeperMode);
         /// <summary>
         /// 得到工作温度
+        /// <see cref="IR600Callback.GetReaderTemperature"/>
         /// </summary>
-        /// <param name="btReadId"></param>
         /// <returns></returns>
-        int GetReaderTemperature(byte btReadId);
+        int GetReaderTemperature(byte btReadId, Action<IReadMessage, int> GetReaderTemperature);
         /// <summary>
         /// 设置DRM模式
+        /// <see cref="IR600Callback.SetDrmMode"/>
         /// </summary>
-        /// <param name="btReadId"></param>
-        /// <param name="btDrmMode"></param>
         /// <returns></returns>
-        int SetDrmMode(byte btReadId, byte btDrmMode);
+        int SetDrmMode(byte btReadId, byte btDrmMode, Action<IReadMessage> SetDrmMode);
         /// <summary>
         /// 获取DRM模式
+        /// <see cref="IR600Callback.GetDrmMode"/>
         /// </summary>
-        /// <param name="btReadId"></param>
         /// <returns></returns>
-        int GetDrmMode(byte btReadId);
+        int GetDrmMode(byte btReadId, Action<IReadMessage, bool> GetDrmMode);
         /// <summary>
         /// 回波损耗测量
+        /// <see cref="IR600Callback.GetImpedanceMatch"/>
         /// </summary>
-        /// <param name="btReadId"></param>
-        /// <param name="btFrequency"></param>
         /// <returns></returns>
         [Obsolete("替代方案:GetImpedanceMatch")]
-        int MeasureReturnLoss(byte btReadId, byte btFrequency);
+        int MeasureReturnLoss(byte btReadId, byte btFrequency, Action<IReadMessage, byte> GetImpedanceMatch);
         /// <summary>
         /// 获得阻抗匹配
+        /// <see cref="IR600Callback.GetImpedanceMatch"/>
         /// </summary>
-        /// <param name="btReadId"></param>
-        /// <param name="btFrequency"></param>
         /// <returns></returns>
-        int GetImpedanceMatch(byte btReadId, byte btFrequency);
+        int GetImpedanceMatch(byte btReadId, byte btFrequency, Action<IReadMessage, byte> GetImpedanceMatch);
         /// <summary>
         /// 盘存
+        /// <see cref="IR600Callback.Inventory"/>
         /// </summary>
-        /// <param name="btReadId"></param>
-        /// <param name="byRound"></param>
         /// <returns></returns>
-        int Inventory(byte btReadId, byte byRound);
+        int Inventory(byte btReadId, byte byRound, Action<IReadMessage, byte, int, int, int, int> Inventory);
         /// <summary>
         /// 读标签
+        /// <see cref="IR600Callback.ReadTag"/>
         /// </summary>
-        /// <param name="btReadId"></param>
-        /// <param name="btMemBank"></param>
-        /// <param name="btWordAdd"></param>
-        /// <param name="btWordCnt"></param>
         /// <returns></returns>
-        int ReadTag(byte btReadId, byte btMemBank, byte btWordAdd, byte btWordCnt);
+        int ReadTag(byte btReadId, byte btMemBank, byte btWordAdd, byte btWordCnt, Action<IReadMessage, R600TagInfo> ReadTag);
         /// <summary>
         /// 写标签
+        /// <see cref="IR600Callback.WriteTag"/>
         /// </summary>
-        /// <param name="btReadId"></param>
-        /// <param name="btAryPassWord"></param>
-        /// <param name="btMemBank"></param>
-        /// <param name="btWordAdd"></param>
-        /// <param name="btWordCnt"></param>
-        /// <param name="btAryData"></param>
         /// <returns></returns>
-        int WriteTag(byte btReadId, byte[] btAryPassWord, byte btMemBank, byte btWordAdd, byte btWordCnt, byte[] btAryData);
+        int WriteTag(byte btReadId, byte[] btAryPassWord, byte btMemBank, byte btWordAdd, byte btWordCnt, byte[] btAryData, Action<IReadMessage, R600TagInfo> WriteTag);
         /// <summary>
         /// 锁定标签
+        /// <see cref="IR600Callback.LockTag"/>
         /// </summary>
-        /// <param name="btReadId"></param>
-        /// <param name="btAryPassWord"></param>
-        /// <param name="btMembank"></param>
-        /// <param name="btLockType"></param>
         /// <returns></returns>
-        int LockTag(byte btReadId, byte[] btAryPassWord, byte btMembank, byte btLockType);
+        int LockTag(byte btReadId, byte[] btAryPassWord, byte btMembank, byte btLockType, Action<IReadMessage, R600TagInfo> LockTag);
         /// <summary>
         /// 释放标记
+        /// <see cref="IR600Callback.KillTag"/>
         /// </summary>
-        /// <param name="btReadId"></param>
-        /// <param name="btAryPassWord"></param>
         /// <returns></returns>
-        int KillTag(byte btReadId, byte[] btAryPassWord);
+        int KillTag(byte btReadId, byte[] btAryPassWord, Action<IReadMessage, R600TagInfo> KillTag);
         /// <summary>
-        /// 设置EPC(len = 0为1取消)
+        /// 设置EPC(btEpcLen=0为取消)
+        /// <see cref="IR600Callback.SetAccessEpcMatch"/>
         /// </summary>
-        /// <param name="btReadId"></param>
-        /// <param name="btMode"></param>
-        /// <param name="btEpcLen"></param>
-        /// <param name="btAryEpc"></param>
         /// <returns></returns>
-        int SetAccessEpcMatch(byte btReadId, byte btMode, byte btEpcLen, byte[] btAryEpc);
+        int SetAccessEpcMatch(byte btReadId, byte btMode, byte btEpcLen, byte[] btAryEpc, Action<IReadMessage> SetAccessEpcMatch);
         /// <summary>
         /// 获取EPC
+        /// <see cref="IR600Callback.GetAccessEpcMatch"/>
         /// </summary>
-        /// <param name="btReadId"></param>
         /// <returns></returns>
-        int GetAccessEpcMatch(byte btReadId);
+        int GetAccessEpcMatch(byte btReadId, Action<IReadMessage, byte[]> GetAccessEpcMatch);
         /// <summary>
-        /// 
+        /// 实时存盘
+        /// <see cref="IR600Callback.InventoryReal"/>
+        /// <see cref="IR600Callback.InventoryRealEnd"/>
         /// </summary>
-        /// <param name="btReadId"></param>
-        /// <param name="byRound"></param>
         /// <returns></returns>
-        int InventoryReal(byte btReadId, byte byRound);
+        int InventoryReal(byte btReadId, byte byRound, Action<IReadMessage, R600TagInfo> InventoryReal, Action<IReadMessage, int, int> InventoryRealEnd);
         /// <summary>
         /// 快速存盘
+        /// <see cref="IR600Callback.FastSwitchInventory"/>
+        /// <see cref="IR600Callback.FastSwitchInventoryEnd"/>
         /// </summary>
-        /// <param name="btReadId"></param>
-        /// <param name="btAryData"></param>
         /// <returns></returns>
-        int FastSwitchInventory(byte btReadId, byte[] btAryData);
+        int FastSwitchInventory(byte btReadId, byte[] btAryData, Action<IReadMessage, R600TagInfo> FastSwitchInventory, Action<IReadMessage, int, int> FastSwitchInventoryEnd);
         /// <summary>
         /// 自定义存盘
         /// </summary>
@@ -298,96 +259,84 @@ namespace System.Data.ShenBanReader
         /// <returns></returns>
         int CustomizedInventory(byte btReadId, byte session, byte target, byte byRound);
         /// <summary>
-        /// 
+        /// 设置Impinj Monza快速读TID功能
+        /// <see cref="IR600Callback.GetMonzaStatus"/>
         /// </summary>
-        /// <param name="btReadId"></param>
         /// <returns></returns>
-        int GetMonzaStatus(byte btReadId);
+        int GetMonzaStatus(byte btReadId, Action<IReadMessage, byte> GetMonzaStatus);
         /// <summary>
-        /// 
+        /// 设置Impinj Monza快速读TID功能
+        /// <see cref="IR600Callback.SetMonzaStatus"/>
         /// </summary>
-        /// <param name="btReadId"></param>
-        /// <param name="btMonzaStatus"></param>
         /// <returns></returns>
-        int SetMonzaStatus(byte btReadId, byte btMonzaStatus);
+        int SetMonzaStatus(byte btReadId, byte btMonzaStatus, Action<IReadMessage, byte> SetMonzaStatus);
         /// <summary>
         /// 获取存盘
+        /// <see cref="IR600Callback.GetInventoryBuffer"/>
         /// </summary>
-        /// <param name="btReadId"></param>
         /// <returns></returns>
-        int GetInventoryBuffer(byte btReadId);
+        int GetInventoryBuffer(byte btReadId, Action<IReadMessage, R600TagInfo> GetInventoryBuffer);
         /// <summary>
         /// 
+        /// <see cref="IR600Callback.GetAndResetInventoryBuffer"/>
         /// </summary>
-        /// <param name="btReadId"></param>
         /// <returns></returns>
-        int GetAndResetInventoryBuffer(byte btReadId);
+        int GetAndResetInventoryBuffer(byte btReadId, Action<IReadMessage, R600TagInfo> GetAndResetInventoryBuffer);
         /// <summary>
         /// 
+        /// <see cref="IR600Callback.GetInventoryBufferTagCount"/>
         /// </summary>
-        /// <param name="btReadId"></param>
         /// <returns></returns>
-        int GetInventoryBufferTagCount(byte btReadId);
+        int GetInventoryBufferTagCount(byte btReadId, Action<IReadMessage, int> GetInventoryBufferTagCount);
         /// <summary>
         /// 
+        /// <see cref="IR600Callback.ResetInventoryBuffer"/>
         /// </summary>
-        /// <param name="btReadId"></param>
         /// <returns></returns>
-        int ResetInventoryBuffer(byte btReadId);
+        int ResetInventoryBuffer(byte btReadId, Action<IReadMessage> ResetInventoryBuffer);
         /// <summary>
-        /// 
+        /// 未实现
         /// </summary>
         /// <param name="btReadId"></param>
         /// <param name="btInterval"></param>
         /// <returns></returns>
         int SetBufferDataFrameInterval(byte btReadId, byte btInterval);
         /// <summary>
-        /// 
+        /// 未实现
         /// </summary>
         /// <param name="btReadId"></param>
         /// <returns></returns>
         int GetBufferDataFrameInterval(byte btReadId);
         /// <summary>
         /// 
+        /// <see cref="IR600Callback.InventoryISO18000"/>
         /// </summary>
-        /// <param name="btReadId"></param>
         /// <returns></returns>
-        int InventoryISO18000(byte btReadId);
+        int InventoryISO18000(byte btReadId, Action<IReadMessage, R600TagInfoIso18000> InventoryISO18000, Action<IReadMessage, int> InventoryISO18000End);
         /// <summary>
         /// 
+        /// <see cref="IR600Callback.ReadTagISO18000"/>
         /// </summary>
-        /// <param name="btReadId"></param>
-        /// <param name="btAryUID"></param>
-        /// <param name="btWordAdd"></param>
-        /// <param name="btWordCnt"></param>
         /// <returns></returns>
-        int ReadTagISO18000(byte btReadId, byte[] btAryUID, byte btWordAdd, byte btWordCnt);
+        int ReadTagISO18000(byte btReadId, byte[] btAryUID, byte btWordAdd, byte btWordCnt, Action<IReadMessage, byte, byte[]> ReadTagISO18000);
         /// <summary>
         /// 
+        /// <see cref="IR600Callback.WriteTagISO18000"/>
         /// </summary>
-        /// <param name="btReadId"></param>
-        /// <param name="btAryUID"></param>
-        /// <param name="btWordAdd"></param>
-        /// <param name="btWordCnt"></param>
-        /// <param name="btAryBuffer"></param>
         /// <returns></returns>
-        int WriteTagISO18000(byte btReadId, byte[] btAryUID, byte btWordAdd, byte btWordCnt, byte[] btAryBuffer);
+        int WriteTagISO18000(byte btReadId, byte[] btAryUID, byte btWordAdd, byte btWordCnt, byte[] btAryBuffer, Action<IReadMessage, byte, byte> WriteTagISO18000);
         /// <summary>
         /// 
+        /// <see cref="IR600Callback.LockTagISO18000"/>
         /// </summary>
-        /// <param name="btReadId"></param>
-        /// <param name="btAryUID"></param>
-        /// <param name="btWordAdd"></param>
         /// <returns></returns>
-        int LockTagISO18000(byte btReadId, byte[] btAryUID, byte btWordAdd);
+        int LockTagISO18000(byte btReadId, byte[] btAryUID, byte btWordAdd, Action<IReadMessage, byte, ReadLockTagStatus> LockTagISO18000);
         /// <summary>
         /// 
+        /// <see cref="IR600Callback.QueryTagISO18000"/>
         /// </summary>
-        /// <param name="btReadId"></param>
-        /// <param name="btAryUID"></param>
-        /// <param name="btWordAdd"></param>
         /// <returns></returns>
-        int QueryTagISO18000(byte btReadId, byte[] btAryUID, byte btWordAdd);
+        int QueryTagISO18000(byte btReadId, byte[] btAryUID, byte btWordAdd, Action<IReadMessage, byte, ReadLockTagStatus> QueryTagISO18000);
         /// <summary>
         /// 正在连接
         /// </summary>
@@ -399,10 +348,39 @@ namespace System.Data.ShenBanReader
         void Close();
     }
     /// <summary>
-    /// 读写处理类
+    /// 调用实现类
     /// </summary>
-    internal sealed class R600Reader : AR600Reader, IR600Reader, IDisposable
+    internal class R600Queue : IR600Queue
     {
+        /// <summary>
+        /// 接收回调
+        /// </summary>
+        public Action<Byte[]> ReceiveCallback { get; internal set; }
+        /// <summary>
+        /// 发送回调
+        /// </summary>
+        public Action<Byte[]> SendCallback { get; internal set; }
+        /// <summary>
+        /// 分析回调
+        /// </summary>
+        public Action<IReadMessage> AnalysisCallback { get; internal set; }
+        /// <summary>
+        /// 回调模型
+        /// </summary>
+        protected IR600Callback _recall;
+        /// <summary>
+        /// 内部链接模型
+        /// </summary>
+        internal AR600Reader.ITalkModel _talker;
+        /// <summary>
+        /// 记录未处理的接收数据，主要考虑接收数据分段
+        /// </summary>
+        protected byte[] m_btAryBuffer = new byte[4096];
+        /// <summary>
+        /// 记录未处理数据的有效长度
+        /// </summary>
+        protected int m_nLenth = 0;
+        #region // 构造及连接
         ///// <summary>
         ///// 配置信息
         ///// </summary>
@@ -410,9 +388,10 @@ namespace System.Data.ShenBanReader
         /// <summary>
         /// 构造
         /// </summary>
-        public R600Reader()
+        public R600Queue()
         {
-            this._talker = new TalkModel();
+            this._recall = new R600Callback();
+            this._talker = new AR600Reader.TalkModel();
             this.AnalysisCallback = AnalyData;
             //_config = new R600ConfigModel();
         }
@@ -421,7 +400,7 @@ namespace System.Data.ShenBanReader
         /// </summary>
         /// <param name="portName"></param>
         /// <param name="baudRate"></param>
-        public R600Reader(string portName, int baudRate)
+        public R600Queue(string portName, int baudRate)
         {
             Connect(portName, baudRate, out string exception);
             this.AnalysisCallback = AnalyData;
@@ -431,12 +410,15 @@ namespace System.Data.ShenBanReader
         /// </summary>
         /// <param name="ip"></param>
         /// <param name="baudRate"></param>
-        public R600Reader(IPAddress ip, int baudRate)
+        public R600Queue(IPAddress ip, int baudRate)
         {
             Connect(ip, baudRate, out string exception);
             this.AnalysisCallback = AnalyData;
         }
-
+        /// <summary>
+        /// 是连接
+        /// </summary>
+        public bool IsConnected { get => _talker.IsConnect(); }
         /// <summary>
         /// 打开串口
         /// </summary>
@@ -444,10 +426,10 @@ namespace System.Data.ShenBanReader
         /// <param name="baudRate"></param>
         /// <param name="exception"></param>
         /// <returns></returns>
-        public override bool Connect(string portName, int baudRate, out string exception)
+        public bool Connect(string portName, int baudRate, out string exception)
         {
             _talker?.Dispose();
-            _talker = new SerialTalkModel();
+            _talker = new AR600Reader.SerialTalkModel();
             _talker.Received += RunReceiveDataCallback;
             return _talker.Connect(portName, baudRate, out exception);
         }
@@ -458,13 +440,15 @@ namespace System.Data.ShenBanReader
         /// <param name="port"></param>
         /// <param name="exception"></param>
         /// <returns></returns>
-        public override bool Connect(IPAddress ip, int port, out string exception)
+        public bool Connect(IPAddress ip, int port, out string exception)
         {
             _talker?.Dispose();
-            _talker = new TcpTalkModel();
+            _talker = new AR600Reader.TcpTalkModel();
             _talker.Received += RunReceiveDataCallback;
             return _talker.Connect(ip, port, out exception);
         }
+        #endregion
+        #region // 接收及分析
         private void RunReceiveDataCallback(byte[] btAryReceiveData)
         {
             try
@@ -537,7 +521,7 @@ namespace System.Data.ShenBanReader
         /// 分析数据
         /// </summary>
         /// <param name="msgTran"></param>
-        private void AnalyData(IR600Message msgTran)
+        private void AnalyData(IReadMessage msgTran)
         {
             if (msgTran.PacketType != 0xA0)
             {
@@ -603,7 +587,7 @@ namespace System.Data.ShenBanReader
         /// </summary>
         /// <param name="msgTran"></param>
         /// <returns></returns>
-        private void ProcessReadGpioValue(IR600Message msgTran)
+        private void ProcessReadGpioValue(IReadMessage msgTran)
         {
             if (msgTran.AryData.Length == 2)
             {
@@ -620,8 +604,8 @@ namespace System.Data.ShenBanReader
                 return;
             }
             int code = 0;
-            string message = msgTran.AryData.Length == 1 ? R600Builder.FormatErrorCode(msgTran.AryData[0], out code) : "未知错误";
-            ProcessError(R600CmdType.ReadGpioValue, code, nameof(ProcessReadGpioValue), $"读取GPIO状态失败，失败原因：{message}", msgTran);
+            string message = msgTran.AryData.Length == 1 ? ReaderCaller.FormatErrorCode(msgTran.AryData[0], out code) : "未知错误";
+            ProcessError(ReadCmdType.ReadGpioValue, code, nameof(ProcessReadGpioValue), $"读取GPIO状态失败，失败原因：{message}", msgTran);
         }
 
         /// <summary>
@@ -629,7 +613,7 @@ namespace System.Data.ShenBanReader
         /// </summary>
         /// <param name="msgTran"></param>
         /// <returns></returns>
-        private void ProcessWriteGpioValue(IR600Message msgTran)
+        private void ProcessWriteGpioValue(IReadMessage msgTran)
         {
             if (msgTran.AryData.Length == 1 && msgTran.AryData[0] == 0x10)
             {
@@ -638,8 +622,8 @@ namespace System.Data.ShenBanReader
                 return;
             }
             int code = 0;
-            string message = msgTran.AryData.Length == 1 ? R600Builder.FormatErrorCode(msgTran.AryData[0], out code) : "未知错误";
-            ProcessError(R600CmdType.WriteGpioValue, code, nameof(ProcessWriteGpioValue), $"设置GPIO状态失败，失败原因：{message}", msgTran);
+            string message = msgTran.AryData.Length == 1 ? ReaderCaller.FormatErrorCode(msgTran.AryData[0], out code) : "未知错误";
+            ProcessError(ReadCmdType.WriteGpioValue, code, nameof(ProcessWriteGpioValue), $"设置GPIO状态失败，失败原因：{message}", msgTran);
         }
 
         /// <summary>
@@ -647,7 +631,7 @@ namespace System.Data.ShenBanReader
         /// </summary>
         /// <param name="msgTran"></param>
         /// <returns></returns>
-        private void ProcessSetAntDetector(IR600Message msgTran)
+        private void ProcessSetAntDetector(IReadMessage msgTran)
         {
             if (msgTran.AryData.Length == 1 && msgTran.AryData[0] == 0x10)
             {
@@ -656,8 +640,8 @@ namespace System.Data.ShenBanReader
                 return;
             }
             int code = 0;
-            string message = msgTran.AryData.Length == 1 ? R600Builder.FormatErrorCode(msgTran.AryData[0], out code) : "未知错误";
-            ProcessError(R600CmdType.SetAntDetector, code, nameof(ProcessSetAntDetector), $"设置天线连接检测阈值失败，失败原因：{message}", msgTran);
+            string message = msgTran.AryData.Length == 1 ? ReaderCaller.FormatErrorCode(msgTran.AryData[0], out code) : "未知错误";
+            ProcessError(ReadCmdType.SetAntDetector, code, nameof(ProcessSetAntDetector), $"设置天线连接检测阈值失败，失败原因：{message}", msgTran);
         }
 
         /// <summary>
@@ -665,7 +649,7 @@ namespace System.Data.ShenBanReader
         /// </summary>
         /// <param name="msgTran"></param>
         /// <returns></returns>
-        private void ProcessGetAntDetector(IR600Message msgTran)
+        private void ProcessGetAntDetector(IReadMessage msgTran)
         {
             if (msgTran.AryData.Length == 1)
             {
@@ -674,7 +658,7 @@ namespace System.Data.ShenBanReader
                 _recall.GetAntDetector(msgTran, msgTran.AryData[0]);
                 return;
             }
-            ProcessError(R600CmdType.GetAntDetector, 0, nameof(ProcessGetAntDetector), "失败，失败原因：未知错误", msgTran);
+            ProcessError(ReadCmdType.GetAntDetector, 0, nameof(ProcessGetAntDetector), "失败，失败原因：未知错误", msgTran);
         }
 
         /// <summary>
@@ -682,7 +666,7 @@ namespace System.Data.ShenBanReader
         /// </summary>
         /// <param name="msgTran"></param>
         /// <returns></returns>
-        private void ProcessSetReaderIdentifier(IR600Message msgTran)
+        private void ProcessSetReaderIdentifier(IReadMessage msgTran)
         {
             if (msgTran.AryData.Length == 1 && msgTran.AryData[0] == 0x10)
             {
@@ -691,8 +675,8 @@ namespace System.Data.ShenBanReader
                 return;
             }
             int code = 0;
-            string message = msgTran.AryData.Length == 1 ? R600Builder.FormatErrorCode(msgTran.AryData[0], out code) : "未知错误";
-            ProcessError(R600CmdType.SetReaderIdentifier, 0, nameof(ProcessSetReaderIdentifier), $"设置读写器识别标记失败，失败原因：{message}", msgTran);
+            string message = msgTran.AryData.Length == 1 ? ReaderCaller.FormatErrorCode(msgTran.AryData[0], out code) : "未知错误";
+            ProcessError(ReadCmdType.SetReaderIdentifier, 0, nameof(ProcessSetReaderIdentifier), $"设置读写器识别标记失败，失败原因：{message}", msgTran);
         }
 
         /// <summary>
@@ -700,7 +684,7 @@ namespace System.Data.ShenBanReader
         /// </summary>
         /// <param name="msgTran"></param>
         /// <returns></returns>
-        private void ProcessGetReaderIdentifier(IR600Message msgTran)
+        private void ProcessGetReaderIdentifier(IReadMessage msgTran)
         {
             if (msgTran.AryData.Length == 12)
             {
@@ -710,8 +694,8 @@ namespace System.Data.ShenBanReader
                 return;
             }
             int code = 0;
-            string message = msgTran.AryData.Length == 1 ? R600Builder.FormatErrorCode(msgTran.AryData[0], out code) : "未知错误";
-            ProcessError(R600CmdType.GetReaderIdentifier, code, nameof(ProcessGetReaderIdentifier), $"读取读写器识别标记失败，失败原因：{message}", msgTran);
+            string message = msgTran.AryData.Length == 1 ? ReaderCaller.FormatErrorCode(msgTran.AryData[0], out code) : "未知错误";
+            ProcessError(ReadCmdType.GetReaderIdentifier, code, nameof(ProcessGetReaderIdentifier), $"读取读写器识别标记失败，失败原因：{message}", msgTran);
         }
 
         /// <summary>
@@ -719,7 +703,7 @@ namespace System.Data.ShenBanReader
         /// </summary>
         /// <param name="msgTran"></param>
         /// <returns></returns>
-        private void ProcessSetLinkProfile(IR600Message msgTran)
+        private void ProcessSetLinkProfile(IReadMessage msgTran)
         {
             if (msgTran.AryData.Length == 1 && msgTran.AryData[0] == 0x10)
             {
@@ -729,8 +713,8 @@ namespace System.Data.ShenBanReader
                 return;
             }
             int code = 0;
-            string message = msgTran.AryData.Length == 1 ? R600Builder.FormatErrorCode(msgTran.AryData[0], out code) : "未知错误";
-            ProcessError(R600CmdType.SetLinkProfile, code, nameof(ProcessSetLinkProfile), $"设置射频通讯链路配置失败，失败原因：{message}", msgTran);
+            string message = msgTran.AryData.Length == 1 ? ReaderCaller.FormatErrorCode(msgTran.AryData[0], out code) : "未知错误";
+            ProcessError(ReadCmdType.SetLinkProfile, code, nameof(ProcessSetLinkProfile), $"设置射频通讯链路配置失败，失败原因：{message}", msgTran);
         }
 
         /// <summary>
@@ -738,26 +722,26 @@ namespace System.Data.ShenBanReader
         /// </summary>
         /// <param name="msgTran"></param>
         /// <returns></returns>
-        private void ProcessGetLinkProfile(IR600Message msgTran)
+        private void ProcessGetLinkProfile(IReadMessage msgTran)
         {
             if (msgTran.AryData.Length == 1 && (msgTran.AryData[0] >= 0xd0) && (msgTran.AryData[0] <= 0xd3))
             {
                 //_config.ReadId = msgTran.ReadId;
                 //_config.LinkProfile = msgTran.AryData[0];
                 //_config.R600LinkProfileType = (R600LinkProfileType)_config.LinkProfile;
-                _recall.GetLinkProfile(msgTran, (R600LinkProfileType)msgTran.AryData[0]);
+                _recall.GetLinkProfile(msgTran, (ReadLinkProfileType)msgTran.AryData[0]);
                 return;
             }
             int code = 0;
-            string message = msgTran.AryData.Length == 1 ? R600Builder.FormatErrorCode(msgTran.AryData[0], out code) : "未知错误";
-            ProcessError(R600CmdType.GetLinkProfile, code, nameof(ProcessGetLinkProfile), $"读取射频通讯链路配置失败，失败原因：{message}", msgTran);
+            string message = msgTran.AryData.Length == 1 ? ReaderCaller.FormatErrorCode(msgTran.AryData[0], out code) : "未知错误";
+            ProcessError(ReadCmdType.GetLinkProfile, code, nameof(ProcessGetLinkProfile), $"读取射频通讯链路配置失败，失败原因：{message}", msgTran);
         }
 
         /// <summary>
         /// 复位读写器(可以不需要返回)
         /// </summary>
         /// <param name="msgTran"></param>
-        private void ProcessReset(IR600Message msgTran)
+        private void ProcessReset(IReadMessage msgTran)
         {
 
         }
@@ -766,7 +750,7 @@ namespace System.Data.ShenBanReader
         /// 设置波特率
         /// </summary>
         /// <param name="msgTran"></param>
-        private void ProcessSetUartBaudRate(IR600Message msgTran)
+        private void ProcessSetUartBaudRate(IReadMessage msgTran)
         {
             if (msgTran.AryData.Length == 1 && msgTran.AryData[0] == 0x10)
             {
@@ -775,8 +759,8 @@ namespace System.Data.ShenBanReader
                 return;
             }
             int code = 0;
-            string message = msgTran.AryData.Length == 1 ? R600Builder.FormatErrorCode(msgTran.AryData[0], out code) : "未知错误";
-            ProcessError(R600CmdType.SetUartBaudRate, code, nameof(ProcessSetUartBaudRate), $"设置波特率失败，失败原因：{message}", msgTran);
+            string message = msgTran.AryData.Length == 1 ? ReaderCaller.FormatErrorCode(msgTran.AryData[0], out code) : "未知错误";
+            ProcessError(ReadCmdType.SetUartBaudRate, code, nameof(ProcessSetUartBaudRate), $"设置波特率失败，失败原因：{message}", msgTran);
         }
 
         /// <summary>
@@ -784,7 +768,7 @@ namespace System.Data.ShenBanReader
         /// </summary>
         /// <param name="msgTran"></param>
         /// <returns></returns>
-        private void ProcessGetFirmwareVersion(IR600Message msgTran)
+        private void ProcessGetFirmwareVersion(IReadMessage msgTran)
         {
             if (msgTran.AryData.Length == 2)
             {
@@ -796,8 +780,8 @@ namespace System.Data.ShenBanReader
                 return;
             }
             int code = 0;
-            string message = msgTran.AryData.Length == 1 ? R600Builder.FormatErrorCode(msgTran.AryData[0], out code) : "未知错误";
-            ProcessError(R600CmdType.GetFirmwareVersion, code, nameof(ProcessGetFirmwareVersion), $"取得读写器版本号失败，失败原因：{message}", msgTran);
+            string message = msgTran.AryData.Length == 1 ? ReaderCaller.FormatErrorCode(msgTran.AryData[0], out code) : "未知错误";
+            ProcessError(ReadCmdType.GetFirmwareVersion, code, nameof(ProcessGetFirmwareVersion), $"取得读写器版本号失败，失败原因：{message}", msgTran);
         }
 
         /// <summary>
@@ -805,7 +789,7 @@ namespace System.Data.ShenBanReader
         /// </summary>
         /// <param name="msgTran"></param>
         /// <returns></returns>
-        private void ProcessSetReaderAddress(IR600Message msgTran)
+        private void ProcessSetReaderAddress(IReadMessage msgTran)
         {
             if (msgTran.AryData.Length == 1 && msgTran.AryData[0] == 0x10)
             {
@@ -814,8 +798,8 @@ namespace System.Data.ShenBanReader
                 return;
             }
             int code = 0;
-            string message = msgTran.AryData.Length == 1 ? R600Builder.FormatErrorCode(msgTran.AryData[0], out code) : "未知错误";
-            ProcessError(R600CmdType.SetReaderAddress, code, nameof(ProcessSetReaderAddress), $"设置读写器地址失败，失败原因：{message}", msgTran);
+            string message = msgTran.AryData.Length == 1 ? ReaderCaller.FormatErrorCode(msgTran.AryData[0], out code) : "未知错误";
+            ProcessError(ReadCmdType.SetReaderAddress, code, nameof(ProcessSetReaderAddress), $"设置读写器地址失败，失败原因：{message}", msgTran);
         }
 
         /// <summary>
@@ -823,7 +807,7 @@ namespace System.Data.ShenBanReader
         /// </summary>
         /// <param name="msgTran"></param>
         /// <returns></returns>
-        private void ProcessSetWorkAntenna(IR600Message msgTran)
+        private void ProcessSetWorkAntenna(IReadMessage msgTran)
         {
             if (msgTran.AryData.Length == 1 && msgTran.AryData[0] == 0x10)
             {
@@ -832,8 +816,8 @@ namespace System.Data.ShenBanReader
                 return;
             }
             int code = 0;
-            string message = msgTran.AryData.Length == 1 ? R600Builder.FormatErrorCode(msgTran.AryData[0], out code) : "未知错误";
-            ProcessError(R600CmdType.SetWorkAntenna, code, nameof(ProcessSetWorkAntenna), $"设置工作天线失败，失败原因：{message}", msgTran);
+            string message = msgTran.AryData.Length == 1 ? ReaderCaller.FormatErrorCode(msgTran.AryData[0], out code) : "未知错误";
+            ProcessError(ReadCmdType.SetWorkAntenna, code, nameof(ProcessSetWorkAntenna), $"设置工作天线失败，失败原因：{message}", msgTran);
         }
 
         /// <summary>
@@ -841,7 +825,7 @@ namespace System.Data.ShenBanReader
         /// </summary>
         /// <param name="msgTran"></param>
         /// <returns></returns>
-        private void ProcessGetWorkAntenna(IR600Message msgTran)
+        private void ProcessGetWorkAntenna(IReadMessage msgTran)
         {
             if (msgTran.AryData.Length == 1)
             {
@@ -849,13 +833,13 @@ namespace System.Data.ShenBanReader
                 {
                     //_config.ReadId = msgTran.ReadId;
                     //_config.WorkAntenna = msgTran.AryData[0];
-                    _recall.GetWorkAntenna(msgTran, (R600AntennaType)msgTran.AryData[0]);
+                    _recall.GetWorkAntenna(msgTran, (ReadAntennaType)msgTran.AryData[0]);
                     return;
                 }
             }
             int code = 0;
-            string message = msgTran.AryData.Length == 1 ? R600Builder.FormatErrorCode(msgTran.AryData[0], out code) : "未知错误";
-            ProcessError(R600CmdType.GetWorkAntenna, code, nameof(ProcessGetWorkAntenna), $"取得工作天线失败，失败原因：{message}", msgTran);
+            string message = msgTran.AryData.Length == 1 ? ReaderCaller.FormatErrorCode(msgTran.AryData[0], out code) : "未知错误";
+            ProcessError(ReadCmdType.GetWorkAntenna, code, nameof(ProcessGetWorkAntenna), $"取得工作天线失败，失败原因：{message}", msgTran);
         }
 
         /// <summary>
@@ -863,7 +847,7 @@ namespace System.Data.ShenBanReader
         /// </summary>
         /// <param name="msgTran"></param>
         /// <returns></returns>
-        private void ProcessSetOutputPower(IR600Message msgTran)
+        private void ProcessSetOutputPower(IReadMessage msgTran)
         {
             if (msgTran.AryData.Length == 1 && msgTran.AryData[0] == 0x10)
             {
@@ -872,8 +856,8 @@ namespace System.Data.ShenBanReader
                 return;
             }
             int code = 0;
-            string message = msgTran.AryData.Length == 1 ? R600Builder.FormatErrorCode(msgTran.AryData[0], out code) : "未知错误";
-            ProcessError(R600CmdType.SetOutputPower, code, nameof(ProcessSetOutputPower), $"设置输出功率失败，失败原因：{message}", msgTran);
+            string message = msgTran.AryData.Length == 1 ? ReaderCaller.FormatErrorCode(msgTran.AryData[0], out code) : "未知错误";
+            ProcessError(ReadCmdType.SetOutputPower, code, nameof(ProcessSetOutputPower), $"设置输出功率失败，失败原因：{message}", msgTran);
         }
 
         /// <summary>
@@ -881,7 +865,7 @@ namespace System.Data.ShenBanReader
         /// </summary>
         /// <param name="msgTran"></param>
         /// <returns></returns>
-        private void ProcessGetOutputPower(IR600Message msgTran)
+        private void ProcessGetOutputPower(IReadMessage msgTran)
         {
             if (msgTran.AryData.Length == 1)
             {
@@ -890,7 +874,7 @@ namespace System.Data.ShenBanReader
                 _recall.GetOutputPower(msgTran, msgTran.AryData[0]);
                 return;
             }
-            ProcessError(R600CmdType.GetOutputPower, 0, nameof(ProcessGetOutputPower), "取得输出功率失败，失败原因：未知错误", msgTran);
+            ProcessError(ReadCmdType.GetOutputPower, 0, nameof(ProcessGetOutputPower), "取得输出功率失败，失败原因：未知错误", msgTran);
         }
 
         /// <summary>
@@ -898,7 +882,7 @@ namespace System.Data.ShenBanReader
         /// </summary>
         /// <param name="msgTran"></param>
         /// <returns></returns>
-        private void ProcessSetFrequencyRegion(IR600Message msgTran)
+        private void ProcessSetFrequencyRegion(IReadMessage msgTran)
         {
             if (msgTran.AryData.Length == 1 && msgTran.AryData[0] == 0x10)
             {
@@ -907,8 +891,8 @@ namespace System.Data.ShenBanReader
                 return;
             }
             int code = 0;
-            string message = msgTran.AryData.Length == 1 ? R600Builder.FormatErrorCode(msgTran.AryData[0], out code) : "未知错误";
-            ProcessError(R600CmdType.SetFrequencyRegion, code, nameof(ProcessSetFrequencyRegion), $"设置射频规范失败，失败原因：{message}", msgTran);
+            string message = msgTran.AryData.Length == 1 ? ReaderCaller.FormatErrorCode(msgTran.AryData[0], out code) : "未知错误";
+            ProcessError(ReadCmdType.SetFrequencyRegion, code, nameof(ProcessSetFrequencyRegion), $"设置射频规范失败，失败原因：{message}", msgTran);
         }
 
         /// <summary>
@@ -916,7 +900,7 @@ namespace System.Data.ShenBanReader
         /// </summary>
         /// <param name="msgTran"></param>
         /// <returns></returns>
-        private void ProcessGetFrequencyRegion(IR600Message msgTran)
+        private void ProcessGetFrequencyRegion(IReadMessage msgTran)
         {
             if (msgTran.AryData.Length == 3)
             {
@@ -924,7 +908,7 @@ namespace System.Data.ShenBanReader
                 //_config.FrequencyRegion = msgTran.AryData[0];
                 //_config.FrequencyStart = msgTran.AryData[1];
                 //_config.FrequencyEnd = msgTran.AryData[2];
-                _recall.GetFrequencyRegion(msgTran, (R600FreqRegionType)msgTran.AryData[0], (int)msgTran.AryData[1], msgTran.AryData[2], 0x00);
+                _recall.GetFrequencyRegion(msgTran, (ReadFreqRegionType)msgTran.AryData[0], (int)msgTran.AryData[1], msgTran.AryData[2], 0x00);
                 return;
             }
             else if (msgTran.AryData.Length == 6)
@@ -935,12 +919,12 @@ namespace System.Data.ShenBanReader
                 //_config.UserDefineFrequencyInterval = msgTran.AryData[1];
                 //_config.UserDefineChannelQuantity = msgTran.AryData[2];
                 //_config.UserDefineStartFrequency = start;
-                _recall.GetFrequencyRegion(msgTran, (R600FreqRegionType)msgTran.AryData[0], start, msgTran.AryData[1], msgTran.AryData[2]);
+                _recall.GetFrequencyRegion(msgTran, (ReadFreqRegionType)msgTran.AryData[0], start, msgTran.AryData[1], msgTran.AryData[2]);
                 return;
             }
             int code = 0;
-            string message = msgTran.AryData.Length == 1 ? R600Builder.FormatErrorCode(msgTran.AryData[0], out code) : "未知错误";
-            ProcessError(R600CmdType.GetFrequencyRegion, code, nameof(ProcessGetFrequencyRegion), $"取得射频规范失败，失败原因：{message}", msgTran);
+            string message = msgTran.AryData.Length == 1 ? ReaderCaller.FormatErrorCode(msgTran.AryData[0], out code) : "未知错误";
+            ProcessError(ReadCmdType.GetFrequencyRegion, code, nameof(ProcessGetFrequencyRegion), $"取得射频规范失败，失败原因：{message}", msgTran);
         }
 
         /// <summary>
@@ -948,7 +932,7 @@ namespace System.Data.ShenBanReader
         /// </summary>
         /// <param name="msgTran"></param>
         /// <returns></returns>
-        private void ProcessSetBeeperMode(IR600Message msgTran)
+        private void ProcessSetBeeperMode(IReadMessage msgTran)
         {
             if (msgTran.AryData.Length == 1 && msgTran.AryData[0] == 0x10)
             {
@@ -957,8 +941,8 @@ namespace System.Data.ShenBanReader
                 return;
             }
             int code = 0;
-            string message = msgTran.AryData.Length == 1 ? R600Builder.FormatErrorCode(msgTran.AryData[0], out code) : "未知错误";
-            ProcessError(R600CmdType.SetBeeperMode, code, nameof(ProcessSetBeeperMode), $"设置蜂鸣器模式失败，失败原因：{message}", msgTran);
+            string message = msgTran.AryData.Length == 1 ? ReaderCaller.FormatErrorCode(msgTran.AryData[0], out code) : "未知错误";
+            ProcessError(ReadCmdType.SetBeeperMode, code, nameof(ProcessSetBeeperMode), $"设置蜂鸣器模式失败，失败原因：{message}", msgTran);
         }
 
         /// <summary>
@@ -966,7 +950,7 @@ namespace System.Data.ShenBanReader
         /// </summary>
         /// <param name="msgTran"></param>
         /// <returns></returns>
-        private void ProcessGetReaderTemperature(IR600Message msgTran)
+        private void ProcessGetReaderTemperature(IReadMessage msgTran)
         {
             if (msgTran.AryData.Length == 2)
             {
@@ -979,8 +963,8 @@ namespace System.Data.ShenBanReader
                 return;
             }
             int code = 0;
-            string message = msgTran.AryData.Length == 1 ? R600Builder.FormatErrorCode(msgTran.AryData[0], out code) : "未知错误";
-            ProcessError(R600CmdType.GetReaderTemperature, code, nameof(ProcessGetReaderTemperature), $"取得读写器温度失败，失败原因：{message}", msgTran);
+            string message = msgTran.AryData.Length == 1 ? ReaderCaller.FormatErrorCode(msgTran.AryData[0], out code) : "未知错误";
+            ProcessError(ReadCmdType.GetReaderTemperature, code, nameof(ProcessGetReaderTemperature), $"取得读写器温度失败，失败原因：{message}", msgTran);
         }
 
         /// <summary>
@@ -988,7 +972,7 @@ namespace System.Data.ShenBanReader
         /// </summary>
         /// <param name="msgTran"></param>
         /// <returns></returns>
-        private void ProcessSetDrmMode(IR600Message msgTran)
+        private void ProcessSetDrmMode(IReadMessage msgTran)
         {
             if (msgTran.AryData.Length == 1 && msgTran.AryData[0] == 0x10)
             {
@@ -997,8 +981,8 @@ namespace System.Data.ShenBanReader
                 return;
             }
             int code = 0;
-            string message = msgTran.AryData.Length == 1 ? R600Builder.FormatErrorCode(msgTran.AryData[0], out code) : "未知错误";
-            ProcessError(R600CmdType.SetDrmMode, code, nameof(ProcessSetDrmMode), $"设置DRM模式失败，失败原因：{message}", msgTran);
+            string message = msgTran.AryData.Length == 1 ? ReaderCaller.FormatErrorCode(msgTran.AryData[0], out code) : "未知错误";
+            ProcessError(ReadCmdType.SetDrmMode, code, nameof(ProcessSetDrmMode), $"设置DRM模式失败，失败原因：{message}", msgTran);
         }
 
         /// <summary>
@@ -1006,7 +990,7 @@ namespace System.Data.ShenBanReader
         /// </summary>
         /// <param name="msgTran"></param>
         /// <returns></returns>
-        private void ProcessGetDrmMode(IR600Message msgTran)
+        private void ProcessGetDrmMode(IReadMessage msgTran)
         {
             if (msgTran.AryData.Length == 1 && (msgTran.AryData[0] == 0x00 || msgTran.AryData[0] == 0x01))
             {
@@ -1016,8 +1000,8 @@ namespace System.Data.ShenBanReader
                 return;
             }
             int code = 0;
-            string message = msgTran.AryData.Length == 1 ? R600Builder.FormatErrorCode(msgTran.AryData[0], out code) : "未知错误";
-            ProcessError(R600CmdType.GetDrmMode, code, nameof(ProcessGetDrmMode), $"取得DRM模式失败，失败原因：{message}", msgTran);
+            string message = msgTran.AryData.Length == 1 ? ReaderCaller.FormatErrorCode(msgTran.AryData[0], out code) : "未知错误";
+            ProcessError(ReadCmdType.GetDrmMode, code, nameof(ProcessGetDrmMode), $"取得DRM模式失败，失败原因：{message}", msgTran);
         }
 
         /// <summary>
@@ -1025,7 +1009,7 @@ namespace System.Data.ShenBanReader
         /// </summary>
         /// <param name="msgTran"></param>
         /// <returns></returns>
-        private void ProcessGetImpedanceMatch(IR600Message msgTran)
+        private void ProcessGetImpedanceMatch(IReadMessage msgTran)
         {
             if (msgTran.AryData.Length == 1)
             {
@@ -1034,7 +1018,7 @@ namespace System.Data.ShenBanReader
                 _recall.GetImpedanceMatch(msgTran, msgTran.AryData[0]);
                 return;
             }
-            ProcessError(R600CmdType.GetAntImpedanceMatch, 0, nameof(ProcessGetImpedanceMatch), $"测量天线端口阻抗匹配失败，失败原因：未知错误", msgTran);
+            ProcessError(ReadCmdType.GetAntImpedanceMatch, 0, nameof(ProcessGetImpedanceMatch), $"测量天线端口阻抗匹配失败，失败原因：未知错误", msgTran);
         }
 
         /// <summary>
@@ -1042,7 +1026,7 @@ namespace System.Data.ShenBanReader
         /// </summary>
         /// <param name="msgTran"></param>
         /// <returns></returns>
-        private void ProcessInventory(IR600Message msgTran)
+        private void ProcessInventory(IReadMessage msgTran)
         {
             if (msgTran.AryData.Length == 9)
             {
@@ -1066,8 +1050,8 @@ namespace System.Data.ShenBanReader
                 return;
             }
             int code = 0;
-            string message = msgTran.AryData.Length == 1 ? R600Builder.FormatErrorCode(msgTran.AryData[0], out code) : "未知错误";
-            ProcessError(R600CmdType.Inventory, code, nameof(ProcessInventory), $"盘存标签失败，失败原因：{message}", msgTran);
+            string message = msgTran.AryData.Length == 1 ? ReaderCaller.FormatErrorCode(msgTran.AryData[0], out code) : "未知错误";
+            ProcessError(ReadCmdType.Inventory, code, nameof(ProcessInventory), $"盘存标签失败，失败原因：{message}", msgTran);
         }
 
         /// <summary>
@@ -1075,7 +1059,7 @@ namespace System.Data.ShenBanReader
         /// </summary>
         /// <param name="msgTran"></param>
         /// <returns></returns>
-        private void ProcessReadTag(IR600Message msgTran)
+        private void ProcessReadTag(IReadMessage msgTran)
         {
             if (msgTran.AryData.Length > 1)
             {
@@ -1085,8 +1069,8 @@ namespace System.Data.ShenBanReader
                 return;
             }
             int code = 0;
-            string message = msgTran.AryData.Length == 1 ? R600Builder.FormatErrorCode(msgTran.AryData[0], out code) : "未知错误";
-            ProcessError(R600CmdType.ReadTag, code, nameof(ProcessReadTag), $"读标签失败，失败原因：{message}", msgTran);
+            string message = msgTran.AryData.Length == 1 ? ReaderCaller.FormatErrorCode(msgTran.AryData[0], out code) : "未知错误";
+            ProcessError(ReadCmdType.ReadTag, code, nameof(ProcessReadTag), $"读标签失败，失败原因：{message}", msgTran);
         }
 
         /// <summary>
@@ -1094,7 +1078,7 @@ namespace System.Data.ShenBanReader
         /// </summary>
         /// <param name="msgTran"></param>
         /// <returns></returns>
-        private void ProcessWriteTag(IR600Message msgTran)
+        private void ProcessWriteTag(IReadMessage msgTran)
         {
             if (msgTran.AryData.Length > 1 && msgTran.AryData[msgTran.AryData.Length - 3] == 0x10)
             {
@@ -1104,8 +1088,8 @@ namespace System.Data.ShenBanReader
                 return;
             }
             var code = 0;
-            string message = msgTran.AryData.Length > 1 ? R600Builder.FormatErrorCode(msgTran.AryData[msgTran.AryData.Length - 3], out code) : (msgTran.AryData.Length == 1 ? R600Builder.FormatErrorCode(msgTran.AryData[0], out code) : "未知错误");
-            ProcessError(R600CmdType.WriteTag, code, nameof(ProcessWriteTag), $"写标签失败，失败原因：{message}", msgTran);
+            string message = msgTran.AryData.Length > 1 ? ReaderCaller.FormatErrorCode(msgTran.AryData[msgTran.AryData.Length - 3], out code) : (msgTran.AryData.Length == 1 ? ReaderCaller.FormatErrorCode(msgTran.AryData[0], out code) : "未知错误");
+            ProcessError(ReadCmdType.WriteTag, code, nameof(ProcessWriteTag), $"写标签失败，失败原因：{message}", msgTran);
         }
 
         /// <summary>
@@ -1113,7 +1097,7 @@ namespace System.Data.ShenBanReader
         /// </summary>
         /// <param name="msgTran"></param>
         /// <returns></returns>
-        private void ProcessLockTag(IR600Message msgTran)
+        private void ProcessLockTag(IReadMessage msgTran)
         {
             if (msgTran.AryData.Length > 1 && msgTran.AryData[msgTran.AryData.Length - 3] == 0x10)
             {
@@ -1123,8 +1107,8 @@ namespace System.Data.ShenBanReader
                 return;
             }
             int code = 0;
-            var message = msgTran.AryData.Length > 1 ? R600Builder.FormatErrorCode(msgTran.AryData[msgTran.AryData.Length - 3], out code) : (msgTran.AryData.Length == 1 ? R600Builder.FormatErrorCode(msgTran.AryData[0], out code) : "未知错误");
-            ProcessError(R600CmdType.LockTag, code, nameof(ProcessLockTag), $"锁定标签失败，失败原因：{message}", msgTran);
+            var message = msgTran.AryData.Length > 1 ? ReaderCaller.FormatErrorCode(msgTran.AryData[msgTran.AryData.Length - 3], out code) : (msgTran.AryData.Length == 1 ? ReaderCaller.FormatErrorCode(msgTran.AryData[0], out code) : "未知错误");
+            ProcessError(ReadCmdType.LockTag, code, nameof(ProcessLockTag), $"锁定标签失败，失败原因：{message}", msgTran);
         }
 
         /// <summary>
@@ -1132,7 +1116,7 @@ namespace System.Data.ShenBanReader
         /// </summary>
         /// <param name="msgTran"></param>
         /// <returns></returns>
-        private void ProcessKillTag(IR600Message msgTran)
+        private void ProcessKillTag(IReadMessage msgTran)
         {
             if (msgTran.AryData.Length != 1 && msgTran.AryData[msgTran.AryData.Length - 3] == 0x10)
             {
@@ -1142,8 +1126,8 @@ namespace System.Data.ShenBanReader
                 return;
             }
             int code = 0;
-            var message = msgTran.AryData.Length > 1 ? R600Builder.FormatErrorCode(msgTran.AryData[msgTran.AryData.Length - 3], out code) : (msgTran.AryData.Length == 1 ? R600Builder.FormatErrorCode(msgTran.AryData[0], out code) : "未知错误");
-            ProcessError(R600CmdType.KillTag, code, nameof(ProcessKillTag), $"销毁标签失败，失败原因：{message}", msgTran);
+            var message = msgTran.AryData.Length > 1 ? ReaderCaller.FormatErrorCode(msgTran.AryData[msgTran.AryData.Length - 3], out code) : (msgTran.AryData.Length == 1 ? ReaderCaller.FormatErrorCode(msgTran.AryData[0], out code) : "未知错误");
+            ProcessError(ReadCmdType.KillTag, code, nameof(ProcessKillTag), $"销毁标签失败，失败原因：{message}", msgTran);
         }
 
         /// <summary>
@@ -1151,7 +1135,7 @@ namespace System.Data.ShenBanReader
         /// </summary>
         /// <param name="msgTran"></param>
         /// <returns></returns>
-        private void ProcessSetAccessEpcMatch(IR600Message msgTran)
+        private void ProcessSetAccessEpcMatch(IReadMessage msgTran)
         {
             if (msgTran.AryData.Length == 1 && msgTran.AryData[0] == 0x10)
             {
@@ -1159,8 +1143,8 @@ namespace System.Data.ShenBanReader
                 return;
             }
             var code = 0;
-            string message = msgTran.AryData.Length == 1 ? R600Builder.FormatErrorCode(msgTran.AryData[0], out code) : "未知错误";
-            ProcessError(R600CmdType.SetAccessEpcMatch, code, nameof(ProcessSetAccessEpcMatch), $"选定/取消选定标签失败，失败原因：{message}", msgTran);
+            string message = msgTran.AryData.Length == 1 ? ReaderCaller.FormatErrorCode(msgTran.AryData[0], out code) : "未知错误";
+            ProcessError(ReadCmdType.SetAccessEpcMatch, code, nameof(ProcessSetAccessEpcMatch), $"选定/取消选定标签失败，失败原因：{message}", msgTran);
         }
 
         /// <summary>
@@ -1168,7 +1152,7 @@ namespace System.Data.ShenBanReader
         /// </summary>
         /// <param name="msgTran"></param>
         /// <returns></returns>
-        private void ProcessGetAccessEpcMatch(IR600Message msgTran)
+        private void ProcessGetAccessEpcMatch(IReadMessage msgTran)
         {
             if (msgTran.AryData.Length == 1)
             {
@@ -1191,8 +1175,8 @@ namespace System.Data.ShenBanReader
                 }
             }
             int code = 0;
-            string message = msgTran.AryData.Length == 1 ? R600Builder.FormatErrorCode(msgTran.AryData[0], out code) : "未知错误";
-            ProcessError(R600CmdType.GetAccessEpcMatch, code, nameof(ProcessGetAccessEpcMatch), $"取得选定标签失败，失败原因：{message}", msgTran);
+            string message = msgTran.AryData.Length == 1 ? ReaderCaller.FormatErrorCode(msgTran.AryData[0], out code) : "未知错误";
+            ProcessError(ReadCmdType.GetAccessEpcMatch, code, nameof(ProcessGetAccessEpcMatch), $"取得选定标签失败，失败原因：{message}", msgTran);
         }
 
         /// <summary>
@@ -1200,7 +1184,7 @@ namespace System.Data.ShenBanReader
         /// </summary>
         /// <param name="msgTran"></param>
         /// <returns></returns>
-        private void ProcessInventoryReal(IR600Message msgTran)
+        private void ProcessInventoryReal(IReadMessage msgTran)
         {
             if (msgTran.AryData.Length > 1)
             {
@@ -1246,8 +1230,8 @@ namespace System.Data.ShenBanReader
                 }
             }
             int code = 0;
-            string message = msgTran.AryData.Length == 1 ? R600Builder.FormatErrorCode(msgTran.AryData[0], out code) : "未知错误";
-            ProcessError((R600CmdType)msgTran.Cmd, code, nameof(ProcessInventoryReal), $"盘存失败，失败原因：{message}", msgTran);
+            string message = msgTran.AryData.Length == 1 ? ReaderCaller.FormatErrorCode(msgTran.AryData[0], out code) : "未知错误";
+            ProcessError((ReadCmdType)msgTran.Cmd, code, nameof(ProcessInventoryReal), $"盘存失败，失败原因：{message}", msgTran);
         }
 
         /// <summary>
@@ -1255,7 +1239,7 @@ namespace System.Data.ShenBanReader
         /// </summary>
         /// <param name="msgTran"></param>
         /// <returns></returns>
-        private void ProcessFastSwitchInventory(IR600Message msgTran)
+        private void ProcessFastSwitchInventory(IReadMessage msgTran)
         {
             if (msgTran.AryData.Length > 2)
             {
@@ -1319,8 +1303,8 @@ namespace System.Data.ShenBanReader
                 }
             }
             var code = 0;
-            string message = msgTran.AryData.Length == 1 ? R600Builder.FormatErrorCode(msgTran.AryData[0], out code) : (msgTran.AryData.Length == 2 ? $"{R600Builder.FormatErrorCode(msgTran.AryData[1], out code)}--天线{(msgTran.AryData[0] + 1)}" : "未知错误");
-            ProcessError(R600CmdType.FastSwitchInventory, code, nameof(ProcessFastSwitchInventory), $"快速4天线盘存失败，失败原因：{message}", msgTran);
+            string message = msgTran.AryData.Length == 1 ? ReaderCaller.FormatErrorCode(msgTran.AryData[0], out code) : (msgTran.AryData.Length == 2 ? $"{ReaderCaller.FormatErrorCode(msgTran.AryData[1], out code)}--天线{(msgTran.AryData[0] + 1)}" : "未知错误");
+            ProcessError(ReadCmdType.FastSwitchInventory, code, nameof(ProcessFastSwitchInventory), $"快速4天线盘存失败，失败原因：{message}", msgTran);
         }
 
         /// <summary>
@@ -1328,7 +1312,7 @@ namespace System.Data.ShenBanReader
         /// </summary>
         /// <param name="msgTran"></param>
         /// <returns></returns>
-        private void ProcessSetMonzaStatus(IR600Message msgTran)
+        private void ProcessSetMonzaStatus(IReadMessage msgTran)
         {
             if (msgTran.AryData.Length == 1 && msgTran.AryData[0] == 0x10)
             {
@@ -1338,8 +1322,8 @@ namespace System.Data.ShenBanReader
                 return;
             }
             int code = 0;
-            string message = msgTran.AryData.Length == 1 ? R600Builder.FormatErrorCode(msgTran.AryData[0], out code) : "未知错误";
-            ProcessError(R600CmdType.SetMonzaStatus, code, nameof(ProcessSetMonzaStatus), $"设置快速读TID功能失败，失败原因：{message}", msgTran);
+            string message = msgTran.AryData.Length == 1 ? ReaderCaller.FormatErrorCode(msgTran.AryData[0], out code) : "未知错误";
+            ProcessError(ReadCmdType.SetMonzaStatus, code, nameof(ProcessSetMonzaStatus), $"设置快速读TID功能失败，失败原因：{message}", msgTran);
         }
 
         /// <summary>
@@ -1347,7 +1331,7 @@ namespace System.Data.ShenBanReader
         /// </summary>
         /// <param name="msgTran"></param>
         /// <returns></returns>
-        private void ProcessGetMonzaStatus(IR600Message msgTran)
+        private void ProcessGetMonzaStatus(IReadMessage msgTran)
         {
             if (msgTran.AryData.Length == 1 && (msgTran.AryData[0] == 0x00 || msgTran.AryData[0] == 0x8D))
             {
@@ -1357,8 +1341,8 @@ namespace System.Data.ShenBanReader
                 return;
             }
             int code = 0;
-            string message = msgTran.AryData.Length == 1 ? R600Builder.FormatErrorCode(msgTran.AryData[0], out code) : "未知错误";
-            ProcessError(R600CmdType.GetMonzaStatus, code, nameof(ProcessGetMonzaStatus), $"读取快速读TID功能失败，失败原因：{message}", msgTran);
+            string message = msgTran.AryData.Length == 1 ? ReaderCaller.FormatErrorCode(msgTran.AryData[0], out code) : "未知错误";
+            ProcessError(ReadCmdType.GetMonzaStatus, code, nameof(ProcessGetMonzaStatus), $"读取快速读TID功能失败，失败原因：{message}", msgTran);
         }
 
         /// <summary>
@@ -1366,7 +1350,7 @@ namespace System.Data.ShenBanReader
         /// </summary>
         /// <param name="msgTran"></param>
         /// <returns></returns>
-        private void ProcessGetInventoryBuffer(IR600Message msgTran)
+        private void ProcessGetInventoryBuffer(IReadMessage msgTran)
         {
             if (msgTran.AryData.Length > 1)
             {
@@ -1377,8 +1361,8 @@ namespace System.Data.ShenBanReader
                 return;
             }
             int code = 0;
-            string message = msgTran.AryData.Length == 1 ? R600Builder.FormatErrorCode(msgTran.AryData[0], out code) : "未知错误";
-            ProcessError(R600CmdType.GetInventoryBuffer, code, nameof(ProcessGetInventoryBuffer), $"读取缓存失败，失败原因：{message}", msgTran);
+            string message = msgTran.AryData.Length == 1 ? ReaderCaller.FormatErrorCode(msgTran.AryData[0], out code) : "未知错误";
+            ProcessError(ReadCmdType.GetInventoryBuffer, code, nameof(ProcessGetInventoryBuffer), $"读取缓存失败，失败原因：{message}", msgTran);
         }
 
         /// <summary>
@@ -1386,7 +1370,7 @@ namespace System.Data.ShenBanReader
         /// </summary>
         /// <param name="msgTran"></param>
         /// <returns></returns>
-        private void ProcessGetAndResetInventoryBuffer(IR600Message msgTran)
+        private void ProcessGetAndResetInventoryBuffer(IReadMessage msgTran)
         {
             if (msgTran.AryData.Length > 1)
             {
@@ -1397,15 +1381,15 @@ namespace System.Data.ShenBanReader
                 return;
             }
             int code = 0;
-            string message = msgTran.AryData.Length == 1 ? R600Builder.FormatErrorCode(msgTran.AryData[0], out code) : "未知错误";
-            ProcessError(R600CmdType.GetAndResetInventoryBuffer, code, nameof(ProcessGetAndResetInventoryBuffer), $"读取清空缓存失败，失败原因：{message}", msgTran);
+            string message = msgTran.AryData.Length == 1 ? ReaderCaller.FormatErrorCode(msgTran.AryData[0], out code) : "未知错误";
+            ProcessError(ReadCmdType.GetAndResetInventoryBuffer, code, nameof(ProcessGetAndResetInventoryBuffer), $"读取清空缓存失败，失败原因：{message}", msgTran);
         }
 
         /// <summary>
         /// 读取缓存标签数量
         /// </summary>
         /// <param name="msgTran"></param>
-        private void ProcessGetInventoryBufferTagCount(IR600Message msgTran)
+        private void ProcessGetInventoryBufferTagCount(IReadMessage msgTran)
         {
             if (msgTran.AryData.Length == 2)
             {
@@ -1414,14 +1398,14 @@ namespace System.Data.ShenBanReader
                 return;
             }
             int code = 0;
-            string message = msgTran.AryData.Length == 1 ? R600Builder.FormatErrorCode(msgTran.AryData[0], out code) : "未知错误";
-            ProcessError(R600CmdType.GetInventoryBufferTagCount, code, nameof(ProcessGetInventoryBufferTagCount), $"读取缓存标签数量失败，失败原因：{message}", msgTran);
+            string message = msgTran.AryData.Length == 1 ? ReaderCaller.FormatErrorCode(msgTran.AryData[0], out code) : "未知错误";
+            ProcessError(ReadCmdType.GetInventoryBufferTagCount, code, nameof(ProcessGetInventoryBufferTagCount), $"读取缓存标签数量失败，失败原因：{message}", msgTran);
         }
         /// <summary>
         /// 清空缓存
         /// </summary>
         /// <param name="msgTran"></param>
-        private void ProcessResetInventoryBuffer(IR600Message msgTran)
+        private void ProcessResetInventoryBuffer(IReadMessage msgTran)
         {
             if (msgTran.AryData.Length == 1 && msgTran.AryData[0] == 0x10)
             {
@@ -1429,16 +1413,16 @@ namespace System.Data.ShenBanReader
                 return;
             }
             int code = 0;
-            string message = msgTran.AryData.Length == 1 ? R600Builder.FormatErrorCode(msgTran.AryData[0], out code) : "未知错误";
-            ProcessError(R600CmdType.ResetInventoryBuffer, code, nameof(ProcessResetInventoryBuffer), $"清空缓存失败，失败原因：{message}", msgTran);
+            string message = msgTran.AryData.Length == 1 ? ReaderCaller.FormatErrorCode(msgTran.AryData[0], out code) : "未知错误";
+            ProcessError(ReadCmdType.ResetInventoryBuffer, code, nameof(ProcessResetInventoryBuffer), $"清空缓存失败，失败原因：{message}", msgTran);
         }
 
-        private void ProcessSetBufferDataFrameInterval(IR600Message msgTran)
+        private void ProcessSetBufferDataFrameInterval(IReadMessage msgTran)
         {
 
         }
 
-        private void ProcessGetBufferDataFrameInterval(IR600Message msgTran)
+        private void ProcessGetBufferDataFrameInterval(IReadMessage msgTran)
         {
 
         }
@@ -1446,7 +1430,7 @@ namespace System.Data.ShenBanReader
         /// 盘存标签
         /// </summary>
         /// <param name="msgTran"></param>
-        private void ProcessInventoryISO18000(IR600Message msgTran)
+        private void ProcessInventoryISO18000(IReadMessage msgTran)
         {
             if (msgTran.AryData.Length == 9)
             {
@@ -1478,14 +1462,14 @@ namespace System.Data.ShenBanReader
                 return;
             }
             int code = 0;
-            string message = msgTran.AryData.Length == 1 ? R600Builder.FormatErrorCode(msgTran.AryData[0], out code) : "未知错误";
-            ProcessError(R600CmdType.InventoryISO18000, code, nameof(ProcessInventoryISO18000), $"盘存标签失败，失败原因：{message}", msgTran);
+            string message = msgTran.AryData.Length == 1 ? ReaderCaller.FormatErrorCode(msgTran.AryData[0], out code) : "未知错误";
+            ProcessError(ReadCmdType.InventoryISO18000, code, nameof(ProcessInventoryISO18000), $"盘存标签失败，失败原因：{message}", msgTran);
         }
         /// <summary>
         /// 读取标签
         /// </summary>
         /// <param name="msgTran"></param>
-        private void ProcessReadTagISO18000(IR600Message msgTran)
+        private void ProcessReadTagISO18000(IReadMessage msgTran)
         {
             if (msgTran.AryData.Length > 1)
             {
@@ -1499,14 +1483,14 @@ namespace System.Data.ShenBanReader
                 return;
             }
             int code = 0;
-            string message = msgTran.AryData.Length == 1 ? R600Builder.FormatErrorCode(msgTran.AryData[0], out code) : "未知错误";
-            ProcessError(R600CmdType.ReadTagISO18000, code, nameof(ProcessReadTagISO18000), $"读取标签失败，失败原因：{message}", msgTran);
+            string message = msgTran.AryData.Length == 1 ? ReaderCaller.FormatErrorCode(msgTran.AryData[0], out code) : "未知错误";
+            ProcessError(ReadCmdType.ReadTagISO18000, code, nameof(ProcessReadTagISO18000), $"读取标签失败，失败原因：{message}", msgTran);
         }
         /// <summary>
         /// 写入标签
         /// </summary>
         /// <param name="msgTran"></param>
-        private void ProcessWriteTagISO18000(IR600Message msgTran)
+        private void ProcessWriteTagISO18000(IReadMessage msgTran)
         {
             if (msgTran.AryData.Length > 1)
             {
@@ -1516,14 +1500,14 @@ namespace System.Data.ShenBanReader
                 return;
             }
             int code = 0;
-            string message = msgTran.AryData.Length == 1 ? R600Builder.FormatErrorCode(msgTran.AryData[0], out code) : "未知错误";
-            ProcessError(R600CmdType.WriteTagISO18000, code, nameof(ProcessWriteTagISO18000), $"写入标签失败，失败原因：{message}", msgTran);
+            string message = msgTran.AryData.Length == 1 ? ReaderCaller.FormatErrorCode(msgTran.AryData[0], out code) : "未知错误";
+            ProcessError(ReadCmdType.WriteTagISO18000, code, nameof(ProcessWriteTagISO18000), $"写入标签失败，失败原因：{message}", msgTran);
         }
         /// <summary>
         /// 永久写保护
         /// </summary>
         /// <param name="msgTran"></param>
-        private void ProcessLockTagISO18000(IR600Message msgTran)
+        private void ProcessLockTagISO18000(IReadMessage msgTran)
         {
             if (msgTran.AryData.Length > 1)
             {
@@ -1531,18 +1515,18 @@ namespace System.Data.ShenBanReader
                 var status = msgTran.AryData[1];
                 //_config.IsoAntId = msgTran.AryData[0];
                 //_config.IsoStatus = msgTran.AryData[1];
-                _recall.LockTagISO18000(msgTran, antId, (R600LockTagStatus)status);
+                _recall.LockTagISO18000(msgTran, antId, (ReadLockTagStatus)status);
                 return;
             }
             int code = 0;
-            string message = msgTran.AryData.Length == 1 ? R600Builder.FormatErrorCode(msgTran.AryData[0], out code) : "未知错误";
-            ProcessError(R600CmdType.LockTagISO18000, code, nameof(ProcessLockTagISO18000), $"永久写保护失败，失败原因：{message}", msgTran);
+            string message = msgTran.AryData.Length == 1 ? ReaderCaller.FormatErrorCode(msgTran.AryData[0], out code) : "未知错误";
+            ProcessError(ReadCmdType.LockTagISO18000, code, nameof(ProcessLockTagISO18000), $"永久写保护失败，失败原因：{message}", msgTran);
         }
         /// <summary>
         /// 查询标签
         /// </summary>
         /// <param name="msgTran"></param>
-        private void ProcessQueryTagISO18000(IR600Message msgTran)
+        private void ProcessQueryTagISO18000(IReadMessage msgTran)
         {
             if (msgTran.AryData.Length > 1)
             {
@@ -1550,242 +1534,173 @@ namespace System.Data.ShenBanReader
                 var status = msgTran.AryData[1];
                 //_config.IsoAntId = msgTran.AryData[0];
                 //_config.IsoStatus = msgTran.AryData[1];
-                _recall.QueryTagISO18000(msgTran, antId, (R600LockTagStatus)status);
+                _recall.QueryTagISO18000(msgTran, antId, (ReadLockTagStatus)status);
                 return;
             }
             int code = 0;
-            var message = msgTran.AryData.Length == 1 ? R600Builder.FormatErrorCode(msgTran.AryData[0], out code) : "未知原因";
-            ProcessError(R600CmdType.QueryTagISO18000, code, nameof(ProcessQueryTagISO18000), $"查询标签失败，失败原因：{message}", msgTran);
+            var message = msgTran.AryData.Length == 1 ? ReaderCaller.FormatErrorCode(msgTran.AryData[0], out code) : "未知原因";
+            ProcessError(ReadCmdType.QueryTagISO18000, code, nameof(ProcessQueryTagISO18000), $"查询标签失败，失败原因：{message}", msgTran);
         }
 
-        private void ProcessError(R600CmdType cmd, int code, string method, string message, IR600Message msgTran)
+        private void ProcessError(ReadCmdType cmd, int code, string method, string message, IReadMessage msgTran)
         {
-            _recall.AlertError(new R600AlertError(cmd, code, message, typeof(R600Reader).FullName, method, msgTran));
+            _recall.AlertError(new ReadAlertError(cmd, code, message, typeof(R600Reader).FullName, method, msgTran));
         }
-    }
-    /// <summary>
-    /// 阅读器
-    /// </summary>
-    internal abstract class AR600Reader : IR600Reader
-    {
-        /// <summary>
-        /// 接收回调
-        /// </summary>
-        public Action<Byte[]> ReceiveCallback { get; internal set; }
-        /// <summary>
-        /// 发送回调
-        /// </summary>
-        public Action<Byte[]> SendCallback { get; internal set; }
-        /// <summary>
-        /// 分析回调
-        /// </summary>
-        public Action<IR600Message> AnalysisCallback { get; internal set; }
-        /// <summary>
-        /// 回调模型
-        /// </summary>
-        protected IR600Callback _recall = new R600Callback();
-        /// <summary>
-        /// 内部链接模型
-        /// </summary>
-        protected ITalkModel _talker;
-        /// <summary>
-        /// 记录未处理的接收数据，主要考虑接收数据分段
-        /// </summary>
-        protected byte[] m_btAryBuffer = new byte[4096];
-        /// <summary>
-        /// 记录未处理数据的有效长度
-        /// </summary>
-        protected int m_nLenth = 0;
-        /// <summary>
-        /// 是连接
-        /// </summary>
-        public virtual bool IsConnected { get => _talker.IsConnect(); }
-        public abstract bool Connect(string portName, int baudRate, out string exception);
-        public abstract bool Connect(IPAddress ip, int port, out string exception);
-        /// <summary>
-        /// 检查字节
-        /// </summary>
-        /// <param name="aryBuffer"></param>
-        /// <param name="index"></param>
-        /// <param name="len"></param>
-        /// <returns></returns>
-        public static byte CheckByte(byte[] aryBuffer, int index, int len)
-        {
-            byte btSum = 0x00;
-            for (int nloop = index; nloop < index + len; nloop++)
-            {
-                btSum += aryBuffer[nloop];
-            }
-            return Convert.ToByte(((~btSum) + 1) & 0xFF);
-        }
+        #endregion
         /// <summary>
         /// 读GPIO值
         /// </summary>
-        /// <param name="btReadId"></param>
         /// <returns></returns>
-        public virtual int ReadGpioValue(byte btReadId)
+        public virtual int ReadGpioValue(byte btReadId, Action<IReadMessage, byte, byte, bool, bool> ReadGpioValue)
         {
-            return SendMessage(btReadId, R600CmdType.ReadGpioValue);
+            if (ReadGpioValue != null) { _recall.ReadGpioValue = ReadGpioValue; }
+            return SendMessage(btReadId, ReadCmdType.ReadGpioValue);
         }
         /// <summary>
         /// 写GPIO值
         /// </summary>
-        /// <param name="btReadId"></param>
-        /// <param name="btChooseGpio"></param>
-        /// <param name="btGpioValue"></param>
         /// <returns></returns>
-        public virtual int WriteGpioValue(byte btReadId, byte btChooseGpio, byte btGpioValue)
+        public virtual int WriteGpioValue(byte btReadId, byte btChooseGpio, byte btGpioValue, Action<IReadMessage> WriteGpioValue)
         {
-            return SendMessage(btReadId, R600CmdType.WriteGpioValue, new byte[2] { btChooseGpio, btGpioValue });
+            if (WriteGpioValue != null) { _recall.WriteGpioValue = WriteGpioValue; }
+            return SendMessage(btReadId, ReadCmdType.WriteGpioValue, new byte[2] { btChooseGpio, btGpioValue });
         }
         /// <summary>
         /// 设置
         /// </summary>
-        /// <param name="btReadId"></param>
-        /// <param name="btDetectorStatus"></param>
         /// <returns></returns>
-        public virtual int SetAntDetector(byte btReadId, byte btDetectorStatus)
+        public virtual int SetAntDetector(byte btReadId, byte btDetectorStatus, Action<IReadMessage> SetAntDetector)
         {
-            return SendMessage(btReadId, R600CmdType.SetAntDetector, new byte[1] { btDetectorStatus });
+            if (SetAntDetector != null) { _recall.SetAntDetector = SetAntDetector; }
+            return SendMessage(btReadId, ReadCmdType.SetAntDetector, new byte[1] { btDetectorStatus });
         }
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="btReadId"></param>
         /// <returns></returns>
-        public virtual int GetAntDetector(byte btReadId)
+        public virtual int GetAntDetector(byte btReadId, Action<IReadMessage, byte> GetAntDetector)
         {
-            return SendMessage(btReadId, R600CmdType.GetAntDetector);
+            if (GetAntDetector != null) { _recall.GetAntDetector = GetAntDetector; }
+            return SendMessage(btReadId, ReadCmdType.GetAntDetector);
         }
         /// <summary>
         /// 设置读ID
         /// </summary>
-        /// <param name="btReadId"></param>
-        /// <param name="identifier"></param>
         /// <returns></returns>
-        public virtual int SetReaderIdentifier(byte btReadId, byte[] identifier)
+        public virtual int SetReaderIdentifier(byte btReadId, byte[] identifier, Action<IReadMessage> SetReaderIdentifier)
         {
-            return SendMessage(btReadId, R600CmdType.SetReaderIdentifier, identifier);
+            if (SetReaderIdentifier != null) { _recall.SetReaderIdentifier = SetReaderIdentifier; }
+            return SendMessage(btReadId, ReadCmdType.SetReaderIdentifier, identifier);
         }
         /// <summary>
         /// 获取读ID
         /// </summary>
-        /// <param name="btReadId"></param>
         /// <returns></returns>
-        public virtual int GetReaderIdentifier(byte btReadId)
+        public virtual int GetReaderIdentifier(byte btReadId, Action<IReadMessage, byte[]> GetReaderIdentifier)
         {
-            return SendMessage(btReadId, R600CmdType.GetReaderIdentifier);
+            if (GetReaderIdentifier != null) { _recall.GetReaderIdentifier = GetReaderIdentifier; }
+            return SendMessage(btReadId, ReadCmdType.GetReaderIdentifier);
         }
         /// <summary>
         /// 设置配置
         /// </summary>
-        /// <param name="btReadId"></param>
-        /// <param name="btProfile"></param>
         /// <returns></returns>
-        public virtual int SetLinkProfile(byte btReadId, byte btProfile)
+        public virtual int SetLinkProfile(byte btReadId, byte btProfile, Action<IReadMessage, byte> SetLinkProfile)
         {
-            return SendMessage(btReadId, R600CmdType.SetLinkProfile, new byte[1] { btProfile });
+            if (SetLinkProfile != null) { _recall.SetLinkProfile = SetLinkProfile; }
+            return SendMessage(btReadId, ReadCmdType.SetLinkProfile, new byte[1] { btProfile });
         }
         /// <summary>
         /// 获取配置
         /// </summary>
-        /// <param name="btReadId"></param>
         /// <returns></returns>
-        public virtual int GetLinkProfile(byte btReadId)
+        public virtual int GetLinkProfile(byte btReadId, Action<IReadMessage, ReadLinkProfileType> GetLinkProfile)
         {
-            return SendMessage(btReadId, R600CmdType.GetLinkProfile);
+            if (GetLinkProfile != null) { _recall.GetLinkProfile = GetLinkProfile; }
+            return SendMessage(btReadId, ReadCmdType.GetLinkProfile);
         }
         /// <summary>
         /// 复位读写器
         /// </summary>
-        /// <param name="btReadId"></param>
         /// <returns></returns>
         public virtual int Reset(byte btReadId)
         {
-            return SendMessage(btReadId, R600CmdType.Reset);
+            return SendMessage(btReadId, ReadCmdType.Reset);
         }
         /// <summary>
         /// 设置非同步收发传输器波特率
         /// </summary>
-        /// <param name="btReadId"></param>
-        /// <param name="nIndexBaudrate"></param>
         /// <returns></returns>
-        public virtual int SetUartBaudRate(byte btReadId, int nIndexBaudrate)
+        public virtual int SetUartBaudRate(byte btReadId, int nIndexBaudrate, Action<IReadMessage> SetUartBaudRate)
         {
-            return SendMessage(btReadId, R600CmdType.SetUartBaudRate, new byte[1] { Convert.ToByte(nIndexBaudrate) });
+            if (SetUartBaudRate != null) { _recall.SetUartBaudRate = SetUartBaudRate; }
+            return SendMessage(btReadId, ReadCmdType.SetUartBaudRate, new byte[1] { Convert.ToByte(nIndexBaudrate) });
         }
         /// <summary>
         /// 获取固件版本
         /// </summary>
-        /// <param name="btReadId"></param>
         /// <returns></returns>
-        public virtual int GetFirmwareVersion(byte btReadId)
+        public virtual int GetFirmwareVersion(byte btReadId, Action<IReadMessage, byte, byte> GetFirmwareVersion)
         {
-            return SendMessage(btReadId, R600CmdType.GetFirmwareVersion);
+            if (GetFirmwareVersion != null) { _recall.GetFirmwareVersion = GetFirmwareVersion; }
+            return SendMessage(btReadId, ReadCmdType.GetFirmwareVersion);
         }
         /// <summary>
         /// 设置读地址
         /// </summary>
-        /// <param name="btReadId"></param>
-        /// <param name="btNewReadId"></param>
         /// <returns></returns>
-        public virtual int SetReaderAddress(byte btReadId, byte btNewReadId)
+        public virtual int SetReaderAddress(byte btReadId, byte btNewReadId, Action<IReadMessage> SetReaderAddress)
         {
-            return SendMessage(btReadId, R600CmdType.SetReaderAddress, new byte[1] { btNewReadId });
+            if (SetReaderAddress != null) { _recall.SetReaderAddress = SetReaderAddress; }
+            return SendMessage(btReadId, ReadCmdType.SetReaderAddress, new byte[1] { btNewReadId });
         }
         /// <summary>
         /// 设置工作天线
         /// </summary>
-        /// <param name="btReadId"></param>
-        /// <param name="btWorkAntenna"></param>
         /// <returns></returns>
-        public virtual int SetWorkAntenna(byte btReadId, byte btWorkAntenna)
+        public virtual int SetWorkAntenna(byte btReadId, byte btWorkAntenna, Action<IReadMessage> SetWorkAntenna)
         {
-            return SendMessage(btReadId, R600CmdType.SetWorkAntenna, new byte[1] { btWorkAntenna });
+            if (SetWorkAntenna != null) { _recall.SetWorkAntenna = SetWorkAntenna; }
+            return SendMessage(btReadId, ReadCmdType.SetWorkAntenna, new byte[1] { btWorkAntenna });
         }
         /// <summary>
         /// 获取工作天线
         /// </summary>
-        /// <param name="btReadId"></param>
         /// <returns></returns>
-        public virtual int GetWorkAntenna(byte btReadId)
+        public virtual int GetWorkAntenna(byte btReadId, Action<IReadMessage, ReadAntennaType> GetWorkAntenna)
         {
-            return SendMessage(btReadId, R600CmdType.GetWorkAntenna);
+            if (GetWorkAntenna != null) { _recall.GetWorkAntenna = GetWorkAntenna; }
+            return SendMessage(btReadId, ReadCmdType.GetWorkAntenna);
         }
         /// <summary>
         /// 设置输出性能
         /// </summary>
-        /// <param name="btReadId"></param>
-        /// <param name="btOutputPower"></param>
         /// <returns></returns>
-        public virtual int SetOutputPower(byte btReadId, byte btOutputPower)
+        public virtual int SetOutputPower(byte btReadId, byte btOutputPower, Action<IReadMessage> SetOutputPower)
         {
-            return SendMessage(btReadId, R600CmdType.SetOutputPower, new byte[1] { btOutputPower });
+            if (SetOutputPower != null) { _recall.SetOutputPower = SetOutputPower; }
+            return SendMessage(btReadId, ReadCmdType.SetOutputPower, new byte[1] { btOutputPower });
         }
         /// <summary>
         /// 获取输出性能
         /// </summary>
-        /// <param name="btReadId"></param>
         /// <returns></returns>
-        public virtual int GetOutputPower(byte btReadId)
+        public virtual int GetOutputPower(byte btReadId, Action<IReadMessage, byte> GetOutputPower)
         {
-            return SendMessage(btReadId, R600CmdType.GetOutputPower);
+            if (GetOutputPower != null) { _recall.GetOutputPower = GetOutputPower; }
+            return SendMessage(btReadId, ReadCmdType.GetOutputPower);
         }
         /// <summary>
         /// 设置频率区域
         /// </summary>
-        /// <param name="btReadId"></param>
-        /// <param name="btRegion"></param>
-        /// <param name="btStart"></param>
-        /// <param name="btInterval"></param>
-        /// <param name="btChannelQuantity"></param>
         /// <returns></returns>
-        public virtual int SetFrequencyRegion(byte btReadId, R600FreqRegionType btRegion, int btStart, byte btInterval, byte btChannelQuantity)
+        public virtual int SetFrequencyRegion(byte btReadId, ReadFreqRegionType btRegion, int btStart, byte btInterval, byte btChannelQuantity, Action<IReadMessage> SetFrequencyRegion)
         {
+            if (SetFrequencyRegion != null) { _recall.SetFrequencyRegion = SetFrequencyRegion; }
             byte[] btAryData;
             switch (btRegion)
             {
-                case R600FreqRegionType.Custom:
+                case ReadFreqRegionType.Custom:
                     btAryData = new byte[6];
                     btAryData[0] = 4;
                     btAryData[1] = btInterval;
@@ -1795,269 +1710,244 @@ namespace System.Data.ShenBanReader
                     btAryData[4] = btAryFreq[1];
                     btAryData[5] = btAryFreq[0];
                     break;
-                case R600FreqRegionType.FCC:
-                case R600FreqRegionType.ETSI:
-                case R600FreqRegionType.CHN:
+                case ReadFreqRegionType.FCC:
+                case ReadFreqRegionType.ETSI:
+                case ReadFreqRegionType.CHN:
                 default:
                     btAryData = new byte[3] { (byte)btRegion, (byte)btStart, btInterval };
                     break;
             }
-            return SendMessage(btReadId, R600CmdType.SetFrequencyRegion, btAryData);
+            return SendMessage(btReadId, ReadCmdType.SetFrequencyRegion, btAryData);
         }
         /// <summary>
         /// 得到频率区域
         /// </summary>
-        /// <param name="btReadId"></param>
         /// <returns></returns>
-        public virtual int GetFrequencyRegion(byte btReadId)
+        public virtual int GetFrequencyRegion(byte btReadId, Action<IReadMessage, ReadFreqRegionType, int, byte, byte> GetFrequencyRegion)
         {
-            return SendMessage(btReadId, R600CmdType.GetFrequencyRegion);
+            if (GetFrequencyRegion != null) { _recall.GetFrequencyRegion = GetFrequencyRegion; }
+            return SendMessage(btReadId, ReadCmdType.GetFrequencyRegion);
         }
         /// <summary>
         /// 设置呼叫模式
         /// </summary>
-        /// <param name="btReadId"></param>
-        /// <param name="btMode"></param>
         /// <returns></returns>
-        public virtual int SetBeeperMode(byte btReadId, byte btMode)
+        public virtual int SetBeeperMode(byte btReadId, byte btMode, Action<IReadMessage> SetBeeperMode)
         {
-            return SendMessage(btReadId, R600CmdType.SetBeeperMode, new byte[1] { btMode });
+            if (SetBeeperMode != null) { _recall.SetBeeperMode = SetBeeperMode; }
+            return SendMessage(btReadId, ReadCmdType.SetBeeperMode, new byte[1] { btMode });
         }
         /// <summary>
         /// 得到工作温度
         /// </summary>
-        /// <param name="btReadId"></param>
         /// <returns></returns>
-        public virtual int GetReaderTemperature(byte btReadId)
+        public virtual int GetReaderTemperature(byte btReadId, Action<IReadMessage, int> GetReaderTemperature)
         {
-            return SendMessage(btReadId, R600CmdType.GetReaderTemperature);
+            if (GetReaderTemperature != null) { _recall.GetReaderTemperature = GetReaderTemperature; }
+            return SendMessage(btReadId, ReadCmdType.GetReaderTemperature);
         }
         /// <summary>
         /// 设置DRM模式
         /// </summary>
-        /// <param name="btReadId"></param>
-        /// <param name="btDrmMode"></param>
         /// <returns></returns>
-        public virtual int SetDrmMode(byte btReadId, byte btDrmMode)
+        public virtual int SetDrmMode(byte btReadId, byte btDrmMode, Action<IReadMessage> SetDrmMode)
         {
-            return SendMessage(btReadId, R600CmdType.SetDrmMode, new byte[1] { btDrmMode });
+            if (SetDrmMode != null) { _recall.SetDrmMode = SetDrmMode; }
+            return SendMessage(btReadId, ReadCmdType.SetDrmMode, new byte[1] { btDrmMode });
         }
         /// <summary>
         /// 获取DRM模式
         /// </summary>
-        /// <param name="btReadId"></param>
         /// <returns></returns>
-        public virtual int GetDrmMode(byte btReadId)
+        public virtual int GetDrmMode(byte btReadId, Action<IReadMessage, bool> GetDrmMode)
         {
-            return SendMessage(btReadId, R600CmdType.GetDrmMode);
+            if (GetDrmMode != null) { _recall.GetDrmMode = GetDrmMode; }
+            return SendMessage(btReadId, ReadCmdType.GetDrmMode);
         }
         /// <summary>
         /// 回波损耗测量
         /// </summary>
-        /// <param name="btReadId"></param>
-        /// <param name="btFrequency"></param>
         /// <returns></returns>
         [Obsolete("替代方案:GetAntImpedanceMatch")]
-        public virtual int MeasureReturnLoss(byte btReadId, byte btFrequency)
+        public virtual int MeasureReturnLoss(byte btReadId, byte btFrequency, Action<IReadMessage, byte> GetImpedanceMatch)
         {
-            return SendMessage(btReadId, R600CmdType.GetAntImpedanceMatch, new byte[1] { btFrequency });
+            if (GetImpedanceMatch != null) { _recall.GetImpedanceMatch = GetImpedanceMatch; }
+            return SendMessage(btReadId, ReadCmdType.GetAntImpedanceMatch, new byte[1] { btFrequency });
         }
         /// <summary>
         /// 获得阻抗匹配
         /// </summary>
-        /// <param name="btReadId"></param>
-        /// <param name="btFrequency"></param>
         /// <returns></returns>
-        public virtual int GetImpedanceMatch(byte btReadId, byte btFrequency)
+        public virtual int GetImpedanceMatch(byte btReadId, byte btFrequency, Action<IReadMessage, byte> GetImpedanceMatch)
         {
-            return SendMessage(btReadId, R600CmdType.GetAntImpedanceMatch, new byte[1] { btFrequency });
+            if (GetImpedanceMatch != null) { _recall.GetImpedanceMatch = GetImpedanceMatch; }
+            return SendMessage(btReadId, ReadCmdType.GetAntImpedanceMatch, new byte[1] { btFrequency });
         }
         /// <summary>
         /// 盘存
         /// </summary>
-        /// <param name="btReadId"></param>
-        /// <param name="byRound"></param>
         /// <returns></returns>
-        public virtual int Inventory(byte btReadId, byte byRound)
+        public virtual int Inventory(byte btReadId, byte byRound, Action<IReadMessage, byte, int, int, int, int> Inventory)
         {
-            return SendMessage(btReadId, R600CmdType.Inventory, new byte[1] { byRound });
+            if (Inventory != null) { _recall.Inventory = Inventory; }
+            return SendMessage(btReadId, ReadCmdType.Inventory, new byte[1] { byRound });
         }
         /// <summary>
         /// 读标签
         /// </summary>
-        /// <param name="btReadId"></param>
-        /// <param name="btMemBank"></param>
-        /// <param name="btWordAdd"></param>
-        /// <param name="btWordCnt"></param>
         /// <returns></returns>
-        public virtual int ReadTag(byte btReadId, byte btMemBank, byte btWordAdd, byte btWordCnt)
+        public virtual int ReadTag(byte btReadId, byte btMemBank, byte btWordAdd, byte btWordCnt, Action<IReadMessage, R600TagInfo> ReadTag)
         {
-            return SendMessage(btReadId, R600CmdType.ReadTag, new byte[3] { btMemBank, btWordAdd, btWordCnt });
+            if (ReadTag != null) { _recall.ReadTag = ReadTag; }
+            return SendMessage(btReadId, ReadCmdType.ReadTag, new byte[3] { btMemBank, btWordAdd, btWordCnt });
         }
         /// <summary>
         /// 写标签
         /// </summary>
-        /// <param name="btReadId"></param>
-        /// <param name="btAryPassWord"></param>
-        /// <param name="btMemBank"></param>
-        /// <param name="btWordAdd"></param>
-        /// <param name="btWordCnt"></param>
-        /// <param name="btAryData"></param>
         /// <returns></returns>
-        public virtual int WriteTag(byte btReadId, byte[] btAryPassWord, byte btMemBank, byte btWordAdd, byte btWordCnt, byte[] btAryData)
+        public virtual int WriteTag(byte btReadId, byte[] btAryPassWord, byte btMemBank, byte btWordAdd, byte btWordCnt, byte[] btAryData, Action<IReadMessage, R600TagInfo> WriteTag)
         {
+            if (WriteTag != null) { _recall.WriteTag = WriteTag; }
             byte[] btAryBuffer = new byte[btAryData.Length + 7];
             btAryPassWord.CopyTo(btAryBuffer, 0);
             btAryBuffer[4] = btMemBank;
             btAryBuffer[5] = btWordAdd;
             btAryBuffer[6] = btWordCnt;
             btAryData.CopyTo(btAryBuffer, 7);
-            return SendMessage(btReadId, R600CmdType.WriteTag, btAryBuffer);
+            return SendMessage(btReadId, ReadCmdType.WriteTag, btAryBuffer);
         }
         /// <summary>
         /// 锁定标签
         /// </summary>
-        /// <param name="btReadId"></param>
-        /// <param name="btAryPassWord"></param>
-        /// <param name="btMembank"></param>
-        /// <param name="btLockType"></param>
         /// <returns></returns>
-        public virtual int LockTag(byte btReadId, byte[] btAryPassWord, byte btMembank, byte btLockType)
+        public virtual int LockTag(byte btReadId, byte[] btAryPassWord, byte btMembank, byte btLockType, Action<IReadMessage, R600TagInfo> LockTag)
         {
+            if (LockTag != null) { _recall.LockTag = LockTag; }
             byte[] btAryData = new byte[6];
             btAryPassWord.CopyTo(btAryData, 0);
             btAryData[4] = btMembank;
             btAryData[5] = btLockType;
-            return SendMessage(btReadId, R600CmdType.LockTag, btAryData);
+            return SendMessage(btReadId, ReadCmdType.LockTag, btAryData);
         }
         /// <summary>
         /// 释放标记
         /// </summary>
-        /// <param name="btReadId"></param>
-        /// <param name="btAryPassWord"></param>
         /// <returns></returns>
-        public virtual int KillTag(byte btReadId, byte[] btAryPassWord)
+        public virtual int KillTag(byte btReadId, byte[] btAryPassWord, Action<IReadMessage, R600TagInfo> KillTag)
         {
+            if (KillTag != null) { _recall.KillTag = KillTag; }
             byte[] btAryData = new byte[4];
             btAryPassWord.CopyTo(btAryData, 0);
-            return SendMessage(btReadId, R600CmdType.KillTag, btAryData);
+            return SendMessage(btReadId, ReadCmdType.KillTag, btAryData);
         }
         /// <summary>
-        /// 设置EPC(btEpcLen=0为取消)
+        /// 设置EPC(len=0为取消)
         /// </summary>
-        /// <param name="btReadId"></param>
-        /// <param name="btMode"></param>
-        /// <param name="btEpcLen"></param>
-        /// <param name="btAryEpc"></param>
         /// <returns></returns>
-        public virtual int SetAccessEpcMatch(byte btReadId, byte btMode, byte btEpcLen, byte[] btAryEpc)
+        public virtual int SetAccessEpcMatch(byte btReadId, byte btMode, byte btEpcLen, byte[] btAryEpc, Action<IReadMessage> SetAccessEpcMatch)
         {
+            if (SetAccessEpcMatch != null) { _recall.SetAccessEpcMatch = SetAccessEpcMatch; }
             if (btEpcLen == 0)
             {
-                return SendMessage(btReadId, R600CmdType.SetAccessEpcMatch, new byte[1] { btMode });
+                return SendMessage(btReadId, ReadCmdType.SetAccessEpcMatch, new byte[1] { btMode });
             }
             int nLen = Convert.ToInt32(btEpcLen) + 2;
             byte[] btAryData = new byte[nLen];
             btAryData[0] = btMode;
             btAryData[1] = btEpcLen;
             btAryEpc.CopyTo(btAryData, 2);
-            return SendMessage(btReadId, R600CmdType.SetAccessEpcMatch, btAryData);
+            return SendMessage(btReadId, ReadCmdType.SetAccessEpcMatch, btAryData);
         }
         /// <summary>
         /// 获取EPC
         /// </summary>
-        /// <param name="btReadId"></param>
         /// <returns></returns>
-        public virtual int GetAccessEpcMatch(byte btReadId)
+        public virtual int GetAccessEpcMatch(byte btReadId, Action<IReadMessage, byte[]> GetAccessEpcMatch)
         {
-            return SendMessage(btReadId, R600CmdType.GetAccessEpcMatch);
+            if (GetAccessEpcMatch != null) { _recall.GetAccessEpcMatch = GetAccessEpcMatch; }
+            return SendMessage(btReadId, ReadCmdType.GetAccessEpcMatch);
         }
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="btReadId"></param>
-        /// <param name="byRound"></param>
         /// <returns></returns>
-        public virtual int InventoryReal(byte btReadId, byte byRound)
+        public virtual int InventoryReal(byte btReadId, byte byRound, Action<IReadMessage, R600TagInfo> InventoryReal, Action<IReadMessage, int, int> InventoryRealEnd)
         {
-            return SendMessage(btReadId, R600CmdType.InventoryReal, new byte[1] { byRound });
+            if (InventoryReal != null) { _recall.InventoryReal = InventoryReal; }
+            if (InventoryRealEnd != null) { _recall.InventoryRealEnd = InventoryRealEnd; }
+            return SendMessage(btReadId, ReadCmdType.InventoryReal, new byte[1] { byRound });
         }
         /// <summary>
         /// 快速存盘
         /// </summary>
-        /// <param name="btReadId"></param>
-        /// <param name="btAryData"></param>
         /// <returns></returns>
-        public virtual int FastSwitchInventory(byte btReadId, byte[] btAryData)
+        public virtual int FastSwitchInventory(byte btReadId, byte[] btAryData, Action<IReadMessage, R600TagInfo> FastSwitchInventory, Action<IReadMessage, int, int> FastSwitchInventoryEnd)
         {
-            return SendMessage(btReadId, R600CmdType.FastSwitchInventory, btAryData);
+            if (FastSwitchInventory != null) { _recall.FastSwitchInventory = FastSwitchInventory; }
+            if (FastSwitchInventoryEnd != null) { _recall.FastSwitchInventoryEnd = FastSwitchInventoryEnd; }
+            return SendMessage(btReadId, ReadCmdType.FastSwitchInventory, btAryData);
         }
         /// <summary>
         /// 自定义存盘
         /// </summary>
-        /// <param name="btReadId"></param>
-        /// <param name="session"></param>
-        /// <param name="target"></param>
-        /// <param name="byRound"></param>
         /// <returns></returns>
         public virtual int CustomizedInventory(byte btReadId, byte session, byte target, byte byRound)
         {
-            return SendMessage(btReadId, R600CmdType.CustomizedInventory, new byte[3] { session, target, byRound });
+            return SendMessage(btReadId, ReadCmdType.CustomizedInventory, new byte[3] { session, target, byRound });
         }
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="btReadId"></param>
         /// <returns></returns>
-        public virtual int GetMonzaStatus(byte btReadId)
+        public virtual int GetMonzaStatus(byte btReadId, Action<IReadMessage, byte> GetMonzaStatus)
         {
-            return SendMessage(btReadId, R600CmdType.GetMonzaStatus);
+            if (GetMonzaStatus != null) { _recall.GetMonzaStatus = GetMonzaStatus; }
+            return SendMessage(btReadId, ReadCmdType.GetMonzaStatus);
         }
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="btReadId"></param>
-        /// <param name="btMonzaStatus"></param>
         /// <returns></returns>
-        public virtual int SetMonzaStatus(byte btReadId, byte btMonzaStatus)
+        public virtual int SetMonzaStatus(byte btReadId, byte btMonzaStatus, Action<IReadMessage, byte> SetMonzaStatus)
         {
-            return SendMessage(btReadId, R600CmdType.SetMonzaStatus, new byte[1] { btMonzaStatus });
+            if (SetMonzaStatus != null) { _recall.SetMonzaStatus = SetMonzaStatus; }
+            return SendMessage(btReadId, ReadCmdType.SetMonzaStatus, new byte[1] { btMonzaStatus });
         }
         /// <summary>
         /// 获取存盘
         /// </summary>
-        /// <param name="btReadId"></param>
         /// <returns></returns>
-        public virtual int GetInventoryBuffer(byte btReadId)
+        public virtual int GetInventoryBuffer(byte btReadId, Action<IReadMessage, R600TagInfo> GetInventoryBuffer)
         {
-            return SendMessage(btReadId, R600CmdType.GetInventoryBuffer);
+            if (GetInventoryBuffer != null) { _recall.GetInventoryBuffer = GetInventoryBuffer; }
+            return SendMessage(btReadId, ReadCmdType.GetInventoryBuffer);
         }
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="btReadId"></param>
         /// <returns></returns>
-        public virtual int GetAndResetInventoryBuffer(byte btReadId)
+        public virtual int GetAndResetInventoryBuffer(byte btReadId, Action<IReadMessage, R600TagInfo> GetAndResetInventoryBuffer)
         {
-            return SendMessage(btReadId, R600CmdType.GetAndResetInventoryBuffer);
+            if (GetAndResetInventoryBuffer != null) { _recall.GetAndResetInventoryBuffer = GetAndResetInventoryBuffer; }
+            return SendMessage(btReadId, ReadCmdType.GetAndResetInventoryBuffer);
         }
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="btReadId"></param>
         /// <returns></returns>
-        public virtual int GetInventoryBufferTagCount(byte btReadId)
+        public virtual int GetInventoryBufferTagCount(byte btReadId, Action<IReadMessage, int> GetInventoryBufferTagCount)
         {
-            return SendMessage(btReadId, R600CmdType.GetInventoryBufferTagCount);
+            if (GetInventoryBufferTagCount != null) { _recall.GetInventoryBufferTagCount = GetInventoryBufferTagCount; }
+            return SendMessage(btReadId, ReadCmdType.GetInventoryBufferTagCount);
         }
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="btReadId"></param>
         /// <returns></returns>
-        public virtual int ResetInventoryBuffer(byte btReadId)
+        public virtual int ResetInventoryBuffer(byte btReadId, Action<IReadMessage> ResetInventoryBuffer)
         {
-            return SendMessage(btReadId, R600CmdType.ResetInventoryBuffer);
+            if (ResetInventoryBuffer != null) { _recall.ResetInventoryBuffer = ResetInventoryBuffer; }
+            return SendMessage(btReadId, ReadCmdType.ResetInventoryBuffer);
         }
         /// <summary>
         /// 
@@ -2067,7 +1957,7 @@ namespace System.Data.ShenBanReader
         /// <returns></returns>
         public virtual int SetBufferDataFrameInterval(byte btReadId, byte btInterval)
         {
-            return SendMessage(btReadId, R600CmdType.SetBufferDataFrameInterval, new byte[1] { btInterval });
+            return SendMessage(btReadId, ReadCmdType.SetBufferDataFrameInterval, new byte[1] { btInterval });
         }
         /// <summary>
         /// 
@@ -2076,82 +1966,71 @@ namespace System.Data.ShenBanReader
         /// <returns></returns>
         public virtual int GetBufferDataFrameInterval(byte btReadId)
         {
-            return SendMessage(btReadId, R600CmdType.GetBufferDataFrameInterval);
+            return SendMessage(btReadId, ReadCmdType.GetBufferDataFrameInterval);
         }
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="btReadId"></param>
         /// <returns></returns>
-        public virtual int InventoryISO18000(byte btReadId)
+        public virtual int InventoryISO18000(byte btReadId, Action<IReadMessage, R600TagInfoIso18000> InventoryISO18000, Action<IReadMessage, int> InventoryISO18000End)
         {
-            return SendMessage(btReadId, R600CmdType.InventoryISO18000);
+            if (InventoryISO18000 != null) { _recall.InventoryISO18000 = InventoryISO18000; }
+            return SendMessage(btReadId, ReadCmdType.InventoryISO18000);
         }
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="btReadId"></param>
-        /// <param name="btAryUID"></param>
-        /// <param name="btWordAdd"></param>
-        /// <param name="btWordCnt"></param>
         /// <returns></returns>
-        public virtual int ReadTagISO18000(byte btReadId, byte[] btAryUID, byte btWordAdd, byte btWordCnt)
+        public virtual int ReadTagISO18000(byte btReadId, byte[] btAryUID, byte btWordAdd, byte btWordCnt, Action<IReadMessage, byte, byte[]> ReadTagISO18000)
         {
+            if (ReadTagISO18000 != null) { _recall.ReadTagISO18000 = ReadTagISO18000; }
             int nLen = btAryUID.Length + 2;
             byte[] btAryData = new byte[nLen];
             btAryUID.CopyTo(btAryData, 0);
             btAryData[nLen - 2] = btWordAdd;
             btAryData[nLen - 1] = btWordCnt;
-            return SendMessage(btReadId, R600CmdType.ReadTagISO18000, btAryData);
+            return SendMessage(btReadId, ReadCmdType.ReadTagISO18000, btAryData);
         }
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="btReadId"></param>
-        /// <param name="btAryUID"></param>
-        /// <param name="btWordAdd"></param>
-        /// <param name="btWordCnt"></param>
-        /// <param name="btAryBuffer"></param>
         /// <returns></returns>
-        public virtual int WriteTagISO18000(byte btReadId, byte[] btAryUID, byte btWordAdd, byte btWordCnt, byte[] btAryBuffer)
+        public virtual int WriteTagISO18000(byte btReadId, byte[] btAryUID, byte btWordAdd, byte btWordCnt, byte[] btAryBuffer, Action<IReadMessage, byte, byte> WriteTagISO18000)
         {
+            if (WriteTagISO18000 != null) { _recall.WriteTagISO18000 = WriteTagISO18000; }
             int nLen = btAryUID.Length + 2 + btAryBuffer.Length;
             byte[] btAryData = new byte[nLen];
             btAryUID.CopyTo(btAryData, 0);
             btAryData[btAryUID.Length] = btWordAdd;
             btAryData[btAryUID.Length + 1] = btWordCnt;
             btAryBuffer.CopyTo(btAryData, btAryUID.Length + 2);
-            return SendMessage(btReadId, R600CmdType.WriteTagISO18000, btAryData);
+            return SendMessage(btReadId, ReadCmdType.WriteTagISO18000, btAryData);
         }
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="btReadId"></param>
-        /// <param name="btAryUID"></param>
-        /// <param name="btWordAdd"></param>
         /// <returns></returns>
-        public virtual int LockTagISO18000(byte btReadId, byte[] btAryUID, byte btWordAdd)
+        public virtual int LockTagISO18000(byte btReadId, byte[] btAryUID, byte btWordAdd, Action<IReadMessage, byte, ReadLockTagStatus> LockTagISO18000)
         {
+            if (LockTagISO18000 != null) { _recall.LockTagISO18000 = LockTagISO18000; }
             int nLen = btAryUID.Length + 1;
             byte[] btAryData = new byte[nLen];
             btAryUID.CopyTo(btAryData, 0);
             btAryData[nLen - 1] = btWordAdd;
-            return SendMessage(btReadId, R600CmdType.LockTagISO18000, btAryData);
+            return SendMessage(btReadId, ReadCmdType.LockTagISO18000, btAryData);
         }
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="btReadId"></param>
-        /// <param name="btAryUID"></param>
-        /// <param name="btWordAdd"></param>
         /// <returns></returns>
-        public virtual int QueryTagISO18000(byte btReadId, byte[] btAryUID, byte btWordAdd)
+        public virtual int QueryTagISO18000(byte btReadId, byte[] btAryUID, byte btWordAdd, Action<IReadMessage, byte, ReadLockTagStatus> QueryTagISO18000)
         {
+            if (QueryTagISO18000 != null) { _recall.QueryTagISO18000 = QueryTagISO18000; }
             int nLen = btAryUID.Length + 1;
             byte[] btAryData = new byte[nLen];
             btAryUID.CopyTo(btAryData, 0);
             btAryData[nLen - 1] = btWordAdd;
-            return SendMessage(btReadId, R600CmdType.QueryTagISO18000, btAryData);
+            return SendMessage(btReadId, ReadCmdType.QueryTagISO18000, btAryData);
         }
         /// <summary>
         /// 发送信息
@@ -2160,7 +2039,7 @@ namespace System.Data.ShenBanReader
         /// <param name="btCmd"></param>
         /// <param name="btAryData"></param>
         /// <returns></returns>
-        public virtual int SendMessage(byte btReadId, R600CmdType btCmd, byte[] btAryData = null)
+        public virtual int SendMessage(byte btReadId, ReadCmdType btCmd, byte[] btAryData = null)
         {
             return SendMessage(btReadId, (byte)btCmd, btAryData);
         }
@@ -2181,7 +2060,7 @@ namespace System.Data.ShenBanReader
                 data[1] = 0x03;
                 data[2] = btReadId;
                 data[3] = btCmd;
-                data[4] = CheckByte(data, 0, 4);
+                data[4] = ReaderCaller.CheckByte(data, 0, 4);
             }
             else
             {
@@ -2192,7 +2071,7 @@ namespace System.Data.ShenBanReader
                 data[2] = btReadId;
                 data[3] = btCmd;
                 btAryData.CopyTo(data, 4);
-                data[nLen + 4] = CheckByte(data, 0, nLen + 4);
+                data[nLen + 4] = ReaderCaller.CheckByte(data, 0, nLen + 4);
             }
             if (_talker.Send(data))
             {
@@ -2209,6 +2088,9 @@ namespace System.Data.ShenBanReader
         {
             return _talker.IsConnect();
         }
+        /// <summary>
+        /// 关闭
+        /// </summary>
         public virtual void Close()
         {
             _talker.Dispose();
@@ -2245,300 +2127,5 @@ namespace System.Data.ShenBanReader
                 ReceiveCallback = model.ReceiveCallback;
             }
         }
-        #region // 内部类
-        /// <summary>
-        /// 对话模型接口
-        /// </summary>
-        internal interface ITalkModel : IDisposable
-        {
-            /// <summary>
-            /// 接收到发来的消息
-            /// </summary>
-            event Action<byte[]> Received;
-            /// <summary>
-            /// 连接到服务端
-            /// </summary>
-            /// <param name="ip">IP地址</param>
-            /// <param name="port">端口号</param>
-            /// <param name="message">消息提示</param>
-            /// <returns></returns>
-            bool Connect(IPAddress ip, int port, out string message);
-            /// <summary>
-            /// 连接到服务端
-            /// </summary>
-            /// <param name="portName">串口号</param>
-            /// <param name="bautRate">波特率</param>
-            /// <param name="message">消息提示</param>
-            /// <returns></returns>
-            bool Connect(string portName, int bautRate, out string message);
-            /// <summary>
-            /// 发送数据包
-            /// </summary>
-            /// <param name="aryBuffer"></param>
-            /// <returns></returns>
-            bool Send(byte[] aryBuffer);
-            /// <summary>
-            /// 注销连接
-            /// </summary>
-            void Exit();
-            /// <summary>
-            /// 校验是否连接服务器
-            /// </summary>
-            /// <returns></returns>
-            bool IsConnect();
-        }
-        /// <summary>
-        /// 对话模型
-        /// </summary>
-        internal class TalkModel : ITalkModel
-        {
-            /// <summary>
-            /// 接收事件
-            /// </summary>
-            public virtual event Action<byte[]> Received;
-            /// <summary>
-            /// 链接
-            /// </summary>
-            /// <param name="ip"></param>
-            /// <param name="port"></param>
-            /// <param name="message"></param>
-            /// <returns></returns>
-            public virtual bool Connect(IPAddress ip, int port, out string message)
-            {
-                message = "接口未实现";
-                return false;
-            }
-            /// <summary>
-            /// 链接
-            /// </summary>
-            /// <param name="portName"></param>
-            /// <param name="bautRate"></param>
-            /// <param name="message"></param>
-            /// <returns></returns>
-            public virtual bool Connect(string portName, int bautRate, out string message)
-            {
-                message = "接口未实现";
-                return false;
-            }
-            /// <summary>
-            /// 释放资源
-            /// </summary>
-            public virtual void Dispose()
-            {
-
-            }
-
-            /// <summary>
-            /// 退出
-            /// </summary>
-            public virtual void Exit()
-            {
-
-            }
-            /// <summary>
-            /// 已连接
-            /// </summary>
-            /// <returns></returns>
-            public virtual bool IsConnect()
-            {
-                return false;
-            }
-            /// <summary>
-            /// 发送
-            /// </summary>
-            /// <param name="aryBuffer"></param>
-            /// <returns></returns>
-            public virtual bool Send(byte[] aryBuffer)
-            {
-                return false;
-            }
-        }
-        /// <summary>
-        /// TCP连接模型
-        /// </summary>
-        internal class TcpTalkModel : TalkModel, ITalkModel
-        {
-            public override event Action<byte[]> Received;
-            TcpClient client;
-            Stream streamToTran;
-            private Thread waitThread;
-            private bool bIsConnect = false;
-            /// <summary>
-            /// 连接
-            /// </summary>
-            /// <param name="ipAddress"></param>
-            /// <param name="port"></param>
-            /// <param name="message"></param>
-            /// <returns></returns>
-            public override bool Connect(IPAddress ipAddress, int port, out string message)
-            {
-                message = string.Empty;
-                try
-                {
-                    client = new TcpClient();
-                    client.Connect(ipAddress, port);
-                    streamToTran = client.GetStream();    // 获取连接至远程的流
-
-                    //建立线程收取服务器发送数据
-                    ThreadStart stThead = new(ReceivedData);
-                    waitThread = new Thread(stThead)
-                    {
-                        IsBackground = true
-                    };
-                    waitThread.Start();
-
-                    bIsConnect = true;
-                    return true;
-                }
-                catch (System.Exception ex)
-                {
-                    message = ex.Message;
-                    bIsConnect = false;
-                    return false;
-                }
-            }
-
-            private void ReceivedData()
-            {
-                while (true)
-                {
-                    try
-                    {
-                        byte[] btAryBuffer = new byte[4096];
-                        int nLenRead = streamToTran.Read(btAryBuffer, 0, btAryBuffer.Length);
-                        if (nLenRead == 0) { continue; }
-                        if (Received != null)
-                        {
-                            byte[] btAryReceiveData = new byte[nLenRead];
-                            Array.Copy(btAryBuffer, btAryReceiveData, nLenRead);
-                            Received(btAryReceiveData);
-                        }
-                    }
-                    catch { }
-                }
-            }
-            /// <summary>
-            /// 发送
-            /// </summary>
-            /// <param name="aryBuffer"></param>
-            /// <returns></returns>
-            public override bool Send(byte[] aryBuffer)
-            {
-                try
-                {
-                    if (!bIsConnect) { return false; }
-                    lock (streamToTran)
-                    {
-                        streamToTran.Write(aryBuffer, 0, aryBuffer.Length);
-                        return true;
-                    }
-                }
-                catch
-                {
-                    return false;
-                }
-            }
-            /// <summary>
-            /// 退出
-            /// </summary>
-            public override void Exit()
-            {
-                streamToTran?.Dispose();
-                client?.Close();
-                waitThread?.Abort();
-                bIsConnect = false;
-            }
-            /// <summary>
-            /// 是连接
-            /// </summary>
-            /// <returns></returns>
-            public override bool IsConnect()
-            {
-                return bIsConnect;
-            }
-            public override void Dispose()
-            {
-                base.Dispose();
-                Exit();
-            }
-        }
-        /// <summary>
-        /// 串口连接模型
-        /// </summary>
-        internal class SerialTalkModel : TalkModel, ITalkModel
-        {
-            public override event Action<byte[]> Received;
-            SerialPort serialPort;
-            public SerialTalkModel()
-            {
-                serialPort = new SerialPort();
-                serialPort.DataReceived += ISerialPort_DataReceived;
-            }
-
-            private void ISerialPort_DataReceived(object sender, SerialDataReceivedEventArgs e)
-            {
-                try
-                {
-                    int nCount = serialPort.BytesToRead;
-                    if (nCount == 0) { return; }
-                    byte[] btAryBuffer = new byte[nCount];
-                    serialPort.Read(btAryBuffer, 0, nCount);
-                    Received?.Invoke(btAryBuffer);
-                }
-                catch { }
-            }
-
-            public override bool Connect(string portName, int bautRate, out string message)
-            {
-                message = string.Empty;
-                if (serialPort.IsOpen)
-                {
-                    serialPort.Close();
-                }
-                try
-                {
-                    serialPort.PortName = portName;
-                    serialPort.BaudRate = bautRate;
-                    serialPort.ReadTimeout = 200;
-                    serialPort.Open();
-                }
-                catch (System.Exception ex)
-                {
-                    message = ex.Message;
-                    return false;
-                }
-                return true;
-            }
-
-            public override void Exit()
-            {
-                if (serialPort.IsOpen)
-                {
-                    serialPort.Close();
-                }
-            }
-
-            public override bool IsConnect()
-            {
-                return serialPort.IsOpen;
-            }
-
-            public override bool Send(byte[] aryBuffer)
-            {
-                if (!serialPort.IsOpen) { return false; }
-                serialPort.Write(aryBuffer, 0, aryBuffer.Length);
-                return true;
-            }
-            public override void Dispose()
-            {
-                base.Dispose();
-                if (serialPort.IsOpen)
-                {
-                    serialPort.Close();
-                }
-                serialPort.Dispose();
-            }
-        }
-        #endregion
     }
 }
