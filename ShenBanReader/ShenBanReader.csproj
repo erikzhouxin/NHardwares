@@ -9,12 +9,12 @@
 		<GenerateAssemblyInfo>true</GenerateAssemblyInfo>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<Authors>ErikZhouXin</Authors>
-		<Version>2021.12.15</Version>
-		<AssemblyVersion>2021.12.15.692</AssemblyVersion>
-		<FileVersion>2021.12.15.692</FileVersion>
+		<Version>2022.1.1</Version>
+		<AssemblyVersion>2022.1.1.730</AssemblyVersion>
+		<FileVersion>2022.1.1.730</FileVersion>
 		<Description>针对深坂科技RFID的R600进行的操作封装</Description>
 		<Copyright>©2020 ErikZhouXin</Copyright>
-		<PackageTags>r600;rfid</PackageTags>
+		<PackageTags>r600;r2000;rfid;射频识别</PackageTags>
 		<RepositoryUrl>https://www.gitee.com/ErikZhouXin/NHardwares</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
 		<PackageReleaseNotes>针对深坂科技RFID的R600进行的操作封装</PackageReleaseNotes>

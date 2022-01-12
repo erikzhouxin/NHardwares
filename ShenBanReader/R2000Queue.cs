@@ -11,7 +11,7 @@ using System.Threading;
 namespace System.Data.ShenBanReader
 {
     /// <summary>
-    /// 
+    /// R2000顺序操作
     /// </summary>
     public interface IR2000Queue
     {
@@ -52,20 +52,113 @@ namespace System.Data.ShenBanReader
         /// <param name="model"></param>
         /// <returns></returns>
         ReadAlertModel<T> InventoryReal<T>(byte readId, byte round, ref T model) where T : R2000Interfaces.InventoryReal;
+        /// <summary>
+        /// 快速四天线盘存
+        /// <see cref="ReadCmdType.FastSwitchInventory"/>
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        ReadAlertModel<T> FastSwitchInventory<T>(byte readId, byte[] antTimes, ref T model) where T : R2000Interfaces.FastSwitchInventory;
+        /// <summary>
+        /// 快速四天线盘存
+        /// new { 0, 1, 1, 1, 2, 1, 3, 1, 0, 1 }四天线各轮询一次,延时0,次数1次
+        /// <see cref="ReadCmdType.FastSwitchInventory"/>
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        ReadAlertModel<T> FastSwitchInventory<T>(byte readId, ref T model) where T : R2000Interfaces.FastSwitchInventory;
+        /// <summary>
+        /// 设置工作天线
+        /// <see cref="ReadCmdType.SetWorkAntenna"/>
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        ReadAlertModel<T> SetWorkAntenna<T>(byte readId, ReadAntennaType antType, ref T model) where T : R2000Interfaces.SetWorkAntenna;
+        /// <summary>
+        /// 设置选中标签
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="readId"></param>
+        /// <param name="mode"></param>
+        /// <param name="epc"></param>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        ReadAlertModel<T> SetAccessEpcMatch<T>(byte readId, byte mode, byte[] epc, ref T model) where T : R2000Interfaces.SetAccessEpcMatch;
+        /// <summary>
+        /// 读取选定标签EPC
+        /// <see cref="ReadCmdType.ReadTag"/>
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="readId"></param>
+        /// <param name="start"></param>
+        /// <param name="length"></param>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        ReadAlertModel<T> ReadTagEpc<T>(byte readId, byte start, byte length, ref T model) where T : R2000Interfaces.ReadTag;
+        /// <summary>
+        /// 读取选定标签TID
+        /// <see cref="ReadCmdType.ReadTag"/>
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="readId"></param>
+        /// <param name="start"></param>
+        /// <param name="length"></param>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        ReadAlertModel<T> ReadTagTid<T>(byte readId, byte start, byte length, ref T model) where T : R2000Interfaces.ReadTag;
+        /// <summary>
+        /// 读取选定标签TID
+        /// <see cref="ReadCmdType.ReadTag"/>
+        /// </summary>
+        /// <param name="readId"></param>
+        /// <param name="start"></param>
+        /// <param name="length"></param>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        ReadAlertModel<R600TagInfo> ReadTagTid(byte readId, byte start, byte length, ref R600TagInfo model);
+        /// <summary>
+        /// 读取选定标签User
+        /// <see cref="ReadCmdType.ReadTag"/>
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="readId"></param>
+        /// <param name="start"></param>
+        /// <param name="length"></param>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        ReadAlertModel<T> ReadTagUser<T>(byte readId, byte start, byte length, ref T model) where T : R2000Interfaces.ReadTag;
+        /// <summary>
+        /// 读取选定标签User
+        /// <see cref="ReadCmdType.ReadTag"/>
+        /// </summary>
+        /// <param name="readId"></param>
+        /// <param name="start"></param>
+        /// <param name="length"></param>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        ReadAlertModel<R600TagInfo> ReadTagUser(byte readId, byte start, byte length, ref R600TagInfo model);
+        /// <summary>
+        /// 读取选定标签
+        /// <see cref="ReadCmdType.ReadTag"/>
+        /// </summary>
+        /// <param name="readId"></param>
+        /// <param name="area"></param>
+        /// <param name="start"></param>
+        /// <param name="length"></param>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        ReadAlertModel<R600TagInfo> ReadTag(byte readId, ReadAreaType area, byte start, byte length, ref R600TagInfo model);
     }
     /// <summary>
     /// R2000顺序操作
     /// </summary>
     internal class R2000Queue : IR2000Queue
     {
-        ITalkQueueModel _talker;
+        ITalkQueueModel _talker = new TalkQueueModel();
         /// <summary>
-        /// 构造
+        /// 私有构造
         /// </summary>
-        public R2000Queue()
-        {
-            _talker = new TalkQueueModel();
-        }
+        internal R2000Queue() { }
         /// <summary>
         /// 打开串口
         /// </summary>

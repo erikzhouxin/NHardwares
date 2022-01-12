@@ -14,9 +14,9 @@ namespace System.Data.ShenBanReader
         /// 读写器设置项
         /// </summary>
         /// <returns></returns>
-        public static IReaderSetter GetReaderSetter()
+        public static IReadSetter GetReaderSetter()
         {
-            return ReaderSetter.Current;
+            return ReadSetter.Current;
         }
         /// <summary>
         /// 获取顺序读内容
@@ -29,14 +29,7 @@ namespace System.Data.ShenBanReader
         /// <summary>
         /// 创建读写器
         /// </summary>
-        public static IR600Reader GetR2000Reader()
-        {
-            return new R600Reader();
-        }
-        /// <summary>
-        /// 创建读写器
-        /// </summary>
-        public static IR600Reader GetReader(IR600Recall recall)
+        public static IR600Reader GetReader(IR600CallMethod recall)
         {
             var result = new R600Reader();
             result.RegistCallback(recall);
@@ -45,7 +38,7 @@ namespace System.Data.ShenBanReader
         /// <summary>
         /// 创建读写器
         /// </summary>
-        public static IR600Reader GetReader(IR600Callback recall)
+        public static IR600Reader GetReader(IR600CallAction recall)
         {
             var result = new R600Reader();
             result.RegistCallback(recall);
@@ -62,16 +55,26 @@ namespace System.Data.ShenBanReader
         /// <summary>
         /// 创建队列读写器
         /// </summary>
-        public static IR600Queue GetQueue(IR600Recall recall)
+        public static IR600Queue GetQueue(IR600CallMethod recall)
         {
             var result = new R600Queue();
             result.RegistCallback(recall);
             return result;
         }
         /// <summary>
+        /// 获取原始访问方式
+        /// </summary>
+        /// <returns></returns>
+        [Obsolete("替代方案:IR600Reader")]
+        public static IR2000Reactor Get2000Reactor()
+        {
+            return new R2000Reactor();
+        }
+
+        /// <summary>
         /// 创建队列读写器
         /// </summary>
-        public static IR600Queue GetQueue(IR600Callback recall)
+        public static IR600Queue GetQueue(IR600CallAction recall)
         {
             var result = new R600Queue();
             result.RegistCallback(recall);

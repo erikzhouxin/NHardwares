@@ -5,7 +5,7 @@ namespace System.Data.ShenBanReader
     /// <summary>
     /// 回调委托接口
     /// </summary>
-    public interface IR600Callback
+    public interface IR600CallAction
     {
         /// <summary>
         /// 发送回调
@@ -211,18 +211,18 @@ namespace System.Data.ShenBanReader
     /// <summary>
     /// 回调委托接口
     /// </summary>
-    public class R600Callback : IR600Callback
+    public class R600CallAction : IR600CallAction
     {
         /// <summary>
         /// 默认构造
         /// </summary>
-        public R600Callback()
+        public R600CallAction()
         {
         }
         /// <summary>
         /// 构造
         /// </summary>
-        public R600Callback(IR600Recall model)
+        public R600CallAction(IR600CallMethod model)
         {
             if (model == null) { return; }
             this.SendCallback = model.SendCallback;
@@ -480,22 +480,22 @@ namespace System.Data.ShenBanReader
     /// <summary>
     /// 回调委托抽象类
     /// </summary>
-    public abstract class AR600Callback : R600Callback, IR600Callback, IR600Recall
+    public abstract class AR600CallAction : R600CallAction, IR600CallAction, IR600CallMethod
     {
         /// <summary>
         /// 默认构造
         /// </summary>
-        public AR600Callback() : base() { }
+        public AR600CallAction() : base() { }
         /// <summary>
         /// 构造
         /// </summary>
-        public AR600Callback(IR600Recall model) : base(model) { }
+        public AR600CallAction(IR600CallMethod model) : base(model) { }
         #region // 回调方法接口
         /// <summary>
         /// 发送回调
         /// </summary>
         /// <param name="aryData"></param>
-        void IR600Recall.SendCallback(byte[] aryData)
+        void IR600CallMethod.SendCallback(byte[] aryData)
         {
             SendCallback?.Invoke(aryData);
         }
@@ -503,7 +503,7 @@ namespace System.Data.ShenBanReader
         /// 接收回调
         /// </summary>
         /// <param name="aryData"></param>
-        void IR600Recall.ReceiveCallback(byte[] aryData)
+        void IR600CallMethod.ReceiveCallback(byte[] aryData)
         {
             ReceiveCallback?.Invoke(aryData);
         }
@@ -511,7 +511,7 @@ namespace System.Data.ShenBanReader
         /// 未知的数据包类型处理
         /// </summary>
         /// <param name="msgTran"></param>
-        void IR600Recall.AlertUnknownPacketType(IReadMessage msgTran)
+        void IR600CallMethod.AlertUnknownPacketType(IReadMessage msgTran)
         {
             AlertUnknownPacketType?.Invoke(msgTran);
         }
@@ -519,7 +519,7 @@ namespace System.Data.ShenBanReader
         /// 提示错误
         /// </summary>
         /// <param name="alert"></param>
-        void IR600Recall.AlertError(ReadAlertError alert)
+        void IR600CallMethod.AlertError(ReadAlertError alert)
         {
             AlertError?.Invoke(alert);
         }
@@ -527,7 +527,7 @@ namespace System.Data.ShenBanReader
         /// 提示回调错误
         /// </summary>
         /// <param name="ex"></param>
-        void IR600Recall.AlertCallbackError(Exception ex)
+        void IR600CallMethod.AlertCallbackError(Exception ex)
         {
             AlertCallbackError?.Invoke(ex);
         }
@@ -539,7 +539,7 @@ namespace System.Data.ShenBanReader
         /// <param name="gpio2Value"></param>
         /// <param name="isGpio1Low"></param>
         /// <param name="isGpio2Low"></param>
-        void IR600Recall.ReadGpioValue(IReadMessage msgTran, byte gpio1Value, byte gpio2Value, bool isGpio1Low, bool isGpio2Low)
+        void IR600CallMethod.ReadGpioValue(IReadMessage msgTran, byte gpio1Value, byte gpio2Value, bool isGpio1Low, bool isGpio2Low)
         {
             ReadGpioValue?.Invoke(msgTran, gpio1Value, gpio2Value, isGpio1Low, isGpio2Low);
         }
@@ -547,7 +547,7 @@ namespace System.Data.ShenBanReader
         /// 设置GPIO状态
         /// </summary>
         /// <param name="msgTran"></param>
-        void IR600Recall.WriteGpioValue(IReadMessage msgTran)
+        void IR600CallMethod.WriteGpioValue(IReadMessage msgTran)
         {
             WriteGpioValue?.Invoke(msgTran);
         }
@@ -555,7 +555,7 @@ namespace System.Data.ShenBanReader
         /// 设置天线连接检测阈值
         /// </summary>
         /// <param name="msgTran"></param>
-        void IR600Recall.SetAntDetector(IReadMessage msgTran)
+        void IR600CallMethod.SetAntDetector(IReadMessage msgTran)
         {
             SetAntDetector?.Invoke(msgTran);
         }
@@ -564,7 +564,7 @@ namespace System.Data.ShenBanReader
         /// </summary>
         /// <param name="msgTran"></param>
         /// <param name="antDetector"></param>
-        void IR600Recall.GetAntDetector(IReadMessage msgTran, byte antDetector)
+        void IR600CallMethod.GetAntDetector(IReadMessage msgTran, byte antDetector)
         {
             GetAntDetector?.Invoke(msgTran, antDetector);
         }
@@ -572,7 +572,7 @@ namespace System.Data.ShenBanReader
         /// 设置读写器识别标记
         /// </summary>
         /// <param name="msgTran"></param>
-        void IR600Recall.SetReaderIdentifier(IReadMessage msgTran)
+        void IR600CallMethod.SetReaderIdentifier(IReadMessage msgTran)
         {
             SetReaderIdentifier?.Invoke(msgTran);
         }
@@ -581,7 +581,7 @@ namespace System.Data.ShenBanReader
         /// </summary>
         /// <param name="msgTran"></param>
         /// <param name="aryData"></param>
-        void IR600Recall.GetReaderIdentifier(IReadMessage msgTran, byte[] aryData)
+        void IR600CallMethod.GetReaderIdentifier(IReadMessage msgTran, byte[] aryData)
         {
             GetReaderIdentifier?.Invoke(msgTran, aryData);
         }
@@ -590,7 +590,7 @@ namespace System.Data.ShenBanReader
         /// </summary>
         /// <param name="msgTran"></param>
         /// <param name="linkProfile"></param>
-        void IR600Recall.SetLinkProfile(IReadMessage msgTran, byte linkProfile)
+        void IR600CallMethod.SetLinkProfile(IReadMessage msgTran, byte linkProfile)
         {
             SetLinkProfile?.Invoke(msgTran, linkProfile);
         }
@@ -599,7 +599,7 @@ namespace System.Data.ShenBanReader
         /// </summary>
         /// <param name="msgTran"></param>
         /// <param name="profileType"></param>
-        void IR600Recall.GetLinkProfile(IReadMessage msgTran, ReadLinkProfileType profileType)
+        void IR600CallMethod.GetLinkProfile(IReadMessage msgTran, ReadLinkProfileType profileType)
         {
             GetLinkProfile?.Invoke(msgTran, profileType);
         }
@@ -607,7 +607,7 @@ namespace System.Data.ShenBanReader
         /// 设置波特率
         /// </summary>
         /// <param name="msgTran"></param>
-        void IR600Recall.SetUartBaudRate(IReadMessage msgTran)
+        void IR600CallMethod.SetUartBaudRate(IReadMessage msgTran)
         {
             SetUartBaudRate?.Invoke(msgTran);
         }
@@ -617,7 +617,7 @@ namespace System.Data.ShenBanReader
         /// <param name="msgTran"></param>
         /// <param name="major"></param>
         /// <param name="minor"></param>
-        void IR600Recall.GetFirmwareVersion(IReadMessage msgTran, byte major, byte minor)
+        void IR600CallMethod.GetFirmwareVersion(IReadMessage msgTran, byte major, byte minor)
         {
             GetFirmwareVersion?.Invoke(msgTran, major, minor);
         }
@@ -625,7 +625,7 @@ namespace System.Data.ShenBanReader
         /// 设置读写器地址
         /// </summary>
         /// <param name="msgTran"></param>
-        void IR600Recall.SetReaderAddress(IReadMessage msgTran)
+        void IR600CallMethod.SetReaderAddress(IReadMessage msgTran)
         {
             SetReaderAddress?.Invoke(msgTran);
         }
@@ -633,7 +633,7 @@ namespace System.Data.ShenBanReader
         /// 设置工作天线
         /// </summary>
         /// <param name="msgTran"></param>
-        void IR600Recall.SetWorkAntenna(IReadMessage msgTran)
+        void IR600CallMethod.SetWorkAntenna(IReadMessage msgTran)
         {
             SetWorkAntenna?.Invoke(msgTran);
         }
@@ -642,7 +642,7 @@ namespace System.Data.ShenBanReader
         /// </summary>
         /// <param name="msgTran"></param>
         /// <param name="antennaType"></param>
-        void IR600Recall.GetWorkAntenna(IReadMessage msgTran, ReadAntennaType antennaType)
+        void IR600CallMethod.GetWorkAntenna(IReadMessage msgTran, ReadAntennaType antennaType)
         {
             GetWorkAntenna?.Invoke(msgTran, antennaType);
         }
@@ -650,7 +650,7 @@ namespace System.Data.ShenBanReader
         /// 设置输出功率
         /// </summary>
         /// <param name="msgTran"></param>
-        void IR600Recall.SetOutputPower(IReadMessage msgTran)
+        void IR600CallMethod.SetOutputPower(IReadMessage msgTran)
         {
             SetOutputPower?.Invoke(msgTran);
         }
@@ -659,7 +659,7 @@ namespace System.Data.ShenBanReader
         /// </summary>
         /// <param name="msgTran"></param>
         /// <param name="outputPower"></param>
-        void IR600Recall.GetOutputPower(IReadMessage msgTran, byte outputPower)
+        void IR600CallMethod.GetOutputPower(IReadMessage msgTran, byte outputPower)
         {
             GetOutputPower?.Invoke(msgTran, outputPower);
         }
@@ -667,7 +667,7 @@ namespace System.Data.ShenBanReader
         /// 设置射频规范
         /// </summary>
         /// <param name="msgTran"></param>
-        void IR600Recall.SetFrequencyRegion(IReadMessage msgTran)
+        void IR600CallMethod.SetFrequencyRegion(IReadMessage msgTran)
         {
             SetFrequencyRegion?.Invoke(msgTran);
         }
@@ -679,7 +679,7 @@ namespace System.Data.ShenBanReader
         /// <param name="start"></param>
         /// <param name="interval"></param>
         /// <param name="chanelQuantity"></param>
-        void IR600Recall.GetFrequencyRegion(IReadMessage msgTran, ReadFreqRegionType frequencyType, int start, byte interval, byte chanelQuantity)
+        void IR600CallMethod.GetFrequencyRegion(IReadMessage msgTran, ReadFreqRegionType frequencyType, int start, byte interval, byte chanelQuantity)
         {
             GetFrequencyRegion?.Invoke(msgTran, frequencyType, start, interval, chanelQuantity);
         }
@@ -687,7 +687,7 @@ namespace System.Data.ShenBanReader
         /// 设置蜂鸣器模式
         /// </summary>
         /// <param name="msgTran"></param>
-        void IR600Recall.SetBeeperMode(IReadMessage msgTran)
+        void IR600CallMethod.SetBeeperMode(IReadMessage msgTran)
         {
             SetBeeperMode?.Invoke(msgTran);
         }
@@ -696,7 +696,7 @@ namespace System.Data.ShenBanReader
         /// </summary>
         /// <param name="msgTran"></param>
         /// <param name="temperature"></param>
-        void IR600Recall.GetReaderTemperature(IReadMessage msgTran, int temperature)
+        void IR600CallMethod.GetReaderTemperature(IReadMessage msgTran, int temperature)
         {
             GetReaderTemperature?.Invoke(msgTran, temperature);
         }
@@ -704,7 +704,7 @@ namespace System.Data.ShenBanReader
         /// 设置DRM模式
         /// </summary>
         /// <param name="msgTran"></param>
-        void IR600Recall.SetDrmMode(IReadMessage msgTran)
+        void IR600CallMethod.SetDrmMode(IReadMessage msgTran)
         {
             SetDrmMode?.Invoke(msgTran);
         }
@@ -713,7 +713,7 @@ namespace System.Data.ShenBanReader
         /// </summary>
         /// <param name="msgTran"></param>
         /// <param name="isOpen"></param>
-        void IR600Recall.GetDrmMode(IReadMessage msgTran, bool isOpen)
+        void IR600CallMethod.GetDrmMode(IReadMessage msgTran, bool isOpen)
         {
             GetDrmMode?.Invoke(msgTran, isOpen);
         }
@@ -722,7 +722,7 @@ namespace System.Data.ShenBanReader
         /// </summary>
         /// <param name="msgTran"></param>
         /// <param name="antImpedance"></param>
-        void IR600Recall.GetImpedanceMatch(IReadMessage msgTran, byte antImpedance)
+        void IR600CallMethod.GetImpedanceMatch(IReadMessage msgTran, byte antImpedance)
         {
             GetImpedanceMatch?.Invoke(msgTran, antImpedance);
         }
@@ -735,7 +735,7 @@ namespace System.Data.ShenBanReader
         /// <param name="readRate"></param>
         /// <param name="totalRead"></param>
         /// <param name="duration"></param>
-        void IR600Recall.Inventory(IReadMessage msgTran, byte currentAnt, int tagCount, int readRate, int totalRead, int duration)
+        void IR600CallMethod.Inventory(IReadMessage msgTran, byte currentAnt, int tagCount, int readRate, int totalRead, int duration)
         {
             Inventory?.Invoke(msgTran, currentAnt, tagCount, readRate, totalRead, duration);
         }
@@ -744,7 +744,7 @@ namespace System.Data.ShenBanReader
         /// </summary>
         /// <param name="msgTran"></param>
         /// <param name="model"></param>
-        void IR600Recall.ReadTag(IReadMessage msgTran, R600TagInfo model)
+        void IR600CallMethod.ReadTag(IReadMessage msgTran, R600TagInfo model)
         {
             ReadTag?.Invoke(msgTran, model);
         }
@@ -753,7 +753,7 @@ namespace System.Data.ShenBanReader
         /// </summary>
         /// <param name="msgTran"></param>
         /// <param name="model"></param>
-        void IR600Recall.WriteTag(IReadMessage msgTran, R600TagInfo model)
+        void IR600CallMethod.WriteTag(IReadMessage msgTran, R600TagInfo model)
         {
             WriteTag?.Invoke(msgTran, model);
         }
@@ -762,7 +762,7 @@ namespace System.Data.ShenBanReader
         /// </summary>
         /// <param name="msgTran"></param>
         /// <param name="model"></param>
-        void IR600Recall.LockTag(IReadMessage msgTran, R600TagInfo model)
+        void IR600CallMethod.LockTag(IReadMessage msgTran, R600TagInfo model)
         {
             LockTag?.Invoke(msgTran, model);
         }
@@ -771,7 +771,7 @@ namespace System.Data.ShenBanReader
         /// </summary>
         /// <param name="msgTran"></param>
         /// <param name="model"></param>
-        void IR600Recall.KillTag(IReadMessage msgTran, R600TagInfo model)
+        void IR600CallMethod.KillTag(IReadMessage msgTran, R600TagInfo model)
         {
             KillTag?.Invoke(msgTran, model);
         }
@@ -779,7 +779,7 @@ namespace System.Data.ShenBanReader
         /// 选定/取消选定标签
         /// </summary>
         /// <param name="msgTran"></param>
-        void IR600Recall.SetAccessEpcMatch(IReadMessage msgTran)
+        void IR600CallMethod.SetAccessEpcMatch(IReadMessage msgTran)
         {
             SetAccessEpcMatch?.Invoke(msgTran);
         }
@@ -788,7 +788,7 @@ namespace System.Data.ShenBanReader
         /// </summary>
         /// <param name="msgTran"></param>
         /// <param name="data"></param>
-        void IR600Recall.GetAccessEpcMatch(IReadMessage msgTran, byte[] data)
+        void IR600CallMethod.GetAccessEpcMatch(IReadMessage msgTran, byte[] data)
         {
             GetAccessEpcMatch?.Invoke(msgTran, data);
         }
@@ -797,7 +797,7 @@ namespace System.Data.ShenBanReader
         /// </summary>
         /// <param name="msgTran"></param>
         /// <param name="model"></param>
-        void IR600Recall.InventoryReal(IReadMessage msgTran, R600TagInfo model)
+        void IR600CallMethod.InventoryReal(IReadMessage msgTran, R600TagInfo model)
         {
             InventoryReal?.Invoke(msgTran, model);
         }
@@ -807,7 +807,7 @@ namespace System.Data.ShenBanReader
         /// <param name="msgTran"></param>
         /// <param name="readRate"></param>
         /// <param name="dataCount"></param>
-        void IR600Recall.InventoryRealEnd(IReadMessage msgTran, int readRate, int dataCount)
+        void IR600CallMethod.InventoryRealEnd(IReadMessage msgTran, int readRate, int dataCount)
         {
             InventoryRealEnd?.Invoke(msgTran, readRate, dataCount);
         }
@@ -816,7 +816,7 @@ namespace System.Data.ShenBanReader
         /// </summary>
         /// <param name="msgTran"></param>
         /// <param name="model"></param>
-        void IR600Recall.FastSwitchInventory(IReadMessage msgTran, R600TagInfo model)
+        void IR600CallMethod.FastSwitchInventory(IReadMessage msgTran, R600TagInfo model)
         {
             FastSwitchInventory?.Invoke(msgTran, model);
         }
@@ -826,7 +826,7 @@ namespace System.Data.ShenBanReader
         /// <param name="msgTran"></param>
         /// <param name="dataCount"></param>
         /// <param name="cmdDuration"></param>
-        void IR600Recall.FastSwitchInventoryEnd(IReadMessage msgTran, int dataCount, int cmdDuration)
+        void IR600CallMethod.FastSwitchInventoryEnd(IReadMessage msgTran, int dataCount, int cmdDuration)
         {
             FastSwitchInventoryEnd?.Invoke(msgTran, dataCount, cmdDuration);
         }
@@ -835,7 +835,7 @@ namespace System.Data.ShenBanReader
         /// </summary>
         /// <param name="msgTran"></param>
         /// <param name="antDetector"></param>
-        void IR600Recall.SetMonzaStatus(IReadMessage msgTran, byte antDetector)
+        void IR600CallMethod.SetMonzaStatus(IReadMessage msgTran, byte antDetector)
         {
             SetMonzaStatus?.Invoke(msgTran, antDetector);
         }
@@ -844,7 +844,7 @@ namespace System.Data.ShenBanReader
         /// </summary>
         /// <param name="msgTran"></param>
         /// <param name="antDetector"></param>
-        void IR600Recall.GetMonzaStatus(IReadMessage msgTran, byte antDetector)
+        void IR600CallMethod.GetMonzaStatus(IReadMessage msgTran, byte antDetector)
         {
             GetMonzaStatus?.Invoke(msgTran, antDetector);
         }
@@ -853,7 +853,7 @@ namespace System.Data.ShenBanReader
         /// </summary>
         /// <param name="msgTran"></param>
         /// <param name="model"></param>
-        void IR600Recall.GetInventoryBuffer(IReadMessage msgTran, R600TagInfo model)
+        void IR600CallMethod.GetInventoryBuffer(IReadMessage msgTran, R600TagInfo model)
         {
             GetInventoryBuffer?.Invoke(msgTran, model);
         }
@@ -862,7 +862,7 @@ namespace System.Data.ShenBanReader
         /// </summary>
         /// <param name="msgTran"></param>
         /// <param name="model"></param>
-        void IR600Recall.GetAndResetInventoryBuffer(IReadMessage msgTran, R600TagInfo model)
+        void IR600CallMethod.GetAndResetInventoryBuffer(IReadMessage msgTran, R600TagInfo model)
         {
             GetAndResetInventoryBuffer?.Invoke(msgTran, model);
         }
@@ -871,14 +871,14 @@ namespace System.Data.ShenBanReader
         /// </summary>
         /// <param name="msgTran"></param>
         /// <param name="tagCount"></param>
-        void IR600Recall.GetInventoryBufferTagCount(IReadMessage msgTran, int tagCount)
+        void IR600CallMethod.GetInventoryBufferTagCount(IReadMessage msgTran, int tagCount)
         {
             GetInventoryBufferTagCount?.Invoke(msgTran, tagCount);
         }
         /// <summary>
         /// 清空缓存
         /// </summary>
-        void IR600Recall.ResetInventoryBuffer(IReadMessage msgTran)
+        void IR600CallMethod.ResetInventoryBuffer(IReadMessage msgTran)
         {
             ResetInventoryBuffer?.Invoke(msgTran);
         }
@@ -887,7 +887,7 @@ namespace System.Data.ShenBanReader
         /// </summary>
         /// <param name="msgTran"></param>
         /// <param name="model"></param>
-        void IR600Recall.InventoryISO18000(IReadMessage msgTran, R600TagInfoIso18000 model)
+        void IR600CallMethod.InventoryISO18000(IReadMessage msgTran, R600TagInfoIso18000 model)
         {
             InventoryISO18000?.Invoke(msgTran, model);
         }
@@ -896,7 +896,7 @@ namespace System.Data.ShenBanReader
         /// </summary>
         /// <param name="msgTran"></param>
         /// <param name="tagCnt"></param>
-        void IR600Recall.InventoryISO18000End(IReadMessage msgTran, int tagCnt)
+        void IR600CallMethod.InventoryISO18000End(IReadMessage msgTran, int tagCnt)
         {
             InventoryISO18000End?.Invoke(msgTran, tagCnt);
         }
@@ -906,7 +906,7 @@ namespace System.Data.ShenBanReader
         /// <param name="msgTran"></param>
         /// <param name="antId"></param>
         /// <param name="data"></param>
-        void IR600Recall.ReadTagISO18000(IReadMessage msgTran, byte antId, byte[] data)
+        void IR600CallMethod.ReadTagISO18000(IReadMessage msgTran, byte antId, byte[] data)
         {
             ReadTagISO18000?.Invoke(msgTran, antId, data);
         }
@@ -916,7 +916,7 @@ namespace System.Data.ShenBanReader
         /// <param name="msgTran"></param>
         /// <param name="antId"></param>
         /// <param name="length"></param>
-        void IR600Recall.WriteTagISO18000(IReadMessage msgTran, byte antId, byte length)
+        void IR600CallMethod.WriteTagISO18000(IReadMessage msgTran, byte antId, byte length)
         {
             WriteTagISO18000?.Invoke(msgTran, antId, length);
         }
@@ -926,7 +926,7 @@ namespace System.Data.ShenBanReader
         /// <param name="msgTran"></param>
         /// <param name="antId"></param>
         /// <param name="status"></param>
-        void IR600Recall.LockTagISO18000(IReadMessage msgTran, byte antId, ReadLockTagStatus status)
+        void IR600CallMethod.LockTagISO18000(IReadMessage msgTran, byte antId, ReadLockTagStatus status)
         {
             LockTagISO18000?.Invoke(msgTran, antId, status);
         }
@@ -936,7 +936,7 @@ namespace System.Data.ShenBanReader
         /// <param name="msgTran"></param>
         /// <param name="antId"></param>
         /// <param name="status"></param>
-        void IR600Recall.QueryTagISO18000(IReadMessage msgTran, byte antId, ReadLockTagStatus status)
+        void IR600CallMethod.QueryTagISO18000(IReadMessage msgTran, byte antId, ReadLockTagStatus status)
         {
             QueryTagISO18000?.Invoke(msgTran, antId, status);
         }

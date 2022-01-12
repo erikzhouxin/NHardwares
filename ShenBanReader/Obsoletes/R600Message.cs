@@ -8,36 +8,8 @@ namespace System.Data.ShenBanReader
     /// <summary>
     /// 消息模型
     /// </summary>
-    internal class R600Message : IReadMessage
+    internal class R600Message : ReadMessage, IReadMessage
     {
-        /// <summary>
-        /// 寄存器地址
-        /// </summary>
-        public byte ReadId { get; }
-        /// <summary>
-        /// 命令
-        /// </summary>
-        public byte Cmd { get; }
-        /// <summary>
-        /// AryData
-        /// </summary>
-        public byte[] AryData { get; }
-        /// <summary>
-        /// 交换数据
-        /// </summary>
-        public byte[] TranData { get; }
-        /// <summary>
-        /// 数据包类型
-        /// </summary>
-        public byte PacketType { get; }
-        /// <summary>
-        /// 数据长度
-        /// </summary>
-        public byte DataLen { get; }
-        /// <summary>
-        /// 校验位
-        /// </summary>
-        public byte Check { get; }
         /// <summary>
         /// 构造
         /// </summary>

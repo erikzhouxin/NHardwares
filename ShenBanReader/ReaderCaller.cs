@@ -353,6 +353,142 @@ namespace System.Data.ShenBanReader
             }
             return res;
         }
+        internal static void RunReceiveDataCallback(ReadReceiveMessage received, byte[] btAryReceiveData, Action<byte[]> ReceiveCallback, Action<IReadMessage> AnalysisCallback, Action<Exception> AlertCallbackError)
+        {
+            try
+            {
+                ReceiveCallback?.Invoke(btAryReceiveData);
+
+                int nCount = btAryReceiveData.Length;
+                byte[] btAryBuffer = new byte[nCount + received.Length];
+                Array.Copy(received.Buffer, btAryBuffer, received.Length);
+                Array.Copy(btAryReceiveData, 0, btAryBuffer, received.Length, btAryReceiveData.Length);
+
+                //分析接收数据，以0xA0为数据起点，以协议中数据长度为数据终止点
+                int nIndex = 0;//当数据中存在A0时，记录数据的终止点
+                int nMarkIndex = 0;//当数据中不存在A0时，nMarkIndex等于数据组最大索引
+                for (int nLoop = 0; nLoop < btAryBuffer.Length; nLoop++)
+                {
+                    if (btAryBuffer.Length > nLoop + 1)
+                    {
+                        if (btAryBuffer[nLoop] == 0xA0)
+                        {
+                            int nLen = Convert.ToInt32(btAryBuffer[nLoop + 1]);
+                            if (nLoop + 1 + nLen < btAryBuffer.Length)
+                            {
+                                byte[] btAryAnaly = new byte[nLen + 2];
+                                Array.Copy(btAryBuffer, nLoop, btAryAnaly, 0, nLen + 2);
+                                try
+                                {
+                                    AnalysisCallback?.Invoke(new R600Message(btAryAnaly));
+                                }
+                                catch (Exception ex)
+                                {
+                                    AlertCallbackError?.Invoke(ex);
+                                }
+
+                                nLoop += 1 + nLen;
+                                nIndex = nLoop + 1;
+                            }
+                            else
+                            {
+                                nLoop += 1 + nLen;
+                            }
+                        }
+                        else
+                        {
+                            nMarkIndex = nLoop;
+                        }
+                    }
+                }
+
+                if (nIndex < nMarkIndex)
+                {
+                    nIndex = nMarkIndex + 1;
+                }
+
+                if (nIndex < btAryBuffer.Length)
+                {
+                    received.Length = btAryBuffer.Length - nIndex;
+                    Array.Clear(received.Buffer, 0, received.Buffer.Length);
+                    Array.Copy(btAryBuffer, nIndex, received.Buffer, 0, btAryBuffer.Length - nIndex);
+                }
+                else
+                {
+                    received.Length = 0;
+                }
+            }
+            catch { }
+        }
+        internal static void RunReceiveDataCallback(ReadReceiveMessage received, byte[] btAryReceiveData, Action<byte[]> ReceiveCallback, Action<MessageTran> AnalysisCallback, Action<Exception> AlertCallbackError)
+        {
+            try
+            {
+                ReceiveCallback?.Invoke(btAryReceiveData);
+                int nCount = btAryReceiveData.Length;
+                byte[] btAryBuffer = new byte[nCount + received.Length];
+                Array.Copy(received.Buffer, btAryBuffer, received.Length);
+                Array.Copy(btAryReceiveData, 0, btAryBuffer, received.Length, btAryReceiveData.Length);
+
+                //分析接收数据，以0xA0为数据起点，以协议中数据长度为数据终止点
+                int nIndex = 0;//当数据中存在A0时，记录数据的终止点
+                int nMarkIndex = 0;//当数据中不存在A0时，nMarkIndex等于数据组最大索引
+                for (int nLoop = 0; nLoop < btAryBuffer.Length; nLoop++)
+                {
+                    if (btAryBuffer.Length > nLoop + 1)
+                    {
+                        if (btAryBuffer[nLoop] == 0xA0)
+                        {
+                            int nLen = Convert.ToInt32(btAryBuffer[nLoop + 1]);
+                            if (nLoop + 1 + nLen < btAryBuffer.Length)
+                            {
+                                byte[] btAryAnaly = new byte[nLen + 2];
+                                Array.Copy(btAryBuffer, nLoop, btAryAnaly, 0, nLen + 2);
+                                try
+                                {
+                                    AnalysisCallback?.Invoke(new MessageTran(btAryAnaly));
+                                }
+                                catch (Exception ex)
+                                {
+                                    AlertCallbackError?.Invoke(ex);
+                                }
+
+                                nLoop += 1 + nLen;
+                                nIndex = nLoop + 1;
+                            }
+                            else
+                            {
+                                nLoop += 1 + nLen;
+                            }
+                        }
+                        else
+                        {
+                            nMarkIndex = nLoop;
+                        }
+                    }
+                }
+
+                if (nIndex < nMarkIndex)
+                {
+                    nIndex = nMarkIndex + 1;
+                }
+
+                if (nIndex < btAryBuffer.Length)
+                {
+                    received.Length = btAryBuffer.Length - nIndex;
+                    Array.Clear(received.Buffer, 0, 4096);
+                    Array.Copy(btAryBuffer, nIndex, received.Buffer, 0, btAryBuffer.Length - nIndex);
+                }
+                else
+                {
+                    received.Length = 0;
+                }
+            }
+            catch (System.Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
         #endregion
     }
 }

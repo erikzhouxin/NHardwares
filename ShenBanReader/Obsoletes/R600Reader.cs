@@ -48,12 +48,12 @@ namespace System.Data.ShenBanReader
         /// 注册命令回调
         /// </summary>
         /// <param name="model"></param>
-        void RegistCallback(IR600Recall model);
+        void RegistCallback(IR600CallMethod model);
         /// <summary>
         /// 注册命令回调
         /// </summary>
         /// <param name="model"></param>
-        void RegistCallback(IR600Callback model);
+        void RegistCallback(IR600CallAction model);
         /// <summary>
         /// 读GPIO值
         /// </summary>
@@ -403,6 +403,7 @@ namespace System.Data.ShenBanReader
     /// </summary>
     internal sealed class R600Reader : AR600Reader, IR600Reader, IDisposable
     {
+        private ReadReceiveMessage _bufferMsg = new ReadReceiveMessage();
         ///// <summary>
         ///// 配置信息
         ///// </summary>
@@ -412,7 +413,7 @@ namespace System.Data.ShenBanReader
         /// </summary>
         public R600Reader()
         {
-            this._talker = new TalkModel();
+            this._talker = new TalkReadModel();
             this.AnalysisCallback = AnalyData;
             //_config = new R600ConfigModel();
         }
@@ -447,7 +448,7 @@ namespace System.Data.ShenBanReader
         public override bool Connect(string portName, int baudRate, out string exception)
         {
             _talker?.Dispose();
-            _talker = new SerialTalkModel();
+            _talker = new SerialTalkReadModel();
             _talker.Received += RunReceiveDataCallback;
             return _talker.Connect(portName, baudRate, out exception);
         }
@@ -461,78 +462,14 @@ namespace System.Data.ShenBanReader
         public override bool Connect(IPAddress ip, int port, out string exception)
         {
             _talker?.Dispose();
-            _talker = new TcpTalkModel();
+            _talker = new TcpTalkReadModel();
             _talker.Received += RunReceiveDataCallback;
             return _talker.Connect(ip, port, out exception);
         }
         private void RunReceiveDataCallback(byte[] btAryReceiveData)
         {
-            try
-            {
-                ReceiveCallback?.Invoke(btAryReceiveData);
-
-                int nCount = btAryReceiveData.Length;
-                byte[] btAryBuffer = new byte[nCount + m_nLenth];
-                Array.Copy(m_btAryBuffer, btAryBuffer, m_nLenth);
-                Array.Copy(btAryReceiveData, 0, btAryBuffer, m_nLenth, btAryReceiveData.Length);
-
-                //分析接收数据，以0xA0为数据起点，以协议中数据长度为数据终止点
-                int nIndex = 0;//当数据中存在A0时，记录数据的终止点
-                int nMarkIndex = 0;//当数据中不存在A0时，nMarkIndex等于数据组最大索引
-                for (int nLoop = 0; nLoop < btAryBuffer.Length; nLoop++)
-                {
-                    if (btAryBuffer.Length > nLoop + 1)
-                    {
-                        if (btAryBuffer[nLoop] == 0xA0)
-                        {
-                            int nLen = Convert.ToInt32(btAryBuffer[nLoop + 1]);
-                            if (nLoop + 1 + nLen < btAryBuffer.Length)
-                            {
-                                byte[] btAryAnaly = new byte[nLen + 2];
-                                Array.Copy(btAryBuffer, nLoop, btAryAnaly, 0, nLen + 2);
-                                try
-                                {
-                                    AnalysisCallback?.Invoke(new R600Message(btAryAnaly));
-                                }
-                                catch (Exception ex)
-                                {
-                                    _recall.AlertCallbackError(ex);
-                                }
-
-                                nLoop += 1 + nLen;
-                                nIndex = nLoop + 1;
-                            }
-                            else
-                            {
-                                nLoop += 1 + nLen;
-                            }
-                        }
-                        else
-                        {
-                            nMarkIndex = nLoop;
-                        }
-                    }
-                }
-
-                if (nIndex < nMarkIndex)
-                {
-                    nIndex = nMarkIndex + 1;
-                }
-
-                if (nIndex < btAryBuffer.Length)
-                {
-                    m_nLenth = btAryBuffer.Length - nIndex;
-                    Array.Clear(m_btAryBuffer, 0, 4096);
-                    Array.Copy(btAryBuffer, nIndex, m_btAryBuffer, 0, btAryBuffer.Length - nIndex);
-                }
-                else
-                {
-                    m_nLenth = 0;
-                }
-            }
-            catch { }
+            ReaderCaller.RunReceiveDataCallback(_bufferMsg, btAryReceiveData, ReceiveCallback, AnalysisCallback, _recall.AlertCallbackError);
         }
-
         /// <summary>
         /// 分析数据
         /// </summary>
@@ -1583,23 +1520,15 @@ namespace System.Data.ShenBanReader
         /// <summary>
         /// 回调模型
         /// </summary>
-        protected IR600Callback _recall = new R600Callback();
+        protected IR600CallAction _recall = new R600CallAction();
         /// <summary>
         /// 内部链接模型
         /// </summary>
-        protected ITalkModel _talker;
-        /// <summary>
-        /// 记录未处理的接收数据，主要考虑接收数据分段
-        /// </summary>
-        protected byte[] m_btAryBuffer = new byte[4096];
-        /// <summary>
-        /// 记录未处理数据的有效长度
-        /// </summary>
-        protected int m_nLenth = 0;
+        protected ITalkReadModel _talker;
         /// <summary>
         /// 是连接
         /// </summary>
-        public virtual bool IsConnected { get => _talker.IsConnect(); }
+        public virtual bool IsConnected { get => _talker.IsConnected; }
         public abstract bool Connect(string portName, int baudRate, out string exception);
         public abstract bool Connect(IPAddress ip, int port, out string exception);
         /// <summary>
@@ -2207,7 +2136,7 @@ namespace System.Data.ShenBanReader
         /// <returns></returns>
         public virtual bool IsConnecting()
         {
-            return _talker.IsConnect();
+            return _talker.IsConnected;
         }
         public virtual void Close()
         {
@@ -2224,11 +2153,11 @@ namespace System.Data.ShenBanReader
         /// <summary>
         /// 注册回调
         /// </summary>
-        public virtual void RegistCallback(IR600Recall model)
+        public virtual void RegistCallback(IR600CallMethod model)
         {
             if (model != null)
             {
-                _recall = new R600Callback(model);
+                _recall = new R600CallAction(model);
                 SendCallback = model.SendCallback;
                 ReceiveCallback = model.ReceiveCallback;
             }
@@ -2236,7 +2165,7 @@ namespace System.Data.ShenBanReader
         /// <summary>
         /// 注册回调
         /// </summary>
-        public virtual void RegistCallback(IR600Callback model)
+        public virtual void RegistCallback(IR600CallAction model)
         {
             if (model != null)
             {
@@ -2245,300 +2174,5 @@ namespace System.Data.ShenBanReader
                 ReceiveCallback = model.ReceiveCallback;
             }
         }
-        #region // 内部类
-        /// <summary>
-        /// 对话模型接口
-        /// </summary>
-        internal interface ITalkModel : IDisposable
-        {
-            /// <summary>
-            /// 接收到发来的消息
-            /// </summary>
-            event Action<byte[]> Received;
-            /// <summary>
-            /// 连接到服务端
-            /// </summary>
-            /// <param name="ip">IP地址</param>
-            /// <param name="port">端口号</param>
-            /// <param name="message">消息提示</param>
-            /// <returns></returns>
-            bool Connect(IPAddress ip, int port, out string message);
-            /// <summary>
-            /// 连接到服务端
-            /// </summary>
-            /// <param name="portName">串口号</param>
-            /// <param name="bautRate">波特率</param>
-            /// <param name="message">消息提示</param>
-            /// <returns></returns>
-            bool Connect(string portName, int bautRate, out string message);
-            /// <summary>
-            /// 发送数据包
-            /// </summary>
-            /// <param name="aryBuffer"></param>
-            /// <returns></returns>
-            bool Send(byte[] aryBuffer);
-            /// <summary>
-            /// 注销连接
-            /// </summary>
-            void Exit();
-            /// <summary>
-            /// 校验是否连接服务器
-            /// </summary>
-            /// <returns></returns>
-            bool IsConnect();
-        }
-        /// <summary>
-        /// 对话模型
-        /// </summary>
-        internal class TalkModel : ITalkModel
-        {
-            /// <summary>
-            /// 接收事件
-            /// </summary>
-            public virtual event Action<byte[]> Received;
-            /// <summary>
-            /// 链接
-            /// </summary>
-            /// <param name="ip"></param>
-            /// <param name="port"></param>
-            /// <param name="message"></param>
-            /// <returns></returns>
-            public virtual bool Connect(IPAddress ip, int port, out string message)
-            {
-                message = "接口未实现";
-                return false;
-            }
-            /// <summary>
-            /// 链接
-            /// </summary>
-            /// <param name="portName"></param>
-            /// <param name="bautRate"></param>
-            /// <param name="message"></param>
-            /// <returns></returns>
-            public virtual bool Connect(string portName, int bautRate, out string message)
-            {
-                message = "接口未实现";
-                return false;
-            }
-            /// <summary>
-            /// 释放资源
-            /// </summary>
-            public virtual void Dispose()
-            {
-
-            }
-
-            /// <summary>
-            /// 退出
-            /// </summary>
-            public virtual void Exit()
-            {
-
-            }
-            /// <summary>
-            /// 已连接
-            /// </summary>
-            /// <returns></returns>
-            public virtual bool IsConnect()
-            {
-                return false;
-            }
-            /// <summary>
-            /// 发送
-            /// </summary>
-            /// <param name="aryBuffer"></param>
-            /// <returns></returns>
-            public virtual bool Send(byte[] aryBuffer)
-            {
-                return false;
-            }
-        }
-        /// <summary>
-        /// TCP连接模型
-        /// </summary>
-        internal class TcpTalkModel : TalkModel, ITalkModel
-        {
-            public override event Action<byte[]> Received;
-            TcpClient client;
-            Stream streamToTran;
-            private Thread waitThread;
-            private bool bIsConnect = false;
-            /// <summary>
-            /// 连接
-            /// </summary>
-            /// <param name="ipAddress"></param>
-            /// <param name="port"></param>
-            /// <param name="message"></param>
-            /// <returns></returns>
-            public override bool Connect(IPAddress ipAddress, int port, out string message)
-            {
-                message = string.Empty;
-                try
-                {
-                    client = new TcpClient();
-                    client.Connect(ipAddress, port);
-                    streamToTran = client.GetStream();    // 获取连接至远程的流
-
-                    //建立线程收取服务器发送数据
-                    ThreadStart stThead = new(ReceivedData);
-                    waitThread = new Thread(stThead)
-                    {
-                        IsBackground = true
-                    };
-                    waitThread.Start();
-
-                    bIsConnect = true;
-                    return true;
-                }
-                catch (System.Exception ex)
-                {
-                    message = ex.Message;
-                    bIsConnect = false;
-                    return false;
-                }
-            }
-
-            private void ReceivedData()
-            {
-                while (true)
-                {
-                    try
-                    {
-                        byte[] btAryBuffer = new byte[4096];
-                        int nLenRead = streamToTran.Read(btAryBuffer, 0, btAryBuffer.Length);
-                        if (nLenRead == 0) { continue; }
-                        if (Received != null)
-                        {
-                            byte[] btAryReceiveData = new byte[nLenRead];
-                            Array.Copy(btAryBuffer, btAryReceiveData, nLenRead);
-                            Received(btAryReceiveData);
-                        }
-                    }
-                    catch { }
-                }
-            }
-            /// <summary>
-            /// 发送
-            /// </summary>
-            /// <param name="aryBuffer"></param>
-            /// <returns></returns>
-            public override bool Send(byte[] aryBuffer)
-            {
-                try
-                {
-                    if (!bIsConnect) { return false; }
-                    lock (streamToTran)
-                    {
-                        streamToTran.Write(aryBuffer, 0, aryBuffer.Length);
-                        return true;
-                    }
-                }
-                catch
-                {
-                    return false;
-                }
-            }
-            /// <summary>
-            /// 退出
-            /// </summary>
-            public override void Exit()
-            {
-                streamToTran?.Dispose();
-                client?.Close();
-                waitThread?.Abort();
-                bIsConnect = false;
-            }
-            /// <summary>
-            /// 是连接
-            /// </summary>
-            /// <returns></returns>
-            public override bool IsConnect()
-            {
-                return bIsConnect;
-            }
-            public override void Dispose()
-            {
-                base.Dispose();
-                Exit();
-            }
-        }
-        /// <summary>
-        /// 串口连接模型
-        /// </summary>
-        internal class SerialTalkModel : TalkModel, ITalkModel
-        {
-            public override event Action<byte[]> Received;
-            SerialPort serialPort;
-            public SerialTalkModel()
-            {
-                serialPort = new SerialPort();
-                serialPort.DataReceived += ISerialPort_DataReceived;
-            }
-
-            private void ISerialPort_DataReceived(object sender, SerialDataReceivedEventArgs e)
-            {
-                try
-                {
-                    int nCount = serialPort.BytesToRead;
-                    if (nCount == 0) { return; }
-                    byte[] btAryBuffer = new byte[nCount];
-                    serialPort.Read(btAryBuffer, 0, nCount);
-                    Received?.Invoke(btAryBuffer);
-                }
-                catch { }
-            }
-
-            public override bool Connect(string portName, int bautRate, out string message)
-            {
-                message = string.Empty;
-                if (serialPort.IsOpen)
-                {
-                    serialPort.Close();
-                }
-                try
-                {
-                    serialPort.PortName = portName;
-                    serialPort.BaudRate = bautRate;
-                    serialPort.ReadTimeout = 200;
-                    serialPort.Open();
-                }
-                catch (System.Exception ex)
-                {
-                    message = ex.Message;
-                    return false;
-                }
-                return true;
-            }
-
-            public override void Exit()
-            {
-                if (serialPort.IsOpen)
-                {
-                    serialPort.Close();
-                }
-            }
-
-            public override bool IsConnect()
-            {
-                return serialPort.IsOpen;
-            }
-
-            public override bool Send(byte[] aryBuffer)
-            {
-                if (!serialPort.IsOpen) { return false; }
-                serialPort.Write(aryBuffer, 0, aryBuffer.Length);
-                return true;
-            }
-            public override void Dispose()
-            {
-                base.Dispose();
-                if (serialPort.IsOpen)
-                {
-                    serialPort.Close();
-                }
-                serialPort.Dispose();
-            }
-        }
-        #endregion
     }
 }

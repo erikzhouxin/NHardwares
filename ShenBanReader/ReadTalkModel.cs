@@ -10,49 +10,10 @@ using System.Threading;
 
 namespace System.Data.ShenBanReader
 {
-    internal interface ReadTalkModel : IDisposable
-    {
-        /// <summary>
-        /// 接收到发来的消息
-        /// </summary>
-        event Action<byte[]> Received;
-        /// <summary>
-        /// 连接到服务端
-        /// </summary>
-        /// <param name="ip">IP地址</param>
-        /// <param name="port">端口号</param>
-        /// <param name="message">消息提示</param>
-        /// <returns></returns>
-        bool Connect(IPAddress ip, int port, out string message);
-        /// <summary>
-        /// 连接到服务端
-        /// </summary>
-        /// <param name="portName">串口号</param>
-        /// <param name="bautRate">波特率</param>
-        /// <param name="message">消息提示</param>
-        /// <returns></returns>
-        bool Connect(string portName, int bautRate, out string message);
-        /// <summary>
-        /// 发送数据包
-        /// </summary>
-        /// <param name="aryBuffer"></param>
-        /// <returns></returns>
-        bool Send(byte[] aryBuffer);
-        /// <summary>
-        /// 注销连接
-        /// </summary>
-        void Exit();
-        /// <summary>
-        /// 校验是否连接服务器
-        /// </summary>
-        /// <returns></returns>
-        bool IsConnect();
-    }
-    #region // 顺序读模型
     /// <summary>
-    /// 对话模型接口
+    /// 通用模型接口
     /// </summary>
-    internal interface ITalkQueueModel : IDisposable
+    internal interface ITalkModel
     {
         /// <summary>
         /// 校验是否连接服务器
@@ -85,6 +46,12 @@ namespace System.Data.ShenBanReader
         /// </summary>
         /// <returns></returns>
         bool Disconnect();
+    }
+    /// <summary>
+    /// 顺序式模型接口
+    /// </summary>
+    internal interface ITalkQueueModel : ITalkModel, IDisposable
+    {
         /// <summary>
         /// 发送数据包
         /// </summary>
@@ -94,6 +61,23 @@ namespace System.Data.ShenBanReader
         /// <returns></returns>
         bool Send(byte[] send, out byte[] received, out Exception exception);
     }
+    /// <summary>
+    /// 触发式模型接口
+    /// </summary>
+    internal interface ITalkReadModel : ITalkModel, IDisposable
+    {
+        /// <summary>
+        /// 接收到发来的消息
+        /// </summary>
+        event Action<byte[]> Received;
+        /// <summary>
+        /// 发送数据包
+        /// </summary>
+        /// <param name="aryBuffer"></param>
+        /// <returns></returns>
+        bool Send(byte[] aryBuffer);
+    }
+    #region // 顺序读模型
     /// <summary>
     /// 对话模型
     /// </summary>
@@ -183,6 +167,14 @@ namespace System.Data.ShenBanReader
             _client = new TcpClient();
         }
         /// <summary>
+        /// 重新连接
+        /// </summary>
+        /// <returns></returns>
+        public override bool Connect()
+        {
+            return TryConnect(_ip, _port, out Exception _);
+        }
+        /// <summary>
         /// 连接
         /// </summary>
         /// <param name="ipAddress"></param>
@@ -199,7 +191,6 @@ namespace System.Data.ShenBanReader
             message = exception.Message;
             return false;
         }
-
         private bool TryConnect(IPAddress ipAddress, int port, out Exception exception)
         {
             try
@@ -212,7 +203,7 @@ namespace System.Data.ShenBanReader
                 _ip = ipAddress;
                 _port = port;
                 _client = new TcpClient();
-                _client.ReceiveTimeout = _client.SendTimeout = ReaderSetter.Current.ReadPollTimeout;
+                _client.ReceiveTimeout = _client.SendTimeout = ReadSetter.Current.QueuePollTimeout;
                 _client.Connect(ipAddress, port);
                 _stream = _client.GetStream();    // 获取连接至远程的流
                 exception = null;
@@ -225,7 +216,6 @@ namespace System.Data.ShenBanReader
                 return false;
             }
         }
-
         /// <summary>
         /// 发送
         /// </summary>
@@ -235,9 +225,9 @@ namespace System.Data.ShenBanReader
         /// <returns></returns>
         public override bool Send(byte[] send, out byte[] received, out Exception exception)
         {
-            var interval = ReaderSetter.Current.ReadPollTimeout;
-            var waiter = ReaderSetter.Current.ReadPollTimeWaiter;
-            var buffLen = ReaderSetter.Current.ReadPollBuffLength;
+            var interval = ReadSetter.Current.QueuePollTimeout;
+            var waiter = ReadSetter.Current.QueuePollTimeWaiter;
+            var buffLen = ReadSetter.Current.QueuePollBuffLength;
             // 获取锁定发送
             if (Monitor.TryEnter(LockObject, TimeSpan.FromMilliseconds(interval)))
             {
@@ -325,22 +315,6 @@ namespace System.Data.ShenBanReader
             return true;
         }
         /// <summary>
-        /// 重新连接
-        /// </summary>
-        /// <returns></returns>
-        public override bool Connect()
-        {
-            try
-            {
-                _client.Connect(_ip, _port);
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-        /// <summary>
         /// 释放
         /// </summary>
         public override void Dispose()
@@ -359,7 +333,14 @@ namespace System.Data.ShenBanReader
         {
             serialPort = new SerialPort();
         }
-
+        /// <summary>
+        /// 重新连接
+        /// </summary>
+        /// <returns></returns>
+        public override bool Connect()
+        {
+            return Connect(serialPort.PortName, serialPort.BaudRate, out string _);
+        }
         public override bool Connect(string portName, int bautRate, out string message)
         {
             try
@@ -371,7 +352,7 @@ namespace System.Data.ShenBanReader
                 }
                 serialPort.PortName = portName;
                 serialPort.BaudRate = bautRate;
-                serialPort.ReadTimeout = ReaderSetter.Current.ReadPollTimeout;
+                serialPort.ReadTimeout = ReadSetter.Current.QueuePollTimeout;
                 serialPort.Open();
             }
             catch (UnauthorizedAccessException)
@@ -413,9 +394,9 @@ namespace System.Data.ShenBanReader
 
         public override bool Send(byte[] aryBuffer, out byte[] received, out Exception exception)
         {
-            var interval = ReaderSetter.Current.ReadPollTimeout;
-            var waiter = ReaderSetter.Current.ReadPollTimeWaiter;
-            var buffLen = ReaderSetter.Current.ReadPollBuffLength;
+            var interval = ReadSetter.Current.QueuePollTimeout;
+            var waiter = ReadSetter.Current.QueuePollTimeWaiter;
+            var buffLen = ReadSetter.Current.QueuePollBuffLength;
             // 获取锁定发送
             if (Monitor.TryEnter(LockObject, TimeSpan.FromMilliseconds(interval)))
             {
@@ -524,4 +505,259 @@ namespace System.Data.ShenBanReader
         }
     }
     #endregion 顺序读模型
+    #region // 触发读模型
+    /// <summary>
+    /// 对话模型
+    /// </summary>
+    internal class TalkReadModel : ITalkReadModel
+    {
+        /// <summary>
+        /// 接收事件
+        /// </summary>
+        public virtual event Action<byte[]> Received;
+        /// <summary>
+        /// 重新连接
+        /// </summary>
+        /// <returns></returns>
+        public virtual bool Connect()
+        {
+            return false;
+        }
+        /// <summary>
+        /// 链接
+        /// </summary>
+        /// <param name="ip"></param>
+        /// <param name="port"></param>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        public virtual bool Connect(IPAddress ip, int port, out string message)
+        {
+            message = "接口未实现";
+            return false;
+        }
+        /// <summary>
+        /// 链接
+        /// </summary>
+        /// <param name="portName"></param>
+        /// <param name="bautRate"></param>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        public virtual bool Connect(string portName, int bautRate, out string message)
+        {
+            message = "接口未实现";
+            return false;
+        }
+        /// <summary>
+        /// 释放资源
+        /// </summary>
+        public virtual void Dispose()
+        {
+
+        }
+
+        /// <summary>
+        /// 退出
+        /// </summary>
+        public virtual bool Disconnect()
+        {
+            return true;
+        }
+        /// <summary>
+        /// 已连接
+        /// </summary>
+        /// <returns></returns>
+        public virtual bool IsConnected { get => false; }
+        /// <summary>
+        /// 发送
+        /// </summary>
+        /// <param name="aryBuffer"></param>
+        /// <returns></returns>
+        public virtual bool Send(byte[] aryBuffer)
+        {
+            return false;
+        }
+    }
+    /// <summary>
+    /// TCP连接模型
+    /// </summary>
+    internal class TcpTalkReadModel : TalkReadModel, ITalkReadModel
+    {
+        public override event Action<byte[]> Received;
+        TcpClient client;
+        Stream streamToTran;
+        private Thread waitThread;
+        private bool bIsConnect = false;
+        /// <summary>
+        /// 连接
+        /// </summary>
+        /// <param name="ipAddress"></param>
+        /// <param name="port"></param>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        public override bool Connect(IPAddress ipAddress, int port, out string message)
+        {
+            message = string.Empty;
+            try
+            {
+                client = new TcpClient();
+                client.Connect(ipAddress, port);
+                streamToTran = client.GetStream();    // 获取连接至远程的流
+
+                //建立线程收取服务器发送数据
+                ThreadStart stThead = new(ReceivedData);
+                waitThread = new Thread(stThead)
+                {
+                    IsBackground = true
+                };
+                waitThread.Start();
+
+                bIsConnect = true;
+                return true;
+            }
+            catch (System.Exception ex)
+            {
+                message = ex.Message;
+                bIsConnect = false;
+                return false;
+            }
+        }
+
+        private void ReceivedData()
+        {
+            while (true)
+            {
+                try
+                {
+                    byte[] btAryBuffer = new byte[4096];
+                    int nLenRead = streamToTran.Read(btAryBuffer, 0, btAryBuffer.Length);
+                    if (nLenRead == 0) { continue; }
+                    if (Received != null)
+                    {
+                        byte[] btAryReceiveData = new byte[nLenRead];
+                        Array.Copy(btAryBuffer, btAryReceiveData, nLenRead);
+                        Received(btAryReceiveData);
+                    }
+                }
+                catch { }
+            }
+        }
+        /// <summary>
+        /// 发送
+        /// </summary>
+        /// <param name="aryBuffer"></param>
+        /// <returns></returns>
+        public override bool Send(byte[] aryBuffer)
+        {
+            try
+            {
+                if (!bIsConnect) { return false; }
+                lock (streamToTran)
+                {
+                    streamToTran.Write(aryBuffer, 0, aryBuffer.Length);
+                    return true;
+                }
+            }
+            catch
+            {
+                return false;
+            }
+        }
+        /// <summary>
+        /// 退出
+        /// </summary>
+        public override bool Disconnect()
+        {
+            streamToTran?.Dispose();
+            client?.Close();
+            waitThread?.Abort();
+            bIsConnect = false;
+            return true;
+        }
+        /// <summary>
+        /// 是连接
+        /// </summary>
+        /// <returns></returns>
+        public override bool IsConnected { get => bIsConnect; }
+        public override void Dispose()
+        {
+            base.Dispose();
+            Disconnect();
+        }
+    }
+    /// <summary>
+    /// 串口连接模型
+    /// </summary>
+    internal class SerialTalkReadModel : TalkReadModel, ITalkReadModel
+    {
+        public override event Action<byte[]> Received;
+        SerialPort _serialPort;
+        public SerialTalkReadModel()
+        {
+            _serialPort = new SerialPort();
+            _serialPort.DataReceived += ISerialPort_DataReceived;
+        }
+
+        private void ISerialPort_DataReceived(object sender, SerialDataReceivedEventArgs e)
+        {
+            try
+            {
+                int nCount = _serialPort.BytesToRead;
+                if (nCount == 0) { return; }
+                byte[] btAryBuffer = new byte[nCount];
+                _serialPort.Read(btAryBuffer, 0, nCount);
+                Received?.Invoke(btAryBuffer);
+            }
+            catch { }
+        }
+
+        public override bool Connect(string portName, int bautRate, out string message)
+        {
+            message = string.Empty;
+            if (_serialPort.IsOpen)
+            {
+                _serialPort.Close();
+            }
+            try
+            {
+                _serialPort.PortName = portName;
+                _serialPort.BaudRate = bautRate;
+                _serialPort.ReadTimeout = 200;
+                _serialPort.Open();
+            }
+            catch (System.Exception ex)
+            {
+                message = ex.Message;
+                return false;
+            }
+            return true;
+        }
+
+        public override bool Disconnect()
+        {
+            if (_serialPort.IsOpen)
+            {
+                _serialPort.Close();
+            }
+            return true;
+        }
+
+        public override bool IsConnected { get => _serialPort.IsOpen; }
+
+        public override bool Send(byte[] aryBuffer)
+        {
+            if (!_serialPort.IsOpen) { return false; }
+            _serialPort.Write(aryBuffer, 0, aryBuffer.Length);
+            return true;
+        }
+        public override void Dispose()
+        {
+            base.Dispose();
+            if (_serialPort.IsOpen)
+            {
+                _serialPort.Close();
+            }
+            _serialPort.Dispose();
+        }
+    }
+    #endregion
 }

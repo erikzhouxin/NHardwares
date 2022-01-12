@@ -8,7 +8,7 @@ namespace System.Data.ShenBanReader
     /// <summary>
     /// 回调方法接口
     /// </summary>
-    public interface IR600Recall
+    public interface IR600CallMethod
     {
         /// <summary>
         /// 发送回调
@@ -313,209 +313,209 @@ namespace System.Data.ShenBanReader
     /// <summary>
     /// 回调方法抽象类
     /// </summary>
-    public abstract class AR600Recall : IR600Recall, IR600Callback
+    public abstract class AR600CallMethod : IR600CallMethod, IR600CallAction
     {
         #region // 回调委托接口
         /// <summary>
         /// 发送回调
         /// </summary>
-        Action<byte[]> IR600Callback.SendCallback { get => SendCallback; set { } }
+        Action<byte[]> IR600CallAction.SendCallback { get => SendCallback; set { } }
         /// <summary>
         /// 接收回调
         /// </summary>
-        Action<byte[]> IR600Callback.ReceiveCallback { get => ReceiveCallback; set { } }
+        Action<byte[]> IR600CallAction.ReceiveCallback { get => ReceiveCallback; set { } }
         /// <summary>
         /// 未知的数据包类型处理
         /// </summary>
-        Action<IReadMessage> IR600Callback.AlertUnknownPacketType { get => AlertUnknownPacketType; set { } }
+        Action<IReadMessage> IR600CallAction.AlertUnknownPacketType { get => AlertUnknownPacketType; set { } }
         /// <summary>
         /// 提示错误
         /// </summary>
-        Action<ReadAlertError> IR600Callback.AlertError { get => AlertError; set { } }
+        Action<ReadAlertError> IR600CallAction.AlertError { get => AlertError; set { } }
         /// <summary>
         /// 提示回调错误
         /// </summary>
-        Action<Exception> IR600Callback.AlertCallbackError { get => AlertCallbackError; set { } }
+        Action<Exception> IR600CallAction.AlertCallbackError { get => AlertCallbackError; set { } }
         /// <summary>
         /// 读取GPIO状态
         /// </summary>
-        Action<IReadMessage, byte, byte, bool, bool> IR600Callback.ReadGpioValue { get => ReadGpioValue; set { } }
+        Action<IReadMessage, byte, byte, bool, bool> IR600CallAction.ReadGpioValue { get => ReadGpioValue; set { } }
         /// <summary>
         /// 设置GPIO状态
         /// </summary>
-        Action<IReadMessage> IR600Callback.WriteGpioValue { get => WriteGpioValue; set { } }
+        Action<IReadMessage> IR600CallAction.WriteGpioValue { get => WriteGpioValue; set { } }
         /// <summary>
         /// 设置天线连接检测阈值
         /// </summary>
-        Action<IReadMessage> IR600Callback.SetAntDetector { get => SetAntDetector; set { } }
+        Action<IReadMessage> IR600CallAction.SetAntDetector { get => SetAntDetector; set { } }
         /// <summary>
         /// 读取天线连接检测阈值
         /// </summary>
-        Action<IReadMessage, byte> IR600Callback.GetAntDetector { get => GetAntDetector; set { } }
+        Action<IReadMessage, byte> IR600CallAction.GetAntDetector { get => GetAntDetector; set { } }
         /// <summary>
         /// 设置读写器识别标记
         /// </summary>
-        Action<IReadMessage> IR600Callback.SetReaderIdentifier { get => SetReaderIdentifier; set { } }
+        Action<IReadMessage> IR600CallAction.SetReaderIdentifier { get => SetReaderIdentifier; set { } }
         /// <summary>
         /// 读取读写器识别标记
         /// </summary>
-        Action<IReadMessage, byte[]> IR600Callback.GetReaderIdentifier { get => GetReaderIdentifier; set { } }
+        Action<IReadMessage, byte[]> IR600CallAction.GetReaderIdentifier { get => GetReaderIdentifier; set { } }
         /// <summary>
         /// 设置射频通讯链路配置
         /// </summary>
-        Action<IReadMessage, byte> IR600Callback.SetLinkProfile { get => SetLinkProfile; set { } }
+        Action<IReadMessage, byte> IR600CallAction.SetLinkProfile { get => SetLinkProfile; set { } }
         /// <summary>
         /// 读取射频通讯链路配置
         /// </summary>
-        Action<IReadMessage, ReadLinkProfileType> IR600Callback.GetLinkProfile { get => GetLinkProfile; set { } }
+        Action<IReadMessage, ReadLinkProfileType> IR600CallAction.GetLinkProfile { get => GetLinkProfile; set { } }
         /// <summary>
         /// 设置波特率
         /// </summary>
-        Action<IReadMessage> IR600Callback.SetUartBaudRate { get => SetUartBaudRate; set { } }
+        Action<IReadMessage> IR600CallAction.SetUartBaudRate { get => SetUartBaudRate; set { } }
         /// <summary>
         /// 取得读写器版本号
         /// </summary>
-        Action<IReadMessage, byte, byte> IR600Callback.GetFirmwareVersion { get => GetFirmwareVersion; set { } }
+        Action<IReadMessage, byte, byte> IR600CallAction.GetFirmwareVersion { get => GetFirmwareVersion; set { } }
         /// <summary>
         /// 设置读写器地址
         /// </summary>
-        Action<IReadMessage> IR600Callback.SetReaderAddress { get => SetReaderAddress; set { } }
+        Action<IReadMessage> IR600CallAction.SetReaderAddress { get => SetReaderAddress; set { } }
         /// <summary>
         /// 设置工作天线
         /// </summary>
-        Action<IReadMessage> IR600Callback.SetWorkAntenna { get => SetWorkAntenna; set { } }
+        Action<IReadMessage> IR600CallAction.SetWorkAntenna { get => SetWorkAntenna; set { } }
         /// <summary>
         /// 取得工作天线
         /// </summary>
-        Action<IReadMessage, ReadAntennaType> IR600Callback.GetWorkAntenna { get => GetWorkAntenna; set { } }
+        Action<IReadMessage, ReadAntennaType> IR600CallAction.GetWorkAntenna { get => GetWorkAntenna; set { } }
         /// <summary>
         /// 设置输出功率
         /// </summary>
-        Action<IReadMessage> IR600Callback.SetOutputPower { get => SetOutputPower; set { } }
+        Action<IReadMessage> IR600CallAction.SetOutputPower { get => SetOutputPower; set { } }
         /// <summary>
         /// 获取输出功率
         /// </summary>
-        Action<IReadMessage, byte> IR600Callback.GetOutputPower { get => GetOutputPower; set { } }
+        Action<IReadMessage, byte> IR600CallAction.GetOutputPower { get => GetOutputPower; set { } }
         /// <summary>
         /// 设置射频规范
         /// </summary>
-        Action<IReadMessage> IR600Callback.SetFrequencyRegion { get => SetFrequencyRegion; set { } }
+        Action<IReadMessage> IR600CallAction.SetFrequencyRegion { get => SetFrequencyRegion; set { } }
         /// <summary>
         /// 获取射频规范
         /// </summary>
-        Action<IReadMessage, ReadFreqRegionType, int, byte, byte> IR600Callback.GetFrequencyRegion { get => GetFrequencyRegion; set { } }
+        Action<IReadMessage, ReadFreqRegionType, int, byte, byte> IR600CallAction.GetFrequencyRegion { get => GetFrequencyRegion; set { } }
         /// <summary>
         /// 设置蜂鸣器模式
         /// </summary>
-        Action<IReadMessage> IR600Callback.SetBeeperMode { get => SetBeeperMode; set { } }
+        Action<IReadMessage> IR600CallAction.SetBeeperMode { get => SetBeeperMode; set { } }
         /// <summary>
         /// 取得读写器温度
         /// </summary>
-        Action<IReadMessage, int> IR600Callback.GetReaderTemperature { get => GetReaderTemperature; set { } }
+        Action<IReadMessage, int> IR600CallAction.GetReaderTemperature { get => GetReaderTemperature; set { } }
         /// <summary>
         /// 设置DRM模式
         /// </summary>
-        Action<IReadMessage> IR600Callback.SetDrmMode { get => SetDrmMode; set { } }
+        Action<IReadMessage> IR600CallAction.SetDrmMode { get => SetDrmMode; set { } }
         /// <summary>
         /// 取得DRM模式
         /// </summary>
-        Action<IReadMessage, bool> IR600Callback.GetDrmMode { get => GetDrmMode; set { } }
+        Action<IReadMessage, bool> IR600CallAction.GetDrmMode { get => GetDrmMode; set { } }
         /// <summary>
         /// 测量天线端口阻抗匹配
         /// </summary>
-        Action<IReadMessage, byte> IR600Callback.GetImpedanceMatch { get => GetImpedanceMatch; set { } }
+        Action<IReadMessage, byte> IR600CallAction.GetImpedanceMatch { get => GetImpedanceMatch; set { } }
         /// <summary>
         /// 盘存标签
         /// </summary>
-        Action<IReadMessage, byte, int, int, int, int> IR600Callback.Inventory { get => Inventory; set { } }
+        Action<IReadMessage, byte, int, int, int, int> IR600CallAction.Inventory { get => Inventory; set { } }
         /// <summary>
         /// 读标签
         /// </summary>
-        Action<IReadMessage, R600TagInfo> IR600Callback.ReadTag { get => ReadTag; set { } }
+        Action<IReadMessage, R600TagInfo> IR600CallAction.ReadTag { get => ReadTag; set { } }
         /// <summary>
         /// 写标签
         /// </summary>
-        Action<IReadMessage, R600TagInfo> IR600Callback.WriteTag { get => WriteTag; set { } }
+        Action<IReadMessage, R600TagInfo> IR600CallAction.WriteTag { get => WriteTag; set { } }
         /// <summary>
         /// 锁定标签
         /// </summary>
-        Action<IReadMessage, R600TagInfo> IR600Callback.LockTag { get => LockTag; set { } }
+        Action<IReadMessage, R600TagInfo> IR600CallAction.LockTag { get => LockTag; set { } }
         /// <summary>
         /// 销毁标签
         /// </summary>
-        Action<IReadMessage, R600TagInfo> IR600Callback.KillTag { get => KillTag; set { } }
+        Action<IReadMessage, R600TagInfo> IR600CallAction.KillTag { get => KillTag; set { } }
         /// <summary>
         /// 选定/取消选定标签
         /// </summary>
-        Action<IReadMessage> IR600Callback.SetAccessEpcMatch { get => SetAccessEpcMatch; set { } }
+        Action<IReadMessage> IR600CallAction.SetAccessEpcMatch { get => SetAccessEpcMatch; set { } }
         /// <summary>
         /// 取得选定标签
         /// </summary>
-        Action<IReadMessage, byte[]> IR600Callback.GetAccessEpcMatch { get => GetAccessEpcMatch; set { } }
+        Action<IReadMessage, byte[]> IR600CallAction.GetAccessEpcMatch { get => GetAccessEpcMatch; set { } }
         /// <summary>
         /// 实时盘存(单个)
         /// </summary>
-        Action<IReadMessage, R600TagInfo> IR600Callback.InventoryReal { get => InventoryReal; set { } }
+        Action<IReadMessage, R600TagInfo> IR600CallAction.InventoryReal { get => InventoryReal; set { } }
         /// <summary>
         /// 实时盘存(完成)
         /// </summary>
-        Action<IReadMessage, int, int> IR600Callback.InventoryRealEnd { get => InventoryRealEnd; set { } }
+        Action<IReadMessage, int, int> IR600CallAction.InventoryRealEnd { get => InventoryRealEnd; set { } }
         /// <summary>
         /// 快速4天线盘存(单个)
         /// </summary>
-        Action<IReadMessage, R600TagInfo> IR600Callback.FastSwitchInventory { get => FastSwitchInventory; set { } }
+        Action<IReadMessage, R600TagInfo> IR600CallAction.FastSwitchInventory { get => FastSwitchInventory; set { } }
         /// <summary>
         /// 快速4天线盘存(完成)
         /// </summary>
-        Action<IReadMessage, int, int> IR600Callback.FastSwitchInventoryEnd { get => FastSwitchInventoryEnd; set { } }
+        Action<IReadMessage, int, int> IR600CallAction.FastSwitchInventoryEnd { get => FastSwitchInventoryEnd; set { } }
         /// <summary>
         /// 设置Impinj Monza快速读TID功能
         /// </summary>
-        Action<IReadMessage, byte> IR600Callback.SetMonzaStatus { get => SetMonzaStatus; set { } }
+        Action<IReadMessage, byte> IR600CallAction.SetMonzaStatus { get => SetMonzaStatus; set { } }
         /// <summary>
         /// 读取Impinj Monza快速读TID功能
         /// </summary>
-        Action<IReadMessage, byte> IR600Callback.GetMonzaStatus { get => GetMonzaStatus; set { } }
+        Action<IReadMessage, byte> IR600CallAction.GetMonzaStatus { get => GetMonzaStatus; set { } }
         /// <summary>
         /// 读取缓存
         /// </summary>
-        Action<IReadMessage, R600TagInfo> IR600Callback.GetInventoryBuffer { get => GetInventoryBuffer; set { } }
+        Action<IReadMessage, R600TagInfo> IR600CallAction.GetInventoryBuffer { get => GetInventoryBuffer; set { } }
         /// <summary>
         /// 读取清空缓存
         /// </summary>
-        Action<IReadMessage, R600TagInfo> IR600Callback.GetAndResetInventoryBuffer { get => GetAndResetInventoryBuffer; set { } }
+        Action<IReadMessage, R600TagInfo> IR600CallAction.GetAndResetInventoryBuffer { get => GetAndResetInventoryBuffer; set { } }
         /// <summary>
         /// 读取缓存标签数量
         /// </summary>
-        Action<IReadMessage, int> IR600Callback.GetInventoryBufferTagCount { get => GetInventoryBufferTagCount; set { } }
+        Action<IReadMessage, int> IR600CallAction.GetInventoryBufferTagCount { get => GetInventoryBufferTagCount; set { } }
         /// <summary>
         /// 清空缓存
         /// </summary>
-        Action<IReadMessage> IR600Callback.ResetInventoryBuffer { get => ResetInventoryBuffer; set { } }
+        Action<IReadMessage> IR600CallAction.ResetInventoryBuffer { get => ResetInventoryBuffer; set { } }
         /// <summary>
         /// 盘存标签(单个)
         /// </summary>
-        Action<IReadMessage, R600TagInfoIso18000> IR600Callback.InventoryISO18000 { get => InventoryISO18000; set { } }
+        Action<IReadMessage, R600TagInfoIso18000> IR600CallAction.InventoryISO18000 { get => InventoryISO18000; set { } }
         /// <summary>
         /// 盘存标签(完成)
         /// </summary>
-        Action<IReadMessage, int> IR600Callback.InventoryISO18000End { get => InventoryISO18000End; set { } }
+        Action<IReadMessage, int> IR600CallAction.InventoryISO18000End { get => InventoryISO18000End; set { } }
         /// <summary>
         /// 读取标签
         /// </summary>
-        Action<IReadMessage, byte, byte[]> IR600Callback.ReadTagISO18000 { get => ReadTagISO18000; set { } }
+        Action<IReadMessage, byte, byte[]> IR600CallAction.ReadTagISO18000 { get => ReadTagISO18000; set { } }
         /// <summary>
         /// 写标签
         /// </summary>
-        Action<IReadMessage, byte, byte> IR600Callback.WriteTagISO18000 { get => WriteTagISO18000; set { } }
+        Action<IReadMessage, byte, byte> IR600CallAction.WriteTagISO18000 { get => WriteTagISO18000; set { } }
         /// <summary>
         /// 永久写保护
         /// </summary>
-        Action<IReadMessage, byte, ReadLockTagStatus> IR600Callback.LockTagISO18000 { get => LockTagISO18000; set { } }
+        Action<IReadMessage, byte, ReadLockTagStatus> IR600CallAction.LockTagISO18000 { get => LockTagISO18000; set { } }
         /// <summary>
         /// 查询标签
         /// </summary>
-        Action<IReadMessage, byte, ReadLockTagStatus> IR600Callback.QueryTagISO18000 { get => QueryTagISO18000; set { } }
+        Action<IReadMessage, byte, ReadLockTagStatus> IR600CallAction.QueryTagISO18000 { get => QueryTagISO18000; set { } }
         #endregion
 
         #region // 回调方法接口

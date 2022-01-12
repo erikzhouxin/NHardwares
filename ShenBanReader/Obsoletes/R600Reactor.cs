@@ -17,6 +17,7 @@ namespace System.Data.ShenBanReader
     /// </summary>
     internal sealed class R600Reactor : AR600Reader, IR600Reactor, IR600Reader, IR600Queue
     {
+        private ReadReceiveMessage _bufferMsg = new ReadReceiveMessage();
         #region // 构造及连接
         ///// <summary>
         ///// 配置信息
@@ -27,7 +28,7 @@ namespace System.Data.ShenBanReader
         /// </summary>
         public R600Reactor()
         {
-            this._talker = new AR600Reader.TalkModel();
+            this._talker = new TalkReadModel();
             this.AnalysisCallback = AnalyData;
             //_config = new R600ConfigModel();
         }
@@ -61,7 +62,7 @@ namespace System.Data.ShenBanReader
         public override bool Connect(string portName, int baudRate, out string exception)
         {
             _talker?.Dispose();
-            _talker = new AR600Reader.SerialTalkModel();
+            _talker = new SerialTalkReadModel();
             _talker.Received += RunReceiveDataCallback;
             return _talker.Connect(portName, baudRate, out exception);
         }
@@ -75,7 +76,7 @@ namespace System.Data.ShenBanReader
         public override bool Connect(IPAddress ip, int port, out string exception)
         {
             _talker?.Dispose();
-            _talker = new AR600Reader.TcpTalkModel();
+            _talker = new TcpTalkReadModel();
             _talker.Received += RunReceiveDataCallback;
             return _talker.Connect(ip, port, out exception);
         }
@@ -83,70 +84,7 @@ namespace System.Data.ShenBanReader
         #region // 接收及分析
         private void RunReceiveDataCallback(byte[] btAryReceiveData)
         {
-            try
-            {
-                ReceiveCallback?.Invoke(btAryReceiveData);
-
-                int nCount = btAryReceiveData.Length;
-                byte[] btAryBuffer = new byte[nCount + m_nLenth];
-                Array.Copy(m_btAryBuffer, btAryBuffer, m_nLenth);
-                Array.Copy(btAryReceiveData, 0, btAryBuffer, m_nLenth, btAryReceiveData.Length);
-
-                //分析接收数据，以0xA0为数据起点，以协议中数据长度为数据终止点
-                int nIndex = 0;//当数据中存在A0时，记录数据的终止点
-                int nMarkIndex = 0;//当数据中不存在A0时，nMarkIndex等于数据组最大索引
-                for (int nLoop = 0; nLoop < btAryBuffer.Length; nLoop++)
-                {
-                    if (btAryBuffer.Length > nLoop + 1)
-                    {
-                        if (btAryBuffer[nLoop] == 0xA0)
-                        {
-                            int nLen = Convert.ToInt32(btAryBuffer[nLoop + 1]);
-                            if (nLoop + 1 + nLen < btAryBuffer.Length)
-                            {
-                                byte[] btAryAnaly = new byte[nLen + 2];
-                                Array.Copy(btAryBuffer, nLoop, btAryAnaly, 0, nLen + 2);
-                                try
-                                {
-                                    AnalysisCallback?.Invoke(new R600Message(btAryAnaly));
-                                }
-                                catch (Exception ex)
-                                {
-                                    _recall.AlertCallbackError(ex);
-                                }
-
-                                nLoop += 1 + nLen;
-                                nIndex = nLoop + 1;
-                            }
-                            else
-                            {
-                                nLoop += 1 + nLen;
-                            }
-                        }
-                        else
-                        {
-                            nMarkIndex = nLoop;
-                        }
-                    }
-                }
-
-                if (nIndex < nMarkIndex)
-                {
-                    nIndex = nMarkIndex + 1;
-                }
-
-                if (nIndex < btAryBuffer.Length)
-                {
-                    m_nLenth = btAryBuffer.Length - nIndex;
-                    Array.Clear(m_btAryBuffer, 0, 4096);
-                    Array.Copy(btAryBuffer, nIndex, m_btAryBuffer, 0, btAryBuffer.Length - nIndex);
-                }
-                else
-                {
-                    m_nLenth = 0;
-                }
-            }
-            catch { }
+            ReaderCaller.RunReceiveDataCallback(_bufferMsg, btAryReceiveData, ReceiveCallback, AnalysisCallback, _recall.AlertCallbackError);
         }
 
         /// <summary>
