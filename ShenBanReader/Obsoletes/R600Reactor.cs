@@ -33,26 +33,6 @@ namespace System.Data.ShenBanReader
             //_config = new R600ConfigModel();
         }
         /// <summary>
-        /// 串口构造
-        /// </summary>
-        /// <param name="portName"></param>
-        /// <param name="baudRate"></param>
-        public R600Reactor(string portName, int baudRate)
-        {
-            Connect(portName, baudRate, out string exception);
-            this.AnalysisCallback = AnalyData;
-        }
-        /// <summary>
-        /// 网口构造
-        /// </summary>
-        /// <param name="ip"></param>
-        /// <param name="baudRate"></param>
-        public R600Reactor(IPAddress ip, int baudRate)
-        {
-            Connect(ip, baudRate, out string exception);
-            this.AnalysisCallback = AnalyData;
-        }
-        /// <summary>
         /// 打开串口
         /// </summary>
         /// <param name="portName"></param>

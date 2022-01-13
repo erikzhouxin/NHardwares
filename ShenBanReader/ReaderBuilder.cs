@@ -18,6 +18,53 @@ namespace System.Data.ShenBanReader
         {
             return ReadSetter.Current;
         }
+        #region // R600系列
+        /// <summary>
+        /// 创建读写器
+        /// </summary>
+        public static IR600Reader GetR600Reader(IR600CallMethod recall)
+        {
+            var result = new R600Reader();
+            result.RegistCallback(recall);
+            return result;
+        }
+        /// <summary>
+        /// 创建读写器
+        /// </summary>
+        public static IR600Reader GetR600Reader(IR600CallAction recall)
+        {
+            var result = new R600Reader();
+            result.RegistCallback(recall);
+            return result;
+        }
+        /// <summary>
+        /// 创建队列读写器
+        /// </summary>
+        public static IR600Queue GetR600Queue()
+        {
+            var result = new R600Queue();
+            return result;
+        }
+        /// <summary>
+        /// 创建队列读写器
+        /// </summary>
+        public static IR600Queue GetR600Queue(IR600CallMethod recall)
+        {
+            var result = new R600Queue();
+            result.RegistCallback(recall);
+            return result;
+        }
+        /// <summary>
+        /// 创建队列读写器
+        /// </summary>
+        public static IR600Queue GetR600Queue(IR600CallAction recall)
+        {
+            var result = new R600Queue();
+            result.RegistCallback(recall);
+            return result;
+        }
+        #endregion
+        #region // R2000系列
         /// <summary>
         /// 获取顺序读内容
         /// </summary>
@@ -25,41 +72,6 @@ namespace System.Data.ShenBanReader
         public static IR2000Queue GetR2000Queue()
         {
             return new R2000Queue();
-        }
-        /// <summary>
-        /// 创建读写器
-        /// </summary>
-        public static IR600Reader GetReader(IR600CallMethod recall)
-        {
-            var result = new R600Reader();
-            result.RegistCallback(recall);
-            return result;
-        }
-        /// <summary>
-        /// 创建读写器
-        /// </summary>
-        public static IR600Reader GetReader(IR600CallAction recall)
-        {
-            var result = new R600Reader();
-            result.RegistCallback(recall);
-            return result;
-        }
-        /// <summary>
-        /// 创建队列读写器
-        /// </summary>
-        public static IR600Queue GetQueue()
-        {
-            var result = new R600Queue();
-            return result;
-        }
-        /// <summary>
-        /// 创建队列读写器
-        /// </summary>
-        public static IR600Queue GetQueue(IR600CallMethod recall)
-        {
-            var result = new R600Queue();
-            result.RegistCallback(recall);
-            return result;
         }
         /// <summary>
         /// 获取原始访问方式
@@ -70,15 +82,6 @@ namespace System.Data.ShenBanReader
         {
             return new R2000Reactor();
         }
-
-        /// <summary>
-        /// 创建队列读写器
-        /// </summary>
-        public static IR600Queue GetQueue(IR600CallAction recall)
-        {
-            var result = new R600Queue();
-            result.RegistCallback(recall);
-            return result;
-        }
+        #endregion
     }
 }

@@ -418,27 +418,6 @@ namespace System.Data.ShenBanReader
             //_config = new R600ConfigModel();
         }
         /// <summary>
-        /// 串口构造
-        /// </summary>
-        /// <param name="portName"></param>
-        /// <param name="baudRate"></param>
-        public R600Reader(string portName, int baudRate)
-        {
-            Connect(portName, baudRate, out string exception);
-            this.AnalysisCallback = AnalyData;
-        }
-        /// <summary>
-        /// 网口构造
-        /// </summary>
-        /// <param name="ip"></param>
-        /// <param name="baudRate"></param>
-        public R600Reader(IPAddress ip, int baudRate)
-        {
-            Connect(ip, baudRate, out string exception);
-            this.AnalysisCallback = AnalyData;
-        }
-
-        /// <summary>
         /// 打开串口
         /// </summary>
         /// <param name="portName"></param>
@@ -1198,8 +1177,8 @@ namespace System.Data.ShenBanReader
             {
                 if (msgTran.AryData.Length == 7)
                 {
-                    var dataCount = Convert.ToInt32(msgTran.AryData[0]) * 255 * 255 + Convert.ToInt32(msgTran.AryData[1]) * 255 + Convert.ToInt32(msgTran.AryData[2]);
-                    var cmdDuration = Convert.ToInt32(msgTran.AryData[3]) * 255 * 255 * 255 + Convert.ToInt32(msgTran.AryData[4]) * 255 * 255 + Convert.ToInt32(msgTran.AryData[5]) * 255 + Convert.ToInt32(msgTran.AryData[6]);
+                    var dataCount = msgTran.AryData[0] * 255 * 255 + msgTran.AryData[1] * 255 + msgTran.AryData[2];
+                    var cmdDuration = msgTran.AryData[3] * 255 * 255 * 255 + msgTran.AryData[4] * 255 * 255 + msgTran.AryData[5] * 255 + msgTran.AryData[6];
                     //_config.InvDataCount = dataCount;
                     //_config.InvCommandDuration = cmdDuration;
                     _recall.FastSwitchInventoryEnd(msgTran, dataCount, cmdDuration);

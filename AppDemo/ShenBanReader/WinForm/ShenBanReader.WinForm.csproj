@@ -9,6 +9,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="nsystem.data.sqlitecipher" Version="2021.9.15" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\EZhouXin.NDabber\src\System.Data.Dabber.csproj" />
     <ProjectReference Include="..\..\..\..\EZhouXin.Tools\FakeHuaMuLan\WinFormControl\FakeHuaMuLan.WinFormControl.csproj" />
     <ProjectReference Include="..\..\..\ShenBanReader\ShenBanReader.csproj" />
   </ItemGroup>
