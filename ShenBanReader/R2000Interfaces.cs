@@ -105,6 +105,23 @@ namespace System.Data.ShenBanReader
             bool TryAddReadTag(R600TagInfo tag);
         }
         /// <summary>
+        /// 写标签
+        /// <see cref="ReadCmdType.WriteTag"/>
+        /// </summary>
+        public interface WriteTag : IReceiveMessage
+        {
+            /// <summary>
+            /// 当前标签列表
+            /// </summary>
+            Dictionary<string, R600TagInfo> CurrentTags { get; }
+            /// <summary>
+            /// 尝试添加标签
+            /// </summary>
+            /// <param name="tag"></param>
+            /// <param name="key"></param>
+            bool TryAddWriteTag(R600TagInfo tag, string key);
+        }
+        /// <summary>
         /// 取得选定标签
         /// <see cref="ReadCmdType.GetAccessEpcMatch"/>
         /// </summary>

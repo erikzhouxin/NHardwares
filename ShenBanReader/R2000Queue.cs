@@ -36,6 +36,20 @@ namespace System.Data.ShenBanReader
         /// </summary>
         bool IsConnected { get; }
         /// <summary>
+        /// 断开连接
+        /// </summary>
+        /// <returns></returns>
+        bool Disconnect();
+        /// <summary>
+        /// 使用当前配置重新连接
+        /// </summary>
+        /// <returns></returns>
+        bool Reconnect(out string exception);
+        /// <summary>
+        /// 关闭当前RFID
+        /// </summary>
+        void Close();
+        /// <summary>
         /// 获取频率
         /// <see cref="ReadCmdType.GetFrequencyRegion"/>
         /// </summary>
@@ -148,6 +162,19 @@ namespace System.Data.ShenBanReader
         /// <param name="model"></param>
         /// <returns></returns>
         ReadAlertModel<R600TagInfo> ReadTag(byte readId, ReadAreaType area, byte start, byte length, ref R600TagInfo model);
+        /// <summary>
+        /// 写标签
+        /// </summary>
+        /// <param name="readId"></param>
+        /// <param name="pass">长度为4</param>
+        /// <param name="area"></param>
+        /// <param name="start">epc从2开始</param>
+        /// <param name="length"></param>
+        /// <param name="newData"></param>
+        /// <param name="oldKey"></param>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        ReadAlertModel<T> WriteTag<T>(byte readId, byte[] pass, ReadAreaType area, byte start, byte length, byte[] newData, string oldKey, ref T model) where T : R2000Interfaces.WriteTag;
     }
     /// <summary>
     /// R2000顺序操作
@@ -189,6 +216,30 @@ namespace System.Data.ShenBanReader
         /// 是否连接
         /// </summary>
         public bool IsConnected { get => _talker.IsConnected; }
+        /// <summary>
+        /// 断开连接
+        /// </summary>
+        /// <returns></returns>
+        public virtual bool Disconnect()
+        {
+            return _talker.Disconnect();
+        }
+        /// <summary>
+        /// 重连
+        /// </summary>
+        /// <param name="msg"></param>
+        /// <returns></returns>
+        public virtual bool Reconnect(out string msg)
+        {
+            return _talker.Connect(out msg);
+        }
+        /// <summary>
+        /// 关闭
+        /// </summary>
+        public virtual void Close()
+        {
+            _talker.Dispose();
+        }
         #region // 读数据
         /// <summary>
         /// 获取频率
@@ -461,23 +512,26 @@ namespace System.Data.ShenBanReader
                 if (msgTran.AryData.Length > 1)
                 {
                     model.ReadId = readId;
-                    var tag = new R600TagInfo(R600TagInfo.InitType.Read, msgTran.AryData);
-                    switch (area)
+                    if (msgTran.AryData.Length > 7)
                     {
-                        case ReadAreaType.Reserved:
-                            tag.Reserved = tag.Data;
-                            break;
-                        case ReadAreaType.TID:
-                            tag.Tid = tag.Data;
-                            break;
-                        case ReadAreaType.User:
-                            tag.User = tag.Data;
-                            break;
-                        case ReadAreaType.EPC:
-                        default:
-                            break;
+                        var tag = new R600TagInfo(R600TagInfo.InitType.Read, msgTran.AryData);
+                        switch (area)
+                        {
+                            case ReadAreaType.Reserved:
+                                tag.Reserved = tag.Data;
+                                break;
+                            case ReadAreaType.TID:
+                                tag.Tid = tag.Data;
+                                break;
+                            case ReadAreaType.User:
+                                tag.User = tag.Data;
+                                break;
+                            case ReadAreaType.EPC:
+                            default:
+                                break;
+                        }
+                        model.TryAddReadTag(tag);
                     }
-                    model.TryAddReadTag(tag);
                     return new ReadAlertModel<T>(ReadCmdType.ReadTag, model);
                 }
                 int code = 0;
@@ -530,7 +584,42 @@ namespace System.Data.ShenBanReader
             }
             return GetAlert404(ReadCmdType.ReadTag, exception, model);
         }
-
+        /// <summary>
+        /// 写标签
+        /// </summary>
+        /// <param name="readId"></param>
+        /// <param name="pass">长度为4</param>
+        /// <param name="area"></param>
+        /// <param name="start"></param>
+        /// <param name="length"></param>
+        /// <param name="newData"></param>
+        /// <param name="oldKey"></param>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public ReadAlertModel<T> WriteTag<T>(byte readId, byte[] pass, ReadAreaType area, byte start, byte length, byte[] newData, string oldKey, ref T model) where T : R2000Interfaces.WriteTag
+        {
+            byte[] btAryBuffer = new byte[newData.Length + 7];
+            pass.CopyTo(btAryBuffer, 0);
+            btAryBuffer[4] = (byte)area;
+            btAryBuffer[5] = start;
+            btAryBuffer[6] = length;
+            newData.CopyTo(btAryBuffer, 7);
+            var data = ReaderCaller.GetSendData(readId, ReadCmdType.WriteTag, btAryBuffer);
+            if (_talker.Send(data, out byte[] received, out Exception exception))
+            {
+                var msgTran = new R600Message(received);
+                if (msgTran.AryData.Length > 3 && msgTran.AryData[msgTran.AryData.Length - 3] == 0x10)
+                {
+                    var tag = new R600TagInfo(R600TagInfo.InitType.Write, msgTran.AryData);
+                    model.TryAddWriteTag(tag, oldKey);
+                    return new ReadAlertModel<T>(ReadCmdType.WriteTag, model);
+                }
+                int code = 0;
+                string message = msgTran.AryData.Length == 1 ? ReaderCaller.FormatErrorCode(msgTran.AryData[0], out code) : (msgTran.AryData.Length > 3 ? ReaderCaller.FormatErrorCode(msgTran.AryData[msgTran.AryData.Length - 3], out code) : "未知错误");
+                return GetAlertError<T>(ReadCmdType.ReadTag, code, $"写标签失败，失败原因：{message}", model);
+            }
+            return GetAlert404(ReadCmdType.ReadTag, exception, model);
+        }
         private ReadAlertModel<T> GetAlertError<T>(ReadCmdType cmd, int code, string message, T model)
         {
             return new ReadAlertModel<T>(cmd, code, message, nameof(R2000Queue), cmd.ToEnumName(), model);

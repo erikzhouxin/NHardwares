@@ -320,6 +320,29 @@ namespace System.Data.ShenBanReader
         L4 = 0x03,
     }
     /// <summary>
+    /// 工作天线(逻辑线路)
+    /// </summary>
+    [Flags]
+    public enum ReadAntType
+    {
+        /// <summary>
+        /// 天线一
+        /// </summary>
+        L1 = 1,
+        /// <summary>
+        /// 天线二
+        /// </summary>
+        L2 = 2,
+        /// <summary>
+        /// 天线三
+        /// </summary>
+        L3 = 4,
+        /// <summary>
+        /// 天线四
+        /// </summary>
+        L4 = 8,
+    }
+    /// <summary>
     /// 命令调用
     /// </summary>
     public static class ReadEnumsCaller
@@ -387,5 +410,63 @@ namespace System.Data.ShenBanReader
         /// <param name="type"></param>
         /// <returns></returns>
         public static String GetEnumName(this ReadCmdType type) => ToEnumName(type);
+        /// <summary>
+        /// 转换成逻辑天线
+        /// </summary>
+        /// <param name="antenna"></param>
+        /// <returns></returns>
+        public static ReadAntType ToAntType(this ReadAntennaType antenna)
+        {
+            return antenna switch
+            {
+                ReadAntennaType.L1 => ReadAntType.L1,
+                ReadAntennaType.L2 => ReadAntType.L2,
+                ReadAntennaType.L3 => ReadAntType.L3,
+                ReadAntennaType.L4 => ReadAntType.L4,
+                _ => ReadAntType.L1,
+            };
+        }
+        /// <summary>
+        /// 转换成天线枚举
+        /// </summary>
+        /// <param name="ant"></param>
+        /// <returns></returns>
+        public static ReadAntennaType ToAntennaType(this ReadAntType ant)
+        {
+            return ant switch
+            {
+                ReadAntType.L1 => ReadAntennaType.L1,
+                ReadAntType.L2 => ReadAntennaType.L2,
+                ReadAntType.L3 => ReadAntennaType.L3,
+                ReadAntType.L4 => ReadAntennaType.L4,
+                _ => ReadAntennaType.L1,
+            };
+        }
+        /// <summary>
+        /// 转换成天线枚举列表
+        /// </summary>
+        /// <param name="ant"></param>
+        /// <returns></returns>
+        public static ReadAntennaType[] ToAntennaTypes(this ReadAntType ant)
+        {
+            var result = new List<ReadAntennaType>();
+            if (ant.HasFlag(ReadAntType.L1))
+            {
+                result.Add(ReadAntennaType.L1);
+            }
+            if (ant.HasFlag(ReadAntType.L2))
+            {
+                result.Add(ReadAntennaType.L2);
+            }
+            if (ant.HasFlag(ReadAntType.L3))
+            {
+                result.Add(ReadAntennaType.L3);
+            }
+            if (ant.HasFlag(ReadAntType.L4))
+            {
+                result.Add(ReadAntennaType.L4);
+            }
+            return result.ToArray();
+        }
     }
 }

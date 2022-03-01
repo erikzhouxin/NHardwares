@@ -16,6 +16,7 @@ namespace System.Data.ShenBanReader
         R2000Interfaces.SetAccessEpcMatch,
         R2000Interfaces.GetAccessEpcTag,
         R2000Interfaces.ReadTag,
+        R2000Interfaces.WriteTag,
         R2000Interfaces.SetWorkAntenna
     {
         /// <summary>
@@ -77,15 +78,15 @@ namespace System.Data.ShenBanReader
                 tagInfo.ANT2 += tag.ANT2;
                 tagInfo.ANT3 += tag.ANT3;
                 tagInfo.ANT4 += tag.ANT4;
-                if(tag.User != null && tag.User.Length > 0)
+                if (tag.User != null && tag.User.Length > 0)
                 {
                     tagInfo.User = tag.User;
                 }
-                if(tag.Tid != null && tag.Tid.Length > 0)
+                if (tag.Tid != null && tag.Tid.Length > 0)
                 {
                     tagInfo.Tid = tag.Tid;
                 }
-                if(tag.Reserved != null && tag.Reserved.Length > 0)
+                if (tag.Reserved != null && tag.Reserved.Length > 0)
                 {
                     tagInfo.Reserved = tag.Reserved;
                 }
@@ -94,7 +95,25 @@ namespace System.Data.ShenBanReader
             CurrentTags[tag.Key] = tag;
             return true;
         }
-
+        /// <summary>
+        /// 尝试添加标签
+        /// </summary>
+        /// <param name="tag"></param>
+        /// <param name="key"></param>
+        public bool TryAddWriteTag(R600TagInfo tag, string key)
+        {
+            byte[] tid = null;
+            if (CurrentTags.TryGetValue(key, out R600TagInfo tagInfo))
+            {
+                tid = tagInfo.Tid;
+            }
+            if(tag.Tid == null)
+            {
+                tag.Tid = tid;
+            }
+            CurrentTags[tag.Key] = tag;
+            return true;
+        }
         /// <summary>
         /// 尝试添加盘存标签
         /// </summary>

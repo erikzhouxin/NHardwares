@@ -309,7 +309,7 @@ namespace System.Data.ShenBanReader
         /// <returns></returns>
         internal static byte[] GetMd5(this byte[] bytes)
         {
-            return new MD5CryptoServiceProvider().ComputeHash(bytes);
+            return MD5.Create().ComputeHash(bytes);
         }
         /// <summary>
         /// 获取MD5加密值

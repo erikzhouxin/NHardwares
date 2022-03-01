@@ -24,7 +24,7 @@ namespace System.Data.ShenBanReader
         /// 依据现有配置重新连接
         /// </summary>
         /// <returns></returns>
-        bool Connect();
+        bool Connect(out string exception);
         /// <summary>
         /// 连接到服务端
         /// </summary>
@@ -135,8 +135,9 @@ namespace System.Data.ShenBanReader
         /// 连接
         /// </summary>
         /// <returns></returns>
-        public virtual bool Connect()
+        public virtual bool Connect(out string message)
         {
+            message = "接口未实现";
             return false;
         }
         /// <summary>
@@ -170,9 +171,15 @@ namespace System.Data.ShenBanReader
         /// 重新连接
         /// </summary>
         /// <returns></returns>
-        public override bool Connect()
+        public override bool Connect(out string message)
         {
-            return TryConnect(_ip, _port, out Exception _);
+            if (TryConnect(_ip, _port, out Exception exception))
+            {
+                message = String.Empty;
+                return true;
+            }
+            message = exception.Message;
+            return false;
         }
         /// <summary>
         /// 连接
@@ -337,9 +344,9 @@ namespace System.Data.ShenBanReader
         /// 重新连接
         /// </summary>
         /// <returns></returns>
-        public override bool Connect()
+        public override bool Connect(out string message)
         {
-            return Connect(serialPort.PortName, serialPort.BaudRate, out string _);
+            return Connect(serialPort.PortName, serialPort.BaudRate, out message);
         }
         public override bool Connect(string portName, int bautRate, out string message)
         {
@@ -456,17 +463,19 @@ namespace System.Data.ShenBanReader
                                 Monitor.Exit(LockObject);
                                 return true;
                             }
-                            else
-                            {
-                                exception = new Exception($"未完成数据接收");
-                                received = null;
-                                Monitor.Exit(LockObject);
-                                return false;
-                            }
+                            //else
+                            //{
+                            //    exception = new Exception($"未完成数据接收");
+                            //    received = null;
+                            //    Monitor.Exit(LockObject);
+                            //    return false;
+                            //}
+                            Thread.Sleep(waiter);
+                            continue;
                         }
                         serialPort.Read(buffer, len, nCount);
                         len += nCount;
-                        Thread.Sleep(waiter);
+                        Thread.Sleep(waiter * 2);
                     }
                 }
                 catch (Exception ex)
@@ -519,8 +528,9 @@ namespace System.Data.ShenBanReader
         /// 重新连接
         /// </summary>
         /// <returns></returns>
-        public virtual bool Connect()
+        public virtual bool Connect(out string message)
         {
+            message = "接口未实现";
             return false;
         }
         /// <summary>
@@ -580,7 +590,8 @@ namespace System.Data.ShenBanReader
     /// <summary>
     /// TCP连接模型
     /// </summary>
-    internal class TcpTalkReadModel : TalkReadModel, ITalkReadModel
+    internal class TcpTalkReadModel
+        : TalkReadModel, ITalkReadModel
     {
         public override event Action<byte[]> Received;
         TcpClient client;
@@ -638,6 +649,14 @@ namespace System.Data.ShenBanReader
                         Received(btAryReceiveData);
                     }
                 }
+                catch (ThreadInterruptedException) // 程序中断
+                {
+                    break;
+                }
+                catch (ThreadAbortException) // 取消
+                {
+                    break;
+                }
                 catch { }
             }
         }
@@ -670,6 +689,8 @@ namespace System.Data.ShenBanReader
             streamToTran?.Dispose();
             client?.Close();
             waitThread?.Abort();
+            //waitThread?.Interrupt();
+            //waitThread?.Join();
             bIsConnect = false;
             return true;
         }

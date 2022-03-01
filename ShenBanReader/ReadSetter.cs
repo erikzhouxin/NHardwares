@@ -41,7 +41,7 @@ namespace System.Data.ShenBanReader
     /// </summary>
     internal class ReadSetter : IReadSetter
     {
-        public static IReadSetter Current { get; } = new ReadSetter();
+        public static IReadSetter Current = new ReadSetter();
         private int _queuePollTimeout = 500;
         /// <summary>
         /// 串口读写超时时间

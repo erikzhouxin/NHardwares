@@ -139,10 +139,10 @@ namespace System.Data.ShenBanReader
         /// 固件版本
         /// </summary>
         public string FirmwareVersion;
-        /// <summary>
-        /// 选定标签
-        /// </summary>
-        internal byte[] AccessEpcMatch;
+        ///// <summary>
+        ///// 选定标签
+        ///// </summary>
+        //internal byte[] AccessEpcMatch;
         #region // R600InventoryISO18000Model
         /// <summary>
         /// 
@@ -258,10 +258,10 @@ namespace System.Data.ShenBanReader
         /// 正在盘存
         /// </summary>
         public bool IsInventory;
-        /// <summary>
-        /// 盘存次数
-        /// </summary>
-        internal int InvTotal;
+        ///// <summary>
+        ///// 盘存次数
+        ///// </summary>
+        //internal int InvTotal;
 
         internal void SetMaxMinRSSI(int nRSSI)
         {
