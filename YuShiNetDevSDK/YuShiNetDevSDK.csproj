@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--自动生成-->
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>net40;net45;netstandard2.1;netcoreapp3.1;net6.0</TargetFrameworks>
+    <AssemblyName>NSystem.Data.YuShiNetDevSDK</AssemblyName>
+    <RootNamespace>System.Data.YuShiNetDevSDK</RootNamespace>
+    <NoBuild>true</NoBuild>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <IncludeBuildOutput>true</IncludeBuildOutput>
+    <NuspecFile>NSystem.Data.YuShiNetDevSDK.nuspec</NuspecFile>
+    <NuspecProperties>version=$(version);src_path=$(src_path);cb_bin_path=$(cb_bin_path);authors=$(Authors);copyright=$(Copyright);summary=$(Description)</NuspecProperties>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="beans\**" />
+    <EmbeddedResource Remove="beans\**" />
+    <None Remove="beans\**" />
+    <None Remove="Directory.Build.props" />
+  </ItemGroup>
+</Project>

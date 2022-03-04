@@ -1,0 +1,22 @@
+﻿<!--此文件自动生成-->
+<Project>
+  <PropertyGroup>
+    <Copyright>Copyright 2020-2022</Copyright>
+    <Company>EZhouXin</Company>
+    <Authors>ErikZhouXin</Authors>
+    <Version>2022.3.11</Version>
+    <AssemblyVersion>2022.3.11.793</AssemblyVersion>
+    <FileVersion>2022.3.11.793</FileVersion>
+    <Description>宇视SDK集成项目</Description>
+    <ProviderLangVersion>7.3</ProviderLangVersion>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <PackageTags>宇视;宇视SDK;NETDEVSDK;NETDEV;</PackageTags>
+    <RepositoryUrl>https://www.gitee.com/ErikZhouXin/NHardwares</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageOutputPath>$([System.IO.Path]::Combine($(MSBuildThisFileDirectory), 'bin'))</PackageOutputPath>
+    <cb_bin_path>$([System.IO.Path]::Combine($(MSBuildThisFileDirectory), 'beans'))</cb_bin_path>
+    <src_path>$(MSBuildThisFileDirectory)</src_path>
+  </PropertyGroup>
+</Project>
