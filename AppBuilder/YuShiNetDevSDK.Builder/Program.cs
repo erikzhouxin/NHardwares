@@ -20,7 +20,11 @@ namespace YuShiNetDevSDK.Builder
         static string SUMMARY { get; } = "宇视SDK集成项目";
         static string PACKAGE_TAGS { get; } = "宇视;宇视SDK;NETDEVSDK;NETDEV;";
         public static String ProjName => "YuShiNetDevSDK";
+#if DEBUG
         public static String Config = "Debug";
+#else
+        public static String Config = "Release";
+#endif
 
         static void Main(string[] args)
         {
@@ -48,7 +52,7 @@ namespace YuShiNetDevSDK.Builder
             Exec("dotnet", "pack", Program.Src);
         }
 
-        #region // MSBuilder
+#region // MSBuilder
         public static void Exec(string fileName, string args, string startDir)
         {
             var wd = System.IO.Path.GetFullPath(startDir);
@@ -92,8 +96,8 @@ namespace YuShiNetDevSDK.Builder
         {
             System.Console.WriteLine(e.Data);
         }
-        #endregion
-        #region // Version
+#endregion
+#region // Version
         private static void GenDirectoryBuildProps(string root)
         {
             using (XmlWriter f = XmlWriter.Create(Path.Combine(root, "Directory.Build.props"), new XmlWriterSettings
@@ -133,8 +137,8 @@ namespace YuShiNetDevSDK.Builder
                 f.WriteEndDocument();
             }
         }
-        #endregion
-        #region // Generator Creater
+#endregion
+#region // Generator Creater
         private static void write_nuspec_file_entry(string src, string target, XmlWriter f)
         {
             f.WriteStartElement("file");
@@ -292,21 +296,22 @@ namespace YuShiNetDevSDK.Builder
                 //write_nuspec_file_entry(relpath_targets, string.Format("build\\net40"), f);
                 //write_nuspec_file_entry(relpath_targets, string.Format("build\\netstandard2.0"), f);
                 // 支持的SDK
-                //foreach (var sdkName in sdks)
-                //{
-                //    try
-                //    {
-                //        foreach (var file in Directory.GetFiles(Path.Combine(dir_src, "bin", Config, sdkName)))
-                //        {
-                //            var fileName = Path.GetFileName(file);
-                //            f.WriteStartElement("file");
-                //            f.WriteAttributeString("src", $"bin\\{Config}\\{sdkName}\\{fileName}");
-                //            f.WriteAttributeString("target", $"lib/{sdkName}/{fileName}");
-                //            f.WriteEndElement(); // file
-                //        }
-                //    }
-                //    catch { }
-                //}
+                foreach (var sdkName in sdks)
+                {
+                    try
+                    {
+                        foreach (var file in Directory.GetFiles(Path.Combine(dir_src, "bin", Config, sdkName)))
+                        {
+                            var fileName = Path.GetFileName(file);
+                            if(fileName.EndsWith(".pdb", StringComparison.OrdinalIgnoreCase)) { continue; }
+                            f.WriteStartElement("file");
+                            f.WriteAttributeString("src", $"bin\\{Config}\\{sdkName}\\{fileName}");
+                            f.WriteAttributeString("target", $"lib/{sdkName}/{fileName}");
+                            f.WriteEndElement(); // file
+                        }
+                    }
+                    catch { }
+                }
 
                 f.WriteEndElement(); // files
 
@@ -329,6 +334,6 @@ namespace YuShiNetDevSDK.Builder
             targetContent = assemblyReg.Replace(targetContent, "<AssemblyVersion>" + ASSEMBLY_VERSION + "</AssemblyVersion>");
             File.WriteAllText(coreProj, targetContent, Encoding.UTF8);
         }
-        #endregion
+#endregion
     }
 }

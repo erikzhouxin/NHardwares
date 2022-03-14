@@ -13,20 +13,19 @@ namespace YuShiITSSDK.Builder
     static class Program
     {
         public static String Src { get; private set; }
-        static string NUSPEC_VERSION { get; } = string.Format("2021.11.11", DateTime.Now);
+        static string NUSPEC_VERSION { get; } = string.Format("{0:yyyy.M}.11", DateTime.Now);
         static string ASSEMBLY_VERSION { get; } = string.Format("{0}.{1}", NUSPEC_VERSION, (int)(DateTime.Now - new DateTime(2020, 1, 1)).TotalDays);
         static string COPYRIGHT { get; } = $"Copyright 2020-{DateTime.Now.Year}";
         static string AUTHORS { get; } = "ErikZhouXin";
         static string SUMMARY { get; } = "宇视SDK集成项目";
         static string PACKAGE_TAGS { get; } = "宇视;宇视SDK;ITSSDK;";
-        public static String Proj_Name { get; private set; }
         public static String Config = "Debug";
+        static string ProjName => "YuShiITSSDK";
 
         static void Main(string[] args)
         {
             var current = Directory.GetCurrentDirectory();
-            Proj_Name = "YuShiITSSDK";
-            Src = Path.GetFullPath(Path.Combine(current, "..", "..", "..", "..", "..", Proj_Name));
+            Src = Path.GetFullPath(Path.Combine(current, "..", "..", "..", "..", "..", ProjName));
             // 生成信息
             Directory.CreateDirectory(Path.Combine(Src, "bin"));
             foreach (var s in Directory.GetFiles(Src, "*.nupkg", SearchOption.AllDirectories))
@@ -38,7 +37,7 @@ namespace YuShiITSSDK.Builder
             // 生成包
             GenNuspecLib(Src);
             // 编译生成版本
-            ReplaceVersion(Path.GetFullPath(Path.Combine(Src, $"{Proj_Name}.csproj")));
+            ReplaceVersion(Path.GetFullPath(Path.Combine(Src, $"{ProjName}.csproj")));
             Exec("dotnet", $"pack -c {Config}", Program.Src);
             // 还原包内容
             Exec("dotnet", "restore", Program.Src);
@@ -146,10 +145,9 @@ namespace YuShiITSSDK.Builder
 
         private static void GenNuspecLib(string dir_src)
         {
-            string id = "NSystem.Data.YuShiITSSDK";
-            string proj = "YuShiITSSDK";
+            string id = $"NSystem.Data.{ProjName}";
             var sdks = new List<string> { "net40", "net45", "netstandard2.1", "netcoreapp3.1", "net6.0" };
-            using (XmlWriter f = XmlWriter.Create(Path.Combine(dir_src, $"{proj}.csproj"), new XmlWriterSettings
+            using (XmlWriter f = XmlWriter.Create(Path.Combine(dir_src, $"{ProjName}.csproj"), new XmlWriterSettings
             {
                 NewLineChars = "\n",
                 Indent = true,
@@ -294,21 +292,22 @@ namespace YuShiITSSDK.Builder
                 //write_nuspec_file_entry(relpath_targets, string.Format("build\\net40"), f);
                 //write_nuspec_file_entry(relpath_targets, string.Format("build\\netstandard2.0"), f);
                 // 支持的SDK
-                //foreach (var sdkName in sdks)
-                //{
-                //    try
-                //    {
-                //        foreach (var file in Directory.GetFiles(Path.Combine(dir_src, "bin", Config, sdkName)))
-                //        {
-                //            var fileName = Path.GetFileName(file);
-                //            f.WriteStartElement("file");
-                //            f.WriteAttributeString("src", $"bin\\{Config}\\{sdkName}\\{fileName}");
-                //            f.WriteAttributeString("target", $"lib/{sdkName}/{fileName}");
-                //            f.WriteEndElement(); // file
-                //        }
-                //    }
-                //    catch { }
-                //}
+                foreach (var sdkName in sdks)
+                {
+                    try
+                    {
+                        foreach (var file in Directory.GetFiles(Path.Combine(dir_src, "bin", Config, sdkName)))
+                        {
+                            var fileName = Path.GetFileName(file);
+                            if(fileName.EndsWith(".pdb", StringComparison.OrdinalIgnoreCase)) { continue; }
+                            f.WriteStartElement("file");
+                            f.WriteAttributeString("src", $"bin\\{Config}\\{sdkName}\\{fileName}");
+                            f.WriteAttributeString("target", $"lib/{sdkName}/{fileName}");
+                            f.WriteEndElement(); // file
+                        }
+                    }
+                    catch { }
+                }
 
                 f.WriteEndElement(); // files
 

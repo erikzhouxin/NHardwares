@@ -10,7 +10,7 @@
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<Authors>ErikZhouXin</Authors>
 		<Version>2022.2.11</Version>
-		<AssemblyVersion>2022.2.1.760</AssemblyVersion>
+		<AssemblyVersion>2022.2.11.760</AssemblyVersion>
 		<FileVersion>2022.2.11.760</FileVersion>
 		<Description>针对深坂科技RFID的R600进行的操作封装</Description>
 		<Copyright>©2020 ErikZhouXin</Copyright>
