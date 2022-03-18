@@ -28,6 +28,14 @@ namespace System.Data.ShenBanReader
         /// <param name="cmd"></param>
         /// <param name="send"></param>
         /// <returns></returns>
+        public static byte[] GetSendData(int readId, ReadCmdType cmd, byte[] send = null) => GetSendData((byte)readId, (byte)cmd, send);
+        /// <summary>
+        /// 获取发送数据
+        /// </summary>
+        /// <param name="readId"></param>
+        /// <param name="cmd"></param>
+        /// <param name="send"></param>
+        /// <returns></returns>
         public static byte[] GetSendData(byte readId, byte cmd, byte[] send = null)
         {
             byte[] data;

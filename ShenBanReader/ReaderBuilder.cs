@@ -82,6 +82,14 @@ namespace System.Data.ShenBanReader
         {
             return new R2000Reactor();
         }
+        /// <summary>
+        /// 获取逻辑阅读器
+        /// </summary>
+        /// <returns></returns>
+        public static IReadLogical GetLogicReader()
+        {
+            return new ReadLogical();
+        }
         #endregion
     }
 }

@@ -109,7 +109,7 @@ namespace System.Data.ShenBanReader
                         byte[] data = new byte[nDataLen];
                         Array.Copy(aryData, 7 + nEpcLen, data, 0, nDataLen);// string strData = R600Method.ByteArrayToString(aryData, 7 + nEpcLen, nDataLen);
                         byte byAntId = (byte)(aryData[nLen - 2] & 0x03);
-                        var pcs = pc.GetHexString();
+
                         this.Key = epc.GetHexString();
                         this.PC = pc;
                         this.CRC = crc;

@@ -15,6 +15,10 @@ namespace System.Data.ShenBanReader
         /// </summary>
         int QueuePollTimeout { get; set; }
         /// <summary>
+        /// 顺序读写器超时次数(10-100)
+        /// </summary>
+        int QueuePollTimes { get; set; }
+        /// <summary>
         /// 顺序读写器等待接收时间(10-300)
         /// </summary>
         int QueuePollTimeWaiter { get; set; }
@@ -73,6 +77,8 @@ namespace System.Data.ShenBanReader
         /// 串口读写缓冲长度
         /// </summary>
         public int ReadPollBuffLength { get => _readPollBuffLength; set => _readPollBuffLength = value >= 1024 && value <= 10240 ? value : _readPollBuffLength; }
+        private int _queuePollTimes = 10;
+        public int QueuePollTimes { get=> _queuePollTimes; set => _queuePollTimes = value >= 10 && value <= 100 ? value : _queuePollTimes; }
         /// <summary>
         /// 私有构造
         /// </summary>

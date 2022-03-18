@@ -598,12 +598,12 @@ namespace System.Data.ShenBanReader
         /// <returns></returns>
         public ReadAlertModel<T> WriteTag<T>(byte readId, byte[] pass, ReadAreaType area, byte start, byte length, byte[] newData, string oldKey, ref T model) where T : R2000Interfaces.WriteTag
         {
-            byte[] btAryBuffer = new byte[newData.Length + 7];
+            byte[] btAryBuffer = new byte[newData.Length + 11];
             pass.CopyTo(btAryBuffer, 0);
             btAryBuffer[4] = (byte)area;
             btAryBuffer[5] = start;
-            btAryBuffer[6] = length;
-            newData.CopyTo(btAryBuffer, 7);
+            btAryBuffer[6] = (byte)(length + 2);
+            newData.CopyTo(btAryBuffer, 11);
             var data = ReaderCaller.GetSendData(readId, ReadCmdType.WriteTag, btAryBuffer);
             if (_talker.Send(data, out byte[] received, out Exception exception))
             {

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Ports;
@@ -60,6 +61,20 @@ namespace System.Data.ShenBanReader
         /// <param name="exception"></param>
         /// <returns></returns>
         bool Send(byte[] send, out byte[] received, out Exception exception);
+    }
+    /// <summary>
+    /// 逻辑顺序式模型接口
+    /// </summary>
+    internal interface ILogicalTalkModel : ITalkModel, IDisposable
+    {
+        /// <summary>
+        /// 发送数据包
+        /// </summary>
+        /// <param name="send"></param>
+        /// <param name="Analysis"></param>
+        /// <param name="exception"></param>
+        /// <returns></returns>
+        bool Send(byte[] send, Func<byte[], bool> Analysis, out Exception exception);
     }
     /// <summary>
     /// 触发式模型接口
@@ -778,6 +793,482 @@ namespace System.Data.ShenBanReader
                 _serialPort.Close();
             }
             _serialPort.Dispose();
+        }
+    }
+    #endregion
+    #region // 逻辑顺序读模型
+    /// <summary>
+    /// 对话模型
+    /// </summary>
+    internal class LogicalTalkModel : ILogicalTalkModel
+    {
+        private static object _lockObj = new object();
+        private static Dictionary<string, object> _lockDic = new Dictionary<string, object>();
+        /// <summary>
+        /// 获取唯一的可以锁的对象
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public static object GetLockObject(string key)
+        {
+            if (_lockDic.TryGetValue(key, out object lockedObj))
+            {
+                return lockedObj;
+            }
+            lock (_lockObj)
+            {
+                if (_lockDic.TryGetValue(key, out object lockObj))
+                {
+                    return lockObj;
+                }
+                return _lockDic[key] = new object();
+            }
+        }
+        /// <summary>
+        /// 链接
+        /// </summary>
+        /// <param name="ip"></param>
+        /// <param name="port"></param>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        public virtual bool Connect(IPAddress ip, int port, out string message)
+        {
+            message = "接口未实现";
+            return false;
+        }
+        /// <summary>
+        /// 链接
+        /// </summary>
+        /// <param name="portName"></param>
+        /// <param name="bautRate"></param>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        public virtual bool Connect(string portName, int bautRate, out string message)
+        {
+            message = "接口未实现";
+            return false;
+        }
+        /// <summary>
+        /// 释放资源
+        /// </summary>
+        public virtual void Dispose()
+        {
+
+        }
+        /// <summary>
+        /// 已连接
+        /// </summary>
+        /// <returns></returns>
+        public virtual bool IsConnected { get => false; }
+        /// <summary>
+        /// 断开连接
+        /// </summary>
+        /// <returns></returns>
+        public virtual bool Disconnect()
+        {
+            return false;
+        }
+        /// <summary>
+        /// 连接
+        /// </summary>
+        /// <returns></returns>
+        public virtual bool Connect(out string message)
+        {
+            message = "接口未实现";
+            return false;
+        }
+        /// <summary>
+        /// 发送
+        /// </summary>
+        /// <returns></returns>
+        public virtual bool Send(byte[] send, Func<byte[], bool> Analysis, out Exception exception)
+        {
+            exception = new SocketException(400);
+            return false;
+        }
+    }
+    internal class SerialPortLogicalTalkModel : LogicalTalkModel, IDisposable
+    {
+        SerialPort _serialPort;
+        int _bufferLen;
+        int _interval;
+        int _waiter;
+        int _pollTimes;
+        public SerialPortLogicalTalkModel()
+        {
+            _serialPort = new SerialPort();
+            _bufferLen = ReadSetter.Current.QueuePollBuffLength;
+            _interval = ReadSetter.Current.QueuePollTimeout;
+            _waiter = ReadSetter.Current.QueuePollTimeWaiter;
+            _pollTimes = ReadSetter.Current.QueuePollTimes;
+        }
+        /// <summary>
+        /// 重新连接
+        /// </summary>
+        /// <returns></returns>
+        public override bool Connect(out string message)
+        {
+            return Connect(_serialPort.PortName, _serialPort.BaudRate, out message);
+        }
+        public override bool Connect(string portName, int bautRate, out string message)
+        {
+            try
+            {
+                message = string.Empty;
+                if (_serialPort.IsOpen)
+                {
+                    _serialPort.Close();
+                }
+                _serialPort.PortName = portName;
+                _serialPort.BaudRate = bautRate;
+                _serialPort.ReadTimeout = ReadSetter.Current.QueuePollTimeout;
+                _serialPort.Open();
+            }
+            catch (UnauthorizedAccessException)
+            {
+                message = $"对{portName}端口的访问被拒绝";
+                return false;
+            }
+            catch (InvalidOperationException)
+            {
+                message = $"无法访问{portName}端口";
+                return false;
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                message = "串口定义参数不正确";
+                return false;
+            }
+            catch (ArgumentException)
+            {
+                message = $"端口名称{portName}不正确或不支持此类型";
+                return false;
+            }
+            catch (IOException)
+            {
+                message = $"端口{portName}不可用";
+                return false;
+            }
+            catch (Exception ex)
+            {
+                message = ex.Message;
+                return false;
+            }
+            return true;
+        }
+        /// <summary>
+        /// 已打开
+        /// </summary>
+        public override bool IsConnected { get => _serialPort.IsOpen; }
+
+        public override bool Send(byte[] aryBuffer, Func<byte[], bool> Analysis, out Exception exception)
+        {
+            // 获取锁定发送
+            var lockObj = GetLockObject(_serialPort.PortName);
+            if (Monitor.TryEnter(lockObj, TimeSpan.FromMilliseconds(_interval)))
+            {
+                try
+                {
+                    if (!_serialPort.IsOpen)
+                    {
+                        exception = new Exception("串口通信未初始化或未打开串口");
+                        return false;
+                    }
+                    try
+                    {
+                        _serialPort.Write(aryBuffer, 0, aryBuffer.Length);
+                    }
+                    catch (Exception ex)
+                    {
+                        exception = ex;
+                        return false;
+                    }
+                    Thread.Sleep(_waiter); // 发送成功后等待,确保已经开始接收,减少出错
+                    var len = 0;
+                    var buffer = new byte[_bufferLen];
+                    var dstart = 0;
+                    var dlen = 0;
+                    try
+                    {
+                        while (true)
+                        {
+                            int nCount = _serialPort.BytesToRead;
+                            if (nCount == 0)
+                            {
+                                // 判断接收位置:
+                                for (int i = dstart; i < len; i++)
+                                {
+                                    if (buffer[i] == 0xA0)
+                                    {
+                                        dstart = i;
+                                        break;
+                                    }
+                                }
+                                dlen = Convert.ToInt32(buffer[dstart + 1]);
+                                if (dstart + 1 + dlen < len)
+                                {
+                                    var temp = new byte[dlen + 2];
+                                    Array.Copy(buffer, dstart, temp, 0, dlen + 2);
+                                    dstart += dlen + 2;
+                                    dlen = 0;
+                                    try
+                                    {
+                                        if (Analysis(temp))
+                                        {
+                                            exception = new Exception("已完成数据接收");
+                                            return true;
+                                        }
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        exception = new Exception(ex.Message, ex);
+                                    }
+                                }
+                                continue;
+                            }
+                            if (buffer.Length - len < nCount)
+                            {
+                                var temp = new byte[len + nCount];
+                                Array.Copy(buffer, 0, temp, 0, len);
+                                buffer = temp;
+                            }
+                            _serialPort.Read(buffer, len, nCount);
+                            len += nCount;
+                            Thread.Sleep(_waiter);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        exception = ex;
+                        return false;
+                    }
+                }
+                finally
+                {
+                    Monitor.Exit(lockObj);
+                }
+            }
+            else
+            {
+                exception = new TimeoutException($"串口{_serialPort.PortName}正在被使用");
+                return false;
+            }
+        }
+        public override void Dispose()
+        {
+            base.Dispose();
+            if (_serialPort.IsOpen)
+            {
+                _serialPort.Close();
+            }
+            _serialPort.Dispose();
+        }
+    }
+    /// <summary>
+    /// TCP连接模型
+    /// </summary>
+    internal class TcpIpLogicalTalkModel : LogicalTalkModel, IDisposable
+    {
+        IPAddress _ip;
+        int _port;
+        TcpClient _client;
+        Stream _stream;
+        bool _isConnected;
+        int _interval;
+        int _waiter;
+        int _buffLen;
+        public TcpIpLogicalTalkModel()
+        {
+            _ip = IPAddress.Parse("192.168.0.178");
+            _port = 4001;
+            _client = new TcpClient();
+            _interval = ReadSetter.Current.QueuePollTimeout;
+            _waiter = ReadSetter.Current.QueuePollTimeWaiter;
+            _buffLen = ReadSetter.Current.QueuePollBuffLength;
+        }
+        /// <summary>
+        /// 重新连接
+        /// </summary>
+        /// <returns></returns>
+        public override bool Connect(out string message)
+        {
+            if (TryConnect(_ip, _port, out Exception exception))
+            {
+                message = String.Empty;
+                return true;
+            }
+            message = exception.Message;
+            return false;
+        }
+        /// <summary>
+        /// 连接
+        /// </summary>
+        /// <param name="ipAddress"></param>
+        /// <param name="port"></param>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        public override bool Connect(IPAddress ipAddress, int port, out string message)
+        {
+            if (TryConnect(ipAddress, port, out Exception exception))
+            {
+                message = String.Empty;
+                return true;
+            }
+            message = exception.Message;
+            return false;
+        }
+        private bool TryConnect(IPAddress ipAddress, int port, out Exception exception)
+        {
+            try
+            {
+                _client.Close();
+            }
+            catch { }
+            try
+            {
+                _ip = ipAddress;
+                _port = port;
+                _client = new TcpClient();
+                _client.ReceiveTimeout = _client.SendTimeout = ReadSetter.Current.QueuePollTimeout;
+                _client.Connect(ipAddress, port);
+                _stream = _client.GetStream();    // 获取连接至远程的流
+                exception = null;
+                return _isConnected = true;
+            }
+            catch (Exception ex)
+            {
+                exception = ex;
+                _isConnected = false;
+                return false;
+            }
+        }
+        /// <summary>
+        /// 发送
+        /// </summary>
+        /// <param name="send"></param>
+        /// <param name="Analysis"></param>
+        /// <param name="exception"></param>
+        /// <returns></returns>
+        public override bool Send(byte[] send, Func<byte[], bool> Analysis, out Exception exception)
+        {
+            var lockObj = GetLockObject(_ip.ToString());
+            // 获取锁定发送
+            if (Monitor.TryEnter(lockObj, TimeSpan.FromMilliseconds(_interval)))
+            {
+                try
+                {
+                    if (!IsConnected) // 未连接重连尝试
+                    {
+                        if (!TryConnect(_ip, _port, out exception))
+                        {
+                            return false;
+                        }
+                    }
+                    try
+                    {
+                        lock (_stream)
+                        {
+                            _stream.Write(send, 0, send.Length);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        exception = new Exception("未连接或已经断开连接", ex);
+                        return false;
+                    }
+                    Thread.Sleep(_waiter); // 发送成功后等待,确保已经开始接收,减少出错
+                    var len = 0;
+                    var buffer = new byte[_buffLen];
+                    var dstart = 0;
+                    var dlen = 0;
+                    var current = new byte[1024];
+                    try
+                    {
+                        while (true)
+                        {
+                            var nCount = _stream.Read(current, 0, current.Length);
+                            if (nCount == 0)
+                            {
+                                // 判断接收位置:
+                                for (int i = dstart; i < len; i++)
+                                {
+                                    if (buffer[i] == 0xA0)
+                                    {
+                                        dstart = i;
+                                        break;
+                                    }
+                                }
+                                dlen = Convert.ToInt32(buffer[dstart + 1]);
+                                if (dstart + 1 + dlen < len)
+                                {
+                                    var temp = new byte[dlen + 2];
+                                    Array.Copy(buffer, dstart, temp, 0, dlen + 2);
+                                    dstart = dlen + 2;
+                                    dlen = 0;
+                                    try
+                                    {
+                                        if (Analysis(temp))
+                                        {
+                                            exception = new Exception("已完成数据接收");
+                                            return true;
+                                        }
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        exception = new Exception(ex.Message, ex);
+                                    }
+                                }
+                                continue;
+                            }
+                            if (buffer.Length - len < nCount)
+                            {
+                                var temp = new byte[len + nCount];
+                                Array.Copy(buffer, 0, temp, 0, len);
+                                buffer = temp;
+                            }
+                            Array.Copy(current, 0, buffer, len, nCount);
+                            len += nCount;
+                            Thread.Sleep(_waiter);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        exception = ex;
+                        return false;
+                    }
+                }
+                finally
+                {
+                    Monitor.Exit(lockObj);
+                }
+            }
+            else
+            {
+                exception = new TimeoutException($"[{_ip}:{_port}]正在被使用");
+                return false;
+            }
+        }
+        /// <summary>
+        /// 是连接
+        /// </summary>
+        /// <returns></returns>
+        public override bool IsConnected { get => _isConnected && _client.Connected; }
+        /// <summary>
+        /// 断开连接
+        /// </summary>
+        /// <returns></returns>
+        public override bool Disconnect()
+        {
+            return true;
+        }
+        /// <summary>
+        /// 释放
+        /// </summary>
+        public override void Dispose()
+        {
+            base.Dispose();
+            _stream?.Dispose();
+            _client?.Close();
         }
     }
     #endregion
