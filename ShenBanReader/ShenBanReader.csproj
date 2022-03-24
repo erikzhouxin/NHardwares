@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net40;net45;netstandard2.1;netcoreapp3.1;net6.0</TargetFrameworks>
+		<TargetFrameworks>net4;net45;netstandard2.1;netcoreapp3.1;net6.0</TargetFrameworks>
 		<AssemblyName>NSystem.Data.ShenBanReader</AssemblyName>
 		<RootNamespace>System.Data.ShenBanReader</RootNamespace>
 		<SignAssembly>true</SignAssembly>
@@ -20,9 +20,47 @@
 		<PackageReleaseNotes>针对深坂科技RFID的R600进行的操作封装</PackageReleaseNotes>
 		<NeutralLanguage>zh</NeutralLanguage>
 	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-		<DefineConstants>DEBUG;TRACE</DefineConstants>
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)'=='Debug|net4'">
+		<DefineConstants>TRACE;DEBUG;NETFrame;NET40</DefineConstants>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)'=='Debug|net45'">
+		<DefineConstants>TRACE;DEBUG;NETFrame;NET45</DefineConstants>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)'=='Debug|netstandard2.1'">
+		<DefineConstants>TRACE;DEBUG;NETFx;NETStd</DefineConstants>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)'=='Debug|netcoreapp2.1'">
+		<DefineConstants>TRACE;DEBUG;NETFx;NETCore</DefineConstants>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)'=='Debug|netcoreapp3.1'">
+		<DefineConstants>TRACE;DEBUG;NETFx;NETCore</DefineConstants>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)'=='Debug|net5.0'">
+		<DefineConstants>TRACE;DEBUG;NETFx;NET50</DefineConstants>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)'=='Debug|net6.0'">
+		<DefineConstants>TRACE;DEBUG;NETFx;NET60</DefineConstants>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)'=='Release|net4'">
+		<DefineConstants>TRACE;NETFrame;NET40</DefineConstants>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)'=='Release|net45'">
+		<DefineConstants>TRACE;NETFrame;NET45</DefineConstants>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)'=='Release|netstandard2.1'">
+		<DefineConstants>TRACE;NETFx;NETStd</DefineConstants>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)'=='Release|netcoreapp2.1'">
+		<DefineConstants>TRACE;NETFx;NETCore</DefineConstants>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)'=='Release|netcoreapp3.1'">
+		<DefineConstants>TRACE;NETFx;NETCore</DefineConstants>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)'=='Release|net5.0'">
+		<DefineConstants>TRACE;NETFx;NET50</DefineConstants>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)'=='Release|net6.0'">
+		<DefineConstants>TRACE;NETFx;NET60</DefineConstants>
 	</PropertyGroup>
 	<ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
 		<PackageReference Include="System.IO.Ports" Version="5.0.1" />

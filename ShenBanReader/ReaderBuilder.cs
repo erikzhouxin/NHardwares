@@ -18,7 +18,6 @@ namespace System.Data.ShenBanReader
         {
             return ReadSetter.Current;
         }
-        #region // R600系列
         /// <summary>
         /// 创建读写器
         /// </summary>
@@ -63,8 +62,6 @@ namespace System.Data.ShenBanReader
             result.RegistCallback(recall);
             return result;
         }
-        #endregion
-        #region // R2000系列
         /// <summary>
         /// 获取顺序读内容
         /// </summary>
@@ -82,14 +79,5 @@ namespace System.Data.ShenBanReader
         {
             return new R2000Reactor();
         }
-        /// <summary>
-        /// 获取逻辑阅读器
-        /// </summary>
-        /// <returns></returns>
-        public static IReadLogical GetLogicReader()
-        {
-            return new ReadLogical();
-        }
-        #endregion
     }
 }

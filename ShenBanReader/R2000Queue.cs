@@ -602,8 +602,8 @@ namespace System.Data.ShenBanReader
             pass.CopyTo(btAryBuffer, 0);
             btAryBuffer[4] = (byte)area;
             btAryBuffer[5] = start;
-            btAryBuffer[6] = (byte)(length + 2);
-            newData.CopyTo(btAryBuffer, 11);
+            btAryBuffer[6] = (byte)(length + 4);
+            newData.CopyTo(btAryBuffer, 7);
             var data = ReaderCaller.GetSendData(readId, ReadCmdType.WriteTag, btAryBuffer);
             if (_talker.Send(data, out byte[] received, out Exception exception))
             {

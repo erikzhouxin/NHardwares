@@ -27,11 +27,6 @@ namespace System.Data.ShenBanReader
         /// </summary>
         public byte[] EPC { get; internal set; }
         /// <summary>
-        /// EPC长度
-        /// </summary>
-        [Obsolete("替代方案:EPC.Length")]
-        public int ELen { get; internal set; }
-        /// <summary>
         /// 信号强度
         /// </summary>
         public byte RSSI { get; internal set; }
@@ -47,11 +42,6 @@ namespace System.Data.ShenBanReader
         /// 数据(Tid,User,Reserved)根据类型不同
         /// </summary>
         public byte[] Data { get; internal set; }
-        /// <summary>
-        /// 数据长度
-        /// </summary>
-        [Obsolete("替代方案:Data.Length")]
-        public int DLen { get; internal set; }
         /// <summary>
         /// 标识
         /// </summary>
@@ -114,9 +104,7 @@ namespace System.Data.ShenBanReader
                         this.PC = pc;
                         this.CRC = crc;
                         this.EPC = epc;
-                        this.ELen = nEpcLen;
                         this.Data = data;
-                        this.DLen = nDataLen;
                         this.AntId = (ReadAntennaType)byAntId;
                         this.ReadCount = aryData[nLen - 1];
                     }
@@ -138,9 +126,7 @@ namespace System.Data.ShenBanReader
                         this.PC = pc;
                         this.CRC = crc;
                         this.EPC = epc;
-                        this.ELen = nEpcLen;
                         this.Data = data;
-                        this.DLen = 0;
                         this.AntId = (ReadAntennaType)byAntId;
                         this.ReadCount = aryData[nLen - 1];
                     }
@@ -163,7 +149,6 @@ namespace System.Data.ShenBanReader
                         this.PC = pc;
                         this.CRC = crc;
                         this.EPC = epc;
-                        this.ELen = nEpcLen;
                         this.AntId = (ReadAntennaType)byAntId;
                         this.RSSI = rssi;
                         this.INVCNT = invcnt;
@@ -186,9 +171,7 @@ namespace System.Data.ShenBanReader
                         this.PC = pc;
                         this.CRC = crc;
                         this.EPC = epc;
-                        this.ELen = nEpcLen;
                         this.Data = data;
-                        this.DLen = 0;
                         this.AntId = (ReadAntennaType)byAntId;
                         this.ReadCount = aryData[nLen - 1];
                     }
@@ -210,9 +193,7 @@ namespace System.Data.ShenBanReader
                         this.PC = pc;
                         this.CRC = crc;
                         this.EPC = epc;
-                        this.ELen = nEpcLen;
                         this.Data = data;
-                        this.DLen = 0;
                         this.AntId = (ReadAntennaType)byAntId;
                         this.ReadCount = aryData[nLen - 1];
                     }
