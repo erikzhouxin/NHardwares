@@ -9,9 +9,9 @@
 		<GenerateAssemblyInfo>true</GenerateAssemblyInfo>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<Authors>ErikZhouXin</Authors>
-		<Version>2022.2.11</Version>
-		<AssemblyVersion>2022.2.11.760</AssemblyVersion>
-		<FileVersion>2022.2.11.760</FileVersion>
+		<Version>2022.3.11</Version>
+		<AssemblyVersion>2022.3.11.780</AssemblyVersion>
+		<FileVersion>2022.3.11.780</FileVersion>
 		<Description>针对深坂科技RFID的R600进行的操作封装</Description>
 		<Copyright>©2020 ErikZhouXin</Copyright>
 		<PackageTags>r600;r2000;rfid;射频识别</PackageTags>

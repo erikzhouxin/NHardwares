@@ -275,6 +275,7 @@ namespace System.Data.ShenBanReader
                 {
                     exception = new Exception("未连接或已经断开连接", ex);
                     received = null;
+                    _isConnected = false;
                     Monitor.Exit(LockObject);
                     return false;
                 }
@@ -611,10 +612,10 @@ namespace System.Data.ShenBanReader
     {
         public override event Action<byte[]> Received;
         public override event Action<byte[], Exception> SendError;
-        TcpClient client;
-        Stream streamToTran;
-        private Thread waitThread;
-        private bool bIsConnect = false;
+        TcpClient _client;
+        Stream _stream;
+        private Thread _thread;
+        private bool _isConnect = false;
         /// <summary>
         /// 连接
         /// </summary>
@@ -627,25 +628,25 @@ namespace System.Data.ShenBanReader
             message = string.Empty;
             try
             {
-                client = new TcpClient();
-                client.Connect(ipAddress, port);
-                streamToTran = client.GetStream();    // 获取连接至远程的流
+                _client = new TcpClient();
+                _client.Connect(ipAddress, port);
+                _stream = _client.GetStream();    // 获取连接至远程的流
 
                 //建立线程收取服务器发送数据
                 ThreadStart stThead = new(ReceivedData);
-                waitThread = new Thread(stThead)
+                _thread = new Thread(stThead)
                 {
                     IsBackground = true
                 };
-                waitThread.Start();
+                _thread.Start();
 
-                bIsConnect = true;
+                _isConnect = true;
                 return true;
             }
             catch (System.Exception ex)
             {
                 message = ex.Message;
-                bIsConnect = false;
+                _isConnect = false;
                 return false;
             }
         }
@@ -657,7 +658,7 @@ namespace System.Data.ShenBanReader
                 try
                 {
                     byte[] btAryBuffer = new byte[4096];
-                    int nLenRead = streamToTran.Read(btAryBuffer, 0, btAryBuffer.Length);
+                    int nLenRead = _stream.Read(btAryBuffer, 0, btAryBuffer.Length);
                     if (nLenRead == 0) { continue; }
                     if (Received != null)
                     {
@@ -686,15 +687,16 @@ namespace System.Data.ShenBanReader
         {
             try
             {
-                if (!bIsConnect) { return false; }
-                lock (streamToTran)
+                if (!_isConnect) { return false; }
+                lock (_stream)
                 {
-                    streamToTran.Write(aryBuffer, 0, aryBuffer.Length);
+                    _stream.Write(aryBuffer, 0, aryBuffer.Length);
                     return true;
                 }
             }
             catch
             {
+                _isConnect = false;
                 return false;
             }
         }
@@ -703,19 +705,27 @@ namespace System.Data.ShenBanReader
         /// </summary>
         public override bool Disconnect()
         {
-            streamToTran?.Dispose();
-            client?.Close();
-            waitThread?.Abort();
-            //waitThread?.Interrupt();
-            //waitThread?.Join();
-            bIsConnect = false;
+            _stream?.Dispose();
+            _client?.Close();
+            try
+            {
+                _thread?.Abort();
+            }
+            catch { }
+            try
+            {
+                _thread?.Interrupt();
+            }
+            catch { }
+            _thread = null;
+            _isConnect = false;
             return true;
         }
         /// <summary>
         /// 是连接
         /// </summary>
         /// <returns></returns>
-        public override bool IsConnected { get => bIsConnect; }
+        public override bool IsConnected { get => _isConnect && _client.Connected; }
         public override void Dispose()
         {
             base.Dispose();
@@ -917,6 +927,7 @@ namespace System.Data.ShenBanReader
             }
             catch
             {
+                _isConnected = false;
                 return false;
             }
         }
@@ -933,7 +944,7 @@ namespace System.Data.ShenBanReader
             _isConnected = false;
             return true;
         }
-        public override bool IsConnected { get => _isConnected; }
+        public override bool IsConnected { get => _isConnected && _client.Connected; }
         public override void Dispose()
         {
             base.Dispose();
