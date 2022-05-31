@@ -6,6 +6,9 @@ using System.Text;
 
 namespace System.Data.YuShiNetDevSDK
 {
+    /// <summary>
+    /// 宇视
+    /// </summary>
     public class NETDEMO
     {
         public const int REAL_PANEL_MAX_SIZE = 16;//16

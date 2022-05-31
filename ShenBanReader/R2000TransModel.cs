@@ -74,10 +74,6 @@ namespace System.Data.ShenBanReader
                 tagInfo.AntId = tag.AntId;
                 tagInfo.CRC = tag.CRC;
                 tagInfo.Data = tag.Data;
-                tagInfo.ANT1 += tag.ANT1;
-                tagInfo.ANT2 += tag.ANT2;
-                tagInfo.ANT3 += tag.ANT3;
-                tagInfo.ANT4 += tag.ANT4;
                 if (tag.User != null && tag.User.Length > 0)
                 {
                     tagInfo.User = tag.User;
@@ -147,10 +143,6 @@ namespace System.Data.ShenBanReader
                 model.INVCNT = tag.INVCNT;
                 model.FREQ = tag.FREQ;
                 model.RSSI = tag.RSSI;
-                model.ANT1 += tag.ANT1;
-                model.ANT2 += tag.ANT2;
-                model.ANT3 += tag.ANT3;
-                model.ANT4 += tag.ANT4;
                 return false;
             }
             CurrentTags[tag.Key] = tag;

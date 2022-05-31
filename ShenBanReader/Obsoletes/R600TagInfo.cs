@@ -63,22 +63,6 @@ namespace System.Data.ShenBanReader
         /// </summary>
         public byte ReadCount { get; internal set; }
         /// <summary>
-        /// 天线一次数
-        /// </summary>
-        public int ANT1 { get; internal set; }
-        /// <summary>
-        /// 天线二次数
-        /// </summary>
-        public int ANT2 { get; internal set; }
-        /// <summary>
-        /// 天线三次数
-        /// </summary>
-        public int ANT3 { get; internal set; }
-        /// <summary>
-        /// 天线四次数
-        /// </summary>
-        public int ANT4 { get; internal set; }
-        /// <summary>
         /// 读标签构造
         /// </summary>
         internal R600TagInfo(InitType type, byte[] aryData)
@@ -241,23 +225,6 @@ namespace System.Data.ShenBanReader
                         this.INVCNT = 1;
                         this.RSSI = rssi;
                         this.FREQ = btFreq;
-                        switch (btAntId)
-                        {
-                            case 0x00:
-                                this.ANT1 = 1;
-                                break;
-                            case 0x01:
-                                this.ANT2 = 1;
-                                break;
-                            case 0x02:
-                                this.ANT3 = 1;
-                                break;
-                            case 0x03:
-                                this.ANT4 = 1;
-                                break;
-                            default:
-                                break;
-                        }
                     }
                     break;
                 default: throw new NotImplementedException();
@@ -318,10 +285,6 @@ namespace System.Data.ShenBanReader
             AntId = tag.AntId;
             CRC = tag.CRC;
             Data = tag.Data;
-            ANT1 += tag.ANT1;
-            ANT2 += tag.ANT2;
-            ANT3 += tag.ANT3;
-            ANT4 += tag.ANT4;
             if (tag.User?.Length > 0)
             {
                 User = tag.User;
