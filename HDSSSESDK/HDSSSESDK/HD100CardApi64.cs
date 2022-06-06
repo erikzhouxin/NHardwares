@@ -5,6 +5,7 @@ using System.Data.HDSSSEEXE;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Pipes;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace System.Data.HDSSSESDK
@@ -43,6 +44,18 @@ namespace System.Data.HDSSSESDK
                 Directory.CreateDirectory(ExeDir);
                 File.WriteAllBytes(ExeFile, Properties.Resources.HDSSSEEXE);
             }
+            else
+            {
+                // 计算md5值与Resources比较
+                var md5 = MD5.Create();
+                var stdHash = md5.ComputeHash(Properties.Resources.HDSSSEEXE);
+                var resHash = md5.ComputeHash(File.ReadAllBytes(ExeFile));
+                if (!CompareHash(stdHash, resHash))
+                {
+                    File.Delete(ExeFile);
+                    File.WriteAllBytes(ExeFile, Properties.Resources.HDSSSEEXE);
+                }
+            }
             SdkFile = Path.Combine(ExeDir, "HDSSSE32.dll");
             if (!File.Exists(SdkFile))
             {
@@ -50,6 +63,20 @@ namespace System.Data.HDSSSESDK
             }
             Instance = new HD100CardApi64();
         }
+
+        private static bool CompareHash(byte[] stdHash, byte[] resHash)
+        {
+            if (stdHash == null || resHash == null || stdHash.Length != resHash.Length) { return false; }
+            for (int i = 0; i < stdHash.Length; i++)
+            {
+                if (stdHash[i] != (byte)resHash[i])
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
         private Process _process;
         private NamedPipeServerStream _piper;
         private StreamWriter _writer;
