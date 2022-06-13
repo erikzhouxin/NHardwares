@@ -10,7 +10,7 @@ using System.IO;
 using System.Threading;
 using System.Runtime.InteropServices;
 using System.Collections;
-using System.Data.YuShiITSSDK;
+using System.Data.YuShiNetDevSDK;
 
 namespace YuShiITSSDK.NWinFormUI
 {

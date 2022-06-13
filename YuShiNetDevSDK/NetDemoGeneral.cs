@@ -13,8 +13,13 @@ namespace System.Data.YuShiNetDevSDK
     {
         public const int REAL_PANEL_MAX_SIZE = 16;//16
         public const int PLAYBACK_PANEL_MAX_SIZE = 4;
-
+        /// <summary>
+        /// IPv4地址长度
+        /// </summary>
         public const int NETDEV_IPV4_LEN_MAX = 16;
+        /// <summary>
+        /// 用户名长度
+        /// </summary>
         public const int NETDEV_USERNAME_LEN_260 = 260;
         public const int NETDEV_SERIAL_NUMBER_LEN_64 = 64;
         public const int NETDEV_MODEL_LEN_64 = 64;
@@ -25,16 +30,42 @@ namespace System.Data.YuShiNetDevSDK
         public const int NETDEMO_FIND_SMART_ALARM_RECORD_COUNT = 16;
 
         /*   Common length */
+        /// <summary>
+        /// 长度4
+        /// </summary>
         public const int NETDEV_LEN_4 = 4;
+        /// <summary>
+        /// 长度8
+        /// </summary>
         public const int NETDEV_LEN_8 = 8;
+        /// <summary>
+        /// 长度16
+        /// </summary>
         public const int NETDEV_LEN_16 = 16;
+        /// <summary>
+        /// 长度32
+        /// </summary>
         public const int NETDEV_LEN_32 = 32;
+        /// <summary>
+        /// 长度64
+        /// </summary>
         public const int NETDEV_LEN_64 = 64;
+        /// <summary>
+        /// 长度128
+        /// </summary>
         public const int NETDEV_LEN_128 = 128;
+        /// <summary>
+        /// 长度132
+        /// </summary>
         public const int NETDEV_LEN_132 = 132;
+        /// <summary>
+        /// 长度260
+        /// </summary>
         public const int NETDEV_LEN_260 = 260;
-
-        public const int NETDEV_MAX_PRESET_NUM = 255; /*预置位总数*/
+        /// <summary>
+        /// 预置位总数
+        /// </summary>
+        public const int NETDEV_MAX_PRESET_NUM = 255;
 
         /*TreeView图标索引*/
         public const int NETDEV_TREEVIEW_IMAGE_ROOT = 0;
@@ -45,55 +76,130 @@ namespace System.Data.YuShiNetDevSDK
         public const int NETDEV_TREEVIEW_IMAGE_VMS_SUB_DEVICE_ON = 5;
         public const int NETDEV_TREEVIEW_IMAGE_VMS_SUB_DEVICE_OFF = 6;
         public const int NETDEV_TREEVIEW_IMAGE_ORG = 7;
-
-        public const int NETDEMO_DOWNLOAD_TIME_COUNT = 5;/*如果下载一个视频超过5次时间进度都没有变化，说明下载出问题，用于下载回放时*/
-
-        public static bool NETDEMO_DOWNLOAD_TIMER_MUX_FLAG = false;/*控制定时器多线程同步,默认为没有线程执行*/
-        public static bool NETDEMO_DOWNLOAD_TIMER_STOP_ALL = false;/*停止下载*/
+        /// <summary>
+        /// 如果下载一个视频超过5次时间进度都没有变化，说明下载出问题，用于下载回放时
+        /// </summary>
+        public const int NETDEMO_DOWNLOAD_TIME_COUNT = 5;
+        /// <summary>
+        /// 控制定时器多线程同步,默认为没有线程执行
+        /// </summary>
+        public static bool NETDEMO_DOWNLOAD_TIMER_MUX_FLAG = false;
+        /// <summary>
+        /// 停止下载
+        /// </summary>
+        public static bool NETDEMO_DOWNLOAD_TIMER_STOP_ALL = false;
 
         //public static bool NETDEMO_SELECTED_CHANGED_FlAG = true;/*是否允许presetIDCobBox_SelectedIndexChanged事件触发*/
-
+        /// <summary>
+        /// 发现树节点类型
+        /// </summary>
         public enum NETDEMO_FIND_TREE_NODE_TYPE_E
         {
-            NETDEMO_FIND_TREE_NODE_CHN_ID = 0,         /* channel ID */
-            NETDEMO_FIND_TREE_NODE_SUB_DEVICE_ID = 1,   /* sub device ID */
+            /// <summary>
+            /// 频道标识channel ID
+            /// </summary>
+            NETDEMO_FIND_TREE_NODE_CHN_ID = 0,
+            /// <summary>
+            /// 子设备标识sub device ID
+            /// </summary>
+            NETDEMO_FIND_TREE_NODE_SUB_DEVICE_ID = 1,
+            /// <summary>
+            /// 设备标识
+            /// </summary>
             NETDEMO_FIND_TREE_NODE_DEVICE_INDEX = 2,
+            /// <summary>
+            /// 组织标识
+            /// </summary>
             NETDEMO_FIND_TREE_NODE_ORG_ID = 3
         }
-
+        /// <summary>
+        /// 登录类型
+        /// </summary>
         public enum NETDEV_LOGIN_TYPE_E
         {
-            NETDEV_NEW_LOGIN = 0,         /* new Login */
-            NETDEV_AGAIN_LOGIN = 1          /* again Login */
+            /// <summary>
+            /// 新登录new Login
+            /// </summary>
+            NETDEV_NEW_LOGIN = 0,
+            /// <summary>
+            /// 重新登录again Login
+            /// </summary>
+            NETDEV_AGAIN_LOGIN = 1
         }
-
+        /// <summary>
+        /// 监视类型
+        /// </summary>
         public enum NETDEMO_MONITOR_TYPE_E
         {
+            /// <summary>
+            /// 单个屏幕
+            /// </summary>
             NETDEMO_MONITOR_SINGLE_SCREEN = 0,
+            /// <summary>
+            /// 所有屏幕
+            /// </summary>
             NETDEMO_MONITOR_ALL_SCREEN = 1
         }
-
+        /// <summary>
+        /// 设备类型
+        /// </summary>
         public enum NETDEMO_DEVICE_TYPE_E
         {
+            /// <summary>
+            /// IPC/NVR
+            /// </summary>
             NETDEMO_DEVICE_IPC_OR_NVR = 0,
+            /// <summary>
+            /// 云台
+            /// </summary>
             NETDEMO_DEVICE_VMS = 1,
+            /// <summary>
+            /// 无效的
+            /// </summary>
             NETDEMO_DEVICE_INVALID = 0xff
         }
-
+        /// <summary>
+        /// 更新时间信息
+        /// </summary>
         public class NETDEMO_UPDATE_TIME_INFO
         {
+            /// <summary>
+            /// 用户登录句柄
+            /// </summary>
             public IntPtr lpHandle;
+            /// <summary>
+            /// 开始时间
+            /// </summary>
             public Int64 tBeginTime;
+            /// <summary>
+            /// 结束时间
+            /// </summary>
             public Int64 tEndTime;
+            /// <summary>
+            /// 当前时间
+            /// </summary>
             public Int64 tCurTime;
+            /// <summary>
+            /// 计数
+            /// </summary>
             public Int32 dwCount;
+            /// <summary>
+            /// 文件名称
+            /// </summary>
             public String strFileName;
+            /// <summary>
+            /// 保存文件路径
+            /// </summary>
             public String strFilePath;
+            /// <summary>
+            /// 下载状态
+            /// </summary>
             public bool downLoad_status;
         }
-
-        /*用于视频流配置质量Quality*/
-        public static NETDEV_VIDEO_QUALITY_E[] gastVideoQualityMap =
+        /// <summary>
+        /// 用于视频流配置质量Quality
+        /// </summary>
+        public static NETDEV_VIDEO_QUALITY_E[] GastVideoQualityMap =
         {
             NETDEV_VIDEO_QUALITY_E.NETDEV_VQ_L0,
             NETDEV_VIDEO_QUALITY_E.NETDEV_VQ_L1,
@@ -106,52 +212,106 @@ namespace System.Data.YuShiNetDevSDK
             NETDEV_VIDEO_QUALITY_E.NETDEV_VQ_L8,
             NETDEV_VIDEO_QUALITY_E.NETDEV_VQ_L9
         };
-
+        /// <summary>
+        /// 异常类型
+        /// </summary>
         public enum NETDEV_EXCEPTION_TYPE_E
         {
-            /* 回放业务异常上报  Playback exceptions report 300~399 */
-            NETDEV_EXCEPTION_REPORT_VOD_END = 300,          /* 回放结束  Playback ended*/
-            NETDEV_EXCEPTION_REPORT_VOD_ABEND = 301,          /* 回放异常  Playback exception occured */
-            NETDEV_EXCEPTION_REPORT_BACKUP_END = 302,          /* 备份结束  Backup ended */
-            NETDEV_EXCEPTION_REPORT_BACKUP_DISC_OUT = 303,          /* 磁盘被拔出  Disk removed */
-            NETDEV_EXCEPTION_REPORT_BACKUP_DISC_FULL = 304,          /* 磁盘已满  Disk full */
-            NETDEV_EXCEPTION_REPORT_BACKUP_ABEND = 305,          /* 其他原因导致备份失败   Backup failure caused by other reasons */
-
-            NETDEV_EXCEPTION_EXCHANGE = 0x8000,       /* 用户交互时异常（用户保活超时）  Exception occurred during user interaction (keep-alive timeout) */
-
-            NETDEV_EXCEPTION_REPORT_INVALID = 0xFFFF        /* 无效值  Invalid value */
+            /// <summary>
+            /// 回放业务异常上报  Playback exceptions report 300~399
+            /// 回放结束  Playback ended
+            /// </summary>
+            NETDEV_EXCEPTION_REPORT_VOD_END = 300,
+            /// <summary>
+            /// 回放异常  Playback exception occured
+            /// </summary>
+            NETDEV_EXCEPTION_REPORT_VOD_ABEND = 301,
+            /// <summary>
+            /// 备份结束  Backup ended
+            /// </summary>
+            NETDEV_EXCEPTION_REPORT_BACKUP_END = 302,
+            /// <summary>
+            /// 磁盘被拔出  Disk removed
+            /// </summary>
+            NETDEV_EXCEPTION_REPORT_BACKUP_DISC_OUT = 303,
+            /// <summary>
+            /// 磁盘已满  Disk full
+            /// </summary>
+            NETDEV_EXCEPTION_REPORT_BACKUP_DISC_FULL = 304,
+            /// <summary>
+            /// 其他原因导致备份失败   Backup failure caused by other reasons
+            /// </summary>
+            NETDEV_EXCEPTION_REPORT_BACKUP_ABEND = 305,
+            /// <summary>
+            /// 用户交互时异常（用户保活超时）  Exception occurred during user interaction (keep-alive timeout)
+            /// </summary>
+            NETDEV_EXCEPTION_EXCHANGE = 0x8000,
+            /// <summary>
+            /// 无效值  Invalid value
+            /// </summary>
+            NETDEV_EXCEPTION_REPORT_INVALID = 0xFFFF
         }
-
+        /// <summary>
+        /// 人脸识别报警类型
+        /// </summary>
         public enum NETDEMO_FIND_FACE_ALARM_RECORD_TYPE_E
         {
-            NETDEMO_FIND_FACE_ALARM_RECORD_MATCH = 0,         /* Match Alarm Record */
-            NETDEMO_FIND_FACE_ALARM_RECORD_PASS_THRU = 1,   /* Pass-Thru Record */
+            /// <summary>
+            /// 匹配的报警记录Match Alarm Record
+            /// </summary>
+            NETDEMO_FIND_FACE_ALARM_RECORD_MATCH = 0,
+            /// <summary>
+            /// 传送记录Pass-Thru Record
+            /// </summary>
+            NETDEMO_FIND_FACE_ALARM_RECORD_PASS_THRU = 1,
         }
-
+        /// <summary>
+        /// 车辆报警记录类型
+        /// </summary>
         public enum NETDEMO_FIND_VEHICLE_ALARM_RECORD_TYPE_E
         {
-            NETDEMO_FIND_VEHICLE_ALARM_RECORD_MATCH = 0,         /* Match Alarm Record */
-            NETDEMO_FIND_VEHICLE_ALARM_RECORD_PASS_THRU = 1,   /* Pass-Thru Record */
+            /// <summary>
+            /// 匹配的报警记录Match Alarm Record
+            /// </summary>
+            NETDEMO_FIND_VEHICLE_ALARM_RECORD_MATCH = 0,
+            /// <summary>
+            /// 传送记录
+            /// </summary>
+            NETDEMO_FIND_VEHICLE_ALARM_RECORD_PASS_THRU = 1,
         }
-
+        /// <summary>
+        /// 报警信息
+        /// </summary>
         public struct NETDEMO_ALARM_INFO
         {
+            /// <summary>
+            /// 报警类型
+            /// </summary>
             public Int32 alarmType;
+            /// <summary>
+            /// 报警提示
+            /// </summary>
             public string reportAlarm;
-
+            /// <summary>
+            /// 构造
+            /// </summary>
+            /// <param name="alarmTypeArg"></param>
+            /// <param name="reportAlarmArg"></param>
             public NETDEMO_ALARM_INFO(int alarmTypeArg, string reportAlarmArg)
             {
                 alarmType = alarmTypeArg;
                 reportAlarm = reportAlarmArg;
             }
         }
-
-        public static NETDEMO_ALARM_INFO[] gastNETDemoAlarmInfo =
+        /// <summary>
+        /// 提示信息
+        /// </summary>
+        public static NETDEMO_ALARM_INFO[] GastNETDemoAlarmInfo =
         {
-            new NETDEMO_ALARM_INFO((int)NETDEV_ALARM_TYPE_E.NETDEV_ALRAM_CONFLAG_DETECT,"conflag detect alarm"),
-            new NETDEMO_ALARM_INFO((int)NETDEV_ALARM_TYPE_E.NETDEV_ALARM_MOVE_DETECT,"Motion detection alarm"),
-            new NETDEMO_ALARM_INFO((int)NETDEV_ALARM_TYPE_E.NETDEV_ALARM_MOVE_DETECT_RECOVER,"Motion detection alarm recover"),
-            new NETDEMO_ALARM_INFO((int)NETDEV_ALARM_TYPE_E.NETDEV_ALARM_VIDEO_LOST,"Video loss alarm"),
+            new NETDEMO_ALARM_INFO((int)NETDEV_ALARM_TYPE_E.NETDEV_ALRAM_CONFLAG_DETECT,"连接状态检测报警(conflag detect alarm)"),
+            new NETDEMO_ALARM_INFO((int)NETDEV_ALARM_TYPE_E.NETDEV_ALARM_MOVE_DETECT,"运动检测报警(Motion detection alarm)"),
+            new NETDEMO_ALARM_INFO((int)NETDEV_ALARM_TYPE_E.NETDEV_ALARM_MOVE_DETECT_RECOVER,"运动检测报警恢复(Motion detection alarm recover)"),
+            new NETDEMO_ALARM_INFO((int)NETDEV_ALARM_TYPE_E.NETDEV_ALARM_VIDEO_LOST,"视频丢失报警(Video loss alarm)"),
             new NETDEMO_ALARM_INFO((int)NETDEV_ALARM_TYPE_E.NETDEV_ALARM_VIDEO_TAMPER_DETECT,"Tampering detection alarm"),
             new NETDEMO_ALARM_INFO((int)NETDEV_ALARM_TYPE_E.NETDEV_ALARM_VIDEO_TAMPER_RECOVER,"Tampering detection alarm recover"),
             new NETDEMO_ALARM_INFO((int)NETDEV_ALARM_TYPE_E.NETDEV_ALARM_INPUT_SWITCH,"Boolean input alarm"),
@@ -272,20 +432,34 @@ namespace System.Data.YuShiNetDevSDK
             new NETDEMO_ALARM_INFO((int)NETDEV_ALARM_TYPE_E.NETDEV_ALARM_ALARMHOST_COMMON,"Emergency alarm events"),
             new NETDEMO_ALARM_INFO((int)NETDEV_ALARM_TYPE_E.NETDEV_ALARM_DOORHOST_COMMON,"Access the event")
         };
-
+        /// <summary>
+        /// 车牌类型
+        /// </summary>
         public struct NETDEMO_PLATE_TYPE
         {
+            /// <summary>
+            /// 类型
+            /// </summary>
             public Int32 dwPlateType;
+            /// <summary>
+            /// 类型名称
+            /// </summary>
             public string strPlateType;
-
+            /// <summary>
+            /// 构造
+            /// </summary>
+            /// <param name="dwPlateTypeArg"></param>
+            /// <param name="strPlateTypeArg"></param>
             public NETDEMO_PLATE_TYPE(int dwPlateTypeArg, string strPlateTypeArg)
             {
                 dwPlateType = dwPlateTypeArg;
                 strPlateType = strPlateTypeArg;
             }
         }
-
-        public static NETDEMO_PLATE_TYPE[] gastNETDemoPlateType =
+        /// <summary>
+        /// 车牌类型
+        /// </summary>
+        public static NETDEMO_PLATE_TYPE[] GastNETDemoPlateType =
         {
             new NETDEMO_PLATE_TYPE((int)NETDEV_PLATE_TYPE_E.NETDEV_PLATE_TYPE_BIG_CAR_E,"Large Vehicle Plate"),
             new NETDEMO_PLATE_TYPE((int)NETDEV_PLATE_TYPE_E.NETDEV_PLATE_TYPE_MINI_CAR_E,"Small Vehicle Plate"),
@@ -315,10 +489,18 @@ namespace System.Data.YuShiNetDevSDK
             new NETDEMO_PLATE_TYPE((int)NETDEV_PLATE_TYPE_E.NETDEV_PLATE_TYPE_ARMY_E,"Military Plate"),
             new NETDEMO_PLATE_TYPE((int)NETDEV_PLATE_TYPE_E.NETDEV_PLATE_TYPE_OTHER_E,"Other")
         };
-
+        /// <summary>
+        /// 车牌颜色
+        /// </summary>
         public struct NETDEMO_PLATE_COLOR
         {
+            /// <summary>
+            /// 颜色类型
+            /// </summary>
             public Int32 dwPlateColor;
+            /// <summary>
+            /// 颜色名
+            /// </summary>
             public string strPlateColor;
 
             public NETDEMO_PLATE_COLOR(int dwPlateColorArg, string strPlateColorArg)
@@ -327,8 +509,10 @@ namespace System.Data.YuShiNetDevSDK
                 strPlateColor = strPlateColorArg;
             }
         }
-
-        public static NETDEMO_PLATE_COLOR[] gastNETDemoPlateColor =
+        /// <summary>
+        /// 车牌颜色
+        /// </summary>
+        public static NETDEMO_PLATE_COLOR[] GastNETDemoPlateColor =
         {
             new NETDEMO_PLATE_COLOR((int)NETDEV_PLATE_COLOR_E.NETDEV_PLATE_COLOR_BLACK_E,"Black"),
             new NETDEMO_PLATE_COLOR((int)NETDEV_PLATE_COLOR_E.NETDEV_PLATE_COLOR_WHITE_E,"White"),
@@ -351,79 +535,184 @@ namespace System.Data.YuShiNetDevSDK
             new NETDEMO_PLATE_COLOR((int)NETDEV_PLATE_COLOR_E.NETDEV_PLATE_COLOR_GRADUALGREEN,"Gradated Green"),
             new NETDEMO_PLATE_COLOR((int)NETDEV_PLATE_COLOR_E.NETDEV_PLATE_COLOR_OTHER_E,"Other")
         };
-
-        public static NETDEV_DEVICE_MAIN_TYPE_E[] gaENETDemoVMSMainDevType =
+        /// <summary>
+        /// 云台主设备类型
+        /// </summary>
+        public static NETDEV_DEVICE_MAIN_TYPE_E[] GaENETDemoVMSMainDevType =
         {
             NETDEV_DEVICE_MAIN_TYPE_E.NETDEV_DTYPE_MAIN_ENCODE,
             NETDEV_DEVICE_MAIN_TYPE_E.NETDEV_DTYPE_MAIN_BAYONET
         };
     }
-
-    /*循环监视信息*/
+    /// <summary>
+    /// 循环监视信息
+    /// </summary>
     public class CycleMonitorInfo
     {
-        /*单个监视对象信息*/
+        /// <summary>
+        /// 单个监视对象信息
+        /// </summary>
         public struct CYCLE_MONITOR_CHANNEL_INFO_S
         {
+            /// <summary>
+            /// 设备索引
+            /// </summary>
             public int deviceIndex;
+            /// <summary>
+            /// 登录句柄
+            /// </summary>
             public IntPtr devhandle;
-            public int channelID;/*1 ~ &*/
+            /// <summary>
+            /// 频道标识(1 ~ &)
+            /// </summary>
+            public int channelID;
         }
-
+        /// <summary>
+        /// 监视类型
+        /// </summary>
         public NETDEMO.NETDEMO_MONITOR_TYPE_E monitorType = NETDEMO.NETDEMO_MONITOR_TYPE_E.NETDEMO_MONITOR_SINGLE_SCREEN;
-        public int panelNo = 0; /*0 ~ 15*/
+        /// <summary>
+        /// 容器序号(0 ~ 15)
+        /// </summary>
+        public int panelNo = 0;
+        /// <summary>
+        /// 监视计数
+        /// </summary>
         public int monitorCount = 0;
-        public int intervalTime = 20;/*秒*/
+        /// <summary>
+        /// 间隔时间(秒)
+        /// </summary>
+        public int intervalTime = 20;
+        /// <summary>
+        /// 频道信息列表
+        /// </summary>
         public List<CYCLE_MONITOR_CHANNEL_INFO_S> channelInfoList = new List<CYCLE_MONITOR_CHANNEL_INFO_S>();
     }
-
+    /// <summary>
+    /// 回放信息
+    /// </summary>
     public class PlayBackInfo
     {
+        /// <summary>
+        /// 登录句柄
+        /// </summary>
         public IntPtr m_devHandle = IntPtr.Zero;
+        /// <summary>
+        /// 回放数据列表
+        /// </summary>
         public List<NETDEV_FINDDATA_S> m_findPlayBackDataList = new List<NETDEV_FINDDATA_S>();
+        /// <summary>
+        /// 选中的频道
+        /// </summary>
         public int m_curSelectedChannelID = -1;
+        /// <summary>
+        /// 选中的设备
+        /// </summary>
         public int m_curSelectedDeviceIndex = -1;
+        /// <summary>
+        /// 下一个容器序号
+        /// </summary>
         public int m_nextPlayBackPanelIndex = 0;
-
-        public System.Timers.Timer m_timer = new System.Timers.Timer(500);//初始化为100毫秒
+        /// <summary>
+        /// 定时器
+        /// 初始化为500毫秒
+        /// </summary>
+        public System.Timers.Timer m_timer = new System.Timers.Timer(500);
     }
-
+    /// <summary>
+    /// 基础信息
+    /// </summary>
     public struct NETDEMO_BASIC_INFO_S
     {
+        /// <summary>
+        /// 退出标识
+        /// </summary>
         public bool existFlag;
+        /// <summary>
+        /// 系统时间
+        /// </summary>
         public NETDEV_TIME_CFG_S stSystemTime;
+        /// <summary>
+        /// 设备名称
+        /// </summary>
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = NETDEVSDK.NETDEV_LEN_64)]
         public String szDeviceName;
+        /// <summary>
+        /// 磁盘信息
+        /// </summary>
         public NETDEV_DISK_INFO_LIST_S stDiskInfoList;
     }
-
+    /// <summary>
+    /// 网络信息
+    /// </summary>
     public struct NETDEMO_NETWORK_INFO_S
     {
+        /// <summary>
+        /// 存在标识
+        /// </summary>
         public bool existFlag;
+        /// <summary>
+        /// 网络配置信息
+        /// </summary>
         public NETDEV_NETWORKCFG_S stNetWorkIP;
+        /// <summary>
+        /// 网络端口号状态信息
+        /// </summary>
         public NETDEV_UPNP_NAT_STATE_S stNetWorkPort;
+        /// <summary>
+        /// NTP参数信息
+        /// </summary>
         public NETDEV_SYSTEM_NTP_INFO_S stNetWorkNTP;
     }
-
+    /// <summary>
+    /// 输入信息
+    /// </summary>
     public struct NETDEMO_INPUT_INFO_S
     {
+        /// <summary>
+        /// 存在标识
+        /// </summary>
         public bool existFlag;
+        /// <summary>
+        /// 告警开关量输入信息
+        /// </summary>
         public NETDEV_ALARM_INPUT_LIST_S stInPutInfo;
+        /// <summary>
+        /// 告警开关量输出信息
+        /// </summary>
         public NETDEV_ALARM_OUTPUT_LIST_S stOutPutInfo;
     }
-
+    /// <summary>
+    /// 通道视频流信息
+    /// </summary>
     public struct NETDEMO_VIDEO_STREAM_INFO_S
     {
+        /// <summary>
+        /// 存在标识
+        /// </summary>
         public bool existFlag;
+        /// <summary>
+        /// 视频流信息列表
+        /// </summary>
         public NETDEV_VIDEO_STREAM_INFO_S[] videoStreamInfoList;
     }
-
+    /// <summary>
+    /// 图像信息
+    /// </summary>
     public struct NETDEMO_IMAGE_INFO_S
     {
+        /// <summary>
+        /// 存在标识
+        /// </summary>
         public bool existFlag;
+        /// <summary>
+        /// 设备图像设置
+        /// </summary>
         public NETDEV_IMAGE_SETTING_S imageInfo;
     }
-
+    /// <summary>
+    /// 
+    /// </summary>
     public struct NETDEMO_VIDEO_OSD_S
     {
         public bool existFlag;

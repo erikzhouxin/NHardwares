@@ -45,7 +45,7 @@ namespace YuShiNetDevSDK.Builder
             Exec("dotnet", $"pack -c {Config}", Program.Src);
             // 还原包内容
             Exec("dotnet", "restore", Program.Src);
-            Exec(@"C:\Program Files\Microsoft Visual Studio 2019\MSBuild\Current\Bin\msbuild.exe", $"/p:Configuration={Config} /t:pack", Program.Src);
+            Exec(@"C:\Program Files\Microsoft Visual Studio 2022\MSBuild\Current\Bin\msbuild.exe", $"/p:Configuration={Config} /t:pack", Program.Src);
             // 编译生成
             //var path_empty = Path.Combine(Program.Src, "_._");
             //if (!File.Exists(path_empty)) { File.WriteAllText(path_empty, ""); }

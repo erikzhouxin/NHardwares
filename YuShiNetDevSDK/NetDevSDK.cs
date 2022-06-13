@@ -6,14 +6,27 @@ using System.Runtime.InteropServices;
 
 namespace System.Data.YuShiNetDevSDK
 {
-
-    /* define enum start */
+    /// <summary>
+    /// define enum start
+    /// 频道状态
+    /// </summary>
     public enum NETDEV_CHANNEL_STATUS_E
     {
-        NETDEV_CHL_STATUS_OFFLINE = 0,       /* Channel offline */
-        NETDEV_CHL_STATUS_ONLINE = 1,       /* Channel online */
-        NETDEV_CHL_STATUS_UNBIND = 2,       /* Channel unbind */
-
+        /// <summary>
+        /// Channel offline 离线
+        /// </summary>
+        NETDEV_CHL_STATUS_OFFLINE = 0,
+        /// <summary>
+        /// Channel online 在线
+        /// </summary>
+        NETDEV_CHL_STATUS_ONLINE = 1,
+        /// <summary>
+        /// Channel unbind 未绑定
+        /// </summary>
+        NETDEV_CHL_STATUS_UNBIND = 2,
+        /// <summary>
+        /// 非法的
+        /// </summary>
         NETDEV_CHL_STATUS_INVALID
     }
 
@@ -2389,36 +2402,78 @@ namespace System.Data.YuShiNetDevSDK
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = NETDEVSDK.NETDEV_MAX_CRUISEPOINT_NUM)]
         public NETDEV_CRUISE_POINT_S[] astCruisePoint;     /* Information of presets included in the route */
     }
-
+    /// <summary>
+    /// 网络配置信息
+    /// </summary>
     [StructLayout(LayoutKind.Sequential)]
     public struct NETDEV_NETWORKCFG_S
     {
-        public Int32 dwMTU;                                         /* MTU value */
-        public Int32 dwIPv4DHCP;                                    /* DHCP of IPv4 */
+        /// <summary>
+        /// MTU值MTU value
+        /// </summary>
+        public Int32 dwMTU;
+        /// <summary>
+        /// DHCP of IPv4 动态IP
+        /// </summary>
+        public Int32 dwIPv4DHCP;
+        /// <summary>
+        /// IP address of IPv4 IPv4地址
+        /// </summary>
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = NETDEVSDK.NETDEV_LEN_32)]
-        public string Ipv4AddressStr;                                /* IP address of IPv4 */
+        public string Ipv4AddressStr;
+        /// <summary>
+        /// Gateway of IPv4 网关地址
+        /// </summary>
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = NETDEVSDK.NETDEV_LEN_32)]
         public string szIPv4GateWay;
+        /// <summary>
+        /// 子网掩码
+        /// </summary>
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = NETDEVSDK.NETDEV_LEN_32)]
-        public string szIPv4SubnetMask;                          /* Gateway of IPv4 */
+        public string szIPv4SubnetMask;
+        /// <summary>
+        /// 保留字段Reserved
+        /// </summary>
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 480)]
-        public byte[] byRes;                                        /* Reserved */
+        public byte[] byRes;
     }
-
+    /// <summary>
+    /// 网络端口号状态信息结构体
+    /// </summary>
     [StructLayout(LayoutKind.Sequential)]
     public struct NETDEV_UPNP_NAT_STATE_S
     {
+        /// <summary>
+        /// 协议个数
+        /// </summary>
         public Int32 dwSize;
+        /// <summary>
+        /// 协议信息
+        /// </summary>
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = NETDEVSDK.NETDEV_LEN_16)]
         public NETDEV_UPNP_PORT_STATE_S[] astUpnpPort;
     }
-
+    /// <summary>
+    /// 协议信息结构体
+    /// </summary>
     [StructLayout(LayoutKind.Sequential)]
     public struct NETDEV_UPNP_PORT_STATE_S
     {
+        /// <summary>
+        /// 协议类型参见枚举# NETDEV_PROTOCOL_TYPE_E
+        /// </summary>
         public NETDEV_PROTOCOL_TYPE_E eType;
+        /// <summary>
+        /// 是否支持
+        /// </summary>
         public Int32 bEnbale;
+        /// <summary>
+        /// 端口号
+        /// </summary>
         public Int32 dwPort;
+        /// <summary>
+        /// 保留字段
+        /// </summary>
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 128)]
         public byte[] byRes;
     }
@@ -2430,106 +2485,284 @@ namespace System.Data.YuShiNetDevSDK
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = NETDEVSDK.NETDEV_LEN_132)]
         public string szIPAddr;           /* IP  IP address */
     }
-
+    /// <summary>
+    /// 通道视频流信息
+    /// </summary>
     [StructLayout(LayoutKind.Sequential)]
     public struct NETDEV_VIDEO_STREAM_INFO_S
     {
-        public NETDEV_LIVE_STREAM_INDEX_E enStreamType;       /* Stream index */
-        public Int32 bEnableFlag;        /* Enable or not */
-        public Int32 dwHeight;           /* -Height  Video encoding resolution - Height */
-        public Int32 dwWidth;            /* -Width  Video encoding resolution - Width */
-        public Int32 dwFrameRate;        /* Video encoding configuration frame rate */
-        public Int32 dwBitRate;          /* Bit rate */
-        public NETDEV_VIDEO_CODE_TYPE_E enCodeType;         /* Video encoding format */
-        public NETDEV_VIDEO_QUALITY_E enQuality;          /* Image quality */
-        public Int32 dwGop;              /* I  I-frame interval */
-        public Int32 bConstantBitRate;   /* Constant Bit Rate or Variable bit rate;0:Variable 1:Constant*/
+        /// <summary>
+        /// 码流索引(Stream index)
+        /// </summary>
+        public NETDEV_LIVE_STREAM_INDEX_E enStreamType;
+        /// <summary>
+        /// 是否启用(Enable or not)
+        /// </summary>
+        public Int32 bEnableFlag;
+        /// <summary>
+        /// 视频编码分辨率-高(-Height  Video encoding resolution - Height)
+        /// </summary>
+        public Int32 dwHeight;
+        /// <summary>
+        /// 视频编码分辨率-宽(-Width  Video encoding resolution - Width)
+        /// </summary>
+        public Int32 dwWidth;
+        /// <summary>
+        /// 视频编码配置帧率(Video encoding configuration frame rate)
+        /// </summary>
+        public Int32 dwFrameRate;
+        /// <summary>
+        /// 码率(Bit rate)
+        /// </summary>
+        public Int32 dwBitRate;
+        /// <summary>
+        /// 视频编码格式(Video encoding format)
+        /// </summary>
+        public NETDEV_VIDEO_CODE_TYPE_E enCodeType;
+        /// <summary>
+        /// 图像质量(Image quality)
+        /// </summary>
+        public NETDEV_VIDEO_QUALITY_E enQuality;
+        /// <summary>
+        /// I帧间隔I  I-frame interval
+        /// </summary>
+        public Int32 dwGop;
+        /// <summary>
+        /// 是否为定码率0:变码率1:定码率 Constant Bit Rate or Variable bit rate;0:Variable 1:Constant
+        /// </summary>
+        public Int32 bConstantBitRate;
+        /// <summary>
+        /// 预留 Reserved
+        /// </summary>
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 28)]
-        public byte[] byRes;                            /* Reserved */
+        public byte[] byRes;
     }
-
+    /// <summary>
+    /// 视频流信息列表
+    /// </summary>
     [StructLayout(LayoutKind.Sequential)]
     public struct NETDEV_VIDEO_STREAM_INFO_LIST_S
     {
-        public UInt32 udwNum;                                /* Number of video stream */
+        /// <summary>
+        /// 视频流个数(Number of video stream)
+        /// </summary>
+        public UInt32 udwNum;
+        /// <summary>
+        /// 视频流信息列表(Video stream list)
+        /// </summary>
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = NETDEVSDK.NETDEV_LEN_16)]
-        public NETDEV_VIDEO_STREAM_INFO_EX_S astVideoStreamInfoList;/* Video stream list*/
+        public NETDEV_VIDEO_STREAM_INFO_EX_S astVideoStreamInfoList;
     }
-
+    /// <summary>
+    /// 
+    /// </summary>
     [StructLayout(LayoutKind.Sequential)]
     public struct NETDEV_VIDEO_STREAM_INFO_EX_S
     {
-        public string bEnabled;                                                                  /* 视频流是否启用编码 Enable encoding for video stream or not*/
-        public UInt32 udwStreamID;                                                             /* 码流索引，参见枚举NETDEV_LIVE_STREAM_INDEX_E。 Stream index. For enumeration, seeNETDEV_LIVE_STREAM_INDEX_E*/
-        public UInt32 udwMainStreamType;                                                       /* 主码流类型，参见NETDEV_MAIN_STREAM_TYPE_E。 Main stream. See NETDEV_MAIN_STREAM_TYPE_E for reference */
-        public NETDEV_VIDEO_ENCODE_INFO_S stVideoEncodeInfo;                                   /* 视频编码参数信息 Video encoding parameter*/
+        /// <summary>
+        /// 视频流是否启用编码 Enable encoding for video stream or not
+        /// </summary>
+        public string bEnabled;
+        /// <summary>
+        /// 码流索引，参见枚举NETDEV_LIVE_STREAM_INDEX_E。 
+        /// Stream index. For enumeration, seeNETDEV_LIVE_STREAM_INDEX_E
+        /// </summary>
+        public UInt32 udwStreamID;
+        /// <summary>
+        /// 主码流类型，参见NETDEV_MAIN_STREAM_TYPE_E。 
+        /// Main stream. See NETDEV_MAIN_STREAM_TYPE_E for reference
+        /// </summary>
+        public UInt32 udwMainStreamType;
+        /// <summary>
+        /// 视频编码参数信息 Video encoding parameter
+        /// </summary>
+        public NETDEV_VIDEO_ENCODE_INFO_S stVideoEncodeInfo;
     }
-
+    /// <summary>
+    /// 
+    /// </summary>
     [StructLayout(LayoutKind.Sequential)]
     public struct NETDEV_VIDEO_ENCODE_INFO_S
     {
-        public string bEnableSVCMode;                        /* SVC配置,0：关闭,1：开启 SVC configuration. 0-Off, 1-On*/
-        public UInt32 udwEncodeFormat;                     /* 视频编码格式信息，参见枚举NETDEV_VIDEO_CODE_TYPE_E。  Video Compression. For enumeration, seeNETDEV_VIDEO_CODE_TYPE_E*/
-        public UInt32 udwWidth;                            /* 图像宽度 Image width*/
-        public UInt32 udwHeight;                           /* 图像高度 Image height*/
-        public UInt32 udwBitrate;                          /* 码率 Bit rate*/
-        public UInt32 udwBitrateType;                      /* 码率类型，参见NETDEV_BIT_RATE_TYPE_E。 Bitrate type. See NETDEV_BIT_RATE_TYPE_E for reference */
-        public UInt32 udwFrameRate;                        /* 帧率 Frame rate*/
-        public UInt32 udwGopType;                          /* Gop模式,参见NETDEV_GOP_TYPE_E。 GOP mode. See NETDEV_GOP_TYPE_E for reference */
-        public UInt32 udwIFrameInterval;                   /* I帧间隔，范围根据能力来定 I Frame Interval. The range depends on capability*/
-        public UInt32 udwImageQuality;                     /* 图像质量，范围[1, 9]，9代表图像质量最高 Image quality, ranges from 1 to 9. 9 means the highest quality*/
-        public UInt32 udwSmoothLevel;                      /* 码流平滑等级，范围[1,9]，1代表平滑级别最低 Smoothing level, ranges from 1 to 9. 1 means the lowest level*/
-        public UInt32 udwSmartEncodeMode;                  /* 智能编码模式，参见NETDEV_SMART_ENCODE_MODE_E。 Smart encoding mode. See NETDEV_SMART_ENCODE_MODE_E for reference*/
+        /// <summary>
+        /// SVC配置,0：关闭,1：开启 SVC configuration. 0-Off, 1-On
+        /// </summary>
+        public string bEnableSVCMode;
+        /// <summary>
+        /// 视频编码格式信息，参见枚举NETDEV_VIDEO_CODE_TYPE_E。  
+        /// Video Compression. For enumeration, seeNETDEV_VIDEO_CODE_TYPE_E
+        /// </summary>
+        public UInt32 udwEncodeFormat;
+        /// <summary>
+        /// 图像宽度 Image width
+        /// </summary>
+        public UInt32 udwWidth;
+        /// <summary>
+        /// 图像高度 Image height
+        /// </summary>
+        public UInt32 udwHeight;
+        /// <summary>
+        /// 码率 Bit rate
+        /// </summary>
+        public UInt32 udwBitrate;
+        /// <summary>
+        /// 码率类型，参见NETDEV_BIT_RATE_TYPE_E。 
+        /// Bitrate type. See NETDEV_BIT_RATE_TYPE_E for reference
+        /// </summary>
+        public UInt32 udwBitrateType;
+        /// <summary>
+        /// 帧率 Frame rate
+        /// </summary>
+        public UInt32 udwFrameRate;
+        /// <summary>
+        /// Gop模式,参见NETDEV_GOP_TYPE_E。 
+        /// GOP mode. See NETDEV_GOP_TYPE_E for reference
+        /// </summary>
+        public UInt32 udwGopType;
+        /// <summary>
+        /// I帧间隔，范围根据能力来定 
+        /// I Frame Interval. The range depends on capability
+        /// </summary>
+        public UInt32 udwIFrameInterval;
+        /// <summary>
+        /// 图像质量，范围[1, 9]，9代表图像质量最高 
+        /// Image quality, ranges from 1 to 9. 9 means the highest quality
+        /// </summary>
+        public UInt32 udwImageQuality;
+        /// <summary>
+        /// 码流平滑等级，范围[1,9]，1代表平滑级别最低 
+        /// Smoothing level, ranges from 1 to 9. 1 means the lowest level
+        /// </summary>
+        public UInt32 udwSmoothLevel;
+        /// <summary>
+        /// 智能编码模式，参见NETDEV_SMART_ENCODE_MODE_E。 
+        /// Smart encoding mode. See NETDEV_SMART_ENCODE_MODE_E for reference
+        /// </summary>
+        public UInt32 udwSmartEncodeMode;
     }
-
+    /// <summary>
+    /// 视频制式能力
+    /// </summary>
     [StructLayout(LayoutKind.Sequential)]
     public struct NETDEV_VIDEO_MODE_INFO_S
     {
-        public Int32 udwWidth;                                      /* 图像宽度 Image width*/
-        public Int32 udwHeight;                                     /* 图像高度 Image height*/
-        public Int32 udwFrameRate;                                  /* 图像帧率 Image frame rate*/
+        /// <summary>
+        /// 图像宽度 Image width
+        /// </summary>
+        public Int32 udwWidth;
+        /// <summary>
+        /// 图像高度 Image height
+        /// </summary>
+        public Int32 udwHeight;
+        /// <summary>
+        /// 图像帧率 Image frame rate
+        /// </summary>
+        public Int32 udwFrameRate;
     }
-
+    /// <summary>
+    /// 昼夜模式信息
+    /// </summary>
     [StructLayout(LayoutKind.Sequential)]
     public struct NETDEV_IRCUT_FILTER_INFO_S
     {
-        public Int32 udwIrCutFilterMode;                            /* 昼夜模式：0白天，1，夜晚，2自动 */
+        /// <summary>
+        /// 昼夜模式：0白天，1，夜晚，2自动
+        /// </summary>
+        public Int32 udwIrCutFilterMode;
+        /// <summary>
+        /// 预留字段Reserved
+        /// </summary>
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 16)]
-        public byte[] byRes;                                        /* Reserved */
+        public byte[] byRes;
     }
 
     [StructLayout(LayoutKind.Sequential)]
     public struct NETDEV_OSD_CONTENT_STYLE_S
     {
-        public UInt32 udwFontStyle;                         /* 字体形式，参见枚举NETDEV_OSD_FONT_STYLE_E。  Font style. For enumeration, seeNETDEV_OSD_FONT_STYLE_E*/
-        public UInt32 udwFontSize;                          /* 字体大小，参见枚举NETDEV_OSD_FONT_SIZE_E。  Font Size. For enumeration, seeNETDEV_OSD_FONT_SIZE_E*/
-        public UInt32 udwColor;                             /* 颜色 Color*/
-        public UInt32 udwDateFormat;                        /* 日期格式，参见枚举NETDEV_OSD_DATE_FORMAT_E。  Date Format. For enumeration, seeNETDEV_OSD_DATE_FORMAT_E */
-        public UInt32 udwTimeFormat;                        /* 时间格式，参见枚举NETDEV_OSD_TIME_FORMAT_E。  Date Format. For enumeration, seeNETDEV_OSD_DATE_FORMAT_E */
+        /// <summary>
+        /// 字体形式，参见枚举NETDEV_OSD_FONT_STYLE_E。  
+        /// Font style. For enumeration, seeNETDEV_OSD_FONT_STYLE_E
+        /// </summary>
+        public UInt32 udwFontStyle;
+        /// <summary>
+        /// 字体大小，参见枚举NETDEV_OSD_FONT_SIZE_E。  
+        /// Font Size. For enumeration, seeNETDEV_OSD_FONT_SIZE_E
+        /// </summary>
+        public UInt32 udwFontSize;
+        /// <summary>
+        /// 颜色 Color
+        /// </summary>
+        public UInt32 udwColor;
+        /// <summary>
+        /// 日期格式，参见枚举NETDEV_OSD_DATE_FORMAT_E。  
+        /// Date Format. For enumeration, seeNETDEV_OSD_DATE_FORMAT_E
+        /// </summary>
+        public UInt32 udwDateFormat;
+        /// <summary>
+        /// 时间格式，参见枚举NETDEV_OSD_TIME_FORMAT_E。  
+        /// Date Format. For enumeration, seeNETDEV_OSD_DATE_FORMAT_E
+        /// </summary>
+        public UInt32 udwTimeFormat;
+        /// <summary>
+        /// 区域内字体对齐，固定8个区域，IPC支持,参见枚举NETDEV_OSD_ALIGN_E。  
+        /// Font align in area, 8 areasfixed, IPcamera supported. For enumeration, seeNETDEV_OSD_ALIGN_E
+        /// </summary>
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = NETDEVSDK.NETDEV_LEN_8)]
-        public UInt32 audwFontAlignList;                   /* 区域内字体对齐，固定8个区域，IPC支持,参见枚举NETDEV_OSD_ALIGN_E。  Font align in area, 8 areasfixed, IPcamera supported. For enumeration, seeNETDEV_OSD_ALIGN_E */
-        public UInt32 udwMargin;                            /* 边缘空的字符数，IPC支持，参见枚举NETDEV_OSD_MIN_MARGIN_E。  Number of character with margin, IP camera supported. For enumeration, seeNETDEV_OSD_MIN_MARGIN_E */
+        public UInt32 audwFontAlignList;
+        /// <summary>
+        /// 边缘空的字符数，IPC支持，参见枚举NETDEV_OSD_MIN_MARGIN_E。  
+        /// Number of character with margin, IP camera supported. For enumeration, seeNETDEV_OSD_MIN_MARGIN_E
+        /// </summary>
+        public UInt32 udwMargin;
 
     }
-
+    /// <summary>
+    /// 透雾信息
+    /// </summary>
     [StructLayout(LayoutKind.Sequential)]
     public struct NETDEV_DEFOGGING_INFO_S
     {
-        public Int32 dwDefoggingMode;              /* 除雾模式 Defogging mode (0:On 1:Off) */
-        public float fDefoggingLevel;              /* 除雾等级 Defogging level (0.0, 1.0) */
+        /// <summary>
+        /// 除雾模式 Defogging mode (0:On 1:Off)
+        /// </summary>
+        public Int32 dwDefoggingMode;
+        /// <summary>
+        /// 除雾等级 Defogging level (0.0, 1.0)
+        /// </summary>
+        public float fDefoggingLevel;
+        /// <summary>
+        /// Reserved
+        /// </summary>
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 64)]
-        public byte[] byRes;                            /* Reserved */
+        public byte[] byRes;
     }
-
+    /// <summary>
+    /// 设备图像设置
+    /// </summary>
     [StructLayout(LayoutKind.Sequential)]
     public struct NETDEV_IMAGE_SETTING_S
     {
-        public Int32 dwContrast;                   /* Contrast */
-        public Int32 dwBrightness;                 /* Brightness */
-        public Int32 dwSaturation;                 /* Saturation */
-        public Int32 dwSharpness;                  /* Sharpness */
+        /// <summary>
+        /// 对比度 Contrast
+        /// </summary>
+        public Int32 dwContrast;
+        /// <summary>
+        /// 亮度 Brightness
+        /// </summary>
+        public Int32 dwBrightness;
+        /// <summary>
+        /// 饱和度 Saturation
+        /// </summary>
+        public Int32 dwSaturation;
+        /// <summary>
+        /// 亮度 清晰度 Sharpness
+        /// </summary>
+        public Int32 dwSharpness;
+        /// <summary>
+        /// Reserved
+        /// </summary>
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 252)]
-        public byte[] byRes;                            /* Reserved */
+        public byte[] byRes;                            
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -2552,53 +2785,88 @@ namespace System.Data.YuShiNetDevSDK
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = NETDEVSDK.NETDEV_OSD_TEXTOVERLAY_NUM)]
         public NETDEV_OSD_TEXT_OVERLAY_S[] astTextOverlay;   /* OSD  Information of channel OSD text overlay */
     }
-
-
-
+    /// <summary>
+    /// 所有告警开关量输入信息
+    /// </summary>
     [StructLayout(LayoutKind.Sequential)]
     public struct NETDEV_ALARM_INPUT_LIST_S
     {
-        public Int32 dwSize;                                           /* Number of input alarms */
+        /// <summary>
+        /// Number of input alarms
+        /// 输入开关量数量
+        /// </summary>
+        public Int32 dwSize;
+        /// <summary>
+        /// Configuration information of input alarms
+        /// 输入开关量配置信息
+        /// </summary>
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = NETDEVSDK.NETDEV_MAX_ALARM_IN_NUM)]
-        public NETDEV_ALARM_INPUT_INFO_S[] astAlarmInputInfo;       /* Configuration information of input alarms */
+        public NETDEV_ALARM_INPUT_INFO_S[] astAlarmInputInfo;
     }
-
+    /// <summary>
+    /// 告警开关量输出信息
+    /// </summary>
     [StructLayout(LayoutKind.Sequential)]
     public struct NETDEV_ALARM_OUTPUT_INFO_S
     {
+        /// <summary>
+        /// Boolean name
+        /// 开关量名称
+        /// </summary>
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = NETDEVSDK.NETDEV_LEN_64)]
-        public string szName;                                           /* Boolean name */
-        public Int32 dwChancelId;                                       /* Channel number */
-        public Int32 enDefaultStatus;                                   /* Default status of boolean output, see enumeration #NETDEV_BOOLEAN_MODE_E */
-        public Int32 dwDurationSec;                                     /* Alarm duration (s) */
-        public Int32 dwOutputNum;                                       /* Alarm output serial number */
+        public string szName;
+        /// <summary>
+        /// Channel number 通道号
+        /// </summary>
+        public Int32 dwChancelId;
+        /// <summary>
+        /// 输出开关量默认状态
+        /// Default status of boolean output, see enumeration #NETDEV_BOOLEAN_MODE_E
+        /// </summary>
+        public Int32 enDefaultStatus;
+        /// <summary>
+        /// 告警持续时间单位S
+        /// Alarm duration (s)
+        /// </summary>
+        public Int32 dwDurationSec;
+        /// <summary>
+        /// 告警输出序号
+        /// Alarm output serial number
+        /// </summary>
+        public Int32 dwOutputNum;
     }
-
+    /// <summary>
+    /// 告警开关量输入信息
+    /// </summary>
     [StructLayout(LayoutKind.Sequential)]
     public struct NETDEV_ALARM_INPUT_INFO_S
     {
+        /// <summary>
+        /// Name of input alarm
+        /// 输入开关量名称
+        /// </summary>
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = NETDEVSDK.NETDEV_LEN_64)]
-        public string szName;                                                  /* Name of input alarm */
+        public string szName;
     }
-
-    /**
- * @struct tagPrivacyMaskPara
- * @brief  Privacy mask configuration information
- * @attention
- */
+    /// <summary>
+    /// Privacy mask configuration information
+    /// </summary>
     [StructLayout(LayoutKind.Sequential)]
     public struct NETDEV_PRIVACY_MASK_CFG_S
     {
-        public Int32 dwSize;                                     /* Mask area number */
+        /// <summary>
+        /// Mask area number
+        /// </summary>
+        public Int32 dwSize;
+        /// <summary>
+        /// Mask area parameters
+        /// </summary>
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = NETDEVSDK.NETDEV_MAX_PRIVACY_MASK_AREA_NUM)]
-        public NETDEV_PRIVACY_MASK_AREA_INFO_S[] astArea;  /* Mask area parameters */
+        public NETDEV_PRIVACY_MASK_AREA_INFO_S[] astArea;
     }
-
-    /**
- * @struct tagAreaInfo
- * @brief  Definition of area configuration structure 
- * @attention
- */
+    /// <summary>
+    /// Definition of area configuration structure 
+    /// </summary>
     [StructLayout(LayoutKind.Sequential)]
     public struct NETDEV_PRIVACY_MASK_AREA_INFO_S
     {
@@ -2789,51 +3057,175 @@ namespace System.Data.YuShiNetDevSDK
         NETDEV_OSD_TIME_FORMAT_CAP_HH_MM_SS_PM          /* hh:mm:ss tt */
 
     };
-
-
+    /// <summary>
+    /// 时区
+    /// </summary>
     public enum NETDEV_TIME_ZONE_E
     {
-        NETDEV_TIME_ZONE_W1200 = 0,              /* W12 */
-        NETDEV_TIME_ZONE_W1100 = 1,              /* W11 */
-        NETDEV_TIME_ZONE_W1000 = 2,              /* W10 */
-        NETDEV_TIME_ZONE_W0900 = 3,              /* W9 */
-        NETDEV_TIME_ZONE_W0800 = 4,              /* W8 */
-        NETDEV_TIME_ZONE_W0700 = 5,              /* W7 */
-        NETDEV_TIME_ZONE_W0600 = 6,              /* W6 */
-        NETDEV_TIME_ZONE_W0500 = 7,              /* W5 */
-        NETDEV_TIME_ZONE_W0430 = 8,              /* W4:30 */
-        NETDEV_TIME_ZONE_W0400 = 9,              /* W4 */
-        NETDEV_TIME_ZONE_W0330 = 10,             /* W3:30 */
-        NETDEV_TIME_ZONE_W0300 = 11,             /* W3 */
-        NETDEV_TIME_ZONE_W0200 = 12,             /* W2 */
-        NETDEV_TIME_ZONE_W0100 = 13,             /* W1 */
-        NETDEV_TIME_ZONE_0000 = 14,             /* W0 */
-        NETDEV_TIME_ZONE_E0100 = 15,             /* E1 */
-        NETDEV_TIME_ZONE_E0200 = 16,             /* E2 */
-        NETDEV_TIME_ZONE_E0300 = 17,             /* E3 */
-        NETDEV_TIME_ZONE_E0330 = 18,             /* E3:30 */
-        NETDEV_TIME_ZONE_E0400 = 19,             /* E4 */
-        NETDEV_TIME_ZONE_E0430 = 20,             /* E4:30 */
-        NETDEV_TIME_ZONE_E0500 = 21,             /* E5 */
-        NETDEV_TIME_ZONE_E0530 = 22,             /* E5:30 */
-        NETDEV_TIME_ZONE_E0545 = 23,             /* E5:45 */
-        NETDEV_TIME_ZONE_E0600 = 24,             /* E6 */
-        NETDEV_TIME_ZONE_E0630 = 25,             /* E6:30 */
-        NETDEV_TIME_ZONE_E0700 = 26,             /* E7 */
-        NETDEV_TIME_ZONE_E0800 = 27,             /* E8 */
-        NETDEV_TIME_ZONE_E0900 = 28,             /* E9 */
-        NETDEV_TIME_ZONE_E0930 = 29,             /* E9:30 */
-        NETDEV_TIME_ZONE_E1000 = 30,             /* E10 */
-        NETDEV_TIME_ZONE_E1100 = 31,             /* E11 */
-        NETDEV_TIME_ZONE_E1200 = 32,             /* E12 */
-        NETDEV_TIME_ZONE_E1300 = 33,             /* E13 */
-        NETDEV_TIME_ZONE_W0930 = 34,              /* W9:30 */
-        NETDEV_TIME_ZONE_E0830 = 35,             /* E8:30 */
-        NETDEV_TIME_ZONE_E0845 = 36,             /* E8:45 */
-        NETDEV_TIME_ZONE_E1030 = 37,             /* E10:30 */
-        NETDEV_TIME_ZONE_E1245 = 38,             /* E12:45 */
-        NETDEV_TIME_ZONE_E1400 = 39,             /* E14 */
-        NETDEV_TIME_ZONE_INVALID = 0xFF          /* Invalid value */
+        /// <summary>
+        /// W12 西12区
+        /// </summary>
+        NETDEV_TIME_ZONE_W1200 = 0,
+        /// <summary>
+        /// W11 西11区
+        /// </summary>
+        NETDEV_TIME_ZONE_W1100 = 1,
+        /// <summary>
+        /// W10 西10区
+        /// </summary>
+        NETDEV_TIME_ZONE_W1000 = 2,
+        /// <summary>
+        /// W9 西9区
+        /// </summary>
+        NETDEV_TIME_ZONE_W0900 = 3,
+        /// <summary>
+        /// W8 西8区
+        /// </summary>
+        NETDEV_TIME_ZONE_W0800 = 4,
+        /// <summary>
+        /// W7 西7区
+        /// </summary>
+        NETDEV_TIME_ZONE_W0700 = 5,
+        /// <summary>
+        /// W6 西6区
+        /// </summary>
+        NETDEV_TIME_ZONE_W0600 = 6,
+        /// <summary>
+        /// W5 西5区
+        /// </summary>
+        NETDEV_TIME_ZONE_W0500 = 7,
+        /// <summary>
+        /// W4:30 西4区30分
+        /// </summary>
+        NETDEV_TIME_ZONE_W0430 = 8,
+        /// <summary>
+        /// W4 西4区
+        /// </summary>
+        NETDEV_TIME_ZONE_W0400 = 9,
+        /// <summary>
+        /// W3:30 西3区30分
+        /// </summary>
+        NETDEV_TIME_ZONE_W0330 = 10,
+        /// <summary>
+        /// W3 西3区
+        /// </summary>
+        NETDEV_TIME_ZONE_W0300 = 11,
+        /// <summary>
+        /// W2 西2区
+        /// </summary>
+        NETDEV_TIME_ZONE_W0200 = 12,
+        /// <summary>
+        /// W1 西1区
+        /// </summary>
+        NETDEV_TIME_ZONE_W0100 = 13,
+        /// <summary>
+        /// W0 0时区
+        /// </summary>
+        NETDEV_TIME_ZONE_0000 = 14,
+        /// <summary>
+        /// E1 东1区
+        /// </summary>
+        NETDEV_TIME_ZONE_E0100 = 15,
+        /// <summary>
+        /// E2 东2区
+        /// </summary>
+        NETDEV_TIME_ZONE_E0200 = 16,
+        /// <summary>
+        /// E3 东3区
+        /// </summary>
+        NETDEV_TIME_ZONE_E0300 = 17,
+        /// <summary>
+        /// E3:30 东3区30分
+        /// </summary>
+        NETDEV_TIME_ZONE_E0330 = 18,
+        /// <summary>
+        /// E4 东4区
+        /// </summary>
+        NETDEV_TIME_ZONE_E0400 = 19,
+        /// <summary>
+        /// E4:30 东4区30分
+        /// </summary>
+        NETDEV_TIME_ZONE_E0430 = 20,
+        /// <summary>
+        /// E5 东5区
+        /// </summary>
+        NETDEV_TIME_ZONE_E0500 = 21,
+        /// <summary>
+        /// E5:30 东5区30分
+        /// </summary>
+        NETDEV_TIME_ZONE_E0530 = 22,
+        /// <summary>
+        /// E5:45 东5区45分
+        /// </summary>
+        NETDEV_TIME_ZONE_E0545 = 23,
+        /// <summary>
+        /// E6 东6区
+        /// </summary>
+        NETDEV_TIME_ZONE_E0600 = 24,
+        /// <summary>
+        /// E6:30 东6区30分
+        /// </summary>
+        NETDEV_TIME_ZONE_E0630 = 25,
+        /// <summary>
+        /// E7 东7区
+        /// </summary>
+        NETDEV_TIME_ZONE_E0700 = 26,
+        /// <summary>
+        /// E8 东8区 中国
+        /// </summary>
+        NETDEV_TIME_ZONE_E0800 = 27,
+        /// <summary>
+        /// E9 东9区
+        /// </summary>
+        NETDEV_TIME_ZONE_E0900 = 28,
+        /// <summary>
+        /// E9:30 东9区30分
+        /// </summary>
+        NETDEV_TIME_ZONE_E0930 = 29,
+        /// <summary>
+        /// E10 东10区
+        /// </summary>
+        NETDEV_TIME_ZONE_E1000 = 30,
+        /// <summary>
+        /// E11 东11区
+        /// </summary>
+        NETDEV_TIME_ZONE_E1100 = 31,
+        /// <summary>
+        /// E12 东12区
+        /// </summary>
+        NETDEV_TIME_ZONE_E1200 = 32,
+        /// <summary>
+        /// E13 东13区
+        /// </summary>
+        NETDEV_TIME_ZONE_E1300 = 33,
+        /// <summary>
+        /// W9:30 西9区30分
+        /// </summary>
+        NETDEV_TIME_ZONE_W0930 = 34,
+        /// <summary>
+        /// E8:30 东8区30分
+        /// </summary>
+        NETDEV_TIME_ZONE_E0830 = 35,
+        /// <summary>
+        /// E8:45 东8区45分
+        /// </summary>
+        NETDEV_TIME_ZONE_E0845 = 36,
+        /// <summary>
+        /// E10:30 东10区30分
+        /// </summary>
+        NETDEV_TIME_ZONE_E1030 = 37,
+        /// <summary>
+        /// E12:45 东12区45分
+        /// </summary>
+        NETDEV_TIME_ZONE_E1245 = 38,
+        /// <summary>
+        /// E14 东14区
+        /// </summary>
+        NETDEV_TIME_ZONE_E1400 = 39,
+        /// <summary>
+        /// Invalid value 无效值
+        /// </summary>
+        NETDEV_TIME_ZONE_INVALID = 0xFF
     };
 
     public enum NETDEV_ALARM_TYPE_E
@@ -3311,12 +3703,22 @@ namespace System.Data.YuShiNetDevSDK
     //        public byte[]  byRes;                     /* Reserved */
     //};
 
-
+    /// <summary>
+    /// NTP参数信息
+    /// </summary>
     [StructLayout(LayoutKind.Sequential)]
     public struct NETDEV_SYSTEM_NTP_INFO_S
     {
-        public Int32 bSupportDHCP;                      /* DHCP  Support DHCP or not */
-        public NETDEV_SYSTEM_IPADDR_S stAddr;          /* NTP   NTP information */
+        /// <summary>
+        /// 是否支持DHCP
+        /// DHCP  Support DHCP or not
+        /// </summary>
+        public Int32 bSupportDHCP;
+        /// <summary>
+        /// NTP信息
+        /// NTP   NTP information
+        /// </summary>
+        public NETDEV_SYSTEM_IPADDR_S stAddr;
     };
     [StructLayout(LayoutKind.Sequential)]
     public struct NETDEV_SYSTEM_NTP_INFO_LIST_S
@@ -3450,10 +3852,15 @@ namespace System.Data.YuShiNetDevSDK
         public float fLongitude;       /* 经度 Longitude */
         public float fLatitude;        /* 纬度 Latitude */
     };
-
+    /// <summary>
+    /// 时间上下文
+    /// </summary>
     [StructLayout(LayoutKind.Sequential)]
     public struct NETDEV_TIME_CFG_S
     {
+        /// <summary>
+        /// 时区
+        /// </summary>
         public NETDEV_TIME_ZONE_E dwTimeZone;             /* see NETDEV_TIME_ZONE_E */
         public NETDEV_TIME_S stTime;                 /* Time */
         public Int32 bEnableDST;             /* 夏令时使能 DST enable */
@@ -6731,14 +7138,29 @@ namespace System.Data.YuShiNetDevSDK
 
         [DllImport("NetDEVSDK.dll", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_Discovery(String pszBeginIP, String pszEndIP);
-
+        /// <summary>
+        /// 获取实时图像
+        /// </summary>
+        /// <param name="lpUserID"></param>
+        /// <param name="pstPreviewInfo"></param>
+        /// <param name="cbPlayDataCallBack"></param>
+        /// <param name="lpUserData"></param>
+        /// <returns></returns>
         [DllImport("NetDEVSDK.dll", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern IntPtr NETDEV_RealPlay(IntPtr lpUserID, ref NETDEV_PREVIEWINFO_S pstPreviewInfo, IntPtr cbPlayDataCallBack, IntPtr lpUserData);
-
+        /// <summary>
+        /// 停止实时图像
+        /// </summary>
+        /// <param name="lpRealHandle"></param>
+        /// <returns></returns>
         [DllImport("NetDEVSDK.dll", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_StopRealPlay(IntPtr lpRealHandle);
-
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="lpRealHandle"></param>
+        /// <param name="pdwBitRate"></param>
+        /// <returns></returns>
         [DllImport("NetDEVSDK.dll", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_GetBitRate(IntPtr lpRealHandle, ref int pdwBitRate);
 

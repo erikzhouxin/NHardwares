@@ -242,6 +242,7 @@ namespace System.Data.ShenBanReader
             FEPC = EPC;
             EPC = new byte[len];
             Array.Copy(FEPC, 0, EPC, 0, len);
+            Key = EPC.GetHexString();
             return true;
         }
         /// <summary>
