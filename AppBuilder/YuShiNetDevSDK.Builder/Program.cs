@@ -13,8 +13,8 @@ namespace YuShiNetDevSDK.Builder
     static class Program
     {
         static string Src { get; set; }
-        static string NUSPEC_VERSION { get; } = string.Format("{0:yyyy.M}.11", DateTime.Now);
-        static string ASSEMBLY_VERSION { get; } = string.Format("{0}.{1}", NUSPEC_VERSION, (int)(DateTime.Now - new DateTime(2020, 1, 1)).TotalDays);
+        static string NUSPEC_VERSION { get; } = string.Format("2022.6.6", DateTime.Now);
+        static string ASSEMBLY_VERSION { get; } = string.Format("2022.6.6.666", NUSPEC_VERSION, (int)(DateTime.Now - new DateTime(2020, 1, 1)).TotalDays);
         static string COPYRIGHT { get; } = $"Copyright 2020-{DateTime.Now.Year}";
         static string AUTHORS { get; } = "ErikZhouXin";
         static string SUMMARY { get; } = "宇视SDK集成项目";

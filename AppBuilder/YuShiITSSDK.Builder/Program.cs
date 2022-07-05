@@ -13,8 +13,8 @@ namespace YuShiITSSDK.Builder
     static class Program
     {
         public static String Src { get; private set; }
-        static string NUSPEC_VERSION { get; } = string.Format("{0:yyyy.M}.11", DateTime.Now);
-        static string ASSEMBLY_VERSION { get; } = string.Format("{0}.{1}", NUSPEC_VERSION, (int)(DateTime.Now - new DateTime(2020, 1, 1)).TotalDays);
+        static string NUSPEC_VERSION { get; } = string.Format("2022.6.6", DateTime.Now);
+        static string ASSEMBLY_VERSION { get; } = string.Format("2022.6.6.666", NUSPEC_VERSION, (int)(DateTime.Now - new DateTime(2020, 1, 1)).TotalDays);
         static string COPYRIGHT { get; } = $"Copyright 2020-{DateTime.Now.Year}";
         static string AUTHORS { get; } = "ErikZhouXin";
         static string SUMMARY { get; } = "宇视SDK集成项目";
@@ -41,7 +41,7 @@ namespace YuShiITSSDK.Builder
             Exec("dotnet", $"pack -c {Config}", Program.Src);
             // 还原包内容
             Exec("dotnet", "restore", Program.Src);
-            Exec(@"C:\Program Files\Microsoft Visual Studio 2019\MSBuild\Current\Bin\msbuild.exe", $"/p:Configuration={Config} /t:pack", Program.Src);
+            Exec(@"C:\Program Files\Microsoft Visual Studio 2022\MSBuild\Current\Bin\msbuild.exe", $"/p:Configuration={Config} /t:pack", Program.Src);
             // 编译生成
             //var path_empty = Path.Combine(Program.Src, "_._");
             //if (!File.Exists(path_empty)) { File.WriteAllText(path_empty, ""); }
