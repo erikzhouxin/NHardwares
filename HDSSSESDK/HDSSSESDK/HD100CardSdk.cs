@@ -108,6 +108,19 @@ namespace System.Data.HDSSSESDK
         internal static IHD100CardApi CreateApi()
         {
             if (Environment.Is64BitProcess) { return HD100CardApi64.Instance; }
+            var currentDir = HD100CardSdkDller.DllFullPath;
+            var pluginDir = HD100CardSdkLoader.DllFullPath;
+            if (!File.Exists(HD100CardSdkDller.DllFullName))
+            {
+                if (Directory.Exists(pluginDir))
+                {
+                    try
+                    {
+                        CopyDirectory(pluginDir, currentDir);
+                    }
+                    catch { }
+                }
+            }
             return new HD100CardApi();
         }
     }
