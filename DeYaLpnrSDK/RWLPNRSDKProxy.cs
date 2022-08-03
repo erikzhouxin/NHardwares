@@ -10,7 +10,7 @@ namespace System.Data.DeYaLpnrSDK
     /// <summary>
     /// 德亚道闸SDK代理
     /// </summary>
-    public interface IRWLPNRSDKProxy
+    public interface IRWLPNRSdkProxy
     {
         /// <summary>
         /// 初始化
@@ -91,13 +91,13 @@ namespace System.Data.DeYaLpnrSDK
         int LPNR_SoftTrigger(IntPtr lib);
     }
 
-    internal class RWLPNRSDKDller : IRWLPNRSDKProxy
+    internal class RWLPNRSdkDller : IRWLPNRSdkProxy
     {
         /// <summary>
         /// 由于这是本地目录中加载,所以加载一次就够用了
         /// </summary>
-        public static IRWLPNRSDKProxy Instance { get; } = new RWLPNRSDKDller();
-        private RWLPNRSDKDller() { }
+        public static IRWLPNRSdkProxy Instance { get; } = new RWLPNRSdkDller();
+        private RWLPNRSdkDller() { }
         public const String DllFileName = "RWLPNRAPI.dll";
         /// <summary>
         /// 全路径
@@ -143,21 +143,21 @@ namespace System.Data.DeYaLpnrSDK
         [DllImport(DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public extern static int LPNR_SoftTrigger(IntPtr lib);
         #region // 显示实现
-        int IRWLPNRSDKProxy.LPNR_EnableLiveFrame(IntPtr lib, int en) => LPNR_EnableLiveFrame(lib, en);
-        int IRWLPNRSDKProxy.LPNR_GetCapturedImage(IntPtr lib, byte[] date) => LPNR_GetCapturedImage(lib, date);
-        int IRWLPNRSDKProxy.LPNR_GetCapturedImageSize(IntPtr lib) => LPNR_GetCapturedImageSize(lib);
-        int IRWLPNRSDKProxy.LPNR_GetLiveFrame(IntPtr lib, byte[] date) => LPNR_GetLiveFrame(lib, date);
-        int IRWLPNRSDKProxy.LPNR_GetLiveFrameSize(IntPtr lib) => LPNR_GetLiveFrameSize(lib);
-        int IRWLPNRSDKProxy.LPNR_GetPlateNumber(IntPtr lib, byte[] funcName) => LPNR_GetPlateNumber(lib, funcName);
-        IntPtr IRWLPNRSDKProxy.LPNR_Init(byte[] ip) => LPNR_Init(ip);
-        int IRWLPNRSDKProxy.LPNR_IsOnline(IntPtr lib) => LPNR_IsOnline(lib);
-        int IRWLPNRSDKProxy.LPNR_SetCallBack(IntPtr lib, LPNRCallBack cb) => LPNR_SetCallBack(lib, cb);
-        int IRWLPNRSDKProxy.LPNR_SoftTrigger(IntPtr lib) => LPNR_SoftTrigger(lib);
-        int IRWLPNRSDKProxy.LPNR_SyncTime(IntPtr lib) => LPNR_SyncTime(lib);
-        int IRWLPNRSDKProxy.LPNR_Terminate(IntPtr handle) => LPNR_Terminate(handle);
+        int IRWLPNRSdkProxy.LPNR_EnableLiveFrame(IntPtr lib, int en) => LPNR_EnableLiveFrame(lib, en);
+        int IRWLPNRSdkProxy.LPNR_GetCapturedImage(IntPtr lib, byte[] date) => LPNR_GetCapturedImage(lib, date);
+        int IRWLPNRSdkProxy.LPNR_GetCapturedImageSize(IntPtr lib) => LPNR_GetCapturedImageSize(lib);
+        int IRWLPNRSdkProxy.LPNR_GetLiveFrame(IntPtr lib, byte[] date) => LPNR_GetLiveFrame(lib, date);
+        int IRWLPNRSdkProxy.LPNR_GetLiveFrameSize(IntPtr lib) => LPNR_GetLiveFrameSize(lib);
+        int IRWLPNRSdkProxy.LPNR_GetPlateNumber(IntPtr lib, byte[] funcName) => LPNR_GetPlateNumber(lib, funcName);
+        IntPtr IRWLPNRSdkProxy.LPNR_Init(byte[] ip) => LPNR_Init(ip);
+        int IRWLPNRSdkProxy.LPNR_IsOnline(IntPtr lib) => LPNR_IsOnline(lib);
+        int IRWLPNRSdkProxy.LPNR_SetCallBack(IntPtr lib, LPNRCallBack cb) => LPNR_SetCallBack(lib, cb);
+        int IRWLPNRSdkProxy.LPNR_SoftTrigger(IntPtr lib) => LPNR_SoftTrigger(lib);
+        int IRWLPNRSdkProxy.LPNR_SyncTime(IntPtr lib) => LPNR_SyncTime(lib);
+        int IRWLPNRSdkProxy.LPNR_Terminate(IntPtr handle) => LPNR_Terminate(handle);
         #endregion
     }
-    internal class RWLPNRSDKLoader : IDisposable, IRWLPNRSDKProxy
+    internal class RWLPNRSdkLoader : IDisposable, IRWLPNRSdkProxy
     {
         /// <summary>
         /// 相对路径
@@ -170,7 +170,7 @@ namespace System.Data.DeYaLpnrSDK
         /// <summary>
         /// 文件全路径
         /// </summary>
-        public static String DllFullName { get; } = Path.Combine(Path.GetFullPath(DllPath), RWLPNRSDKDller.DllFileName);
+        public static String DllFullName { get; } = Path.Combine(Path.GetFullPath(DllPath), RWLPNRSdkDller.DllFileName);
         #region // 委托定义        
         private DCreater.LPNR_EnableLiveFrame _LPNR_EnableLiveFrame;
         private DCreater.LPNR_GetCapturedImage _LPNR_GetCapturedImage;
@@ -185,7 +185,7 @@ namespace System.Data.DeYaLpnrSDK
         private DCreater.LPNR_SyncTime _LPNR_SyncTime;
         private DCreater.LPNR_Terminate _LPNR_Terminate;
         #endregion
-        public RWLPNRSDKLoader()
+        public RWLPNRSdkLoader()
         {
             hModule = LoadLibraryEx(DllFullName, IntPtr.Zero, LoadLibraryFlags.LOAD_WITH_ALTERED_SEARCH_PATH);
 
@@ -300,18 +300,18 @@ namespace System.Data.DeYaLpnrSDK
         }
         #endregion
         #region // 显示实现
-        int IRWLPNRSDKProxy.LPNR_EnableLiveFrame(IntPtr lib, int en) => _LPNR_EnableLiveFrame.Invoke(lib, en);
-        int IRWLPNRSDKProxy.LPNR_GetCapturedImage(IntPtr lib, byte[] date) => _LPNR_GetCapturedImage.Invoke(lib, date);
-        int IRWLPNRSDKProxy.LPNR_GetCapturedImageSize(IntPtr lib) => _LPNR_GetCapturedImageSize.Invoke(lib);
-        int IRWLPNRSDKProxy.LPNR_GetLiveFrame(IntPtr lib, byte[] date) => _LPNR_GetLiveFrame.Invoke(lib, date);
-        int IRWLPNRSDKProxy.LPNR_GetLiveFrameSize(IntPtr lib) => _LPNR_GetLiveFrameSize.Invoke(lib);
-        int IRWLPNRSDKProxy.LPNR_GetPlateNumber(IntPtr lib, byte[] funcName) => _LPNR_GetPlateNumber.Invoke(lib, funcName);
-        IntPtr IRWLPNRSDKProxy.LPNR_Init(byte[] ip) => _LPNR_Init.Invoke(ip);
-        int IRWLPNRSDKProxy.LPNR_IsOnline(IntPtr lib) => _LPNR_IsOnline.Invoke(lib);
-        int IRWLPNRSDKProxy.LPNR_SetCallBack(IntPtr lib, LPNRCallBack cb) => _LPNR_SetCallBack.Invoke(lib, cb);
-        int IRWLPNRSDKProxy.LPNR_SoftTrigger(IntPtr lib) => _LPNR_SoftTrigger.Invoke(lib);
-        int IRWLPNRSDKProxy.LPNR_SyncTime(IntPtr lib) => _LPNR_SyncTime.Invoke(lib);
-        int IRWLPNRSDKProxy.LPNR_Terminate(IntPtr handle) => _LPNR_Terminate.Invoke(handle);
+        int IRWLPNRSdkProxy.LPNR_EnableLiveFrame(IntPtr lib, int en) => _LPNR_EnableLiveFrame.Invoke(lib, en);
+        int IRWLPNRSdkProxy.LPNR_GetCapturedImage(IntPtr lib, byte[] date) => _LPNR_GetCapturedImage.Invoke(lib, date);
+        int IRWLPNRSdkProxy.LPNR_GetCapturedImageSize(IntPtr lib) => _LPNR_GetCapturedImageSize.Invoke(lib);
+        int IRWLPNRSdkProxy.LPNR_GetLiveFrame(IntPtr lib, byte[] date) => _LPNR_GetLiveFrame.Invoke(lib, date);
+        int IRWLPNRSdkProxy.LPNR_GetLiveFrameSize(IntPtr lib) => _LPNR_GetLiveFrameSize.Invoke(lib);
+        int IRWLPNRSdkProxy.LPNR_GetPlateNumber(IntPtr lib, byte[] funcName) => _LPNR_GetPlateNumber.Invoke(lib, funcName);
+        IntPtr IRWLPNRSdkProxy.LPNR_Init(byte[] ip) => _LPNR_Init.Invoke(ip);
+        int IRWLPNRSdkProxy.LPNR_IsOnline(IntPtr lib) => _LPNR_IsOnline.Invoke(lib);
+        int IRWLPNRSdkProxy.LPNR_SetCallBack(IntPtr lib, LPNRCallBack cb) => _LPNR_SetCallBack.Invoke(lib, cb);
+        int IRWLPNRSdkProxy.LPNR_SoftTrigger(IntPtr lib) => _LPNR_SoftTrigger.Invoke(lib);
+        int IRWLPNRSdkProxy.LPNR_SyncTime(IntPtr lib) => _LPNR_SyncTime.Invoke(lib);
+        int IRWLPNRSdkProxy.LPNR_Terminate(IntPtr handle) => _LPNR_Terminate.Invoke(handle);
         #endregion
     }
 }

@@ -5,40 +5,29 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace System.Data.DeYaLpnrSDK
+namespace System.Data.HDSSSESDK
 {
     /// <summary>
-    /// 德亚道闸SDK
+    /// SDK创建类
     /// </summary>
-    public static class RWLPNRSdk
+    public static class HD100CardSdk
     {
-
-        static Lazy<IRWLPNRSdkProxy> _RWLPNRSdk = new Lazy<IRWLPNRSdkProxy>(() => new RWLPNRSdkLoader(), true);
+        static Lazy<IHD100CardSdkProxy> _hd100Card = new Lazy<IHD100CardSdkProxy>(() => new HD100CardSdkLoader(), true);
         /// <summary>
         /// 静态构造
         /// </summary>
-        static RWLPNRSdk()
+        static HD100CardSdk()
         {
-            Directory.CreateDirectory(RWLPNRSdkLoader.DllFullPath);
-            if (Environment.Is64BitProcess)
+            Directory.CreateDirectory(HD100CardSdkLoader.DllFullPath);
+            bool isExists = CompareFile(HD100CardSdkLoader.DllFullName, Properties.Resources.X86_HDSSSE32);
+            if (!isExists)
             {
-                bool isExists = CompareFile(RWLPNRSdkLoader.DllFullName, Properties.Resources.X64_RWLPNRAPI);
-                if (!isExists)
-                {
-                    WriteFile(Properties.Resources.X64_RWLPNRAPI, Path.Combine(RWLPNRSdkLoader.DllFullPath, "RWLPNRAPI.dll"));
-                }
-            }
-            else
-            {
-                bool isExists = CompareFile(RWLPNRSdkLoader.DllFullName, Properties.Resources.X86_RWLPNRAPI);
-                if (!isExists)
-                {
-                    WriteFile(Properties.Resources.X86_RWLPNRAPI, Path.Combine(RWLPNRSdkLoader.DllFullPath, "RWLPNRAPI.dll"));
-                }
+                WriteFile(Properties.Resources.X86_HDSSSE32, Path.Combine(HD100CardSdkLoader.DllFullPath, "HDSSSE32.dll"));
+                WriteFile(Properties.Resources.X86_UnPack, Path.Combine(HD100CardSdkLoader.DllFullPath, "UnPack.dll"));
+                WriteFile(Properties.Resources.X86_BmpToJpg, Path.Combine(HD100CardSdkLoader.DllFullPath, "BmpToJpg.dll"));
             }
         }
-
-        private static void WriteFile(byte[] dllFile, string fullName)
+        internal static void WriteFile(byte[] dllFile, string fullName)
         {
             try
             {
@@ -47,8 +36,7 @@ namespace System.Data.DeYaLpnrSDK
             }
             catch (Exception ex) { Console.WriteLine(ex); }
         }
-
-        private static bool CompareFile(string file, byte[] res)
+        internal static bool CompareFile(string file, byte[] res)
         {
             if (!File.Exists(file)) { return false; }
             using (var hash = SHA1.Create())
@@ -67,17 +55,21 @@ namespace System.Data.DeYaLpnrSDK
             }
         }
         /// <summary>
-        /// 创建SDK代理
+        /// 创建SDK代理,SDK原生不支持64位,所以64位可能有性能损耗
         /// </summary>
         /// <param name="isBase"></param>
         /// <returns></returns>
-        public static IRWLPNRSdkProxy Create(bool isBase = false)
+        public static IHD100CardSdkProxy Create(bool isBase = false)
         {
-            var currentDir = RWLPNRSdkDller.DllFullPath;
-            var pluginDir = RWLPNRSdkLoader.DllFullPath;
+            if (Environment.Is64BitProcess) // 此时不用其他方式就可以了
+            {
+                return HD100CardApi64.Instance;
+            }
+            var currentDir = HD100CardSdkDller.DllFullPath;
+            var pluginDir = HD100CardSdkLoader.DllFullPath;
             if (isBase)
             {
-                if (!File.Exists(RWLPNRSdkDller.DllFullName))
+                if (!File.Exists(HD100CardSdkDller.DllFullName))
                 {
                     if (Directory.Exists(pluginDir))
                     {
@@ -88,10 +80,10 @@ namespace System.Data.DeYaLpnrSDK
                         catch { }
                     }
                 }
-                return RWLPNRSdkDller.Instance;
+                return HD100CardSdkDller.Instance;
             }
-            if (!Directory.Exists(pluginDir)) { return RWLPNRSdkDller.Instance; }
-            return _RWLPNRSdk.Value;
+            if (!Directory.Exists(pluginDir)) { return HD100CardSdkDller.Instance; }
+            return _hd100Card.Value;
         }
         /// <summary>
         /// 复制目录
@@ -111,6 +103,12 @@ namespace System.Data.DeYaLpnrSDK
                 }
                 File.Copy(item.FullName, Path.Combine(tag, item.Name), false);
             }
+        }
+        [Obsolete("替代方案:HD100CardSdk.Create")]
+        internal static IHD100CardApi CreateApi()
+        {
+            if (Environment.Is64BitProcess) { return HD100CardApi64.Instance; }
+            return new HD100CardApi();
         }
     }
 }
