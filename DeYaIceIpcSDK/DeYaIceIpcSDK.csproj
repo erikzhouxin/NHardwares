@@ -1,6 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<!--自动生成-->
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<TargetFrameworks>net40;net45;netstandard2.1;netcoreapp3.1;net6.0</TargetFrameworks>
 		<AssemblyName>NSystem.Data.DeYaIceIpcSDK</AssemblyName>
@@ -19,7 +17,7 @@
 		<GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-		<PackageTags>德亚;德亚SDK;IceIpcSDK;</PackageTags>
+		<PackageTags>德亚;德亚SDK;车牌识别;IceIpcSDK;</PackageTags>
 		<RepositoryUrl>https://www.gitee.com/ErikZhouXin/NHardwares</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
 	</PropertyGroup>

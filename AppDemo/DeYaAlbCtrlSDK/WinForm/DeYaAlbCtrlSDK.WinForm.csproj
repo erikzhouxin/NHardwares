@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFrameworks>netcoreapp3.1;net40</TargetFrameworks>
+		<UseWindowsForms>true</UseWindowsForms>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <Compile Remove="ALBDLL.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Remove="ClassDiagram1.cd" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\..\..\DeYaAlbCtrlSDK\DeYaAlbCtrlSDK.csproj" />
+	</ItemGroup>
+
+</Project>

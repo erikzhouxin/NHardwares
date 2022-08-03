@@ -235,7 +235,7 @@ namespace YuShiITSSDK.Builder
 
                 f.WriteStartElement("files");
 
-                var cpuTags = new List<string> { "win-x86", "win-x64", "win-arm", "win-arm64", "win10-x86", "win10-x64", "win10-arm", "win10-arm64", "x86", "x64" };
+                var cpuTags = new List<string> { "win-x86", "win-x64", "win-arm", "win-arm64", "x86", "x64" };
                 foreach (var cpuTag in cpuTags)
                 {
                     var platform = cpuTag.IndexOf("64") > 0 ? "x64" : "x86";
@@ -276,7 +276,7 @@ namespace YuShiITSSDK.Builder
                             ftar.WriteAttributeString("Include", $"$(MSBuildThisFileDirectory)..\\..\\runtimes\\{cpuTag}\\native\\{fileName}");
                             ftar.WriteElementString("Link", $"runtimes\\{cpuTag}\\native\\{fileName}");
                             ftar.WriteElementString("CopyToOutputDirectory", "PreserveNewest");
-                            ftar.WriteElementString("Pack", "false");
+                            ftar.WriteElementString("Pack", "true");
                             ftar.WriteEndElement(); // Content
                         }
                     }

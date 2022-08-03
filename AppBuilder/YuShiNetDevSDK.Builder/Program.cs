@@ -52,7 +52,7 @@ namespace YuShiNetDevSDK.Builder
             Exec("dotnet", "pack", Program.Src);
         }
 
-#region // MSBuilder
+        #region // MSBuilder
         public static void Exec(string fileName, string args, string startDir)
         {
             var wd = System.IO.Path.GetFullPath(startDir);
@@ -96,8 +96,8 @@ namespace YuShiNetDevSDK.Builder
         {
             System.Console.WriteLine(e.Data);
         }
-#endregion
-#region // Version
+        #endregion
+        #region // Version
         private static void GenDirectoryBuildProps(string root)
         {
             using (XmlWriter f = XmlWriter.Create(Path.Combine(root, "Directory.Build.props"), new XmlWriterSettings
@@ -137,8 +137,8 @@ namespace YuShiNetDevSDK.Builder
                 f.WriteEndDocument();
             }
         }
-#endregion
-#region // Generator Creater
+        #endregion
+        #region // Generator Creater
         private static void write_nuspec_file_entry(string src, string target, XmlWriter f)
         {
             f.WriteStartElement("file");
@@ -239,7 +239,7 @@ namespace YuShiNetDevSDK.Builder
 
                 f.WriteStartElement("files");
 
-                var cpuTags = new List<string> { "win-x86", "win-x64", "win-arm", "win-arm64", "win10-x86", "win10-x64", "win10-arm", "win10-arm64", "x86", "x64" };
+                var cpuTags = new List<string> { "win-x86", "win-x64", "win-arm", "win-arm64", "x86", "x64" };
                 foreach (var cpuTag in cpuTags)
                 {
                     var platform = cpuTag.IndexOf("64") > 0 ? "x64" : "x86";
@@ -280,7 +280,7 @@ namespace YuShiNetDevSDK.Builder
                             ftar.WriteAttributeString("Include", $"$(MSBuildThisFileDirectory)..\\..\\runtimes\\{cpuTag}\\native\\{fileName}");
                             ftar.WriteElementString("Link", $"runtimes\\{cpuTag}\\native\\{fileName}");
                             ftar.WriteElementString("CopyToOutputDirectory", "PreserveNewest");
-                            ftar.WriteElementString("Pack", "false");
+                            ftar.WriteElementString("Pack", "true");
                             ftar.WriteEndElement(); // Content
                         }
                     }
@@ -303,7 +303,7 @@ namespace YuShiNetDevSDK.Builder
                         foreach (var file in Directory.GetFiles(Path.Combine(dir_src, "bin", Config, sdkName)))
                         {
                             var fileName = Path.GetFileName(file);
-                            if(fileName.EndsWith(".pdb", StringComparison.OrdinalIgnoreCase)) { continue; }
+                            if (fileName.EndsWith(".pdb", StringComparison.OrdinalIgnoreCase)) { continue; }
                             f.WriteStartElement("file");
                             f.WriteAttributeString("src", $"bin\\{Config}\\{sdkName}\\{fileName}");
                             f.WriteAttributeString("target", $"lib/{sdkName}/{fileName}");
@@ -334,6 +334,6 @@ namespace YuShiNetDevSDK.Builder
             targetContent = assemblyReg.Replace(targetContent, "<AssemblyVersion>" + ASSEMBLY_VERSION + "</AssemblyVersion>");
             File.WriteAllText(coreProj, targetContent, Encoding.UTF8);
         }
-#endregion
+        #endregion
     }
 }
