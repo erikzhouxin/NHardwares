@@ -1,0 +1,1006 @@
+﻿#region // IPGBNET
+public class IPGBNET
+{
+    public delegate void NETfConnectOrDis(int UserId, byte ISConn, NETAVHSDK_USERINFO lpUserInfo, long dwUser);
+
+    public delegate void NETfTerminalSta(int UserId, NETAVHSDK_TMINFO lpTmInfo, long dwUser);
+
+    public delegate void NETfBatchTerminalSta(int UserId, NETAVHSDK_CALLBACKTMINFO lpTmInfo, long dwUser);
+
+    public delegate void NETfEncTerminalSta(int UserId, NETAVHSDK_ENCTMINFO lpTmInfo, long dwUser);
+
+    public delegate void NETfGBStreamSta(int UserId, int StreamId, int StreamSta, long dwUser);
+
+    public delegate void NETfFireSta(int UserId, NETAVHSDK_FIREINFO lpFireInfo, long dwUser);
+
+    private static IPGBNET s_IPGBNET;
+
+    public NETfConnectOrDis mNETfConnectOrDis;
+
+    public NETfTerminalSta mNETfTerminalSta;
+
+    public NETfBatchTerminalSta mNETfBatchTerminalSta;
+
+    public NETfEncTerminalSta mNETfEncTerminalSta;
+
+    public NETfGBStreamSta mNETfGBStreamSta;
+
+    public NETfFireSta mNETfFireSta;
+
+    public static IPGBNET Instance
+    {
+        get
+        {
+            if (null == s_IPGBNET)
+            {
+                s_IPGBNET = new IPGBNET();
+            }
+
+            return s_IPGBNET;
+        }
+    }
+
+    public unsafe void NETIPGBNETSDK_SetLogCallBack(NETfConnectOrDis LogCallBack, long dwUser)
+    {
+        //IL_0022: Expected I, but got I8
+        mNETfConnectOrDis = (NETfConnectOrDis)Delegate.Combine(mNETfConnectOrDis, LogCallBack);
+        _003CModule_003E.IPGBNETSDK_SetConnStatusCallBack((nint)_003CModule_003E.__unep_0040_003FNativefConnectOrDis_0040NET_0040IPGB_0040_0040_0024_0024FYAXGEPEAUIPGBSDK_USERINFO_0040_0040PEAX_0040Z, (void*)dwUser);
+    }
+
+    public unsafe void NETIPGBNETSDK_SetTerminalStaCallBack(NETfTerminalSta TerminalStaCallBack, long dwUser)
+    {
+        //IL_0022: Expected I, but got I8
+        mNETfTerminalSta = (NETfTerminalSta)Delegate.Combine(mNETfTerminalSta, TerminalStaCallBack);
+        _003CModule_003E.IPGBNETSDK_SetTerminalStatusCallBack((nint)_003CModule_003E.__unep_0040_003FNativefTerminalSta_0040NET_0040IPGB_0040_0040_0024_0024FYAXGPEAUIPGBSDK_TMINFO_0040_0040PEAX_0040Z, (void*)dwUser);
+    }
+
+    public unsafe void NETIPGBNETSDK_SetBatchTerminalStaCallBack(NETfBatchTerminalSta BatchTerminalStaCallBack, long dwUser)
+    {
+        //IL_0022: Expected I, but got I8
+        mNETfBatchTerminalSta = (NETfBatchTerminalSta)Delegate.Combine(mNETfBatchTerminalSta, BatchTerminalStaCallBack);
+        _003CModule_003E.IPGBNETSDK_SetBatchTerminalStatusCallBack((nint)_003CModule_003E.__unep_0040_003FNativefBatchTerminalSta_0040NET_0040IPGB_0040_0040_0024_0024FYAXGPEAUIPGBSDK_CALLBACKTMINFO_0040_0040PEAX_0040Z, (void*)dwUser);
+    }
+
+    public unsafe void NETIPGBNETSDK_SetEncTerminalStaCallBack(NETfEncTerminalSta EncTerminalStaCallBack, long dwUser)
+    {
+        //IL_0022: Expected I, but got I8
+        mNETfEncTerminalSta = (NETfEncTerminalSta)Delegate.Combine(mNETfEncTerminalSta, EncTerminalStaCallBack);
+        _003CModule_003E.IPGBNETSDK_SetEncTerminalStatusCallBack((nint)_003CModule_003E.__unep_0040_003FNativefEncTerminalSta_0040NET_0040IPGB_0040_0040_0024_0024FYAXGPEAUIPGBSDK_ENCTMINFO_0040_0040PEAX_0040Z, (void*)dwUser);
+    }
+
+    public unsafe void NETIPGBNETSDK_SetGBStreamStaCallBack(NETfGBStreamSta GBStreamStaCallBack, long dwUser)
+    {
+        //IL_0022: Expected I, but got I8
+        mNETfGBStreamSta = (NETfGBStreamSta)Delegate.Combine(mNETfGBStreamSta, GBStreamStaCallBack);
+        _003CModule_003E.IPGBNETSDK_SetGbStreamStatusCallBack((nint)_003CModule_003E.__unep_0040_003FNativefGBStreamSta_0040NET_0040IPGB_0040_0040_0024_0024FYAXGGW4__EM_STREAMSTA_TYPE_0040_0040PEAX_0040Z, (void*)dwUser);
+    }
+
+    public unsafe void NETIPGBNETSDK_SetFireStaCallBack(NETfFireSta FireStaCallBack, long dwUser)
+    {
+        //IL_0022: Expected I, but got I8
+        mNETfFireSta = (NETfFireSta)Delegate.Combine(mNETfFireSta, FireStaCallBack);
+        _003CModule_003E.IPGBNETSDK_SetFireStaCallBack((nint)_003CModule_003E.__unep_0040_003FNativefFireSta_0040NET_0040IPGB_0040_0040_0024_0024FYAXGPEAUIPGBSDK_FIREINFO_0040_0040PEAX_0040Z, (void*)dwUser);
+    }
+
+    public unsafe ushort NETIPGBNETSDK_Init(int port)
+    {
+        _003CModule_003E.printf((sbyte*)Unsafe.AsPointer(ref _003CModule_003E._003F_003F_C_0040_0M_0040HKCMHKDG_0040_003F_0024LD_003Fu_003FJ_003F_0024LM_003F_0024LL_003F_0024KP_003F_0024LP_003F_0024KK_003FJ_003F_0024LM_003F6_003F_0024AA_0040), __arglist());
+        return (ushort)((_003CModule_003E.IPGBNETSDK_Init((ushort)port) == 0) ? 1 : 0);
+    }
+
+    public ushort NETIPGBNETSDK_GetSdkVer()
+    {
+        return (ushort)_003CModule_003E.IPGBNETSDK_GetSdkVer();
+    }
+
+    public void NETIPGBNETSDK_Cleanup()
+    {
+        _003CModule_003E.IPGBNETSDK_Cleanup();
+    }
+
+    public unsafe ushort NETIPGBNETSDK_LogIn(NETAVHSDK_LOGSERVER lpSer, ref NETAVHSDK_USERINFO lpUser)
+    {
+        //IL_0019: Expected I4, but got I8
+        //IL_0030: Expected I4, but got I8
+        _003CModule_003E.printf((sbyte*)Unsafe.AsPointer(ref _003CModule_003E._003F_003F_C_0040_0BA_0040BKPAHACM_0040_003F_0024LF_003FG_003FB_003F_0024LM_003F_0024LH_003F_0024PO_003FN_003Fq_003FF_003Fw_003F_0024LP_003F_0024KK_003FJ_003F_0024LM_003F6_003F_0024AA_0040), __arglist());
+        IPGBSDK_LOGSERVER iPGBSDK_LOGSERVER;
+        // IL initblk instruction
+        Unsafe.InitBlockUnaligned(ref iPGBSDK_LOGSERVER, 0, 228);
+        CoverToAVHSDK_LOGSERVER(lpSer, &iPGBSDK_LOGSERVER);
+        IPGBSDK_USERINFO iPGBSDK_USERINFO;
+        // IL initblk instruction
+        Unsafe.InitBlockUnaligned(ref iPGBSDK_USERINFO, 0, 690852);
+        int num = _003CModule_003E.IPGBNETSDK_LogIn(&iPGBSDK_LOGSERVER);
+        if (num > 0)
+        {
+            CoverToNETAVHSDK_USERINFO(ref lpUser, &iPGBSDK_USERINFO);
+        }
+
+        _003CModule_003E.printf((sbyte*)Unsafe.AsPointer(ref _003CModule_003E._003F_003F_C_0040_0BA_0040PIIJNGD_0040_003F_0024LF_003FG_003FB_003F_0024LM_003F_0024LH_003F_0024PO_003FN_003Fq_003FF_003Fw_003F_0024LN_003Fa_003FJ_003Fx_003F6_003F_0024AA_0040), __arglist());
+        return (ushort)num;
+    }
+
+    public void NETIPGBNETSDK_LogOut(int user_id)
+    {
+        _003CModule_003E.IPGBNETSDK_LogOut((ushort)user_id);
+    }
+
+    public unsafe ushort NETIPGBNETSDK_GetConnStatusInfo(int user_id, ref NETAVHSDK_USERINFO lpUserInfo)
+    {
+        //IL_000e: Expected I4, but got I8
+        IPGBSDK_USERINFO iPGBSDK_USERINFO;
+        // IL initblk instruction
+        Unsafe.InitBlockUnaligned(ref iPGBSDK_USERINFO, 0, 690852);
+        int num = (int)_003CModule_003E.IPGBNETSDK_GetConnStatusInfo((ushort)user_id, &iPGBSDK_USERINFO);
+        if (num == 0)
+        {
+            CoverToNETAVHSDK_USERINFO(ref lpUserInfo, &iPGBSDK_USERINFO);
+        }
+
+        return (ushort)num;
+    }
+
+    public unsafe ushort NETIPGBNETSDK_GetOneSerFileInfo(int user_id, ref NETAVHSDK_ONEFILEINFO fdir, [MarshalAs(UnmanagedType.U1)] bool ISFirst)
+    {
+        //IL_000b: Expected I4, but got I8
+        IPGBSDK_SER_ONEFILEINFO iPGBSDK_SER_ONEFILEINFO;
+        // IL initblk instruction
+        Unsafe.InitBlockUnaligned(ref iPGBSDK_SER_ONEFILEINFO, 0, 124);
+        int num = _003CModule_003E.IPGBNETSDK_GetOneSerFileInfo((ushort)user_id, &iPGBSDK_SER_ONEFILEINFO, ISFirst ? 1 : 0);
+        if (num == 0)
+        {
+            string filePath = Marshal.PtrToStringAnsi((IntPtr)(void*)(&iPGBSDK_SER_ONEFILEINFO));
+            fdir.FilePath = filePath;
+            string fileName = Marshal.PtrToStringAnsi((IntPtr)Unsafe.AsPointer(ref Unsafe.AddByteOffset(ref iPGBSDK_SER_ONEFILEINFO, 60)));
+            fdir.FileName = fileName;
+            fdir.FileSec = (ushort)(*(int*)(&Unsafe.AddByteOffset(ref iPGBSDK_SER_ONEFILEINFO, 120)));
+        }
+
+        return (ushort)num;
+    }
+
+    public unsafe string[] NETIPGBNETSDK_GetSysSoundCardInfo(ref NETAVHSDK_SOUNDCARDINFO target)
+    {
+        //IL_000e: Expected I4, but got I8
+        IPGBSDK_SOUNDCARDINFO iPGBSDK_SOUNDCARDINFO;
+        // IL initblk instruction
+        Unsafe.InitBlockUnaligned(ref iPGBSDK_SOUNDCARDINFO, 0, 5122);
+        _003CModule_003E.IPGBNETSDK_GetSysSoundCardINFO(&iPGBSDK_SOUNDCARDINFO);
+        return CoverToAVHSDK_SOUNDCARDINFO(ref target, &iPGBSDK_SOUNDCARDINFO);
+    }
+
+    public unsafe void NETIPGBNETSDK_SetSysSoundCardMix(string cap_mix_name, int set_type, int mval)
+    {
+        //IL_000e: Expected I4, but got I8
+        _0024ArrayType_0024_0024_0024BY0CAA_0040D _0024ArrayType_0024_0024_0024BY0CAA_0040D;
+        // IL initblk instruction
+        Unsafe.InitBlockUnaligned(ref _0024ArrayType_0024_0024_0024BY0CAA_0040D, 0, 512);
+        if (!((string)null == cap_mix_name))
+        {
+            sbyte* ptr = (sbyte*)(void*)Marshal.StringToHGlobalAnsi(cap_mix_name);
+            _003CModule_003E.strcpy_s((sbyte*)(&_0024ArrayType_0024_0024_0024BY0CAA_0040D), 512uL, ptr);
+            Marshal.FreeHGlobal((IntPtr)(void*)ptr);
+        }
+
+        _003CModule_003E.IPGBNETSDK_SetSysSoundCardMix((sbyte*)(&_0024ArrayType_0024_0024_0024BY0CAA_0040D), (byte)set_type, (ushort)mval);
+    }
+
+    public unsafe ushort NETIPGBNETSDK_CreateSerFileGbStream(int user_id, ref NETAVHSDK_GBSERFILEINFO pGbinfo)
+    {
+        //IL_000e: Expected I4, but got I8
+        IPGBSDK_GBSERFILEINFO iPGBSDK_GBSERFILEINFO;
+        // IL initblk instruction
+        Unsafe.InitBlockUnaligned(ref iPGBSDK_GBSERFILEINFO, 0, 9732);
+        CoverToNETAVHSDK_SerFileGbStream(ref pGbinfo, &iPGBSDK_GBSERFILEINFO);
+        return (ushort)_003CModule_003E.IPGBNETSDK_CreateSerFileGbStream((ushort)user_id, &iPGBSDK_GBSERFILEINFO);
+    }
+
+    public unsafe ushort NETIPGBNETSDK_CreateLcaFileGbStream(int user_id, ref NETAVHSDK_GBLCAFILEINFO pGbinfo)
+    {
+        //IL_000e: Expected I4, but got I8
+        IPGBSDK_GBLCAFILEINFO iPGBSDK_GBLCAFILEINFO;
+        // IL initblk instruction
+        Unsafe.InitBlockUnaligned(ref iPGBSDK_GBLCAFILEINFO, 0, 13512);
+        CoverToNETAVHSDK_LCAFileGbStream(ref pGbinfo, &iPGBSDK_GBLCAFILEINFO);
+        return (ushort)_003CModule_003E.IPGBNETSDK_CreateLcaFileGbStream((ushort)user_id, &iPGBSDK_GBLCAFILEINFO);
+    }
+
+    public unsafe ushort NETIPGBNETSDK_CreateTextGbStream(int user_id, ref NETAVHSDK_GBTEXTINFO pGbinfo)
+    {
+        //IL_000e: Expected I4, but got I8
+        IPGBSDK_GBTEXTINFO iPGBSDK_GBTEXTINFO;
+        // IL initblk instruction
+        Unsafe.InitBlockUnaligned(ref iPGBSDK_GBTEXTINFO, 0, 8012);
+        CoverToNETAVHSDK_GBTEXTINFO(ref pGbinfo, &iPGBSDK_GBTEXTINFO);
+        return (ushort)_003CModule_003E.IPGBNETSDK_CreateTextGbStream((ushort)user_id, &iPGBSDK_GBTEXTINFO);
+    }
+
+    public unsafe ushort NETIPGBNETSDK_CreateTerminalCbStream(int user_id, ref NETAVHSDK_GBTMCBINFO pGbinfo)
+    {
+        //IL_000e: Expected I4, but got I8
+        IPGBSDK_GBTMCBINFO iPGBSDK_GBTMCBINFO;
+        // IL initblk instruction
+        Unsafe.InitBlockUnaligned(ref iPGBSDK_GBTMCBINFO, 0, 6014);
+        CoverToNETAVHSDK_GBTMCBINFO(ref pGbinfo, &iPGBSDK_GBTMCBINFO);
+        return (ushort)_003CModule_003E.IPGBNETSDK_CreateTerminalCbStream((ushort)user_id, &iPGBSDK_GBTMCBINFO);
+    }
+
+    public unsafe ushort NETIPGBNETSDK_CreateSoundCarSrcChannel(ref NETAVHSDK_SoundCarSrcINFO pGbinfo)
+    {
+        //IL_000e: Expected I4, but got I8
+        IPGBSDK_SoundCarSrcINFO iPGBSDK_SoundCarSrcINFO;
+        // IL initblk instruction
+        Unsafe.InitBlockUnaligned(ref iPGBSDK_SoundCarSrcINFO, 0, 516);
+        CoverToNETAVHSDK_SoundCarSrc(ref pGbinfo, &iPGBSDK_SoundCarSrcINFO);
+        return (ushort)_003CModule_003E.IPGBNETSDK_CreateSoundCarSrcChannel(&iPGBSDK_SoundCarSrcINFO);
+    }
+
+    public unsafe ushort NETIPGBNETSDK_CreateEncTerminalCbStream(int user_id, ref NETAVHSDK_GBENCTMCBINFO pGbinfo)
+    {
+        //IL_000e: Expected I4, but got I8
+        IPGBSDK_GBENCTMCBINFO iPGBSDK_GBENCTMCBINFO;
+        // IL initblk instruction
+        Unsafe.InitBlockUnaligned(ref iPGBSDK_GBENCTMCBINFO, 0, 6018);
+        CoverToNETAVHSDK_GBENCTMCBINFO(ref pGbinfo, &iPGBSDK_GBENCTMCBINFO);
+        return (ushort)_003CModule_003E.IPGBNETSDK_CreateEncTerminalCbStream((ushort)user_id, &iPGBSDK_GBENCTMCBINFO);
+    }
+
+    public unsafe ushort NETIPGBNETSDK_CreateSoundCarGbStream(int user_id, ref NETAVHSDK_GBSoundCarINFO pGbinfo)
+    {
+        //IL_000e: Expected I4, but got I8
+        IPGBSDK_GBSoundCarINFO iPGBSDK_GBSoundCarINFO;
+        // IL initblk instruction
+        Unsafe.InitBlockUnaligned(ref iPGBSDK_GBSoundCarINFO, 0, 6012);
+        CoverToNETAVHSDK_GBSoundCarINFO(ref pGbinfo, &iPGBSDK_GBSoundCarINFO);
+        return (ushort)_003CModule_003E.IPGBNETSDK_CreateSoundCarGbStream((ushort)user_id, &iPGBSDK_GBSoundCarINFO);
+    }
+
+    public unsafe ushort NETIPGBNETSDK_CreateThirdRealSrcChannel(ref NETAVHSDK_ThirdRealSrcINFO pGbinfo)
+    {
+        //IL_000a: Expected I4, but got I8
+        //IL_002c: Expected I4, but got I8
+        IPGBSDK_ThirdRealSrcINFO iPGBSDK_ThirdRealSrcINFO;
+        // IL initblk instruction
+        Unsafe.InitBlockUnaligned(ref iPGBSDK_ThirdRealSrcINFO, 0, 4);
+        NETAVHSDK_ThirdRealSrcINFO nETAVHSDK_ThirdRealSrcINFO = pGbinfo;
+        *(ushort*)(&iPGBSDK_ThirdRealSrcINFO) = nETAVHSDK_ThirdRealSrcINFO.EncType;
+        *(ushort*)(&Unsafe.AddByteOffset(ref iPGBSDK_ThirdRealSrcINFO, 2)) = nETAVHSDK_ThirdRealSrcINFO.ADataInputType;
+        _0024ArrayType_0024_0024_0024BY09D _0024ArrayType_0024_0024_0024BY09D;
+        // IL initblk instruction
+        Unsafe.InitBlockUnaligned(ref _0024ArrayType_0024_0024_0024BY09D, 0, 10);
+        int num = _003CModule_003E.IPGBNETSDK_CreateThirdRealSrcChannel(&iPGBSDK_ThirdRealSrcINFO, (sbyte*)(&_0024ArrayType_0024_0024_0024BY09D));
+        string buf = Marshal.PtrToStringAnsi((IntPtr)(void*)(&_0024ArrayType_0024_0024_0024BY09D));
+        pGbinfo.buf = buf;
+        return (ushort)num;
+    }
+
+    public unsafe ushort NETIPGBNETSDK_FillDataToThirdRealSrcChannel(int aSrcId, string buf, int len)
+    {
+        //IL_000e: Expected I4, but got I8
+        _0024ArrayType_0024_0024_0024BY0CAA_0040D _0024ArrayType_0024_0024_0024BY0CAA_0040D;
+        // IL initblk instruction
+        Unsafe.InitBlockUnaligned(ref _0024ArrayType_0024_0024_0024BY0CAA_0040D, 0, 512);
+        if (!((string)null == buf))
+        {
+            sbyte* ptr = (sbyte*)(void*)Marshal.StringToHGlobalAnsi(buf);
+            _003CModule_003E.strcpy_s((sbyte*)(&_0024ArrayType_0024_0024_0024BY0CAA_0040D), 512uL, ptr);
+            Marshal.FreeHGlobal((IntPtr)(void*)ptr);
+        }
+
+        return (ushort)_003CModule_003E.IPGBNETSDK_FillDataToThirdRealSrcChannel((ushort)aSrcId, (sbyte*)(&_0024ArrayType_0024_0024_0024BY0CAA_0040D), len);
+    }
+
+    public unsafe ushort NETIPGBNETSDK_CreateThirdRealAudioGbStream(int user_id, ref NETAVHSDK_GBTHIRDREALAUDIOINFO pGbinfo)
+    {
+        //IL_000e: Expected I4, but got I8
+        IPGBSDK_GBTHIRDREALAUDIOINFO iPGBSDK_GBTHIRDREALAUDIOINFO;
+        // IL initblk instruction
+        Unsafe.InitBlockUnaligned(ref iPGBSDK_GBTHIRDREALAUDIOINFO, 0, 6012);
+        CoverToNETAVHSDK_GBTHIRDREALAUDIOINFO(ref pGbinfo, &iPGBSDK_GBTHIRDREALAUDIOINFO);
+        return (ushort)_003CModule_003E.IPGBNETSDK_CreateThirdRealAudioGbStream((ushort)user_id, &iPGBSDK_GBTHIRDREALAUDIOINFO);
+    }
+
+    public ushort NETIPGBNETSDK_DelOneAudioSrcChannel(int aSrcId)
+    {
+        return (ushort)_003CModule_003E.IPGBNETSDK_DelOneAudioSrcChannel((ushort)aSrcId);
+    }
+
+    public ushort NETIPGBNETSDK_DelOneStream(int user_id, int stream_id)
+    {
+        return (ushort)_003CModule_003E.IPGBNETSDK_DelOneStream((ushort)user_id, (ushort)stream_id);
+    }
+
+    public unsafe ushort NETIPGBNETSDK_SetTmOutVol(int user_id, ref NETAVHSDK_SET_TMVOL pVol)
+    {
+        //IL_000e: Expected I4, but got I8
+        IPGBSDK_SET_TMVOL iPGBSDK_SET_TMVOL;
+        // IL initblk instruction
+        Unsafe.InitBlockUnaligned(ref iPGBSDK_SET_TMVOL, 0, 406);
+        CoverToNETAVHSDK_SET_TMVOL(ref pVol, &iPGBSDK_SET_TMVOL);
+        return (ushort)_003CModule_003E.IPGBNETSDK_SetTmOutVol((ushort)user_id, &iPGBSDK_SET_TMVOL);
+    }
+
+    public unsafe ushort NETIPGBNETSDK_ThreeFireArm(int user_id, ref NETAVHSDK_THREEFIRINFO pVol, byte pinType)
+    {
+        //IL_000b: Expected I4, but got I8
+        IPGBSDK_THREEFIRINFO iPGBSDK_THREEFIRINFO;
+        // IL initblk instruction
+        Unsafe.InitBlockUnaligned(ref iPGBSDK_THREEFIRINFO, 0, 66);
+        CoverToNETAVHSDK_THREEFIRINFO(ref pVol, &iPGBSDK_THREEFIRINFO);
+        return (ushort)_003CModule_003E.IPGBNETSDK_ThreeFireArm((ushort)user_id, &iPGBSDK_THREEFIRINFO, pinType);
+    }
+
+    public unsafe ushort NETIPGBNETSDK_GetMp3FileInfo(string file_path, ref NETAVHSDK_LCA_MP3INFO mp3FileInfo)
+    {
+        //IL_000a: Expected I4, but got I8
+        //IL_002f: Expected I4, but got I8
+        IPGBSDK_LCA_MP3INFO iPGBSDK_LCA_MP3INFO;
+        // IL initblk instruction
+        Unsafe.InitBlockUnaligned(ref iPGBSDK_LCA_MP3INFO, 0, 8);
+        NETAVHSDK_LCA_MP3INFO nETAVHSDK_LCA_MP3INFO = mp3FileInfo;
+        *(int*)(&iPGBSDK_LCA_MP3INFO) = nETAVHSDK_LCA_MP3INFO.FileSec;
+        *(int*)(&Unsafe.AddByteOffset(ref iPGBSDK_LCA_MP3INFO, 4)) = nETAVHSDK_LCA_MP3INFO.IsUseGb;
+        _0024ArrayType_0024_0024_0024BY0CAA_0040D _0024ArrayType_0024_0024_0024BY0CAA_0040D;
+        // IL initblk instruction
+        Unsafe.InitBlockUnaligned(ref _0024ArrayType_0024_0024_0024BY0CAA_0040D, 0, 512);
+        if (!((string)null == file_path))
+        {
+            sbyte* ptr = (sbyte*)(void*)Marshal.StringToHGlobalAnsi(file_path);
+            _003CModule_003E.strcpy_s((sbyte*)(&_0024ArrayType_0024_0024_0024BY0CAA_0040D), 512uL, ptr);
+            Marshal.FreeHGlobal((IntPtr)(void*)ptr);
+        }
+
+        return (ushort)_003CModule_003E.IPGBNETSDK_GetMp3FileInfo((sbyte*)(&_0024ArrayType_0024_0024_0024BY0CAA_0040D), &iPGBSDK_LCA_MP3INFO);
+    }
+
+    public ushort NETIPGBNETSDK_CtrlAnyTmForCall(int user_id, int tm_id, byte ctlType)
+    {
+        return (ushort)_003CModule_003E.IPGBNETSDK_CtrlAnyTmTalkStatus((ushort)user_id, (ushort)tm_id, ctlType);
+    }
+
+    public ushort NETIPGBNETSDK_CtrlAnyTmForCall(int user_id, uint main_tmid, int other_tmid)
+    {
+        return (ushort)_003CModule_003E.IPGBNETSDK_CtrlAnyTmForCall((ushort)user_id, (ushort)main_tmid, (ushort)other_tmid);
+    }
+
+    public unsafe ushort NETIPGBNETSDK_GetUserFqInfo(int user_id, ref NETAVHSDK_USERFQINFO pFqInfo)
+    {
+        IPGBSDK_USERFQINFO* ptr = (IPGBSDK_USERFQINFO*)_003CModule_003E.calloc(1uL, 310202uL);
+        int num = _003CModule_003E.IPGBNETSDK_GetUserFqInfo((ushort)user_id, ptr);
+        CoverToNETAVHSDK_USERFQINFO(ref pFqInfo, ptr);
+        _003CModule_003E.free(ptr);
+        return (ushort)num;
+    }
+
+    public unsafe void CoverToAVHSDK_LOGSERVER(NETAVHSDK_LOGSERVER netSource, IPGBSDK_LOGSERVER* target)
+    {
+        //IL_004d: Expected I, but got I8
+        //IL_00b6: Expected I, but got I8
+        *(ushort*)((long)(nint)target + 224L) = netSource.SCmdport;
+        *(ushort*)((long)(nint)target + 226L) = netSource.LogType;
+        string uPass = netSource.UPass;
+        if (!((string)null == uPass))
+        {
+            sbyte* ptr = (sbyte*)(void*)Marshal.StringToHGlobalAnsi(uPass);
+            _003CModule_003E.strcpy_s((sbyte*)((ulong)(nint)target + 60uL), 60uL, ptr);
+            Marshal.FreeHGlobal((IntPtr)(void*)ptr);
+        }
+
+        string userName = netSource.UserName;
+        if (!((string)null == userName))
+        {
+            sbyte* ptr2 = (sbyte*)(void*)Marshal.StringToHGlobalAnsi(userName);
+            _003CModule_003E.strcpy_s((sbyte*)target, 20uL, ptr2);
+            Marshal.FreeHGlobal((IntPtr)(void*)ptr2);
+        }
+
+        string sIp = netSource.SIp;
+        if (!((string)null == sIp))
+        {
+            sbyte* ptr3 = (sbyte*)(void*)Marshal.StringToHGlobalAnsi(sIp);
+            _003CModule_003E.strcpy_s((sbyte*)((ulong)(nint)target + 80uL), 16uL, ptr3);
+            Marshal.FreeHGlobal((IntPtr)(void*)ptr3);
+        }
+    }
+
+    public unsafe void CoverToNETAVHSDK_USERINFO(ref NETAVHSDK_USERINFO netTarget, IPGBSDK_USERINFO* source)
+    {
+        //IL_0048: Expected I, but got I8
+        //IL_005b: Expected I, but got I8
+        //IL_0074: Expected I, but got I8
+        //IL_00d8: Expected I, but got I8
+        netTarget.UserID = *(ushort*)source;
+        netTarget.TmCout = *(ushort*)((long)(nint)source + 4L);
+        netTarget.Userlevel = *(ushort*)((long)(nint)source + 2L);
+        netTarget.m_OneTm = new NETAVHSDK_TMINFO[*(ushort*)((long)(nint)source + 4L)];
+        int num = 0;
+        if (0u < (uint)(*(ushort*)((long)(nint)source + 4L)))
+        {
+            IPGBSDK_USERINFO* ptr = (IPGBSDK_USERINFO*)((ulong)(nint)source + 224uL);
+            do
+            {
+                NETAVHSDK_TMINFO nETAVHSDK_TMINFO = new NETAVHSDK_TMINFO();
+                IntPtr ptr2 = (IntPtr)(void*)((ulong)(nint)ptr - 216uL);
+                nETAVHSDK_TMINFO.TmName = Marshal.PtrToStringAnsi(ptr2);
+                IntPtr ptr3 = (IntPtr)(void*)((ulong)(nint)ptr - 16uL);
+                nETAVHSDK_TMINFO.Tmip = Marshal.PtrToStringAnsi(ptr3);
+                nETAVHSDK_TMINFO.TmSta = (NETEM_TMSTA_TYPE)(*(int*)ptr);
+                nETAVHSDK_TMINFO.TmNo = *(ushort*)((long)(nint)ptr + 4L);
+                nETAVHSDK_TMINFO.TmVol = *(byte*)((long)(nint)ptr + 6L);
+                nETAVHSDK_TMINFO.ISOnLine = *(byte*)((long)(nint)ptr + 7L);
+                nETAVHSDK_TMINFO.GbStreamid = *(ushort*)((long)(nint)ptr + 8L);
+                nETAVHSDK_TMINFO.OtherTalkTmId = *(ushort*)((long)(nint)ptr + 10L);
+                netTarget.m_OneTm[num] = nETAVHSDK_TMINFO;
+                num++;
+                ptr = (IPGBSDK_USERINFO*)((ulong)(nint)ptr + 228uL);
+            }
+            while (num < *(ushort*)((long)(nint)source + 4L));
+        }
+    }
+
+    public unsafe void CoverToNETAVHSDK_TMINFO(ref NETAVHSDK_TMINFO netTarget, IPGBSDK_TMINFO* source)
+    {
+        //IL_0021: Expected I, but got I8
+        string tmName = Marshal.PtrToStringAnsi((IntPtr)(void*)source);
+        netTarget.TmName = tmName;
+        string tmip = Marshal.PtrToStringAnsi((IntPtr)(void*)((ulong)(nint)source + 200uL));
+        netTarget.Tmip = tmip;
+        netTarget.TmSta = (NETEM_TMSTA_TYPE)(*(int*)((long)(nint)source + 216L));
+        netTarget.TmNo = *(ushort*)((long)(nint)source + 220L);
+        netTarget.TmVol = *(byte*)((long)(nint)source + 222L);
+        netTarget.ISOnLine = *(byte*)((long)(nint)source + 223L);
+        netTarget.GbStreamid = *(ushort*)((long)(nint)source + 224L);
+        netTarget.OtherTalkTmId = *(ushort*)((long)(nint)source + 226L);
+    }
+
+    public unsafe void CoverToNETAVHSDK_BATCHTMINFO(ref NETAVHSDK_CALLBACKTMINFO netTarget, IPGBSDK_CALLBACKTMINFO* source)
+    {
+        //IL_001d: Expected I, but got I8
+        //IL_0026: Expected I, but got I8
+        //IL_0048: Expected I, but got I8
+        //IL_00c4: Expected I, but got I8
+        netTarget.m_oneTm = new NETAVHSDK_TMINFO[*(ushort*)source];
+        int num = 0;
+        if (0u < (uint)(*(ushort*)source))
+        {
+            IPGBSDK_CALLBACKTMINFO* ptr = (IPGBSDK_CALLBACKTMINFO*)((ulong)(nint)source + 8uL);
+            do
+            {
+                NETAVHSDK_TMINFO nETAVHSDK_TMINFO = new NETAVHSDK_TMINFO();
+                IPGBSDK_TMINFO* ptr2 = (IPGBSDK_TMINFO*)(*(long*)ptr);
+                IntPtr ptr3 = (IntPtr)(void*)ptr2;
+                nETAVHSDK_TMINFO.TmName = Marshal.PtrToStringAnsi(ptr3);
+                IntPtr ptr4 = (IntPtr)(void*)((ulong)(nint)ptr2 + 200uL);
+                nETAVHSDK_TMINFO.Tmip = Marshal.PtrToStringAnsi(ptr4);
+                nETAVHSDK_TMINFO.TmSta = (NETEM_TMSTA_TYPE)(*(int*)((long)(nint)ptr2 + 216L));
+                nETAVHSDK_TMINFO.TmNo = *(ushort*)((long)(nint)ptr2 + 220L);
+                nETAVHSDK_TMINFO.TmVol = *(byte*)((long)(nint)ptr2 + 222L);
+                nETAVHSDK_TMINFO.ISOnLine = *(byte*)((long)(nint)ptr2 + 223L);
+                nETAVHSDK_TMINFO.GbStreamid = *(ushort*)((long)(nint)ptr2 + 224L);
+                nETAVHSDK_TMINFO.OtherTalkTmId = *(ushort*)((long)(nint)ptr2 + 226L);
+                netTarget.m_oneTm[num] = nETAVHSDK_TMINFO;
+                num++;
+                ptr = (IPGBSDK_CALLBACKTMINFO*)((ulong)(nint)ptr + 8uL);
+            }
+            while (num < *(ushort*)source);
+        }
+    }
+
+    public unsafe void CoverToNETAVHSDK_ENCTMINFO(ref NETAVHSDK_ENCTMINFO netTarget, IPGBSDK_ENCTMINFO* source)
+    {
+        //IL_0021: Expected I, but got I8
+        string tmName = Marshal.PtrToStringAnsi((IntPtr)(void*)source);
+        netTarget.TmName = tmName;
+        string tmip = Marshal.PtrToStringAnsi((IntPtr)(void*)((ulong)(nint)source + 200uL));
+        netTarget.Tmip = tmip;
+        netTarget.TmSta = (NETEM_TMSTA_TYPE)(*(int*)((long)(nint)source + 216L));
+        netTarget.TmNo = *(ushort*)((long)(nint)source + 220L);
+        netTarget.GbStreamid = *(ushort*)((long)(nint)source + 222L);
+    }
+
+    public unsafe void CoverToNETAVHSDK_FIREINFO(ref NETAVHSDK_FIREINFO netTarget, IPGBSDK_FIREINFO* source)
+    {
+        netTarget.Fno = (ushort)(*(int*)source);
+        netTarget.FVal = (ushort)(*(int*)((long)(nint)source + 4L));
+    }
+
+    public unsafe void CoverToNETAVHSDK_SerFileGbStream(ref NETAVHSDK_GBSERFILEINFO source, IPGBSDK_GBSERFILEINFO* netTarget)
+    {
+        //IL_0055: Expected I, but got I8
+        //IL_006b: Expected I, but got I8
+        //IL_009f: Expected I, but got I8
+        //IL_00c6: Expected I, but got I8
+        *(ushort*)netTarget = source.GBlevel;
+        *(ushort*)((long)(nint)netTarget + 2L) = source.GBVol;
+        *(ushort*)((long)(nint)netTarget + 6006L) = source.PlayLoop;
+        *(ushort*)((long)(nint)netTarget + 6008L) = source.PlaySec;
+        *(ushort*)((long)(nint)netTarget + 4L) = source.TmCout;
+        int num = 0;
+        NETAVHSDK_GBSERFILEINFO nETAVHSDK_GBSERFILEINFO = source;
+        if (0u < (uint)nETAVHSDK_GBSERFILEINFO.TmCout)
+        {
+            IPGBSDK_GBSERFILEINFO* ptr = (IPGBSDK_GBSERFILEINFO*)((ulong)(nint)netTarget + 6uL);
+            do
+            {
+                *(ushort*)ptr = nETAVHSDK_GBSERFILEINFO.TmID[num];
+                num++;
+                ptr = (IPGBSDK_GBSERFILEINFO*)((ulong)(nint)ptr + 2uL);
+                nETAVHSDK_GBSERFILEINFO = source;
+            }
+            while (num < nETAVHSDK_GBSERFILEINFO.TmCout);
+        }
+
+        *(ushort*)((long)(nint)netTarget + 6010L) = source.FileCout;
+        int num2 = 0;
+        NETAVHSDK_GBSERFILEINFO nETAVHSDK_GBSERFILEINFO2 = source;
+        if (0u < (uint)nETAVHSDK_GBSERFILEINFO2.FileCout)
+        {
+            IPGBSDK_GBSERFILEINFO* ptr2 = (IPGBSDK_GBSERFILEINFO*)((ulong)(nint)netTarget + 6012uL);
+            do
+            {
+                IPGBSDK_SER_ONEFILEINFO iPGBSDK_SER_ONEFILEINFO;
+                CoverToAVHSDK_ONEFILEINFO(nETAVHSDK_GBSERFILEINFO2.m_OneFile[num2], &iPGBSDK_SER_ONEFILEINFO);
+                // IL cpblk instruction
+                Unsafe.CopyBlockUnaligned(ptr2, ref iPGBSDK_SER_ONEFILEINFO, 124);
+                num2++;
+                ptr2 = (IPGBSDK_GBSERFILEINFO*)((ulong)(nint)ptr2 + 124uL);
+                nETAVHSDK_GBSERFILEINFO2 = source;
+            }
+            while (num2 < nETAVHSDK_GBSERFILEINFO2.FileCout);
+        }
+    }
+
+    public unsafe void CoverToNETAVHSDK_ONEFILEINFO(ref NETAVHSDK_ONEFILEINFO netTarget, IPGBSDK_SER_ONEFILEINFO* source)
+    {
+        //IL_001e: Expected I, but got I8
+        string filePath = Marshal.PtrToStringAnsi((IntPtr)(void*)source);
+        netTarget.FilePath = filePath;
+        string fileName = Marshal.PtrToStringAnsi((IntPtr)(void*)((ulong)(nint)source + 60uL));
+        netTarget.FileName = fileName;
+        netTarget.FileSec = (ushort)(*(int*)((long)(nint)source + 120L));
+    }
+
+    public unsafe void CoverToAVHSDK_ONEFILEINFO(NETAVHSDK_ONEFILEINFO netSource, IPGBSDK_SER_ONEFILEINFO* target)
+    {
+        //IL_005c: Expected I, but got I8
+        string filePath = netSource.FilePath;
+        if (!((string)null == filePath))
+        {
+            sbyte* ptr = (sbyte*)(void*)Marshal.StringToHGlobalAnsi(filePath);
+            _003CModule_003E.strcpy_s((sbyte*)target, 60uL, ptr);
+            Marshal.FreeHGlobal((IntPtr)(void*)ptr);
+        }
+
+        string fileName = netSource.FileName;
+        if (!((string)null == fileName))
+        {
+            sbyte* ptr2 = (sbyte*)(void*)Marshal.StringToHGlobalAnsi(fileName);
+            _003CModule_003E.strcpy_s((sbyte*)((ulong)(nint)target + 60uL), 60uL, ptr2);
+            Marshal.FreeHGlobal((IntPtr)(void*)ptr2);
+        }
+
+        *(int*)((long)(nint)target + 120L) = netSource.FileSec;
+    }
+
+    public unsafe void CoverToNETAVHSDK_LCAFileGbStream(ref NETAVHSDK_GBLCAFILEINFO source, IPGBSDK_GBLCAFILEINFO* netTarget)
+    {
+        //IL_0065: Expected I, but got I8
+        //IL_007b: Expected I, but got I8
+        //IL_00a2: Expected I, but got I8
+        //IL_0102: Expected I, but got I8
+        *(ushort*)netTarget = source.GBlevel;
+        *(ushort*)((long)(nint)netTarget + 2L) = source.GBVol;
+        *(ushort*)((long)(nint)netTarget + 4L) = source.TmCout;
+        *(ushort*)((long)(nint)netTarget + 6006L) = source.PlayLoop;
+        *(ushort*)((long)(nint)netTarget + 6008L) = source.PlaySec;
+        *(ushort*)((long)(nint)netTarget + 6010L) = source.FileCout;
+        int num = 0;
+        NETAVHSDK_GBLCAFILEINFO nETAVHSDK_GBLCAFILEINFO = source;
+        if (0u < (uint)nETAVHSDK_GBLCAFILEINFO.TmCout)
+        {
+            IPGBSDK_GBLCAFILEINFO* ptr = (IPGBSDK_GBLCAFILEINFO*)((ulong)(nint)netTarget + 6uL);
+            do
+            {
+                *(ushort*)ptr = nETAVHSDK_GBLCAFILEINFO.TmID[num];
+                num++;
+                ptr = (IPGBSDK_GBLCAFILEINFO*)((ulong)(nint)ptr + 2uL);
+                nETAVHSDK_GBLCAFILEINFO = source;
+            }
+            while (num < nETAVHSDK_GBLCAFILEINFO.TmCout);
+        }
+
+        int num2 = 0;
+        NETAVHSDK_GBLCAFILEINFO nETAVHSDK_GBLCAFILEINFO2 = source;
+        if (0u >= (uint)nETAVHSDK_GBLCAFILEINFO2.FileCout)
+        {
+            return;
+        }
+
+        IPGBSDK_GBLCAFILEINFO* ptr2 = (IPGBSDK_GBLCAFILEINFO*)((ulong)(nint)netTarget + 6012uL);
+        do
+        {
+            string filePath = nETAVHSDK_GBLCAFILEINFO2.m_LcaOneFile[num2].FilePath;
+            IPGBSDK_LCA_ONEFILEINFO iPGBSDK_LCA_ONEFILEINFO;
+            if (!((string)null == filePath))
+            {
+                sbyte* ptr3 = (sbyte*)(void*)Marshal.StringToHGlobalAnsi(filePath);
+                _003CModule_003E.strcpy_s((sbyte*)(&iPGBSDK_LCA_ONEFILEINFO), 250uL, ptr3);
+                Marshal.FreeHGlobal((IntPtr)(void*)ptr3);
+            }
+            // IL cpblk instruction
+            Unsafe.CopyBlockUnaligned(ptr2, ref iPGBSDK_LCA_ONEFILEINFO, 250);
+            num2++;
+            ptr2 = (IPGBSDK_GBLCAFILEINFO*)((ulong)(nint)ptr2 + 250uL);
+            nETAVHSDK_GBLCAFILEINFO2 = source;
+        }
+        while (num2 < nETAVHSDK_GBLCAFILEINFO2.FileCout);
+    }
+
+    public unsafe void CoverToNETAVHSDK_LCAONEFILEINFO(ref NETAVHSDK_LCA_ONEFILEINFO netTarget, IPGBSDK_LCA_ONEFILEINFO* source)
+    {
+        string filePath = Marshal.PtrToStringAnsi((IntPtr)(void*)source);
+        netTarget.FilePath = filePath;
+    }
+
+    public unsafe void CoverToAVHSDK_LCAONEFILEINFO(NETAVHSDK_LCA_ONEFILEINFO netSource, IPGBSDK_LCA_ONEFILEINFO* target)
+    {
+        string filePath = netSource.FilePath;
+        if (!((string)null == filePath))
+        {
+            sbyte* ptr = (sbyte*)(void*)Marshal.StringToHGlobalAnsi(filePath);
+            _003CModule_003E.strcpy_s((sbyte*)target, 250uL, ptr);
+            Marshal.FreeHGlobal((IntPtr)(void*)ptr);
+        }
+    }
+
+    public unsafe void CoverToNETAVHSDK_GBTEXTINFO(ref NETAVHSDK_GBTEXTINFO source, IPGBSDK_GBTEXTINFO* netTarget)
+    {
+        //IL_0049: Expected I, but got I8
+        //IL_005c: Expected I, but got I8
+        *(ushort*)netTarget = source.GBlevel;
+        *(ushort*)netTarget = source.GBlevel;
+        *(ushort*)((long)(nint)netTarget + 2L) = source.GBVol;
+        *(ushort*)((long)(nint)netTarget + 4L) = source.PlaySec;
+        *(ushort*)((long)(nint)netTarget + 6L) = source.TmCout;
+        int num = 0;
+        NETAVHSDK_GBTEXTINFO nETAVHSDK_GBTEXTINFO = source;
+        if (0u < (uint)nETAVHSDK_GBTEXTINFO.TmCout)
+        {
+            IPGBSDK_GBTEXTINFO* ptr = (IPGBSDK_GBTEXTINFO*)((ulong)(nint)netTarget + 8uL);
+            do
+            {
+                *(ushort*)ptr = nETAVHSDK_GBTEXTINFO.TmID[num];
+                num++;
+                ptr = (IPGBSDK_GBTEXTINFO*)((ulong)(nint)ptr + 2uL);
+                nETAVHSDK_GBTEXTINFO = source;
+            }
+            while (num < nETAVHSDK_GBTEXTINFO.TmCout);
+        }
+
+        ref NETAVHSDK_TTSTEXTIINFO tEXT = ref source.m_TEXT;
+        IPGBSDK_TTSTEXTIINFO iPGBSDK_TTSTEXTIINFO;
+        *(byte*)(&iPGBSDK_TTSTEXTIINFO) = tEXT.TTStype;
+        *(ushort*)(&Unsafe.AddByteOffset(ref iPGBSDK_TTSTEXTIINFO, 2)) = tEXT.TextLen;
+        *(byte*)(&Unsafe.AddByteOffset(ref iPGBSDK_TTSTEXTIINFO, 1)) = tEXT.TTSPlayCout;
+        string tEXT2 = tEXT.TEXT;
+        if (!((string)null == tEXT2))
+        {
+            sbyte* ptr2 = (sbyte*)(void*)Marshal.StringToHGlobalAnsi(tEXT2);
+            _003CModule_003E.strcpy_s((sbyte*)Unsafe.AsPointer(ref Unsafe.AddByteOffset(ref iPGBSDK_TTSTEXTIINFO, 4)), 2000uL, ptr2);
+            Marshal.FreeHGlobal((IntPtr)(void*)ptr2);
+        }
+        // IL cpblk instruction
+        Unsafe.CopyBlockUnaligned((long)(nint)netTarget + 6008L, ref iPGBSDK_TTSTEXTIINFO, 2004);
+    }
+
+    public unsafe void CoverToNETAVHSDK_TTSTEXTIINFO(ref NETAVHSDK_TTSTEXTIINFO netTarget, IPGBSDK_TTSTEXTIINFO* source)
+    {
+        //IL_004e: Expected I, but got I8
+        *(byte*)source = netTarget.TTStype;
+        *(ushort*)((long)(nint)source + 2L) = netTarget.TextLen;
+        *(byte*)((long)(nint)source + 1L) = netTarget.TTSPlayCout;
+        string tEXT = netTarget.TEXT;
+        if (!((string)null == tEXT))
+        {
+            sbyte* ptr = (sbyte*)(void*)Marshal.StringToHGlobalAnsi(tEXT);
+            _003CModule_003E.strcpy_s((sbyte*)((ulong)(nint)source + 4uL), 2000uL, ptr);
+            Marshal.FreeHGlobal((IntPtr)(void*)ptr);
+        }
+    }
+
+    public unsafe void CoverToNETAVHSDK_GBTMCBINFO(ref NETAVHSDK_GBTMCBINFO source, IPGBSDK_GBTMCBINFO* netTarget)
+    {
+        //IL_005b: Expected I, but got I8
+        //IL_006e: Expected I, but got I8
+        *(ushort*)netTarget = source.GBlevel;
+        *(ushort*)((long)(nint)netTarget + 2L) = source.GBVol;
+        *(ushort*)((long)(nint)netTarget + 6L) = source.EncType;
+        *(ushort*)((long)(nint)netTarget + 8L) = source.CbSrcTmNo;
+        *(ushort*)((long)(nint)netTarget + 10L) = source.PlaySec;
+        *(ushort*)((long)(nint)netTarget + 12L) = source.TmCout;
+        int num = 0;
+        NETAVHSDK_GBTMCBINFO nETAVHSDK_GBTMCBINFO = source;
+        if (0u < (uint)nETAVHSDK_GBTMCBINFO.TmCout)
+        {
+            IPGBSDK_GBTMCBINFO* ptr = (IPGBSDK_GBTMCBINFO*)((ulong)(nint)netTarget + 14uL);
+            do
+            {
+                *(ushort*)ptr = nETAVHSDK_GBTMCBINFO.TmID[num];
+                num++;
+                ptr = (IPGBSDK_GBTMCBINFO*)((ulong)(nint)ptr + 2uL);
+                nETAVHSDK_GBTMCBINFO = source;
+            }
+            while (num < nETAVHSDK_GBTMCBINFO.TmCout);
+        }
+    }
+
+    public unsafe void CoverToNETAVHSDK_GBENCTMCBINFO(ref NETAVHSDK_GBENCTMCBINFO source, IPGBSDK_GBENCTMCBINFO* netTarget)
+    {
+        //IL_0075: Expected I, but got I8
+        //IL_0088: Expected I, but got I8
+        *(ushort*)netTarget = source.GBlevel;
+        *(ushort*)((long)(nint)netTarget + 2L) = source.GBVol;
+        *(ushort*)((long)(nint)netTarget + 6L) = source.EncType;
+        *(ushort*)((long)(nint)netTarget + 8L) = source.CbSrcTmNo;
+        *(ushort*)((long)(nint)netTarget + 10L) = source.POWType;
+        *(ushort*)((long)(nint)netTarget + 12L) = source.POWVal;
+        *(ushort*)((long)(nint)netTarget + 14L) = source.PlaySec;
+        *(ushort*)((long)(nint)netTarget + 16L) = source.TmCout;
+        int num = 0;
+        NETAVHSDK_GBENCTMCBINFO nETAVHSDK_GBENCTMCBINFO = source;
+        if (0u < (uint)nETAVHSDK_GBENCTMCBINFO.TmCout)
+        {
+            IPGBSDK_GBENCTMCBINFO* ptr = (IPGBSDK_GBENCTMCBINFO*)((ulong)(nint)netTarget + 18uL);
+            do
+            {
+                *(ushort*)ptr = nETAVHSDK_GBENCTMCBINFO.TmID[num];
+                num++;
+                ptr = (IPGBSDK_GBENCTMCBINFO*)((ulong)(nint)ptr + 2uL);
+                nETAVHSDK_GBENCTMCBINFO = source;
+            }
+            while (num < nETAVHSDK_GBENCTMCBINFO.TmCout);
+        }
+    }
+
+    public unsafe void CoverToNETAVHSDK_SoundCarSrc(ref NETAVHSDK_SoundCarSrcINFO source, IPGBSDK_SoundCarSrcINFO* netTarget)
+    {
+        //IL_0042: Expected I, but got I8
+        *(ushort*)netTarget = source.EncType;
+        *(ushort*)((long)(nint)netTarget + 2L) = source.SoundCarMixVol;
+        string soundCarMixName = source.SoundCarMixName;
+        if (!((string)null == soundCarMixName))
+        {
+            sbyte* ptr = (sbyte*)(void*)Marshal.StringToHGlobalAnsi(soundCarMixName);
+            _003CModule_003E.strcpy_s((sbyte*)((ulong)(nint)netTarget + 4uL), 512uL, ptr);
+            Marshal.FreeHGlobal((IntPtr)(void*)ptr);
+        }
+    }
+
+    public unsafe string[] CoverToAVHSDK_SOUNDCARDINFO(ref NETAVHSDK_SOUNDCARDINFO netTarget, IPGBSDK_SOUNDCARDINFO* source)
+    {
+        //IL_0040: Expected I, but got I8
+        netTarget.CapMixCout = *(ushort*)source;
+        netTarget.SOUNDNODES = new NETAVHSDK_SOUNDNODE[*(ushort*)source];
+        ushort num = *(ushort*)source;
+        string[] array = new string[num];
+        int num2 = 0;
+        if (0u < (uint)num)
+        {
+            do
+            {
+                NETAVHSDK_SOUNDNODE nETAVHSDK_SOUNDNODE = new NETAVHSDK_SOUNDNODE();
+                IntPtr ptr = (IntPtr)(void*)((nint)source + (long)num2 * 512L + 2);
+                nETAVHSDK_SOUNDNODE.CapMixName = Marshal.PtrToStringAnsi(ptr);
+                netTarget.SOUNDNODES[num2] = nETAVHSDK_SOUNDNODE;
+                array[num2] = nETAVHSDK_SOUNDNODE.CapMixName;
+                num2++;
+            }
+            while (num2 < *(ushort*)source);
+        }
+
+        return array;
+    }
+
+    public unsafe void CoverToNETAVHSDK_GBSoundCarINFO(ref NETAVHSDK_GBSoundCarINFO source, IPGBSDK_GBSoundCarINFO* netTarget)
+    {
+        //IL_005a: Expected I, but got I8
+        //IL_006d: Expected I, but got I8
+        *(ushort*)netTarget = source.GBlevel;
+        *(ushort*)((long)(nint)netTarget + 2L) = source.GBVol;
+        *(ushort*)((long)(nint)netTarget + 4L) = source.PlaySec;
+        *(ushort*)((long)(nint)netTarget + 6L) = source.EncType;
+        *(ushort*)((long)(nint)netTarget + 8L) = source.AudioSrcChId;
+        *(ushort*)((long)(nint)netTarget + 10L) = source.TmCout;
+        int num = 0;
+        NETAVHSDK_GBSoundCarINFO nETAVHSDK_GBSoundCarINFO = source;
+        if (0u < (uint)nETAVHSDK_GBSoundCarINFO.TmCout)
+        {
+            IPGBSDK_GBSoundCarINFO* ptr = (IPGBSDK_GBSoundCarINFO*)((ulong)(nint)netTarget + 12uL);
+            do
+            {
+                *(ushort*)ptr = nETAVHSDK_GBSoundCarINFO.TmID[num];
+                num++;
+                ptr = (IPGBSDK_GBSoundCarINFO*)((ulong)(nint)ptr + 2uL);
+                nETAVHSDK_GBSoundCarINFO = source;
+            }
+            while (num < nETAVHSDK_GBSoundCarINFO.TmCout);
+        }
+    }
+
+    public unsafe void CoverToNETAVHSDK_ThirdRealSrcINFO(ref NETAVHSDK_ThirdRealSrcINFO source, IPGBSDK_ThirdRealSrcINFO* netTarget)
+    {
+        *(ushort*)netTarget = source.EncType;
+        *(ushort*)((long)(nint)netTarget + 2L) = source.ADataInputType;
+    }
+
+    public unsafe void CoverToNETAVHSDK_GBTHIRDREALAUDIOINFO(ref NETAVHSDK_GBTHIRDREALAUDIOINFO source, IPGBSDK_GBTHIRDREALAUDIOINFO* netTarget)
+    {
+        //IL_005a: Expected I, but got I8
+        //IL_006d: Expected I, but got I8
+        *(ushort*)netTarget = source.GBlevel;
+        *(ushort*)((long)(nint)netTarget + 2L) = source.GBVol;
+        *(ushort*)((long)(nint)netTarget + 4L) = source.EncType;
+        *(ushort*)((long)(nint)netTarget + 6L) = source.AudioSrcChId;
+        *(ushort*)((long)(nint)netTarget + 8L) = source.PlaySec;
+        *(ushort*)((long)(nint)netTarget + 10L) = source.TmCout;
+        int num = 0;
+        NETAVHSDK_GBTHIRDREALAUDIOINFO nETAVHSDK_GBTHIRDREALAUDIOINFO = source;
+        if (0u < (uint)nETAVHSDK_GBTHIRDREALAUDIOINFO.TmCout)
+        {
+            IPGBSDK_GBTHIRDREALAUDIOINFO* ptr = (IPGBSDK_GBTHIRDREALAUDIOINFO*)((ulong)(nint)netTarget + 12uL);
+            do
+            {
+                *(ushort*)ptr = nETAVHSDK_GBTHIRDREALAUDIOINFO.TmID[num];
+                num++;
+                ptr = (IPGBSDK_GBTHIRDREALAUDIOINFO*)((ulong)(nint)ptr + 2uL);
+                nETAVHSDK_GBTHIRDREALAUDIOINFO = source;
+            }
+            while (num < nETAVHSDK_GBTHIRDREALAUDIOINFO.TmCout);
+        }
+    }
+
+    public unsafe void CoverToNETAVHSDK_THREEFIRINFO(ref NETAVHSDK_THREEFIRINFO source, IPGBSDK_THREEFIRINFO* netTarget)
+    {
+        //IL_001c: Expected I, but got I8
+        //IL_002f: Expected I, but got I8
+        *(ushort*)netTarget = source.PinCout;
+        int num = 0;
+        NETAVHSDK_THREEFIRINFO nETAVHSDK_THREEFIRINFO = source;
+        if (0u < (uint)nETAVHSDK_THREEFIRINFO.PinCout)
+        {
+            IPGBSDK_THREEFIRINFO* ptr = (IPGBSDK_THREEFIRINFO*)((ulong)(nint)netTarget + 2uL);
+            do
+            {
+                *(ushort*)ptr = nETAVHSDK_THREEFIRINFO.PinNO[num];
+                num++;
+                ptr = (IPGBSDK_THREEFIRINFO*)((ulong)(nint)ptr + 2uL);
+                nETAVHSDK_THREEFIRINFO = source;
+            }
+            while (num < nETAVHSDK_THREEFIRINFO.PinCout);
+        }
+    }
+
+    public unsafe void CoverToNETAVHSDK_SET_TMVOL(ref NETAVHSDK_SET_TMVOL source, IPGBSDK_SET_TMVOL* netTarget)
+    {
+        //IL_003c: Expected I, but got I8
+        //IL_004f: Expected I, but got I8
+        *(ushort*)((long)(nint)netTarget + 402L) = source.TmVol;
+        *(ushort*)((long)(nint)netTarget + 404L) = source.SetType;
+        *(short*)netTarget = (short)source.TmCout;
+        int num = 0;
+        NETAVHSDK_SET_TMVOL nETAVHSDK_SET_TMVOL = source;
+        if (0 < nETAVHSDK_SET_TMVOL.TmCout)
+        {
+            IPGBSDK_SET_TMVOL* ptr = (IPGBSDK_SET_TMVOL*)((ulong)(nint)netTarget + 2uL);
+            do
+            {
+                *(ushort*)ptr = nETAVHSDK_SET_TMVOL.TmId[num];
+                num++;
+                ptr = (IPGBSDK_SET_TMVOL*)((ulong)(nint)ptr + 2uL);
+                nETAVHSDK_SET_TMVOL = source;
+            }
+            while ((uint)num < nETAVHSDK_SET_TMVOL.TmCout);
+        }
+    }
+
+    public unsafe void CoverToNETAVHSDK_LCA_MP3INFO(ref NETAVHSDK_LCA_MP3INFO source, IPGBSDK_LCA_MP3INFO* netTarget)
+    {
+        *(int*)netTarget = source.FileSec;
+        *(int*)((long)(nint)netTarget + 4L) = source.IsUseGb;
+    }
+
+    public unsafe void CoverToNETAVHSDK_USERFQINFO(ref NETAVHSDK_USERFQINFO netTarget, IPGBSDK_USERFQINFO* source)
+    {
+        //IL_002a: Expected I, but got I8
+        //IL_003d: Expected I, but got I8
+        //IL_0081: Expected I, but got I8
+        //IL_009c: Expected I, but got I8
+        //IL_00b8: Expected I, but got I8
+        netTarget.FqCout = *(ushort*)source;
+        netTarget.m_OneFq = new NETAVHSDK_ONEFQINFO[*(ushort*)source];
+        int num = 0;
+        if (0u >= (uint)(*(ushort*)source))
+        {
+            return;
+        }
+
+        IPGBSDK_USERFQINFO* ptr = (IPGBSDK_USERFQINFO*)((ulong)(nint)source + 204uL);
+        do
+        {
+            NETAVHSDK_ONEFQINFO nETAVHSDK_ONEFQINFO = new NETAVHSDK_ONEFQINFO();
+            IntPtr ptr2 = (IntPtr)(void*)((ulong)(nint)ptr - 202uL);
+            nETAVHSDK_ONEFQINFO.FqName = Marshal.PtrToStringAnsi(ptr2);
+            nETAVHSDK_ONEFQINFO.FqId = *(ushort*)((long)(nint)ptr - 2L);
+            nETAVHSDK_ONEFQINFO.FqTmCout = *(ushort*)ptr;
+            ushort num2 = *(ushort*)ptr;
+            if (num2 != 0)
+            {
+                nETAVHSDK_ONEFQINFO.FqTmNo = new ushort[num2];
+                int num3 = 0;
+                if (0u < (uint)(*(ushort*)ptr))
+                {
+                    IPGBSDK_USERFQINFO* ptr3 = (IPGBSDK_USERFQINFO*)((ulong)(nint)ptr + 2uL);
+                    do
+                    {
+                        ref ushort reference = ref nETAVHSDK_ONEFQINFO.FqTmNo[num3];
+                        reference = *(ushort*)ptr3;
+                        num3++;
+                        ptr3 = (IPGBSDK_USERFQINFO*)((ulong)(nint)ptr3 + 2uL);
+                    }
+                    while (num3 < *(ushort*)ptr);
+                }
+            }
+
+            netTarget.m_OneFq[num] = nETAVHSDK_ONEFQINFO;
+            num++;
+            ptr = (IPGBSDK_USERFQINFO*)((ulong)(nint)ptr + 6204uL);
+        }
+        while (num < *(ushort*)source);
+    }
+
+    public unsafe void CoverToNETAVHSDK_ONEFQINFO(ref NETAVHSDK_ONEFQINFO netTarget, IPGBSDK_ONEFQINFO* source)
+    {
+        //IL_0065: Expected I, but got I8
+        //IL_007e: Expected I, but got I8
+        string fqName = Marshal.PtrToStringAnsi((IntPtr)(void*)source);
+        netTarget.FqName = fqName;
+        netTarget.FqId = *(ushort*)((long)(nint)source + 200L);
+        netTarget.FqTmCout = *(ushort*)((long)(nint)source + 202L);
+        ushort num = *(ushort*)((long)(nint)source + 202L);
+        if (num == 0)
+        {
+            return;
+        }
+
+        netTarget.FqTmNo = new ushort[num];
+        int num2 = 0;
+        if (0u < (uint)(*(ushort*)((long)(nint)source + 202L)))
+        {
+            IPGBSDK_ONEFQINFO* ptr = (IPGBSDK_ONEFQINFO*)((ulong)(nint)source + 204uL);
+            do
+            {
+                ref ushort reference = ref netTarget.FqTmNo[num2];
+                reference = *(ushort*)ptr;
+                num2++;
+                ptr = (IPGBSDK_ONEFQINFO*)((ulong)(nint)ptr + 2uL);
+            }
+            while (num2 < *(ushort*)((long)(nint)source + 202L));
+        }
+    }
+
+    public unsafe void str2ch(string source, sbyte* szChar, int szLength)
+    {
+        if (!((string)null == source))
+        {
+            sbyte* ptr = (sbyte*)(void*)Marshal.StringToHGlobalAnsi(source);
+            _003CModule_003E.strcpy_s(szChar, (ulong)szLength, ptr);
+            Marshal.FreeHGlobal((IntPtr)(void*)ptr);
+        }
+    }
+
+    public unsafe string ch2str(sbyte* ch)
+    {
+        return Marshal.PtrToStringAnsi((IntPtr)(void*)ch);
+    }
+}
+#endregion // IPGBNET

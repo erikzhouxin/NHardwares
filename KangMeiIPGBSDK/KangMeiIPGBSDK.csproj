@@ -1,0 +1,43 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFrameworks>net40;net45;netstandard2.1;netcoreapp3.1;net6.0</TargetFrameworks>
+		<AssemblyName>NSystem.Data.KangMeiIPGBSDK</AssemblyName>
+		<RootNamespace>System.Data.KangMeiIPGBSDK</RootNamespace>
+		<PackageId>NSystem.Data.KangMeiIPGBSDK</PackageId>
+		<NoBuild>false</NoBuild>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<Copyright>Copyright 2020-2022</Copyright>
+		<Company>EZhouXin</Company>
+		<Authors>ErikZhouXin</Authors>
+		<Version>2022.6.6</Version>
+		<AssemblyVersion>2022.6.6.666</AssemblyVersion>
+		<FileVersion>2022.6.6.666</FileVersion>
+		<Description>康美数字IP网络广播对讲系统音柱项目集成</Description>
+		<ProviderLangVersion>7.3</ProviderLangVersion>
+		<GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+		<PackageTags>康美;康美SDK;音柱;IPGBNET;</PackageTags>
+		<RepositoryUrl>https://www.gitee.com/ErikZhouXin/NHardwares</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+	</PropertyGroup>
+	<ItemGroup>
+		<Compile Remove="beans\**" />
+		<EmbeddedResource Remove="beans\**" />
+		<None Remove="beans\**" />
+	</ItemGroup>
+	<ItemGroup>
+		<Compile Update="Properties\Resources.Designer.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>Resources.resx</DependentUpon>
+		</Compile>
+	</ItemGroup>
+	<ItemGroup>
+		<EmbeddedResource Update="Properties\Resources.resx">
+			<Generator>ResXFileCodeGenerator</Generator>
+			<LastGenOutput>Resources.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+	</ItemGroup>
+</Project>
