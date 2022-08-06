@@ -86,6 +86,7 @@ namespace System.Data.KangMeiIPGBSDK
         public const int IPGB_MAX_THREEFIRCOUT = 32;
 
         static Lazy<IIPGBNETSdkProxy> _IPGBNETSdk = new Lazy<IIPGBNETSdkProxy>(() => new IPGBNETSdkLoader(), true);
+        static Lazy<IIPGBPUSHSdkProxy> _IPGBPUSHSdk = new Lazy<IIPGBPUSHSdkProxy>(() => new IPGBPUSHSdkLoader(), true);
         /// <summary>
         /// 静态构造
         /// </summary>
@@ -181,6 +182,34 @@ namespace System.Data.KangMeiIPGBSDK
             if (!Directory.Exists(pluginDir)) { return IPGBNETSdkDller.Instance; }
             return _IPGBNETSdk.Value;
         }
+        /// <summary>
+        /// 创建推流代理
+        /// </summary>
+        /// <param name="isBase"></param>
+        /// <returns></returns>
+        public static IIPGBPUSHSdkProxy CreatePush(bool isBase)
+        {
+            var currentDir = IPGBPUSHSdkDller.DllFullPath;
+            var pluginDir = IPGBPUSHSdkLoader.DllFullPath;
+            if (isBase)
+            {
+                if (!File.Exists(IPGBPUSHSdkDller.DllFullName))
+                {
+                    if (Directory.Exists(pluginDir))
+                    {
+                        try
+                        {
+                            CopyDirectory(pluginDir, currentDir);
+                        }
+                        catch { }
+                    }
+                }
+                return IPGBPUSHSdkDller.Instance;
+            }
+            if (!Directory.Exists(pluginDir)) { return IPGBPUSHSdkDller.Instance; }
+            return _IPGBPUSHSdk.Value;
+        }
+
         /// <summary>
         /// 复制目录
         /// </summary>

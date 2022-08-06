@@ -22,5 +22,11 @@ namespace KangMeiIPGBSDK.WinForm
             var form = new TestIPGBNET.TestIPGBNETForm();
             form.ShowDialog();
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            var form = new TestIPGBNETPush.TestIPGBPUSHNETForm();
+            form.ShowDialog();
+        }
     }
 }

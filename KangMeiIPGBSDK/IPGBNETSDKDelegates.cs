@@ -52,7 +52,7 @@ namespace System.Data.KangMeiIPGBSDK
     /// <param name="lpFireInfo">触发的消防信息</param>
     /// <param name="dwUser">用户类指针</param>
     public delegate void SDKfFireSta(int UserId, IPGBSDK_FIREINFO lpFireInfo, long dwUser);
-    internal class DCreater
+    internal partial class DCreater
     {
         /// <summary>
         /// 设置登录状态回调
