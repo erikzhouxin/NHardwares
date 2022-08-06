@@ -63,16 +63,6 @@ namespace System.Data.HDSSSESDK.Properties {
         /// <summary>
         ///   查找 System.Byte[] 类型的本地化资源。
         /// </summary>
-        internal static byte[] HDSSSEEXE {
-            get {
-                object obj = ResourceManager.GetObject("HDSSSEEXE", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   查找 System.Byte[] 类型的本地化资源。
-        /// </summary>
         internal static byte[] X86_BmpToJpg {
             get {
                 object obj = ResourceManager.GetObject("X86_BmpToJpg", resourceCulture);
@@ -86,6 +76,16 @@ namespace System.Data.HDSSSESDK.Properties {
         internal static byte[] X86_HDSSSE32 {
             get {
                 object obj = ResourceManager.GetObject("X86_HDSSSE32", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Byte[] 类型的本地化资源。
+        /// </summary>
+        internal static byte[] X86_HDSSSEEXE {
+            get {
+                object obj = ResourceManager.GetObject("X86_HDSSSEEXE", resourceCulture);
                 return ((byte[])(obj));
             }
         }

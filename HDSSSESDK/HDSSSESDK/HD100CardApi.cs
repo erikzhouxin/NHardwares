@@ -399,8 +399,8 @@ namespace System.Data.HDSSSESDK
         /// </summary>
         static HD100CardApi64()
         {
-            var isExists = HD100CardSdk.CompareFile(ExeFileName, Properties.Resources.HDSSSEEXE);
-            if (!isExists) { HD100CardSdk.WriteFile(Properties.Resources.HDSSSEEXE, ExeFileName); }
+            var isExists = HD100CardSdk.CompareFile(ExeFileName, Properties.Resources.X86_HDSSSEEXE);
+            if (!isExists) { HD100CardSdk.WriteFile(Properties.Resources.X86_HDSSSEEXE, ExeFileName); }
             Instance = new HD100CardApi64();
         }
 
@@ -416,7 +416,7 @@ namespace System.Data.HDSSSESDK
         {
             _key = Guid.NewGuid().ToString("N");
             _process = new Process();
-            _process.StartInfo.FileName = ExeFile;
+            _process.StartInfo.FileName = ExeFileName;
             _process.StartInfo.WorkingDirectory = HD100CardSdkLoader.DllFullPath;
             _process.StartInfo.Arguments = _key;
             _process.StartInfo.CreateNoWindow = true;
