@@ -4,7 +4,7 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms>
-    <AssemblyName>NSystem.Data.HDSSSESDK.WinForm</AssemblyName>
+    <AssemblyName>HDSSSESDK.WinForm</AssemblyName>
     <RootNamespace>System.Data.HDSSSESDK.WinForm</RootNamespace>
   </PropertyGroup>
 

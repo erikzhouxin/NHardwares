@@ -14,7 +14,7 @@ namespace System.Data.KangMeiIPGBSDK
     /// <param name="UserId">用户ID</param>
     /// <param name="ISConn">连接或断开  (1:连接,0:断开)</param>
     /// <param name="lpUserInfo">当连接成功时输出用户信息</param>
-    /// <param name="dwUser"><用户类指针/param>
+    /// <param name="dwUser">用户类指针</param>
     public delegate void SDKfConnectStatus(int UserId, byte ISConn, IPGBSDK_USERINFO lpUserInfo, long dwUser);
     /// <summary>
     /// 单个终端状态回调函数原形

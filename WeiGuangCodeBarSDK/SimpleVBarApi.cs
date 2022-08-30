@@ -45,7 +45,7 @@ namespace System.Data.WeiGuangCodeBarSDK
         /// </summary>
         public void CloseDevice()
         {
-            if (dev != null)
+            if (dev != IntPtr.Zero)
             {
                 _proxy.vbar_channel_close(dev);
                 dev = IntPtr.Zero;
@@ -59,7 +59,7 @@ namespace System.Data.WeiGuangCodeBarSDK
         /// <param name="cswitch"></param>
         public void ControlScan(bool cswitch)
         {
-            if (dev != null)
+            if (dev != IntPtr.Zero)
             {
                 if (cswitch)
                 {
@@ -92,7 +92,7 @@ namespace System.Data.WeiGuangCodeBarSDK
         /// <param name="bswitch"></param>
         public void Backlight(bool bswitch)
         {
-            if (dev != null)
+            if (dev != IntPtr.Zero)
             {
                 if (bswitch)
                 {
@@ -127,7 +127,7 @@ namespace System.Data.WeiGuangCodeBarSDK
         public bool GetResultStr(out byte[] result_buffer, out int result_size)
         {
             byte[] c_result = new byte[1024];
-            if (dev != null)
+            if (dev != IntPtr.Zero)
             {
                 byte[] bufferrecv = new byte[1024];
                 _proxy.vbar_channel_recv(dev, bufferrecv, 1024, 200);
