@@ -10,7 +10,7 @@ namespace System.Data.WeiGuangCodeBarSDK
     /// </summary>
     public class SimpleVBarApi
     {
-        IntPtr dev = IntPtr.Zero;
+        private IntPtr dev = IntPtr.Zero;
         private ISimpleVBarSdkProxy _proxy;
         /// <summary>
         /// 构造
@@ -28,7 +28,7 @@ namespace System.Data.WeiGuangCodeBarSDK
         /// 连接设备
         /// </summary>
         /// <returns></returns>
-        public bool openDevice()
+        public bool OpenDevice()
         {
             dev = _proxy.vbar_channel_open(1, 1);
             if (dev == IntPtr.Zero)
@@ -126,17 +126,16 @@ namespace System.Data.WeiGuangCodeBarSDK
         /// <returns></returns>
         public bool GetResultStr(out byte[] result_buffer, out int result_size)
         {
-            byte[] c_result = new byte[1024];
             if (dev != IntPtr.Zero)
             {
                 byte[] bufferrecv = new byte[1024];
                 _proxy.vbar_channel_recv(dev, bufferrecv, 1024, 200);
                 if (bufferrecv[0] == 85 && bufferrecv[1] == 170 && bufferrecv[3] == 0)
                 {
-                    Console.WriteLine(bufferrecv[4]);
-                    Console.WriteLine(bufferrecv[5]);
+                    //Console.WriteLine(bufferrecv[4]);
+                    //Console.WriteLine(bufferrecv[5]);
                     int datalen = bufferrecv[4] + (bufferrecv[5] << 8);
-                    Console.WriteLine(datalen);
+                    //Console.WriteLine(datalen);
                     byte[] readBuffers = new byte[datalen];
                     for (int s1 = 0; s1 < datalen; s1++)
                     {
@@ -157,6 +156,40 @@ namespace System.Data.WeiGuangCodeBarSDK
             {
                 result_buffer = null;
                 result_size = 0;
+                return false;
+            }
+        }
+        /// <summary>
+        /// 解码设置
+        /// </summary>
+        /// <param name="resuult"></param>
+        /// <returns></returns>
+        public bool GetResultStr(out string resuult)
+        {
+            if (dev != IntPtr.Zero)
+            {
+                byte[] bufferrecv = new byte[1024];
+                _proxy.vbar_channel_recv(dev, bufferrecv, 1024, 200);
+                if (bufferrecv[0] == 85 && bufferrecv[1] == 170 && bufferrecv[3] == 0)
+                {
+                    int datalen = bufferrecv[4] + (bufferrecv[5] << 8);
+                    byte[] readBuffers = new byte[datalen];
+                    for (int s1 = 0; s1 < datalen; s1++)
+                    {
+                        readBuffers[s1] = bufferrecv[6 + s1];
+                    }
+                    resuult = Encoding.UTF8.GetString(readBuffers);
+                    return true;
+                }
+                else
+                {
+                    resuult = null;
+                    return false;
+                }
+            }
+            else
+            {
+                resuult = null;
                 return false;
             }
         }

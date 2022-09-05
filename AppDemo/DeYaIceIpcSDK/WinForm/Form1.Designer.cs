@@ -191,9 +191,10 @@
             // 
             // buttonConnect
             // 
-            this.buttonConnect.Location = new System.Drawing.Point(140, 49);
+            this.buttonConnect.Location = new System.Drawing.Point(163, 69);
+            this.buttonConnect.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.buttonConnect.Name = "buttonConnect";
-            this.buttonConnect.Size = new System.Drawing.Size(38, 23);
+            this.buttonConnect.Size = new System.Drawing.Size(44, 33);
             this.buttonConnect.TabIndex = 0;
             this.buttonConnect.Text = "连接";
             this.buttonConnect.UseVisualStyleBackColor = true;
@@ -201,27 +202,30 @@
             // 
             // textBoxIP1
             // 
-            this.textBoxIP1.Location = new System.Drawing.Point(14, 51);
+            this.textBoxIP1.Location = new System.Drawing.Point(16, 72);
+            this.textBoxIP1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.textBoxIP1.Name = "textBoxIP1";
-            this.textBoxIP1.Size = new System.Drawing.Size(124, 21);
+            this.textBoxIP1.Size = new System.Drawing.Size(144, 23);
             this.textBoxIP1.TabIndex = 1;
             this.textBoxIP1.Text = "192.168.1.99";
             // 
             // pictureBox1
             // 
             this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pictureBox1.Location = new System.Drawing.Point(11, 148);
+            this.pictureBox1.Location = new System.Drawing.Point(13, 210);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(410, 202);
+            this.pictureBox1.Size = new System.Drawing.Size(478, 285);
             this.pictureBox1.TabIndex = 2;
             this.pictureBox1.TabStop = false;
             // 
             // buttonDisconnect
             // 
             this.buttonDisconnect.Enabled = false;
-            this.buttonDisconnect.Location = new System.Drawing.Point(140, 72);
+            this.buttonDisconnect.Location = new System.Drawing.Point(163, 102);
+            this.buttonDisconnect.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.buttonDisconnect.Name = "buttonDisconnect";
-            this.buttonDisconnect.Size = new System.Drawing.Size(38, 23);
+            this.buttonDisconnect.Size = new System.Drawing.Size(44, 33);
             this.buttonDisconnect.TabIndex = 4;
             this.buttonDisconnect.Text = "断开";
             this.buttonDisconnect.UseVisualStyleBackColor = true;
@@ -230,9 +234,10 @@
             // buttonDisconnect2
             // 
             this.buttonDisconnect2.Enabled = false;
-            this.buttonDisconnect2.Location = new System.Drawing.Point(602, 72);
+            this.buttonDisconnect2.Location = new System.Drawing.Point(702, 102);
+            this.buttonDisconnect2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.buttonDisconnect2.Name = "buttonDisconnect2";
-            this.buttonDisconnect2.Size = new System.Drawing.Size(38, 23);
+            this.buttonDisconnect2.Size = new System.Drawing.Size(44, 33);
             this.buttonDisconnect2.TabIndex = 8;
             this.buttonDisconnect2.Text = "断开";
             this.buttonDisconnect2.UseVisualStyleBackColor = true;
@@ -240,17 +245,19 @@
             // 
             // textBoxIP2
             // 
-            this.textBoxIP2.Location = new System.Drawing.Point(471, 51);
+            this.textBoxIP2.Location = new System.Drawing.Point(550, 72);
+            this.textBoxIP2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.textBoxIP2.Name = "textBoxIP2";
-            this.textBoxIP2.Size = new System.Drawing.Size(124, 21);
+            this.textBoxIP2.Size = new System.Drawing.Size(144, 23);
             this.textBoxIP2.TabIndex = 7;
             this.textBoxIP2.Text = "192.168.55.100";
             // 
             // buttonConnect2
             // 
-            this.buttonConnect2.Location = new System.Drawing.Point(602, 49);
+            this.buttonConnect2.Location = new System.Drawing.Point(702, 69);
+            this.buttonConnect2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.buttonConnect2.Name = "buttonConnect2";
-            this.buttonConnect2.Size = new System.Drawing.Size(38, 23);
+            this.buttonConnect2.Size = new System.Drawing.Size(44, 33);
             this.buttonConnect2.TabIndex = 6;
             this.buttonConnect2.Text = "连接";
             this.buttonConnect2.UseVisualStyleBackColor = true;
@@ -259,18 +266,20 @@
             // pictureBox2
             // 
             this.pictureBox2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pictureBox2.Location = new System.Drawing.Point(471, 148);
+            this.pictureBox2.Location = new System.Drawing.Point(550, 210);
+            this.pictureBox2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(409, 202);
+            this.pictureBox2.Size = new System.Drawing.Size(477, 285);
             this.pictureBox2.TabIndex = 9;
             this.pictureBox2.TabStop = false;
             // 
             // buttonDisconnect3
             // 
             this.buttonDisconnect3.Enabled = false;
-            this.buttonDisconnect3.Location = new System.Drawing.Point(136, 389);
+            this.buttonDisconnect3.Location = new System.Drawing.Point(159, 551);
+            this.buttonDisconnect3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.buttonDisconnect3.Name = "buttonDisconnect3";
-            this.buttonDisconnect3.Size = new System.Drawing.Size(38, 23);
+            this.buttonDisconnect3.Size = new System.Drawing.Size(44, 33);
             this.buttonDisconnect3.TabIndex = 14;
             this.buttonDisconnect3.Text = "断开";
             this.buttonDisconnect3.UseVisualStyleBackColor = true;
@@ -279,25 +288,28 @@
             // pictureBox3
             // 
             this.pictureBox3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pictureBox3.Location = new System.Drawing.Point(10, 465);
+            this.pictureBox3.Location = new System.Drawing.Point(12, 659);
+            this.pictureBox3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(411, 206);
+            this.pictureBox3.Size = new System.Drawing.Size(479, 291);
             this.pictureBox3.TabIndex = 12;
             this.pictureBox3.TabStop = false;
             // 
             // textBoxIP3
             // 
-            this.textBoxIP3.Location = new System.Drawing.Point(10, 368);
+            this.textBoxIP3.Location = new System.Drawing.Point(12, 521);
+            this.textBoxIP3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.textBoxIP3.Name = "textBoxIP3";
-            this.textBoxIP3.Size = new System.Drawing.Size(124, 21);
+            this.textBoxIP3.Size = new System.Drawing.Size(144, 23);
             this.textBoxIP3.TabIndex = 11;
             this.textBoxIP3.Text = "192.168.55.100";
             // 
             // buttonConnect3
             // 
-            this.buttonConnect3.Location = new System.Drawing.Point(136, 366);
+            this.buttonConnect3.Location = new System.Drawing.Point(159, 518);
+            this.buttonConnect3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.buttonConnect3.Name = "buttonConnect3";
-            this.buttonConnect3.Size = new System.Drawing.Size(38, 23);
+            this.buttonConnect3.Size = new System.Drawing.Size(44, 33);
             this.buttonConnect3.TabIndex = 10;
             this.buttonConnect3.Text = "连接";
             this.buttonConnect3.UseVisualStyleBackColor = true;
@@ -306,9 +318,10 @@
             // buttonDisconnect4
             // 
             this.buttonDisconnect4.Enabled = false;
-            this.buttonDisconnect4.Location = new System.Drawing.Point(602, 390);
+            this.buttonDisconnect4.Location = new System.Drawing.Point(702, 552);
+            this.buttonDisconnect4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.buttonDisconnect4.Name = "buttonDisconnect4";
-            this.buttonDisconnect4.Size = new System.Drawing.Size(38, 23);
+            this.buttonDisconnect4.Size = new System.Drawing.Size(44, 33);
             this.buttonDisconnect4.TabIndex = 19;
             this.buttonDisconnect4.Text = "断开";
             this.buttonDisconnect4.UseVisualStyleBackColor = true;
@@ -317,25 +330,28 @@
             // pictureBox4
             // 
             this.pictureBox4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pictureBox4.Location = new System.Drawing.Point(471, 465);
+            this.pictureBox4.Location = new System.Drawing.Point(550, 659);
+            this.pictureBox4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.pictureBox4.Name = "pictureBox4";
-            this.pictureBox4.Size = new System.Drawing.Size(409, 206);
+            this.pictureBox4.Size = new System.Drawing.Size(477, 291);
             this.pictureBox4.TabIndex = 17;
             this.pictureBox4.TabStop = false;
             // 
             // textBoxIP4
             // 
-            this.textBoxIP4.Location = new System.Drawing.Point(471, 368);
+            this.textBoxIP4.Location = new System.Drawing.Point(550, 521);
+            this.textBoxIP4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.textBoxIP4.Name = "textBoxIP4";
-            this.textBoxIP4.Size = new System.Drawing.Size(124, 21);
+            this.textBoxIP4.Size = new System.Drawing.Size(144, 23);
             this.textBoxIP4.TabIndex = 16;
             this.textBoxIP4.Text = "192.168.55.100";
             // 
             // buttonConnect4
             // 
-            this.buttonConnect4.Location = new System.Drawing.Point(602, 366);
+            this.buttonConnect4.Location = new System.Drawing.Point(702, 518);
+            this.buttonConnect4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.buttonConnect4.Name = "buttonConnect4";
-            this.buttonConnect4.Size = new System.Drawing.Size(38, 23);
+            this.buttonConnect4.Size = new System.Drawing.Size(44, 33);
             this.buttonConnect4.TabIndex = 15;
             this.buttonConnect4.Text = "连接";
             this.buttonConnect4.UseVisualStyleBackColor = true;
@@ -344,45 +360,50 @@
             // labelPlate1
             // 
             this.labelPlate1.AutoSize = true;
-            this.labelPlate1.Location = new System.Drawing.Point(12, 128);
+            this.labelPlate1.Location = new System.Drawing.Point(14, 181);
+            this.labelPlate1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelPlate1.Name = "labelPlate1";
-            this.labelPlate1.Size = new System.Drawing.Size(29, 12);
+            this.labelPlate1.Size = new System.Drawing.Size(32, 17);
             this.labelPlate1.TabIndex = 20;
             this.labelPlate1.Text = "车牌";
             // 
             // labelPlate2
             // 
             this.labelPlate2.AutoSize = true;
-            this.labelPlate2.Location = new System.Drawing.Point(474, 126);
+            this.labelPlate2.Location = new System.Drawing.Point(553, 178);
+            this.labelPlate2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelPlate2.Name = "labelPlate2";
-            this.labelPlate2.Size = new System.Drawing.Size(29, 12);
+            this.labelPlate2.Size = new System.Drawing.Size(32, 17);
             this.labelPlate2.TabIndex = 21;
             this.labelPlate2.Text = "车牌";
             // 
             // labelPlate3
             // 
             this.labelPlate3.AutoSize = true;
-            this.labelPlate3.Location = new System.Drawing.Point(8, 450);
+            this.labelPlate3.Location = new System.Drawing.Point(9, 638);
+            this.labelPlate3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelPlate3.Name = "labelPlate3";
-            this.labelPlate3.Size = new System.Drawing.Size(29, 12);
+            this.labelPlate3.Size = new System.Drawing.Size(32, 17);
             this.labelPlate3.TabIndex = 22;
             this.labelPlate3.Text = "车牌";
             // 
             // labelPlate4
             // 
             this.labelPlate4.AutoSize = true;
-            this.labelPlate4.Location = new System.Drawing.Point(474, 449);
+            this.labelPlate4.Location = new System.Drawing.Point(553, 636);
+            this.labelPlate4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelPlate4.Name = "labelPlate4";
-            this.labelPlate4.Size = new System.Drawing.Size(29, 12);
+            this.labelPlate4.Size = new System.Drawing.Size(32, 17);
             this.labelPlate4.TabIndex = 23;
             this.labelPlate4.Text = "车牌";
             // 
             // button_openGate
             // 
             this.button_openGate.Enabled = false;
-            this.button_openGate.Location = new System.Drawing.Point(215, 49);
+            this.button_openGate.Location = new System.Drawing.Point(251, 69);
+            this.button_openGate.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button_openGate.Name = "button_openGate";
-            this.button_openGate.Size = new System.Drawing.Size(63, 23);
+            this.button_openGate.Size = new System.Drawing.Size(74, 33);
             this.button_openGate.TabIndex = 24;
             this.button_openGate.Text = "打开道闸";
             this.button_openGate.UseVisualStyleBackColor = true;
@@ -391,9 +412,10 @@
             // button_openGate2
             // 
             this.button_openGate2.Enabled = false;
-            this.button_openGate2.Location = new System.Drawing.Point(678, 49);
+            this.button_openGate2.Location = new System.Drawing.Point(791, 69);
+            this.button_openGate2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button_openGate2.Name = "button_openGate2";
-            this.button_openGate2.Size = new System.Drawing.Size(63, 23);
+            this.button_openGate2.Size = new System.Drawing.Size(74, 33);
             this.button_openGate2.TabIndex = 25;
             this.button_openGate2.Text = "打开道闸";
             this.button_openGate2.UseVisualStyleBackColor = true;
@@ -402,9 +424,10 @@
             // button_openGate3
             // 
             this.button_openGate3.Enabled = false;
-            this.button_openGate3.Location = new System.Drawing.Point(213, 366);
+            this.button_openGate3.Location = new System.Drawing.Point(248, 518);
+            this.button_openGate3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button_openGate3.Name = "button_openGate3";
-            this.button_openGate3.Size = new System.Drawing.Size(63, 23);
+            this.button_openGate3.Size = new System.Drawing.Size(74, 33);
             this.button_openGate3.TabIndex = 26;
             this.button_openGate3.Text = "打开道闸";
             this.button_openGate3.UseVisualStyleBackColor = true;
@@ -413,9 +436,10 @@
             // button_openGate4
             // 
             this.button_openGate4.Enabled = false;
-            this.button_openGate4.Location = new System.Drawing.Point(678, 366);
+            this.button_openGate4.Location = new System.Drawing.Point(791, 518);
+            this.button_openGate4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button_openGate4.Name = "button_openGate4";
-            this.button_openGate4.Size = new System.Drawing.Size(63, 23);
+            this.button_openGate4.Size = new System.Drawing.Size(74, 33);
             this.button_openGate4.TabIndex = 27;
             this.button_openGate4.Text = "打开道闸";
             this.button_openGate4.UseVisualStyleBackColor = true;
@@ -424,9 +448,10 @@
             // button_trigger
             // 
             this.button_trigger.Enabled = false;
-            this.button_trigger.Location = new System.Drawing.Point(215, 72);
+            this.button_trigger.Location = new System.Drawing.Point(251, 102);
+            this.button_trigger.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button_trigger.Name = "button_trigger";
-            this.button_trigger.Size = new System.Drawing.Size(63, 23);
+            this.button_trigger.Size = new System.Drawing.Size(74, 33);
             this.button_trigger.TabIndex = 28;
             this.button_trigger.Text = "手动触发";
             this.button_trigger.UseVisualStyleBackColor = true;
@@ -435,9 +460,10 @@
             // button_trigger2
             // 
             this.button_trigger2.Enabled = false;
-            this.button_trigger2.Location = new System.Drawing.Point(678, 72);
+            this.button_trigger2.Location = new System.Drawing.Point(791, 102);
+            this.button_trigger2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button_trigger2.Name = "button_trigger2";
-            this.button_trigger2.Size = new System.Drawing.Size(63, 23);
+            this.button_trigger2.Size = new System.Drawing.Size(74, 33);
             this.button_trigger2.TabIndex = 29;
             this.button_trigger2.Text = "手动触发";
             this.button_trigger2.UseVisualStyleBackColor = true;
@@ -446,9 +472,10 @@
             // button_trigger3
             // 
             this.button_trigger3.Enabled = false;
-            this.button_trigger3.Location = new System.Drawing.Point(213, 389);
+            this.button_trigger3.Location = new System.Drawing.Point(248, 551);
+            this.button_trigger3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button_trigger3.Name = "button_trigger3";
-            this.button_trigger3.Size = new System.Drawing.Size(63, 23);
+            this.button_trigger3.Size = new System.Drawing.Size(74, 33);
             this.button_trigger3.TabIndex = 30;
             this.button_trigger3.Text = "手动触发";
             this.button_trigger3.UseVisualStyleBackColor = true;
@@ -457,9 +484,10 @@
             // button_trigger4
             // 
             this.button_trigger4.Enabled = false;
-            this.button_trigger4.Location = new System.Drawing.Point(678, 390);
+            this.button_trigger4.Location = new System.Drawing.Point(791, 552);
+            this.button_trigger4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button_trigger4.Name = "button_trigger4";
-            this.button_trigger4.Size = new System.Drawing.Size(63, 23);
+            this.button_trigger4.Size = new System.Drawing.Size(74, 33);
             this.button_trigger4.TabIndex = 31;
             this.button_trigger4.Text = "手动触发";
             this.button_trigger4.UseVisualStyleBackColor = true;
@@ -468,9 +496,10 @@
             // button_reboot
             // 
             this.button_reboot.Enabled = false;
-            this.button_reboot.Location = new System.Drawing.Point(177, 49);
+            this.button_reboot.Location = new System.Drawing.Point(206, 69);
+            this.button_reboot.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button_reboot.Name = "button_reboot";
-            this.button_reboot.Size = new System.Drawing.Size(38, 23);
+            this.button_reboot.Size = new System.Drawing.Size(44, 33);
             this.button_reboot.TabIndex = 32;
             this.button_reboot.Text = "重启";
             this.button_reboot.UseVisualStyleBackColor = true;
@@ -479,9 +508,10 @@
             // button_reboot2
             // 
             this.button_reboot2.Enabled = false;
-            this.button_reboot2.Location = new System.Drawing.Point(641, 49);
+            this.button_reboot2.Location = new System.Drawing.Point(748, 69);
+            this.button_reboot2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button_reboot2.Name = "button_reboot2";
-            this.button_reboot2.Size = new System.Drawing.Size(38, 23);
+            this.button_reboot2.Size = new System.Drawing.Size(44, 33);
             this.button_reboot2.TabIndex = 33;
             this.button_reboot2.Text = "重启";
             this.button_reboot2.UseVisualStyleBackColor = true;
@@ -490,9 +520,10 @@
             // button_reboot3
             // 
             this.button_reboot3.Enabled = false;
-            this.button_reboot3.Location = new System.Drawing.Point(175, 366);
+            this.button_reboot3.Location = new System.Drawing.Point(204, 518);
+            this.button_reboot3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button_reboot3.Name = "button_reboot3";
-            this.button_reboot3.Size = new System.Drawing.Size(38, 23);
+            this.button_reboot3.Size = new System.Drawing.Size(44, 33);
             this.button_reboot3.TabIndex = 34;
             this.button_reboot3.Text = "重启";
             this.button_reboot3.UseVisualStyleBackColor = true;
@@ -501,9 +532,10 @@
             // button_reboot4
             // 
             this.button_reboot4.Enabled = false;
-            this.button_reboot4.Location = new System.Drawing.Point(641, 366);
+            this.button_reboot4.Location = new System.Drawing.Point(748, 518);
+            this.button_reboot4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button_reboot4.Name = "button_reboot4";
-            this.button_reboot4.Size = new System.Drawing.Size(38, 23);
+            this.button_reboot4.Size = new System.Drawing.Size(44, 33);
             this.button_reboot4.TabIndex = 35;
             this.button_reboot4.Text = "重启";
             this.button_reboot4.UseVisualStyleBackColor = true;
@@ -512,9 +544,10 @@
             // button_talk
             // 
             this.button_talk.Enabled = false;
-            this.button_talk.Location = new System.Drawing.Point(401, 49);
+            this.button_talk.Location = new System.Drawing.Point(468, 69);
+            this.button_talk.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button_talk.Name = "button_talk";
-            this.button_talk.Size = new System.Drawing.Size(39, 23);
+            this.button_talk.Size = new System.Drawing.Size(46, 33);
             this.button_talk.TabIndex = 36;
             this.button_talk.Text = "对讲";
             this.button_talk.UseVisualStyleBackColor = true;
@@ -523,9 +556,10 @@
             // button_talk2
             // 
             this.button_talk2.Enabled = false;
-            this.button_talk2.Location = new System.Drawing.Point(864, 49);
+            this.button_talk2.Location = new System.Drawing.Point(1008, 69);
+            this.button_talk2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button_talk2.Name = "button_talk2";
-            this.button_talk2.Size = new System.Drawing.Size(42, 23);
+            this.button_talk2.Size = new System.Drawing.Size(49, 33);
             this.button_talk2.TabIndex = 37;
             this.button_talk2.Text = "对讲";
             this.button_talk2.UseVisualStyleBackColor = true;
@@ -534,9 +568,10 @@
             // button_talk3
             // 
             this.button_talk3.Enabled = false;
-            this.button_talk3.Location = new System.Drawing.Point(402, 366);
+            this.button_talk3.Location = new System.Drawing.Point(469, 518);
+            this.button_talk3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button_talk3.Name = "button_talk3";
-            this.button_talk3.Size = new System.Drawing.Size(38, 23);
+            this.button_talk3.Size = new System.Drawing.Size(44, 33);
             this.button_talk3.TabIndex = 38;
             this.button_talk3.Text = "对讲";
             this.button_talk3.UseVisualStyleBackColor = true;
@@ -545,9 +580,10 @@
             // button_talk4
             // 
             this.button_talk4.Enabled = false;
-            this.button_talk4.Location = new System.Drawing.Point(863, 366);
+            this.button_talk4.Location = new System.Drawing.Point(1007, 518);
+            this.button_talk4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button_talk4.Name = "button_talk4";
-            this.button_talk4.Size = new System.Drawing.Size(38, 23);
+            this.button_talk4.Size = new System.Drawing.Size(44, 33);
             this.button_talk4.TabIndex = 39;
             this.button_talk4.Text = "对讲";
             this.button_talk4.UseVisualStyleBackColor = true;
@@ -556,9 +592,10 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(12, 30);
+            this.label5.Location = new System.Drawing.Point(14, 42);
+            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(65, 12);
+            this.label5.Size = new System.Drawing.Size(68, 17);
             this.label5.TabIndex = 40;
             this.label5.Text = "连接方式：";
             // 
@@ -566,9 +603,10 @@
             // 
             this.radioButton_Preview.AutoSize = true;
             this.radioButton_Preview.Checked = true;
-            this.radioButton_Preview.Location = new System.Drawing.Point(90, 29);
+            this.radioButton_Preview.Location = new System.Drawing.Point(105, 41);
+            this.radioButton_Preview.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.radioButton_Preview.Name = "radioButton_Preview";
-            this.radioButton_Preview.Size = new System.Drawing.Size(71, 16);
+            this.radioButton_Preview.Size = new System.Drawing.Size(74, 21);
             this.radioButton_Preview.TabIndex = 41;
             this.radioButton_Preview.TabStop = true;
             this.radioButton_Preview.Text = "视频预览";
@@ -577,9 +615,10 @@
             // radioButton_Frame
             // 
             this.radioButton_Frame.AutoSize = true;
-            this.radioButton_Frame.Location = new System.Drawing.Point(208, 28);
+            this.radioButton_Frame.Location = new System.Drawing.Point(243, 40);
+            this.radioButton_Frame.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.radioButton_Frame.Name = "radioButton_Frame";
-            this.radioButton_Frame.Size = new System.Drawing.Size(71, 16);
+            this.radioButton_Frame.Size = new System.Drawing.Size(74, 21);
             this.radioButton_Frame.TabIndex = 42;
             this.radioButton_Frame.TabStop = true;
             this.radioButton_Frame.Text = "图像解码";
@@ -591,7 +630,8 @@
             this.ChoiceToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1343, 25);
+            this.menuStrip1.Padding = new System.Windows.Forms.Padding(7, 3, 0, 3);
+            this.menuStrip1.Size = new System.Drawing.Size(1370, 27);
             this.menuStrip1.TabIndex = 43;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -629,9 +669,10 @@
             // buttonSyncTime1
             // 
             this.buttonSyncTime1.Enabled = false;
-            this.buttonSyncTime1.Location = new System.Drawing.Point(277, 49);
+            this.buttonSyncTime1.Location = new System.Drawing.Point(323, 69);
+            this.buttonSyncTime1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.buttonSyncTime1.Name = "buttonSyncTime1";
-            this.buttonSyncTime1.Size = new System.Drawing.Size(63, 23);
+            this.buttonSyncTime1.Size = new System.Drawing.Size(74, 33);
             this.buttonSyncTime1.TabIndex = 44;
             this.buttonSyncTime1.Text = "时间同步";
             this.buttonSyncTime1.UseVisualStyleBackColor = true;
@@ -640,9 +681,10 @@
             // buttonSPortSend1
             // 
             this.buttonSPortSend1.Enabled = false;
-            this.buttonSPortSend1.Location = new System.Drawing.Point(277, 72);
+            this.buttonSPortSend1.Location = new System.Drawing.Point(323, 102);
+            this.buttonSPortSend1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.buttonSPortSend1.Name = "buttonSPortSend1";
-            this.buttonSPortSend1.Size = new System.Drawing.Size(63, 23);
+            this.buttonSPortSend1.Size = new System.Drawing.Size(74, 33);
             this.buttonSPortSend1.TabIndex = 45;
             this.buttonSPortSend1.Text = "串口发送";
             this.buttonSPortSend1.UseVisualStyleBackColor = true;
@@ -651,9 +693,10 @@
             // buttonRecord1
             // 
             this.buttonRecord1.Enabled = false;
-            this.buttonRecord1.Location = new System.Drawing.Point(340, 72);
+            this.buttonRecord1.Location = new System.Drawing.Point(397, 102);
+            this.buttonRecord1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.buttonRecord1.Name = "buttonRecord1";
-            this.buttonRecord1.Size = new System.Drawing.Size(61, 23);
+            this.buttonRecord1.Size = new System.Drawing.Size(71, 33);
             this.buttonRecord1.TabIndex = 47;
             this.buttonRecord1.Text = "开始录像";
             this.buttonRecord1.UseVisualStyleBackColor = true;
@@ -662,9 +705,10 @@
             // buttonCapture1
             // 
             this.buttonCapture1.Enabled = false;
-            this.buttonCapture1.Location = new System.Drawing.Point(177, 72);
+            this.buttonCapture1.Location = new System.Drawing.Point(206, 102);
+            this.buttonCapture1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.buttonCapture1.Name = "buttonCapture1";
-            this.buttonCapture1.Size = new System.Drawing.Size(38, 23);
+            this.buttonCapture1.Size = new System.Drawing.Size(44, 33);
             this.buttonCapture1.TabIndex = 48;
             this.buttonCapture1.Text = "抓拍";
             this.buttonCapture1.UseVisualStyleBackColor = true;
@@ -672,9 +716,10 @@
             // 
             // buttonPlateZero1
             // 
-            this.buttonPlateZero1.Location = new System.Drawing.Point(164, 121);
+            this.buttonPlateZero1.Location = new System.Drawing.Point(191, 171);
+            this.buttonPlateZero1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.buttonPlateZero1.Name = "buttonPlateZero1";
-            this.buttonPlateZero1.Size = new System.Drawing.Size(19, 23);
+            this.buttonPlateZero1.Size = new System.Drawing.Size(22, 33);
             this.buttonPlateZero1.TabIndex = 51;
             this.buttonPlateZero1.Text = "零";
             this.buttonPlateZero1.UseVisualStyleBackColor = true;
@@ -682,25 +727,28 @@
             // 
             // textBoxGateNum1
             // 
-            this.textBoxGateNum1.Location = new System.Drawing.Point(189, 123);
+            this.textBoxGateNum1.Location = new System.Drawing.Point(220, 174);
+            this.textBoxGateNum1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.textBoxGateNum1.Name = "textBoxGateNum1";
             this.textBoxGateNum1.ReadOnly = true;
-            this.textBoxGateNum1.Size = new System.Drawing.Size(80, 21);
+            this.textBoxGateNum1.Size = new System.Drawing.Size(93, 23);
             this.textBoxGateNum1.TabIndex = 52;
             // 
             // textBoxTriggerNum1
             // 
-            this.textBoxTriggerNum1.Location = new System.Drawing.Point(294, 121);
+            this.textBoxTriggerNum1.Location = new System.Drawing.Point(343, 171);
+            this.textBoxTriggerNum1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.textBoxTriggerNum1.Name = "textBoxTriggerNum1";
             this.textBoxTriggerNum1.ReadOnly = true;
-            this.textBoxTriggerNum1.Size = new System.Drawing.Size(80, 21);
+            this.textBoxTriggerNum1.Size = new System.Drawing.Size(93, 23);
             this.textBoxTriggerNum1.TabIndex = 53;
             // 
             // buttonGateZero1
             // 
-            this.buttonGateZero1.Location = new System.Drawing.Point(271, 121);
+            this.buttonGateZero1.Location = new System.Drawing.Point(316, 171);
+            this.buttonGateZero1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.buttonGateZero1.Name = "buttonGateZero1";
-            this.buttonGateZero1.Size = new System.Drawing.Size(19, 23);
+            this.buttonGateZero1.Size = new System.Drawing.Size(22, 33);
             this.buttonGateZero1.TabIndex = 54;
             this.buttonGateZero1.Text = "零";
             this.buttonGateZero1.UseVisualStyleBackColor = true;
@@ -708,9 +756,10 @@
             // 
             // buttonTriggerZero1
             // 
-            this.buttonTriggerZero1.Location = new System.Drawing.Point(380, 121);
+            this.buttonTriggerZero1.Location = new System.Drawing.Point(443, 171);
+            this.buttonTriggerZero1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.buttonTriggerZero1.Name = "buttonTriggerZero1";
-            this.buttonTriggerZero1.Size = new System.Drawing.Size(19, 23);
+            this.buttonTriggerZero1.Size = new System.Drawing.Size(22, 33);
             this.buttonTriggerZero1.TabIndex = 55;
             this.buttonTriggerZero1.Text = "零";
             this.buttonTriggerZero1.UseVisualStyleBackColor = true;
@@ -719,9 +768,10 @@
             // buttonCapture2
             // 
             this.buttonCapture2.Enabled = false;
-            this.buttonCapture2.Location = new System.Drawing.Point(641, 72);
+            this.buttonCapture2.Location = new System.Drawing.Point(748, 102);
+            this.buttonCapture2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.buttonCapture2.Name = "buttonCapture2";
-            this.buttonCapture2.Size = new System.Drawing.Size(38, 23);
+            this.buttonCapture2.Size = new System.Drawing.Size(44, 33);
             this.buttonCapture2.TabIndex = 60;
             this.buttonCapture2.Text = "抓拍";
             this.buttonCapture2.UseVisualStyleBackColor = true;
@@ -730,9 +780,10 @@
             // buttonRecord2
             // 
             this.buttonRecord2.Enabled = false;
-            this.buttonRecord2.Location = new System.Drawing.Point(802, 72);
+            this.buttonRecord2.Location = new System.Drawing.Point(936, 102);
+            this.buttonRecord2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.buttonRecord2.Name = "buttonRecord2";
-            this.buttonRecord2.Size = new System.Drawing.Size(62, 23);
+            this.buttonRecord2.Size = new System.Drawing.Size(72, 33);
             this.buttonRecord2.TabIndex = 59;
             this.buttonRecord2.Text = "开始录像";
             this.buttonRecord2.UseVisualStyleBackColor = true;
@@ -741,9 +792,10 @@
             // buttonSPortSend2
             // 
             this.buttonSPortSend2.Enabled = false;
-            this.buttonSPortSend2.Location = new System.Drawing.Point(740, 72);
+            this.buttonSPortSend2.Location = new System.Drawing.Point(863, 102);
+            this.buttonSPortSend2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.buttonSPortSend2.Name = "buttonSPortSend2";
-            this.buttonSPortSend2.Size = new System.Drawing.Size(63, 23);
+            this.buttonSPortSend2.Size = new System.Drawing.Size(74, 33);
             this.buttonSPortSend2.TabIndex = 57;
             this.buttonSPortSend2.Text = "串口发送";
             this.buttonSPortSend2.UseVisualStyleBackColor = true;
@@ -752,9 +804,10 @@
             // buttonSyncTime2
             // 
             this.buttonSyncTime2.Enabled = false;
-            this.buttonSyncTime2.Location = new System.Drawing.Point(740, 49);
+            this.buttonSyncTime2.Location = new System.Drawing.Point(863, 69);
+            this.buttonSyncTime2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.buttonSyncTime2.Name = "buttonSyncTime2";
-            this.buttonSyncTime2.Size = new System.Drawing.Size(63, 23);
+            this.buttonSyncTime2.Size = new System.Drawing.Size(74, 33);
             this.buttonSyncTime2.TabIndex = 56;
             this.buttonSyncTime2.Text = "时间同步";
             this.buttonSyncTime2.UseVisualStyleBackColor = true;
@@ -763,9 +816,10 @@
             // buttonCapture3
             // 
             this.buttonCapture3.Enabled = false;
-            this.buttonCapture3.Location = new System.Drawing.Point(175, 389);
+            this.buttonCapture3.Location = new System.Drawing.Point(204, 551);
+            this.buttonCapture3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.buttonCapture3.Name = "buttonCapture3";
-            this.buttonCapture3.Size = new System.Drawing.Size(37, 23);
+            this.buttonCapture3.Size = new System.Drawing.Size(43, 33);
             this.buttonCapture3.TabIndex = 66;
             this.buttonCapture3.Text = "抓拍";
             this.buttonCapture3.UseVisualStyleBackColor = true;
@@ -774,9 +828,10 @@
             // buttonRecord3
             // 
             this.buttonRecord3.Enabled = false;
-            this.buttonRecord3.Location = new System.Drawing.Point(340, 388);
+            this.buttonRecord3.Location = new System.Drawing.Point(397, 550);
+            this.buttonRecord3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.buttonRecord3.Name = "buttonRecord3";
-            this.buttonRecord3.Size = new System.Drawing.Size(61, 23);
+            this.buttonRecord3.Size = new System.Drawing.Size(71, 33);
             this.buttonRecord3.TabIndex = 65;
             this.buttonRecord3.Text = "开始录像";
             this.buttonRecord3.UseVisualStyleBackColor = true;
@@ -785,9 +840,10 @@
             // buttonSPortSend3
             // 
             this.buttonSPortSend3.Enabled = false;
-            this.buttonSPortSend3.Location = new System.Drawing.Point(276, 389);
+            this.buttonSPortSend3.Location = new System.Drawing.Point(322, 551);
+            this.buttonSPortSend3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.buttonSPortSend3.Name = "buttonSPortSend3";
-            this.buttonSPortSend3.Size = new System.Drawing.Size(63, 23);
+            this.buttonSPortSend3.Size = new System.Drawing.Size(74, 33);
             this.buttonSPortSend3.TabIndex = 63;
             this.buttonSPortSend3.Text = "串口发送";
             this.buttonSPortSend3.UseVisualStyleBackColor = true;
@@ -796,9 +852,10 @@
             // buttonSyncTime3
             // 
             this.buttonSyncTime3.Enabled = false;
-            this.buttonSyncTime3.Location = new System.Drawing.Point(276, 366);
+            this.buttonSyncTime3.Location = new System.Drawing.Point(322, 518);
+            this.buttonSyncTime3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.buttonSyncTime3.Name = "buttonSyncTime3";
-            this.buttonSyncTime3.Size = new System.Drawing.Size(63, 23);
+            this.buttonSyncTime3.Size = new System.Drawing.Size(74, 33);
             this.buttonSyncTime3.TabIndex = 62;
             this.buttonSyncTime3.Text = "时间同步";
             this.buttonSyncTime3.UseVisualStyleBackColor = true;
@@ -807,9 +864,10 @@
             // buttonCapture4
             // 
             this.buttonCapture4.Enabled = false;
-            this.buttonCapture4.Location = new System.Drawing.Point(641, 390);
+            this.buttonCapture4.Location = new System.Drawing.Point(748, 552);
+            this.buttonCapture4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.buttonCapture4.Name = "buttonCapture4";
-            this.buttonCapture4.Size = new System.Drawing.Size(38, 23);
+            this.buttonCapture4.Size = new System.Drawing.Size(44, 33);
             this.buttonCapture4.TabIndex = 72;
             this.buttonCapture4.Text = "抓拍";
             this.buttonCapture4.UseVisualStyleBackColor = true;
@@ -818,9 +876,10 @@
             // buttonRecord4
             // 
             this.buttonRecord4.Enabled = false;
-            this.buttonRecord4.Location = new System.Drawing.Point(802, 389);
+            this.buttonRecord4.Location = new System.Drawing.Point(936, 551);
+            this.buttonRecord4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.buttonRecord4.Name = "buttonRecord4";
-            this.buttonRecord4.Size = new System.Drawing.Size(62, 23);
+            this.buttonRecord4.Size = new System.Drawing.Size(72, 33);
             this.buttonRecord4.TabIndex = 71;
             this.buttonRecord4.Text = "开始录像";
             this.buttonRecord4.UseVisualStyleBackColor = true;
@@ -829,9 +888,10 @@
             // buttonSPortSend4
             // 
             this.buttonSPortSend4.Enabled = false;
-            this.buttonSPortSend4.Location = new System.Drawing.Point(740, 389);
+            this.buttonSPortSend4.Location = new System.Drawing.Point(863, 551);
+            this.buttonSPortSend4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.buttonSPortSend4.Name = "buttonSPortSend4";
-            this.buttonSPortSend4.Size = new System.Drawing.Size(63, 23);
+            this.buttonSPortSend4.Size = new System.Drawing.Size(74, 33);
             this.buttonSPortSend4.TabIndex = 69;
             this.buttonSPortSend4.Text = "串口发送";
             this.buttonSPortSend4.UseVisualStyleBackColor = true;
@@ -840,9 +900,10 @@
             // buttonSyncTime4
             // 
             this.buttonSyncTime4.Enabled = false;
-            this.buttonSyncTime4.Location = new System.Drawing.Point(740, 366);
+            this.buttonSyncTime4.Location = new System.Drawing.Point(863, 518);
+            this.buttonSyncTime4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.buttonSyncTime4.Name = "buttonSyncTime4";
-            this.buttonSyncTime4.Size = new System.Drawing.Size(63, 23);
+            this.buttonSyncTime4.Size = new System.Drawing.Size(74, 33);
             this.buttonSyncTime4.TabIndex = 68;
             this.buttonSyncTime4.Text = "时间同步";
             this.buttonSyncTime4.UseVisualStyleBackColor = true;
@@ -850,9 +911,10 @@
             // 
             // buttonTriggerZero2
             // 
-            this.buttonTriggerZero2.Location = new System.Drawing.Point(843, 120);
+            this.buttonTriggerZero2.Location = new System.Drawing.Point(983, 170);
+            this.buttonTriggerZero2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.buttonTriggerZero2.Name = "buttonTriggerZero2";
-            this.buttonTriggerZero2.Size = new System.Drawing.Size(19, 23);
+            this.buttonTriggerZero2.Size = new System.Drawing.Size(22, 33);
             this.buttonTriggerZero2.TabIndex = 79;
             this.buttonTriggerZero2.Text = "零";
             this.buttonTriggerZero2.UseVisualStyleBackColor = true;
@@ -860,9 +922,10 @@
             // 
             // buttonGateZero2
             // 
-            this.buttonGateZero2.Location = new System.Drawing.Point(734, 119);
+            this.buttonGateZero2.Location = new System.Drawing.Point(856, 169);
+            this.buttonGateZero2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.buttonGateZero2.Name = "buttonGateZero2";
-            this.buttonGateZero2.Size = new System.Drawing.Size(19, 23);
+            this.buttonGateZero2.Size = new System.Drawing.Size(22, 33);
             this.buttonGateZero2.TabIndex = 78;
             this.buttonGateZero2.Text = "零";
             this.buttonGateZero2.UseVisualStyleBackColor = true;
@@ -870,25 +933,28 @@
             // 
             // textBoxTriggerNum2
             // 
-            this.textBoxTriggerNum2.Location = new System.Drawing.Point(757, 120);
+            this.textBoxTriggerNum2.Location = new System.Drawing.Point(883, 170);
+            this.textBoxTriggerNum2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.textBoxTriggerNum2.Name = "textBoxTriggerNum2";
             this.textBoxTriggerNum2.ReadOnly = true;
-            this.textBoxTriggerNum2.Size = new System.Drawing.Size(80, 21);
+            this.textBoxTriggerNum2.Size = new System.Drawing.Size(93, 23);
             this.textBoxTriggerNum2.TabIndex = 77;
             // 
             // textBoxGateNum2
             // 
-            this.textBoxGateNum2.Location = new System.Drawing.Point(652, 121);
+            this.textBoxGateNum2.Location = new System.Drawing.Point(761, 171);
+            this.textBoxGateNum2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.textBoxGateNum2.Name = "textBoxGateNum2";
             this.textBoxGateNum2.ReadOnly = true;
-            this.textBoxGateNum2.Size = new System.Drawing.Size(80, 21);
+            this.textBoxGateNum2.Size = new System.Drawing.Size(93, 23);
             this.textBoxGateNum2.TabIndex = 76;
             // 
             // buttonPlateZero2
             // 
-            this.buttonPlateZero2.Location = new System.Drawing.Point(627, 119);
+            this.buttonPlateZero2.Location = new System.Drawing.Point(732, 169);
+            this.buttonPlateZero2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.buttonPlateZero2.Name = "buttonPlateZero2";
-            this.buttonPlateZero2.Size = new System.Drawing.Size(19, 23);
+            this.buttonPlateZero2.Size = new System.Drawing.Size(22, 33);
             this.buttonPlateZero2.TabIndex = 75;
             this.buttonPlateZero2.Text = "零";
             this.buttonPlateZero2.UseVisualStyleBackColor = true;
@@ -896,9 +962,10 @@
             // 
             // buttonTriggerZero3
             // 
-            this.buttonTriggerZero3.Location = new System.Drawing.Point(380, 439);
+            this.buttonTriggerZero3.Location = new System.Drawing.Point(443, 622);
+            this.buttonTriggerZero3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.buttonTriggerZero3.Name = "buttonTriggerZero3";
-            this.buttonTriggerZero3.Size = new System.Drawing.Size(19, 23);
+            this.buttonTriggerZero3.Size = new System.Drawing.Size(22, 33);
             this.buttonTriggerZero3.TabIndex = 85;
             this.buttonTriggerZero3.Text = "零";
             this.buttonTriggerZero3.UseVisualStyleBackColor = true;
@@ -906,9 +973,10 @@
             // 
             // buttonGateZero3
             // 
-            this.buttonGateZero3.Location = new System.Drawing.Point(271, 439);
+            this.buttonGateZero3.Location = new System.Drawing.Point(316, 622);
+            this.buttonGateZero3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.buttonGateZero3.Name = "buttonGateZero3";
-            this.buttonGateZero3.Size = new System.Drawing.Size(19, 23);
+            this.buttonGateZero3.Size = new System.Drawing.Size(22, 33);
             this.buttonGateZero3.TabIndex = 84;
             this.buttonGateZero3.Text = "零";
             this.buttonGateZero3.UseVisualStyleBackColor = true;
@@ -916,25 +984,28 @@
             // 
             // textBoxTriggerNum3
             // 
-            this.textBoxTriggerNum3.Location = new System.Drawing.Point(294, 439);
+            this.textBoxTriggerNum3.Location = new System.Drawing.Point(343, 622);
+            this.textBoxTriggerNum3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.textBoxTriggerNum3.Name = "textBoxTriggerNum3";
             this.textBoxTriggerNum3.ReadOnly = true;
-            this.textBoxTriggerNum3.Size = new System.Drawing.Size(80, 21);
+            this.textBoxTriggerNum3.Size = new System.Drawing.Size(93, 23);
             this.textBoxTriggerNum3.TabIndex = 83;
             // 
             // textBoxGateNum3
             // 
-            this.textBoxGateNum3.Location = new System.Drawing.Point(189, 441);
+            this.textBoxGateNum3.Location = new System.Drawing.Point(220, 625);
+            this.textBoxGateNum3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.textBoxGateNum3.Name = "textBoxGateNum3";
             this.textBoxGateNum3.ReadOnly = true;
-            this.textBoxGateNum3.Size = new System.Drawing.Size(80, 21);
+            this.textBoxGateNum3.Size = new System.Drawing.Size(93, 23);
             this.textBoxGateNum3.TabIndex = 82;
             // 
             // buttonPlateZero3
             // 
-            this.buttonPlateZero3.Location = new System.Drawing.Point(164, 439);
+            this.buttonPlateZero3.Location = new System.Drawing.Point(191, 622);
+            this.buttonPlateZero3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.buttonPlateZero3.Name = "buttonPlateZero3";
-            this.buttonPlateZero3.Size = new System.Drawing.Size(19, 23);
+            this.buttonPlateZero3.Size = new System.Drawing.Size(22, 33);
             this.buttonPlateZero3.TabIndex = 81;
             this.buttonPlateZero3.Text = "零";
             this.buttonPlateZero3.UseVisualStyleBackColor = true;
@@ -942,9 +1013,10 @@
             // 
             // buttonTriggerZero4
             // 
-            this.buttonTriggerZero4.Location = new System.Drawing.Point(843, 440);
+            this.buttonTriggerZero4.Location = new System.Drawing.Point(983, 623);
+            this.buttonTriggerZero4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.buttonTriggerZero4.Name = "buttonTriggerZero4";
-            this.buttonTriggerZero4.Size = new System.Drawing.Size(19, 23);
+            this.buttonTriggerZero4.Size = new System.Drawing.Size(22, 33);
             this.buttonTriggerZero4.TabIndex = 91;
             this.buttonTriggerZero4.Text = "零";
             this.buttonTriggerZero4.UseVisualStyleBackColor = true;
@@ -952,9 +1024,10 @@
             // 
             // buttonGateZero4
             // 
-            this.buttonGateZero4.Location = new System.Drawing.Point(734, 440);
+            this.buttonGateZero4.Location = new System.Drawing.Point(856, 623);
+            this.buttonGateZero4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.buttonGateZero4.Name = "buttonGateZero4";
-            this.buttonGateZero4.Size = new System.Drawing.Size(19, 23);
+            this.buttonGateZero4.Size = new System.Drawing.Size(22, 33);
             this.buttonGateZero4.TabIndex = 90;
             this.buttonGateZero4.Text = "零";
             this.buttonGateZero4.UseVisualStyleBackColor = true;
@@ -962,25 +1035,28 @@
             // 
             // textBoxTriggerNum4
             // 
-            this.textBoxTriggerNum4.Location = new System.Drawing.Point(757, 440);
+            this.textBoxTriggerNum4.Location = new System.Drawing.Point(883, 623);
+            this.textBoxTriggerNum4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.textBoxTriggerNum4.Name = "textBoxTriggerNum4";
             this.textBoxTriggerNum4.ReadOnly = true;
-            this.textBoxTriggerNum4.Size = new System.Drawing.Size(80, 21);
+            this.textBoxTriggerNum4.Size = new System.Drawing.Size(93, 23);
             this.textBoxTriggerNum4.TabIndex = 89;
             // 
             // textBoxGateNum4
             // 
-            this.textBoxGateNum4.Location = new System.Drawing.Point(652, 442);
+            this.textBoxGateNum4.Location = new System.Drawing.Point(761, 626);
+            this.textBoxGateNum4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.textBoxGateNum4.Name = "textBoxGateNum4";
             this.textBoxGateNum4.ReadOnly = true;
-            this.textBoxGateNum4.Size = new System.Drawing.Size(80, 21);
+            this.textBoxGateNum4.Size = new System.Drawing.Size(93, 23);
             this.textBoxGateNum4.TabIndex = 88;
             // 
             // buttonPlateZero4
             // 
-            this.buttonPlateZero4.Location = new System.Drawing.Point(627, 440);
+            this.buttonPlateZero4.Location = new System.Drawing.Point(732, 623);
+            this.buttonPlateZero4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.buttonPlateZero4.Name = "buttonPlateZero4";
-            this.buttonPlateZero4.Size = new System.Drawing.Size(19, 23);
+            this.buttonPlateZero4.Size = new System.Drawing.Size(22, 33);
             this.buttonPlateZero4.TabIndex = 87;
             this.buttonPlateZero4.Text = "零";
             this.buttonPlateZero4.UseVisualStyleBackColor = true;
@@ -989,36 +1065,40 @@
             // labelStatus1
             // 
             this.labelStatus1.AutoSize = true;
-            this.labelStatus1.Location = new System.Drawing.Point(13, 81);
+            this.labelStatus1.Location = new System.Drawing.Point(15, 115);
+            this.labelStatus1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelStatus1.Name = "labelStatus1";
-            this.labelStatus1.Size = new System.Drawing.Size(29, 12);
+            this.labelStatus1.Size = new System.Drawing.Size(32, 17);
             this.labelStatus1.TabIndex = 93;
             this.labelStatus1.Text = "离线";
             // 
             // labelStatus2
             // 
             this.labelStatus2.AutoSize = true;
-            this.labelStatus2.Location = new System.Drawing.Point(472, 81);
+            this.labelStatus2.Location = new System.Drawing.Point(551, 115);
+            this.labelStatus2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelStatus2.Name = "labelStatus2";
-            this.labelStatus2.Size = new System.Drawing.Size(29, 12);
+            this.labelStatus2.Size = new System.Drawing.Size(32, 17);
             this.labelStatus2.TabIndex = 94;
             this.labelStatus2.Text = "离线";
             // 
             // labelStatus3
             // 
             this.labelStatus3.AutoSize = true;
-            this.labelStatus3.Location = new System.Drawing.Point(9, 398);
+            this.labelStatus3.Location = new System.Drawing.Point(10, 564);
+            this.labelStatus3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelStatus3.Name = "labelStatus3";
-            this.labelStatus3.Size = new System.Drawing.Size(29, 12);
+            this.labelStatus3.Size = new System.Drawing.Size(32, 17);
             this.labelStatus3.TabIndex = 95;
             this.labelStatus3.Text = "离线";
             // 
             // labelStatus4
             // 
             this.labelStatus4.AutoSize = true;
-            this.labelStatus4.Location = new System.Drawing.Point(472, 399);
+            this.labelStatus4.Location = new System.Drawing.Point(551, 565);
+            this.labelStatus4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelStatus4.Name = "labelStatus4";
-            this.labelStatus4.Size = new System.Drawing.Size(29, 12);
+            this.labelStatus4.Size = new System.Drawing.Size(32, 17);
             this.labelStatus4.TabIndex = 96;
             this.labelStatus4.Text = "离线";
             // 
@@ -1026,18 +1106,20 @@
             // 
             this.listBoxInfo.FormattingEnabled = true;
             this.listBoxInfo.HorizontalScrollbar = true;
-            this.listBoxInfo.ItemHeight = 12;
-            this.listBoxInfo.Location = new System.Drawing.Point(939, 51);
+            this.listBoxInfo.ItemHeight = 17;
+            this.listBoxInfo.Location = new System.Drawing.Point(1096, 72);
+            this.listBoxInfo.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.listBoxInfo.Name = "listBoxInfo";
-            this.listBoxInfo.Size = new System.Drawing.Size(399, 616);
+            this.listBoxInfo.Size = new System.Drawing.Size(465, 871);
             this.listBoxInfo.TabIndex = 97;
             // 
             // buttonStartVideo1
             // 
             this.buttonStartVideo1.Enabled = false;
-            this.buttonStartVideo1.Location = new System.Drawing.Point(340, 49);
+            this.buttonStartVideo1.Location = new System.Drawing.Point(397, 69);
+            this.buttonStartVideo1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.buttonStartVideo1.Name = "buttonStartVideo1";
-            this.buttonStartVideo1.Size = new System.Drawing.Size(61, 23);
+            this.buttonStartVideo1.Size = new System.Drawing.Size(71, 33);
             this.buttonStartVideo1.TabIndex = 98;
             this.buttonStartVideo1.Text = "开始视频";
             this.buttonStartVideo1.UseVisualStyleBackColor = true;
@@ -1046,9 +1128,10 @@
             // buttonStartVideo3
             // 
             this.buttonStartVideo3.Enabled = false;
-            this.buttonStartVideo3.Location = new System.Drawing.Point(340, 366);
+            this.buttonStartVideo3.Location = new System.Drawing.Point(397, 518);
+            this.buttonStartVideo3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.buttonStartVideo3.Name = "buttonStartVideo3";
-            this.buttonStartVideo3.Size = new System.Drawing.Size(61, 23);
+            this.buttonStartVideo3.Size = new System.Drawing.Size(71, 33);
             this.buttonStartVideo3.TabIndex = 99;
             this.buttonStartVideo3.Text = "开始视频";
             this.buttonStartVideo3.UseVisualStyleBackColor = true;
@@ -1057,9 +1140,10 @@
             // buttonStartVideo2
             // 
             this.buttonStartVideo2.Enabled = false;
-            this.buttonStartVideo2.Location = new System.Drawing.Point(802, 49);
+            this.buttonStartVideo2.Location = new System.Drawing.Point(936, 69);
+            this.buttonStartVideo2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.buttonStartVideo2.Name = "buttonStartVideo2";
-            this.buttonStartVideo2.Size = new System.Drawing.Size(62, 23);
+            this.buttonStartVideo2.Size = new System.Drawing.Size(72, 33);
             this.buttonStartVideo2.TabIndex = 100;
             this.buttonStartVideo2.Text = "开始视频";
             this.buttonStartVideo2.UseVisualStyleBackColor = true;
@@ -1068,9 +1152,10 @@
             // buttonStartVideo4
             // 
             this.buttonStartVideo4.Enabled = false;
-            this.buttonStartVideo4.Location = new System.Drawing.Point(802, 366);
+            this.buttonStartVideo4.Location = new System.Drawing.Point(936, 518);
+            this.buttonStartVideo4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.buttonStartVideo4.Name = "buttonStartVideo4";
-            this.buttonStartVideo4.Size = new System.Drawing.Size(62, 23);
+            this.buttonStartVideo4.Size = new System.Drawing.Size(72, 33);
             this.buttonStartVideo4.TabIndex = 101;
             this.buttonStartVideo4.Text = "开始视频";
             this.buttonStartVideo4.UseVisualStyleBackColor = true;
@@ -1079,9 +1164,10 @@
             // radioButtonOnlyConn
             // 
             this.radioButtonOnlyConn.AutoSize = true;
-            this.radioButtonOnlyConn.Location = new System.Drawing.Point(329, 30);
+            this.radioButtonOnlyConn.Location = new System.Drawing.Point(384, 42);
+            this.radioButtonOnlyConn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.radioButtonOnlyConn.Name = "radioButtonOnlyConn";
-            this.radioButtonOnlyConn.Size = new System.Drawing.Size(107, 16);
+            this.radioButtonOnlyConn.Size = new System.Drawing.Size(110, 21);
             this.radioButtonOnlyConn.TabIndex = 102;
             this.radioButtonOnlyConn.TabStop = true;
             this.radioButtonOnlyConn.Text = "连接与码流分开";
@@ -1090,9 +1176,10 @@
             // checkBoxPassword
             // 
             this.checkBoxPassword.AutoSize = true;
-            this.checkBoxPassword.Location = new System.Drawing.Point(471, 31);
+            this.checkBoxPassword.Location = new System.Drawing.Point(550, 44);
+            this.checkBoxPassword.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.checkBoxPassword.Name = "checkBoxPassword";
-            this.checkBoxPassword.Size = new System.Drawing.Size(96, 16);
+            this.checkBoxPassword.Size = new System.Drawing.Size(99, 21);
             this.checkBoxPassword.TabIndex = 103;
             this.checkBoxPassword.Text = "使用密码连接";
             this.checkBoxPassword.UseVisualStyleBackColor = true;
@@ -1100,26 +1187,29 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(600, 31);
+            this.label1.Location = new System.Drawing.Point(700, 44);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(41, 12);
+            this.label1.Size = new System.Drawing.Size(44, 17);
             this.label1.TabIndex = 104;
             this.label1.Text = "密码：";
             // 
             // textBoxPassword
             // 
-            this.textBoxPassword.Location = new System.Drawing.Point(641, 26);
+            this.textBoxPassword.Location = new System.Drawing.Point(748, 37);
+            this.textBoxPassword.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.textBoxPassword.Name = "textBoxPassword";
             this.textBoxPassword.PasswordChar = '*';
-            this.textBoxPassword.Size = new System.Drawing.Size(100, 21);
+            this.textBoxPassword.Size = new System.Drawing.Size(116, 23);
             this.textBoxPassword.TabIndex = 105;
             // 
             // button_WR1
             // 
             this.button_WR1.Enabled = false;
-            this.button_WR1.Location = new System.Drawing.Point(401, 72);
+            this.button_WR1.Location = new System.Drawing.Point(468, 102);
+            this.button_WR1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button_WR1.Name = "button_WR1";
-            this.button_WR1.Size = new System.Drawing.Size(39, 23);
+            this.button_WR1.Size = new System.Drawing.Size(46, 33);
             this.button_WR1.TabIndex = 106;
             this.button_WR1.Text = "读写";
             this.button_WR1.UseVisualStyleBackColor = true;
@@ -1128,9 +1218,10 @@
             // button_WR2
             // 
             this.button_WR2.Enabled = false;
-            this.button_WR2.Location = new System.Drawing.Point(864, 72);
+            this.button_WR2.Location = new System.Drawing.Point(1008, 102);
+            this.button_WR2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button_WR2.Name = "button_WR2";
-            this.button_WR2.Size = new System.Drawing.Size(43, 23);
+            this.button_WR2.Size = new System.Drawing.Size(50, 33);
             this.button_WR2.TabIndex = 107;
             this.button_WR2.Text = "读写";
             this.button_WR2.UseVisualStyleBackColor = true;
@@ -1139,9 +1230,10 @@
             // button_WR3
             // 
             this.button_WR3.Enabled = false;
-            this.button_WR3.Location = new System.Drawing.Point(402, 390);
+            this.button_WR3.Location = new System.Drawing.Point(469, 552);
+            this.button_WR3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button_WR3.Name = "button_WR3";
-            this.button_WR3.Size = new System.Drawing.Size(38, 23);
+            this.button_WR3.Size = new System.Drawing.Size(44, 33);
             this.button_WR3.TabIndex = 108;
             this.button_WR3.Text = "读写";
             this.button_WR3.UseVisualStyleBackColor = true;
@@ -1150,9 +1242,10 @@
             // button_WR4
             // 
             this.button_WR4.Enabled = false;
-            this.button_WR4.Location = new System.Drawing.Point(864, 389);
+            this.button_WR4.Location = new System.Drawing.Point(1008, 551);
+            this.button_WR4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button_WR4.Name = "button_WR4";
-            this.button_WR4.Size = new System.Drawing.Size(38, 23);
+            this.button_WR4.Size = new System.Drawing.Size(44, 33);
             this.button_WR4.TabIndex = 109;
             this.button_WR4.Text = "读写";
             this.button_WR4.UseVisualStyleBackColor = true;
@@ -1161,9 +1254,10 @@
             // button_network1
             // 
             this.button_network1.Enabled = false;
-            this.button_network1.Location = new System.Drawing.Point(177, 96);
+            this.button_network1.Location = new System.Drawing.Point(206, 136);
+            this.button_network1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button_network1.Name = "button_network1";
-            this.button_network1.Size = new System.Drawing.Size(38, 23);
+            this.button_network1.Size = new System.Drawing.Size(44, 33);
             this.button_network1.TabIndex = 110;
             this.button_network1.Text = "配置";
             this.button_network1.UseVisualStyleBackColor = true;
@@ -1172,9 +1266,10 @@
             // button_network2
             // 
             this.button_network2.Enabled = false;
-            this.button_network2.Location = new System.Drawing.Point(641, 95);
+            this.button_network2.Location = new System.Drawing.Point(748, 135);
+            this.button_network2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button_network2.Name = "button_network2";
-            this.button_network2.Size = new System.Drawing.Size(38, 23);
+            this.button_network2.Size = new System.Drawing.Size(44, 33);
             this.button_network2.TabIndex = 111;
             this.button_network2.Text = "配置";
             this.button_network2.UseVisualStyleBackColor = true;
@@ -1183,9 +1278,10 @@
             // button_network3
             // 
             this.button_network3.Enabled = false;
-            this.button_network3.Location = new System.Drawing.Point(175, 413);
+            this.button_network3.Location = new System.Drawing.Point(204, 585);
+            this.button_network3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button_network3.Name = "button_network3";
-            this.button_network3.Size = new System.Drawing.Size(37, 23);
+            this.button_network3.Size = new System.Drawing.Size(43, 33);
             this.button_network3.TabIndex = 112;
             this.button_network3.Text = "配置";
             this.button_network3.UseVisualStyleBackColor = true;
@@ -1194,9 +1290,10 @@
             // button_network4
             // 
             this.button_network4.Enabled = false;
-            this.button_network4.Location = new System.Drawing.Point(641, 413);
+            this.button_network4.Location = new System.Drawing.Point(748, 585);
+            this.button_network4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button_network4.Name = "button_network4";
-            this.button_network4.Size = new System.Drawing.Size(38, 23);
+            this.button_network4.Size = new System.Drawing.Size(44, 33);
             this.button_network4.TabIndex = 113;
             this.button_network4.Text = "配置";
             this.button_network4.UseVisualStyleBackColor = true;
@@ -1205,9 +1302,10 @@
             // button_openGate2_1
             // 
             this.button_openGate2_1.Enabled = false;
-            this.button_openGate2_1.Location = new System.Drawing.Point(340, 96);
+            this.button_openGate2_1.Location = new System.Drawing.Point(397, 136);
+            this.button_openGate2_1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button_openGate2_1.Name = "button_openGate2_1";
-            this.button_openGate2_1.Size = new System.Drawing.Size(67, 23);
+            this.button_openGate2_1.Size = new System.Drawing.Size(78, 33);
             this.button_openGate2_1.TabIndex = 114;
             this.button_openGate2_1.Text = "打开道闸2";
             this.button_openGate2_1.UseVisualStyleBackColor = true;
@@ -1217,19 +1315,21 @@
             // 
             this.comboBox_BIndex1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox_BIndex1.FormattingEnabled = true;
-            this.comboBox_BIndex1.Location = new System.Drawing.Point(14, 97);
+            this.comboBox_BIndex1.Location = new System.Drawing.Point(16, 137);
+            this.comboBox_BIndex1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.comboBox_BIndex1.Name = "comboBox_BIndex1";
-            this.comboBox_BIndex1.Size = new System.Drawing.Size(50, 20);
+            this.comboBox_BIndex1.Size = new System.Drawing.Size(58, 25);
             this.comboBox_BIndex1.TabIndex = 115;
             // 
             // button_broadcast1
             // 
             this.button_broadcast1.BackColor = System.Drawing.Color.Maroon;
             this.button_broadcast1.Enabled = false;
-            this.button_broadcast1.Font = new System.Drawing.Font("宋体", 12F);
-            this.button_broadcast1.Location = new System.Drawing.Point(70, 95);
+            this.button_broadcast1.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.button_broadcast1.Location = new System.Drawing.Point(82, 135);
+            this.button_broadcast1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button_broadcast1.Name = "button_broadcast1";
-            this.button_broadcast1.Size = new System.Drawing.Size(68, 23);
+            this.button_broadcast1.Size = new System.Drawing.Size(79, 33);
             this.button_broadcast1.TabIndex = 116;
             this.button_broadcast1.Text = "语音播报";
             this.button_broadcast1.UseVisualStyleBackColor = false;
@@ -1239,9 +1339,10 @@
             // button_broadcastGroup1
             // 
             this.button_broadcastGroup1.Enabled = false;
-            this.button_broadcastGroup1.Location = new System.Drawing.Point(140, 95);
+            this.button_broadcastGroup1.Location = new System.Drawing.Point(163, 135);
+            this.button_broadcastGroup1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button_broadcastGroup1.Name = "button_broadcastGroup1";
-            this.button_broadcastGroup1.Size = new System.Drawing.Size(38, 23);
+            this.button_broadcastGroup1.Size = new System.Drawing.Size(44, 33);
             this.button_broadcastGroup1.TabIndex = 117;
             this.button_broadcastGroup1.Text = "组播";
             this.button_broadcastGroup1.UseVisualStyleBackColor = true;
@@ -1250,9 +1351,10 @@
             // button_RBinary1
             // 
             this.button_RBinary1.Enabled = false;
-            this.button_RBinary1.Location = new System.Drawing.Point(277, 96);
+            this.button_RBinary1.Location = new System.Drawing.Point(323, 136);
+            this.button_RBinary1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button_RBinary1.Name = "button_RBinary1";
-            this.button_RBinary1.Size = new System.Drawing.Size(63, 23);
+            this.button_RBinary1.Size = new System.Drawing.Size(74, 33);
             this.button_RBinary1.TabIndex = 118;
             this.button_RBinary1.Text = "二进制读";
             this.button_RBinary1.UseVisualStyleBackColor = true;
@@ -1261,9 +1363,10 @@
             // button_WBinary1
             // 
             this.button_WBinary1.Enabled = false;
-            this.button_WBinary1.Location = new System.Drawing.Point(215, 96);
+            this.button_WBinary1.Location = new System.Drawing.Point(251, 136);
+            this.button_WBinary1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button_WBinary1.Name = "button_WBinary1";
-            this.button_WBinary1.Size = new System.Drawing.Size(63, 23);
+            this.button_WBinary1.Size = new System.Drawing.Size(74, 33);
             this.button_WBinary1.TabIndex = 119;
             this.button_WBinary1.Text = "二进制写";
             this.button_WBinary1.UseVisualStyleBackColor = true;
@@ -1272,9 +1375,10 @@
             // button_RS232_1
             // 
             this.button_RS232_1.Enabled = false;
-            this.button_RS232_1.Location = new System.Drawing.Point(407, 96);
+            this.button_RS232_1.Location = new System.Drawing.Point(475, 136);
+            this.button_RS232_1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button_RS232_1.Name = "button_RS232_1";
-            this.button_RS232_1.Size = new System.Drawing.Size(39, 23);
+            this.button_RS232_1.Size = new System.Drawing.Size(46, 33);
             this.button_RS232_1.TabIndex = 120;
             this.button_RS232_1.Text = "232";
             this.button_RS232_1.UseVisualStyleBackColor = true;
@@ -1283,9 +1387,10 @@
             // button_RS232_2
             // 
             this.button_RS232_2.Enabled = false;
-            this.button_RS232_2.Location = new System.Drawing.Point(870, 95);
+            this.button_RS232_2.Location = new System.Drawing.Point(1015, 135);
+            this.button_RS232_2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button_RS232_2.Name = "button_RS232_2";
-            this.button_RS232_2.Size = new System.Drawing.Size(44, 23);
+            this.button_RS232_2.Size = new System.Drawing.Size(51, 33);
             this.button_RS232_2.TabIndex = 128;
             this.button_RS232_2.Text = "232";
             this.button_RS232_2.UseVisualStyleBackColor = true;
@@ -1294,9 +1399,10 @@
             // button_WBinary2
             // 
             this.button_WBinary2.Enabled = false;
-            this.button_WBinary2.Location = new System.Drawing.Point(679, 95);
+            this.button_WBinary2.Location = new System.Drawing.Point(792, 135);
+            this.button_WBinary2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button_WBinary2.Name = "button_WBinary2";
-            this.button_WBinary2.Size = new System.Drawing.Size(63, 23);
+            this.button_WBinary2.Size = new System.Drawing.Size(74, 33);
             this.button_WBinary2.TabIndex = 127;
             this.button_WBinary2.Text = "二进制写";
             this.button_WBinary2.UseVisualStyleBackColor = true;
@@ -1305,9 +1411,10 @@
             // button_RBinary2
             // 
             this.button_RBinary2.Enabled = false;
-            this.button_RBinary2.Location = new System.Drawing.Point(741, 95);
+            this.button_RBinary2.Location = new System.Drawing.Point(864, 135);
+            this.button_RBinary2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button_RBinary2.Name = "button_RBinary2";
-            this.button_RBinary2.Size = new System.Drawing.Size(63, 23);
+            this.button_RBinary2.Size = new System.Drawing.Size(74, 33);
             this.button_RBinary2.TabIndex = 126;
             this.button_RBinary2.Text = "二进制读";
             this.button_RBinary2.UseVisualStyleBackColor = true;
@@ -1316,9 +1423,10 @@
             // button_broadcastGroup2
             // 
             this.button_broadcastGroup2.Enabled = false;
-            this.button_broadcastGroup2.Location = new System.Drawing.Point(603, 94);
+            this.button_broadcastGroup2.Location = new System.Drawing.Point(704, 133);
+            this.button_broadcastGroup2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button_broadcastGroup2.Name = "button_broadcastGroup2";
-            this.button_broadcastGroup2.Size = new System.Drawing.Size(38, 23);
+            this.button_broadcastGroup2.Size = new System.Drawing.Size(44, 33);
             this.button_broadcastGroup2.TabIndex = 125;
             this.button_broadcastGroup2.Text = "组播";
             this.button_broadcastGroup2.UseVisualStyleBackColor = true;
@@ -1327,9 +1435,10 @@
             // button_broadcast2
             // 
             this.button_broadcast2.Enabled = false;
-            this.button_broadcast2.Location = new System.Drawing.Point(533, 94);
+            this.button_broadcast2.Location = new System.Drawing.Point(622, 133);
+            this.button_broadcast2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button_broadcast2.Name = "button_broadcast2";
-            this.button_broadcast2.Size = new System.Drawing.Size(68, 23);
+            this.button_broadcast2.Size = new System.Drawing.Size(79, 33);
             this.button_broadcast2.TabIndex = 124;
             this.button_broadcast2.Text = "语音播报";
             this.button_broadcast2.UseVisualStyleBackColor = true;
@@ -1339,17 +1448,19 @@
             // 
             this.comboBox_BIndex2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox_BIndex2.FormattingEnabled = true;
-            this.comboBox_BIndex2.Location = new System.Drawing.Point(477, 96);
+            this.comboBox_BIndex2.Location = new System.Drawing.Point(556, 136);
+            this.comboBox_BIndex2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.comboBox_BIndex2.Name = "comboBox_BIndex2";
-            this.comboBox_BIndex2.Size = new System.Drawing.Size(50, 20);
+            this.comboBox_BIndex2.Size = new System.Drawing.Size(58, 25);
             this.comboBox_BIndex2.TabIndex = 123;
             // 
             // button_openGate2_2
             // 
             this.button_openGate2_2.Enabled = false;
-            this.button_openGate2_2.Location = new System.Drawing.Point(803, 95);
+            this.button_openGate2_2.Location = new System.Drawing.Point(937, 135);
+            this.button_openGate2_2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button_openGate2_2.Name = "button_openGate2_2";
-            this.button_openGate2_2.Size = new System.Drawing.Size(67, 23);
+            this.button_openGate2_2.Size = new System.Drawing.Size(78, 33);
             this.button_openGate2_2.TabIndex = 122;
             this.button_openGate2_2.Text = "打开道闸2";
             this.button_openGate2_2.UseVisualStyleBackColor = true;
@@ -1358,9 +1469,10 @@
             // button_RS232_3
             // 
             this.button_RS232_3.Enabled = false;
-            this.button_RS232_3.Location = new System.Drawing.Point(408, 413);
+            this.button_RS232_3.Location = new System.Drawing.Point(476, 585);
+            this.button_RS232_3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button_RS232_3.Name = "button_RS232_3";
-            this.button_RS232_3.Size = new System.Drawing.Size(44, 23);
+            this.button_RS232_3.Size = new System.Drawing.Size(51, 33);
             this.button_RS232_3.TabIndex = 136;
             this.button_RS232_3.Text = "232";
             this.button_RS232_3.UseVisualStyleBackColor = true;
@@ -1369,9 +1481,10 @@
             // button_WBinary3
             // 
             this.button_WBinary3.Enabled = false;
-            this.button_WBinary3.Location = new System.Drawing.Point(213, 413);
+            this.button_WBinary3.Location = new System.Drawing.Point(248, 585);
+            this.button_WBinary3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button_WBinary3.Name = "button_WBinary3";
-            this.button_WBinary3.Size = new System.Drawing.Size(63, 23);
+            this.button_WBinary3.Size = new System.Drawing.Size(74, 33);
             this.button_WBinary3.TabIndex = 135;
             this.button_WBinary3.Text = "二进制写";
             this.button_WBinary3.UseVisualStyleBackColor = true;
@@ -1380,9 +1493,10 @@
             // button_RBinary3
             // 
             this.button_RBinary3.Enabled = false;
-            this.button_RBinary3.Location = new System.Drawing.Point(276, 413);
+            this.button_RBinary3.Location = new System.Drawing.Point(322, 585);
+            this.button_RBinary3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button_RBinary3.Name = "button_RBinary3";
-            this.button_RBinary3.Size = new System.Drawing.Size(63, 23);
+            this.button_RBinary3.Size = new System.Drawing.Size(74, 33);
             this.button_RBinary3.TabIndex = 134;
             this.button_RBinary3.Text = "二进制读";
             this.button_RBinary3.UseVisualStyleBackColor = true;
@@ -1391,9 +1505,10 @@
             // button_broadcastGroup3
             // 
             this.button_broadcastGroup3.Enabled = false;
-            this.button_broadcastGroup3.Location = new System.Drawing.Point(136, 412);
+            this.button_broadcastGroup3.Location = new System.Drawing.Point(159, 584);
+            this.button_broadcastGroup3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button_broadcastGroup3.Name = "button_broadcastGroup3";
-            this.button_broadcastGroup3.Size = new System.Drawing.Size(38, 23);
+            this.button_broadcastGroup3.Size = new System.Drawing.Size(44, 33);
             this.button_broadcastGroup3.TabIndex = 133;
             this.button_broadcastGroup3.Text = "组播";
             this.button_broadcastGroup3.UseVisualStyleBackColor = true;
@@ -1402,9 +1517,10 @@
             // button_broadcast3
             // 
             this.button_broadcast3.Enabled = false;
-            this.button_broadcast3.Location = new System.Drawing.Point(66, 412);
+            this.button_broadcast3.Location = new System.Drawing.Point(77, 584);
+            this.button_broadcast3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button_broadcast3.Name = "button_broadcast3";
-            this.button_broadcast3.Size = new System.Drawing.Size(68, 23);
+            this.button_broadcast3.Size = new System.Drawing.Size(79, 33);
             this.button_broadcast3.TabIndex = 132;
             this.button_broadcast3.Text = "语音播报";
             this.button_broadcast3.UseVisualStyleBackColor = true;
@@ -1414,17 +1530,19 @@
             // 
             this.comboBox_BIndex3.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox_BIndex3.FormattingEnabled = true;
-            this.comboBox_BIndex3.Location = new System.Drawing.Point(10, 414);
+            this.comboBox_BIndex3.Location = new System.Drawing.Point(12, 586);
+            this.comboBox_BIndex3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.comboBox_BIndex3.Name = "comboBox_BIndex3";
-            this.comboBox_BIndex3.Size = new System.Drawing.Size(50, 20);
+            this.comboBox_BIndex3.Size = new System.Drawing.Size(58, 25);
             this.comboBox_BIndex3.TabIndex = 131;
             // 
             // button_openGate2_3
             // 
             this.button_openGate2_3.Enabled = false;
-            this.button_openGate2_3.Location = new System.Drawing.Point(340, 413);
+            this.button_openGate2_3.Location = new System.Drawing.Point(397, 585);
+            this.button_openGate2_3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button_openGate2_3.Name = "button_openGate2_3";
-            this.button_openGate2_3.Size = new System.Drawing.Size(67, 23);
+            this.button_openGate2_3.Size = new System.Drawing.Size(78, 33);
             this.button_openGate2_3.TabIndex = 130;
             this.button_openGate2_3.Text = "打开道闸2";
             this.button_openGate2_3.UseVisualStyleBackColor = true;
@@ -1433,9 +1551,10 @@
             // button_RS232_4
             // 
             this.button_RS232_4.Enabled = false;
-            this.button_RS232_4.Location = new System.Drawing.Point(870, 414);
+            this.button_RS232_4.Location = new System.Drawing.Point(1015, 586);
+            this.button_RS232_4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button_RS232_4.Name = "button_RS232_4";
-            this.button_RS232_4.Size = new System.Drawing.Size(44, 23);
+            this.button_RS232_4.Size = new System.Drawing.Size(51, 33);
             this.button_RS232_4.TabIndex = 144;
             this.button_RS232_4.Text = "232";
             this.button_RS232_4.UseVisualStyleBackColor = true;
@@ -1444,9 +1563,10 @@
             // button_WBinary4
             // 
             this.button_WBinary4.Enabled = false;
-            this.button_WBinary4.Location = new System.Drawing.Point(679, 414);
+            this.button_WBinary4.Location = new System.Drawing.Point(792, 586);
+            this.button_WBinary4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button_WBinary4.Name = "button_WBinary4";
-            this.button_WBinary4.Size = new System.Drawing.Size(63, 23);
+            this.button_WBinary4.Size = new System.Drawing.Size(74, 33);
             this.button_WBinary4.TabIndex = 143;
             this.button_WBinary4.Text = "二进制写";
             this.button_WBinary4.UseVisualStyleBackColor = true;
@@ -1455,9 +1575,10 @@
             // button_RBinary4
             // 
             this.button_RBinary4.Enabled = false;
-            this.button_RBinary4.Location = new System.Drawing.Point(741, 414);
+            this.button_RBinary4.Location = new System.Drawing.Point(864, 586);
+            this.button_RBinary4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button_RBinary4.Name = "button_RBinary4";
-            this.button_RBinary4.Size = new System.Drawing.Size(63, 23);
+            this.button_RBinary4.Size = new System.Drawing.Size(74, 33);
             this.button_RBinary4.TabIndex = 142;
             this.button_RBinary4.Text = "二进制读";
             this.button_RBinary4.UseVisualStyleBackColor = true;
@@ -1466,9 +1587,10 @@
             // button_broadcastGroup4
             // 
             this.button_broadcastGroup4.Enabled = false;
-            this.button_broadcastGroup4.Location = new System.Drawing.Point(603, 414);
+            this.button_broadcastGroup4.Location = new System.Drawing.Point(704, 586);
+            this.button_broadcastGroup4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button_broadcastGroup4.Name = "button_broadcastGroup4";
-            this.button_broadcastGroup4.Size = new System.Drawing.Size(38, 23);
+            this.button_broadcastGroup4.Size = new System.Drawing.Size(44, 33);
             this.button_broadcastGroup4.TabIndex = 141;
             this.button_broadcastGroup4.Text = "组播";
             this.button_broadcastGroup4.UseVisualStyleBackColor = true;
@@ -1477,9 +1599,10 @@
             // button_broadcast4
             // 
             this.button_broadcast4.Enabled = false;
-            this.button_broadcast4.Location = new System.Drawing.Point(533, 414);
+            this.button_broadcast4.Location = new System.Drawing.Point(622, 586);
+            this.button_broadcast4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button_broadcast4.Name = "button_broadcast4";
-            this.button_broadcast4.Size = new System.Drawing.Size(68, 23);
+            this.button_broadcast4.Size = new System.Drawing.Size(79, 33);
             this.button_broadcast4.TabIndex = 140;
             this.button_broadcast4.Text = "语音播报";
             this.button_broadcast4.UseVisualStyleBackColor = true;
@@ -1489,17 +1612,19 @@
             // 
             this.comboBox_BIndex4.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox_BIndex4.FormattingEnabled = true;
-            this.comboBox_BIndex4.Location = new System.Drawing.Point(477, 416);
+            this.comboBox_BIndex4.Location = new System.Drawing.Point(556, 589);
+            this.comboBox_BIndex4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.comboBox_BIndex4.Name = "comboBox_BIndex4";
-            this.comboBox_BIndex4.Size = new System.Drawing.Size(50, 20);
+            this.comboBox_BIndex4.Size = new System.Drawing.Size(58, 25);
             this.comboBox_BIndex4.TabIndex = 139;
             // 
             // button_openGate2_4
             // 
             this.button_openGate2_4.Enabled = false;
-            this.button_openGate2_4.Location = new System.Drawing.Point(803, 414);
+            this.button_openGate2_4.Location = new System.Drawing.Point(937, 586);
+            this.button_openGate2_4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button_openGate2_4.Name = "button_openGate2_4";
-            this.button_openGate2_4.Size = new System.Drawing.Size(67, 23);
+            this.button_openGate2_4.Size = new System.Drawing.Size(78, 33);
             this.button_openGate2_4.TabIndex = 138;
             this.button_openGate2_4.Text = "打开道闸2";
             this.button_openGate2_4.UseVisualStyleBackColor = true;
@@ -1508,43 +1633,48 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(766, 32);
+            this.label2.Location = new System.Drawing.Point(894, 45);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(53, 12);
+            this.label2.Size = new System.Drawing.Size(56, 17);
             this.label2.TabIndex = 145;
             this.label2.Text = "偏移量：";
             // 
             // textBox_offset
             // 
-            this.textBox_offset.Location = new System.Drawing.Point(825, 25);
+            this.textBox_offset.Location = new System.Drawing.Point(962, 35);
+            this.textBox_offset.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.textBox_offset.Name = "textBox_offset";
-            this.textBox_offset.Size = new System.Drawing.Size(55, 21);
+            this.textBox_offset.Size = new System.Drawing.Size(63, 23);
             this.textBox_offset.TabIndex = 146;
             this.textBox_offset.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox_offset_KeyPress);
             // 
             // textBox_groupIndex
             // 
-            this.textBox_groupIndex.Location = new System.Drawing.Point(976, 24);
+            this.textBox_groupIndex.Location = new System.Drawing.Point(1139, 34);
+            this.textBox_groupIndex.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.textBox_groupIndex.Name = "textBox_groupIndex";
-            this.textBox_groupIndex.Size = new System.Drawing.Size(282, 21);
+            this.textBox_groupIndex.Size = new System.Drawing.Size(328, 23);
             this.textBox_groupIndex.TabIndex = 147;
             this.textBox_groupIndex.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox_groupIndex_KeyPress);
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(905, 30);
+            this.label3.Location = new System.Drawing.Point(1056, 42);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(65, 12);
+            this.label3.Size = new System.Drawing.Size(68, 17);
             this.label3.TabIndex = 148;
             this.label3.Text = "组播序号：";
             // 
             // button_cameraInfo1
             // 
             this.button_cameraInfo1.Enabled = false;
-            this.button_cameraInfo1.Location = new System.Drawing.Point(405, 122);
+            this.button_cameraInfo1.Location = new System.Drawing.Point(472, 173);
+            this.button_cameraInfo1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button_cameraInfo1.Name = "button_cameraInfo1";
-            this.button_cameraInfo1.Size = new System.Drawing.Size(63, 23);
+            this.button_cameraInfo1.Size = new System.Drawing.Size(74, 33);
             this.button_cameraInfo1.TabIndex = 149;
             this.button_cameraInfo1.Text = "相机信息";
             this.button_cameraInfo1.UseVisualStyleBackColor = true;
@@ -1553,9 +1683,10 @@
             // button_cameraInfo2
             // 
             this.button_cameraInfo2.Enabled = false;
-            this.button_cameraInfo2.Location = new System.Drawing.Point(863, 120);
+            this.button_cameraInfo2.Location = new System.Drawing.Point(1007, 170);
+            this.button_cameraInfo2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button_cameraInfo2.Name = "button_cameraInfo2";
-            this.button_cameraInfo2.Size = new System.Drawing.Size(62, 23);
+            this.button_cameraInfo2.Size = new System.Drawing.Size(72, 33);
             this.button_cameraInfo2.TabIndex = 150;
             this.button_cameraInfo2.Text = "相机信息";
             this.button_cameraInfo2.UseVisualStyleBackColor = true;
@@ -1564,9 +1695,10 @@
             // button_cameraInfo3
             // 
             this.button_cameraInfo3.Enabled = false;
-            this.button_cameraInfo3.Location = new System.Drawing.Point(406, 437);
+            this.button_cameraInfo3.Location = new System.Drawing.Point(474, 619);
+            this.button_cameraInfo3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button_cameraInfo3.Name = "button_cameraInfo3";
-            this.button_cameraInfo3.Size = new System.Drawing.Size(62, 23);
+            this.button_cameraInfo3.Size = new System.Drawing.Size(72, 33);
             this.button_cameraInfo3.TabIndex = 151;
             this.button_cameraInfo3.Text = "相机信息";
             this.button_cameraInfo3.UseVisualStyleBackColor = true;
@@ -1575,9 +1707,10 @@
             // button_cameraInfo4
             // 
             this.button_cameraInfo4.Enabled = false;
-            this.button_cameraInfo4.Location = new System.Drawing.Point(863, 439);
+            this.button_cameraInfo4.Location = new System.Drawing.Point(1007, 622);
+            this.button_cameraInfo4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button_cameraInfo4.Name = "button_cameraInfo4";
-            this.button_cameraInfo4.Size = new System.Drawing.Size(62, 23);
+            this.button_cameraInfo4.Size = new System.Drawing.Size(72, 33);
             this.button_cameraInfo4.TabIndex = 152;
             this.button_cameraInfo4.Text = "相机信息";
             this.button_cameraInfo4.UseVisualStyleBackColor = true;
@@ -1586,9 +1719,10 @@
             // button_getIOState1
             // 
             this.button_getIOState1.Enabled = false;
-            this.button_getIOState1.Location = new System.Drawing.Point(439, 49);
+            this.button_getIOState1.Location = new System.Drawing.Point(512, 69);
+            this.button_getIOState1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button_getIOState1.Name = "button_getIOState1";
-            this.button_getIOState1.Size = new System.Drawing.Size(30, 23);
+            this.button_getIOState1.Size = new System.Drawing.Size(35, 33);
             this.button_getIOState1.TabIndex = 153;
             this.button_getIOState1.Text = "IO";
             this.button_getIOState1.UseVisualStyleBackColor = true;
@@ -1597,9 +1731,10 @@
             // button_getIOState2
             // 
             this.button_getIOState2.Enabled = false;
-            this.button_getIOState2.Location = new System.Drawing.Point(907, 49);
+            this.button_getIOState2.Location = new System.Drawing.Point(1058, 69);
+            this.button_getIOState2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button_getIOState2.Name = "button_getIOState2";
-            this.button_getIOState2.Size = new System.Drawing.Size(30, 23);
+            this.button_getIOState2.Size = new System.Drawing.Size(35, 33);
             this.button_getIOState2.TabIndex = 154;
             this.button_getIOState2.Text = "IO";
             this.button_getIOState2.UseVisualStyleBackColor = true;
@@ -1608,9 +1743,10 @@
             // button_getIOState3
             // 
             this.button_getIOState3.Enabled = false;
-            this.button_getIOState3.Location = new System.Drawing.Point(439, 366);
+            this.button_getIOState3.Location = new System.Drawing.Point(512, 518);
+            this.button_getIOState3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button_getIOState3.Name = "button_getIOState3";
-            this.button_getIOState3.Size = new System.Drawing.Size(30, 23);
+            this.button_getIOState3.Size = new System.Drawing.Size(35, 33);
             this.button_getIOState3.TabIndex = 155;
             this.button_getIOState3.Text = "IO";
             this.button_getIOState3.UseVisualStyleBackColor = true;
@@ -1619,9 +1755,10 @@
             // button_getIOState4
             // 
             this.button_getIOState4.Enabled = false;
-            this.button_getIOState4.Location = new System.Drawing.Point(903, 366);
+            this.button_getIOState4.Location = new System.Drawing.Point(1054, 518);
+            this.button_getIOState4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button_getIOState4.Name = "button_getIOState4";
-            this.button_getIOState4.Size = new System.Drawing.Size(30, 23);
+            this.button_getIOState4.Size = new System.Drawing.Size(35, 33);
             this.button_getIOState4.TabIndex = 156;
             this.button_getIOState4.Text = "IO";
             this.button_getIOState4.UseVisualStyleBackColor = true;
@@ -1630,9 +1767,10 @@
             // button_getVehicleInfo1
             // 
             this.button_getVehicleInfo1.Enabled = false;
-            this.button_getVehicleInfo1.Location = new System.Drawing.Point(426, 151);
+            this.button_getVehicleInfo1.Location = new System.Drawing.Point(497, 214);
+            this.button_getVehicleInfo1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button_getVehicleInfo1.Name = "button_getVehicleInfo1";
-            this.button_getVehicleInfo1.Size = new System.Drawing.Size(42, 45);
+            this.button_getVehicleInfo1.Size = new System.Drawing.Size(49, 64);
             this.button_getVehicleInfo1.TabIndex = 157;
             this.button_getVehicleInfo1.Text = "导出车辆信息";
             this.button_getVehicleInfo1.UseVisualStyleBackColor = true;
@@ -1641,9 +1779,10 @@
             // button_getPayInfo1
             // 
             this.button_getPayInfo1.Enabled = false;
-            this.button_getPayInfo1.Location = new System.Drawing.Point(426, 202);
+            this.button_getPayInfo1.Location = new System.Drawing.Point(497, 286);
+            this.button_getPayInfo1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button_getPayInfo1.Name = "button_getPayInfo1";
-            this.button_getPayInfo1.Size = new System.Drawing.Size(42, 50);
+            this.button_getPayInfo1.Size = new System.Drawing.Size(49, 71);
             this.button_getPayInfo1.TabIndex = 158;
             this.button_getPayInfo1.Text = "导出计费信息";
             this.button_getPayInfo1.UseVisualStyleBackColor = true;
@@ -1652,9 +1791,10 @@
             // button_getPayInfo2
             // 
             this.button_getPayInfo2.Enabled = false;
-            this.button_getPayInfo2.Location = new System.Drawing.Point(883, 202);
+            this.button_getPayInfo2.Location = new System.Drawing.Point(1030, 286);
+            this.button_getPayInfo2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button_getPayInfo2.Name = "button_getPayInfo2";
-            this.button_getPayInfo2.Size = new System.Drawing.Size(42, 50);
+            this.button_getPayInfo2.Size = new System.Drawing.Size(49, 71);
             this.button_getPayInfo2.TabIndex = 160;
             this.button_getPayInfo2.Text = "导出计费信息";
             this.button_getPayInfo2.UseVisualStyleBackColor = true;
@@ -1663,9 +1803,10 @@
             // button_getVehicleInfo2
             // 
             this.button_getVehicleInfo2.Enabled = false;
-            this.button_getVehicleInfo2.Location = new System.Drawing.Point(883, 151);
+            this.button_getVehicleInfo2.Location = new System.Drawing.Point(1030, 214);
+            this.button_getVehicleInfo2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button_getVehicleInfo2.Name = "button_getVehicleInfo2";
-            this.button_getVehicleInfo2.Size = new System.Drawing.Size(42, 45);
+            this.button_getVehicleInfo2.Size = new System.Drawing.Size(49, 64);
             this.button_getVehicleInfo2.TabIndex = 159;
             this.button_getVehicleInfo2.Text = "导出车辆信息";
             this.button_getVehicleInfo2.UseVisualStyleBackColor = true;
@@ -1674,9 +1815,10 @@
             // button_getPayInfo3
             // 
             this.button_getPayInfo3.Enabled = false;
-            this.button_getPayInfo3.Location = new System.Drawing.Point(426, 517);
+            this.button_getPayInfo3.Location = new System.Drawing.Point(497, 732);
+            this.button_getPayInfo3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button_getPayInfo3.Name = "button_getPayInfo3";
-            this.button_getPayInfo3.Size = new System.Drawing.Size(42, 50);
+            this.button_getPayInfo3.Size = new System.Drawing.Size(49, 71);
             this.button_getPayInfo3.TabIndex = 162;
             this.button_getPayInfo3.Text = "导出计费信息";
             this.button_getPayInfo3.UseVisualStyleBackColor = true;
@@ -1685,9 +1827,10 @@
             // button_getVehicleInfo3
             // 
             this.button_getVehicleInfo3.Enabled = false;
-            this.button_getVehicleInfo3.Location = new System.Drawing.Point(426, 466);
+            this.button_getVehicleInfo3.Location = new System.Drawing.Point(497, 660);
+            this.button_getVehicleInfo3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button_getVehicleInfo3.Name = "button_getVehicleInfo3";
-            this.button_getVehicleInfo3.Size = new System.Drawing.Size(42, 45);
+            this.button_getVehicleInfo3.Size = new System.Drawing.Size(49, 64);
             this.button_getVehicleInfo3.TabIndex = 161;
             this.button_getVehicleInfo3.Text = "导出车辆信息";
             this.button_getVehicleInfo3.UseVisualStyleBackColor = true;
@@ -1696,9 +1839,10 @@
             // button_getPayInfo4
             // 
             this.button_getPayInfo4.Enabled = false;
-            this.button_getPayInfo4.Location = new System.Drawing.Point(886, 519);
+            this.button_getPayInfo4.Location = new System.Drawing.Point(1034, 735);
+            this.button_getPayInfo4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button_getPayInfo4.Name = "button_getPayInfo4";
-            this.button_getPayInfo4.Size = new System.Drawing.Size(42, 50);
+            this.button_getPayInfo4.Size = new System.Drawing.Size(49, 71);
             this.button_getPayInfo4.TabIndex = 164;
             this.button_getPayInfo4.Text = "导出计费信息";
             this.button_getPayInfo4.UseVisualStyleBackColor = true;
@@ -1707,9 +1851,10 @@
             // button_getVehicleInfo4
             // 
             this.button_getVehicleInfo4.Enabled = false;
-            this.button_getVehicleInfo4.Location = new System.Drawing.Point(886, 468);
+            this.button_getVehicleInfo4.Location = new System.Drawing.Point(1034, 663);
+            this.button_getVehicleInfo4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button_getVehicleInfo4.Name = "button_getVehicleInfo4";
-            this.button_getVehicleInfo4.Size = new System.Drawing.Size(42, 45);
+            this.button_getVehicleInfo4.Size = new System.Drawing.Size(49, 64);
             this.button_getVehicleInfo4.TabIndex = 163;
             this.button_getVehicleInfo4.Text = "导出车辆信息";
             this.button_getVehicleInfo4.UseVisualStyleBackColor = true;
@@ -1718,9 +1863,10 @@
             // button_updateList
             // 
             this.button_updateList.Enabled = false;
-            this.button_updateList.Location = new System.Drawing.Point(427, 258);
+            this.button_updateList.Location = new System.Drawing.Point(498, 366);
+            this.button_updateList.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button_updateList.Name = "button_updateList";
-            this.button_updateList.Size = new System.Drawing.Size(39, 61);
+            this.button_updateList.Size = new System.Drawing.Size(46, 86);
             this.button_updateList.TabIndex = 165;
             this.button_updateList.Text = "批量升级白名单";
             this.button_updateList.UseVisualStyleBackColor = true;
@@ -1729,9 +1875,10 @@
             // button_settingMore
             // 
             this.button_settingMore.Enabled = false;
-            this.button_settingMore.Location = new System.Drawing.Point(426, 325);
+            this.button_settingMore.Location = new System.Drawing.Point(497, 460);
+            this.button_settingMore.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button_settingMore.Name = "button_settingMore";
-            this.button_settingMore.Size = new System.Drawing.Size(40, 35);
+            this.button_settingMore.Size = new System.Drawing.Size(47, 50);
             this.button_settingMore.TabIndex = 166;
             this.button_settingMore.Text = "更多配置";
             this.button_settingMore.UseVisualStyleBackColor = true;
@@ -1740,9 +1887,10 @@
             // button_settingMore2
             // 
             this.button_settingMore2.Enabled = false;
-            this.button_settingMore2.Location = new System.Drawing.Point(886, 258);
+            this.button_settingMore2.Location = new System.Drawing.Point(1034, 366);
+            this.button_settingMore2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button_settingMore2.Name = "button_settingMore2";
-            this.button_settingMore2.Size = new System.Drawing.Size(40, 35);
+            this.button_settingMore2.Size = new System.Drawing.Size(47, 50);
             this.button_settingMore2.TabIndex = 167;
             this.button_settingMore2.Text = "更多配置";
             this.button_settingMore2.UseVisualStyleBackColor = true;
@@ -1751,9 +1899,10 @@
             // button_settingMore3
             // 
             this.button_settingMore3.Enabled = false;
-            this.button_settingMore3.Location = new System.Drawing.Point(427, 573);
+            this.button_settingMore3.Location = new System.Drawing.Point(498, 812);
+            this.button_settingMore3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button_settingMore3.Name = "button_settingMore3";
-            this.button_settingMore3.Size = new System.Drawing.Size(40, 35);
+            this.button_settingMore3.Size = new System.Drawing.Size(47, 50);
             this.button_settingMore3.TabIndex = 168;
             this.button_settingMore3.Text = "更多配置";
             this.button_settingMore3.UseVisualStyleBackColor = true;
@@ -1762,9 +1911,10 @@
             // button_settingMore4
             // 
             this.button_settingMore4.Enabled = false;
-            this.button_settingMore4.Location = new System.Drawing.Point(886, 575);
+            this.button_settingMore4.Location = new System.Drawing.Point(1034, 815);
+            this.button_settingMore4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button_settingMore4.Name = "button_settingMore4";
-            this.button_settingMore4.Size = new System.Drawing.Size(40, 35);
+            this.button_settingMore4.Size = new System.Drawing.Size(47, 50);
             this.button_settingMore4.TabIndex = 169;
             this.button_settingMore4.Text = "更多配置";
             this.button_settingMore4.UseVisualStyleBackColor = true;
@@ -1772,9 +1922,9 @@
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1343, 680);
+            this.ClientSize = new System.Drawing.Size(1370, 749);
             this.Controls.Add(this.button_settingMore4);
             this.Controls.Add(this.button_settingMore3);
             this.Controls.Add(this.button_settingMore2);
@@ -1926,6 +2076,7 @@
             this.Controls.Add(this.buttonConnect);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1_20200113";

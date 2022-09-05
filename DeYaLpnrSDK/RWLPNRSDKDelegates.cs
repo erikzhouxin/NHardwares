@@ -11,7 +11,6 @@ namespace System.Data.DeYaLpnrSDK
     /// <param name="ptr"></param>
     /// <param name="code"></param>
     public delegate void LPNRCallBack(IntPtr ptr, int code);
-
     internal class DCreater
     {
         /// <summary>

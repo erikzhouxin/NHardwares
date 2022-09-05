@@ -62,15 +62,19 @@ namespace Txq_csharp_sdk
 
         }
 
-     
+
 
         private void btnOpenDevice_Click(object sender, EventArgs e)
         {
 
-            if (Api.openDevice())
+            if (Api.OpenDevice())
             {
                 MessageBox.Show("连接设备成功");
-                StartDecodeThread();
+                // 开启解码线程进行
+                bIsLoop = true;
+                DecodeThread = new Thread(new ThreadStart(DecodeThreadMethod));
+                DecodeThread.IsBackground = true;
+                DecodeThread.Start();
             }
             else
             {
@@ -89,17 +93,6 @@ namespace Txq_csharp_sdk
         private void button1_Click(object sender, EventArgs e)
         {
             this.richTextBoxResult.Clear();
-        }
-
-        /// <summary>
-        /// 方法：开始解码线程方法
-        /// </summary>
-        private void StartDecodeThread()
-        {
-            bIsLoop = true;
-            DecodeThread = new Thread(new ThreadStart(DecodeThreadMethod));
-            DecodeThread.IsBackground = true;
-            DecodeThread.Start();
         }
 
         /// <summary>
@@ -165,5 +158,5 @@ namespace Txq_csharp_sdk
         }
 
     }
-    }
+}
 

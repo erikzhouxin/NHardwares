@@ -90,7 +90,6 @@ namespace System.Data.DeYaLpnrSDK
         /// <returns></returns>
         int LPNR_SoftTrigger(IntPtr lib);
     }
-
     internal class RWLPNRSdkDller : IRWLPNRSdkProxy
     {
         /// <summary>
