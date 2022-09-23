@@ -81,6 +81,9 @@ namespace ALBDLLTester
             }
         }
 
+        /// <summary>
+        /// 处理数据
+        /// </summary>
         /// <param name="m">The Windows <see cref="T:System.Windows.Forms.Message"/> to process.</param>
         protected override void DefWndProc(ref System.Windows.Forms.Message m)
         {
@@ -220,8 +223,6 @@ namespace ALBDLLTester
             int status = 0;
             unsafe
             {
-                int* dw = &status;
-
                 if (handle == IntPtr.Zero)
                 {
                     this.textBox2.Text = "离线";
@@ -233,7 +234,7 @@ namespace ALBDLLTester
                 {
                     MessageBox.Show("获取状态失败！");
                 }
-                if (((0x01 << 6) & status) > 0)
+                if (((0x01 << 6) & dwx) > 0)
                 {
                     Console.WriteLine("status=" + status);
                     this.textBox2.Text = "在线";
