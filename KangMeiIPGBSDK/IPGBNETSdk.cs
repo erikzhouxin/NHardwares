@@ -99,8 +99,10 @@ namespace System.Data.KangMeiIPGBSDK
                 if (!isExists)
                 {
                     WriteFile(Properties.Resources.X64_IPGBNETSDK, Path.Combine(IPGBNETSdkLoader.DllFullPath, "IPGBNETSDK.dll"));
+                    WriteFile(Properties.Resources.X64_IPGBNETSDK1, Path.Combine(IPGBNETSdkLoader.DllFullPath, "IPGBNETSDK.lib"));
                     WriteFile(Properties.Resources.X64_CtlAudioDrv, Path.Combine(IPGBNETSdkLoader.DllFullPath, "CtlAudioDrv.dll"));
                     WriteFile(Properties.Resources.X64_IPGBPushStream, Path.Combine(IPGBNETSdkLoader.DllFullPath, "IPGBPushStream.dll"));
+                    WriteFile(Properties.Resources.X64_IPGBPushStream1, Path.Combine(IPGBNETSdkLoader.DllFullPath, "IPGBPushStream.lib"));
                     WriteFile(Properties.Resources.X64_lame_enc_dll, Path.Combine(IPGBNETSdkLoader.DllFullPath, "lame_enc_dll.dll"));
                     WriteFile(Properties.Resources.X64_libmp3lame, Path.Combine(IPGBNETSdkLoader.DllFullPath, "libmp3lame.dll"));
                     WriteFile(Properties.Resources.X64_mfc100, Path.Combine(IPGBNETSdkLoader.DllFullPath, "mfc100.dll"));
@@ -116,8 +118,10 @@ namespace System.Data.KangMeiIPGBSDK
                 if (!isExists)
                 {
                     WriteFile(Properties.Resources.X86_IPGBNETSDK, Path.Combine(IPGBNETSdkLoader.DllFullPath, "IPGBNETSDK.dll"));
+                    WriteFile(Properties.Resources.X86_IPGBNETSDK1, Path.Combine(IPGBNETSdkLoader.DllFullPath, "IPGBNETSDK.lib"));
                     WriteFile(Properties.Resources.X86_CtlAudioDrv, Path.Combine(IPGBNETSdkLoader.DllFullPath, "CtlAudioDrv.dll"));
                     WriteFile(Properties.Resources.X86_IPGBPushStream, Path.Combine(IPGBNETSdkLoader.DllFullPath, "IPGBPushStream.dll"));
+                    WriteFile(Properties.Resources.X86_IPGBPushStream1, Path.Combine(IPGBNETSdkLoader.DllFullPath, "IPGBPushStream.lib"));
                     WriteFile(Properties.Resources.X86_lame_enc_dll, Path.Combine(IPGBNETSdkLoader.DllFullPath, "lame_enc_dll.dll"));
                     WriteFile(Properties.Resources.X86_libmp3lame, Path.Combine(IPGBNETSdkLoader.DllFullPath, "libmp3lame.dll"));
                     WriteFile(Properties.Resources.X86_mfc100, Path.Combine(IPGBNETSdkLoader.DllFullPath, "mfc100.dll"));

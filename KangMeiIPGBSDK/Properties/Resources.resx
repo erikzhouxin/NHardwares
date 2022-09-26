@@ -121,11 +121,23 @@
   <data name="X64_CtlAudioDrv" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\X64_CtlAudioDrv.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="X64_IPGBNET" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\X64_IPGBNET.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="X64_IPGBNETPush" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\X64_IPGBNETPush.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="X64_IPGBNETSDK" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\X64_IPGBNETSDK.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="X64_IPGBNETSDK1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\X64_IPGBNETSDK.lib;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="X64_IPGBPushStream" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\X64_IPGBPushStream.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="X64_IPGBPushStream1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\X64_IPGBPushStream.lib;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="X64_lame_enc_dll" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\X64_lame_enc_dll.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -151,11 +163,23 @@
   <data name="X86_CtlAudioDrv" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\X86_CtlAudioDrv.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="X86_IPGBNET" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\X86_IPGBNET.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="X86_IPGBNETPush" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\X86_IPGBNETPush.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="X86_IPGBNETSDK" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\X86_IPGBNETSDK.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="X86_IPGBNETSDK1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\X86_IPGBNETSDK.lib;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="X86_IPGBPushStream" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\X86_IPGBPushStream.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="X86_IPGBPushStream1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\X86_IPGBPushStream.lib;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="X86_lame_enc_dll" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\X86_lame_enc_dll.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>

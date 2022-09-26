@@ -12,6 +12,11 @@ namespace KangMeiIPGBSDK.WinForm
 {
     public partial class Form1 : Form
     {
+        static Form1()
+        {
+            System.Data.KangMeiIPGBSDK.IPGBNETSdk.Create(true);
+            System.Data.KangMeiIPGBSDK.IPGBNETSdk.CreatePush(true);
+        }
         public Form1()
         {
             InitializeComponent();

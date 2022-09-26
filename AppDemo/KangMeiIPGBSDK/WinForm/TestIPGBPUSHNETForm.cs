@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Net;
-using System.Data.KangMeiIPGBSDK;
+using IPGBPUSH.NET;
 
 namespace TestIPGBNETPush
 {
@@ -110,15 +110,15 @@ namespace TestIPGBNETPush
             // 初始化按钮状态
             InitButtonsEnabledStatus();
 
-            IPGBPUSHNET.Instance.NETIPGBPUSHNETSDK_Init();
-            IPGBPUSHNET.Instance.NETIPGBPUSHNETSDK_SetGBStreamStaCallBack(gbStreamSta, this.Handle.ToInt64());             //广播流状态回调
+            IPGBPUSHNETSDK.Instance.NETIPGBPUSHNETSDK_Init();
+            IPGBPUSHNETSDK.Instance.NETIPGBPUSHNETSDK_SetGBStreamStaCallBack(gbStreamSta, this.Handle.ToInt64());             //广播流状态回调
             InsertLogMessage("SDK初始化......");
         }
 
         // 窗体关闭
         private void TestIPGBPUSHNETForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-            IPGBPUSHNET.Instance.NETIPGBPUSHNETSDK_Cleanup();
+            IPGBPUSHNETSDK.Instance.NETIPGBPUSHNETSDK_Cleanup();
         }
 
         // 显示业务日志消息函数
@@ -133,7 +133,7 @@ namespace TestIPGBNETPush
         {
             NETPUSHSDK_SOUNDCARDINFO cardPubInfo = new NETPUSHSDK_SOUNDCARDINFO();
             // 第1步 获取声卡信息
-            String[] card_list = IPGBPUSHNET.Instance.NETIPGBPUSHNETSDK_GetSysSoundCardINFO(ref cardPubInfo);
+            String[] card_list = IPGBPUSHNETSDK.Instance.NETIPGBPUSHNETSDK_GetSysSoundCardINFO(ref cardPubInfo);
             String cardNo = card_list.Length > 1 ? card_list[1] : card_list[0];
 
             // 构造请求对象
@@ -153,7 +153,7 @@ namespace TestIPGBNETPush
             capMixInfo.CapMixName = cardNo;
             pSrcinfo.CapMixInfo = capMixInfo;
 
-            m_GbStreamId = IPGBPUSHNET.Instance.NETIPGBPUSHNETSDK_CreateSoundCardPushStream(ref pSrcinfo);
+            m_GbStreamId = IPGBPUSHNETSDK.Instance.NETIPGBPUSHNETSDK_CreateSoundCardPushStream(ref pSrcinfo);
             if (m_GbStreamId != 0)
             {
                 InsertLogMessage("声卡推流id=" + m_GbStreamId + "\n");
@@ -199,7 +199,7 @@ namespace TestIPGBNETPush
                 files[0] = f_inifo;
                 pGbinfo.LcaFileInfo = files;
                 InsertLogMessage("本地文件认证加密的内容=======" + pGbinfo.Sdes);
-                m_GbStreamId = IPGBPUSHNET.Instance.NETIPGBPUSHNETSDK_CreateThirdPushStream(ref pGbinfo);
+                m_GbStreamId = IPGBPUSHNETSDK.Instance.NETIPGBPUSHNETSDK_CreateThirdPushStream(ref pGbinfo);
                 if (m_GbStreamId != 0)
                 {
                     InsertLogMessage("本地文件实时推流id=" + m_GbStreamId + "\n");
@@ -213,7 +213,7 @@ namespace TestIPGBNETPush
         //停止推流的点击事件
         private void buttonStop_Click(object sender, EventArgs e)
         {
-            if (IPGBPUSHNET.Instance.NETIPGBPUSHNETSDK_DelOnePushStream(m_GbStreamId) == 0)
+            if (IPGBPUSHNETSDK.Instance.NETIPGBPUSHNETSDK_DelOnePushStream(m_GbStreamId) == 0)
             {
                 InsertLogMessage("停止推流......\n");
                 SetEnableSendGb(true);

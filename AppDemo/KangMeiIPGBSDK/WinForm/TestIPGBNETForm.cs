@@ -7,7 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Net;
-using System.Data.KangMeiIPGBSDK;
+using IPGBPUSH.NET;
+using IPGB.NET;
 
 namespace TestIPGBNET
 {
@@ -304,17 +305,17 @@ namespace TestIPGBNET
         {
             Control.CheckForIllegalCrossThreadCalls = false;
 
-            this.txtUserName.Text = "2";
+            this.txtUserName.Text = "110";
 
-            this.txtPassWord.Text = "2";
+            this.txtPassWord.Text = "123";
 
-            this.txtIp.Text = "192.168.1.64";
+            this.txtIp.Text = "192.168.1.110";
 
             this.txtPort.Text = "3960";
 
-            this.txtTagertTerminalId.Text = "201";
+            this.txtTagertTerminalId.Text = "110";
 
-            this.txtSourceTerminalId.Text = "203";
+            this.txtSourceTerminalId.Text = "110";
 
             this.txtOutVol.Text = "50";
 
@@ -326,19 +327,19 @@ namespace TestIPGBNET
             InitButtonsEnabledStatus();
 
             //初始化SDK
-            IPGBNET.Instance.NETIPGBNETSDK_Init(Convert.ToInt32(txtThridSteamPort.Text));
-            IPGBNET.Instance.NETIPGBNETSDK_SetLogCallBack(connectOrDis, this.Handle.ToInt64());                    //登录回调
+            IPGBNETSDK.Instance.NETIPGBNETSDK_Init(Convert.ToInt32(txtThridSteamPort.Text));
+            IPGBNETSDK.Instance.NETIPGBNETSDK_SetLogCallBack(connectOrDis, this.Handle.ToInt64());                    //登录回调
             // IPAVHNET.Instance.NETIPGBNETSDK_SetTerminalStaCallBack(terminalSta, this.Handle.ToInt64());	 //终端状态回调
-            IPGBNET.Instance.NETIPGBNETSDK_SetBatchTerminalStaCallBack(terminalStaBatch, this.Handle.ToInt64());	 //终端状态批量回调
-            IPGBNET.Instance.NETIPGBNETSDK_SetGBStreamStaCallBack(gbStreamSta, this.Handle.ToInt64());             //广播流状态回调
-            IPGBNET.Instance.NETIPGBNETSDK_SetFireStaCallBack(fireSta, this.Handle.ToInt64());                     //消防状态回调
+            IPGBNETSDK.Instance.NETIPGBNETSDK_SetBatchTerminalStaCallBack(terminalStaBatch, this.Handle.ToInt64());	 //终端状态批量回调
+            IPGBNETSDK.Instance.NETIPGBNETSDK_SetGBStreamStaCallBack(gbStreamSta, this.Handle.ToInt64());             //广播流状态回调
+            IPGBNETSDK.Instance.NETIPGBNETSDK_SetFireStaCallBack(fireSta, this.Handle.ToInt64());                     //消防状态回调
             InsertLogMessage("SDK初始化......");
 
         }
         // 窗体关闭
         private void TestIPGBNETForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-            IPGBNET.Instance.NETIPGBNETSDK_Cleanup();
+            IPGBNETSDK.Instance.NETIPGBNETSDK_Cleanup();
 
         }
 
@@ -375,8 +376,7 @@ namespace TestIPGBNET
 
             Logs.UPass = txtPassWord.Text; //用户密码
 
-            NETAVHSDK_USERINFO lpUser = new NETAVHSDK_USERINFO();
-            int res = IPGBNET.Instance.NETIPGBNETSDK_LogIn(Logs, ref m_us);
+            int res = IPGBNETSDK.Instance.NETIPGBNETSDK_LogIn(Logs, ref m_us);
             if (res > 0)
             {
                 m_GbStreamId = 0;
@@ -397,7 +397,7 @@ namespace TestIPGBNET
         {
             //当前用户ID
             int user_id = Convert.ToInt32(txtUserId.Text);
-            IPGBNET.Instance.NETIPGBNETSDK_LogOut(user_id);
+            IPGBNETSDK.Instance.NETIPGBNETSDK_LogOut(user_id);
             InsertLogMessage("登出成功......");
             InitButtonsEnabledStatus();
         }
@@ -409,7 +409,7 @@ namespace TestIPGBNET
             int user_id = Convert.ToInt32(txtUserId.Text);
             //获取服务器文件资源
             NETAVHSDK_ONEFILEINFO file = new NETAVHSDK_ONEFILEINFO();
-            if (IPGBNET.Instance.NETIPGBNETSDK_GetOneSerFileInfo(user_id, ref file, true) == 0)
+            if (IPGBNETSDK.Instance.NETIPGBNETSDK_GetOneSerFileInfo(user_id, ref file, true) == 0)
             {
 
                 //构造请求对象
@@ -432,7 +432,7 @@ namespace TestIPGBNET
                 pGbinfo.m_OneFile = files;
 
                 //创建服务器文件广播
-                m_GbStreamId = IPGBNET.Instance.NETIPGBNETSDK_CreateSerFileGbStream(user_id, ref pGbinfo);
+                m_GbStreamId = IPGBNETSDK.Instance.NETIPGBNETSDK_CreateSerFileGbStream(user_id, ref pGbinfo);
 
                 if (m_GbStreamId > 0)
                 {
@@ -455,7 +455,7 @@ namespace TestIPGBNET
         {
             NETAVHSDK_SOUNDCARDINFO cardPubInfo = new NETAVHSDK_SOUNDCARDINFO();
             //第1步 获取声卡信息
-            String[] card_list = IPGBNET.Instance.NETIPGBNETSDK_GetSysSoundCardInfo(ref cardPubInfo);
+            String[] card_list = IPGBNETSDK.Instance.NETIPGBNETSDK_GetSysSoundCardInfo(ref cardPubInfo);
             if (card_list != null && card_list.Length > 0)
             {
                 String cardNo = card_list.Length > 1 ? card_list[1] : card_list[0];
@@ -467,7 +467,7 @@ namespace TestIPGBNET
                 pSrcinfo.SoundCarMixName = cardNo; //声卡采集混音接口名
                 pSrcinfo.SoundCarMixVol = 80;   //声卡采集混音接口音量
 
-                int audioSrcChId = IPGBNET.Instance.NETIPGBNETSDK_CreateSoundCarSrcChannel(ref pSrcinfo);
+                int audioSrcChId = IPGBNETSDK.Instance.NETIPGBNETSDK_CreateSoundCarSrcChannel(ref pSrcinfo);
 
                 //第3步 发送声卡广播请求
                 //构造请求对象
@@ -486,7 +486,7 @@ namespace TestIPGBNET
                 pGbinfo.PlaySec = 0; //暂不支持
                 pGbinfo.AudioSrcChId = (ushort)audioSrcChId; //声卡音频采集编码源通道ID句柄
                 //创建声卡广播
-                m_GbStreamId = IPGBNET.Instance.NETIPGBNETSDK_CreateSoundCarGbStream(m_UserId, ref pGbinfo);
+                m_GbStreamId = IPGBNETSDK.Instance.NETIPGBNETSDK_CreateSoundCarGbStream(m_UserId, ref pGbinfo);
                 if (m_GbStreamId > 0)
                 {
 
@@ -520,7 +520,7 @@ namespace TestIPGBNET
 
             pGbinfo.PlaySec = 0; //暂不支持
 
-            m_GbStreamId = IPGBNET.Instance.NETIPGBNETSDK_CreateTerminalCbStream(m_UserId, ref pGbinfo);
+            m_GbStreamId = IPGBNETSDK.Instance.NETIPGBNETSDK_CreateTerminalCbStream(m_UserId, ref pGbinfo);
 
             if (m_GbStreamId > 0)
             {
@@ -556,7 +556,7 @@ namespace TestIPGBNET
             pGbinfo.m_TEXT = mText;
 
             //创建文本广播
-            m_GbStreamId = IPGBNET.Instance.NETIPGBNETSDK_CreateTextGbStream(m_UserId, ref pGbinfo);
+            m_GbStreamId = IPGBNETSDK.Instance.NETIPGBNETSDK_CreateTextGbStream(m_UserId, ref pGbinfo);
             if (m_GbStreamId != 0)
             {
                 this.SetEnableSendGb(false);
@@ -601,7 +601,7 @@ namespace TestIPGBNET
                 files[0] = f_inifo;
                 pGbinfo.m_LcaOneFile = files;
                 //创建本地文件广播
-                m_GbStreamId = IPGBNET.Instance.NETIPGBNETSDK_CreateLcaFileGbStream(m_UserId, ref pGbinfo);
+                m_GbStreamId = IPGBNETSDK.Instance.NETIPGBNETSDK_CreateLcaFileGbStream(m_UserId, ref pGbinfo);
 
                 if (m_GbStreamId > 0)
                 {
@@ -639,7 +639,7 @@ namespace TestIPGBNET
             pGbinfo.POWType = 0;
             pGbinfo.POWVal = 1;
 
-            m_GbStreamId = IPGBNET.Instance.NETIPGBNETSDK_CreateEncTerminalCbStream(m_UserId, ref pGbinfo);
+            m_GbStreamId = IPGBNETSDK.Instance.NETIPGBNETSDK_CreateEncTerminalCbStream(m_UserId, ref pGbinfo);
 
             if (m_GbStreamId > 0)
             {
@@ -660,7 +660,7 @@ namespace TestIPGBNET
 
             //认证内容
             String buf = "";
-            int audioSrcChId = IPGBNET.Instance.NETIPGBNETSDK_CreateThirdRealSrcChannel(ref pSrcinfo);
+            int audioSrcChId = IPGBNETSDK.Instance.NETIPGBNETSDK_CreateThirdRealSrcChannel(ref pSrcinfo);
             if (audioSrcChId <= 0)
             {
                 InsertLogMessage("创建第三方实时流编码源通道失败" + "\n");
@@ -685,7 +685,7 @@ namespace TestIPGBNET
 
             pGbinfo.PlaySec = 0; //暂不支持
             pGbinfo.AudioSrcChId = (ushort)audioSrcChId; //声卡音频采集编码源通道ID句柄
-            m_GbStreamId = IPGBNET.Instance.NETIPGBNETSDK_CreateThirdRealAudioGbStream(m_UserId, ref pGbinfo);
+            m_GbStreamId = IPGBNETSDK.Instance.NETIPGBNETSDK_CreateThirdRealAudioGbStream(m_UserId, ref pGbinfo);
             if (m_GbStreamId != 0)
             {
                 InsertLogMessage("第三方实时流广播流id=" + m_GbStreamId + "\n");
@@ -697,7 +697,7 @@ namespace TestIPGBNET
         // 停止广播点击事件
         private void btnStopGB_Click(object sender, EventArgs e)
         {
-            IPGBNET.Instance.NETIPGBNETSDK_DelOneStream(m_UserId, m_GbStreamId);
+            IPGBNETSDK.Instance.NETIPGBNETSDK_DelOneStream(m_UserId, m_GbStreamId);
             this.SetEnableSendGb(true);
             InsertLogMessage("广播已停止......\n");
 
@@ -715,7 +715,7 @@ namespace TestIPGBNET
             ushort call_tmid = Convert.ToUInt16(str_tfTagerTerminal);
 
             //终端对讲
-            int result = IPGBNET.Instance.NETIPGBNETSDK_CtrlAnyTmForCall(m_UserId, main_tmid, call_tmid);
+            int result = IPGBNETSDK.Instance.NETIPGBNETSDK_CtrlAnyTmForCall(m_UserId, main_tmid, call_tmid);
             if (result == 0)
             {
                 InsertLogMessage("终端对讲成功\n");
@@ -738,7 +738,7 @@ namespace TestIPGBNET
             byte ctlType = 1;
 
             //控制绑定终端对讲
-            int result = IPGBNET.Instance.NETIPGBNETSDK_CtrlAnyTmForCall(m_UserId, call_tmid, ctlType);
+            int result = IPGBNETSDK.Instance.NETIPGBNETSDK_CtrlAnyTmForCall(m_UserId, call_tmid, ctlType);
             if (result == 0)
             {
                 InsertLogMessage("控制终端对讲成功\n");
@@ -761,7 +761,7 @@ namespace TestIPGBNET
             byte ctlType = 2;
 
             //控制绑定终端对讲
-            int result = IPGBNET.Instance.NETIPGBNETSDK_CtrlAnyTmForCall(m_UserId, call_tmid, ctlType);
+            int result = IPGBNETSDK.Instance.NETIPGBNETSDK_CtrlAnyTmForCall(m_UserId, call_tmid, ctlType);
             if (result == 0)
             {
                 InsertLogMessage("控制终端对讲成功\n");
@@ -785,7 +785,7 @@ namespace TestIPGBNET
             //触发类型
             byte pinType = 1;
             //触发第三方消防系统接口信号
-            int result = IPGBNET.Instance.NETIPGBNETSDK_ThreeFireArm(m_UserId, ref pVol, pinType);
+            int result = IPGBNETSDK.Instance.NETIPGBNETSDK_ThreeFireArm(m_UserId, ref pVol, pinType);
             if (result == 0)
             {
                 InsertLogMessage("创建触发第三方消防系统接口信号\n");
@@ -807,7 +807,7 @@ namespace TestIPGBNET
             //触发类型
             byte pinType = 2;
             //触发第三方消防系统接口信号
-            int result = IPGBNET.Instance.NETIPGBNETSDK_ThreeFireArm(m_UserId, ref pVol, pinType);
+            int result = IPGBNETSDK.Instance.NETIPGBNETSDK_ThreeFireArm(m_UserId, ref pVol, pinType);
             if (result == 0)
             {
                 InsertLogMessage("删除触发第三方消防系统接口信号");
@@ -834,7 +834,7 @@ namespace TestIPGBNET
             pVol.SetType = 2;
 
             //调节终端输出音量事件
-            int result = IPGBNET.Instance.NETIPGBNETSDK_SetTmOutVol(m_UserId, ref pVol);
+            int result = IPGBNETSDK.Instance.NETIPGBNETSDK_SetTmOutVol(m_UserId, ref pVol);
             InsertLogMessage($"调节终端输出音量{(result == 0 ? "成功" : "失败")} \n");
         }
 
@@ -843,7 +843,7 @@ namespace TestIPGBNET
         {
             int user_id = Convert.ToInt32(txtUserId.Text);
             NETAVHSDK_USERFQINFO pFqInfo = new NETAVHSDK_USERFQINFO();
-            int res = IPGBNET.Instance.NETIPGBNETSDK_GetUserFqInfo(user_id, ref pFqInfo);
+            int res = IPGBNETSDK.Instance.NETIPGBNETSDK_GetUserFqInfo(user_id, ref pFqInfo);
             InsertLogMessage("用户分区个数:" + pFqInfo.FqCout);
             foreach (NETAVHSDK_ONEFQINFO fq in pFqInfo.m_OneFq)
             {
@@ -861,10 +861,5 @@ namespace TestIPGBNET
             }
 
         }
-
-
-
-
-
     }
 }
