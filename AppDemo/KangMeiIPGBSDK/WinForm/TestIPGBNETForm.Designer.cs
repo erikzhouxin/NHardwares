@@ -150,6 +150,7 @@
             this.btnLogOut.TabIndex = 114;
             this.btnLogOut.Text = "登出";
             this.btnLogOut.UseVisualStyleBackColor = true;
+            this.btnLogOut.Click += new System.EventHandler(this.btnLogOut_Click);
             // 
             // btnLogin
             // 
@@ -171,6 +172,7 @@
             this.btnFileGB.TabIndex = 112;
             this.btnFileGB.Text = "服务器文件广播";
             this.btnFileGB.UseVisualStyleBackColor = true;
+            this.btnFileGB.Click += new System.EventHandler(this.btnFileGB_Click);
             // 
             // btnTerminalOutVol
             // 
@@ -211,6 +213,7 @@
             this.btnStopGB.TabIndex = 108;
             this.btnStopGB.Text = "停止广播";
             this.btnStopGB.UseVisualStyleBackColor = true;
+            this.btnStopGB.Click += new System.EventHandler(this.btnStopGB_Click);
             // 
             // btnThridSteamGB
             // 
@@ -241,6 +244,7 @@
             this.btnLocalFileGB.TabIndex = 105;
             this.btnLocalFileGB.Text = "本地文件广播";
             this.btnLocalFileGB.UseVisualStyleBackColor = true;
+            this.btnLocalFileGB.Click += new System.EventHandler(this.btnLocalFileGB_Click);
             // 
             // btnTTSGB
             // 
@@ -251,6 +255,7 @@
             this.btnTTSGB.TabIndex = 104;
             this.btnTTSGB.Text = "文本广播";
             this.btnTTSGB.UseVisualStyleBackColor = true;
+            this.btnTTSGB.Click += new System.EventHandler(this.btnTTSGB_Click);
             // 
             // btnStopDJ
             // 
@@ -339,6 +344,7 @@
             this.btnSoundCardGB.TabIndex = 95;
             this.btnSoundCardGB.Text = "声卡广播";
             this.btnSoundCardGB.UseVisualStyleBackColor = true;
+            this.btnSoundCardGB.Click += new System.EventHandler(this.btnSoundCardGB_Click);
             // 
             // txtThridSteamPort
             // 

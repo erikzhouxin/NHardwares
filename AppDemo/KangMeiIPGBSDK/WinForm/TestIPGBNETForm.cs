@@ -305,17 +305,17 @@ namespace TestIPGBNET
         {
             Control.CheckForIllegalCrossThreadCalls = false;
 
-            this.txtUserName.Text = "110";
+            this.txtUserName.Text = "108";
 
             this.txtPassWord.Text = "123";
 
-            this.txtIp.Text = "192.168.1.110";
+            this.txtIp.Text = "192.168.1.9";
 
             this.txtPort.Text = "3960";
 
-            this.txtTagertTerminalId.Text = "110";
+            this.txtTagertTerminalId.Text = "108";
 
-            this.txtSourceTerminalId.Text = "110";
+            this.txtSourceTerminalId.Text = "108";
 
             this.txtOutVol.Text = "50";
 
@@ -328,11 +328,11 @@ namespace TestIPGBNET
 
             //初始化SDK
             IPGBNETSDK.Instance.NETIPGBNETSDK_Init(Convert.ToInt32(txtThridSteamPort.Text));
-            IPGBNETSDK.Instance.NETIPGBNETSDK_SetLogCallBack(connectOrDis, this.Handle.ToInt64());                    //登录回调
-            // IPAVHNET.Instance.NETIPGBNETSDK_SetTerminalStaCallBack(terminalSta, this.Handle.ToInt64());	 //终端状态回调
-            IPGBNETSDK.Instance.NETIPGBNETSDK_SetBatchTerminalStaCallBack(terminalStaBatch, this.Handle.ToInt64());	 //终端状态批量回调
-            IPGBNETSDK.Instance.NETIPGBNETSDK_SetGBStreamStaCallBack(gbStreamSta, this.Handle.ToInt64());             //广播流状态回调
-            IPGBNETSDK.Instance.NETIPGBNETSDK_SetFireStaCallBack(fireSta, this.Handle.ToInt64());                     //消防状态回调
+            //IPGBNETSDK.Instance.NETIPGBNETSDK_SetLogCallBack(connectOrDis, this.Handle.ToInt64());                    //登录回调
+            //// IPAVHNET.Instance.NETIPGBNETSDK_SetTerminalStaCallBack(terminalSta, this.Handle.ToInt64());	 //终端状态回调
+            //IPGBNETSDK.Instance.NETIPGBNETSDK_SetBatchTerminalStaCallBack(terminalStaBatch, this.Handle.ToInt64());	 //终端状态批量回调
+            //IPGBNETSDK.Instance.NETIPGBNETSDK_SetGBStreamStaCallBack(gbStreamSta, this.Handle.ToInt64());             //广播流状态回调
+            //IPGBNETSDK.Instance.NETIPGBNETSDK_SetFireStaCallBack(fireSta, this.Handle.ToInt64());                     //消防状态回调
             InsertLogMessage("SDK初始化......");
 
         }
@@ -383,7 +383,7 @@ namespace TestIPGBNET
                 m_UserId = res;
                 this.txtUserId.Text = Convert.ToString(m_UserId);
                 InsertLogMessage("登陆成功......");
-                // this.SetEnableLogin(true);
+                this.SetEnableLogin(true);
             }
             else
             {
@@ -415,7 +415,7 @@ namespace TestIPGBNET
                 //构造请求对象
                 NETAVHSDK_GBSERFILEINFO pGbinfo = new NETAVHSDK_GBSERFILEINFO();
                 pGbinfo.GBlevel = 18;
-                pGbinfo.GBVol = 30;
+                pGbinfo.GBVol = 75;
 
                 //目标终端
                 String str_tfTagerTerminal = this.txtTagertTerminalId.Text.ToString();
@@ -472,8 +472,8 @@ namespace TestIPGBNET
                 //第3步 发送声卡广播请求
                 //构造请求对象
                 NETAVHSDK_GBSoundCarINFO pGbinfo = new NETAVHSDK_GBSoundCarINFO();
-                pGbinfo.GBlevel = 18; //配置此广播的级别,（1-18 18为高级别，以区分此用户创建的所有广播流级别控制，高打断低，同级不可打断)
-                pGbinfo.GBVol = 100; //接收终端音量
+                pGbinfo.GBlevel =  18; //配置此广播的级别,（1-18 18为高级别，以区分此用户创建的所有广播流级别控制，高打断低，同级不可打断)
+                pGbinfo.GBVol = 75; //接收终端音量
                 pGbinfo.EncType = 1; //编码格式
 
 
@@ -502,8 +502,8 @@ namespace TestIPGBNET
         {
             //构造请求对象
             NETAVHSDK_GBTMCBINFO pGbinfo = new NETAVHSDK_GBTMCBINFO();
-            pGbinfo.GBlevel = 18; //配置此广播的级别,（1-18 18为高级别，以区分此用户创建的所有广播流级别控制，高打断低，同级不可打断)
-            pGbinfo.GBVol = 30; //接收终端音量
+            pGbinfo.GBlevel =  18; //配置此广播的级别,（1-18 18为高级别，以区分此用户创建的所有广播流级别控制，高打断低，同级不可打断)
+            pGbinfo.GBVol = 75; //接收终端音量
             pGbinfo.CBVol = 21; //采播输入音量
             pGbinfo.EncType = 1; //编码格式
 
@@ -537,8 +537,8 @@ namespace TestIPGBNET
         {
             //构造请求对象
             NETAVHSDK_GBTEXTINFO pGbinfo = new NETAVHSDK_GBTEXTINFO();
-            pGbinfo.GBlevel = 18; //配置此广播的级别,（1-18 18为高级别，以区分此用户创建的所有广播流级别控制，高打断低，同级不可打断)
-            pGbinfo.GBVol = 30; //接收终端音量
+            pGbinfo.GBlevel =  18; //配置此广播的级别,（1-18 18为高级别，以区分此用户创建的所有广播流级别控制，高打断低，同级不可打断)
+            pGbinfo.GBVol = 75; //接收终端音量
 
             //目标终端
             String str_tfTagerTerminal = this.txtTagertTerminalId.Text.ToString();
@@ -559,7 +559,6 @@ namespace TestIPGBNET
             m_GbStreamId = IPGBNETSDK.Instance.NETIPGBNETSDK_CreateTextGbStream(m_UserId, ref pGbinfo);
             if (m_GbStreamId != 0)
             {
-                this.SetEnableSendGb(false);
                 InsertLogMessage("文本广播广播流id=" + m_GbStreamId + "\n");
                 return;
             }
@@ -582,12 +581,12 @@ namespace TestIPGBNET
                 //构造请求对象
                 NETAVHSDK_GBLCAFILEINFO pGbinfo = new NETAVHSDK_GBLCAFILEINFO();
                 pGbinfo.GBlevel = 18;
-                pGbinfo.GBVol = 30;
+                pGbinfo.GBVol = 75;
 
                 //目标终端
                 String str_tfTagerTerminal = this.txtTagertTerminalId.Text.ToString();
                 pGbinfo.TmID = new UInt16[1];
-                pGbinfo.TmID[0] = Convert.ToUInt16(str_tfTagerTerminal); ;//接收广播的终端ID数组,此处为ID为1的终端
+                pGbinfo.TmID[0] = Convert.ToUInt16(str_tfTagerTerminal); //接收广播的终端ID数组,此处为ID为1的终端
                 pGbinfo.TmCout = 1;
 
                 pGbinfo.PlayLoop = 1;
@@ -618,8 +617,8 @@ namespace TestIPGBNET
         {
             //构造请求对象
             NETAVHSDK_GBENCTMCBINFO pGbinfo = new NETAVHSDK_GBENCTMCBINFO();
-            pGbinfo.GBlevel = 18; //配置此广播的级别,（1-18 18为高级别，以区分此用户创建的所有广播流级别控制，高打断低，同级不可打断)
-            pGbinfo.GBVol = 30; //接收终端音量
+            pGbinfo.GBlevel =  18; //配置此广播的级别,（1-18 18为高级别，以区分此用户创建的所有广播流级别控制，高打断低，同级不可打断)
+            pGbinfo.GBVol = 75; //接收终端音量
             pGbinfo.CBVol = 21; //采播输入音量
             pGbinfo.EncType = 1; //编码格式
 
@@ -672,8 +671,8 @@ namespace TestIPGBNET
 
             //构造请求对象
             NETAVHSDK_GBTHIRDREALAUDIOINFO pGbinfo = new NETAVHSDK_GBTHIRDREALAUDIOINFO();
-            pGbinfo.GBlevel = 18; //配置此广播的级别,（1-18 18为高级别，以区分此用户创建的所有广播流级别控制，高打断低，同级不可打断)
-            pGbinfo.GBVol = 30;   //接收终端音量
+            pGbinfo.GBlevel =  18; //配置此广播的级别,（1-18 18为高级别，以区分此用户创建的所有广播流级别控制，高打断低，同级不可打断)
+            pGbinfo.GBVol = 75;   //接收终端音量
             pGbinfo.EncType = Convert.ToUInt16(txtThridSteamType.Text.ToString());
 
 

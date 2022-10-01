@@ -22,19 +22,13 @@
 		<RepositoryType>git</RepositoryType>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 	</PropertyGroup>
-	<ItemGroup Condition="'$(Platform)'=='x86'">
+	<ItemGroup>
 		<Reference Include="IPGBNET">
-			<HintPath>beans\x86\IPGBNET.dll</HintPath>
-		</Reference>
-		<Reference Include="IPGBNETPush">
-			<HintPath>beans\x86\IPGBNETPush.dll</HintPath>
-		</Reference>
-	</ItemGroup>
-	<ItemGroup Condition="'$(Platform)'!='x86'">
-		<Reference Include="IPGBNET">
+			<Private>true</Private>
 			<HintPath>beans\x64\IPGBNET.dll</HintPath>
 		</Reference>
 		<Reference Include="IPGBNETPush">
+			<Private>true</Private>
 			<HintPath>beans\x64\IPGBNETPush.dll</HintPath>
 		</Reference>
 	</ItemGroup>
