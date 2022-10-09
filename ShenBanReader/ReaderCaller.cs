@@ -370,11 +370,11 @@ namespace System.Data.ShenBanReader
                 int nCount = btAryReceiveData.Length;
                 byte[] btAryBuffer = new byte[nCount + received.Length];
                 Array.Copy(received.Buffer, btAryBuffer, received.Length);
-                Array.Copy(btAryReceiveData, 0, btAryBuffer, received.Length, btAryReceiveData.Length);
+                Array.Copy(btAryReceiveData, 0, btAryBuffer, received.Length, nCount);
 
-                //分析接收数据，以0xA0为数据起点，以协议中数据长度为数据终止点
-                int nIndex = 0;//当数据中存在A0时，记录数据的终止点
-                int nMarkIndex = 0;//当数据中不存在A0时，nMarkIndex等于数据组最大索引
+                // 分析接收数据，以0xA0为数据起点，以协议中数据长度为数据终止点
+                int nIndex = 0; // 当数据中存在A0时，记录数据的终止点
+                int nMarkIndex = 0; // 当数据中不存在A0时，nMarkIndex等于数据组最大索引
                 for (int nLoop = 0; nLoop < btAryBuffer.Length; nLoop++)
                 {
                     if (btAryBuffer.Length > nLoop + 1)

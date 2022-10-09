@@ -164,7 +164,7 @@ namespace System.Data.KangMeiIPGBSDK
         /// </summary>
         /// <param name="isBase"></param>
         /// <returns></returns>
-        public static IIPGBNETSdkProxy Create(bool isBase)
+        public static IIPGBNETSdkProxy Create(bool isBase = false)
         {
             var currentDir = IPGBNETSdkDller.DllFullPath;
             var pluginDir = IPGBNETSdkLoader.DllFullPath;
@@ -191,7 +191,7 @@ namespace System.Data.KangMeiIPGBSDK
         /// </summary>
         /// <param name="isBase"></param>
         /// <returns></returns>
-        public static IIPGBPUSHSdkProxy CreatePush(bool isBase)
+        public static IIPGBPUSHSdkProxy CreatePush(bool isBase = false)
         {
             var currentDir = IPGBPUSHSdkDller.DllFullPath;
             var pluginDir = IPGBPUSHSdkLoader.DllFullPath;
@@ -239,7 +239,7 @@ namespace System.Data.KangMeiIPGBSDK
             var res = new List<TE>();
             foreach (var item in tms)
             {
-                if(item == null) { continue; }
+                if (item == null) { continue; }
                 res.Add(GetElement(item));
             }
             return res.ToArray();

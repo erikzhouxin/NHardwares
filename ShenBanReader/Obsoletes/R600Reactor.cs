@@ -9,15 +9,14 @@ namespace System.Data.ShenBanReader
     /// <summary>
     /// 聚集接口
     /// </summary>
-    public interface IR600Reactor : IR600Reader, IR600Queue
-    {
-    }
+    public interface IR600Reactor : IR600Reader, IR600Queue { }
     /// <summary>
     /// 聚集实现类
     /// </summary>
     internal sealed class R600Reactor : AR600Reader, IR600Reactor, IR600Reader, IR600Queue
     {
         private ReadReceiveMessage _bufferMsg = new ReadReceiveMessage();
+        private object _bufferLock = new object();
         #region // 构造及连接
         ///// <summary>
         ///// 配置信息
@@ -64,7 +63,10 @@ namespace System.Data.ShenBanReader
         #region // 接收及分析
         private void RunReceiveDataCallback(byte[] btAryReceiveData)
         {
-            ReaderCaller.RunReceiveDataCallback(_bufferMsg, btAryReceiveData, ReceiveCallback, AnalysisCallback, _recall.AlertCallbackError);
+            lock (_bufferLock)
+            {
+                ReaderCaller.RunReceiveDataCallback(_bufferMsg, btAryReceiveData, ReceiveCallback, AnalysisCallback, _recall.AlertCallbackError);
+            }
         }
 
         /// <summary>

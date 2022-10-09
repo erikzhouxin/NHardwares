@@ -517,7 +517,6 @@ namespace System.Data.ShenBanReader
         /// </summary>
         Action<IReadMessage, byte, ReadLockTagStatus> IR600CallAction.QueryTagISO18000 { get => QueryTagISO18000; set { } }
         #endregion
-
         #region // 回调方法接口
         /// <summary>
         /// 发送回调

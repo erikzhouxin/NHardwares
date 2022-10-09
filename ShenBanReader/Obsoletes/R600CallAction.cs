@@ -216,9 +216,7 @@ namespace System.Data.ShenBanReader
         /// <summary>
         /// 默认构造
         /// </summary>
-        public R600CallAction()
-        {
-        }
+        public R600CallAction() { }
         /// <summary>
         /// 构造
         /// </summary>

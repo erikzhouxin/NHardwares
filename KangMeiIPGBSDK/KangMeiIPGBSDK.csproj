@@ -21,6 +21,39 @@
 		<RepositoryUrl>https://www.gitee.com/ErikZhouXin/NHardwares</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+		<AppConfig Condition="'$(TargetFramework)' == 'net40'">app.net40.config</AppConfig>
+		<AutoUnifyAssemblyReferences Condition="'$(TargetFramework)' == 'net40'">false</AutoUnifyAssemblyReferences>
+		<NoWarn>1701;1702;IDE0057;IDE0066;IDE0079;IDE0063</NoWarn>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)'=='Debug|net40'">
+		<DefineConstants>TRACE;DEBUG;NETFrame;NET40</DefineConstants>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)'=='Debug|net45'">
+		<DefineConstants>TRACE;DEBUG;NETFrame;NET45</DefineConstants>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)'=='Debug|netstandard2.1'">
+		<DefineConstants>TRACE;DEBUG;NETFx;NETStd</DefineConstants>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)'=='Debug|netcoreapp3.1'">
+		<DefineConstants>TRACE;DEBUG;NETFx;NETCore</DefineConstants>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)'=='Debug|net6.0'">
+		<DefineConstants>TRACE;DEBUG;NETFx;NET60</DefineConstants>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)'=='Release|net40'">
+		<DefineConstants>TRACE;NETFrame;NET40</DefineConstants>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)'=='Release|net45'">
+		<DefineConstants>TRACE;NETFrame;NET45</DefineConstants>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)'=='Release|netstandard2.1'">
+		<DefineConstants>TRACE;NETFx;NETStd</DefineConstants>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)'=='Release|netcoreapp3.1'">
+		<DefineConstants>TRACE;NETFx;NETCore</DefineConstants>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)'=='Release|net6.0'">
+		<DefineConstants>TRACE;NETFx;NET60</DefineConstants>
 	</PropertyGroup>
 	<ItemGroup>
 		<Reference Include="IPGBNET">
@@ -43,11 +76,63 @@
 			<AutoGen>True</AutoGen>
 			<DependentUpon>Resources.resx</DependentUpon>
 		</Compile>
-	</ItemGroup>
-	<ItemGroup>
 		<EmbeddedResource Update="Properties\Resources.resx">
 			<Generator>ResXFileCodeGenerator</Generator>
 			<LastGenOutput>Resources.Designer.cs</LastGenOutput>
 		</EmbeddedResource>
+	</ItemGroup>
+	<ItemGroup Condition="'$(TargetFramework)' == 'net40'">
+		<PackageReference Include="Microsoft.Bcl.Async" Version="1.0.168" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+		<Reference Include="System" />
+		<Reference Include="System.ComponentModel.DataAnnotations" />
+		<Reference Include="System.Web" />
+	</ItemGroup>
+	<ItemGroup Condition="'$(TargetFramework)' == 'net45'">
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+		<PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
+		<Reference Include="System.Web" />
+	</ItemGroup>
+	<ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.1'">
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+		<PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
+		<PackageReference Include="System.ComponentModel.TypeConverter" Version="4.3.0" />
+		<PackageReference Include="System.Collections.NonGeneric" Version="4.3.0" />
+		<PackageReference Include="System.IO.Pipes.AccessControl" Version="5.0.0" />
+		<PackageReference Include="System.Reflection.Emit" Version="4.7.0" />
+		<PackageReference Include="System.Reflection.Emit.ILGeneration" Version="4.7.0" />
+		<PackageReference Include="System.Reflection.TypeExtensions" Version="4.7.0" />
+		<PackageReference Include="System.Security.Permissions" Version="4.7.0" />
+	</ItemGroup>
+	<ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp3.1'">
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+		<PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
+		<PackageReference Include="System.ComponentModel.TypeConverter" Version="4.3.0" />
+		<PackageReference Include="System.Collections.NonGeneric" Version="4.3.0" />
+		<PackageReference Include="System.IO.Pipes.AccessControl" Version="5.0.0" />
+		<PackageReference Include="System.Reflection.Emit" Version="4.7.0" />
+		<PackageReference Include="System.Reflection.Emit.ILGeneration" Version="4.7.0" />
+		<PackageReference Include="System.Reflection.TypeExtensions" Version="4.7.0" />
+		<PackageReference Include="System.Security.Permissions" Version="4.7.0" />
+	</ItemGroup>
+	<ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+		<PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
+		<PackageReference Include="System.ComponentModel.TypeConverter" Version="4.3.0" />
+		<PackageReference Include="System.Collections.NonGeneric" Version="4.3.0" />
+		<PackageReference Include="System.IO.Pipes.AccessControl" Version="5.0.0" />
+		<PackageReference Include="System.Reflection.Emit" Version="4.7.0" />
+		<PackageReference Include="System.Reflection.Emit.ILGeneration" Version="4.7.0" />
+		<PackageReference Include="System.Reflection.TypeExtensions" Version="4.7.0" />
+		<PackageReference Include="System.Security.Permissions" Version="4.7.0" />
+	</ItemGroup>
+	<ItemGroup Condition="'$(TargetFramework)' == 'net40'">
+		<Reference Include="Microsoft.CSharp" />
+		<Reference Include="System.Runtime"/>
+	</ItemGroup>
+	<ItemGroup Condition="'$(TargetFramework)' != 'net40'">
+		<PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+		<PackageReference Include="System.Runtime" Version="4.3.1" />
+		<PackageReference Include="System.Memory" Version="4.5.3" />
 	</ItemGroup>
 </Project>
