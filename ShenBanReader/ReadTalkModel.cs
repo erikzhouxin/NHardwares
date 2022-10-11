@@ -64,20 +64,6 @@ namespace System.Data.ShenBanReader
         bool Send(byte[] send, out byte[] received, out Exception exception);
     }
     /// <summary>
-    /// 逻辑顺序式模型接口
-    /// </summary>
-    internal interface ILogicalTalkModel : ITalkModel, IDisposable
-    {
-        /// <summary>
-        /// 发送数据包
-        /// </summary>
-        /// <param name="send"></param>
-        /// <param name="Analysis"></param>
-        /// <param name="exception"></param>
-        /// <returns></returns>
-        bool Send(byte[] send, Func<byte[], bool> Analysis, out Exception exception);
-    }
-    /// <summary>
     /// 触发式模型接口
     /// </summary>
     internal interface ITalkReadModel : ITalkModel, IDisposable
@@ -85,8 +71,15 @@ namespace System.Data.ShenBanReader
         /// <summary>
         /// 接收到发来的消息
         /// </summary>
-        event Action<byte[]> Received;
-        event Action<byte[], Exception> SendError;
+        Action<byte[]> Received { get; set; }
+        /// <summary>
+        /// 发送错误
+        /// </summary>
+        Action<byte[]> Sended { get; set; }
+        /// <summary>
+        /// 发送错误
+        /// </summary>
+        Action<byte[], Exception> Errored { get; set; }
         /// <summary>
         /// 发送数据包
         /// </summary>
@@ -96,88 +89,15 @@ namespace System.Data.ShenBanReader
     }
     #region // 顺序读模型
     /// <summary>
-    /// 对话模型
-    /// </summary>
-    internal class TalkQueueModel : ITalkQueueModel
-    {
-        /// <summary>
-        /// 锁定对象
-        /// </summary>
-        public static object LockObject { get; } = new object();
-        /// <summary>
-        /// 链接
-        /// </summary>
-        /// <param name="ip"></param>
-        /// <param name="port"></param>
-        /// <param name="message"></param>
-        /// <returns></returns>
-        public virtual bool Connect(IPAddress ip, int port, out string message)
-        {
-            message = "接口未实现";
-            return false;
-        }
-        /// <summary>
-        /// 链接
-        /// </summary>
-        /// <param name="portName"></param>
-        /// <param name="bautRate"></param>
-        /// <param name="message"></param>
-        /// <returns></returns>
-        public virtual bool Connect(string portName, int bautRate, out string message)
-        {
-            message = "接口未实现";
-            return false;
-        }
-        /// <summary>
-        /// 释放资源
-        /// </summary>
-        public virtual void Dispose()
-        {
-
-        }
-        /// <summary>
-        /// 已连接
-        /// </summary>
-        /// <returns></returns>
-        public virtual bool IsConnected { get => false; }
-        /// <summary>
-        /// 断开连接
-        /// </summary>
-        /// <returns></returns>
-        public virtual bool Disconnect()
-        {
-            return false;
-        }
-        /// <summary>
-        /// 连接
-        /// </summary>
-        /// <returns></returns>
-        public virtual bool Connect(out string message)
-        {
-            message = "接口未实现";
-            return false;
-        }
-        /// <summary>
-        /// 发送
-        /// </summary>
-        /// <returns></returns>
-        public virtual bool Send(byte[] send, out byte[] received, out Exception exception)
-        {
-            exception = new SocketException(400);
-            received = null;
-            return false;
-        }
-    }
-    /// <summary>
     /// TCP连接模型
     /// </summary>
-    internal class TcpTalkQueueModel : TalkQueueModel, ITalkQueueModel
+    internal class TcpTalkQueueModel : TalkReadModel
     {
-        IPAddress _ip;
-        int _port;
-        TcpClient _client;
-        Stream _stream;
-        bool _isConnected;
+        private IPAddress _ip;
+        private int _port;
+        private TcpClient _client;
+        private Stream _stream;
+        private bool _isConnected;
         public TcpTalkQueueModel()
         {
             _ip = IPAddress.Parse("192.168.0.178");
@@ -253,14 +173,14 @@ namespace System.Data.ShenBanReader
             var waiter = ReadSetter.Current.QueuePollTimeWaiter;
             var buffLen = ReadSetter.Current.QueuePollBuffLength;
             // 获取锁定发送
-            if (Monitor.TryEnter(LockObject, TimeSpan.FromMilliseconds(interval)))
+            if (Monitor.TryEnter(_locker, TimeSpan.FromMilliseconds(interval)))
             {
                 if (!IsConnected) // 未连接重连尝试
                 {
                     if (!TryConnect(_ip, _port, out exception))
                     {
                         received = null;
-                        Monitor.Exit(LockObject);
+                        Monitor.Exit(_locker);
                         return false;
                     }
                 }
@@ -276,7 +196,7 @@ namespace System.Data.ShenBanReader
                     exception = new Exception("未连接或已经断开连接", ex);
                     received = null;
                     _isConnected = false;
-                    Monitor.Exit(LockObject);
+                    Monitor.Exit(_locker);
                     return false;
                 }
                 Thread.Sleep(waiter * 2); // 发送成功后等待,确保已经开始接收,减少出错
@@ -290,14 +210,14 @@ namespace System.Data.ShenBanReader
                         exception = new Exception($"已完成数据接收");
                         received = new byte[len];
                         Array.Copy(buffer, received, len);
-                        Monitor.Exit(LockObject);
+                        Monitor.Exit(_locker);
                         return true;
                     }
                     else
                     {
                         exception = new Exception($"未完成数据接收");
                         received = null;
-                        Monitor.Exit(LockObject);
+                        Monitor.Exit(_locker);
                         return false;
                     }
                 }
@@ -308,13 +228,13 @@ namespace System.Data.ShenBanReader
                     {
                         received = new byte[len];
                         Array.Copy(buffer, received, len);
-                        Monitor.Exit(LockObject);
+                        Monitor.Exit(_locker);
                         return true; // 有数据就走成功逻辑
                     }
                     else
                     {
                         received = null;
-                        Monitor.Exit(LockObject);
+                        Monitor.Exit(_locker);
                         return false;
                     }
                 }
@@ -351,7 +271,7 @@ namespace System.Data.ShenBanReader
     /// <summary>
     /// 串口连接模型
     /// </summary>
-    internal class SerialTalkQueueModel : TalkQueueModel, ITalkQueueModel
+    internal class SerialTalkQueueModel : TalkReadModel
     {
         SerialPort serialPort;
         public SerialTalkQueueModel()
@@ -416,20 +336,19 @@ namespace System.Data.ShenBanReader
         /// 已打开
         /// </summary>
         public override bool IsConnected { get => serialPort.IsOpen; }
-
         public override bool Send(byte[] aryBuffer, out byte[] received, out Exception exception)
         {
             var interval = ReadSetter.Current.QueuePollTimeout;
             var waiter = ReadSetter.Current.QueuePollTimeWaiter;
             var buffLen = ReadSetter.Current.QueuePollBuffLength;
             // 获取锁定发送
-            if (Monitor.TryEnter(LockObject, TimeSpan.FromMilliseconds(interval)))
+            if (Monitor.TryEnter(_locker, TimeSpan.FromMilliseconds(interval)))
             {
                 if (!serialPort.IsOpen)
                 {
                     received = null;
                     exception = new Exception("串口通信未初始化或未打开串口");
-                    Monitor.Exit(LockObject);
+                    Monitor.Exit(_locker);
                     return false;
                 }
                 try
@@ -440,7 +359,7 @@ namespace System.Data.ShenBanReader
                 {
                     exception = ex;
                     received = null;
-                    Monitor.Exit(LockObject);
+                    Monitor.Exit(_locker);
                     return false;
                 }
                 Thread.Sleep(waiter * 2); // 发送成功后等待,确保已经开始接收,减少出错
@@ -467,7 +386,7 @@ namespace System.Data.ShenBanReader
                                 received = null;
                                 exception = new Exception($"已超过轮询时间{interval}毫秒，未读取到数据");
                             }
-                            Monitor.Exit(LockObject);
+                            Monitor.Exit(_locker);
                             return res;
                         }
                         int nCount = serialPort.BytesToRead;
@@ -478,7 +397,7 @@ namespace System.Data.ShenBanReader
                                 exception = new Exception($"已完成数据接收");
                                 received = new byte[len];
                                 Array.Copy(buffer, received, len);
-                                Monitor.Exit(LockObject);
+                                Monitor.Exit(_locker);
                                 return true;
                             }
                             //else
@@ -503,13 +422,13 @@ namespace System.Data.ShenBanReader
                     {
                         received = new byte[len];
                         Array.Copy(buffer, received, len);
-                        Monitor.Exit(LockObject);
+                        Monitor.Exit(_locker);
                         return true; // 有数据就走成功逻辑
                     }
                     else
                     {
                         received = null;
-                        Monitor.Exit(LockObject);
+                        Monitor.Exit(_locker);
                         return false;
                     }
                 }
@@ -536,11 +455,21 @@ namespace System.Data.ShenBanReader
     /// <summary>
     /// 对话模型
     /// </summary>
-    internal class TalkReadModel : ITalkReadModel
+    internal class TalkReadModel : ITalkReadModel, ITalkQueueModel
     {
-        public virtual event Action<byte[]> Received;
-        public virtual event Action<byte[], Exception> SendError;
-
+        protected readonly object _locker = new object();
+        /// <summary>
+        /// 接收信息
+        /// </summary>
+        public virtual Action<byte[]> Received { get; set; }
+        /// <summary>
+        /// 发送信息
+        /// </summary>
+        public virtual Action<byte[]> Sended { get; set; }
+        /// <summary>
+        /// 错误信息
+        /// </summary>
+        public virtual Action<byte[], Exception> Errored { get; set; }
         /// <summary>
         /// 重新连接
         /// </summary>
@@ -579,9 +508,7 @@ namespace System.Data.ShenBanReader
         /// </summary>
         public virtual void Dispose()
         {
-
         }
-
         /// <summary>
         /// 退出
         /// </summary>
@@ -603,6 +530,16 @@ namespace System.Data.ShenBanReader
         {
             return false;
         }
+        /// <summary>
+        /// 发送
+        /// </summary>
+        /// <returns></returns>
+        public virtual bool Send(byte[] send, out byte[] received, out Exception exception)
+        {
+            exception = new SocketException(400);
+            received = null;
+            return false;
+        }
     }
     /// <summary>
     /// TCP连接模型
@@ -610,8 +547,6 @@ namespace System.Data.ShenBanReader
     internal class TcpTalkReadModel
         : TalkReadModel, ITalkReadModel
     {
-        public override event Action<byte[]> Received;
-        public override event Action<byte[], Exception> SendError;
         TcpClient _client;
         Stream _stream;
         private Thread _thread;
@@ -737,8 +672,6 @@ namespace System.Data.ShenBanReader
     /// </summary>
     internal class SerialTalkReadModel : TalkReadModel, ITalkReadModel
     {
-        public override event Action<byte[], Exception> SendError;
-        public override event Action<byte[]> Received;
         SerialPort _serialPort;
         public SerialTalkReadModel()
         {
@@ -756,7 +689,10 @@ namespace System.Data.ShenBanReader
                 _serialPort.Read(btAryBuffer, 0, nCount);
                 Received?.Invoke(btAryBuffer);
             }
-            catch { }
+            catch (Exception ex)
+            {
+                Errored?.Invoke(new byte[0], ex);
+            }
         }
 
         public override bool Connect(string portName, int bautRate, out string message)
@@ -808,15 +744,13 @@ namespace System.Data.ShenBanReader
             _serialPort.Dispose();
         }
     }
-    #endregion
+    #endregion 触发读模型
     #region // 逻辑跳读模型
     /// <summary>
     /// TCP连接模型
     /// </summary>
     internal class TcpLogicalTalkModel : TalkReadModel, ITalkReadModel
     {
-        public override event Action<byte[]> Received;
-        public override event Action<byte[], Exception> SendError;
         private byte[] _buffer;
         private int _len;
         private TcpClient _client;
@@ -956,8 +890,6 @@ namespace System.Data.ShenBanReader
     /// </summary>
     internal class SerialLogicalTalkModel : TalkReadModel, ITalkReadModel
     {
-        public override event Action<byte[]> Received;
-        public override event Action<byte[], Exception> SendError;
         private byte[] _buffer;
         private int _len;
         private SerialPort _serialPort;
@@ -1080,7 +1012,7 @@ namespace System.Data.ShenBanReader
         {
             if (!_serialPort.IsOpen)
             {
-                SendError?.Invoke(aryData, new IOException($"当前串口[{_serialPort.PortName}]未打开"));
+                Errored?.Invoke(aryData, new IOException($"当前串口【{_serialPort.PortName}】未打开"));
                 _isConnected = false;
                 return false;
             }
@@ -1092,8 +1024,8 @@ namespace System.Data.ShenBanReader
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
-                SendError?.Invoke(aryData, ex);
+                Console.WriteLine($"发送【{aryData.GetHexString()}】错误:" + ex.Message);
+                Errored?.Invoke(aryData, ex);
                 return false;
             }
         }
@@ -1109,5 +1041,5 @@ namespace System.Data.ShenBanReader
             _serialPort.Dispose();
         }
     }
-    #endregion
+    #endregion 逻辑跳读模型
 }

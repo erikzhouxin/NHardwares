@@ -59,16 +59,11 @@ namespace System.Data.ShenBanReader
         internal MessageTran(byte[] btAryTranData)
         {
             int nLen = btAryTranData.Length;
-
             this.TranData = new byte[nLen];
             btAryTranData.CopyTo(this.TranData, 0);
 
-
             byte btCK = ReaderCaller.CheckByte(this.TranData, 0, this.TranData.Length - 1);
-            if (btCK != btAryTranData[nLen - 1])
-            {
-                return;
-            }
+            if (btCK != btAryTranData[nLen - 1]) { return; }
 
             this.PacketType = btAryTranData[0];
             this.DataLen = btAryTranData[1];
@@ -551,7 +546,19 @@ namespace System.Data.ShenBanReader
 
         private void RunReceiveDataCallback(byte[] btAryReceiveData)
         {
-            ReaderCaller.RunReceiveDataCallback(_bufferMsg, btAryReceiveData, ReceiveCallback, AnalyCallback, (ex) => Console.WriteLine(ex.Message));
+            ReceiveCallback?.Invoke(btAryReceiveData);
+            var res = _bufferMsg.GetOrAdd(btAryReceiveData);
+            foreach (var btAryAnaly in res)
+            {
+                try
+                {
+                    AnalyCallback?.Invoke(new MessageTran(btAryAnaly));
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex);
+                }
+            }
         }
 
         public int SendMessage(byte[] btArySenderData)

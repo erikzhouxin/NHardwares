@@ -82,7 +82,61 @@ namespace System.Data.ShenBanReader
     /// </summary>
     internal class ReadReceiveMessage
     {
-        public int Length;
+        public object Locker = new object();
+        public int Length = 0;
         public byte[] Buffer = new byte[ReadSetter.Current.ReadPollBuffLength];
+        /// <summary>
+        /// 添加内容
+        /// </summary>
+        /// <param name="res"></param>
+        /// <returns></returns>
+        public byte[][] GetOrAdd(byte[] res)
+        {
+            lock (Locker)
+            {
+                try
+                {
+                    int tCount = res.Length + Length;
+                    byte[] tBuffer = new byte[tCount];
+                    Array.Copy(Buffer, tBuffer, Length);
+                    Array.Copy(res, 0, tBuffer, Length, res.Length);
+                    // 分析接收数据，以0xA0为数据起点，以协议中数据长度为数据终止点
+                    int nIndex = 0; // 当数据中存在A0时，记录数据的终止点
+                    List<byte[]> result = new List<byte[]>();
+                    for (int nLoop = 0; nLoop < tCount; nLoop++)
+                    {
+                        if (tBuffer[nLoop] == 0xA0)
+                        {
+                            if (tCount > nLoop + 1)
+                            {
+                                int nLen = Convert.ToInt32(tBuffer[nLoop + 1]);
+                                int tempLoop = nLoop + 1 + nLen;
+                                if (tempLoop < tCount)
+                                {
+                                    byte[] btAryAnaly = new byte[nLen + 2];
+                                    Array.Copy(tBuffer, nLoop, btAryAnaly, 0, nLen + 2);
+                                    result.Add(btAryAnaly);
+                                    nIndex = tempLoop + 1;
+                                }
+                                nLoop = tempLoop;
+                            }
+                        }
+                    }
+                    Length = 0;
+                    if (nIndex < tCount)
+                    {
+                        Length = tCount - nIndex;
+                        Array.Clear(Buffer, 0, 4096);
+                        Array.Copy(tBuffer, nIndex, Buffer, 0, Length);
+                    }
+                    return result.ToArray();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex);
+                }
+            }
+            return new byte[0][];
+        }
     }
 }

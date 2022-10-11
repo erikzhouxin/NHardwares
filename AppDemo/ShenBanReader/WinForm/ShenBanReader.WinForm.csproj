@@ -2,7 +2,7 @@
 
 	<PropertyGroup>
 		<OutputType>WinExe</OutputType>
-		<TargetFramework>net40</TargetFramework>
+		<TargetFramework>netcoreapp3.1</TargetFramework>
 		<UseWindowsForms>true</UseWindowsForms>
 		<AssemblyName>NSystem.Data.ShenBanReader.WinForm</AssemblyName>
 		<RootNamespace>System.Data.ShenBanReader.WinForm</RootNamespace>
@@ -21,12 +21,16 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="nsystem.data.sqlitecipher" Version="2021.9.15" />
-		<PackageReference Include="nsystem.data.dabber" Version="2022.6.6" />
+		<PackageReference Include="NSystem.Data.SQLiteCipher" Version="2021.9.15" />
+		<PackageReference Include="NSystem.Data.Dabber" Version="2022.6.6" />
 	</ItemGroup>
 
 	<ItemGroup>
 	  <ProjectReference Include="..\..\..\ShenBanReader\ShenBanReader.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Properties\DataSources\" />
 	</ItemGroup>
 
 </Project>

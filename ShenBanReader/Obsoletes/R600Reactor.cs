@@ -16,7 +16,6 @@ namespace System.Data.ShenBanReader
     internal sealed class R600Reactor : AR600Reader, IR600Reactor, IR600Reader, IR600Queue
     {
         private ReadReceiveMessage _bufferMsg = new ReadReceiveMessage();
-        private object _bufferLock = new object();
         #region // 构造及连接
         ///// <summary>
         ///// 配置信息
@@ -63,10 +62,20 @@ namespace System.Data.ShenBanReader
         #region // 接收及分析
         private void RunReceiveDataCallback(byte[] btAryReceiveData)
         {
-            lock (_bufferLock)
+            ReceiveCallback?.Invoke(btAryReceiveData);
+            var res = _bufferMsg.GetOrAdd(btAryReceiveData);
+            foreach (var btAryAnaly in res)
             {
-                ReaderCaller.RunReceiveDataCallback(_bufferMsg, btAryReceiveData, ReceiveCallback, AnalysisCallback, _recall.AlertCallbackError);
+                try
+                {
+                    AnalysisCallback?.Invoke(new R600Message(btAryAnaly));
+                }
+                catch (Exception ex)
+                {
+                    _recall.AlertCallbackError?.Invoke(ex);
+                }
             }
+            //ReaderCaller.RunReceiveDataCallback(_bufferMsg, btAryReceiveData, ReceiveCallback, AnalysisCallback, _recall.AlertCallbackError);
         }
 
         /// <summary>

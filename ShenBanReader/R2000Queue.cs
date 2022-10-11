@@ -181,7 +181,7 @@ namespace System.Data.ShenBanReader
     /// </summary>
     internal class R2000Queue : IR2000Queue
     {
-        ITalkQueueModel _talker = new TalkQueueModel();
+        ITalkQueueModel _talker = new TalkReadModel();
         /// <summary>
         /// 私有构造
         /// </summary>

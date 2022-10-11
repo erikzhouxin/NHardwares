@@ -45,8 +45,7 @@ namespace System.Data.ShenBanReader
         {
             _talker.Dispose();
             _talker = new SerialLogicalTalkModel();
-            _talker.Received += ReceiveDataCallback;
-            _talker.SendError += ErrorDataCallback;
+            _talker.Received = ReceiveDataCallback;
             return _talker.Connect(portName, baudRate, out exception);
         }
         /// <summary>
@@ -60,8 +59,7 @@ namespace System.Data.ShenBanReader
         {
             _talker.Dispose();
             _talker = new TcpLogicalTalkModel();
-            _talker.Received += ReceiveDataCallback;
-            _talker.SendError += ErrorDataCallback;
+            _talker.Received = ReceiveDataCallback;
             return _talker.Connect(ip, port, out exception);
         }
         /// <summary>
@@ -184,14 +182,6 @@ namespace System.Data.ShenBanReader
             var res = _talker.Send(sendData); // 选中
             Thread.Sleep(30);
             return res;
-        }
-
-        /// <summary>
-        /// 错误回调
-        /// </summary>
-        private void ErrorDataCallback(byte[] aryData, Exception ex)
-        {
-
         }
         /// <summary>
         /// 释放

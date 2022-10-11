@@ -389,6 +389,12 @@ namespace System.Data.ShenBanReader
         /// <returns></returns>
         int QueryTagISO18000(byte btReadId, byte[] btAryUID, byte btWordAdd);
         /// <summary>
+        /// 设置自动读取
+        /// </summary>
+        /// <param name="isAuto"></param>
+        /// <returns></returns>
+        int SetAutoRead(bool isAuto);
+        /// <summary>
         /// 正在连接
         /// </summary>
         /// <returns></returns>
@@ -426,7 +432,8 @@ namespace System.Data.ShenBanReader
         /// <returns></returns>
         public override bool Connect(string portName, int baudRate, out string exception)
         {
-            _talker?.Dispose();
+            _talker.Received = null;
+            _talker.Dispose();
             _talker = new SerialTalkReadModel();
             _talker.Received += RunReceiveDataCallback;
             return _talker.Connect(portName, baudRate, out exception);
@@ -440,14 +447,28 @@ namespace System.Data.ShenBanReader
         /// <returns></returns>
         public override bool Connect(IPAddress ip, int port, out string exception)
         {
-            _talker?.Dispose();
+            _talker.Received = null ;
+            _talker.Dispose();
             _talker = new TcpTalkReadModel();
             _talker.Received += RunReceiveDataCallback;
             return _talker.Connect(ip, port, out exception);
         }
         private void RunReceiveDataCallback(byte[] btAryReceiveData)
         {
-            ReaderCaller.RunReceiveDataCallback(_bufferMsg, btAryReceiveData, ReceiveCallback, AnalysisCallback, _recall.AlertCallbackError);
+            ReceiveCallback?.Invoke(btAryReceiveData);
+            var res = _bufferMsg.GetOrAdd(btAryReceiveData);
+            foreach (var btAryAnaly in res)
+            {
+                try
+                {
+                    AnalysisCallback?.Invoke(new R600Message(btAryAnaly));
+                }
+                catch (Exception ex)
+                {
+                    _recall.AlertCallbackError?.Invoke(ex);
+                }
+            }
+            //ReaderCaller.RunReceiveDataCallback(_bufferMsg, btAryReceiveData, ReceiveCallback, AnalysisCallback, _recall.AlertCallbackError);
         }
         /// <summary>
         /// 分析数据
@@ -457,7 +478,7 @@ namespace System.Data.ShenBanReader
         {
             if (msgTran.PacketType != 0xA0)
             {
-                _recall.AlertUnknownPacketType(msgTran);
+                _recall.AlertUnknownPacketType?.Invoke(msgTran);
                 return;
             }
             switch (msgTran.Cmd)
@@ -509,7 +530,7 @@ namespace System.Data.ShenBanReader
                 case 0xB3: ProcessLockTagISO18000(msgTran); break;
                 case 0xB4: ProcessQueryTagISO18000(msgTran); break;
                 default:
-                    _recall.AlertUnknownPacketType(msgTran);
+                    _recall.AlertUnknownPacketType?.Invoke(msgTran);
                     break;
             }
         }
@@ -532,7 +553,7 @@ namespace System.Data.ShenBanReader
                 //_config.Gpio2Value = gpio2Value;
                 //_config.IsGpio1Low = isGpio1Low;
                 //_config.IsGpio2Low = isGpio2Low;
-                _recall.ReadGpioValue(msgTran, gpio1Value, gpio2Value, isGpio1Low, isGpio2Low);
+                _recall.ReadGpioValue?.Invoke(msgTran, gpio1Value, gpio2Value, isGpio1Low, isGpio2Low);
                 return;
             }
             int code = 0;
@@ -550,7 +571,7 @@ namespace System.Data.ShenBanReader
             if (msgTran.AryData.Length == 1 && msgTran.AryData[0] == 0x10)
             {
                 //_config.ReadId = msgTran.ReadId;
-                _recall?.WriteGpioValue(msgTran);
+                _recall.WriteGpioValue?.Invoke(msgTran);
                 return;
             }
             int code = 0;
@@ -568,7 +589,7 @@ namespace System.Data.ShenBanReader
             if (msgTran.AryData.Length == 1 && msgTran.AryData[0] == 0x10)
             {
                 //_config.ReadId = msgTran.ReadId;
-                _recall.SetAntDetector(msgTran);
+                _recall.SetAntDetector?.Invoke(msgTran);
                 return;
             }
             int code = 0;
@@ -587,7 +608,7 @@ namespace System.Data.ShenBanReader
             {
                 //_config.ReadId = msgTran.ReadId;
                 //_config.AntDetector = msgTran.AryData[0];
-                _recall.GetAntDetector(msgTran, msgTran.AryData[0]);
+                _recall.GetAntDetector?.Invoke(msgTran, msgTran.AryData[0]);
                 return;
             }
             ProcessError(ReadCmdType.GetAntDetector, 0, nameof(ProcessGetAntDetector), "失败，失败原因：未知错误", msgTran);
@@ -603,7 +624,7 @@ namespace System.Data.ShenBanReader
             if (msgTran.AryData.Length == 1 && msgTran.AryData[0] == 0x10)
             {
                 //_config.ReadId = msgTran.ReadId;
-                _recall.SetReaderIdentifier(msgTran);
+                _recall.SetReaderIdentifier?.Invoke(msgTran);
                 return;
             }
             int code = 0;
@@ -622,7 +643,7 @@ namespace System.Data.ShenBanReader
             {
                 //_config.ReadId = msgTran.ReadId;
                 //_config.ReaderIdentifier = msgTran.AryData.GetHexString();
-                _recall.GetReaderIdentifier(msgTran, msgTran.AryData);
+                _recall.GetReaderIdentifier?.Invoke(msgTran, msgTran.AryData);
                 return;
             }
             int code = 0;
@@ -641,7 +662,7 @@ namespace System.Data.ShenBanReader
             {
                 //_config.ReadId = msgTran.ReadId;
                 //_config.LinkProfile = msgTran.AryData[0];
-                _recall.SetLinkProfile(msgTran, msgTran.AryData[0]);
+                _recall.SetLinkProfile?.Invoke(msgTran, msgTran.AryData[0]);
                 return;
             }
             int code = 0;
@@ -661,7 +682,7 @@ namespace System.Data.ShenBanReader
                 //_config.ReadId = msgTran.ReadId;
                 //_config.LinkProfile = msgTran.AryData[0];
                 //_config.R600LinkProfileType = (R600LinkProfileType)_config.LinkProfile;
-                _recall.GetLinkProfile(msgTran, (ReadLinkProfileType)msgTran.AryData[0]);
+                _recall.GetLinkProfile?.Invoke(msgTran, (ReadLinkProfileType)msgTran.AryData[0]);
                 return;
             }
             int code = 0;
@@ -687,7 +708,7 @@ namespace System.Data.ShenBanReader
             if (msgTran.AryData.Length == 1 && msgTran.AryData[0] == 0x10)
             {
                 //_config.ReadId = msgTran.ReadId;
-                _recall.SetUartBaudRate(msgTran);
+                _recall.SetUartBaudRate?.Invoke(msgTran);
                 return;
             }
             int code = 0;
@@ -708,7 +729,7 @@ namespace System.Data.ShenBanReader
                 //_config.Minor = msgTran.AryData[1];
                 //_config.ReadId = msgTran.ReadId;
                 //_config.FirmwareVersion = $"{_config.Major}.{_config.Minor}";
-                _recall.GetFirmwareVersion(msgTran, msgTran.AryData[0], msgTran.AryData[1]);
+                _recall.GetFirmwareVersion?.Invoke(msgTran, msgTran.AryData[0], msgTran.AryData[1]);
                 return;
             }
             int code = 0;
@@ -726,7 +747,7 @@ namespace System.Data.ShenBanReader
             if (msgTran.AryData.Length == 1 && msgTran.AryData[0] == 0x10)
             {
                 //_config.ReadId = msgTran.ReadId;
-                _recall.SetReaderAddress(msgTran);
+                _recall.SetReaderAddress?.Invoke(msgTran);
                 return;
             }
             int code = 0;
@@ -744,7 +765,7 @@ namespace System.Data.ShenBanReader
             if (msgTran.AryData.Length == 1 && msgTran.AryData[0] == 0x10)
             {
                 //_config.ReadId = msgTran.ReadId;
-                _recall.SetWorkAntenna(msgTran);
+                _recall.SetWorkAntenna?.Invoke(msgTran);
                 return;
             }
             int code = 0;
@@ -765,7 +786,7 @@ namespace System.Data.ShenBanReader
                 {
                     //_config.ReadId = msgTran.ReadId;
                     //_config.WorkAntenna = msgTran.AryData[0];
-                    _recall.GetWorkAntenna(msgTran, (ReadAntennaType)msgTran.AryData[0]);
+                    _recall.GetWorkAntenna?.Invoke(msgTran, (ReadAntennaType)msgTran.AryData[0]);
                     return;
                 }
             }
@@ -784,7 +805,7 @@ namespace System.Data.ShenBanReader
             if (msgTran.AryData.Length == 1 && msgTran.AryData[0] == 0x10)
             {
                 //_config.ReadId = msgTran.ReadId;
-                _recall.SetOutputPower(msgTran);
+                _recall.SetOutputPower?.Invoke(msgTran);
                 return;
             }
             int code = 0;
@@ -803,7 +824,7 @@ namespace System.Data.ShenBanReader
             {
                 //_config.ReadId = msgTran.ReadId;
                 //_config.OutputPower = msgTran.AryData[0];
-                _recall.GetOutputPower(msgTran, msgTran.AryData[0]);
+                _recall.GetOutputPower?.Invoke(msgTran, msgTran.AryData[0]);
                 return;
             }
             ProcessError(ReadCmdType.GetOutputPower, 0, nameof(ProcessGetOutputPower), "取得输出功率失败，失败原因：未知错误", msgTran);
@@ -819,7 +840,7 @@ namespace System.Data.ShenBanReader
             if (msgTran.AryData.Length == 1 && msgTran.AryData[0] == 0x10)
             {
                 //_config.ReadId = msgTran.ReadId;
-                _recall.SetFrequencyRegion(msgTran);
+                _recall.SetFrequencyRegion?.Invoke(msgTran);
                 return;
             }
             int code = 0;
@@ -840,7 +861,7 @@ namespace System.Data.ShenBanReader
                 //_config.FrequencyRegion = msgTran.AryData[0];
                 //_config.FrequencyStart = msgTran.AryData[1];
                 //_config.FrequencyEnd = msgTran.AryData[2];
-                _recall.GetFrequencyRegion(msgTran, (ReadFreqRegionType)msgTran.AryData[0], (int)msgTran.AryData[1], msgTran.AryData[2], 0x00);
+                _recall.GetFrequencyRegion?.Invoke(msgTran, (ReadFreqRegionType)msgTran.AryData[0], (int)msgTran.AryData[1], msgTran.AryData[2], 0x00);
                 return;
             }
             else if (msgTran.AryData.Length == 6)
@@ -851,7 +872,7 @@ namespace System.Data.ShenBanReader
                 //_config.UserDefineFrequencyInterval = msgTran.AryData[1];
                 //_config.UserDefineChannelQuantity = msgTran.AryData[2];
                 //_config.UserDefineStartFrequency = start;
-                _recall.GetFrequencyRegion(msgTran, (ReadFreqRegionType)msgTran.AryData[0], start, msgTran.AryData[1], msgTran.AryData[2]);
+                _recall.GetFrequencyRegion?.Invoke(msgTran, (ReadFreqRegionType)msgTran.AryData[0], start, msgTran.AryData[1], msgTran.AryData[2]);
                 return;
             }
             int code = 0;
@@ -869,7 +890,7 @@ namespace System.Data.ShenBanReader
             if (msgTran.AryData.Length == 1 && msgTran.AryData[0] == 0x10)
             {
                 //_config.ReadId = msgTran.ReadId;
-                _recall.SetBeeperMode(msgTran);
+                _recall.SetBeeperMode?.Invoke(msgTran);
                 return;
             }
             int code = 0;
@@ -891,7 +912,7 @@ namespace System.Data.ShenBanReader
                 //_config.PlusMinus = msgTran.AryData[0];
                 //_config.Temperature = msgTran.AryData[1];
                 //_config.TemperatureText = $"{temperature}℃";
-                _recall.GetReaderTemperature(msgTran, temperature);
+                _recall.GetReaderTemperature?.Invoke(msgTran, temperature);
                 return;
             }
             int code = 0;
@@ -909,7 +930,7 @@ namespace System.Data.ShenBanReader
             if (msgTran.AryData.Length == 1 && msgTran.AryData[0] == 0x10)
             {
                 //_config.ReadId = msgTran.ReadId;
-                _recall.SetDrmMode(msgTran);
+                _recall.SetDrmMode?.Invoke(msgTran);
                 return;
             }
             int code = 0;
@@ -928,7 +949,7 @@ namespace System.Data.ShenBanReader
             {
                 //_config.ReadId = msgTran.ReadId;
                 //_config.DrmMode = msgTran.AryData[0];
-                _recall.GetDrmMode(msgTran, msgTran.AryData[0] == 0x00);
+                _recall.GetDrmMode?.Invoke(msgTran, msgTran.AryData[0] == 0x00);
                 return;
             }
             int code = 0;
@@ -947,7 +968,7 @@ namespace System.Data.ShenBanReader
             {
                 //_config.ReadId = msgTran.ReadId;
                 //_config.AntImpedance = msgTran.AryData[0];
-                _recall.GetImpedanceMatch(msgTran, msgTran.AryData[0]);
+                _recall.GetImpedanceMatch?.Invoke(msgTran, msgTran.AryData[0]);
                 return;
             }
             ProcessError(ReadCmdType.GetAntImpedanceMatch, 0, nameof(ProcessGetImpedanceMatch), $"测量天线端口阻抗匹配失败，失败原因：未知错误", msgTran);
@@ -978,7 +999,7 @@ namespace System.Data.ShenBanReader
                 //_config.InvEnd = DateTime.Now;
                 //_config.InvDuration = duration;
 
-                _recall.Inventory(msgTran, msgTran.AryData[0], tagCount, readRate, totalRead, duration);
+                _recall.Inventory?.Invoke(msgTran, msgTran.AryData[0], tagCount, readRate, totalRead, duration);
                 return;
             }
             int code = 0;
@@ -997,7 +1018,7 @@ namespace System.Data.ShenBanReader
             {
                 //var model = R600TagModel.Read(msgTran.AryData);
                 //_config.InvTags[model.Key] = model;
-                _recall.ReadTag(msgTran, new R600TagInfo(R600TagInfo.InitType.Read, msgTran.AryData));
+                _recall.ReadTag?.Invoke(msgTran, new R600TagInfo(R600TagInfo.InitType.Read, msgTran.AryData));
                 return;
             }
             int code = 0;
@@ -1016,7 +1037,7 @@ namespace System.Data.ShenBanReader
             {
                 //var model = R600TagModel.Write(msgTran.AryData);
                 //_config.InvTags[model.Key] = model;
-                _recall.WriteTag(msgTran, new R600TagInfo(R600TagInfo.InitType.Write, msgTran.AryData));
+                _recall.WriteTag?.Invoke(msgTran, new R600TagInfo(R600TagInfo.InitType.Write, msgTran.AryData));
                 return;
             }
             var code = 0;
@@ -1035,7 +1056,7 @@ namespace System.Data.ShenBanReader
             {
                 //var model = R600TagModel.Lock(msgTran.AryData);
                 //_config.InvTags[model.Key] = model;
-                _recall.LockTag(msgTran, new R600TagInfo(R600TagInfo.InitType.Lock, msgTran.AryData));
+                _recall.LockTag?.Invoke(msgTran, new R600TagInfo(R600TagInfo.InitType.Lock, msgTran.AryData));
                 return;
             }
             int code = 0;
@@ -1054,7 +1075,7 @@ namespace System.Data.ShenBanReader
             {
                 //var model = R600TagModel.Kill(msgTran.AryData);
                 //_config.InvTags[model.Key] = model;
-                _recall.KillTag(msgTran, new R600TagInfo(R600TagInfo.InitType.Kill, msgTran.TranData));
+                _recall.KillTag?.Invoke(msgTran, new R600TagInfo(R600TagInfo.InitType.Kill, msgTran.TranData));
                 return;
             }
             int code = 0;
@@ -1071,7 +1092,7 @@ namespace System.Data.ShenBanReader
         {
             if (msgTran.AryData.Length == 1 && msgTran.AryData[0] == 0x10)
             {
-                _recall.SetAccessEpcMatch(msgTran);
+                _recall.SetAccessEpcMatch?.Invoke(msgTran);
                 return;
             }
             var code = 0;
@@ -1102,7 +1123,7 @@ namespace System.Data.ShenBanReader
                 if (data != null)
                 {
                     //_config.AccessEpcMatch = data;
-                    _recall.GetAccessEpcMatch(msgTran, data);
+                    _recall.GetAccessEpcMatch?.Invoke(msgTran, data);
                     return;
                 }
             }
@@ -1129,7 +1150,7 @@ namespace System.Data.ShenBanReader
                         Convert.ToInt32(msgTran.AryData[6]);
                     //_config.InvReadRate = readRate;
                     //_config.InvDataCount = dataCount;
-                    _recall.InventoryRealEnd(msgTran, readRate, dataCount);
+                    _recall.InventoryRealEnd?.Invoke(msgTran, readRate, dataCount);
                     return;
                 }
                 else
@@ -1157,7 +1178,7 @@ namespace System.Data.ShenBanReader
                     //_config.InvTags[model.Key] = model;
                     //_config.InvEnd = DateTime.Now;
 
-                    _recall.InventoryReal(msgTran, model);
+                    _recall.InventoryReal?.Invoke(msgTran, model);
                     return;
                 }
             }
@@ -1181,7 +1202,7 @@ namespace System.Data.ShenBanReader
                     var cmdDuration = msgTran.AryData[3] * 255 * 255 * 255 + msgTran.AryData[4] * 255 * 255 + msgTran.AryData[5] * 255 + msgTran.AryData[6];
                     //_config.InvDataCount = dataCount;
                     //_config.InvCommandDuration = cmdDuration;
-                    _recall.FastSwitchInventoryEnd(msgTran, dataCount, cmdDuration);
+                    _recall.FastSwitchInventoryEnd?.Invoke(msgTran, dataCount, cmdDuration);
                     return;
                 }
                 else
@@ -1230,7 +1251,7 @@ namespace System.Data.ShenBanReader
                     //_config.InvEnd = DateTime.Now;
                     //_config.InvTags[model.Key] = model1;
 
-                    _recall.FastSwitchInventory(msgTran, model);
+                    _recall.FastSwitchInventory?.Invoke(msgTran, model);
                     return;
                 }
             }
@@ -1250,7 +1271,7 @@ namespace System.Data.ShenBanReader
             {
                 //_config.ReadId = msgTran.ReadId;
                 //_config.AntDetector = msgTran.AryData[0];
-                _recall.SetMonzaStatus(msgTran, msgTran.AryData[0]);
+                _recall.SetMonzaStatus?.Invoke(msgTran, msgTran.AryData[0]);
                 return;
             }
             int code = 0;
@@ -1269,7 +1290,7 @@ namespace System.Data.ShenBanReader
             {
                 //_config.ReadId = msgTran.ReadId;
                 //_config.AntDetector = msgTran.AryData[0];
-                _recall.GetMonzaStatus(msgTran, msgTran.AryData[0]);
+                _recall.GetMonzaStatus?.Invoke(msgTran, msgTran.AryData[0]);
                 return;
             }
             int code = 0;
@@ -1289,7 +1310,7 @@ namespace System.Data.ShenBanReader
                 //var model = R600TagModel.Buffer(msgTran.AryData);
                 //_config.SetMaxMinRSSI(Convert.ToInt32(model.RSSI));
                 //_config.InvTags[model.Key] = model;
-                _recall.GetInventoryBuffer(msgTran, new R600TagInfo(R600TagInfo.InitType.Buffer, msgTran.AryData));
+                _recall.GetInventoryBuffer?.Invoke(msgTran, new R600TagInfo(R600TagInfo.InitType.Buffer, msgTran.AryData));
                 return;
             }
             int code = 0;
@@ -1309,7 +1330,7 @@ namespace System.Data.ShenBanReader
                 //var model = R600TagModel.Buffer(msgTran.AryData);
                 //_config.SetMaxMinRSSI(Convert.ToInt32(model.RSSI));
                 //_config.InvTags[model.Key] = model;
-                _recall.GetAndResetInventoryBuffer(msgTran, new R600TagInfo(R600TagInfo.InitType.Buffer, msgTran.AryData));
+                _recall.GetAndResetInventoryBuffer?.Invoke(msgTran, new R600TagInfo(R600TagInfo.InitType.Buffer, msgTran.AryData));
                 return;
             }
             int code = 0;
@@ -1326,7 +1347,7 @@ namespace System.Data.ShenBanReader
             if (msgTran.AryData.Length == 2)
             {
                 //_config.InvTagCount = Convert.ToInt32(msgTran.AryData[0]) * 256 + Convert.ToInt32(msgTran.AryData[1]);
-                _recall.GetInventoryBufferTagCount(msgTran, msgTran.AryData.ConvertInt32());
+                _recall.GetInventoryBufferTagCount?.Invoke(msgTran, msgTran.AryData.ConvertInt32());
                 return;
             }
             int code = 0;
@@ -1341,7 +1362,7 @@ namespace System.Data.ShenBanReader
         {
             if (msgTran.AryData.Length == 1 && msgTran.AryData[0] == 0x10)
             {
-                _recall.ResetInventoryBuffer(msgTran);
+                _recall.ResetInventoryBuffer?.Invoke(msgTran);
                 return;
             }
             int code = 0;
@@ -1383,14 +1404,14 @@ namespace System.Data.ShenBanReader
                 //model1.IsoTotal += 1;
                 //_config.IsoTags[model.Key] = model1;
 
-                _recall.InventoryISO18000(msgTran, model);
+                _recall.InventoryISO18000?.Invoke(msgTran, model);
                 return;
             }
             else if (msgTran.AryData.Length == 2)
             {
                 var tagCnt = Convert.ToInt32(msgTran.AryData[1]);
                 //_config.IsoTagCnt = tagCnt;
-                _recall.InventoryISO18000End(msgTran, tagCnt);
+                _recall.InventoryISO18000End?.Invoke(msgTran, tagCnt);
                 return;
             }
             int code = 0;
@@ -1411,7 +1432,7 @@ namespace System.Data.ShenBanReader
 
                 // _config.IsoAntId = antId
                 //_config.IsoReadData = data;
-                _recall.ReadTagISO18000(msgTran, antId, data);
+                _recall.ReadTagISO18000?.Invoke(msgTran, antId, data);
                 return;
             }
             int code = 0;
@@ -1428,7 +1449,7 @@ namespace System.Data.ShenBanReader
             {
                 //_config.IsoAntId = msgTran.AryData[0];
                 //_config.IsoWriteLength = msgTran.AryData[1];
-                _recall.WriteTagISO18000(msgTran, msgTran.AryData[0], msgTran.AryData[1]);
+                _recall.WriteTagISO18000?.Invoke(msgTran, msgTran.AryData[0], msgTran.AryData[1]);
                 return;
             }
             int code = 0;
@@ -1447,7 +1468,7 @@ namespace System.Data.ShenBanReader
                 var status = msgTran.AryData[1];
                 //_config.IsoAntId = msgTran.AryData[0];
                 //_config.IsoStatus = msgTran.AryData[1];
-                _recall.LockTagISO18000(msgTran, antId, (ReadLockTagStatus)status);
+                _recall.LockTagISO18000?.Invoke(msgTran, antId, (ReadLockTagStatus)status);
                 return;
             }
             int code = 0;
@@ -1466,7 +1487,7 @@ namespace System.Data.ShenBanReader
                 var status = msgTran.AryData[1];
                 //_config.IsoAntId = msgTran.AryData[0];
                 //_config.IsoStatus = msgTran.AryData[1];
-                _recall.QueryTagISO18000(msgTran, antId, (ReadLockTagStatus)status);
+                _recall.QueryTagISO18000?.Invoke(msgTran, antId, (ReadLockTagStatus)status);
                 return;
             }
             int code = 0;
@@ -1476,7 +1497,7 @@ namespace System.Data.ShenBanReader
 
         private void ProcessError(ReadCmdType cmd, int code, string method, string message, IReadMessage msgTran)
         {
-            _recall.AlertError(new ReadAlertError(cmd, code, message, typeof(R600Reader).FullName, method, msgTran));
+            _recall.AlertError?.Invoke(new ReadAlertError(cmd, code, message, typeof(R600Reader).FullName, method, msgTran));
         }
     }
     /// <summary>
@@ -1508,7 +1529,21 @@ namespace System.Data.ShenBanReader
         /// 是连接
         /// </summary>
         public virtual bool IsConnected { get => _talker.IsConnected; }
+        /// <summary>
+        /// 连接串口
+        /// </summary>
+        /// <param name="portName"></param>
+        /// <param name="baudRate"></param>
+        /// <param name="exception"></param>
+        /// <returns></returns>
         public abstract bool Connect(string portName, int baudRate, out string exception);
+        /// <summary>
+        /// 连接IP
+        /// </summary>
+        /// <param name="ip"></param>
+        /// <param name="port"></param>
+        /// <param name="exception"></param>
+        /// <returns></returns>
         public abstract bool Connect(IPAddress ip, int port, out string exception);
         /// <summary>
         /// 检查字节
@@ -2102,12 +2137,32 @@ namespace System.Data.ShenBanReader
                 btAryData.CopyTo(data, 4);
                 data[nLen + 4] = CheckByte(data, 0, nLen + 4);
             }
+            return SendMessage(data);
+        }
+        /// <summary>
+        /// 发送消息
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public virtual int SendMessage(byte[] data)
+        {
             if (_talker.Send(data))
             {
                 SendCallback?.Invoke(data);
                 return 0;
             }
             return -1;
+        }
+        public virtual int SetAutoRead(bool isAuto)
+        {
+            var data = new byte[6];
+            data[0] = 0xA0;
+            data[1] = 0x04;
+            data[2] = 0xFF;
+            data[3] = 0xA0;
+            data[4] = isAuto ? (byte)0x04 : (byte)0x00;
+            data[5] = CheckByte(data, 0, 5);
+            return SendMessage(data);
         }
         /// <summary>
         /// 正在连接
@@ -2117,6 +2172,9 @@ namespace System.Data.ShenBanReader
         {
             return _talker.IsConnected;
         }
+        /// <summary>
+        /// 关闭 
+        /// </summary>
         public virtual void Close()
         {
             _talker.Dispose();
