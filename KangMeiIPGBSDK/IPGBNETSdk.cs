@@ -13,6 +13,10 @@ namespace System.Data.KangMeiIPGBSDK
     public static class IPGBNETSdk
     {
         /// <summary>
+        /// SDK文件名称
+        /// </summary>
+        public const String DllFileName = "IPGBNETSDK.dll";
+        /// <summary>
         /// 最大IP地址长度
         /// </summary>
         public const int IPGB_MAX_IPADR_LEN = 16;
@@ -98,11 +102,11 @@ namespace System.Data.KangMeiIPGBSDK
                 bool isExists = CompareFile(IPGBNETSdkLoader.DllFullName, Properties.Resources.X64_IPGBNETSDK);
                 if (!isExists)
                 {
+                    WriteFile(Properties.Resources.X64_IPGBNET, Path.Combine(IPGBNETSdkLoader.DllFullPath, "IPGBNET.dll"));
+                    WriteFile(Properties.Resources.X64_IPGBNETPush, Path.Combine(IPGBNETSdkLoader.DllFullPath, "IPGBNETPush.dll"));
                     WriteFile(Properties.Resources.X64_IPGBNETSDK, Path.Combine(IPGBNETSdkLoader.DllFullPath, "IPGBNETSDK.dll"));
-                    WriteFile(Properties.Resources.X64_IPGBNETSDK1, Path.Combine(IPGBNETSdkLoader.DllFullPath, "IPGBNETSDK.lib"));
                     WriteFile(Properties.Resources.X64_CtlAudioDrv, Path.Combine(IPGBNETSdkLoader.DllFullPath, "CtlAudioDrv.dll"));
                     WriteFile(Properties.Resources.X64_IPGBPushStream, Path.Combine(IPGBNETSdkLoader.DllFullPath, "IPGBPushStream.dll"));
-                    WriteFile(Properties.Resources.X64_IPGBPushStream1, Path.Combine(IPGBNETSdkLoader.DllFullPath, "IPGBPushStream.lib"));
                     WriteFile(Properties.Resources.X64_lame_enc_dll, Path.Combine(IPGBNETSdkLoader.DllFullPath, "lame_enc_dll.dll"));
                     WriteFile(Properties.Resources.X64_libmp3lame, Path.Combine(IPGBNETSdkLoader.DllFullPath, "libmp3lame.dll"));
                     WriteFile(Properties.Resources.X64_mfc100, Path.Combine(IPGBNETSdkLoader.DllFullPath, "mfc100.dll"));
@@ -117,11 +121,11 @@ namespace System.Data.KangMeiIPGBSDK
                 bool isExists = CompareFile(IPGBNETSdkLoader.DllFullName, Properties.Resources.X86_IPGBNETSDK);
                 if (!isExists)
                 {
+                    WriteFile(Properties.Resources.X86_IPGBNET, Path.Combine(IPGBNETSdkLoader.DllFullPath, "IPGBNET.dll"));
+                    WriteFile(Properties.Resources.X86_IPGBNETPush, Path.Combine(IPGBNETSdkLoader.DllFullPath, "IPGBNETPush.dll"));
                     WriteFile(Properties.Resources.X86_IPGBNETSDK, Path.Combine(IPGBNETSdkLoader.DllFullPath, "IPGBNETSDK.dll"));
-                    WriteFile(Properties.Resources.X86_IPGBNETSDK1, Path.Combine(IPGBNETSdkLoader.DllFullPath, "IPGBNETSDK.lib"));
                     WriteFile(Properties.Resources.X86_CtlAudioDrv, Path.Combine(IPGBNETSdkLoader.DllFullPath, "CtlAudioDrv.dll"));
                     WriteFile(Properties.Resources.X86_IPGBPushStream, Path.Combine(IPGBNETSdkLoader.DllFullPath, "IPGBPushStream.dll"));
-                    WriteFile(Properties.Resources.X86_IPGBPushStream1, Path.Combine(IPGBNETSdkLoader.DllFullPath, "IPGBPushStream.lib"));
                     WriteFile(Properties.Resources.X86_lame_enc_dll, Path.Combine(IPGBNETSdkLoader.DllFullPath, "lame_enc_dll.dll"));
                     WriteFile(Properties.Resources.X86_libmp3lame, Path.Combine(IPGBNETSdkLoader.DllFullPath, "libmp3lame.dll"));
                     WriteFile(Properties.Resources.X86_mfc100, Path.Combine(IPGBNETSdkLoader.DllFullPath, "mfc100.dll"));
@@ -132,7 +136,7 @@ namespace System.Data.KangMeiIPGBSDK
                 }
             }
         }
-        private static void WriteFile(byte[] dllFile, string fullName)
+        internal static void WriteFile(byte[] dllFile, string fullName)
         {
             try
             {
@@ -141,7 +145,7 @@ namespace System.Data.KangMeiIPGBSDK
             }
             catch (Exception ex) { Console.WriteLine(ex); }
         }
-        private static bool CompareFile(string file, byte[] res)
+        internal static bool CompareFile(string file, byte[] res)
         {
             if (!File.Exists(file)) { return false; }
             using (var hash = SHA1.Create())
@@ -166,7 +170,6 @@ namespace System.Data.KangMeiIPGBSDK
         /// <returns></returns>
         public static IIPGBNETSdkProxy Create(bool isBase = false)
         {
-            var currentDir = IPGBNETSdkDller.DllFullPath;
             var pluginDir = IPGBNETSdkLoader.DllFullPath;
             if (isBase)
             {
@@ -176,14 +179,13 @@ namespace System.Data.KangMeiIPGBSDK
                     {
                         try
                         {
-                            CopyDirectory(pluginDir, currentDir);
+                            CopyDirectory(pluginDir, Path.GetFullPath("."));
                         }
                         catch { }
                     }
                 }
                 return IPGBNETSdkDller.Instance;
             }
-            if (!Directory.Exists(pluginDir)) { return IPGBNETSdkDller.Instance; }
             return _IPGBNETSdk.Value;
         }
         /// <summary>
@@ -193,7 +195,6 @@ namespace System.Data.KangMeiIPGBSDK
         /// <returns></returns>
         public static IIPGBPUSHSdkProxy CreatePush(bool isBase = false)
         {
-            var currentDir = IPGBPUSHSdkDller.DllFullPath;
             var pluginDir = IPGBPUSHSdkLoader.DllFullPath;
             if (isBase)
             {
@@ -203,7 +204,7 @@ namespace System.Data.KangMeiIPGBSDK
                     {
                         try
                         {
-                            CopyDirectory(pluginDir, currentDir);
+                            CopyDirectory(pluginDir, Path.GetFullPath("."));
                         }
                         catch { }
                     }

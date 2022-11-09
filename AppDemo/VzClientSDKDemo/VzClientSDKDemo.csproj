@@ -1,0 +1,338 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{E6E63D9A-41B6-40F8-8D6A-18FE2E7A8AE0}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>VzClientSDKDemo</RootNamespace>
+    <AssemblyName>VzClientSDKDemo</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>3.5</OldToolsVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <OutputPath>bin\x86\Release\</OutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AlgResultParamCfg.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AlgResultParamCfg.Designer.cs">
+      <DependentUpon>AlgResultParamCfg.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BaseConfig_From.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BaseConfig_From.Designer.cs">
+      <DependentUpon>BaseConfig_From.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EncryptCfg_Form.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EncryptCfg_Form.designer.cs">
+      <DependentUpon>EncryptCfg_Form.cs</DependentUpon>
+    </Compile>
+    <Compile Include="InAndOut.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="InAndOut.Designer.cs">
+      <DependentUpon>InAndOut.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NetCfg_Form.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NetCfg_Form.Designer.cs">
+      <DependentUpon>NetCfg_Form.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ParamExt_Form.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ParamExt_Form.Designer.cs">
+      <DependentUpon>ParamExt_Form.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PlayVoice.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PlayVoice.Designer.cs">
+      <DependentUpon>PlayVoice.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RuleCfg_Form.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RuleCfg_Form.Designer.cs">
+      <DependentUpon>RuleCfg_Form.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RVideoCfg_Form.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RVideoCfg_Form.Designer.cs">
+      <DependentUpon>RVideoCfg_Form.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SerialControl_Form.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SerialControl_Form.Designer.cs">
+      <DependentUpon>SerialControl_Form.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SetParameter_Form.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SetParameter_Form.Designer.cs">
+      <DependentUpon>SetParameter_Form.cs</DependentUpon>
+    </Compile>
+    <Compile Include="OSDSET_Form.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OSDSET_Form.Designer.cs">
+      <DependentUpon>OSDSET_Form.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PlateQuery_Form.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PlateQuery_Form.Designer.cs">
+      <DependentUpon>PlateQuery_Form.cs</DependentUpon>
+    </Compile>
+    <Compile Include="QueryPicShow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="QueryPicShow.Designer.cs">
+      <DependentUpon>QueryPicShow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Talk_Form.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Talk_Form.designer.cs">
+      <DependentUpon>Talk_Form.cs</DependentUpon>
+    </Compile>
+    <Compile Include="VideoCfg_Form.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="VideoCfg_Form.Designer.cs">
+      <DependentUpon>VideoCfg_Form.cs</DependentUpon>
+    </Compile>
+    <Compile Include="VzLPRSDKDemo_Form.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="VzLPRSDKDemo_Form.Designer.cs">
+      <DependentUpon>VzLPRSDKDemo_Form.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WhiteList_Form.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WhiteList_Form.Designer.cs">
+      <DependentUpon>WhiteList_Form.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WhiteListAdd_Form.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WhiteListAdd_Form.Designer.cs">
+      <DependentUpon>WhiteListAdd_Form.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WhiteListChange_Form.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WhiteListChange_Form.Designer.cs">
+      <DependentUpon>WhiteListChange_Form.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="AlgResultParamCfg.resx">
+      <DependentUpon>AlgResultParamCfg.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BaseConfig_From.resx">
+      <DependentUpon>BaseConfig_From.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EncryptCfg_Form.resx">
+      <DependentUpon>EncryptCfg_Form.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="InAndOut.resx">
+      <DependentUpon>InAndOut.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NetCfg_Form.resx">
+      <DependentUpon>NetCfg_Form.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ParamExt_Form.resx">
+      <DependentUpon>ParamExt_Form.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PlayVoice.resx">
+      <DependentUpon>PlayVoice.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RuleCfg_Form.resx">
+      <DependentUpon>RuleCfg_Form.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RVideoCfg_Form.resx">
+      <DependentUpon>RVideoCfg_Form.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SerialControl_Form.resx">
+      <DependentUpon>SerialControl_Form.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SetParameter_Form.resx">
+      <DependentUpon>SetParameter_Form.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OSDSET_Form.resx">
+      <DependentUpon>OSDSET_Form.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PlateQuery_Form.resx">
+      <DependentUpon>PlateQuery_Form.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="QueryPicShow.resx">
+      <DependentUpon>QueryPicShow.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Talk_Form.resx">
+      <DependentUpon>Talk_Form.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VideoCfg_Form.resx">
+      <DependentUpon>VideoCfg_Form.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VzLPRSDKDemo_Form.resx">
+      <DependentUpon>VzLPRSDKDemo_Form.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WhiteList_Form.resx">
+      <DependentUpon>WhiteList_Form.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WhiteListAdd_Form.resx">
+      <DependentUpon>WhiteListAdd_Form.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WhiteListChange_Form.resx">
+      <DependentUpon>WhiteListChange_Form.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\VzClientSDK\VzClientSDK.csproj">
+      <Project>{08ae444d-7a1f-4855-9aaa-f5495f74019d}</Project>
+      <Name>VzClientSDK</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

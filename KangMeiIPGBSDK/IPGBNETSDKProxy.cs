@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.HardwareInterfaces;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -231,7 +232,6 @@ namespace System.Data.KangMeiIPGBSDK
         /// </summary>
         public static IIPGBNETSdkProxy Instance { get; } = new IPGBNETSdkDller();
         private IPGBNETSdkDller() { }
-        public const String DllFileName = "IPGBNETSDK.dll";
         /// <summary>
         /// 全路径
         /// </summary>
@@ -239,61 +239,61 @@ namespace System.Data.KangMeiIPGBSDK
         /// <summary>
         /// 文件全路径
         /// </summary>
-        public static String DllFullName { get; } = Path.GetFullPath(DllFileName);
+        public static String DllFullName { get; } = Path.GetFullPath(IPGBNETSdk.DllFileName);
         /// <summary>
         /// 设置登录状态回调
         /// </summary>
         /// <param name="ConnStaCallBack"></param>
         /// <param name="dwUser"></param>
-        [DllImport(DllFileName)]
+        [DllImport(IPGBNETSdk.DllFileName)]
         public static extern void IPGBNETSDK_SetConnStatusCallBack(SDKfConnectStatus ConnStaCallBack, long dwUser);
         /// <summary>
         /// 设置单个终端状态回调
         /// </summary>
         /// <param name="TerminalStatusCallBack"></param>
         /// <param name="dwUser"></param>
-        [DllImport(DllFileName)]
+        [DllImport(IPGBNETSdk.DllFileName)]
         public static extern void IPGBNETSDK_SetTerminalStatusCallBack(SDKfTerminalStatus TerminalStatusCallBack, long dwUser);
         /// <summary>
         /// 设置批量终端状态回调
         /// </summary>
-        [DllImport(DllFileName)]
+        [DllImport(IPGBNETSdk.DllFileName)]
         public static extern void IPGBNETSDK_SetBatchTerminalStatusCallBack(SDKfBatchTerminalStatus TerminalStatusCallBack, long dwUser);
         /// <summary>
         /// 设置编码类型终端状态回调
         /// </summary>
-        [DllImport(DllFileName)]
+        [DllImport(IPGBNETSdk.DllFileName)]
         public static extern void IPGBNETSDK_SetEncTerminalStatusCallBack(SDKfEncTerminalStatus EncTerminalStatusCallBack, long dwUser);
         /// <summary>
         /// 设置广播流状态回调
         /// </summary>
-        [DllImport(DllFileName)]
+        [DllImport(IPGBNETSdk.DllFileName)]
         public static extern void IPGBNETSDK_SetGbStreamStatusCallBack(SDKfGbStreamStatus StreamStatusCallBack, long dwUser);
         /// <summary>
         /// 设置消防状态回调
         /// </summary>
-        [DllImport(DllFileName)]
+        [DllImport(IPGBNETSdk.DllFileName)]
         public static extern void IPGBNETSDK_SetFireStaCallBack(SDKfFireSta FireStaCallBack, long dwUser);
         /**
          * SDK初始化
          * @param  Aport         (in)   使用第三方音源传输音频数据时监听的TCP端口号
          * @return ->返回0成功
          **/
-        [DllImport(DllFileName)]
+        [DllImport(IPGBNETSdk.DllFileName)]
         public static extern int IPGBNETSDK_Init(ushort Aport);
 
         /**
          * SDK退出清理
          * @return 
          **/
-        [DllImport(DllFileName)]
+        [DllImport(IPGBNETSdk.DllFileName)]
         public static extern void IPGBNETSDK_Cleanup();
 
         /**
          * 获取SDK版本
          * @return ->获取SDK版本 2个高字节表示主版本，2个低字节表示次版本。如0x00010003：表示版本为1.3
          **/
-        [DllImport(DllFileName)]
+        [DllImport(IPGBNETSdk.DllFileName)]
         public static extern uint IPGBNETSDK_GetSdkVer();
 
         /**
@@ -301,7 +301,7 @@ namespace System.Data.KangMeiIPGBSDK
          * @param  lpSer         (in)   登陆信息
          * @return ->成功返回用户ID(大于0)  
          **/
-        [DllImport(DllFileName)]
+        [DllImport(IPGBNETSdk.DllFileName)]
         public static extern int IPGBNETSDK_LogIn(IPGBSDK_LOGSERVER lpSer);
 
         /**
@@ -309,7 +309,7 @@ namespace System.Data.KangMeiIPGBSDK
          * @param  UserId       (in)   用户ID
          * @return 
          **/
-        [DllImport(DllFileName)]
+        [DllImport(IPGBNETSdk.DllFileName)]
         public static extern void IPGBNETSDK_LogOut(uint UserId);
 
         /**
@@ -318,7 +318,7 @@ namespace System.Data.KangMeiIPGBSDK
          * @param  lpUserInfo          (out)   当前连接成功时返回用户信息
          * @return   ->返回连接状态
          **/
-        [DllImport(DllFileName)]
+        [DllImport(IPGBNETSdk.DllFileName)]
         public static extern NETEM_SDKLOGSTA_TYPE IPGBNETSDK_GetConnStatusInfo(uint UserId, out IPGBSDK_USERINFO lpUserInfo);
 
         /**
@@ -328,7 +328,7 @@ namespace System.Data.KangMeiIPGBSDK
          * @param  ISFirst             (in)    当为True时从资源目录超始位开始
          * @return   ->返回0时成功
          **/
-        [DllImport(DllFileName)]
+        [DllImport(IPGBNETSdk.DllFileName)]
         public static extern int IPGBNETSDK_GetOneSerFileInfo(uint UserId, out IPGBSDK_SER_ONEFILEINFO Finfo, bool ISFirst);
 
         /**
@@ -336,7 +336,7 @@ namespace System.Data.KangMeiIPGBSDK
          * @param  SoundInfo           (out)   输出系统声卡混音接口
          * @return  
          **/
-        [DllImport(DllFileName)]
+        [DllImport(IPGBNETSdk.DllFileName)]
         public static extern void IPGBNETSDK_GetSysSoundCardINFO(out IPGBSDK_SOUNDCARDINFO SoundInfo);
 
         /**
@@ -346,7 +346,7 @@ namespace System.Data.KangMeiIPGBSDK
          * @param  MVal                    (in)    当SetType=1时的音量值 0-100
          * @return   
          **/
-        [DllImport(DllFileName)]
+        [DllImport(IPGBNETSdk.DllFileName)]
         public static extern void IPGBNETSDK_SetSysSoundCardMix(string CapMixName, byte SetType, uint MVal);
 
         /**
@@ -355,7 +355,7 @@ namespace System.Data.KangMeiIPGBSDK
          * @param  pGbinfo             (in)    广播信息
          * @return   ->成功返回广播流ID（大于0）
          **/
-        [DllImport(DllFileName)]
+        [DllImport(IPGBNETSdk.DllFileName)]
         public static extern int IPGBNETSDK_CreateSerFileGbStream(uint UserId, IPGBSDK_GBSERFILEINFO pGbinfo);
 
         /**
@@ -364,7 +364,7 @@ namespace System.Data.KangMeiIPGBSDK
          * @param  pGbinfo             (in)    广播信息
          * @return   ->成功返回广播流ID（大于0）
          **/
-        [DllImport(DllFileName)]
+        [DllImport(IPGBNETSdk.DllFileName)]
         public static extern int IPGBNETSDK_CreateLcaFileGbStream(uint UserId, IPGBSDK_GBLCAFILEINFO pGbinfo);
 
         /**
@@ -373,7 +373,7 @@ namespace System.Data.KangMeiIPGBSDK
          * @param  pGbinfo             (in)    广播信息
          * @return   ->成功返回广播流ID（大于0）
          **/
-        [DllImport(DllFileName)]
+        [DllImport(IPGBNETSdk.DllFileName)]
         public static extern int IPGBNETSDK_CreateTextGbStream(uint UserId, IPGBSDK_GBTEXTINFO pGbinfo);
 
         /**
@@ -382,7 +382,7 @@ namespace System.Data.KangMeiIPGBSDK
          * @param  pGbinfo             (in)    广播信息
          * @return   ->成功返回广播流ID（大于0）
          **/
-        [DllImport(DllFileName)]
+        [DllImport(IPGBNETSdk.DllFileName)]
         public static extern int IPGBNETSDK_CreateTerminalCbStream(uint UserId, IPGBSDK_GBTMCBINFO pGbinfo);
 
         /**
@@ -391,7 +391,7 @@ namespace System.Data.KangMeiIPGBSDK
          * @param  pGbinfo             (in)    广播信息
          * @return   ->成功返回广播流ID（大于0）
          **/
-        [DllImport(DllFileName)]
+        [DllImport(IPGBNETSdk.DllFileName)]
         public static extern int IPGBNETSDK_CreateEncTerminalCbStream(uint UserId, IPGBSDK_GBENCTMCBINFO pGbinfo);
 
         /**
@@ -399,7 +399,7 @@ namespace System.Data.KangMeiIPGBSDK
          * @param  pSrcinfo             (in)    编码信息
          * @return   ->成功返回通道ID（大于0）
          **/
-        [DllImport(DllFileName)]
+        [DllImport(IPGBNETSdk.DllFileName)]
         public static extern int IPGBNETSDK_CreateSoundCarSrcChannel(IPGBSDK_SoundCarSrcINFO pSrcinfo);
 
         /**
@@ -408,7 +408,7 @@ namespace System.Data.KangMeiIPGBSDK
          * @param  pGbinfo             (in)    广播信息
          * @return   ->成功返回广播流ID（大于0）
          **/
-        [DllImport(DllFileName)]
+        [DllImport(IPGBNETSdk.DllFileName)]
         public static extern int IPGBNETSDK_CreateSoundCarGbStream(uint UserId, IPGBSDK_GBSoundCarINFO pGbinfo);
 
         /**
@@ -417,7 +417,7 @@ namespace System.Data.KangMeiIPGBSDK
          * @param  outdesb              (out)    输出用于网络数据传输的8个字节认证内容
          * @return   ->成功返回编码通道ID（大于0）
          **/
-        [DllImport(DllFileName)]
+        [DllImport(IPGBNETSdk.DllFileName)]
         public static extern int IPGBNETSDK_CreateThirdRealSrcChannel(IPGBSDK_ThirdRealSrcINFO pSrcinfo, out string outdesb);
 
         /**
@@ -427,7 +427,7 @@ namespace System.Data.KangMeiIPGBSDK
          * @param  len             (in)    音频数据长度
          * @return   ->成功返回等于len
          **/
-        [DllImport(DllFileName)]
+        [DllImport(IPGBNETSdk.DllFileName)]
         public static extern int IPGBNETSDK_FillDataToThirdRealSrcChannel(uint ASrcId, string buf, int len);
 
         /**
@@ -436,7 +436,7 @@ namespace System.Data.KangMeiIPGBSDK
          * @param  pGbinfo             (in)    广播信息
          * @return   ->成功返回广播流ID（大于0）
          **/
-        [DllImport(DllFileName)]
+        [DllImport(IPGBNETSdk.DllFileName)]
         public static extern int IPGBNETSDK_CreateThirdRealAudioGbStream(uint UserId, IPGBSDK_GBTHIRDREALAUDIOINFO pGbinfo);
 
         /**
@@ -444,7 +444,7 @@ namespace System.Data.KangMeiIPGBSDK
          * @param  ASrcId              (in)     编码通道ID
          * @return   ->成功返回0
          **/
-        [DllImport(DllFileName)]
+        [DllImport(IPGBNETSdk.DllFileName)]
         public static extern int IPGBNETSDK_DelOneAudioSrcChannel(uint ASrcId);
 
         /**
@@ -453,7 +453,7 @@ namespace System.Data.KangMeiIPGBSDK
          * @param  StreamId            (in)     广播流ID
          * @return   ->成功返回0
          **/
-        [DllImport(DllFileName)]
+        [DllImport(IPGBNETSdk.DllFileName)]
         public static extern int IPGBNETSDK_DelOneStream(uint UserId, uint StreamId);
 
         /**
@@ -462,7 +462,7 @@ namespace System.Data.KangMeiIPGBSDK
          * @param  pVol                (in)     调节终端音量信息
          * @return   ->成功返回0
          **/
-        [DllImport(DllFileName)]
+        [DllImport(IPGBNETSdk.DllFileName)]
         public static extern int IPGBNETSDK_SetTmOutVol(uint UserId, IPGBSDK_SET_TMVOL pVol);
 
         /**
@@ -472,7 +472,7 @@ namespace System.Data.KangMeiIPGBSDK
          * @param   PinType             (in)     控制类型 1:触发相应信号的警报  2:删除相应信号的警报
          * @return   ->成功返回0
          **/
-        [DllImport(DllFileName)]
+        [DllImport(IPGBNETSdk.DllFileName)]
         public static extern int IPGBNETSDK_ThreeFireArm(uint UserId, IPGBSDK_THREEFIRINFO FirePinInfo, byte PinType);
 
         /**
@@ -481,7 +481,7 @@ namespace System.Data.KangMeiIPGBSDK
          * @param  pMp3Fileinfo          (out)     输出文件信息
          * @return   ->成功返回0
          **/
-        [DllImport(DllFileName)]
+        [DllImport(IPGBNETSdk.DllFileName)]
         public static extern int IPGBNETSDK_GetMp3FileInfo(string FilePath, out IPGBSDK_LCA_MP3INFO pMp3Fileinfo);
 
         /**
@@ -491,7 +491,7 @@ namespace System.Data.KangMeiIPGBSDK
          * @param  otherTmid             (in)      被叫终端ID
          * @return   ->成功返回0
          **/
-        [DllImport(DllFileName)]
+        [DllImport(IPGBNETSdk.DllFileName)]
         public static extern int IPGBNETSDK_CtrlAnyTmForCall(uint UserId, uint MainTmID, uint otherTmid);
 
         /**
@@ -501,7 +501,7 @@ namespace System.Data.KangMeiIPGBSDK
          * @param   CtlType               (in)      控制类型(1:接通  2:断开)
          * @return   ->成功返回0
          **/
-        [DllImport(DllFileName)]
+        [DllImport(IPGBNETSdk.DllFileName)]
         public static extern int IPGBNETSDK_CtrlAnyTmTalkStatus(uint UserId, uint TmID, byte CtlType);
 
         /**
@@ -510,7 +510,7 @@ namespace System.Data.KangMeiIPGBSDK
          * @param   pFqInfo               (out)     分区信息
          * @return   ->成功返回0
          **/
-        [DllImport(DllFileName)]
+        [DllImport(IPGBNETSdk.DllFileName)]
         public static extern int IPGBNETSDK_GetUserFqInfo(uint UserId, out IPGBSDK_USERFQINFO pFqInfo);
         #region // 显示实现
         void IIPGBNETSdkProxy.IPGBNETSDK_Cleanup() => IPGBNETSDK_Cleanup();
@@ -549,7 +549,7 @@ namespace System.Data.KangMeiIPGBSDK
         int IIPGBNETSdkProxy.IPGBNETSDK_ThreeFireArm(uint UserId, IPGBSDK_THREEFIRINFO FirePinInfo, byte PinType) => IPGBNETSDK_ThreeFireArm(UserId, FirePinInfo, PinType);
         #endregion
     }
-    internal class IPGBNETSdkLoader : IIPGBNETSdkProxy
+    internal class IPGBNETSdkLoader : ASdkDynamicLoader, IIPGBNETSdkProxy
     {
         /// <summary>
         /// 相对路径
@@ -562,7 +562,7 @@ namespace System.Data.KangMeiIPGBSDK
         /// <summary>
         /// 文件全路径
         /// </summary>
-        public static String DllFullName { get; } = Path.Combine(Path.GetFullPath(DllPath), IPGBNETSdkDller.DllFileName);
+        public static String DllFullName { get; } = Path.Combine(Path.GetFullPath(DllPath), IPGBNETSdk.DllFileName);
         #region // 委托定义
         private DCreater.IPGBNETSDK_SetConnStatusCallBack _IPGBNETSDK_SetConnStatusCallBack;
         private DCreater.IPGBNETSDK_SetTerminalStatusCallBack _IPGBNETSDK_SetTerminalStatusCallBack;
@@ -636,103 +636,6 @@ namespace System.Data.KangMeiIPGBSDK
             _IPGBNETSDK_CtrlAnyTmTalkStatus = GetDelegate<DCreater.IPGBNETSDK_CtrlAnyTmTalkStatus>(nameof(DCreater.IPGBNETSDK_CtrlAnyTmTalkStatus));
             _IPGBNETSDK_GetUserFqInfo = GetDelegate<DCreater.IPGBNETSDK_GetUserFqInfo>(nameof(DCreater.IPGBNETSDK_GetUserFqInfo));
         }
-        #region // 动态内容
-        [DllImport("kernel32.dll")]
-        private static extern uint GetLastError();
-        /// <summary>
-        /// API LoadLibraryEx
-        /// </summary>
-        /// <param name="lpFileName"></param>
-        /// <param name="hReservedNull"></param>
-        /// <param name="dwFlags"></param>
-        /// <returns></returns>
-        [DllImport("kernel32.dll", EntryPoint = "LoadLibraryEx", SetLastError = true)]
-        private static extern IntPtr LoadLibraryEx(string lpFileName, IntPtr hReservedNull, LoadLibraryFlags dwFlags);
-        [DllImport("kernel32.dll", CallingConvention = CallingConvention.StdCall)]
-        private static extern IntPtr LoadLibrary(string lpFileName, int h, int flags);
-        [DllImport("kernel32.dll", CharSet = CharSet.Ansi, ExactSpelling = true, SetLastError = true)]
-        private static extern IntPtr GetProcAddress(IntPtr hModule, string lProcName);
-        [DllImport("kernel32.dll", CallingConvention = CallingConvention.StdCall)]
-        private static extern bool FreeLibrary(IntPtr hModule);
-        IntPtr hModule;
-        /// <summary>
-        /// 释放
-        /// </summary>
-        public void Dispose()
-        {
-            FreeLibrary(hModule);
-        }
-        public Delegate GetMethod(string procName, Type type)
-        {
-            IntPtr func = GetProcAddress(hModule, procName);
-            return (Delegate)Marshal.GetDelegateForFunctionPointer(func, type);
-        }
-        public T GetDelegate<T>(string procName) where T : Delegate
-        {
-            IntPtr func = GetProcAddress(hModule, procName);
-            return (T)Marshal.GetDelegateForFunctionPointer(func, typeof(T));
-        }
-        /// <summary>
-        /// LoadLibraryFlags
-        /// </summary>
-        public enum LoadLibraryFlags : uint
-        {
-            /// <summary>
-            /// DONT_RESOLVE_DLL_REFERENCES
-            /// </summary>
-            DONT_RESOLVE_DLL_REFERENCES = 0x00000001,
-
-            /// <summary>
-            /// LOAD_IGNORE_CODE_AUTHZ_LEVEL
-            /// </summary>
-            LOAD_IGNORE_CODE_AUTHZ_LEVEL = 0x00000010,
-
-            /// <summary>
-            /// LOAD_LIBRARY_AS_DATAFILE
-            /// </summary>
-            LOAD_LIBRARY_AS_DATAFILE = 0x00000002,
-
-            /// <summary>
-            /// LOAD_LIBRARY_AS_DATAFILE_EXCLUSIVE
-            /// </summary>
-            LOAD_LIBRARY_AS_DATAFILE_EXCLUSIVE = 0x00000040,
-
-            /// <summary>
-            /// LOAD_LIBRARY_AS_IMAGE_RESOURCE
-            /// </summary>
-            LOAD_LIBRARY_AS_IMAGE_RESOURCE = 0x00000020,
-
-            /// <summary>
-            /// LOAD_LIBRARY_SEARCH_APPLICATION_DIR
-            /// </summary>
-            LOAD_LIBRARY_SEARCH_APPLICATION_DIR = 0x00000200,
-
-            /// <summary>
-            /// LOAD_LIBRARY_SEARCH_DEFAULT_DIRS
-            /// </summary>
-            LOAD_LIBRARY_SEARCH_DEFAULT_DIRS = 0x00001000,
-
-            /// <summary>
-            /// LOAD_LIBRARY_SEARCH_DLL_LOAD_DIR
-            /// </summary>
-            LOAD_LIBRARY_SEARCH_DLL_LOAD_DIR = 0x00000100,
-
-            /// <summary>
-            /// LOAD_LIBRARY_SEARCH_SYSTEM32
-            /// </summary>
-            LOAD_LIBRARY_SEARCH_SYSTEM32 = 0x00000800,
-
-            /// <summary>
-            /// LOAD_LIBRARY_SEARCH_USER_DIRS
-            /// </summary>
-            LOAD_LIBRARY_SEARCH_USER_DIRS = 0x00000400,
-
-            /// <summary>
-            /// LOAD_WITH_ALTERED_SEARCH_PATH
-            /// </summary>
-            LOAD_WITH_ALTERED_SEARCH_PATH = 0x00000008
-        }
-        #endregion
         #region // 显示实现
         void IIPGBNETSdkProxy.IPGBNETSDK_Cleanup() => _IPGBNETSDK_Cleanup.Invoke();
         int IIPGBNETSdkProxy.IPGBNETSDK_CreateEncTerminalCbStream(uint UserId, IPGBSDK_GBENCTMCBINFO pGbinfo) => _IPGBNETSDK_CreateEncTerminalCbStream.Invoke(UserId, pGbinfo);

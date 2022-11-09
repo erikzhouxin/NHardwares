@@ -8,12 +8,11 @@
     <AssemblyVersion>2022.6.6.666</AssemblyVersion>
     <FileVersion>2022.6.6.666</FileVersion>
     <Description>宇视SDK集成项目</Description>
-    <ProviderLangVersion>7.3</ProviderLangVersion>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <PackageTags>宇视;宇视SDK;NETDEVSDK;NETDEV;</PackageTags>
-    <RepositoryUrl>https://www.gitee.com/ErikZhouXin/NHardwares</RepositoryUrl>
+    <RepositoryUrl>https://www.gitee.com/erikzhouxin/nhardwares</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageOutputPath>$([System.IO.Path]::Combine($(MSBuildThisFileDirectory), 'bin'))</PackageOutputPath>
     <cb_bin_path>$([System.IO.Path]::Combine($(MSBuildThisFileDirectory), 'beans'))</cb_bin_path>

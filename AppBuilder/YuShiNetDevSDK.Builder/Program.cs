@@ -119,12 +119,12 @@ namespace YuShiNetDevSDK.Builder
                 f.WriteElementString("AssemblyVersion", ASSEMBLY_VERSION);
                 f.WriteElementString("FileVersion", ASSEMBLY_VERSION);
                 f.WriteElementString("Description", SUMMARY);
-                f.WriteElementString("ProviderLangVersion", "7.3");
+                //f.WriteElementString("ProviderLangVersion", "7.3");
                 f.WriteElementString("GenerateAssemblyProductAttribute", "false");
                 f.WriteElementString("PackageLicenseExpression", "MIT");
                 f.WriteElementString("PackageRequireLicenseAcceptance", "false");
                 f.WriteElementString("PackageTags", PACKAGE_TAGS);
-                f.WriteElementString("RepositoryUrl", "https://www.gitee.com/ErikZhouXin/NHardwares");
+                f.WriteElementString("RepositoryUrl", "https://www.gitee.com/erikzhouxin/nhardwares");
                 f.WriteElementString("RepositoryType", "git");
                 f.WriteElementString("PackageOutputPath", "$([System.IO.Path]::Combine($(MSBuildThisFileDirectory), 'bin'))");
 
@@ -228,7 +228,7 @@ namespace YuShiNetDevSDK.Builder
                 f.WriteEndElement();
                 f.WriteStartElement("repository");
                 f.WriteAttributeString("type", "git");
-                f.WriteAttributeString("url", "https://www.gitee.com/ErikZhouXin/NHardwares");
+                f.WriteAttributeString("url", "https://www.gitee.com/erikzhouxin/nhardwares");
                 f.WriteEndElement(); // repository
                 f.WriteElementString("summary", "$summary$");
                 f.WriteElementString("tags", PACKAGE_TAGS);

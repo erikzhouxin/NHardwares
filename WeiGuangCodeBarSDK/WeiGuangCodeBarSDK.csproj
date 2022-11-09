@@ -13,12 +13,11 @@
 		<AssemblyVersion>2022.6.6.666</AssemblyVersion>
 		<FileVersion>2022.6.6.666</FileVersion>
 		<Description>微光二维码识别项目集成</Description>
-		<ProviderLangVersion>7.3</ProviderLangVersion>
 		<GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
 		<PackageTags>微光;微光SDK;二维码识别;CodeBar;</PackageTags>
-		<RepositoryUrl>https://www.gitee.com/ErikZhouXin/NHardwares</RepositoryUrl>
+		<RepositoryUrl>https://www.gitee.com/erikzhouxin/nhardwares</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 	</PropertyGroup>

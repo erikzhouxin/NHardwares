@@ -103,29 +103,9 @@ namespace System.Data.KangMeiIPGBSDK.Properties {
         /// <summary>
         ///   查找 System.Byte[] 类型的本地化资源。
         /// </summary>
-        internal static byte[] X64_IPGBNETSDK1 {
-            get {
-                object obj = ResourceManager.GetObject("X64_IPGBNETSDK1", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   查找 System.Byte[] 类型的本地化资源。
-        /// </summary>
         internal static byte[] X64_IPGBPushStream {
             get {
                 object obj = ResourceManager.GetObject("X64_IPGBPushStream", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   查找 System.Byte[] 类型的本地化资源。
-        /// </summary>
-        internal static byte[] X64_IPGBPushStream1 {
-            get {
-                object obj = ResourceManager.GetObject("X64_IPGBPushStream1", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -243,29 +223,9 @@ namespace System.Data.KangMeiIPGBSDK.Properties {
         /// <summary>
         ///   查找 System.Byte[] 类型的本地化资源。
         /// </summary>
-        internal static byte[] X86_IPGBNETSDK1 {
-            get {
-                object obj = ResourceManager.GetObject("X86_IPGBNETSDK1", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   查找 System.Byte[] 类型的本地化资源。
-        /// </summary>
         internal static byte[] X86_IPGBPushStream {
             get {
                 object obj = ResourceManager.GetObject("X86_IPGBPushStream", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   查找 System.Byte[] 类型的本地化资源。
-        /// </summary>
-        internal static byte[] X86_IPGBPushStream1 {
-            get {
-                object obj = ResourceManager.GetObject("X86_IPGBPushStream1", resourceCulture);
                 return ((byte[])(obj));
             }
         }

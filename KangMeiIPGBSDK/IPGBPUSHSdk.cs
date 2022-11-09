@@ -11,6 +11,10 @@ namespace System.Data.KangMeiIPGBSDK
     public static class IPGBPUSHSdk
     {
         /// <summary>
+        /// SDK文件名称
+        /// </summary>
+        public const String DllFileName = "IPGBPushStream.dll";
+        /// <summary>
         /// 声卡名称
         /// </summary>
         public const int IPGBPUSH_MAX_SoundCardNAME = 512;

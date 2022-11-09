@@ -12,6 +12,13 @@ namespace System.Data.KangMeiIPGBSDK
     /// <param name="PSta">推流状态</param>
     /// <param name="dwUser">用户类指针</param>
     public delegate void SDKfPushStatus(int PID, NETEM_PUSHSTREAMSTA_TYPE PSta, long dwUser);
+    /// <summary>
+    /// 推流状态回调函数原形
+    /// </summary>
+    /// <param name="PID">推流ID</param>
+    /// <param name="PSta">推流状态</param>
+    /// <param name="dwUser">用户类指针</param>
+    public delegate void SDKfGBStreamSta(int PID, int PSta, long dwUser);
     internal partial class DCreater
     {
         /**

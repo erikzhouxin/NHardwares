@@ -14,7 +14,7 @@ namespace ALBDLLTester
 {
     public partial class Form1 : Form
     {
-        IAlbCtrlSdkProxy ALBDLL = AlbCtrlSdk.Create();
+        IAlbCtrlSdkProxy ALBDLL = AlbCtrlSdk.Create(true);
         public Form1()
         {
             InitializeComponent();

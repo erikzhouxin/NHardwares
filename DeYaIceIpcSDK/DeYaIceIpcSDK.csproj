@@ -13,12 +13,11 @@
 		<AssemblyVersion>2022.6.6.666</AssemblyVersion>
 		<FileVersion>2022.6.6.666</FileVersion>
 		<Description>德亚车牌识别项目集成</Description>
-		<ProviderLangVersion>7.3</ProviderLangVersion>
 		<GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
 		<PackageTags>德亚;德亚SDK;车牌识别;IceIpcSDK;</PackageTags>
-		<RepositoryUrl>https://www.gitee.com/ErikZhouXin/NHardwares</RepositoryUrl>
+		<RepositoryUrl>https://www.gitee.com/erikzhouxin/nhardwares</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
 	</PropertyGroup>
 	<ItemGroup>

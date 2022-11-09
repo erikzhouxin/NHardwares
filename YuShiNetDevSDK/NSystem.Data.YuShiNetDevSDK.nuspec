@@ -9,7 +9,7 @@
     <copyright>$copyright$</copyright>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <license type="expression">MIT</license>
-    <repository type="git" url="https://www.gitee.com/ErikZhouXin/NHardwares" />
+    <repository type="git" url="https://www.gitee.com/erikzhouxin/nhardwares" />
     <summary>$summary$</summary>
     <tags>宇视;宇视SDK;NETDEVSDK;NETDEV;</tags>
     <description>宇视SDK</description>

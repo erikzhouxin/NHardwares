@@ -78,7 +78,6 @@ namespace System.Data.KangMeiIPGBSDK
         /// </summary>
         public static IIPGBPUSHSdkProxy Instance { get; } = new IPGBPUSHSdkDller();
         private IPGBPUSHSdkDller() { }
-        public const String DllFileName = "IPGBPushStream.dll";
         /// <summary>
         /// 全路径
         /// </summary>
@@ -86,33 +85,33 @@ namespace System.Data.KangMeiIPGBSDK
         /// <summary>
         /// 文件全路径
         /// </summary>
-        public static String DllFullName { get; } = Path.GetFullPath(DllFileName);
+        public static String DllFullName { get; } = Path.GetFullPath(IPGBPUSHSdk.DllFileName);
         /**
          * 设置推流状态回调函数
          * @param  pFunc               (in)   回调函数地址
          * @param  puser               (in)   用户类指针
          * @return  
          **/
-        [DllImport(DllFileName)]
+        [DllImport(IPGBPUSHSdk.DllFileName)]
         public static extern void IPGBPUSHSTREAM_SetCallBackPushStatus(SDKfPushStatus pFunc, long puser);
         /**
          * SDK初始化
          * @return ->返回0成功
          **/
-        [DllImport(DllFileName)]
+        [DllImport(IPGBPUSHSdk.DllFileName)]
         public static extern int IPGBPUSHSTREAM_Init();
         /**
          * SDK退出清理
          * @return 
          **/
-        [DllImport(DllFileName)]
+        [DllImport(IPGBPUSHSdk.DllFileName)]
         public static extern void IPGBPUSHSTREAM_Cleanup();
         /**
          * 获取得到系统的声卡信息
          * @param  SoundInfo           (out)   输出系统声卡混音接口
          * @return  
          **/
-        [DllImport(DllFileName)]
+        [DllImport(IPGBPUSHSdk.DllFileName)]
         public static extern void IPGBPUSHSTREAM_GetSysSoundCardINFO(out IPGBPUSH_SOUNDCARDINFO SoundInfo);
         /**
          * 设置系统声卡混音接口音量
@@ -120,21 +119,21 @@ namespace System.Data.KangMeiIPGBSDK
          * @param  MVal                    (in)    音量值 0-100
          * @return   
          **/
-        [DllImport(DllFileName)]
+        [DllImport(IPGBPUSHSdk.DllFileName)]
         public static extern void IPGBPUSHSTREAM_SetSysSoundCardVol(string CapMixName, uint MVal);
         /**
          * 创建实时声卡采集推流
          * @param  pSrcinfo             (in)    推流信息
          * @return   ->成功返回推流ID（大于0）
          **/
-        [DllImport(DllFileName)]
+        [DllImport(IPGBPUSHSdk.DllFileName)]
         public static extern int IPGBPUSHSTREAM_CreateSoundCardPushStream(IPGBPUSH_SoundCarPushStream pSrcinfo);
         /**
          * 创建本地第三方音频流推流
          * @param  pSrcinfo             (in)    推流信息
          * @return   ->成功返回推流ID（大于0）
          **/
-        [DllImport(DllFileName)]
+        [DllImport(IPGBPUSHSdk.DllFileName)]
         public static extern int IPGBPUSHSTREAM_CreateThirdPushStream(IPGBPUSH_ThirdPushStream pSrcinfo);
         /**
          * 向本地第三方音频流推流通道输入相应格式的音频数据(注意：只对StreamType=1有效)
@@ -143,14 +142,14 @@ namespace System.Data.KangMeiIPGBSDK
          * @param  len             (in)    音频数据长度
          * @return   ->成功返回等于len
          **/
-        [DllImport(DllFileName)]
+        [DllImport(IPGBPUSHSdk.DllFileName)]
         public static extern int IPGBPUSHSTREAM_FillDataToThirdStream(uint StreamId, string buf, int len);
         /**
          * 删除一个推流
          * @param  StreamId             (in)    推流ID
          * @return 
          **/
-        [DllImport(DllFileName)]
+        [DllImport(IPGBPUSHSdk.DllFileName)]
         public static extern void IPGBPUSHSTREAM_DelOnePushStream(uint StreamId);
         /**
          * 分析本地MP3文件信息
@@ -158,7 +157,7 @@ namespace System.Data.KangMeiIPGBSDK
          * @param  pMp3Fileinfo          (out)     输出文件信息
          * @return   ->成功返回0
          **/
-        [DllImport(DllFileName)]
+        [DllImport(IPGBPUSHSdk.DllFileName)]
         public static extern int IPGBPUSHSTREAM_GetMp3FileInfo(string FilePath, out IPGBPUSH_LCA_MP3INFO pMp3Fileinfo);
         #region // 显示实现
         void IIPGBPUSHSdkProxy.IPGBPUSHSTREAM_Cleanup() => IPGBPUSHSTREAM_Cleanup();
@@ -186,7 +185,7 @@ namespace System.Data.KangMeiIPGBSDK
         /// <summary>
         /// 文件全路径
         /// </summary>
-        public static String DllFullName { get; } = Path.Combine(Path.GetFullPath(DllPath), IPGBPUSHSdkDller.DllFileName);
+        public static String DllFullName { get; } = Path.Combine(Path.GetFullPath(DllPath), IPGBPUSHSdk.DllFileName);
         #region // 委托定义
         private DCreater.IPGBPUSHSTREAM_SetCallBackPushStatus _IPGBPUSHSTREAM_SetCallBackPushStatus;
         private DCreater.IPGBPUSHSTREAM_Init _IPGBPUSHSTREAM_Init;

@@ -2,20 +2,11 @@
 
 	<PropertyGroup>
 		<OutputType>WinExe</OutputType>
-		<TargetFramework>netcoreapp3.1</TargetFramework>
+		<TargetFrameworks>netcoreapp3.1</TargetFrameworks>
 		<UseWindowsForms>true</UseWindowsForms>
-		<PlatformTarget>x64</PlatformTarget>
 		<AllowUnsafeBlocks>True</AllowUnsafeBlocks>
 	</PropertyGroup>
 
-	<ItemGroup>
-		<Reference Include="IPGBNET">
-			<HintPath>..\..\..\KangMeiIPGBSDK\beans\x64\IPGBNET.dll</HintPath>
-		</Reference>
-		<Reference Include="IPGBNETPush">
-			<HintPath>..\..\..\KangMeiIPGBSDK\beans\x64\IPGBNETPush.dll</HintPath>
-		</Reference>
-	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\..\..\KangMeiIPGBSDK\KangMeiIPGBSDK.csproj" />
 		<!--<PackageReference Include="NSystem.Data.KangMeiIPGBSDK" Version="2022.7.7" />-->
