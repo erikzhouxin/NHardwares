@@ -92,6 +92,16 @@ namespace System.Data.VzClientSDK
                 if (!isExists)
                 {
                     WriteFile(Properties.Resources.X64_VzLPRSDK, Path.Combine(VzClientSdkLoader.DllFullPath, "VzLPRSDK.dll"));
+                    WriteFile(Properties.Resources.X64_avcodec_57, Path.Combine(VzClientSdkLoader.DllFullPath, "avcodec-57.dll"));
+                    WriteFile(Properties.Resources.X64_avformat_57, Path.Combine(VzClientSdkLoader.DllFullPath, "avformat-57.dll"));
+                    WriteFile(Properties.Resources.X64_avutil_54, Path.Combine(VzClientSdkLoader.DllFullPath, "avutil-54.dll"));
+                    WriteFile(Properties.Resources.X64_avutil_55, Path.Combine(VzClientSdkLoader.DllFullPath, "avutil-55.dll"));
+                    WriteFile(Properties.Resources.X64_libwinpthread_1, Path.Combine(VzClientSdkLoader.DllFullPath, "libwinpthread-1.dll"));
+                    WriteFile(Properties.Resources.X64_swscale_3, Path.Combine(VzClientSdkLoader.DllFullPath, "swscale-3.dll"));
+                    WriteFile(Properties.Resources.X64_VzAudioDataPlayer, Path.Combine(VzClientSdkLoader.DllFullPath, "VzAudioDataPlayer.dll"));
+                    WriteFile(Properties.Resources.X64_VzDrawsLib, Path.Combine(VzClientSdkLoader.DllFullPath, "VzDrawsLib.dll"));
+                    WriteFile(Properties.Resources.X64_VzPlayer2, Path.Combine(VzClientSdkLoader.DllFullPath, "VzPlayer2.dll"));
+                    WriteFile(Properties.Resources.X64_VzStreamClient, Path.Combine(VzClientSdkLoader.DllFullPath, "VzStreamClient.dll"));
                 }
             }
             else
@@ -100,6 +110,14 @@ namespace System.Data.VzClientSDK
                 if (!isExists)
                 {
                     WriteFile(Properties.Resources.X86_VzLPRSDK, Path.Combine(VzClientSdkLoader.DllFullPath, "VzLPRSDK.dll"));
+                    WriteFile(Properties.Resources.X86_avcodec_57, Path.Combine(VzClientSdkLoader.DllFullPath, "avcodec-57.dll"));
+                    WriteFile(Properties.Resources.X86_avformat_57, Path.Combine(VzClientSdkLoader.DllFullPath, "avformat-57.dll"));
+                    WriteFile(Properties.Resources.X86_avutil_55, Path.Combine(VzClientSdkLoader.DllFullPath, "avutil-55.dll"));
+                    WriteFile(Properties.Resources.X86_msvcr90, Path.Combine(VzClientSdkLoader.DllFullPath, "msvcr90.dll"));
+                    WriteFile(Properties.Resources.X86_VzAudioDataPlayer, Path.Combine(VzClientSdkLoader.DllFullPath, "VzAudioDataPlayer.dll"));
+                    WriteFile(Properties.Resources.X86_VzDrawsLib, Path.Combine(VzClientSdkLoader.DllFullPath, "VzDrawsLib.dll"));
+                    WriteFile(Properties.Resources.X86_VzPlayer2, Path.Combine(VzClientSdkLoader.DllFullPath, "VzPlayer2.dll"));
+                    WriteFile(Properties.Resources.X86_VzStreamClient, Path.Combine(VzClientSdkLoader.DllFullPath, "VzStreamClient.dll"));
                 }
             }
         }
