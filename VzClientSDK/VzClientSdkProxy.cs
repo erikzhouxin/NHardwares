@@ -1268,14 +1268,6 @@ namespace System.Data.VzClientSDK
         public static IVzClientSdkProxy Instance { get; } = new VzClientSdkDller();
         private VzClientSdkDller() { }
         /// <summary>
-        /// 全路径
-        /// </summary>
-        public static string DllFullPath { get; } = Path.GetFullPath(".");
-        /// <summary>
-        /// 文件全路径
-        /// </summary>
-        public static String DllFullName { get; } = Path.GetFullPath(VzClientSdk.DllFileName);
-        /// <summary>
         /// 复制内存
         /// </summary>
         /// <param name="Destination"></param>
@@ -2804,18 +2796,6 @@ namespace System.Data.VzClientSDK
     }
     internal class VzClientSdkLoader : ASdkDynamicLoader, IVzClientSdkProxy
     {
-        /// <summary>
-        /// 相对路径
-        /// </summary>
-        public const string DllPath = @"plugins\vzclientsdk";
-        /// <summary>
-        /// 全路径
-        /// </summary>
-        public static string DllFullPath { get; } = Path.GetFullPath(DllPath);
-        /// <summary>
-        /// 文件全路径
-        /// </summary>
-        public static String DllFullName { get; } = Path.Combine(Path.GetFullPath(DllPath), VzClientSdk.DllFileName);
         #region // 委托定义
         private DCreater.VzLPRClient_CancelOfflineCheck _VzLPRClient_CancelOfflineCheck;
         private DCreater.VzLPRClient_ChangeEncryptKey _VzLPRClient_ChangeEncryptKey;
@@ -2958,8 +2938,6 @@ namespace System.Data.VzClientSDK
         #endregion 委托定义
         public VzClientSdkLoader()
         {
-            hModule = LoadLibraryEx(DllFullName, IntPtr.Zero, LoadLibraryFlags.LOAD_WITH_ALTERED_SEARCH_PATH);
-
             _VzLPRClient_CancelOfflineCheck = GetDelegate<DCreater.VzLPRClient_CancelOfflineCheck>(nameof(DCreater.VzLPRClient_CancelOfflineCheck));
             _VzLPRClient_ChangeEncryptKey = GetDelegate<DCreater.VzLPRClient_ChangeEncryptKey>(nameof(DCreater.VzLPRClient_ChangeEncryptKey));
             _VzLPRClient_Cleanup = GetDelegate<DCreater.VzLPRClient_Cleanup>(nameof(DCreater.VzLPRClient_Cleanup));
@@ -3098,6 +3076,10 @@ namespace System.Data.VzClientSDK
             _VzLPRClient_WhiteListSetQueryCallBack = GetDelegate<DCreater.VzLPRClient_WhiteListSetQueryCallBack>(nameof(DCreater.VzLPRClient_WhiteListSetQueryCallBack));
             _VzLPRClient_WhiteListUpdateVehicleByID = GetDelegate<DCreater.VzLPRClient_WhiteListUpdateVehicleByID>(nameof(DCreater.VzLPRClient_WhiteListUpdateVehicleByID));
             _VzLPRClient_WriteUserData = GetDelegate<DCreater.VzLPRClient_WriteUserData>(nameof(DCreater.VzLPRClient_WriteUserData));
+        }
+        public override string GetFileFullName()
+        {
+            return VzClientSdk.DllFullName;
         }
         /// <summary>
         /// 复制内存

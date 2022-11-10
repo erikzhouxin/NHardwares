@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.Data.HardwareInterfaces;
 using System.Data.Mabber;
 using System.IO;
+using System.Linq.Expressions;
 using System.Reflection;
 using System.Runtime.InteropServices;
 
@@ -19,6 +21,14 @@ namespace System.Data.KangMeiIPGBSDK
     /// </summary>
     public class IPGBPUSHNET
     {
+        /// <summary>
+        /// 推流状态回调函数原形
+        /// </summary>
+        /// <param name="PID">推流ID</param>
+        /// <param name="PSta">推流状态</param>
+        /// <param name="dwUser">用户类指针</param>
+		public delegate void NETfGBStreamSta(int PID, int PSta, long dwUser);
+
         private static readonly object _pLocker;
         private static readonly Assembly _pAssembly;
         private static readonly Type _pType;
@@ -47,25 +57,19 @@ namespace System.Data.KangMeiIPGBSDK
         static IPGBPUSHNET()
         {
             _pLocker = new object();
-            IPGBNETSdk.Create();
-            DllFullPath = IPGBPUSHSdkLoader.DllFullPath;
-            DllFullName = Path.Combine(DllFullPath, DllFileName);
+            IPGBPUSHSdk.Create();
+            DllFullPath = IPGBPUSHSdk.DllFullPath;
+            DllFullName = Path.Combine(IPGBPUSHSdk.DllFullPath, DllFileName);
             if (!File.Exists(DllFullName))
             {
-                if (Environment.Is64BitProcess)
-                {
-                    IPGBNETSdk.WriteFile(Properties.Resources.X64_IPGBNETPush, DllFullName);
-                }
-                else
-                {
-                    IPGBNETSdk.WriteFile(Properties.Resources.X86_IPGBNETPush, DllFullName);
-                }
+                SdkFileComponent.WriteResourceFile(Environment.Is64BitProcess ? Properties.Resources.X64_IPGBNETPush : Properties.Resources.X86_IPGBNETPush, DllFullName);
             }
-            Instance = new IPGBPUSHNET();
-            _pTypes = new ConcurrentDictionary<string, Type>();
-            _pMethods = new ConcurrentDictionary<string, MethodInfo>();
             _pAssembly = Assembly.LoadFile(DllFullName);
             _pType = _pAssembly.GetType(typeof(IPGBPUSH.NET.IPGBPUSHNET).FullName);
+            Instance = new IPGBPUSHNET(_pType.GetProperty(nameof(Instance)).GetValue(null, null));
+
+            _pTypes = new ConcurrentDictionary<string, Type>();
+            _pMethods = new ConcurrentDictionary<string, MethodInfo>();
         }
         private readonly object _pModel;
         internal IPGBPUSHNET(object model) { _pModel = model; }
@@ -73,15 +77,34 @@ namespace System.Data.KangMeiIPGBSDK
         /// 构造
         /// </summary>
         public IPGBPUSHNET() { _pModel = Activator.CreateInstance(_pType); }
+        private NETfGBStreamSta _gbstaCallback;
+        private Delegate _rgbstaCallback;
+        private bool _isGbstaCallback;
         /// <summary>
         /// 设置回调
         /// </summary>
         /// <param name="GBStreamStaCallBack"></param>
         /// <param name="dwUser"></param>
-        public void NETIPGBPUSHNETSDK_SetGBStreamStaCallBack(SDKfGBStreamSta GBStreamStaCallBack, long dwUser)
+        public void NETIPGBPUSHNETSDK_SetGBStreamStaCallBack(NETfGBStreamSta GBStreamStaCallBack, long dwUser)
         {
-            GetMethodInvoke(nameof(NETIPGBPUSHNETSDK_SetGBStreamStaCallBack), GBStreamStaCallBack, dwUser);
+            this._gbstaCallback = GBStreamStaCallBack;
+            if (!_isGbstaCallback)
+            {
+                _isGbstaCallback = true;
+                var streamId = Expression.Parameter(typeof(int));
+                var streamSta = Expression.Parameter(typeof(int));
+                var tmId = Expression.Parameter(typeof(long));
+                var thisVal = Expression.Constant(this);
+                var delegateModel = GetModelDelegate(nameof(NETfGBStreamSta));
+                var callMethod = Expression.Call(thisVal, typeof(IPGBPUSHNET).GetMethod(nameof(GBStreamSta), BindingFlags.Instance | BindingFlags.NonPublic), streamId, streamSta, tmId);
+                var _egbstaCallback = Expression.Lambda(delegateModel, callMethod, streamId, streamSta, tmId);
+                GetMethodInvoke(nameof(NETIPGBPUSHNETSDK_SetGBStreamStaCallBack), _rgbstaCallback = _egbstaCallback.Compile(), dwUser);
+            }
             //_proxy.NETIPGBPUSHNETSDK_SetGBStreamStaCallBack(GBStreamStaCallBack, dwUser);
+        }
+        private void GBStreamSta(int StreamId, int StreamSta, long dwUser)
+        {
+            _gbstaCallback?.Invoke(StreamId, StreamSta, dwUser);
         }
         /// <summary>
         /// 初始化
@@ -188,10 +211,7 @@ namespace System.Data.KangMeiIPGBSDK
         }
         private static object ChangeModelType(object srcObject, string name)
         {
-            return ChangeTargetType(srcObject, GetModelType(name));
-        }
-        private static object ChangeTargetType(object srcObject, Type tagType)
-        {
+            Type tagType = GetModelType(name);
             Type srcType = srcObject.GetType();
             TinyMapper.Bind(srcType, tagType);
             return TinyMapper.Map(srcType, tagType, srcObject);

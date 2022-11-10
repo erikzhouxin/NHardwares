@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.HardwareInterfaces;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -211,16 +212,6 @@ namespace System.Data.DeYaAlbCtrlSDK
         /// </summary>
         public static IAlbCtrlSdkProxy Instance { get; } = new AlbCtrlSdkDller();
         private AlbCtrlSdkDller() { }
-        public const String DllFileName = "ALBCtrlDll.dll";
-        /// <summary>
-        /// 全路径
-        /// </summary>
-        public static string DllFullPath { get; } = Path.GetFullPath(".");
-        /// <summary>
-        /// 文件全路径
-        /// </summary>
-        public static String DllFullName { get; } = Path.GetFullPath(DllFileName);
-
         /*
         * 功能：打开并连接设备
         * 参数：string pcIP
@@ -230,7 +221,7 @@ namespace System.Data.DeYaAlbCtrlSDK
         *      启动成功时返回设备句柄 IntPtr
         *      启动失败返回NULL 
         */
-        [DllImportAttribute(DllFileName, EntryPoint = "DEV_Open", CallingConvention = CallingConvention.Winapi)]
+        [DllImport(AlbCtrlSdk.DllFileName, EntryPoint = "DEV_Open", CallingConvention = CallingConvention.Winapi)]
         public static extern System.IntPtr DEV_Open([InAttribute()][MarshalAsAttribute(UnmanagedType.LPStr)] string pcIP);
         /*
          * 功能：关闭设备连接
@@ -238,7 +229,7 @@ namespace System.Data.DeYaAlbCtrlSDK
          *      设备句柄，即在调用DEV_Open时返回的句柄
          * 返回：BOOl类型，成功返回true,失败返回false
          */
-        [DllImportAttribute(DllFileName, EntryPoint = "DEV_Close", CallingConvention = CallingConvention.Winapi)]
+        [DllImport(AlbCtrlSdk.DllFileName, EntryPoint = "DEV_Close", CallingConvention = CallingConvention.Winapi)]
         public static extern bool DEV_Close(System.IntPtr hSDK);
         /*
          * 功能：道闸机栏杆控制
@@ -248,7 +239,7 @@ namespace System.Data.DeYaAlbCtrlSDK
          *      控制栏杆指令，true为发栏杆起杆指令，false为控制栏杆落杆指令
          * 返回：BOOl类型，成功返回true,失败返回false
          */
-        [DllImportAttribute(DllFileName, EntryPoint = "DEV_ALB_Ctrl", CallingConvention = CallingConvention.Winapi)]
+        [DllImport(AlbCtrlSdk.DllFileName, EntryPoint = "DEV_ALB_Ctrl", CallingConvention = CallingConvention.Winapi)]
         public static extern bool DEV_ALB_Ctrl(System.IntPtr hSDK, bool bOpen);
         /*
          * 功能：设置道闸机状态改变时的处理事件
@@ -258,10 +249,10 @@ namespace System.Data.DeYaAlbCtrlSDK
          *      处理事件委托，具体见 DEVEventCallBack 定义
          * 返回：BOOl类型，成功返回true,失败返回false
          */
-        [DllImportAttribute(DllFileName, EntryPoint = "DEV_SetEventHandle", CallingConvention = CallingConvention.Winapi)]
+        [DllImport(AlbCtrlSdk.DllFileName, EntryPoint = "DEV_SetEventHandle", CallingConvention = CallingConvention.Winapi)]
         public static extern bool DEV_SetEventHandle(System.IntPtr hSDK, DEVEventCallBack pCallBack);
 
-        [DllImport(DllFileName, EntryPoint = "DEV_EnableEventMessageEx", SetLastError = true, CallingConvention = CallingConvention.StdCall, CharSet = CharSet.Ansi)]
+        [DllImport(AlbCtrlSdk.DllFileName, EntryPoint = "DEV_EnableEventMessageEx", SetLastError = true, CallingConvention = CallingConvention.StdCall, CharSet = CharSet.Ansi)]
         public static extern Boolean DEV_EnableEventMessageEx(IntPtr h, IntPtr hWnd, int MsgID);
         /*
          * 功能：获取道闸机状态
@@ -290,7 +281,7 @@ namespace System.Data.DeYaAlbCtrlSDK
          *      --------------------------------------------------------
          *      bit7 - bit31                        预留位置
          */
-        [DllImportAttribute(DllFileName, EntryPoint = "DEV_GetStatus", CallingConvention = CallingConvention.Winapi)]
+        [DllImport(AlbCtrlSdk.DllFileName, EntryPoint = "DEV_GetStatus", CallingConvention = CallingConvention.Winapi)]
         public static extern bool DEV_GetStatus(System.IntPtr hSDK, out uint dwStatus);
         /*
          * 功能：获取道闸机故障码
@@ -315,9 +306,9 @@ namespace System.Data.DeYaAlbCtrlSDK
          *      bit5 - bit32   保留
          * 注：在状态改变回调函数中，状态参数为4时调用，获取故障码
          */
-        [Obsolete("替代方案:[DEV_GetStatus]此方法已弃用去除")]
-        [DllImportAttribute(DllFileName, EntryPoint = "DEV_GetFaultBits", CallingConvention = CallingConvention.Winapi)]
-        public static extern bool DEV_GetFaultBits(System.IntPtr hSDK, int nErroMsg);
+        //[Obsolete("替代方案:[DEV_GetStatus]此方法已弃用去除")]
+        //[DllImport(AlbCtrlSdk.DllFileName, EntryPoint = "DEV_GetFaultBits", CallingConvention = CallingConvention.Winapi)]
+        //public static extern bool DEV_GetFaultBits(System.IntPtr hSDK, int nErroMsg);
         /*
          * 功能：打开/关闭日志记录
          * 参数：IntPtr hSDK
@@ -326,7 +317,7 @@ namespace System.Data.DeYaAlbCtrlSDK
          *      是否打开,true打开，false关闭
          * 返回：BOOl类型，成功返回true,失败返回false
          */
-        [DllImportAttribute(DllFileName, EntryPoint = "DEV_EnableLog", CallingConvention = CallingConvention.Winapi)]
+        [DllImport(AlbCtrlSdk.DllFileName, EntryPoint = "DEV_EnableLog", CallingConvention = CallingConvention.Winapi)]
         public static extern bool DEV_EnableLog(System.IntPtr hSDK, bool nEnable);
         /*
          * 功能：设置日志保存路径
@@ -336,7 +327,7 @@ namespace System.Data.DeYaAlbCtrlSDK
          *      日志路径字符串，只到文件夹，不用指定文件名称
          * 返回：BOOl类型，成功返回true,失败返回false
          */
-        [DllImportAttribute(DllFileName, EntryPoint = "DEV_SetLogPath", CallingConvention = CallingConvention.Winapi)]
+        [DllImport(AlbCtrlSdk.DllFileName, EntryPoint = "DEV_SetLogPath", CallingConvention = CallingConvention.Winapi)]
         public static extern bool DEV_SetLogPath(System.IntPtr hSDK, string logPath);
         /*
          * 功能：获取道闸机版本
@@ -356,7 +347,7 @@ namespace System.Data.DeYaAlbCtrlSDK
          * 对应ASCII码：
          *                                      3        .        2        .        3
          */
-        [DllImportAttribute(DllFileName, EntryPoint = "DEV_GetVersion", CallingConvention = CallingConvention.Winapi)]
+        [DllImport(AlbCtrlSdk.DllFileName, EntryPoint = "DEV_GetVersion", CallingConvention = CallingConvention.Winapi)]
         public static extern bool DEV_GetVersion(System.IntPtr hSDK, out long nVersion);
         /// <summary>
         /// 启用队列
@@ -364,7 +355,7 @@ namespace System.Data.DeYaAlbCtrlSDK
         /// <param name="h">设备句柄</param>
         /// <param name="bOpen">True启用,False关闭</param>
         /// <returns></returns>
-        [DllImport(DllFileName, EntryPoint = "DEV_Queue", SetLastError = true, CallingConvention = CallingConvention.StdCall, CharSet = CharSet.Ansi)]
+        [DllImport(AlbCtrlSdk.DllFileName, EntryPoint = "DEV_Queue", SetLastError = true, CallingConvention = CallingConvention.StdCall, CharSet = CharSet.Ansi)]
         public static extern Boolean DEV_Queue(IntPtr h, Boolean bOpen);
         #region // 显示实现
         IntPtr IAlbCtrlSdkProxy.DEV_Open(string strIP) => DEV_Open(strIP);
@@ -380,20 +371,8 @@ namespace System.Data.DeYaAlbCtrlSDK
         bool IAlbCtrlSdkProxy.DEV_Queue(IntPtr h, bool bOpen) => DEV_Queue(h, bOpen);
         #endregion
     }
-    internal class AlbCtrlSdkLoader : IDisposable, IAlbCtrlSdkProxy
+    internal class AlbCtrlSdkLoader : ASdkDynamicLoader, IAlbCtrlSdkProxy
     {
-        /// <summary>
-        /// 相对路径
-        /// </summary>
-        public const string DllPath = @"plugins\albctrlsdk";
-        /// <summary>
-        /// 全路径
-        /// </summary>
-        public static string DllFullPath { get; } = Path.GetFullPath(DllPath);
-        /// <summary>
-        /// 文件全路径
-        /// </summary>
-        public static String DllFullName { get; } = Path.Combine(Path.GetFullPath(DllPath), AlbCtrlSdkDller.DllFileName);
         #region // 委托定义        
         private DCreater.DEV_Open _DEV_Open;
         private DCreater.DEV_Close _DEV_Close;
@@ -409,8 +388,6 @@ namespace System.Data.DeYaAlbCtrlSDK
         #endregion
         public AlbCtrlSdkLoader()
         {
-            hModule = LoadLibraryEx(DllFullName, IntPtr.Zero, LoadLibraryFlags.LOAD_WITH_ALTERED_SEARCH_PATH);
-
             _DEV_Open = GetDelegate<DCreater.DEV_Open>(nameof(DCreater.DEV_Open));
             _DEV_Close = GetDelegate<DCreater.DEV_Close>(nameof(DCreater.DEV_Close));
             _DEV_ALB_Ctrl = GetDelegate<DCreater.DEV_ALB_Ctrl>(nameof(DCreater.DEV_ALB_Ctrl));
@@ -423,104 +400,10 @@ namespace System.Data.DeYaAlbCtrlSDK
             _DEV_GetVersion = GetDelegate<DCreater.DEV_GetVersion>(nameof(DCreater.DEV_GetVersion));
             _DEV_Queue = GetDelegate<DCreater.DEV_Queue>(nameof(DCreater.DEV_Queue));
         }
-        #region // 动态内容
-        [DllImport("kernel32.dll")]
-        private static extern uint GetLastError();
-        /// <summary>
-        /// API LoadLibraryEx
-        /// </summary>
-        /// <param name="lpFileName"></param>
-        /// <param name="hReservedNull"></param>
-        /// <param name="dwFlags"></param>
-        /// <returns></returns>
-        [DllImport("kernel32.dll", EntryPoint = "LoadLibraryEx", SetLastError = true)]
-        private static extern IntPtr LoadLibraryEx(string lpFileName, IntPtr hReservedNull, LoadLibraryFlags dwFlags);
-        [DllImport("kernel32.dll", CallingConvention = CallingConvention.StdCall)]
-        private static extern IntPtr LoadLibrary(string lpFileName, int h, int flags);
-        [DllImport("kernel32.dll", CharSet = CharSet.Ansi, ExactSpelling = true, SetLastError = true)]
-        private static extern IntPtr GetProcAddress(IntPtr hModule, string lProcName);
-        [DllImport("kernel32.dll", CallingConvention = CallingConvention.StdCall)]
-        private static extern bool FreeLibrary(IntPtr hModule);
-        IntPtr hModule;
-        /// <summary>
-        /// 释放
-        /// </summary>
-        public void Dispose()
+        public override string GetFileFullName()
         {
-            FreeLibrary(hModule);
+            return AlbCtrlSdk.DllFullName;
         }
-        public Delegate GetMethod(string procName, Type type)
-        {
-            IntPtr func = GetProcAddress(hModule, procName);
-            return (Delegate)Marshal.GetDelegateForFunctionPointer(func, type);
-        }
-        public T GetDelegate<T>(string procName) where T : Delegate
-        {
-            IntPtr func = GetProcAddress(hModule, procName);
-            return (T)Marshal.GetDelegateForFunctionPointer(func, typeof(T));
-        }
-
-        /// <summary>
-        /// LoadLibraryFlags
-        /// </summary>
-        public enum LoadLibraryFlags : uint
-        {
-            /// <summary>
-            /// DONT_RESOLVE_DLL_REFERENCES
-            /// </summary>
-            DONT_RESOLVE_DLL_REFERENCES = 0x00000001,
-
-            /// <summary>
-            /// LOAD_IGNORE_CODE_AUTHZ_LEVEL
-            /// </summary>
-            LOAD_IGNORE_CODE_AUTHZ_LEVEL = 0x00000010,
-
-            /// <summary>
-            /// LOAD_LIBRARY_AS_DATAFILE
-            /// </summary>
-            LOAD_LIBRARY_AS_DATAFILE = 0x00000002,
-
-            /// <summary>
-            /// LOAD_LIBRARY_AS_DATAFILE_EXCLUSIVE
-            /// </summary>
-            LOAD_LIBRARY_AS_DATAFILE_EXCLUSIVE = 0x00000040,
-
-            /// <summary>
-            /// LOAD_LIBRARY_AS_IMAGE_RESOURCE
-            /// </summary>
-            LOAD_LIBRARY_AS_IMAGE_RESOURCE = 0x00000020,
-
-            /// <summary>
-            /// LOAD_LIBRARY_SEARCH_APPLICATION_DIR
-            /// </summary>
-            LOAD_LIBRARY_SEARCH_APPLICATION_DIR = 0x00000200,
-
-            /// <summary>
-            /// LOAD_LIBRARY_SEARCH_DEFAULT_DIRS
-            /// </summary>
-            LOAD_LIBRARY_SEARCH_DEFAULT_DIRS = 0x00001000,
-
-            /// <summary>
-            /// LOAD_LIBRARY_SEARCH_DLL_LOAD_DIR
-            /// </summary>
-            LOAD_LIBRARY_SEARCH_DLL_LOAD_DIR = 0x00000100,
-
-            /// <summary>
-            /// LOAD_LIBRARY_SEARCH_SYSTEM32
-            /// </summary>
-            LOAD_LIBRARY_SEARCH_SYSTEM32 = 0x00000800,
-
-            /// <summary>
-            /// LOAD_LIBRARY_SEARCH_USER_DIRS
-            /// </summary>
-            LOAD_LIBRARY_SEARCH_USER_DIRS = 0x00000400,
-
-            /// <summary>
-            /// LOAD_WITH_ALTERED_SEARCH_PATH
-            /// </summary>
-            LOAD_WITH_ALTERED_SEARCH_PATH = 0x00000008
-        }
-        #endregion
         #region // 显示实现
         IntPtr IAlbCtrlSdkProxy.DEV_Open(string strIP) => _DEV_Open.Invoke(strIP);
         bool IAlbCtrlSdkProxy.DEV_Close(IntPtr h) => _DEV_Close.Invoke(h);

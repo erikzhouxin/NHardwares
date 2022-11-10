@@ -63,9 +63,9 @@ namespace System.Data.DeYaIceIpcSDK.Properties {
         /// <summary>
         ///   查找 System.Byte[] 类型的本地化资源。
         /// </summary>
-        internal static byte[] X64_Avutil52 {
+        internal static byte[] X64_avutil_52 {
             get {
-                object obj = ResourceManager.GetObject("X64_Avutil52", resourceCulture);
+                object obj = ResourceManager.GetObject("X64_avutil_52", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -73,9 +73,9 @@ namespace System.Data.DeYaIceIpcSDK.Properties {
         /// <summary>
         ///   查找 System.Byte[] 类型的本地化资源。
         /// </summary>
-        internal static byte[] X64_Draw {
+        internal static byte[] X64_draw {
             get {
-                object obj = ResourceManager.GetObject("X64_Draw", resourceCulture);
+                object obj = ResourceManager.GetObject("X64_draw", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -83,9 +83,9 @@ namespace System.Data.DeYaIceIpcSDK.Properties {
         /// <summary>
         ///   查找 System.Byte[] 类型的本地化资源。
         /// </summary>
-        internal static byte[] X64_HiH264decW64 {
+        internal static byte[] X64_hi_h264dec_w64 {
             get {
-                object obj = ResourceManager.GetObject("X64_HiH264decW64", resourceCulture);
+                object obj = ResourceManager.GetObject("X64_hi_h264dec_w64", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -93,9 +93,9 @@ namespace System.Data.DeYaIceIpcSDK.Properties {
         /// <summary>
         ///   查找 System.Byte[] 类型的本地化资源。
         /// </summary>
-        internal static byte[] X64_IceIpcSdk {
+        internal static byte[] X64_ice_ipcsdk {
             get {
-                object obj = ResourceManager.GetObject("X64_IceIpcSdk", resourceCulture);
+                object obj = ResourceManager.GetObject("X64_ice_ipcsdk", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -103,9 +103,9 @@ namespace System.Data.DeYaIceIpcSDK.Properties {
         /// <summary>
         ///   查找 System.Byte[] 类型的本地化资源。
         /// </summary>
-        internal static byte[] X64_IceP2p {
+        internal static byte[] X64_ice_p2p {
             get {
-                object obj = ResourceManager.GetObject("X64_IceP2p", resourceCulture);
+                object obj = ResourceManager.GetObject("X64_ice_p2p", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -123,9 +123,9 @@ namespace System.Data.DeYaIceIpcSDK.Properties {
         /// <summary>
         ///   查找 System.Byte[] 类型的本地化资源。
         /// </summary>
-        internal static byte[] X64_Swscale2 {
+        internal static byte[] X64_swscale_2 {
             get {
-                object obj = ResourceManager.GetObject("X64_Swscale2", resourceCulture);
+                object obj = ResourceManager.GetObject("X64_swscale_2", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -133,9 +133,9 @@ namespace System.Data.DeYaIceIpcSDK.Properties {
         /// <summary>
         ///   查找 System.Byte[] 类型的本地化资源。
         /// </summary>
-        internal static byte[] X64_Wpcap {
+        internal static byte[] X64_wpcap {
             get {
-                object obj = ResourceManager.GetObject("X64_Wpcap", resourceCulture);
+                object obj = ResourceManager.GetObject("X64_wpcap", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -143,9 +143,9 @@ namespace System.Data.DeYaIceIpcSDK.Properties {
         /// <summary>
         ///   查找 System.Byte[] 类型的本地化资源。
         /// </summary>
-        internal static byte[] X64_Zlibwapi {
+        internal static byte[] X64_zlibwapi {
             get {
-                object obj = ResourceManager.GetObject("X64_Zlibwapi", resourceCulture);
+                object obj = ResourceManager.GetObject("X64_zlibwapi", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -153,9 +153,9 @@ namespace System.Data.DeYaIceIpcSDK.Properties {
         /// <summary>
         ///   查找 System.Byte[] 类型的本地化资源。
         /// </summary>
-        internal static byte[] X86_Avutil52 {
+        internal static byte[] X86_avutil_52 {
             get {
-                object obj = ResourceManager.GetObject("X86_Avutil52", resourceCulture);
+                object obj = ResourceManager.GetObject("X86_avutil_52", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -163,9 +163,9 @@ namespace System.Data.DeYaIceIpcSDK.Properties {
         /// <summary>
         ///   查找 System.Byte[] 类型的本地化资源。
         /// </summary>
-        internal static byte[] X86_Draw {
+        internal static byte[] X86_draw {
             get {
-                object obj = ResourceManager.GetObject("X86_Draw", resourceCulture);
+                object obj = ResourceManager.GetObject("X86_draw", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -173,9 +173,9 @@ namespace System.Data.DeYaIceIpcSDK.Properties {
         /// <summary>
         ///   查找 System.Byte[] 类型的本地化资源。
         /// </summary>
-        internal static byte[] X86_HiH264decW {
+        internal static byte[] X86_hi_h264dec_w {
             get {
-                object obj = ResourceManager.GetObject("X86_HiH264decW", resourceCulture);
+                object obj = ResourceManager.GetObject("X86_hi_h264dec_w", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -183,9 +183,9 @@ namespace System.Data.DeYaIceIpcSDK.Properties {
         /// <summary>
         ///   查找 System.Byte[] 类型的本地化资源。
         /// </summary>
-        internal static byte[] X86_IceIpcSdk {
+        internal static byte[] X86_ice_ipcsdk {
             get {
-                object obj = ResourceManager.GetObject("X86_IceIpcSdk", resourceCulture);
+                object obj = ResourceManager.GetObject("X86_ice_ipcsdk", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -193,9 +193,9 @@ namespace System.Data.DeYaIceIpcSDK.Properties {
         /// <summary>
         ///   查找 System.Byte[] 类型的本地化资源。
         /// </summary>
-        internal static byte[] X86_IceP2p {
+        internal static byte[] X86_ice_p2p {
             get {
-                object obj = ResourceManager.GetObject("X86_IceP2p", resourceCulture);
+                object obj = ResourceManager.GetObject("X86_ice_p2p", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -213,9 +213,9 @@ namespace System.Data.DeYaIceIpcSDK.Properties {
         /// <summary>
         ///   查找 System.Byte[] 类型的本地化资源。
         /// </summary>
-        internal static byte[] X86_Swscale2 {
+        internal static byte[] X86_swscale_2 {
             get {
-                object obj = ResourceManager.GetObject("X86_Swscale2", resourceCulture);
+                object obj = ResourceManager.GetObject("X86_swscale_2", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -223,9 +223,9 @@ namespace System.Data.DeYaIceIpcSDK.Properties {
         /// <summary>
         ///   查找 System.Byte[] 类型的本地化资源。
         /// </summary>
-        internal static byte[] X86_Wpcap {
+        internal static byte[] X86_wpcap {
             get {
-                object obj = ResourceManager.GetObject("X86_Wpcap", resourceCulture);
+                object obj = ResourceManager.GetObject("X86_wpcap", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -233,9 +233,9 @@ namespace System.Data.DeYaIceIpcSDK.Properties {
         /// <summary>
         ///   查找 System.Byte[] 类型的本地化资源。
         /// </summary>
-        internal static byte[] X86_Zlibwapi {
+        internal static byte[] X86_zlibwapi {
             get {
-                object obj = ResourceManager.GetObject("X86_Zlibwapi", resourceCulture);
+                object obj = ResourceManager.GetObject("X86_zlibwapi", resourceCulture);
                 return ((byte[])(obj));
             }
         }

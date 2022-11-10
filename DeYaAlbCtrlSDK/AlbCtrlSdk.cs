@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.HardwareInterfaces;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
@@ -12,6 +13,30 @@ namespace System.Data.DeYaAlbCtrlSDK
     /// </summary>
     public static class AlbCtrlSdk
     {
+        /// <summary>
+        /// SDK文件名称
+        /// </summary>
+        public const String DllFileName = "ALBCtrlDll.dll";
+        /// <summary>
+        /// 基础全路径
+        /// </summary>
+        public static string BaseDllFullPath { get; } = Path.GetFullPath(".");
+        /// <summary>
+        /// 基础文件全路径
+        /// </summary>
+        public static String BaseDllFullName { get; } = Path.GetFullPath(DllFileName);
+        /// <summary>
+        /// 相对路径
+        /// </summary>
+        public const string DllVirtualPath = @"plugins\albctrlsdk";
+        /// <summary>
+        /// 全路径
+        /// </summary>
+        public static string DllFullPath { get; } = Path.GetFullPath(DllVirtualPath);
+        /// <summary>
+        /// 文件全路径
+        /// </summary>
+        public static String DllFullName { get; } = Path.Combine(DllFullPath, DllFileName);
 
         static Lazy<IAlbCtrlSdkProxy> _albCtrlSdk = new Lazy<IAlbCtrlSdkProxy>(() => new AlbCtrlSdkLoader(), true);
         /// <summary>
@@ -19,53 +44,26 @@ namespace System.Data.DeYaAlbCtrlSDK
         /// </summary>
         static AlbCtrlSdk()
         {
-            Directory.CreateDirectory(AlbCtrlSdkLoader.DllFullPath);
+            Directory.CreateDirectory(DllFullPath);
             if (Environment.Is64BitProcess)
             {
-                bool isExists = CompareFile(AlbCtrlSdkLoader.DllFullName, Properties.Resources.X64_ALBCtrlDll);
-                if (!isExists)
+                if (!SdkFileComponent.CompareResourceFile(DllFullName, Properties.Resources.X64_ALBCtrlDll))
                 {
-                    WriteFile(Properties.Resources.X64_ALBCtrlDll, Path.Combine(AlbCtrlSdkLoader.DllFullPath, "ALBCtrlDll.dll"));
+                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_ALBCtrlDll, Path.Combine(DllFullPath, "ALBCtrlDll.dll"));
                 }
             }
             else
             {
-                bool isExists = CompareFile(AlbCtrlSdkLoader.DllFullName, Properties.Resources.X86_ALBCtrlDll);
-                if (!isExists)
+                if (!SdkFileComponent.CompareResourceFile(DllFullName, Properties.Resources.X86_ALBCtrlDll))
                 {
-                    WriteFile(Properties.Resources.X86_ALBCtrlDll, Path.Combine(AlbCtrlSdkLoader.DllFullPath, "ALBCtrlDll.dll"));
+                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_ALBCtrlDll, Path.Combine(DllFullPath, "ALBCtrlDll.dll"));
                 }
             }
         }
-
-        private static void WriteFile(byte[] dllFile, string fullName)
-        {
-            try
-            {
-                if (File.Exists(fullName)) { File.Delete(fullName); }
-                File.WriteAllBytes(fullName, dllFile);
-            }
-            catch (Exception ex) { Console.WriteLine(ex); }
-        }
-
-        private static bool CompareFile(string file, byte[] res)
-        {
-            if (!File.Exists(file)) { return false; }
-            using (var hash = SHA1.Create())
-            {
-                using (var distFile = new FileStream(file, FileMode.Open, FileAccess.Read, FileShare.Read))
-                {
-                    var resHash = hash.ComputeHash(res);
-                    var distHash = hash.ComputeHash(distFile);
-                    if (resHash.Length != distHash.Length) { return false; }
-                    for (int i = 0; i < resHash.Length; i++)
-                    {
-                        if (resHash[i] != distHash[i]) { return false; }
-                    }
-                    return true;
-                }
-            }
-        }
+        /// <summary>
+        /// plugins内容实例
+        /// </summary>
+        public static IAlbCtrlSdkProxy Instance { get => _albCtrlSdk.Value; }
         /// <summary>
         /// 创建SDK代理
         /// </summary>
@@ -73,44 +71,10 @@ namespace System.Data.DeYaAlbCtrlSDK
         /// <returns></returns>
         public static IAlbCtrlSdkProxy Create(bool isBase = false)
         {
-            var currentDir = AlbCtrlSdkDller.DllFullPath;
-            var pluginDir = AlbCtrlSdkLoader.DllFullPath;
-            if (isBase)
-            {
-                if (!File.Exists(AlbCtrlSdkDller.DllFullName))
-                {
-                    if (Directory.Exists(pluginDir))
-                    {
-                        try
-                        {
-                            CopyDirectory(pluginDir, currentDir);
-                        }
-                        catch { }
-                    }
-                }
-                return AlbCtrlSdkDller.Instance;
-            }
-            if (!Directory.Exists(pluginDir)) { return AlbCtrlSdkDller.Instance; }
-            return _albCtrlSdk.Value;
-        }
-        /// <summary>
-        /// 复制目录
-        /// </summary>
-        /// <param name="src"></param>
-        /// <param name="tag"></param>
-        public static void CopyDirectory(string src, string tag)
-        {
-            foreach (var item in new DirectoryInfo(src).GetFileSystemInfos())
-            {
-                if (item is DirectoryInfo dir)
-                {
-                    var tagDir = Path.Combine(tag, dir.Name);
-                    if (!Directory.Exists(tagDir)) { Directory.CreateDirectory(tagDir); }
-                    CopyDirectory(dir.FullName, tagDir);
-                    continue;
-                }
-                File.Copy(item.FullName, Path.Combine(tag, item.Name), false);
-            }
+            if (!isBase) { return _albCtrlSdk.Value; }
+            if (!File.Exists(BaseDllFullName))
+            { SdkFileComponent.TryCopyDirectory(DllFullPath, BaseDllFullPath); }
+            return AlbCtrlSdkDller.Instance;
         }
     }
 }

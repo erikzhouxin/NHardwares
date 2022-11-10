@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.HardwareInterfaces;
 using System.Data.HDSSSEEXE;
 using System.Diagnostics;
 using System.IO;
@@ -389,7 +390,7 @@ namespace System.Data.HDSSSESDK
         /// <summary>
         /// 执行文件全名
         /// </summary>
-        public static String ExeFileName { get; } = Path.Combine(HD100CardSdkLoader.DllFullPath, ExeFile);
+        public static String ExeFileName { get; } = Path.Combine(HD100CardSdk.DllFullPath, ExeFile);
         /// <summary>
         /// 单一实例
         /// </summary>
@@ -399,8 +400,8 @@ namespace System.Data.HDSSSESDK
         /// </summary>
         static HD100CardApi64()
         {
-            var isExists = HD100CardSdk.CompareFile(ExeFileName, Properties.Resources.X86_HDSSSEEXE);
-            if (!isExists) { HD100CardSdk.WriteFile(Properties.Resources.X86_HDSSSEEXE, ExeFileName); }
+            if (!SdkFileComponent.CompareResourceFile(ExeFileName, Properties.Resources.X86_HDSSSEEXE)) 
+            { SdkFileComponent.WriteResourceFile(Properties.Resources.X86_HDSSSEEXE, ExeFileName); }
             Instance = new HD100CardApi64();
         }
 
@@ -417,7 +418,7 @@ namespace System.Data.HDSSSESDK
             _key = Guid.NewGuid().ToString("N");
             _process = new Process();
             _process.StartInfo.FileName = ExeFileName;
-            _process.StartInfo.WorkingDirectory = HD100CardSdkLoader.DllFullPath;
+            _process.StartInfo.WorkingDirectory = HD100CardSdk.DllFullPath;
             _process.StartInfo.Arguments = _key;
             _process.StartInfo.CreateNoWindow = true;
             _process.StartInfo.UseShellExecute = false;

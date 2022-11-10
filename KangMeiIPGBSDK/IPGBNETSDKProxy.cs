@@ -233,14 +233,6 @@ namespace System.Data.KangMeiIPGBSDK
         public static IIPGBNETSdkProxy Instance { get; } = new IPGBNETSdkDller();
         private IPGBNETSdkDller() { }
         /// <summary>
-        /// 全路径
-        /// </summary>
-        public static string DllFullPath { get; } = Path.GetFullPath(".");
-        /// <summary>
-        /// 文件全路径
-        /// </summary>
-        public static String DllFullName { get; } = Path.GetFullPath(IPGBNETSdk.DllFileName);
-        /// <summary>
         /// 设置登录状态回调
         /// </summary>
         /// <param name="ConnStaCallBack"></param>
@@ -551,18 +543,6 @@ namespace System.Data.KangMeiIPGBSDK
     }
     internal class IPGBNETSdkLoader : ASdkDynamicLoader, IIPGBNETSdkProxy
     {
-        /// <summary>
-        /// 相对路径
-        /// </summary>
-        public const string DllPath = @"plugins\kangmeiipgbsdk";
-        /// <summary>
-        /// 全路径
-        /// </summary>
-        public static string DllFullPath { get; } = Path.GetFullPath(DllPath);
-        /// <summary>
-        /// 文件全路径
-        /// </summary>
-        public static String DllFullName { get; } = Path.Combine(Path.GetFullPath(DllPath), IPGBNETSdk.DllFileName);
         #region // 委托定义
         private DCreater.IPGBNETSDK_SetConnStatusCallBack _IPGBNETSDK_SetConnStatusCallBack;
         private DCreater.IPGBNETSDK_SetTerminalStatusCallBack _IPGBNETSDK_SetTerminalStatusCallBack;
@@ -600,8 +580,6 @@ namespace System.Data.KangMeiIPGBSDK
         #endregion
         public IPGBNETSdkLoader()
         {
-            hModule = LoadLibraryEx(DllFullName, IntPtr.Zero, LoadLibraryFlags.LOAD_WITH_ALTERED_SEARCH_PATH);
-
             _IPGBNETSDK_SetConnStatusCallBack = GetDelegate<DCreater.IPGBNETSDK_SetConnStatusCallBack>(nameof(DCreater.IPGBNETSDK_SetConnStatusCallBack));
             _IPGBNETSDK_SetTerminalStatusCallBack = GetDelegate<DCreater.IPGBNETSDK_SetTerminalStatusCallBack>(nameof(DCreater.IPGBNETSDK_SetTerminalStatusCallBack));
             _IPGBNETSDK_SetBatchTerminalStatusCallBack = GetDelegate<DCreater.IPGBNETSDK_SetBatchTerminalStatusCallBack>(nameof(DCreater.IPGBNETSDK_SetBatchTerminalStatusCallBack));
@@ -635,6 +613,10 @@ namespace System.Data.KangMeiIPGBSDK
             _IPGBNETSDK_CtrlAnyTmForCall = GetDelegate<DCreater.IPGBNETSDK_CtrlAnyTmForCall>(nameof(DCreater.IPGBNETSDK_CtrlAnyTmForCall));
             _IPGBNETSDK_CtrlAnyTmTalkStatus = GetDelegate<DCreater.IPGBNETSDK_CtrlAnyTmTalkStatus>(nameof(DCreater.IPGBNETSDK_CtrlAnyTmTalkStatus));
             _IPGBNETSDK_GetUserFqInfo = GetDelegate<DCreater.IPGBNETSDK_GetUserFqInfo>(nameof(DCreater.IPGBNETSDK_GetUserFqInfo));
+        }
+        public override string GetFileFullName()
+        {
+            return IPGBNETSdk.DllFullName;
         }
         #region // 显示实现
         void IIPGBNETSdkProxy.IPGBNETSDK_Cleanup() => _IPGBNETSDK_Cleanup.Invoke();

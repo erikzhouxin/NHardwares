@@ -1,8 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
 	<PropertyGroup>
 		<OutputType>WinExe</OutputType>
-		<TargetFramework>netcoreapp3.1</TargetFramework>
+		<TargetFrameworks>netcoreapp3.1;net40</TargetFrameworks>
 		<UseWindowsForms>true</UseWindowsForms>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+		<AppConfig Condition="'$(TargetFramework)' == 'net40'">app.net40.config</AppConfig>
+		<AutoUnifyAssemblyReferences Condition="'$(TargetFramework)' == 'net40'">false</AutoUnifyAssemblyReferences>
 	</PropertyGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\..\..\DeYaLpnrSDK\DeYaLpnrSDK.csproj" />

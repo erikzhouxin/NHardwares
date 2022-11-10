@@ -7,11 +7,70 @@ using System.Text;
 namespace System.Data.HardwareInterfaces
 {
     /// <summary>
+    /// LoadLibraryFlags加载动态链接库标记
+    /// </summary>
+    public enum SdkDynamicLoadLibFlags : uint
+    {
+        /// <summary>
+        /// DONT_RESOLVE_DLL_REFERENCES
+        /// </summary>
+        DONT_RESOLVE_DLL_REFERENCES = 0x00000001,
+
+        /// <summary>
+        /// LOAD_IGNORE_CODE_AUTHZ_LEVEL
+        /// </summary>
+        LOAD_IGNORE_CODE_AUTHZ_LEVEL = 0x00000010,
+
+        /// <summary>
+        /// LOAD_LIBRARY_AS_DATAFILE
+        /// </summary>
+        LOAD_LIBRARY_AS_DATAFILE = 0x00000002,
+
+        /// <summary>
+        /// LOAD_LIBRARY_AS_DATAFILE_EXCLUSIVE
+        /// </summary>
+        LOAD_LIBRARY_AS_DATAFILE_EXCLUSIVE = 0x00000040,
+
+        /// <summary>
+        /// LOAD_LIBRARY_AS_IMAGE_RESOURCE
+        /// </summary>
+        LOAD_LIBRARY_AS_IMAGE_RESOURCE = 0x00000020,
+
+        /// <summary>
+        /// LOAD_LIBRARY_SEARCH_APPLICATION_DIR
+        /// </summary>
+        LOAD_LIBRARY_SEARCH_APPLICATION_DIR = 0x00000200,
+
+        /// <summary>
+        /// LOAD_LIBRARY_SEARCH_DEFAULT_DIRS
+        /// </summary>
+        LOAD_LIBRARY_SEARCH_DEFAULT_DIRS = 0x00001000,
+
+        /// <summary>
+        /// LOAD_LIBRARY_SEARCH_DLL_LOAD_DIR
+        /// </summary>
+        LOAD_LIBRARY_SEARCH_DLL_LOAD_DIR = 0x00000100,
+
+        /// <summary>
+        /// LOAD_LIBRARY_SEARCH_SYSTEM32
+        /// </summary>
+        LOAD_LIBRARY_SEARCH_SYSTEM32 = 0x00000800,
+
+        /// <summary>
+        /// LOAD_LIBRARY_SEARCH_USER_DIRS
+        /// </summary>
+        LOAD_LIBRARY_SEARCH_USER_DIRS = 0x00000400,
+
+        /// <summary>
+        /// LOAD_WITH_ALTERED_SEARCH_PATH
+        /// </summary>
+        LOAD_WITH_ALTERED_SEARCH_PATH = 0x00000008
+    }
+    /// <summary>
     /// SDK动态加载抽象类
     /// </summary>
-    public abstract class ASdkDynamicLoader
+    public abstract class ASdkDynamicLoader : IDisposable
     {
-        #region // 动态内容
         /// <summary>
         /// 获取最后的错误
         /// </summary>
@@ -26,7 +85,7 @@ namespace System.Data.HardwareInterfaces
         /// <param name="dwFlags"></param>
         /// <returns></returns>
         [DllImport("kernel32.dll", EntryPoint = "LoadLibraryEx", SetLastError = true)]
-        public static extern IntPtr LoadLibraryEx(string lpFileName, IntPtr hReservedNull, LoadLibraryFlags dwFlags);
+        public static extern IntPtr LoadLibraryEx(string lpFileName, IntPtr hReservedNull, SdkDynamicLoadLibFlags dwFlags);
         /// <summary>
         /// 加载类库
         /// </summary>
@@ -55,6 +114,13 @@ namespace System.Data.HardwareInterfaces
         /// 加载类
         /// </summary>
         protected IntPtr hModule;
+        /// <summary>
+        /// 构造
+        /// </summary>
+        public ASdkDynamicLoader()
+        {
+            Initialize();
+        }
         /// <summary>
         /// 释放
         /// </summary>
@@ -85,65 +151,16 @@ namespace System.Data.HardwareInterfaces
             return (T)Marshal.GetDelegateForFunctionPointer(func, typeof(T));
         }
         /// <summary>
-        /// LoadLibraryFlags
+        /// 获取文件全路径
         /// </summary>
-        public enum LoadLibraryFlags : uint
+        /// <returns></returns>
+        public abstract string GetFileFullName();
+        /// <summary>
+        /// 初始化
+        /// </summary>
+        public virtual void Initialize()
         {
-            /// <summary>
-            /// DONT_RESOLVE_DLL_REFERENCES
-            /// </summary>
-            DONT_RESOLVE_DLL_REFERENCES = 0x00000001,
-
-            /// <summary>
-            /// LOAD_IGNORE_CODE_AUTHZ_LEVEL
-            /// </summary>
-            LOAD_IGNORE_CODE_AUTHZ_LEVEL = 0x00000010,
-
-            /// <summary>
-            /// LOAD_LIBRARY_AS_DATAFILE
-            /// </summary>
-            LOAD_LIBRARY_AS_DATAFILE = 0x00000002,
-
-            /// <summary>
-            /// LOAD_LIBRARY_AS_DATAFILE_EXCLUSIVE
-            /// </summary>
-            LOAD_LIBRARY_AS_DATAFILE_EXCLUSIVE = 0x00000040,
-
-            /// <summary>
-            /// LOAD_LIBRARY_AS_IMAGE_RESOURCE
-            /// </summary>
-            LOAD_LIBRARY_AS_IMAGE_RESOURCE = 0x00000020,
-
-            /// <summary>
-            /// LOAD_LIBRARY_SEARCH_APPLICATION_DIR
-            /// </summary>
-            LOAD_LIBRARY_SEARCH_APPLICATION_DIR = 0x00000200,
-
-            /// <summary>
-            /// LOAD_LIBRARY_SEARCH_DEFAULT_DIRS
-            /// </summary>
-            LOAD_LIBRARY_SEARCH_DEFAULT_DIRS = 0x00001000,
-
-            /// <summary>
-            /// LOAD_LIBRARY_SEARCH_DLL_LOAD_DIR
-            /// </summary>
-            LOAD_LIBRARY_SEARCH_DLL_LOAD_DIR = 0x00000100,
-
-            /// <summary>
-            /// LOAD_LIBRARY_SEARCH_SYSTEM32
-            /// </summary>
-            LOAD_LIBRARY_SEARCH_SYSTEM32 = 0x00000800,
-
-            /// <summary>
-            /// LOAD_LIBRARY_SEARCH_USER_DIRS
-            /// </summary>
-            LOAD_LIBRARY_SEARCH_USER_DIRS = 0x00000400,
-
-            /// <summary>
-            /// LOAD_WITH_ALTERED_SEARCH_PATH
-            /// </summary>
-            LOAD_WITH_ALTERED_SEARCH_PATH = 0x00000008
+            hModule = LoadLibraryEx(GetFileFullName(), IntPtr.Zero, SdkDynamicLoadLibFlags.LOAD_WITH_ALTERED_SEARCH_PATH);
         }
-        #endregion
     }
 }

@@ -1,19 +1,22 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
 
-  <PropertyGroup>
-    <OutputType>WinExe</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
-    <UseWindowsForms>true</UseWindowsForms>
-    <AssemblyName>HDSSSESDK.WinForm</AssemblyName>
-    <RootNamespace>System.Data.HDSSSESDK.WinForm</RootNamespace>
-  </PropertyGroup>
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFrameworks>netcoreapp3.1</TargetFrameworks>
+		<UseWindowsForms>true</UseWindowsForms>
+		<AssemblyName>HDSSSESDK.WinForm</AssemblyName>
+		<RootNamespace>System.Data.HDSSSESDK.WinForm</RootNamespace>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+		<AppConfig Condition="'$(TargetFramework)' == 'net40'">app.net40.config</AppConfig>
+		<AutoUnifyAssemblyReferences Condition="'$(TargetFramework)' == 'net40'">false</AutoUnifyAssemblyReferences>
+	</PropertyGroup>
 
-  <ItemGroup>
-	  <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\HDSSSESDK\HDSSSESDK\HDSSSESDK.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\..\..\HDSSSESDK\HDSSSESDK\HDSSSESDK.csproj" />
+	</ItemGroup>
 
 </Project>

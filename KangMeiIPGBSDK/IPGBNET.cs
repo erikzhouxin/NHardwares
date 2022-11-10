@@ -100,22 +100,16 @@ namespace System.Data.KangMeiIPGBSDK
         {
             _pLocker = new object();
             IPGBNETSdk.Create();
-            DllFullPath = IPGBNETSdkLoader.DllFullPath;
-            DllFullName = Path.Combine(DllFullPath, DllFileName);
+            DllFullPath = IPGBNETSdk.DllFullPath;
+            DllFullName = Path.Combine(IPGBNETSdk.DllFullPath, DllFileName);
             if (!File.Exists(DllFullName))
             {
-                if (Environment.Is64BitProcess)
-                {
-                    IPGBNETSdk.WriteFile(Properties.Resources.X64_IPGBNET, DllFullName);
-                }
-                else
-                {
-                    IPGBNETSdk.WriteFile(Properties.Resources.X86_IPGBNET, DllFullName);
-                }
+                SdkFileComponent.WriteResourceFile(Environment.Is64BitProcess ? Properties.Resources.X64_IPGBNET : Properties.Resources.X86_IPGBNET, DllFullName);
             }
             _pAssembly = Assembly.LoadFile(DllFullName);
-            _pType = _pAssembly.GetType("IPGB.NET.IPGBNET");
+            _pType = _pAssembly.GetType(typeof(IPGB.NET.IPGBNET).FullName);
             Instance = new IPGBNET(_pType.GetProperty(nameof(Instance)).GetValue(null, null));
+
             _pTypes = new ConcurrentDictionary<string, Type>();
             _pMethods = new ConcurrentDictionary<string, MethodInfo>();
 

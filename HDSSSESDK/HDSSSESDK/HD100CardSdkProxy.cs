@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.HardwareInterfaces;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -361,28 +362,19 @@ namespace System.Data.HDSSSESDK
         /// </summary>
         public static HD100CardSdkDller Instance { get; } = new HD100CardSdkDller();
         private HD100CardSdkDller() { }
-        public const String DllFileName = "HDSSSE32.dll";
-        /// <summary>
-        /// 全路径
-        /// </summary>
-        public static string DllFullPath { get; } = Path.GetFullPath(".");
-        /// <summary>
-        /// 文件全路径
-        /// </summary>
-        public static String DllFullName { get; } = Path.GetFullPath(DllFileName);
         /// <summary>
         /// 打开端口
         /// </summary>
         /// <param name="dev_Name"></param>
         /// <returns></returns>
-        [DllImport(DllFileName, EntryPoint = "ICC_Reader_Open")]
+        [DllImport(HD100CardSdk.DllFileName, EntryPoint = "ICC_Reader_Open")]
         public static extern int ICC_Reader_Open(StringBuilder dev_Name);
         /// <summary>
         /// 关闭端口
         /// </summary>
         /// <param name="ReaderHandle"></param>
         /// <returns></returns>
-        [DllImport(DllFileName, EntryPoint = "ICC_Reader_Close")]
+        [DllImport(HD100CardSdk.DllFileName, EntryPoint = "ICC_Reader_Close")]
         public static extern int ICC_Reader_Close(int ReaderHandle);
         /// <summary>
         /// 读磁条卡
@@ -393,7 +385,7 @@ namespace System.Data.HDSSSESDK
         /// <param name="rlen"></param>
         /// <param name="data"></param>
         /// <returns></returns>
-        [DllImport(DllFileName, EntryPoint = "Rcard")]
+        [DllImport(HD100CardSdk.DllFileName, EntryPoint = "Rcard")]
         public static extern int Rcard(int ReaderHandle, byte ctime, int track, byte[] rlen, StringBuilder data);
         /// <summary>
         /// 扫码
@@ -402,7 +394,7 @@ namespace System.Data.HDSSSESDK
         /// <param name="ctime"></param>
         /// <param name="QRCodeInfo"></param>
         /// <returns></returns>
-        [DllImport(DllFileName, EntryPoint = "ICC_Reader_ScanCode")]
+        [DllImport(HD100CardSdk.DllFileName, EntryPoint = "ICC_Reader_ScanCode")]
         public static extern int ICC_Reader_ScanCode(int ReaderHandle, byte ctime, StringBuilder QRCodeInfo);
         /// <summary>
         /// 蜂鸣
@@ -410,14 +402,14 @@ namespace System.Data.HDSSSESDK
         /// <param name="ReaderHandle"></param>
         /// <param name="time"></param>
         /// <returns></returns>
-        [DllImport(DllFileName, EntryPoint = "ICC_PosBeep")]
+        [DllImport(HD100CardSdk.DllFileName, EntryPoint = "ICC_PosBeep")]
         public static extern int ICC_PosBeep(int ReaderHandle, byte time);
         /// <summary>
         /// 设置读typeA
         /// </summary>
         /// <param name="ReaderHandle"></param>
         /// <returns></returns>
-        [DllImport(DllFileName, EntryPoint = "PICC_Reader_SetTypeA")]
+        [DllImport(HD100CardSdk.DllFileName, EntryPoint = "PICC_Reader_SetTypeA")]
         public static extern int PICC_Reader_SetTypeA(int ReaderHandle);
         /// <summary>
         /// 选择卡片，41为typea,M1 42为typeb,TypeB卡片需先上电后选卡
@@ -425,14 +417,14 @@ namespace System.Data.HDSSSESDK
         /// <param name="ReaderHandle"></param>
         /// <param name="cardtype"></param>
         /// <returns></returns>
-        [DllImport(DllFileName, EntryPoint = "PICC_Reader_Select")]
+        [DllImport(HD100CardSdk.DllFileName, EntryPoint = "PICC_Reader_Select")]
         public static extern int PICC_Reader_Select(int ReaderHandle, byte cardtype);
         /// <summary>
         /// typea 和 M1 请求卡片
         /// </summary>
         /// <param name="ReaderHandle"></param>
         /// <returns></returns>
-        [DllImport(DllFileName, EntryPoint = "PICC_Reader_Request")]
+        [DllImport(HD100CardSdk.DllFileName, EntryPoint = "PICC_Reader_Request")]
         public static extern int PICC_Reader_Request(int ReaderHandle);
         /// <summary>
         /// 防碰撞 typea M1卡片
@@ -440,7 +432,7 @@ namespace System.Data.HDSSSESDK
         /// <param name="ReaderHandle"></param>
         /// <param name="uid"></param>
         /// <returns></returns>
-        [DllImport(DllFileName, EntryPoint = "PICC_Reader_anticoll")]
+        [DllImport(HD100CardSdk.DllFileName, EntryPoint = "PICC_Reader_anticoll")]
         public static extern int PICC_Reader_anticoll(int ReaderHandle, byte[] uid);
         /// <summary>
         /// 注意：输入的是12位的密钥，例如12个f，但是password必须是6个字节的密钥，需要用StrToHex函数处理。
@@ -450,7 +442,7 @@ namespace System.Data.HDSSSESDK
         /// <param name="SecNr"></param>
         /// <param name="PassWord"></param>
         /// <returns></returns>
-        [DllImport(DllFileName, EntryPoint = "PICC_Reader_Authentication_Pass")]
+        [DllImport(HD100CardSdk.DllFileName, EntryPoint = "PICC_Reader_Authentication_Pass")]
         public static extern int PICC_Reader_Authentication_Pass(int ReaderHandle, byte Mode, byte SecNr, byte[] PassWord);
         /// <summary>
         /// 读卡
@@ -459,7 +451,7 @@ namespace System.Data.HDSSSESDK
         /// <param name="Addr"></param>
         /// <param name="Data"></param>
         /// <returns></returns>
-        [DllImport(DllFileName, EntryPoint = "PICC_Reader_Read")]
+        [DllImport(HD100CardSdk.DllFileName, EntryPoint = "PICC_Reader_Read")]
         public static extern int PICC_Reader_Read(int ReaderHandle, byte Addr, byte[] Data);
         /// <summary>
         /// 写卡
@@ -468,7 +460,7 @@ namespace System.Data.HDSSSESDK
         /// <param name="Addr"></param>
         /// <param name="Data"></param>
         /// <returns></returns>
-        [DllImport(DllFileName, EntryPoint = "PICC_Reader_Write")]
+        [DllImport(HD100CardSdk.DllFileName, EntryPoint = "PICC_Reader_Write")]
         public static extern int PICC_Reader_Write(int ReaderHandle, byte Addr, byte[] Data);
         /// <summary>
         /// 将字符命令流转为16进制流
@@ -477,7 +469,7 @@ namespace System.Data.HDSSSESDK
         /// <param name="len"></param>
         /// <param name="HexOut"></param>
         /// <returns></returns>
-        [DllImport(DllFileName, EntryPoint = "StrToHex")]
+        [DllImport(HD100CardSdk.DllFileName, EntryPoint = "StrToHex")]
         public static extern int StrToHex(StringBuilder strIn, int len, Byte[] HexOut);
         /// <summary>
         /// 将16进制流命令转为字符流
@@ -486,7 +478,7 @@ namespace System.Data.HDSSSESDK
         /// <param name="inLen"></param>
         /// <param name="strOut"></param>
         /// <returns></returns>
-        [DllImport(DllFileName, EntryPoint = "HexToStr")]
+        [DllImport(HD100CardSdk.DllFileName, EntryPoint = "HexToStr")]
         public static extern int HexToStr(Byte[] strIn, int inLen, StringBuilder strOut);
         /// <summary>
         /// 接触CPU
@@ -496,7 +488,7 @@ namespace System.Data.HDSSSESDK
         /// <param name="SLOT"></param>
         /// <param name="Response"></param>
         /// <returns></returns>
-        [DllImport(DllFileName, EntryPoint = "ICC_Reader_pre_PowerOn")]
+        [DllImport(HD100CardSdk.DllFileName, EntryPoint = "ICC_Reader_pre_PowerOn")]
         public static extern int ICC_Reader_pre_PowerOn(int ReaderHandle, byte SLOT, byte[] Response);
         /// <summary>
         /// type a/b执行apdu命令 返回数据长度 失败小于0
@@ -507,7 +499,7 @@ namespace System.Data.HDSSSESDK
         /// <param name="Command_APDU"></param>
         /// <param name="Response_APDU"></param>
         /// <returns></returns>
-        [DllImport(DllFileName, EntryPoint = "ICC_Reader_Application")]
+        [DllImport(HD100CardSdk.DllFileName, EntryPoint = "ICC_Reader_Application")]
         public static extern int ICC_Reader_Application(int ReaderHandle, byte SLOT, int Lenth_of_Command_APDU, byte[] Command_APDU, byte[] Response_APDU);
         /// <summary>
         /// 非接CPU
@@ -516,7 +508,7 @@ namespace System.Data.HDSSSESDK
         /// <param name="ReaderHandle"></param>
         /// <param name="Response"></param>
         /// <returns></returns>
-        [DllImport(DllFileName, EntryPoint = "PICC_Reader_PowerOnTypeA")]
+        [DllImport(HD100CardSdk.DllFileName, EntryPoint = "PICC_Reader_PowerOnTypeA")]
         public static extern int PICC_Reader_PowerOnTypeA(int ReaderHandle, byte[] Response);
         /// <summary>
         /// type a/b执行apdu命令 返回数据长度 失败小于0
@@ -526,7 +518,7 @@ namespace System.Data.HDSSSESDK
         /// <param name="Command_APDU"></param>
         /// <param name="Response_APDU"></param>
         /// <returns></returns>
-        [DllImport(DllFileName, EntryPoint = "PICC_Reader_Application")]
+        [DllImport(HD100CardSdk.DllFileName, EntryPoint = "PICC_Reader_Application")]
         public static extern int PICC_Reader_Application(int ReaderHandle, int Lenth_of_Command_APDU, byte[] Command_APDU, byte[] Response_APDU);
         /// <summary>
         /// 社保卡
@@ -542,7 +534,7 @@ namespace System.Data.HDSSSESDK
         /// <param name="kyxq"></param>
         /// <param name="err"></param>
         /// <returns></returns>
-        [DllImport(DllFileName, EntryPoint = "PICC_Reader_SICARD")]
+        [DllImport(HD100CardSdk.DllFileName, EntryPoint = "PICC_Reader_SICARD")]
         public static extern int PICC_Reader_SICARD(int ReaderHandle, StringBuilder sbkh, StringBuilder xm, StringBuilder xb, StringBuilder mz, StringBuilder csrq, StringBuilder shbzhm, StringBuilder fkrq, StringBuilder kyxq, StringBuilder err);
         /// <summary>
         /// 银行卡
@@ -554,7 +546,7 @@ namespace System.Data.HDSSSESDK
         /// <param name="kh_len"></param>
         /// <param name="iType"></param>
         /// <returns></returns>
-        [DllImport(DllFileName, EntryPoint = "PICC_Reader_CardInfo")]
+        [DllImport(HD100CardSdk.DllFileName, EntryPoint = "PICC_Reader_CardInfo")]
         public static extern int PICC_Reader_CardInfo(int ReaderHandle, byte[] sn, byte[] date, byte[] kh, byte[] kh_len, int iType);
         /// <summary>
         /// 身份证
@@ -572,7 +564,7 @@ namespace System.Data.HDSSSESDK
         /// <param name="pExpire"></param>
         /// <param name="pErrMsg"></param>
         /// <returns></returns>
-        [DllImport(DllFileName, EntryPoint = "PICC_Reader_ReadIDMsg")]
+        [DllImport(HD100CardSdk.DllFileName, EntryPoint = "PICC_Reader_ReadIDMsg")]
         public static extern int PICC_Reader_ReadIDMsg(int RHandle, StringBuilder pBmpFile, StringBuilder pName, StringBuilder pSex, StringBuilder pNation, StringBuilder pBirth, StringBuilder pAddress, StringBuilder pCertNo, StringBuilder pDepartment, StringBuilder pEffectData, StringBuilder pExpire, StringBuilder pErrMsg);
         /// <summary>
         /// 上电 返回数据长度 失败小于0
@@ -580,7 +572,7 @@ namespace System.Data.HDSSSESDK
         /// <param name="ReaderHandle"></param>
         /// <param name="UID"></param>
         /// <returns></returns>
-        [DllImport(DllFileName, EntryPoint = "PICC_Reader_ID_ReadUID")]
+        [DllImport(HD100CardSdk.DllFileName, EntryPoint = "PICC_Reader_ID_ReadUID")]
         public static extern int PICC_Reader_ID_ReadUID(int ReaderHandle, StringBuilder UID);
         /// <summary>
         /// 读身份证 
@@ -588,111 +580,111 @@ namespace System.Data.HDSSSESDK
         /// <param name="ReaderHandle"></param>
         /// <param name="err"></param>
         /// <returns></returns>
-        [DllImport(DllFileName, EntryPoint = "PICC_Reader_ReadIDCard")]
+        [DllImport(HD100CardSdk.DllFileName, EntryPoint = "PICC_Reader_ReadIDCard")]
         public static extern int PICC_Reader_ReadIDCard(int ReaderHandle, StringBuilder err);
         /// <summary>
         /// 获取证件类型
         /// </summary>
         /// <returns></returns>
-        [DllImport(DllFileName, EntryPoint = "GetCardType", CallingConvention = CallingConvention.StdCall)]
+        [DllImport(HD100CardSdk.DllFileName, EntryPoint = "GetCardType", CallingConvention = CallingConvention.StdCall)]
         public static extern int GetCardType();
         /// <summary>
         /// 姓名(类型为1时表示：外国人中文姓名)
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        [DllImport(DllFileName, EntryPoint = "GetName", CallingConvention = CallingConvention.StdCall)]
+        [DllImport(HD100CardSdk.DllFileName, EntryPoint = "GetName", CallingConvention = CallingConvention.StdCall)]
         public static extern int GetName(StringBuilder name);
         /// <summary>
         /// 性别
         /// </summary>
         /// <param name="sex"></param>
         /// <returns></returns>
-        [DllImport(DllFileName, EntryPoint = "GetSex", CallingConvention = CallingConvention.StdCall)]
+        [DllImport(HD100CardSdk.DllFileName, EntryPoint = "GetSex", CallingConvention = CallingConvention.StdCall)]
         public static extern int GetSex(StringBuilder sex);
         /// <summary>
         /// 民族
         /// </summary>
         /// <param name="Nation"></param>
         /// <returns></returns>
-        [DllImport(DllFileName, EntryPoint = "GetNation", CallingConvention = CallingConvention.StdCall)]
+        [DllImport(HD100CardSdk.DllFileName, EntryPoint = "GetNation", CallingConvention = CallingConvention.StdCall)]
         public static extern int GetNation(StringBuilder Nation);
         /// <summary>
         /// 出生日期
         /// </summary>
         /// <param name="Birth"></param>
         /// <returns></returns>
-        [DllImport(DllFileName, EntryPoint = "GetBirth", CallingConvention = CallingConvention.StdCall)]
+        [DllImport(HD100CardSdk.DllFileName, EntryPoint = "GetBirth", CallingConvention = CallingConvention.StdCall)]
         public static extern int GetBirth(StringBuilder Birth);
         /// <summary>
         /// 住址
         /// </summary>
         /// <param name="Address"></param>
         /// <returns></returns>
-        [DllImport(DllFileName, EntryPoint = "GetAddress", CallingConvention = CallingConvention.StdCall)]
+        [DllImport(HD100CardSdk.DllFileName, EntryPoint = "GetAddress", CallingConvention = CallingConvention.StdCall)]
         public static extern int GetAddress(StringBuilder Address);
         /// <summary>
         /// 公民身份证号码(类型为1时表示：外国人居留证号码)
         /// </summary>
         /// <param name="CertNo"></param>
         /// <returns></returns>
-        [DllImport(DllFileName, EntryPoint = "GetCertNo", CallingConvention = CallingConvention.StdCall)]
+        [DllImport(HD100CardSdk.DllFileName, EntryPoint = "GetCertNo", CallingConvention = CallingConvention.StdCall)]
         public static extern int GetCertNo(StringBuilder CertNo);
         /// <summary>
         /// 签发机关
         /// </summary>
         /// <param name="Departemt"></param>
         /// <returns></returns>
-        [DllImport(DllFileName, EntryPoint = "GetDepartemt", CallingConvention = CallingConvention.StdCall)]
+        [DllImport(HD100CardSdk.DllFileName, EntryPoint = "GetDepartemt", CallingConvention = CallingConvention.StdCall)]
         public static extern int GetDepartemt(StringBuilder Departemt);
         /// <summary>
         /// 有效起始日期
         /// </summary>
         /// <param name="EffectDate"></param>
         /// <returns></returns>
-        [DllImport(DllFileName, EntryPoint = "GetEffectDate", CallingConvention = CallingConvention.StdCall)]
+        [DllImport(HD100CardSdk.DllFileName, EntryPoint = "GetEffectDate", CallingConvention = CallingConvention.StdCall)]
         public static extern int GetEffectDate(StringBuilder EffectDate);
         /// <summary>
         /// 有效截止日期
         /// </summary>
         /// <param name="ExpireDate"></param>
         /// <returns></returns>
-        [DllImport(DllFileName, EntryPoint = "GetExpireDate", CallingConvention = CallingConvention.StdCall)]
+        [DllImport(HD100CardSdk.DllFileName, EntryPoint = "GetExpireDate", CallingConvention = CallingConvention.StdCall)]
         public static extern int GetExpireDate(StringBuilder ExpireDate);
         /// <summary>
         /// 生成照片
         /// </summary>
         /// <param name="pBmpfilepath"></param>
         /// <returns></returns>
-        [DllImport(DllFileName, EntryPoint = "GetBmpFile", CallingConvention = CallingConvention.StdCall)]
+        [DllImport(HD100CardSdk.DllFileName, EntryPoint = "GetBmpFile", CallingConvention = CallingConvention.StdCall)]
         public static extern int GetBmpFile(StringBuilder pBmpfilepath);
         /// <summary>
         /// 外国人英文姓名
         /// </summary>
         /// <param name="EnName"></param>
         /// <returns></returns>
-        [DllImport(DllFileName, EntryPoint = "GetEnName", CallingConvention = CallingConvention.StdCall)]
+        [DllImport(HD100CardSdk.DllFileName, EntryPoint = "GetEnName", CallingConvention = CallingConvention.StdCall)]
         public static extern int GetEnName(StringBuilder EnName);
         /// <summary>
         /// 外国人国籍代码 符合GB/T2659-2000规定
         /// </summary>
         /// <param name="NationalityCode"></param>
         /// <returns></returns>
-        [DllImport(DllFileName, EntryPoint = "GetNationalityCode", CallingConvention = CallingConvention.StdCall)]
+        [DllImport(HD100CardSdk.DllFileName, EntryPoint = "GetNationalityCode", CallingConvention = CallingConvention.StdCall)]
         public static extern int GetNationalityCode(StringBuilder NationalityCode);
         /// <summary>
         /// 港澳台通行证号码
         /// </summary>
         /// <param name="txzhm"></param>
         /// <returns></returns>
-        [DllImport(DllFileName, EntryPoint = "GetTXZHM", CallingConvention = CallingConvention.StdCall)]
+        [DllImport(HD100CardSdk.DllFileName, EntryPoint = "GetTXZHM", CallingConvention = CallingConvention.StdCall)]
         public static extern int GetTXZHM(StringBuilder txzhm);
         /// <summary>
         /// 港澳台通行证签发次数
         /// </summary>
         /// <param name="txzqfcs"></param>
         /// <returns></returns>
-        [DllImport(DllFileName, EntryPoint = "GetTXZQFCS", CallingConvention = CallingConvention.StdCall)]
+        [DllImport(HD100CardSdk.DllFileName, EntryPoint = "GetTXZQFCS", CallingConvention = CallingConvention.StdCall)]
         public static extern int GetTXZQFCS(StringBuilder txzqfcs);
         /// <summary>
         /// 寻卡15693
@@ -700,7 +692,7 @@ namespace System.Data.HDSSSESDK
         /// <param name="Rhandle"></param>
         /// <param name="resp"></param>
         /// <returns></returns>
-        [DllImport(DllFileName, EntryPoint = "PICC_Reader_Inventory", CallingConvention = CallingConvention.StdCall)]
+        [DllImport(HD100CardSdk.DllFileName, EntryPoint = "PICC_Reader_Inventory", CallingConvention = CallingConvention.StdCall)]
         public static extern int PICC_Reader_Inventory(int Rhandle, byte[] resp);
         /// <summary>
         /// 读卡
@@ -709,7 +701,7 @@ namespace System.Data.HDSSSESDK
         /// <param name="blockAddr"></param>
         /// <param name="resp"></param>
         /// <returns></returns>
-        [DllImport(DllFileName, EntryPoint = "PICC_Reader_15693_Read", CallingConvention = CallingConvention.StdCall)]
+        [DllImport(HD100CardSdk.DllFileName, EntryPoint = "PICC_Reader_15693_Read", CallingConvention = CallingConvention.StdCall)]
         public static extern int PICC_Reader_15693_Read(int Rhandle, byte blockAddr, byte[] resp);
         /// <summary>
         /// 写卡
@@ -719,7 +711,7 @@ namespace System.Data.HDSSSESDK
         /// <param name="data"></param>
         /// <param name="resp"></param>
         /// <returns></returns>
-        [DllImport(DllFileName, EntryPoint = "PICC_Reader_15693_Write", CallingConvention = CallingConvention.StdCall)]
+        [DllImport(HD100CardSdk.DllFileName, EntryPoint = "PICC_Reader_15693_Write", CallingConvention = CallingConvention.StdCall)]
         public static extern int PICC_Reader_15693_Write(int Rhandle, byte blockAddr, byte[] data, byte[] resp);
         /// <summary>
         /// AFI
@@ -728,7 +720,7 @@ namespace System.Data.HDSSSESDK
         /// <param name="data"></param>
         /// <param name="resp"></param>
         /// <returns></returns>
-        [DllImport(DllFileName, EntryPoint = "PICC_Reader_AFI", CallingConvention = CallingConvention.StdCall)]
+        [DllImport(HD100CardSdk.DllFileName, EntryPoint = "PICC_Reader_AFI", CallingConvention = CallingConvention.StdCall)]
         public static extern int PICC_Reader_AFI(int Rhandle, byte[] data, byte[] resp);
         /// <summary>
         /// DSFID
@@ -737,7 +729,7 @@ namespace System.Data.HDSSSESDK
         /// <param name="data"></param>
         /// <param name="resp"></param>
         /// <returns></returns>
-        [DllImport(DllFileName, EntryPoint = "PICC_Reader_DSFID", CallingConvention = CallingConvention.StdCall)]
+        [DllImport(HD100CardSdk.DllFileName, EntryPoint = "PICC_Reader_DSFID", CallingConvention = CallingConvention.StdCall)]
         public static extern int PICC_Reader_DSFID(int Rhandle, byte[] data, byte[] resp);
         /// <summary>
         /// 卡片信息
@@ -745,7 +737,7 @@ namespace System.Data.HDSSSESDK
         /// <param name="Rhandle"></param>
         /// <param name="resp"></param>
         /// <returns></returns>
-        [DllImport(DllFileName, EntryPoint = "PICC_Reader_SystemInfor", CallingConvention = CallingConvention.StdCall)]
+        [DllImport(HD100CardSdk.DllFileName, EntryPoint = "PICC_Reader_SystemInfor", CallingConvention = CallingConvention.StdCall)]
         public static extern int PICC_Reader_SystemInfor(int Rhandle, byte[] resp);
         /// <summary>
         /// 锁块
@@ -754,7 +746,7 @@ namespace System.Data.HDSSSESDK
         /// <param name="blockAddr"></param>
         /// <param name="resp"></param>
         /// <returns></returns>
-        [DllImport(DllFileName, EntryPoint = "PICC_Reader_LockDataBlock", CallingConvention = CallingConvention.StdCall)]
+        [DllImport(HD100CardSdk.DllFileName, EntryPoint = "PICC_Reader_LockDataBlock", CallingConvention = CallingConvention.StdCall)]
         public static extern int PICC_Reader_LockDataBlock(int Rhandle, byte blockAddr, byte[] resp);
         #region // 显示实现
         int IHD100CardSdkProxy.GetAddress(StringBuilder Address) => GetAddress(Address);
@@ -809,20 +801,8 @@ namespace System.Data.HDSSSESDK
         int IHD100CardSdkProxy.StrToHex(StringBuilder strIn, int len, byte[] HexOut) => StrToHex(strIn, len, HexOut);
         #endregion
     }
-    internal class HD100CardSdkLoader : IHD100CardSdkProxy
+    internal class HD100CardSdkLoader : ASdkDynamicLoader, IHD100CardSdkProxy
     {
-        /// <summary>
-        /// 相对路径
-        /// </summary>
-        public const string DllPath = @"plugins\hdssseexe";
-        /// <summary>
-        /// 全路径
-        /// </summary>
-        public static string DllFullPath { get; } = Path.GetFullPath(DllPath);
-        /// <summary>
-        /// 文件全路径
-        /// </summary>
-        public static String DllFullName { get; } = Path.Combine(Path.GetFullPath(DllPath), HD100CardSdkDller.DllFileName);
         #region // 委托定义
         private DCreater.ICC_Reader_Open _ICC_Reader_Open;
         private DCreater.ICC_Reader_Close _ICC_Reader_Close;
@@ -872,8 +852,6 @@ namespace System.Data.HDSSSESDK
         #endregion
         public HD100CardSdkLoader()
         {
-            hModule = LoadLibraryEx(DllFullName, IntPtr.Zero, LoadLibraryFlags.LOAD_WITH_ALTERED_SEARCH_PATH);
-
             _ICC_Reader_Open = GetDelegate<DCreater.ICC_Reader_Open>(nameof(DCreater.ICC_Reader_Open));
             _ICC_Reader_Close = GetDelegate<DCreater.ICC_Reader_Close>(nameof(DCreater.ICC_Reader_Close));
             _Rcard = GetDelegate<DCreater.Rcard>(nameof(DCreater.Rcard));
@@ -920,103 +898,10 @@ namespace System.Data.HDSSSESDK
             _PICC_Reader_SystemInfor = GetDelegate<DCreater.PICC_Reader_SystemInfor>(nameof(DCreater.PICC_Reader_SystemInfor));
             _PICC_Reader_LockDataBlock = GetDelegate<DCreater.PICC_Reader_LockDataBlock>(nameof(DCreater.PICC_Reader_LockDataBlock));
         }
-        #region // 动态内容
-        [DllImport("kernel32.dll")]
-        private static extern uint GetLastError();
-        /// <summary>
-        /// API LoadLibraryEx
-        /// </summary>
-        /// <param name="lpFileName"></param>
-        /// <param name="hReservedNull"></param>
-        /// <param name="dwFlags"></param>
-        /// <returns></returns>
-        [DllImport("kernel32.dll", EntryPoint = "LoadLibraryEx", SetLastError = true)]
-        private static extern IntPtr LoadLibraryEx(string lpFileName, IntPtr hReservedNull, LoadLibraryFlags dwFlags);
-        [DllImport("kernel32.dll", CallingConvention = CallingConvention.StdCall)]
-        private static extern IntPtr LoadLibrary(string lpFileName, int h, int flags);
-        [DllImport("kernel32.dll", CharSet = CharSet.Ansi, ExactSpelling = true, SetLastError = true)]
-        private static extern IntPtr GetProcAddress(IntPtr hModule, string lProcName);
-        [DllImport("kernel32.dll", CallingConvention = CallingConvention.StdCall)]
-        private static extern bool FreeLibrary(IntPtr hModule);
-        IntPtr hModule;
-        /// <summary>
-        /// 释放
-        /// </summary>
-        public void Dispose()
+        public override string GetFileFullName()
         {
-            FreeLibrary(hModule);
+            return HD100CardSdk.DllFullName;
         }
-        public Delegate GetMethod(string procName, Type type)
-        {
-            IntPtr func = GetProcAddress(hModule, procName);
-            return (Delegate)Marshal.GetDelegateForFunctionPointer(func, type);
-        }
-        public T GetDelegate<T>(string procName) where T : Delegate
-        {
-            IntPtr func = GetProcAddress(hModule, procName);
-            return (T)Marshal.GetDelegateForFunctionPointer(func, typeof(T));
-        }
-        /// <summary>
-        /// LoadLibraryFlags
-        /// </summary>
-        public enum LoadLibraryFlags : uint
-        {
-            /// <summary>
-            /// DONT_RESOLVE_DLL_REFERENCES
-            /// </summary>
-            DONT_RESOLVE_DLL_REFERENCES = 0x00000001,
-
-            /// <summary>
-            /// LOAD_IGNORE_CODE_AUTHZ_LEVEL
-            /// </summary>
-            LOAD_IGNORE_CODE_AUTHZ_LEVEL = 0x00000010,
-
-            /// <summary>
-            /// LOAD_LIBRARY_AS_DATAFILE
-            /// </summary>
-            LOAD_LIBRARY_AS_DATAFILE = 0x00000002,
-
-            /// <summary>
-            /// LOAD_LIBRARY_AS_DATAFILE_EXCLUSIVE
-            /// </summary>
-            LOAD_LIBRARY_AS_DATAFILE_EXCLUSIVE = 0x00000040,
-
-            /// <summary>
-            /// LOAD_LIBRARY_AS_IMAGE_RESOURCE
-            /// </summary>
-            LOAD_LIBRARY_AS_IMAGE_RESOURCE = 0x00000020,
-
-            /// <summary>
-            /// LOAD_LIBRARY_SEARCH_APPLICATION_DIR
-            /// </summary>
-            LOAD_LIBRARY_SEARCH_APPLICATION_DIR = 0x00000200,
-
-            /// <summary>
-            /// LOAD_LIBRARY_SEARCH_DEFAULT_DIRS
-            /// </summary>
-            LOAD_LIBRARY_SEARCH_DEFAULT_DIRS = 0x00001000,
-
-            /// <summary>
-            /// LOAD_LIBRARY_SEARCH_DLL_LOAD_DIR
-            /// </summary>
-            LOAD_LIBRARY_SEARCH_DLL_LOAD_DIR = 0x00000100,
-
-            /// <summary>
-            /// LOAD_LIBRARY_SEARCH_SYSTEM32
-            /// </summary>
-            LOAD_LIBRARY_SEARCH_SYSTEM32 = 0x00000800,
-
-            /// <summary>
-            /// LOAD_LIBRARY_SEARCH_USER_DIRS
-            /// </summary>
-            LOAD_LIBRARY_SEARCH_USER_DIRS = 0x00000400,
-
-            /// <summary>
-            /// LOAD_WITH_ALTERED_SEARCH_PATH
-            /// </summary>
-            LOAD_WITH_ALTERED_SEARCH_PATH = 0x00000008
-        }
-        #endregion
         #region // 显示实现
         int IHD100CardSdkProxy.GetAddress(StringBuilder Address) => _GetAddress.Invoke(Address);
         int IHD100CardSdkProxy.GetBirth(StringBuilder Birth) => _GetBirth.Invoke(Birth);

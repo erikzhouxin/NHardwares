@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.HardwareInterfaces;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
@@ -12,6 +13,30 @@ namespace System.Data.DeYaLpnrSDK
     /// </summary>
     public static class RWLPNRSdk
     {
+        /// <summary>
+        /// SDK文件名称
+        /// </summary>
+        public const String DllFileName = "RWLPNRAPI.dll";
+        /// <summary>
+        /// 全路径
+        /// </summary>
+        public static string BaseDllFullPath { get; } = Path.GetFullPath(".");
+        /// <summary>
+        /// 文件全路径
+        /// </summary>
+        public static String BaseDllFullName { get; } = Path.GetFullPath(DllFileName);
+        /// <summary>
+        /// 相对路径
+        /// </summary>
+        public const string DllVirtualPath = @"plugins\deyalpnrsdk";
+        /// <summary>
+        /// 全路径
+        /// </summary>
+        public static string DllFullPath { get; } = Path.GetFullPath(DllVirtualPath);
+        /// <summary>
+        /// 文件全路径
+        /// </summary>
+        public static String DllFullName { get; } = Path.Combine(DllFullPath, DllFileName);
 
         static Lazy<IRWLPNRSdkProxy> _RWLPNRSdk = new Lazy<IRWLPNRSdkProxy>(() => new RWLPNRSdkLoader(), true);
         /// <summary>
@@ -19,50 +44,19 @@ namespace System.Data.DeYaLpnrSDK
         /// </summary>
         static RWLPNRSdk()
         {
-            Directory.CreateDirectory(RWLPNRSdkLoader.DllFullPath);
+            Directory.CreateDirectory(DllFullPath);
             if (Environment.Is64BitProcess)
             {
-                bool isExists = CompareFile(RWLPNRSdkLoader.DllFullName, Properties.Resources.X64_RWLPNRAPI);
-                if (!isExists)
+                if (!SdkFileComponent.CompareResourceFile(DllFullName, Properties.Resources.X64_RWLPNRAPI))
                 {
-                    WriteFile(Properties.Resources.X64_RWLPNRAPI, Path.Combine(RWLPNRSdkLoader.DllFullPath, "RWLPNRAPI.dll"));
+                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_RWLPNRAPI, Path.Combine(DllFullPath, "RWLPNRAPI.dll"));
                 }
             }
             else
             {
-                bool isExists = CompareFile(RWLPNRSdkLoader.DllFullName, Properties.Resources.X86_RWLPNRAPI);
-                if (!isExists)
+                if (!SdkFileComponent.CompareResourceFile(DllFullName, Properties.Resources.X86_RWLPNRAPI))
                 {
-                    WriteFile(Properties.Resources.X86_RWLPNRAPI, Path.Combine(RWLPNRSdkLoader.DllFullPath, "RWLPNRAPI.dll"));
-                }
-            }
-        }
-
-        private static void WriteFile(byte[] dllFile, string fullName)
-        {
-            try
-            {
-                if (File.Exists(fullName)) { File.Delete(fullName); }
-                File.WriteAllBytes(fullName, dllFile);
-            }
-            catch (Exception ex) { Console.WriteLine(ex); }
-        }
-
-        private static bool CompareFile(string file, byte[] res)
-        {
-            if (!File.Exists(file)) { return false; }
-            using (var hash = SHA1.Create())
-            {
-                using (var distFile = new FileStream(file, FileMode.Open, FileAccess.Read, FileShare.Read))
-                {
-                    var resHash = hash.ComputeHash(res);
-                    var distHash = hash.ComputeHash(distFile);
-                    if (resHash.Length != distHash.Length) { return false; }
-                    for (int i = 0; i < resHash.Length; i++)
-                    {
-                        if (resHash[i] != distHash[i]) { return false; }
-                    }
-                    return true;
+                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_RWLPNRAPI, Path.Combine(DllFullPath, "RWLPNRAPI.dll"));
                 }
             }
         }
@@ -73,44 +67,11 @@ namespace System.Data.DeYaLpnrSDK
         /// <returns></returns>
         public static IRWLPNRSdkProxy Create(bool isBase = false)
         {
-            var currentDir = RWLPNRSdkDller.DllFullPath;
-            var pluginDir = RWLPNRSdkLoader.DllFullPath;
-            if (isBase)
-            {
-                if (!File.Exists(RWLPNRSdkDller.DllFullName))
-                {
-                    if (Directory.Exists(pluginDir))
-                    {
-                        try
-                        {
-                            CopyDirectory(pluginDir, currentDir);
-                        }
-                        catch { }
-                    }
-                }
-                return RWLPNRSdkDller.Instance;
-            }
-            if (!Directory.Exists(pluginDir)) { return RWLPNRSdkDller.Instance; }
-            return _RWLPNRSdk.Value;
-        }
-        /// <summary>
-        /// 复制目录
-        /// </summary>
-        /// <param name="src"></param>
-        /// <param name="tag"></param>
-        public static void CopyDirectory(string src, string tag)
-        {
-            foreach (var item in new DirectoryInfo(src).GetFileSystemInfos())
-            {
-                if (item is DirectoryInfo dir)
-                {
-                    var tagDir = Path.Combine(tag, dir.Name);
-                    if (!Directory.Exists(tagDir)) { Directory.CreateDirectory(tagDir); }
-                    CopyDirectory(dir.FullName, tagDir);
-                    continue;
-                }
-                File.Copy(item.FullName, Path.Combine(tag, item.Name), false);
-            }
+            if (!isBase) { return _RWLPNRSdk.Value; }
+            if (!File.Exists(BaseDllFullName))
+            { SdkFileComponent.TryCopyDirectory(DllFullPath, BaseDllFullPath); }
+            return RWLPNRSdkDller.Instance;
+            ;
         }
     }
 }

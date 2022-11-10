@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.HardwareInterfaces;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -677,22 +678,13 @@ namespace System.Data.DeYaIceIpcSDK
         /// <returns></returns>
         uint ICE_IPCSDK_SetSnapOsdCfg(IntPtr hSDK, ref T_SnapOsdCfg pstParam);
     }
-    internal partial class IceIpcDller : IIceIpcSdkProxy
+    internal class IceIpcSdkDller : IIceIpcSdkProxy
     {
         /// <summary>
         /// 由于这是本地目录中加载,所以加载一次就够用了
         /// </summary>
-        public static IIceIpcSdkProxy Instance { get; } = new IceIpcDller();
-        private IceIpcDller() { }
-        public const String DllFileName = "ice_ipcsdk.dll";
-        /// <summary>
-        /// 全路径
-        /// </summary>
-        public static string DllFullPath { get; } = Path.GetFullPath(".");
-        /// <summary>
-        /// 文件全路径
-        /// </summary>
-        public static String DllFullName { get; } = Path.GetFullPath(DllFileName);
+        public static IIceIpcSdkProxy Instance { get; } = new IceIpcSdkDller();
+        private IceIpcSdkDller() { }
         /**
          *  @brief  设置获得实时识别数据的相关回调函数
          *  @param  [IN] hSDK       连接相机时返回的sdk句柄
@@ -700,7 +692,7 @@ namespace System.Data.DeYaIceIpcSDK
          *  @param  [IN] pvParam    回调函数中的参数，能区分开不同的使用者即可
          *  @return void
          */
-        [DllImportAttribute(DllFileName, EntryPoint = "ICE_IPCSDK_SetPlateCallback", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(IceIpcSdk.DllFileName, EntryPoint = "ICE_IPCSDK_SetPlateCallback", CallingConvention = CallingConvention.Cdecl)]
         public static extern void ICE_IPCSDK_SetPlateCallback(IntPtr hSDK, ICE_IPCSDK_OnPlate pfOnPlate, IntPtr pvParam);
 
         /**
@@ -710,7 +702,7 @@ namespace System.Data.DeYaIceIpcSDK
          *  @param  [IN] pvPastPlateParam   回调函数中的参数，能区分开不同的使用者即可
          *  @return void
          */
-        [DllImportAttribute(DllFileName, EntryPoint = "ICE_IPCSDK_SetPastPlateCallBack", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(IceIpcSdk.DllFileName, EntryPoint = "ICE_IPCSDK_SetPastPlateCallBack", CallingConvention = CallingConvention.Cdecl)]
         public static extern void ICE_IPCSDK_SetPastPlateCallBack(IntPtr hSDK, ICE_IPCSDK_OnPastPlate pfOnPastPlate,
                                                                   IntPtr pvPastPlateParam);
 
@@ -720,7 +712,7 @@ namespace System.Data.DeYaIceIpcSDK
          *  @param  [IN] pfOnSerialPort     相机发送的RS485数据，通过该回调获得
          *  @param  [IN] pvSerialPortParam  回调函数中的参数，能区分开不同的使用者即可
          */
-        [DllImportAttribute(DllFileName, EntryPoint = "ICE_IPCSDK_SetSerialPortCallBack", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(IceIpcSdk.DllFileName, EntryPoint = "ICE_IPCSDK_SetSerialPortCallBack", CallingConvention = CallingConvention.Cdecl)]
         public static extern void ICE_IPCSDK_SetSerialPortCallBack(IntPtr hSDK, ICE_IPCSDK_OnSerialPort pfOnSerialPort,
                                                                    IntPtr pvSerialPortParam);
 
@@ -731,11 +723,11 @@ namespace System.Data.DeYaIceIpcSDK
          *  @param  [IN] pvSerialPortParam  回调函数中的参数，能区分开不同的使用者即可
          *  @return void
          */
-        [DllImportAttribute(DllFileName, EntryPoint = "ICE_IPCSDK_SetSerialPortCallBack_RS232", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(IceIpcSdk.DllFileName, EntryPoint = "ICE_IPCSDK_SetSerialPortCallBack_RS232", CallingConvention = CallingConvention.Cdecl)]
         public static extern void ICE_IPCSDK_SetSerialPortCallBack_RS232(IntPtr hSDK, ICE_IPCSDK_OnSerialPort_RS232 pfOnSerialPort,
                                                                          IntPtr pvSerialPortParam);
 
-        [DllImportAttribute(DllFileName, EntryPoint = "ICE_IPCSDK_SetDeviceEventCallBack", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(IceIpcSdk.DllFileName, EntryPoint = "ICE_IPCSDK_SetDeviceEventCallBack", CallingConvention = CallingConvention.Cdecl)]
         public static extern void ICE_IPCSDK_SetDeviceEventCallBack(IntPtr hSDK, ICE_IPCSDK_OnDeviceEvent pfOnDeviceEvent, IntPtr pvDeviceEventParam);
 
         /**
@@ -744,7 +736,7 @@ namespace System.Data.DeYaIceIpcSDK
         *  @param  [IN] pfOnIOEvent              对讲事件回调
         *  @param  [IN] pvIOEventParam           对讲事件回调参数,用于区分不同对讲变化事件
         */
-        [DllImportAttribute(DllFileName, EntryPoint = "ICE_IPCSDK_SetTalkEventCallBack", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(IceIpcSdk.DllFileName, EntryPoint = "ICE_IPCSDK_SetTalkEventCallBack", CallingConvention = CallingConvention.Cdecl)]
         public static extern void ICE_IPCSDK_SetTalkEventCallBack(IntPtr hSDK, ICE_IPCSDK_OnTalkEvent pfOnTalkEvent, IntPtr pvTalkEventParam);
 
         /**
@@ -754,21 +746,21 @@ namespace System.Data.DeYaIceIpcSDK
          *  @param  [IN] pvParam    回调函数中的参数，能区分开不同的使用者即可
          *  @return void
          */
-        [DllImportAttribute(DllFileName, EntryPoint = "ICE_IPCSDK_SetFrameCallback", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(IceIpcSdk.DllFileName, EntryPoint = "ICE_IPCSDK_SetFrameCallback", CallingConvention = CallingConvention.Cdecl)]
         public static extern void ICE_IPCSDK_SetFrameCallback(IntPtr hSDK, ICE_IPCSDK_OnFrame_Planar pfOnFrame, IntPtr pvParam);
 
         /**
          *  @brief  全局初始化
          *  @return void
          */
-        [DllImportAttribute(DllFileName, EntryPoint = "ICE_IPCSDK_Init", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(IceIpcSdk.DllFileName, EntryPoint = "ICE_IPCSDK_Init", CallingConvention = CallingConvention.Cdecl)]
         public static extern void ICE_IPCSDK_Init();
 
         /**
          *  @brief  全局释放
          *  @return void
          */
-        [DllImportAttribute(DllFileName, EntryPoint = "ICE_IPCSDK_Fini", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(IceIpcSdk.DllFileName, EntryPoint = "ICE_IPCSDK_Fini", CallingConvention = CallingConvention.Cdecl)]
         public static extern void ICE_IPCSDK_Fini();
 
         /**
@@ -781,7 +773,7 @@ namespace System.Data.DeYaIceIpcSDK
          *  @param  [IN] pvPlateParam  车牌回调参数，能区分开不同的使用者即可
          *  @return sdk句柄(连接不成功时，返回值为null）
          */
-        [DllImportAttribute(DllFileName, EntryPoint = "ICE_IPCSDK_OpenPreview", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(IceIpcSdk.DllFileName, EntryPoint = "ICE_IPCSDK_OpenPreview", CallingConvention = CallingConvention.Cdecl)]
         public static extern IntPtr ICE_IPCSDK_OpenPreview(
             [InAttribute()][MarshalAsAttribute(UnmanagedType.LPStr)] string pcIP,
             byte u8OverTCP, byte u8MainStream, uint hWnd, ICE_IPCSDK_OnPlate pfOnPlate, IntPtr pvPlateParam);
@@ -797,7 +789,7 @@ namespace System.Data.DeYaIceIpcSDK
          *  @param  [IN] pvPlateParam  车牌回调参数，能区分开不同的使用者即可
          *  @return sdk句柄(连接不成功时，返回值为null）
          */
-        [DllImportAttribute(DllFileName, EntryPoint = "ICE_IPCSDK_OpenPreview_Passwd", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(IceIpcSdk.DllFileName, EntryPoint = "ICE_IPCSDK_OpenPreview_Passwd", CallingConvention = CallingConvention.Cdecl)]
         public static extern IntPtr ICE_IPCSDK_OpenPreview_Passwd(
             [InAttribute()][MarshalAsAttribute(UnmanagedType.LPStr)] string pcIP,
             [MarshalAsAttribute(UnmanagedType.LPStr)] string pcPasswd,
@@ -808,7 +800,7 @@ namespace System.Data.DeYaIceIpcSDK
          *  @param  [IN] pcIP   相机ip
          *  @return sdk句柄(连接不成功时，返回值为null）
          */
-        [DllImportAttribute(DllFileName, EntryPoint = "ICE_IPCSDK_OpenDevice", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(IceIpcSdk.DllFileName, EntryPoint = "ICE_IPCSDK_OpenDevice", CallingConvention = CallingConvention.Cdecl)]
         public static extern IntPtr ICE_IPCSDK_OpenDevice([InAttribute()][MarshalAsAttribute(UnmanagedType.LPStr)] string pcIP);
 
         /**
@@ -817,7 +809,7 @@ namespace System.Data.DeYaIceIpcSDK
          *  @param  [IN] pcPasswd      连接密码
          *  @return sdk句柄(连接不成功时，返回值为null）
          */
-        [DllImportAttribute(DllFileName, EntryPoint = "ICE_IPCSDK_OpenDevice_Passwd", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(IceIpcSdk.DllFileName, EntryPoint = "ICE_IPCSDK_OpenDevice_Passwd", CallingConvention = CallingConvention.Cdecl)]
         public static extern IntPtr ICE_IPCSDK_OpenDevice_Passwd([InAttribute()][MarshalAsAttribute(UnmanagedType.LPStr)] string pcIP,
             [InAttribute()][MarshalAsAttribute(UnmanagedType.LPStr)] string pcPasswd);
 
@@ -835,7 +827,7 @@ namespace System.Data.DeYaIceIpcSDK
          *  @param  [IN] pvFrameParam  图像帧回调参数，能区分开不同的使用者即可
          *  @return sdk句柄(连接不成功时，返回值为null）
          */
-        [DllImportAttribute(DllFileName, EntryPoint = "ICE_IPCSDK_Open", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(IceIpcSdk.DllFileName, EntryPoint = "ICE_IPCSDK_Open", CallingConvention = CallingConvention.Cdecl)]
         public static extern IntPtr ICE_IPCSDK_Open(
             [InAttribute()][MarshalAsAttribute(UnmanagedType.LPStr)] string pcIP,
             byte u8OverTCP, ushort u16RTSPPort, ushort u16ICEPort,
@@ -857,7 +849,7 @@ namespace System.Data.DeYaIceIpcSDK
          *  @param  [IN] pvFrameParam  图像帧回调参数，能区分开不同的使用者即可
          *  @return sdk句柄(连接不成功时，返回值为null）
          */
-        [DllImportAttribute(DllFileName, EntryPoint = "ICE_IPCSDK_Open_Passwd", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(IceIpcSdk.DllFileName, EntryPoint = "ICE_IPCSDK_Open_Passwd", CallingConvention = CallingConvention.Cdecl)]
         public static extern IntPtr ICE_IPCSDK_Open_Passwd(
             [InAttribute()][MarshalAsAttribute(UnmanagedType.LPStr)] string pcIP,
             [InAttribute()][MarshalAsAttribute(UnmanagedType.LPStr)] string pcPasswd,
@@ -869,7 +861,7 @@ namespace System.Data.DeYaIceIpcSDK
          *  @param  [IN] hSDK   连接相机时返回的句柄值
          *  @return void
          */
-        [DllImportAttribute(DllFileName, EntryPoint = "ICE_IPCSDK_Close", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(IceIpcSdk.DllFileName, EntryPoint = "ICE_IPCSDK_Close", CallingConvention = CallingConvention.Cdecl)]
         public static extern void ICE_IPCSDK_Close(IntPtr hSDK);
 
         /**
@@ -879,7 +871,7 @@ namespace System.Data.DeYaIceIpcSDK
          *  @param  [IN] hWnd           预览视频的窗口句柄
          *  @return 1表示成功，0表示失败
          */
-        [DllImportAttribute(DllFileName, EntryPoint = "ICE_IPCSDK_StartStream", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(IceIpcSdk.DllFileName, EntryPoint = "ICE_IPCSDK_StartStream", CallingConvention = CallingConvention.Cdecl)]
         public static extern uint ICE_IPCSDK_StartStream(IntPtr hSDK, byte u8MainStream, uint hWnd);
 
         /**
@@ -887,7 +879,7 @@ namespace System.Data.DeYaIceIpcSDK
          *  @param  [IN] hSDK   连接相机时返回的句柄值
          *  @return void
          */
-        [DllImportAttribute(DllFileName, EntryPoint = "ICE_IPCSDK_StopStream", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(IceIpcSdk.DllFileName, EntryPoint = "ICE_IPCSDK_StopStream", CallingConvention = CallingConvention.Cdecl)]
         public static extern void ICE_IPCSDK_StopStream(IntPtr hSDK);
 
         /**
@@ -895,7 +887,7 @@ namespace System.Data.DeYaIceIpcSDK
          *  @param   [IN] hSDK 由连接相机接口获得的句柄
          *  @return  1表示成功，0表示失败
          */
-        [DllImportAttribute(DllFileName, EntryPoint = "ICE_IPCSDK_OpenGate", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(IceIpcSdk.DllFileName, EntryPoint = "ICE_IPCSDK_OpenGate", CallingConvention = CallingConvention.Cdecl)]
         public static extern uint ICE_IPCSDK_OpenGate(IntPtr hSDK);
 
         /**
@@ -904,7 +896,7 @@ namespace System.Data.DeYaIceIpcSDK
          *  @param   [IN] u32Index  控制的IO口(0:表示IO1 1:表示IO2)
          *  @return  1表示成功，0表示失败
          */
-        [DllImportAttribute(DllFileName, EntryPoint = "ICE_IPCSDK_ControlAlarmOut", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(IceIpcSdk.DllFileName, EntryPoint = "ICE_IPCSDK_ControlAlarmOut", CallingConvention = CallingConvention.Cdecl)]
         public static extern uint ICE_IPCSDK_ControlAlarmOut(IntPtr hSDK, uint u32Index);
 
         /**
@@ -916,7 +908,7 @@ namespace System.Data.DeYaIceIpcSDK
          *  @param  [OUT] pu32Reserve     预留参数
          *  @return 1表示成功，0表示失败
          */
-        [DllImportAttribute(DllFileName, EntryPoint = "ICE_IPCSDK_GetAlarmOutConfig", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(IceIpcSdk.DllFileName, EntryPoint = "ICE_IPCSDK_GetAlarmOutConfig", CallingConvention = CallingConvention.Cdecl)]
         public static extern uint ICE_IPCSDK_GetAlarmOutConfig(IntPtr hSDK, uint u32Index, ref uint pu32IdleState,
                                                                 ref uint pu32DelayTime, ref uint pu32Reserve);
 
@@ -929,7 +921,7 @@ namespace System.Data.DeYaIceIpcSDK
          *  @param  [IN] pu32Reserve      预留参数
          *  @return 1表示成功，0表示失败
          */
-        [DllImportAttribute(DllFileName, EntryPoint = "ICE_IPCSDK_SetAlarmOutConfig", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(IceIpcSdk.DllFileName, EntryPoint = "ICE_IPCSDK_SetAlarmOutConfig", CallingConvention = CallingConvention.Cdecl)]
         public static extern uint ICE_IPCSDK_SetAlarmOutConfig(IntPtr hSDK, uint u32Index, uint u32IdleState,
                                                                 uint u32DelayTime, uint u32Reserve);
         /**
@@ -937,7 +929,7 @@ namespace System.Data.DeYaIceIpcSDK
          *  @param  [IN] hSDK 由连接相机接口获得的句柄
          *  @return 1表示成功，0表示失败
          */
-        [DllImportAttribute(DllFileName, EntryPoint = "ICE_IPCSDK_BeginTalk", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(IceIpcSdk.DllFileName, EntryPoint = "ICE_IPCSDK_BeginTalk", CallingConvention = CallingConvention.Cdecl)]
         public static extern uint ICE_IPCSDK_BeginTalk(IntPtr hSDK);
 
         /**
@@ -945,7 +937,7 @@ namespace System.Data.DeYaIceIpcSDK
          *  @param  [IN] hSDK 由连接相机接口获得的句柄
          *  @return 1表示成功，0表示失败
          */
-        [DllImportAttribute(DllFileName, EntryPoint = "ICE_IPCSDK_EndTalk", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(IceIpcSdk.DllFileName, EntryPoint = "ICE_IPCSDK_EndTalk", CallingConvention = CallingConvention.Cdecl)]
         public static extern void ICE_IPCSDK_EndTalk(IntPtr hSDK);
 
         /**
@@ -958,7 +950,7 @@ namespace System.Data.DeYaIceIpcSDK
          *  @param  [OUT] pu32PicLen    抓拍图片实际长度
          *  @return 1表示成功，0表示失败
          */
-        [DllImportAttribute(DllFileName, EntryPoint = "ICE_IPCSDK_Trigger", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(IceIpcSdk.DllFileName, EntryPoint = "ICE_IPCSDK_Trigger", CallingConvention = CallingConvention.Cdecl)]
         public static extern uint ICE_IPCSDK_Trigger(IntPtr hSDK, StringBuilder pcNumber, StringBuilder pcColor,
                                                     byte[] pcPicData, uint u32PicSize, ref uint pu32PicLen);
 
@@ -967,7 +959,7 @@ namespace System.Data.DeYaIceIpcSDK
          *  @param  [IN]  hSDK          由连接相机接口获得的句柄
          *  @return 1表示成功，0表示失败
          */
-        [DllImportAttribute(DllFileName, EntryPoint = "ICE_IPCSDK_TriggerExt", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(IceIpcSdk.DllFileName, EntryPoint = "ICE_IPCSDK_TriggerExt", CallingConvention = CallingConvention.Cdecl)]
         public static extern uint ICE_IPCSDK_TriggerExt(IntPtr hSDK);
 
         /**
@@ -978,7 +970,7 @@ namespace System.Data.DeYaIceIpcSDK
          *  @param  [OUT] pu32PicLen    抓拍图片实际长度
          *  @return 1表示成功，0表示失败
          */
-        [DllImportAttribute(DllFileName, EntryPoint = "ICE_IPCSDK_Capture", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(IceIpcSdk.DllFileName, EntryPoint = "ICE_IPCSDK_Capture", CallingConvention = CallingConvention.Cdecl)]
         public static extern uint ICE_IPCSDK_Capture(IntPtr hSDK, byte[] pcPicData, uint u32PicSize, ref uint pu32PicLen);
 
         /**
@@ -986,7 +978,7 @@ namespace System.Data.DeYaIceIpcSDK
          *  @param  [IN] hSDK   由连接相机接口获得的句柄
          *  @return 1表示在线，0表示离线
          */
-        [DllImportAttribute(DllFileName, EntryPoint = "ICE_IPCSDK_GetStatus", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(IceIpcSdk.DllFileName, EntryPoint = "ICE_IPCSDK_GetStatus", CallingConvention = CallingConvention.Cdecl)]
         public static extern uint ICE_IPCSDK_GetStatus(IntPtr hSDK);
 
         /**
@@ -994,7 +986,7 @@ namespace System.Data.DeYaIceIpcSDK
          *  @param  [IN] hSDK   由连接相机接口获得的句柄
          *  @return 1表示成功，0表示失败
          */
-        [DllImportAttribute(DllFileName, EntryPoint = "ICE_IPCSDK_Reboot", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(IceIpcSdk.DllFileName, EntryPoint = "ICE_IPCSDK_Reboot", CallingConvention = CallingConvention.Cdecl)]
         public static extern uint ICE_IPCSDK_Reboot(IntPtr hSDK);
 
         /**
@@ -1008,7 +1000,7 @@ namespace System.Data.DeYaIceIpcSDK
          *  @param  [IN] u8Sec      秒
          *  @return 1表示成功，0表示失败
          */
-        [DllImportAttribute(DllFileName, EntryPoint = "ICE_IPCSDK_SyncTime", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(IceIpcSdk.DllFileName, EntryPoint = "ICE_IPCSDK_SyncTime", CallingConvention = CallingConvention.Cdecl)]
         public static extern uint ICE_IPCSDK_SyncTime(IntPtr hSDK, ushort u16Year, byte u8Month, byte u8Day,
                                                         byte u8Hour, byte u8Min, byte u8Sec);
 
@@ -1019,7 +1011,7 @@ namespace System.Data.DeYaIceIpcSDK
          *  @param  [IN] u32Len    串口数据长度
          *  @return 1表示成功，0表示失败
          */
-        [DllImportAttribute(DllFileName, EntryPoint = "ICE_IPCSDK_TransSerialPort", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(IceIpcSdk.DllFileName, EntryPoint = "ICE_IPCSDK_TransSerialPort", CallingConvention = CallingConvention.Cdecl)]
         //public static extern uint ICE_IPCSDK_TransSerialPort(IntPtr hSDK, String pcData, uint u32Len);
         public static extern uint ICE_IPCSDK_TransSerialPort(IntPtr hSDK, byte[] pcData, uint u32Len);
 
@@ -1030,7 +1022,7 @@ namespace System.Data.DeYaIceIpcSDK
          *  @param  [IN] u32Len    串口数据长度
          *  @return 1表示成功，0表示失败
          */
-        [DllImportAttribute(DllFileName, EntryPoint = "ICE_IPCSDK_TransSerialPort_RS232", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(IceIpcSdk.DllFileName, EntryPoint = "ICE_IPCSDK_TransSerialPort_RS232", CallingConvention = CallingConvention.Cdecl)]
         //public static extern uint ICE_IPCSDK_TransSerialPort_RS232(IntPtr hSDK, string pcData, uint u32Len);
         public static extern uint ICE_IPCSDK_TransSerialPort_RS232(IntPtr hSDK, byte[] pcData, uint u32Len);
 
@@ -1040,7 +1032,7 @@ namespace System.Data.DeYaIceIpcSDK
          *  @param  [OUT] szDevID  相机mac地址
          *  @return 1表示成功，0表示失败
          */
-        [DllImportAttribute(DllFileName, EntryPoint = "ICE_IPCSDK_GetDevID", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(IceIpcSdk.DllFileName, EntryPoint = "ICE_IPCSDK_GetDevID", CallingConvention = CallingConvention.Cdecl)]
         public static extern uint ICE_IPCSDK_GetDevID(IntPtr hSDK, StringBuilder szDevID);
 
         /**
@@ -1049,7 +1041,7 @@ namespace System.Data.DeYaIceIpcSDK
          *  @param  [IN] pcFileName  保存录像的文件名
          *  @return 1表示成功，0表示失败
          */
-        [DllImportAttribute(DllFileName, EntryPoint = "ICE_IPCSDK_StartRecord", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(IceIpcSdk.DllFileName, EntryPoint = "ICE_IPCSDK_StartRecord", CallingConvention = CallingConvention.Cdecl)]
         public static extern uint ICE_IPCSDK_StartRecord(IntPtr hSDK, [InAttribute()][MarshalAsAttribute(UnmanagedType.LPStr)] string pcFileName);
 
         /**
@@ -1057,7 +1049,7 @@ namespace System.Data.DeYaIceIpcSDK
          *  @param  [IN] hSDK   由连接相机接口获得的句柄
          *  @return void
          */
-        [DllImportAttribute(DllFileName, EntryPoint = "ICE_IPCSDK_StopRecord", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(IceIpcSdk.DllFileName, EntryPoint = "ICE_IPCSDK_StopRecord", CallingConvention = CallingConvention.Cdecl)]
         public static extern void ICE_IPCSDK_StopRecord(IntPtr hSDK);
 
         /**
@@ -1066,7 +1058,7 @@ namespace System.Data.DeYaIceIpcSDK
          *  @parame [IN] pstOSDAttr OSD参数结构体地址，详见ICE_OSDAttr_S
          *  @return 1表示成功，0表示失败
          */
-        [DllImportAttribute(DllFileName, EntryPoint = "ICE_IPCSDK_SetOSDCfg", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(IceIpcSdk.DllFileName, EntryPoint = "ICE_IPCSDK_SetOSDCfg", CallingConvention = CallingConvention.Cdecl)]
         public static extern uint ICE_IPCSDK_SetOSDCfg(IntPtr hSDK, ref ICE_OSDAttr_S pstOSDAttr);
 
         /**
@@ -1075,7 +1067,7 @@ namespace System.Data.DeYaIceIpcSDK
          *  @parame [IN] pcData     需要写入的用户数据
          *  @return 1表示成功，0表示失败
          */
-        [DllImportAttribute(DllFileName, EntryPoint = "ICE_IPCSDK_WriteUserData", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(IceIpcSdk.DllFileName, EntryPoint = "ICE_IPCSDK_WriteUserData", CallingConvention = CallingConvention.Cdecl)]
         public static extern uint ICE_IPCSDK_WriteUserData(IntPtr hSDK,
             [InAttribute()][MarshalAsAttribute(UnmanagedType.LPStr)] string pcData);
 
@@ -1086,7 +1078,7 @@ namespace System.Data.DeYaIceIpcSDK
          *  @param  [IN] nSize      读出的数据的最大长度，即缓冲区大小
          *  @return 1表示成功，0表示失败
          */
-        [DllImportAttribute(DllFileName, EntryPoint = "ICE_IPCSDK_ReadUserData", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(IceIpcSdk.DllFileName, EntryPoint = "ICE_IPCSDK_ReadUserData", CallingConvention = CallingConvention.Cdecl)]
         public static extern uint ICE_IPCSDK_ReadUserData(IntPtr hSDK, byte[] pcData, int nSize);
 
         /**
@@ -1097,7 +1089,7 @@ namespace System.Data.DeYaIceIpcSDK
          *  @parame [IN] nLen       写入数据的长度
          *  @return 1表示成功，0表示失败
          */
-        [DllImportAttribute(DllFileName, EntryPoint = "ICE_IPCSDK_WriteUserData_Binary", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(IceIpcSdk.DllFileName, EntryPoint = "ICE_IPCSDK_WriteUserData_Binary", CallingConvention = CallingConvention.Cdecl)]
         public static extern uint ICE_IPCSDK_WriteUserData_Binary(IntPtr hSDK,
             [InAttribute()][MarshalAsAttribute(UnmanagedType.LPStr)] string pcData,
             uint nOffset, uint nLen);
@@ -1111,7 +1103,7 @@ namespace System.Data.DeYaIceIpcSDK
          *  @param  [IN] nLen       需要读出的数据的大小
          *  @return 1表示成功，0表示失败
          */
-        [DllImportAttribute(DllFileName, EntryPoint = "ICE_IPCSDK_ReadUserData_Binary", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(IceIpcSdk.DllFileName, EntryPoint = "ICE_IPCSDK_ReadUserData_Binary", CallingConvention = CallingConvention.Cdecl)]
         public static extern uint ICE_IPCSDK_ReadUserData_Binary(IntPtr hSDK, byte[] pcData,
                                                                  uint nSize, uint nOffset, uint nLen);
         /**
@@ -1122,7 +1114,7 @@ namespace System.Data.DeYaIceIpcSDK
          *  @param  [OUT] u32Gateway   相机网关
          *  @return 1表示成功，0表示失败
          */
-        [DllImportAttribute(DllFileName, EntryPoint = "ICE_IPCSDK_GetIPAddr", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(IceIpcSdk.DllFileName, EntryPoint = "ICE_IPCSDK_GetIPAddr", CallingConvention = CallingConvention.Cdecl)]
         public static extern uint ICE_IPCSDK_GetIPAddr(IntPtr hSDK, ref uint pu32IP, ref uint pu32Mask, ref uint pu32Gateway);
 
         /**
@@ -1133,7 +1125,7 @@ namespace System.Data.DeYaIceIpcSDK
          *  @param  [IN] u32Gateway   相机网关
          *  @return 1表示成功，0表示失败
          */
-        [DllImportAttribute(DllFileName, EntryPoint = "ICE_IPCSDK_SetIPAddr", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(IceIpcSdk.DllFileName, EntryPoint = "ICE_IPCSDK_SetIPAddr", CallingConvention = CallingConvention.Cdecl)]
         public static extern uint ICE_IPCSDK_SetIPAddr(IntPtr hSDK, uint u32IP, uint u32Mask, uint u32Gateway);
 
         /**
@@ -1142,7 +1134,7 @@ namespace System.Data.DeYaIceIpcSDK
          *                         设备mac地址和ip地址的字符串，格式为：mac地址 ip地址 例如：00-00-00-00-00-00 192.168.55.150\r\n
          *  @return void
          */
-        [DllImportAttribute(DllFileName, EntryPoint = "ICE_IPCSDK_SearchDev", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(IceIpcSdk.DllFileName, EntryPoint = "ICE_IPCSDK_SearchDev", CallingConvention = CallingConvention.Cdecl)]
         public static extern void ICE_IPCSDK_SearchDev(StringBuilder szDevs);
 
         /**
@@ -1151,7 +1143,7 @@ namespace System.Data.DeYaIceIpcSDK
          *  @parame [IN] logPath    日志路径，默认为D:\
          *  @return void
          */
-        [DllImportAttribute(DllFileName, EntryPoint = "ICE_IPCSDK_LogConfig", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(IceIpcSdk.DllFileName, EntryPoint = "ICE_IPCSDK_LogConfig", CallingConvention = CallingConvention.Cdecl)]
         public static extern void ICE_IPCSDK_LogConfig(int openLog, string logPath);
 
         /**
@@ -1160,7 +1152,7 @@ namespace System.Data.DeYaIceIpcSDK
          *  @parame [IN] nIndex    语音文件索引号，详见《语音列表.txt》
          *  @return 1表示成功，0表示失败
          */
-        [DllImportAttribute(DllFileName, EntryPoint = "ICE_IPCSDK_Broadcast", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(IceIpcSdk.DllFileName, EntryPoint = "ICE_IPCSDK_Broadcast", CallingConvention = CallingConvention.Cdecl)]
         public static extern uint ICE_IPCSDK_Broadcast(IntPtr hSDK, ushort nIndex);
 
         /**
@@ -1170,7 +1162,7 @@ namespace System.Data.DeYaIceIpcSDK
          *                         语音文件索引号，详见《语音列表.txt》
          *  @return 1表示成功，0表示失败
          */
-        [DllImportAttribute(DllFileName, EntryPoint = "ICE_IPCSDK_BroadcastGroup", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(IceIpcSdk.DllFileName, EntryPoint = "ICE_IPCSDK_BroadcastGroup", CallingConvention = CallingConvention.Cdecl)]
         public static extern uint ICE_IPCSDK_BroadcastGroup(IntPtr hSDK,
             [InAttribute()][MarshalAsAttribute(UnmanagedType.LPStr)] string pcIndex);
 
@@ -1184,7 +1176,7 @@ namespace System.Data.DeYaIceIpcSDK
 
          *  @return 1表示成功，0表示失败
          */
-        [DllImportAttribute(DllFileName, EntryPoint = "ICE_IPCSDK_SetCity", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(IceIpcSdk.DllFileName, EntryPoint = "ICE_IPCSDK_SetCity", CallingConvention = CallingConvention.Cdecl)]
         public static extern uint ICE_IPCSDK_SetCity(IntPtr hSDK, uint u32Index);
 
         /**
@@ -1195,7 +1187,7 @@ namespace System.Data.DeYaIceIpcSDK
          *  @param  [IN] _iFeat2Len     特征码2的长度，目前需输入20
          *  @return  匹配度，范围：0-1，值越大越匹配
          */
-        [DllImportAttribute(DllFileName, EntryPoint = "ICE_IPCSDK_VBR_CompareFeat", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(IceIpcSdk.DllFileName, EntryPoint = "ICE_IPCSDK_VBR_CompareFeat", CallingConvention = CallingConvention.Cdecl)]
         public static extern float ICE_IPCSDK_VBR_CompareFeat(float[] _pfResFeat1, uint _iFeat1Len,
                                                               float[] _pfReaFeat2, uint _iFeat2Len);
 
@@ -1210,7 +1202,7 @@ namespace System.Data.DeYaIceIpcSDK
         *  @param  [IN] nHeight        坐标是在什么分辨率下取得的，表示高（如在1280*720下取得的，高为720）
         *  @rerun 设置状态 1 设置成功 0 设置失败
         */
-        [DllImportAttribute(DllFileName, EntryPoint = "ICE_IPCSDK_SetLoop", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(IceIpcSdk.DllFileName, EntryPoint = "ICE_IPCSDK_SetLoop", CallingConvention = CallingConvention.Cdecl)]
         public static extern uint ICE_IPCSDK_SetLoop(IntPtr hSDK, uint nLeft, uint nBottom, uint nRight, uint nTop, uint nWidth, uint nHeight);
 
         /**
@@ -1224,7 +1216,7 @@ namespace System.Data.DeYaIceIpcSDK
         *  @param  [OUT] nHeight        坐标是在什么分辨率下取得的，表示高（如在1280*720下取得的，宽为720）
         *  @rerun 设置状态 1 获取成功 0 获取失败
         */
-        [DllImportAttribute(DllFileName, EntryPoint = "ICE_IPCSDK_GetLoop", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(IceIpcSdk.DllFileName, EntryPoint = "ICE_IPCSDK_GetLoop", CallingConvention = CallingConvention.Cdecl)]
         public static extern uint ICE_IPCSDK_GetLoop(IntPtr hSDK, ref uint nLeft, ref uint nBottom, ref uint nRight, ref uint nTop, uint nWidth, uint nHeight);
 
         /**
@@ -1233,7 +1225,7 @@ namespace System.Data.DeYaIceIpcSDK
         *  @param  [IN] u32TriggerMode 触发模式（0：线圈触发 1：视频触发）
         *  @rerun  设置状态 1 设置成功 0 设置失败
         */
-        [DllImportAttribute(DllFileName, EntryPoint = "ICE_IPCSDK_SetTriggerMode", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(IceIpcSdk.DllFileName, EntryPoint = "ICE_IPCSDK_SetTriggerMode", CallingConvention = CallingConvention.Cdecl)]
         public static extern uint ICE_IPCSDK_SetTriggerMode(IntPtr hSDK, uint u32TriggerMode);
 
         /**
@@ -1242,7 +1234,7 @@ namespace System.Data.DeYaIceIpcSDK
         *  @param  [OUT] u32TriggerMode 触发模式（0：线圈触发 1：视频触发）
         *  @rerun  设置状态 1 设置成功 0 设置失败
         */
-        [DllImportAttribute(DllFileName, EntryPoint = "ICE_IPCSDK_GetTriggerMode", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(IceIpcSdk.DllFileName, EntryPoint = "ICE_IPCSDK_GetTriggerMode", CallingConvention = CallingConvention.Cdecl)]
         public static extern uint ICE_IPCSDK_GetTriggerMode(IntPtr hSDK, ref uint pu32TriggerMode);
 
         /**
@@ -1251,7 +1243,7 @@ namespace System.Data.DeYaIceIpcSDK
         *  @param  [IN] pstSysVersion       系统版本信息
         *  @return 0 失败 1 成功
         */
-        [DllImportAttribute(DllFileName, EntryPoint = "ICE_IPCSDK_GetCameraInfo", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(IceIpcSdk.DllFileName, EntryPoint = "ICE_IPCSDK_GetCameraInfo", CallingConvention = CallingConvention.Cdecl)]
         public static extern uint ICE_IPCSDK_GetCameraInfo(IntPtr hSDK, ref ICE_CameraInfo pstCameraInfo);
 
         /**
@@ -1260,7 +1252,7 @@ namespace System.Data.DeYaIceIpcSDK
         *  @param  [OUT] pstUARTCfg       串口配置参数结构体(ICE_UART_PARAM)
         *  @return 0 失败 1 成功
         */
-        [DllImportAttribute(DllFileName, EntryPoint = "ICE_IPCSDK_GetUARTCfg", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(IceIpcSdk.DllFileName, EntryPoint = "ICE_IPCSDK_GetUARTCfg", CallingConvention = CallingConvention.Cdecl)]
         public static extern uint ICE_IPCSDK_GetUARTCfg(IntPtr hSDK, ref ICE_UART_PARAM pstUARTCfg);
 
         /**
@@ -1269,7 +1261,7 @@ namespace System.Data.DeYaIceIpcSDK
         *  @param  [OUT] pstUARTCfg       串口配置参数
         *  @return 0 失败 1 成功
         */
-        [DllImportAttribute(DllFileName, EntryPoint = "ICE_IPCSDK_SetUARTCfg", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(IceIpcSdk.DllFileName, EntryPoint = "ICE_IPCSDK_SetUARTCfg", CallingConvention = CallingConvention.Cdecl)]
         public static extern uint ICE_IPCSDK_SetUARTCfg(IntPtr hSDK, ref ICE_UART_PARAM pstUARTCfg);
 
         /**
@@ -1281,7 +1273,7 @@ namespace System.Data.DeYaIceIpcSDK
         *  @param  [OUT] pu32Reserve2     预留参数2
         *  @return 0 失败 1 成功
         */
-        [DllImportAttribute(DllFileName, EntryPoint = "ICE_IPCSDK_GetIOState", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(IceIpcSdk.DllFileName, EntryPoint = "ICE_IPCSDK_GetIOState", CallingConvention = CallingConvention.Cdecl)]
         public static extern uint ICE_IPCSDK_GetIOState(IntPtr hSDK, uint u32Index, ref uint pu32IOState, ref uint pu32Reserve1, ref uint pu32Reserve2);
 
         /*
@@ -1291,7 +1283,7 @@ namespace System.Data.DeYaIceIpcSDK
         *  @param  [IN] u32PicSize			 车辆在场信息缓冲区地址大小
         *  @param  [OUT] pu32PicLen	         车辆在场信息实际长度
         */
-        [DllImportAttribute(DllFileName, EntryPoint = "ICE_IPCSDK_getOfflineVehicleInfo", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(IceIpcSdk.DllFileName, EntryPoint = "ICE_IPCSDK_getOfflineVehicleInfo", CallingConvention = CallingConvention.Cdecl)]
         public static extern uint ICE_IPCSDK_getOfflineVehicleInfo(IntPtr hSDK, byte[] pcVehicleInfo, uint u32InfoSize, ref uint pu32InfoLen);
 
         /*
@@ -1301,7 +1293,7 @@ namespace System.Data.DeYaIceIpcSDK
         *  @param  [IN] u32PicSize			 脱机计费数据缓冲区地址大小
         *  @param  [OUT] pu32PicLen	         脱机计费数据实际长度
         */
-        [DllImportAttribute(DllFileName, EntryPoint = "ICE_IPCSDK_getPayInfo", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(IceIpcSdk.DllFileName, EntryPoint = "ICE_IPCSDK_getPayInfo", CallingConvention = CallingConvention.Cdecl)]
         public static extern uint ICE_IPCSDK_getPayInfo(IntPtr hSDK, byte[] pcPayInfo, uint u32InfoSize, ref uint pu32InfoLen);
 
         /**
@@ -1310,7 +1302,7 @@ namespace System.Data.DeYaIceIpcSDK
         *  @param  [IN] pfOnIOEvent              IO事件回调
         *  @param  [IN] pvIOEventParam           IO事件回调参数,用于区分不同IO变化事件
         */
-        [DllImportAttribute(DllFileName, EntryPoint = "ICE_IPCSDK_SetIOEventCallBack", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(IceIpcSdk.DllFileName, EntryPoint = "ICE_IPCSDK_SetIOEventCallBack", CallingConvention = CallingConvention.Cdecl)]
         public static extern void ICE_IPCSDK_SetIOEventCallBack(IntPtr hSDK, ICE_IPCSDK_OnIOEvent pfOnIOEvent, IntPtr pvIOEventParam);
 
         /**
@@ -1321,7 +1313,7 @@ namespace System.Data.DeYaIceIpcSDK
         *  @param  [IN] s32EnableNoPlateVehicleBrand    是否支持有牌车的车款识别（1：输出，0：不输出）
         *  @return  获取状态 1 成功 0 失败
         */
-        [DllImportAttribute(DllFileName, EntryPoint = "ICE_IPCSDK_SetVehicleBrand", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(IceIpcSdk.DllFileName, EntryPoint = "ICE_IPCSDK_SetVehicleBrand", CallingConvention = CallingConvention.Cdecl)]
         public static extern uint ICE_IPCSDK_SetVehicleBrand(IntPtr hSDK, int s32FilterByPlate, int s32EnableNoPlateVehicleBrand, int s32EnableVehicleBrand);
 
         /**
@@ -1332,40 +1324,40 @@ namespace System.Data.DeYaIceIpcSDK
         *  @param  [OUT] s32EnableNoPlateVehicleBrand    是否支持有牌车的车款识别（1：输出，0：不输出）
         *  @return  获取状态 1 成功 0 失败
         */
-        [DllImportAttribute(DllFileName, EntryPoint = "ICE_IPCSDK_GetVehicleBrand", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(IceIpcSdk.DllFileName, EntryPoint = "ICE_IPCSDK_GetVehicleBrand", CallingConvention = CallingConvention.Cdecl)]
         public static extern uint ICE_IPCSDK_GetVehicleBrand(IntPtr hSDK, ref int s32FilterByPlate, ref int s32EnableNoPlateVehicleBrand, ref int s32EnableVehicleBrand);
 
-        [DllImportAttribute(DllFileName, EntryPoint = "ICE_IPCSDK_SetLedCreen_Config", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(IceIpcSdk.DllFileName, EntryPoint = "ICE_IPCSDK_SetLedCreen_Config", CallingConvention = CallingConvention.Cdecl)]
         public static extern uint ICE_IPCSDK_SetLedCreen_Config(IntPtr hSDK, ref ICE_OFFLINE_LED_CONFIG ledConfig);
 
-        [DllImportAttribute(DllFileName, EntryPoint = "ICE_IPCSDK_GetLedCreen_Config", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(IceIpcSdk.DllFileName, EntryPoint = "ICE_IPCSDK_GetLedCreen_Config", CallingConvention = CallingConvention.Cdecl)]
         public static extern uint ICE_IPCSDK_GetLedCreen_Config(IntPtr hSDK, ref ICE_OFFLINE_LED_CONFIG ledConfig);
 
-        [DllImportAttribute(DllFileName, EntryPoint = "ICE_IPCSDK_SetLicense", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(IceIpcSdk.DllFileName, EntryPoint = "ICE_IPCSDK_SetLicense", CallingConvention = CallingConvention.Cdecl)]
         public static extern uint ICE_IPCSDK_SetLicense(IntPtr hSDK, byte[] old_lics, byte[] new_lics);
 
-        [DllImportAttribute(DllFileName, EntryPoint = "ICE_IPCSDK_CheckLicense", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(IceIpcSdk.DllFileName, EntryPoint = "ICE_IPCSDK_CheckLicense", CallingConvention = CallingConvention.Cdecl)]
         public static extern uint ICE_IPCSDK_CheckLicense(IntPtr hSDK, byte[] license);
 
-        [DllImportAttribute(DllFileName, EntryPoint = "ICE_IPCSDK_EnableEnc", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(IceIpcSdk.DllFileName, EntryPoint = "ICE_IPCSDK_EnableEnc", CallingConvention = CallingConvention.Cdecl)]
         public static extern uint ICE_IPCSDK_EnableEnc(IntPtr hSDK, uint u32EncId, byte[] szPwd);
 
-        [DllImportAttribute(DllFileName, EntryPoint = "ICE_IPCSDK_ModifyEncPwd", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(IceIpcSdk.DllFileName, EntryPoint = "ICE_IPCSDK_ModifyEncPwd", CallingConvention = CallingConvention.Cdecl)]
         public static extern uint ICE_IPCSDK_ModifyEncPwd(IntPtr hSDK, byte[] szOldPwd, byte[] szNewPwd);
 
-        [DllImportAttribute(DllFileName, EntryPoint = "ICE_IPCSDK_SetDecPwd", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(IceIpcSdk.DllFileName, EntryPoint = "ICE_IPCSDK_SetDecPwd", CallingConvention = CallingConvention.Cdecl)]
         public static extern uint ICE_IPCSDK_SetDecPwd(IntPtr hSDK, byte[] szPwd);
 
-        [DllImportAttribute(DllFileName, EntryPoint = "ICE_IPCSDK_BroadcastWav", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(IceIpcSdk.DllFileName, EntryPoint = "ICE_IPCSDK_BroadcastWav", CallingConvention = CallingConvention.Cdecl)]
         public static extern uint ICE_IPCSDK_BroadcastWav(IntPtr hSDK, byte[] pcData, uint u32Len);
 
-        [DllImportAttribute(DllFileName, EntryPoint = "ICE_IPCSDK_UpdateWhiteListBatch", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(IceIpcSdk.DllFileName, EntryPoint = "ICE_IPCSDK_UpdateWhiteListBatch", CallingConvention = CallingConvention.Cdecl)]
         public static extern uint ICE_IPCSDK_UpdateWhiteListBatch(IntPtr hSDK, String szFilePath, int s32Type);
 
-        [DllImportAttribute(DllFileName, EntryPoint = "ICE_IPCSDK_GetSnapOsdCfg", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(IceIpcSdk.DllFileName, EntryPoint = "ICE_IPCSDK_GetSnapOsdCfg", CallingConvention = CallingConvention.Cdecl)]
         public static extern uint ICE_IPCSDK_GetSnapOsdCfg(IntPtr hSDK, ref T_SnapOsdCfg pstParam);
 
-        [DllImportAttribute(DllFileName, EntryPoint = "ICE_IPCSDK_SetSnapOsdCfg", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(IceIpcSdk.DllFileName, EntryPoint = "ICE_IPCSDK_SetSnapOsdCfg", CallingConvention = CallingConvention.Cdecl)]
         public static extern uint ICE_IPCSDK_SetSnapOsdCfg(IntPtr hSDK, ref T_SnapOsdCfg pstParam);
         #region // 显示实现接口
         uint IIceIpcSdkProxy.ICE_IPCSDK_BeginTalk(IntPtr hSDK) => ICE_IPCSDK_BeginTalk(hSDK);
@@ -1442,20 +1434,8 @@ namespace System.Data.DeYaIceIpcSDK
         uint IIceIpcSdkProxy.ICE_IPCSDK_WriteUserData_Binary(IntPtr hSDK, string pcData, uint nOffset, uint nLen) => ICE_IPCSDK_WriteUserData_Binary(hSDK, pcData, nOffset, nLen);
         #endregion
     }
-    internal partial class IceIpcSdkLoader : IIceIpcSdkProxy, IDisposable
+    internal class IceIpcSdkLoader : ASdkDynamicLoader, IIceIpcSdkProxy
     {
-        /// <summary>
-        /// 相对路径
-        /// </summary>
-        public const string DllPath = @"plugins\iceipcsdk";
-        /// <summary>
-        /// 全路径
-        /// </summary>
-        public static string DllFullPath { get; } = Path.GetFullPath(DllPath);
-        /// <summary>
-        /// 文件全路径
-        /// </summary>
-        public static String DllFullName { get; } = Path.Combine(Path.GetFullPath(DllPath), IceIpcDller.DllFileName);
         #region // 委托变量
         private DCreater.ICE_IPCSDK_Init _ICE_IPCSDK_Init;
         private DCreater.ICE_IPCSDK_Fini _ICE_IPCSDK_Fini;
@@ -1535,7 +1515,6 @@ namespace System.Data.DeYaIceIpcSDK
         /// </summary>
         public IceIpcSdkLoader()
         {
-            hModule = LoadLibraryEx(DllFullName, IntPtr.Zero, LoadLibraryFlags.LOAD_WITH_ALTERED_SEARCH_PATH);
             _ICE_IPCSDK_Init = GetDelegate<DCreater.ICE_IPCSDK_Init>(nameof(DCreater.ICE_IPCSDK_Init));
             _ICE_IPCSDK_Fini = GetDelegate<DCreater.ICE_IPCSDK_Fini>(nameof(DCreater.ICE_IPCSDK_Fini));
 
@@ -1610,103 +1589,10 @@ namespace System.Data.DeYaIceIpcSDK
             _ICE_IPCSDK_GetSnapOsdCfg = GetDelegate<DCreater.ICE_IPCSDK_GetSnapOsdCfg>(nameof(DCreater.ICE_IPCSDK_GetSnapOsdCfg));
             _ICE_IPCSDK_SetSnapOsdCfg = GetDelegate<DCreater.ICE_IPCSDK_SetSnapOsdCfg>(nameof(DCreater.ICE_IPCSDK_SetSnapOsdCfg));
         }
-        #region // 动态内容
-        [DllImport("kernel32.dll")]
-        private static extern uint GetLastError();
-        /// <summary>
-        /// API LoadLibraryEx
-        /// </summary>
-        /// <param name="lpFileName"></param>
-        /// <param name="hReservedNull"></param>
-        /// <param name="dwFlags"></param>
-        /// <returns></returns>
-        [DllImport("kernel32.dll", EntryPoint = "LoadLibraryEx", SetLastError = true)]
-        private static extern IntPtr LoadLibraryEx(string lpFileName, IntPtr hReservedNull, LoadLibraryFlags dwFlags);
-        [DllImport("kernel32.dll", CallingConvention = CallingConvention.StdCall)]
-        private static extern IntPtr LoadLibrary(string lpFileName, int h, int flags);
-        [DllImport("kernel32.dll", CharSet = CharSet.Ansi, ExactSpelling = true, SetLastError = true)]
-        private static extern IntPtr GetProcAddress(IntPtr hModule, string lProcName);
-        [DllImport("kernel32.dll", CallingConvention = CallingConvention.StdCall)]
-        private static extern bool FreeLibrary(IntPtr hModule);
-        IntPtr hModule;
-        /// <summary>
-        /// 释放
-        /// </summary>
-        public void Dispose()
+        public override string GetFileFullName()
         {
-            FreeLibrary(hModule);
+            return IceIpcSdk.DllFullName;
         }
-        public Delegate GetMethod(string procName, Type type)
-        {
-            IntPtr func = GetProcAddress(hModule, procName);
-            return (Delegate)Marshal.GetDelegateForFunctionPointer(func, type);
-        }
-        public T GetDelegate<T>(string procName) where T : Delegate
-        {
-            IntPtr func = GetProcAddress(hModule, procName);
-            return (T)Marshal.GetDelegateForFunctionPointer(func, typeof(T));
-        }
-        /// <summary>
-        /// LoadLibraryFlags
-        /// </summary>
-        public enum LoadLibraryFlags : uint
-        {
-            /// <summary>
-            /// DONT_RESOLVE_DLL_REFERENCES
-            /// </summary>
-            DONT_RESOLVE_DLL_REFERENCES = 0x00000001,
-
-            /// <summary>
-            /// LOAD_IGNORE_CODE_AUTHZ_LEVEL
-            /// </summary>
-            LOAD_IGNORE_CODE_AUTHZ_LEVEL = 0x00000010,
-
-            /// <summary>
-            /// LOAD_LIBRARY_AS_DATAFILE
-            /// </summary>
-            LOAD_LIBRARY_AS_DATAFILE = 0x00000002,
-
-            /// <summary>
-            /// LOAD_LIBRARY_AS_DATAFILE_EXCLUSIVE
-            /// </summary>
-            LOAD_LIBRARY_AS_DATAFILE_EXCLUSIVE = 0x00000040,
-
-            /// <summary>
-            /// LOAD_LIBRARY_AS_IMAGE_RESOURCE
-            /// </summary>
-            LOAD_LIBRARY_AS_IMAGE_RESOURCE = 0x00000020,
-
-            /// <summary>
-            /// LOAD_LIBRARY_SEARCH_APPLICATION_DIR
-            /// </summary>
-            LOAD_LIBRARY_SEARCH_APPLICATION_DIR = 0x00000200,
-
-            /// <summary>
-            /// LOAD_LIBRARY_SEARCH_DEFAULT_DIRS
-            /// </summary>
-            LOAD_LIBRARY_SEARCH_DEFAULT_DIRS = 0x00001000,
-
-            /// <summary>
-            /// LOAD_LIBRARY_SEARCH_DLL_LOAD_DIR
-            /// </summary>
-            LOAD_LIBRARY_SEARCH_DLL_LOAD_DIR = 0x00000100,
-
-            /// <summary>
-            /// LOAD_LIBRARY_SEARCH_SYSTEM32
-            /// </summary>
-            LOAD_LIBRARY_SEARCH_SYSTEM32 = 0x00000800,
-
-            /// <summary>
-            /// LOAD_LIBRARY_SEARCH_USER_DIRS
-            /// </summary>
-            LOAD_LIBRARY_SEARCH_USER_DIRS = 0x00000400,
-
-            /// <summary>
-            /// LOAD_WITH_ALTERED_SEARCH_PATH
-            /// </summary>
-            LOAD_WITH_ALTERED_SEARCH_PATH = 0x00000008
-        }
-        #endregion
         #region // 显示实现接口
         uint IIceIpcSdkProxy.ICE_IPCSDK_BeginTalk(IntPtr hSDK) => _ICE_IPCSDK_BeginTalk.Invoke(hSDK);
         uint IIceIpcSdkProxy.ICE_IPCSDK_Broadcast(IntPtr hSDK, ushort nIndex) => _ICE_IPCSDK_Broadcast.Invoke(hSDK, nIndex);

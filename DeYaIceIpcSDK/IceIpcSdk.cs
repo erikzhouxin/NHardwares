@@ -5,6 +5,7 @@ using System.Text;
 using System.Runtime.InteropServices;
 using System.IO;
 using System.Security.Cryptography;
+using System.Data.HardwareInterfaces;
 
 namespace System.Data.DeYaIceIpcSDK
 {
@@ -13,75 +14,73 @@ namespace System.Data.DeYaIceIpcSDK
     /// </summary>
     public static class IceIpcSdk
     {
+        /// <summary>
+        /// SDK文件名称
+        /// </summary>
+        public const String DllFileName = "ice_ipcsdk.dll";
+        /// <summary>
+        /// 全路径
+        /// </summary>
+        public static string BaseDllFullPath { get; } = Path.GetFullPath(".");
+        /// <summary>
+        /// 文件全路径
+        /// </summary>
+        public static String BaseDllFullName { get; } = Path.GetFullPath(DllFileName);
+        /// <summary>
+        /// 相对路径
+        /// </summary>
+        public const string DllVirtualPath = @"plugins\iceipcsdk";
+        /// <summary>
+        /// 全路径
+        /// </summary>
+        public static string DllFullPath { get; } = Path.GetFullPath(DllVirtualPath);
+        /// <summary>
+        /// 文件全路径
+        /// </summary>
+        public static String DllFullName { get; } = Path.Combine(DllFullPath, DllFileName);
+
         static Lazy<IIceIpcSdkProxy> _iceIpcSdk = new Lazy<IIceIpcSdkProxy>(() => new IceIpcSdkLoader(), true);
         /// <summary>
         /// 静态构造
         /// </summary>
         static IceIpcSdk()
         {
-            Directory.CreateDirectory(IceIpcSdkLoader.DllFullPath);
+            Directory.CreateDirectory(DllFullPath);
             if (Environment.Is64BitProcess)
             {
-                bool isExists = CompareFile(IceIpcSdkLoader.DllFullName, Properties.Resources.X64_IceIpcSdk);
-                if (!isExists)
+                if (!SdkFileComponent.CompareResourceFile(DllFullName, Properties.Resources.X64_ice_ipcsdk))
                 {
-                    WriteFile(Properties.Resources.X64_IceIpcSdk, Path.Combine(IceIpcSdkLoader.DllFullPath, "ice_ipcsdk.dll"));
-                    WriteFile(Properties.Resources.X64_Avutil52, Path.Combine(IceIpcSdkLoader.DllFullPath, "avutil-52.dll"));
-                    WriteFile(Properties.Resources.X64_Draw, Path.Combine(IceIpcSdkLoader.DllFullPath, "draw.dll"));
-                    WriteFile(Properties.Resources.X64_HiH264decW64, Path.Combine(IceIpcSdkLoader.DllFullPath, "hi_h264dec_w64.dll"));
-                    WriteFile(Properties.Resources.X64_IceP2p, Path.Combine(IceIpcSdkLoader.DllFullPath, "ice_p2p.dll"));
-                    WriteFile(Properties.Resources.X64_Packet, Path.Combine(IceIpcSdkLoader.DllFullPath, "Packet.dll"));
-                    WriteFile(Properties.Resources.X64_Swscale2, Path.Combine(IceIpcSdkLoader.DllFullPath, "swscale-2.dll"));
-                    WriteFile(Properties.Resources.X64_Wpcap, Path.Combine(IceIpcSdkLoader.DllFullPath, "wpcap.dll"));
-                    WriteFile(Properties.Resources.X64_Zlibwapi, Path.Combine(IceIpcSdkLoader.DllFullPath, "zlibwapi.dll"));
+                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_ice_ipcsdk, Path.Combine(DllFullPath, "ice_ipcsdk.dll"));
+                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_avutil_52, Path.Combine(DllFullPath, "avutil-52.dll"));
+                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_draw, Path.Combine(DllFullPath, "draw.dll"));
+                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_hi_h264dec_w64, Path.Combine(DllFullPath, "hi_h264dec_w64.dll"));
+                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_ice_p2p, Path.Combine(DllFullPath, "ice_p2p.dll"));
+                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_Packet, Path.Combine(DllFullPath, "Packet.dll"));
+                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_swscale_2, Path.Combine(DllFullPath, "swscale-2.dll"));
+                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_wpcap, Path.Combine(DllFullPath, "wpcap.dll"));
+                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_zlibwapi, Path.Combine(DllFullPath, "zlibwapi.dll"));
                 }
             }
             else
             {
-                bool isExists = CompareFile(IceIpcSdkLoader.DllFullName, Properties.Resources.X86_IceIpcSdk);
-                if (!isExists)
+                if (!SdkFileComponent.CompareResourceFile(DllFullName, Properties.Resources.X86_ice_ipcsdk))
                 {
-                    WriteFile(Properties.Resources.X86_IceIpcSdk, Path.Combine(IceIpcSdkLoader.DllFullPath, "ice_ipcsdk.dll"));
-                    WriteFile(Properties.Resources.X86_Avutil52, Path.Combine(IceIpcSdkLoader.DllFullPath, "avutil-52.dll"));
-                    WriteFile(Properties.Resources.X86_Draw, Path.Combine(IceIpcSdkLoader.DllFullPath, "draw.dll"));
-                    WriteFile(Properties.Resources.X86_HiH264decW, Path.Combine(IceIpcSdkLoader.DllFullPath, "hi_h264dec_w.dll"));
-                    WriteFile(Properties.Resources.X86_IceP2p, Path.Combine(IceIpcSdkLoader.DllFullPath, "ice_p2p.dll"));
-                    WriteFile(Properties.Resources.X86_Packet, Path.Combine(IceIpcSdkLoader.DllFullPath, "Packet.dll"));
-                    WriteFile(Properties.Resources.X86_Swscale2, Path.Combine(IceIpcSdkLoader.DllFullPath, "swscale-2.dll"));
-                    WriteFile(Properties.Resources.X86_Wpcap, Path.Combine(IceIpcSdkLoader.DllFullPath, "wpcap.dll"));
-                    WriteFile(Properties.Resources.X86_Zlibwapi, Path.Combine(IceIpcSdkLoader.DllFullPath, "zlibwapi.dll"));
+                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_ice_ipcsdk, Path.Combine(DllFullPath, "ice_ipcsdk.dll"));
+                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_avutil_52, Path.Combine(DllFullPath, "avutil-52.dll"));
+                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_draw, Path.Combine(DllFullPath, "draw.dll"));
+                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_hi_h264dec_w, Path.Combine(DllFullPath, "hi_h264dec_w.dll"));
+                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_ice_p2p, Path.Combine(DllFullPath, "ice_p2p.dll"));
+                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_Packet, Path.Combine(DllFullPath, "Packet.dll"));
+                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_swscale_2, Path.Combine(DllFullPath, "swscale-2.dll"));
+                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_wpcap, Path.Combine(DllFullPath, "wpcap.dll"));
+                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_zlibwapi, Path.Combine(DllFullPath, "zlibwapi.dll"));
                 }
             }
         }
-
-        private static void WriteFile(byte[] dllFile, string fullName)
-        {
-            try
-            {
-                if (File.Exists(fullName)) { File.Delete(fullName); }
-                File.WriteAllBytes(fullName, dllFile);
-            }
-            catch (Exception ex) { Console.WriteLine(ex); }
-        }
-
-        private static bool CompareFile(string file, byte[] res)
-        {
-            if (!File.Exists(file)) { return false; }
-            using (var hash = SHA1.Create())
-            {
-                using (var distFile = new FileStream(file, FileMode.Open, FileAccess.Read, FileShare.Read))
-                {
-                    var resHash = hash.ComputeHash(res);
-                    var distHash = hash.ComputeHash(distFile);
-                    if (resHash.Length != distHash.Length) { return false; }
-                    for (int i = 0; i < resHash.Length; i++)
-                    {
-                        if (resHash[i] != distHash[i]) { return false; }
-                    }
-                    return true;
-                }
-            }
-        }
+        /// <summary>
+        /// plugins内容实例
+        /// </summary>
+        public static IIceIpcSdkProxy Instance { get => _iceIpcSdk.Value; }
         /// <summary>
         /// 创建SDK代理
         /// </summary>
@@ -89,44 +88,10 @@ namespace System.Data.DeYaIceIpcSDK
         /// <returns></returns>
         public static IIceIpcSdkProxy Create(bool isBase = false)
         {
-            var currentDir = IceIpcDller.DllFullPath;
-            var pluginDir = IceIpcSdkLoader.DllFullPath;
-            if (isBase)
-            {
-                if (!File.Exists(IceIpcDller.DllFullName))
-                {
-                    if (Directory.Exists(pluginDir))
-                    {
-                        try
-                        {
-                            CopyDirectory(pluginDir, currentDir);
-                        }
-                        catch { }
-                    }
-                }
-                return IceIpcDller.Instance;
-            }
-            if (!Directory.Exists(pluginDir)) { return IceIpcDller.Instance; }
-            return _iceIpcSdk.Value;
-        }
-        /// <summary>
-        /// 复制目录
-        /// </summary>
-        /// <param name="src"></param>
-        /// <param name="tag"></param>
-        public static void CopyDirectory(string src, string tag)
-        {
-            foreach (var item in new DirectoryInfo(src).GetFileSystemInfos())
-            {
-                if (item is DirectoryInfo dir)
-                {
-                    var tagDir = Path.Combine(tag, dir.Name);
-                    if (!Directory.Exists(tagDir)) { Directory.CreateDirectory(tagDir); }
-                    CopyDirectory(dir.FullName, tagDir);
-                    continue;
-                }
-                File.Copy(item.FullName, Path.Combine(tag, item.Name), false);
-            }
+            if (!isBase) { return _iceIpcSdk.Value; }
+            if (!File.Exists(BaseDllFullName))
+            { SdkFileComponent.TryCopyDirectory(DllFullPath, BaseDllFullPath); }
+            return IceIpcSdkDller.Instance;
         }
     }
 }

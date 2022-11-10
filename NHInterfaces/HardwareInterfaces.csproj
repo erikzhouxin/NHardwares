@@ -21,8 +21,6 @@
 		<RepositoryType>git</RepositoryType>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 		<ApplicationIcon>Resources\favicon.ico</ApplicationIcon>
-		<AppConfig Condition="'$(TargetFramework)' == 'net40'">app.net40.config</AppConfig>
-		<AutoUnifyAssemblyReferences Condition="'$(TargetFramework)' == 'net40'">false</AutoUnifyAssemblyReferences>
 		<NoWarn>1701;1702;IDE0057;IDE0066;IDE0079;IDE0063</NoWarn>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)'=='Debug|net40'">
@@ -74,21 +72,12 @@
 	<ItemGroup Condition="'$(TargetFramework)' == 'net40'">
 	</ItemGroup>
 	<ItemGroup Condition="'$(TargetFramework)' == 'net45'">
-		<Reference Include="System.Web" />
 	</ItemGroup>
 	<ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.1'">
 	</ItemGroup>
 	<ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp3.1'">
 	</ItemGroup>
 	<ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
-	</ItemGroup>
-	<ItemGroup Condition="'$(TargetFramework)' == 'net40'">
-		<Reference Include="Microsoft.CSharp" />
-		<Reference Include="System.Runtime" />
-	</ItemGroup>
-	<ItemGroup Condition="'$(TargetFramework)' != 'net40'">
-		<PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
-		<PackageReference Include="System.Runtime" Version="4.3.1" />
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="NSystem.Data.Dabber" Version="2022.6.6" />
