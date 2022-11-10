@@ -257,7 +257,7 @@ namespace System.Data.VzClientSDK
         /// </summary>
         public const int URLLENGTH = 1000;
 
-        static Lazy<IVzClientSdkProxy> _albCtrlSdk = new Lazy<IVzClientSdkProxy>(() => new VzClientSdkLoader(), true);
+        static Lazy<IVzClientSdkProxy> _vzClientSdk = new Lazy<IVzClientSdkProxy>(() => new VzClientSdkLoader(), true);
         /// <summary>
         /// 静态构造
         /// </summary>
@@ -298,13 +298,17 @@ namespace System.Data.VzClientSDK
             }
         }
         /// <summary>
+        /// plugins内容实例
+        /// </summary>
+        public static IVzClientSdkProxy Instance { get => _vzClientSdk.Value; }
+        /// <summary>
         /// 创建SDK代理
         /// </summary>
         /// <param name="isBase"></param>
         /// <returns></returns>
         public static IVzClientSdkProxy Create(bool isBase = false)
         {
-            if (!isBase) { return _albCtrlSdk.Value; }
+            if (!isBase) { return _vzClientSdk.Value; }
             if (!File.Exists(DllFullName))
             { SdkFileComponent.TryCopyDirectory(DllFullPath, BaseDllFullPath); }
             return VzClientSdkDller.Instance;
