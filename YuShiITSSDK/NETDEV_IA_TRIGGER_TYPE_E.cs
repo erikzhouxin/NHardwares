@@ -6,7 +6,7 @@
     目的：触发抓拍方式
     定义：
     */
-    public enum IA_TRIGGER_TYPE_E
+    public enum NETDEV_IA_TRIGGER_TYPE_E
     {
         IA_TRIGGER_DEBUG = 0,                    /* 调试抓拍照片 */
         IA_TRIGGER_FORMAL = 1,                   /* 正式抓拍照片 */

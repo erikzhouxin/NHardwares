@@ -7,976 +7,71 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.IO;
-using System.Threading;
 using System.Runtime.InteropServices;
 using System.Collections;
 using System.Data.YuShiITSSDK;
+using stuUserInfo = System.Data.YuShiITSSDK.NETDEV_StuUserInfo;
 
 namespace YuShiITSSDK.NWinFormUI
 {
     public partial class MainForm : Form
     {
-        public int m_dwPtzSpeed;
-        public int gstBvecDevInfo;
+        #region // 全局定义字段
+        public static IntPtr m_lpDevHandle = IntPtr.Zero;
+        public static IntPtr m_oPlayHandleMap = IntPtr.Zero;
+        public static IntPtr m_oPicHandleMap = IntPtr.Zero;
+        public static IntPtr m_lpTmsPicHandle = IntPtr.Zero;
+        public static IntPtr m_talkHandle = IntPtr.Zero;
+        public static String m_strLogPath = null;
+        public static String m_strRecordSavePath = null;
+        public static String m_strsnapshotFilePath = null;
+        public static String m_strVideoCBDataPath = null;
+        public static String m_strVechicleListfile = null;
+        public static String m_strDeviceUpPathfile = null;
+        public static String m_strVehicleListPath = null;
+        public static String m_strPicListPath = null;
+        private static IItsNetDevSdkProxy NetDevSdk = ItsNetDevSdk.Create();
+        #endregion
+
+        public int m_volume = 0;
+        public bool m_soundStatus = false;
+        public int m_micVolume = 0;
+        public bool m_micStatus = false;
+
         public SortedList m_VecDevInfo = new SortedList();
-        public static string strModulePath = Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
 
-        //返回取得字符串缓冲区的长度
-        [DllImport("kernel32.dll")]
-        private static extern int GetPrivateProfileString(string lpAppName, string lpKeyName, string lpDefault,
-                                                          StringBuilder lpReturnedString, int nSize, string lpFileName);
+        /*callback function*/
+        NETDEV_ParkStatusReportCallBack_PF ItsParkStatusReportCB = null;
+        NETDEV_ParkStatusReportCallBack_PF ItsMultiParkStatusReportCB = null;
 
-        public MainForm()
+        NETDEV_PIC_UPLOAD_PF ItsPicCB = null;
+
+        NETDEV_PIC_UPLOAD_PF ItsMultiPicCB = null;
+
+        NETDEV_PIC_UPLOAD_PF ItsTmsPicCB = null;
+
+        NETDEV_PARKING_STATUS_PF ItsTmsParkingStatusCB = null;
+
+        NETDEV_PARSE_VIDEO_DATA_CALLBACK_PF ItsParseVideoCB = null;
+
+        NETDEV_DECODE_VIDEO_DATA_CALLBACK_PF ItsDecodeVideoCB = null;
+
+        public string GetDefaultString(byte[] utf8String)
         {
-            InitializeComponent();
-            InitOSDTab();
-            initDgUserInfo();
-            CheckForIllegalCrossThreadCalls = false;
-            int iRet = NETDEVSDK.NETDEV_Init();
-            if (NETDEVSDK.TRUE != iRet)
-            {
-                MessageBox.Show("it is not a admin oper");
-            }
-
-            NETDEVSDK.NETDEV_EnableCarplate(0);
-
-            _sdkCallBackFuncList.Add(this, this.AlarmMessCallBack);
-
-            _sdkExcepCallBackFuncList.Add(this, this.ExceptionCallBack);
+            utf8String = Encoding.Convert(Encoding.GetEncoding("UTF-8"), Encoding.Unicode, utf8String);
+            string strUnicode = Encoding.Unicode.GetString(utf8String);
+            strUnicode = strUnicode.Substring(0, strUnicode.IndexOf('\0'));
+            return strUnicode;
         }
 
-     
-
-        public event NETDEV_PIC_UPLOAD_PF MultiPicDataCallBackFun;
-        public event NETDEV_DISCOVERY_CALLBACK_PF SetDevDiscoveryCallBackHandl;
-        private static Dictionary<object, NETDEVSDK.NETDEV_AlarmMessCallBack_PF> _sdkCallBackFuncList = new Dictionary<object, NETDEVSDK.NETDEV_AlarmMessCallBack_PF>();
-        private static Dictionary<object, NETDEVSDK.NETDEV_ExceptionCallBack_PF> _sdkExcepCallBackFuncList = new Dictionary<object, NETDEVSDK.NETDEV_ExceptionCallBack_PF>();
-
-
-        public void Demo_AutoConnetThread()
+        public void GetUTF8Buffer(string inputString, int bufferLen, out byte[] utf8Buffer)
         {
-            IntPtr m_lpTmpPlayHandle = IntPtr.Zero;
-            IntPtr m_lpTmpPicHandle = IntPtr.Zero;
-            String strIP = IP.Text;
-            int iPort = Convert.ToInt32(PORT.Text);
-            String strUser = USER.Text;
-            String strPasswd = PASSWORD.Text;
-            IntPtr pstDevInfo = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(NETDEV_DEVICE_INFO_S)));
-            while (true)
+            utf8Buffer = new byte[bufferLen];
+            byte[] tempBuffer = System.Text.Encoding.UTF8.GetBytes(inputString);
+            for (int i = 0; i < tempBuffer.Length; ++i)
             {
-                Thread.Sleep(2000);
-                if (NETDEVSDK.FALSE != NETDEVSDK.bautoconnect)
-                {
-                    do
-                    {
-
-                        NETDEVSDK.m_lpDevHandle = NETDEVSDK.NETDEV_Login(strIP, (Int16)iPort, strUser, strPasswd, pstDevInfo);
-                        if (IntPtr.Zero != NETDEVSDK.m_lpDevHandle)
-                        {
-                            IntPtr ptrAlarmCB = Marshal.GetFunctionPointerForDelegate(_sdkCallBackFuncList[this]);
-                            Int32 bRet = NETDEVSDK.NETDEV_SetAlarmCallBack(NETDEVSDK.m_lpDevHandle, ptrAlarmCB, IntPtr.Zero);
-                            if (NETDEVSDK.TRUE != bRet)
-                            {
-                                MessageBox.Show("Set alarm callback failed.");
-                            }
-                        }
-                        Thread.Sleep(2000);
-                        NETDEVSDK.bStreamConnect = NETDEVSDK.TRUE;
-                    } while (IntPtr.Zero == NETDEVSDK.m_lpDevHandle);
-                }
-
-                NETDEVSDK.bautoconnect = NETDEVSDK.FALSE;
-
-                if (NETDEVSDK.TRUE == NETDEVSDK.bStreamConnect)
-                {
-                    if (NETDEVSDK.lpRePlayHandle == NETDEVSDK.m_oPlayHandleMap && IntPtr.Zero != NETDEVSDK.m_oPlayHandleMap)
-                    {
-                        NETDEV_PREVIEWINFO_S stNetInfo = new NETDEV_PREVIEWINFO_S();
-
-                        stNetInfo.dwChannelID = 1;
-                        stNetInfo.hPlayWnd = VID_STREAM.Handle;
-                        stNetInfo.dwStreamType = (Int32)NETDEV_LIVE_STREAM_INDEX_E.NETDEV_LIVE_STREAM_INDEX_MAIN;
-                        stNetInfo.dwLinkMode = (Int32)NETDEV_PROTOCAL_E.NETDEV_TRANSPROTOCAL_RTPTCP;
-                        m_lpTmpPlayHandle = NETDEVSDK.NETDEV_RealPlay(NETDEVSDK.m_lpDevHandle, ref stNetInfo, IntPtr.Zero, IntPtr.Zero);
-
-                        if (IntPtr.Zero != m_lpTmpPlayHandle)
-                        {
-                            NETDEVSDK.m_oPlayHandleMap = m_lpTmpPlayHandle;
-                        }
-                    }
-
-                    if (NETDEVSDK.lpRePicHandle == NETDEVSDK.m_oPicHandleMap && IntPtr.Zero != NETDEVSDK.m_oPicHandleMap)
-                    {
-                        NETDEVSDK.m_oPicHandleMap = (IntPtr)NETDEVSDK.NETDEV_StartPicStream(NETDEVSDK.m_lpDevHandle, PIC_STREAM.Handle, false, "", MultiPicDataCallBackFun, IntPtr.Zero);
-                        if (IntPtr.Zero != m_lpTmpPicHandle)
-                        {
-                            NETDEVSDK.m_oPicHandleMap = m_lpTmpPicHandle;
-                        }
-
-                    }
-
-                    if (IntPtr.Zero != NETDEVSDK.m_oPlayHandleMap && IntPtr.Zero != NETDEVSDK.m_oPicHandleMap)
-                    {
-                        NETDEVSDK.bStreamConnect = 0;
-                    }
-                }
+                utf8Buffer[i] = tempBuffer[i];
             }
-
-        }
-
-        private void ExceptionCallBack(IntPtr lpUserID, Int32 dwType, IntPtr stAlarmInfo, IntPtr lpExpHandle, IntPtr lpUserData)
-        {
-            if ((int)NETDEV_EXCEPTION_TYPE_E.NETDEV_EXCEPTION_EXCHANGE == dwType)
-            {
-                NETDEVSDK.NETDEV_Logout(NETDEVSDK.m_lpDevHandle);
-                NETDEVSDK.m_lpDevHandle = IntPtr.Zero;
-                NETDEVSDK.lpRePicHandle = NETDEVSDK.m_oPicHandleMap;
-                NETDEVSDK.lpRePlayHandle = NETDEVSDK.m_oPlayHandleMap;
-                NETDEVSDK.bautoconnect = NETDEVSDK.TRUE;
-            }
-        }
-
-        private void AlarmMessCallBack(IntPtr lpUserID, Int32 dwChannelID, NETDEV_ALARM_INFO_S stAlarmInfo, IntPtr lpBuf, Int32 dwBufLen, IntPtr lpUserData)
-        {
-            switch (stAlarmInfo.dwAlarmType)
-            {
-                case (int)NETDEV_ALARM_TYPE_E.NETDEV_ALARM_NET_FAILED:
-                case (int)NETDEV_ALARM_TYPE_E.NETDEV_ALARM_NET_TIMEOUT:
-                case (int)NETDEV_ALARM_TYPE_E.NETDEV_ALARM_SHAKE_FAILED:
-                    {
-                        NETDEVSDK.bStreamConnect = NETDEVSDK.TRUE;
-                        if (NETDEVSDK.m_oPlayHandleMap == lpUserID)
-                        {
-                            NETDEVSDK.lpRePlayHandle = lpUserID;
-                            NETDEVSDK.NETDEV_StopRealPlay(lpUserID);
-                        }
-                        if (NETDEVSDK.m_oPicHandleMap == lpUserID)
-                        {
-                            NETDEVSDK.lpRePicHandle = lpUserID;
-                            NETDEVSDK.NETDEV_StopPicStream(lpUserID);
-                        }
-                    }
-                    break;
-
-                default:
-                    {
-                        break;
-                    }
-            }
-        }
-
-        private void Login_Click(object sender, EventArgs e)
-        {
-            //first logout
-
-            if (IntPtr.Zero != NETDEVSDK.m_lpDevHandle)
-            {
-                NETDEVSDK.NETDEV_StopRealPlay(NETDEVSDK.m_lpDevHandle);
-            }
-
-            NETDEVSDK.NETDEV_Logout(NETDEVSDK.m_lpDevHandle);
-
-            NETDEVSDK.m_lpDevHandle = IntPtr.Zero;
-
-            //then login
-
-            String strIP = IP.Text;
-            int iPort = Convert.ToInt32(PORT.Text);
-            String strUser = USER.Text;
-            String strPasswd = PASSWORD.Text;
-
-            IntPtr pstDevInfo = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(NETDEV_DEVICE_INFO_S)));
-
-            NETDEVSDK.m_lpDevHandle = NETDEVSDK.NETDEV_Login(strIP, (Int16)iPort, strUser, strPasswd, pstDevInfo);
-            if (NETDEVSDK.m_lpDevHandle == IntPtr.Zero)
-            {
-                MessageBox.Show("Login failed,the error is [" + NETDEVSDK.NETDEV_GetLastError().ToString() + "]");
-                return;
-            }
-
-            IntPtr ptrAlarmCB = Marshal.GetFunctionPointerForDelegate(_sdkCallBackFuncList[this]);
-
-            NETDEVSDK.NETDEV_SetAlarmCallBack(NETDEVSDK.m_lpDevHandle, ptrAlarmCB, IntPtr.Zero);
-
-            IntPtr ptrExcepCB = Marshal.GetFunctionPointerForDelegate(_sdkExcepCallBackFuncList[this]);
-
-            NETDEVSDK.NETDEV_SetExceptionCallBack(ptrExcepCB, IntPtr.Zero);
-
-            MessageBox.Show("Login succeed");
-
-            Marshal.FreeHGlobal(pstDevInfo);
-            m_dwPtzSpeed = 5;
-
-            Thread hThread = new Thread(Demo_AutoConnetThread);
-            hThread.IsBackground = true;
-            hThread.Start();
-            //创建一个线程
-        }
-
-        private void Logout_Click(object sender, EventArgs e)
-        {
-            if (IntPtr.Zero == NETDEVSDK.m_lpDevHandle)
-            {
-                return;
-            }
-
-            if (IntPtr.Zero != NETDEVSDK.m_oPlayHandleMap)
-            {
-                NETDEVSDK.NETDEV_StopRealPlay(NETDEVSDK.m_oPlayHandleMap);
-            }
-            //后期要加“判断照片流是否已停止播放”
-
-            NETDEVSDK.NETDEV_Logout(NETDEVSDK.m_lpDevHandle);
-
-            NETDEVSDK.m_oPlayHandleMap = IntPtr.Zero;
-            NETDEVSDK.m_lpDevHandle = IntPtr.Zero;
-            MessageBox.Show("Logout succeed");
-            NETDEVSDK.NETDEV_Cleanup();
-        }
-
-        private void Setlog_Click(object sender, EventArgs e)
-        {
-            String strLogPath = LOGDIR.Text;
-            int lRet = NETDEVSDK.NETDEV_SetLogPath(strLogPath);
-            if (NETDEVSDK.TRUE != lRet)
-            {
-                MessageBox.Show("Set Log Path failed");
-            }
-            MessageBox.Show("Set Log Path succeed");
-            return;
-        }
-
-        private void Realplay_Click(object sender, EventArgs e)
-        {
-            if (IntPtr.Zero == NETDEVSDK.m_lpDevHandle)
-            {
-                return;
-            }
-            int bRet;
-            if (IntPtr.Zero != NETDEVSDK.m_oPlayHandleMap)
-            {
-                bRet = NETDEVSDK.NETDEV_StopRealPlay(NETDEVSDK.m_oPlayHandleMap);
-                if (NETDEVSDK.TRUE == bRet)
-                {
-                    NETDEVSDK.m_oPlayHandleMap = IntPtr.Zero;
-                }
-            }
-
-            NETDEV_PREVIEWINFO_S stNetInfo = new NETDEV_PREVIEWINFO_S();
-
-            stNetInfo.dwChannelID = 1;
-            stNetInfo.hPlayWnd = VID_STREAM.Handle;
-            stNetInfo.dwStreamType = (Int32)NETDEV_LIVE_STREAM_INDEX_E.NETDEV_LIVE_STREAM_INDEX_MAIN;
-            stNetInfo.dwLinkMode = (Int32)NETDEV_PROTOCAL_E.NETDEV_TRANSPROTOCAL_RTPTCP;//only support
-
-            NETDEVSDK.m_oPlayHandleMap = NETDEVSDK.NETDEV_RealPlay(NETDEVSDK.m_lpDevHandle, ref stNetInfo, IntPtr.Zero, IntPtr.Zero);
-            if (IntPtr.Zero == NETDEVSDK.m_oPlayHandleMap)
-            {
-                MessageBox.Show("Realplay failed.");
-            }
-
-        }
-
-        private void Stopplay_Click(object sender, EventArgs e)
-        {
-            if (IntPtr.Zero == NETDEVSDK.m_lpDevHandle)
-            {
-                return;
-            }
-
-            if (IntPtr.Zero == NETDEVSDK.m_oPlayHandleMap)
-            {
-                return;
-            }
-
-            int bRet = NETDEVSDK.NETDEV_StopRealPlay(NETDEVSDK.m_oPlayHandleMap);
-            if (NETDEVSDK.TRUE != bRet)
-            {
-                MessageBox.Show("Stop RealPlay failed");
-            }
-
-            NETDEVSDK.m_oPlayHandleMap = IntPtr.Zero;
-        }
-
-        private void Snapshot_Click(object sender, EventArgs e)
-        {
-            String strSavePath = "C:\\NetDEVSDK\\Pic\\netDev";
-
-            if (IntPtr.Zero != NETDEVSDK.m_oPlayHandleMap)
-            {
-                String strOut;
-                int bRet = NETDEVSDK.NETDEV_CapturePicture(NETDEVSDK.m_oPlayHandleMap, strSavePath, (int)NETDEV_PICTURE_FORMAT_E.NETDEV_PICTURE_JPG);
-                if (NETDEVSDK.TRUE != bRet)
-                {
-                    strOut = "Get Capture failed.";
-                }
-                else
-                {
-                    strOut = "Get Capture succeed, the path is " + strSavePath + ".jpg";
-                }
-                MessageBox.Show(strOut);
-            }
-        }
-
-        private void Switch_Click(object sender, EventArgs e)
-        {
-            Int32 ulRet = NETDEVSDK.NETDEV_SetOutputSwitchStatusCfg(NETDEVSDK.m_lpDevHandle);
-            if (NETDEVSDK.TRUE != ulRet)
-            {
-                MessageBox.Show("NETDEV_SetOutputSwitchStatusCfg fail");
-                return;
-            }
-            MessageBox.Show("Succeed");
-        }
-
-        private void GetDev_Click(object sender, EventArgs e)
-        {
-
-            if (IntPtr.Zero == NETDEVSDK.m_lpDevHandle)
-            {
-                return;
-            }
-            NETDEV_DEVICE_BASICINFO_S stDeviceInfo = new NETDEV_DEVICE_BASICINFO_S();
-            stDeviceInfo.szDevModel = new char[64];
-            stDeviceInfo.szFirmwareVersion = new char[64];
-            stDeviceInfo.szMacAddress = new char[64];
-            stDeviceInfo.szSerialNum = new char[64];
-            stDeviceInfo.byRes = new byte[512];
-
-            Int32 dwBytesReturned = 0;
-            Int32 lChannelID = 1;
-            int bRet = NETDEVSDK.NETDEV_GetDevConfig(NETDEVSDK.m_lpDevHandle, lChannelID, (int)NETDEV_CONFIG_COMMAND_E.NETDEV_GET_DEVICECFG, ref stDeviceInfo, Marshal.SizeOf(stDeviceInfo), ref dwBytesReturned);
-            if (NETDEVSDK.TRUE != bRet)
-            {
-                MessageBox.Show("Get Device Info failed.");
-            }
-            else
-            {
-                int i;
-                String DevModel = new String(stDeviceInfo.szDevModel);
-                for (i = 0; i < 64; i++)
-                {
-                    if ('\0' == stDeviceInfo.szDevModel[i])
-                    {
-                        break;
-                    }
-                }
-                DevModel = DevModel.Remove(i, 64 - i);
-
-                String SerialNum = new String(stDeviceInfo.szSerialNum);
-                for (i = 0; i < 64; i++)
-                {
-                    if ('\0' == stDeviceInfo.szSerialNum[i])
-                    {
-                        break;
-                    }
-                }
-                SerialNum = SerialNum.Remove(i, 64 - i);
-
-                String FirmwareVersion = new String(stDeviceInfo.szFirmwareVersion);
-                for (i = 0; i < 64; i++)
-                {
-                    if ('\0' == stDeviceInfo.szFirmwareVersion[i])
-                    {
-                        break;
-                    }
-                }
-                FirmwareVersion = FirmwareVersion.Remove(i, 64 - i);
-
-                String MacAddress = new String(stDeviceInfo.szMacAddress);
-                for (i = 0; i < 64; i++)
-                {
-                    if ('\0' == stDeviceInfo.szMacAddress[i])
-                    {
-                        break;
-                    }
-                }
-                MacAddress = MacAddress.Remove(i, 64 - i);
-                for (i = 0; i < 5; i++)
-                {
-                    MacAddress = MacAddress.Insert((i + 1) * 2 + i, ":");
-                }
-                DEV_TYPE.Text = DevModel;
-                DEV_SERIAL.Text = SerialNum;
-                SOFT_VER.Text = FirmwareVersion;
-                MAC_ADDR.Text = MacAddress;
-            }
-            return;
-        }
-        private void GetNetcfg_Click(object sender, EventArgs e)
-        {
-            if (IntPtr.Zero == NETDEVSDK.m_lpDevHandle)
-            {
-                return;
-            }
-            NETDEV_NETWORKCFG_S stNetworkcfg = new NETDEV_NETWORKCFG_S();
-            stNetworkcfg.szIpv4Address = new char[32];
-            stNetworkcfg.szIPv4GateWay = new char[32];
-            stNetworkcfg.byRes = new byte[512];
-
-            Int32 dwBytesReturned = 0;
-            int lChannelID = 1;
-            int bRet = NETDEVSDK.NETDEV_GetDevConfig(NETDEVSDK.m_lpDevHandle, lChannelID, (int)NETDEV_CONFIG_COMMAND_E.NETDEV_GET_NETWORKCFG, ref stNetworkcfg, Marshal.SizeOf(stNetworkcfg), ref dwBytesReturned);
-            if (NETDEVSDK.TRUE != bRet)
-            {
-                MessageBox.Show("Get Network Interfaces failed.");
-            }
-            else
-            {
-                String Ipv4Address = new String(stNetworkcfg.szIpv4Address);
-                int i;
-                for (i = 0; i < 32; i++)
-                {
-                    if ('\0' == stNetworkcfg.szIpv4Address[i])
-                    {
-                        break;
-                    }
-                }
-                Ipv4Address = Ipv4Address.Remove(i, 32 - i);
-                String IPv4SubnetMask = new String(stNetworkcfg.szIPv4SubnetMask);
-                for (i = 0; i < 32; i++)
-                {
-                    if ('\0' == stNetworkcfg.szIPv4SubnetMask[i])
-                    {
-                        break;
-                    }
-                }
-                IPv4SubnetMask = IPv4SubnetMask.Remove(i, 32 - i);
-
-                IPADDR.Text = Ipv4Address;
-                SUBNETMASK.Text = IPv4SubnetMask;
-                DHCP.Text = stNetworkcfg.dwIPv4DHCP.ToString();
-                MTU.Text = stNetworkcfg.dwMTU.ToString();
-            }
-            return;
-        }
-
-        private void SetNetcfg_Click(object sender, EventArgs e)
-        {
-            //have some question
-            if (IntPtr.Zero == NETDEVSDK.m_lpDevHandle)
-            {
-                return;
-            }
-            NETDEV_NETWORKCFG_S stNetworkSetcfg = new NETDEV_NETWORKCFG_S();
-            stNetworkSetcfg.szIpv4Address = new char[32];
-            stNetworkSetcfg.szIPv4GateWay = new char[32];
-            stNetworkSetcfg.byRes = new byte[512];
-            Int32 dwBytesReturned = 0;
-            int lChannelID = 1;
-            int bRet = NETDEVSDK.NETDEV_GetDevConfig(NETDEVSDK.m_lpDevHandle, lChannelID, (int)NETDEV_CONFIG_COMMAND_E.NETDEV_GET_NETWORKCFG, ref stNetworkSetcfg, Marshal.SizeOf(stNetworkSetcfg), ref dwBytesReturned);
-            if (NETDEVSDK.TRUE != bRet)
-            {
-                MessageBox.Show("Get Network Interfaces failed.");
-                return;
-            }
-            if ("" != IPADDR.Text)
-            {
-                IPADDR.Text = (stNetworkSetcfg.szIpv4Address).ToString();
-
-            }
-            if ("" != SUBNETMASK.Text)
-            {
-                SUBNETMASK.Text = stNetworkSetcfg.szIPv4SubnetMask.ToString();
-            }
-            if ("" != DHCP.Text)
-            {
-                DHCP.Text = stNetworkSetcfg.dwIPv4DHCP.ToString();
-            }
-            if ("" != MTU.Text)
-            {
-                MTU.Text = stNetworkSetcfg.dwMTU.ToString();
-            }
-
-            bRet = NETDEVSDK.NETDEV_SetDevConfig(NETDEVSDK.m_lpDevHandle, lChannelID, (int)NETDEV_CONFIG_COMMAND_E.NETDEV_SET_NETWORKCFG, ref stNetworkSetcfg, Marshal.SizeOf(stNetworkSetcfg));
-            if (NETDEVSDK.TRUE != bRet)
-            {
-                MessageBox.Show("Set Network Interfaces failed.");
-                return;
-            }
-            else
-            {
-                MessageBox.Show("Set Network Interfaces succeed.");
-            }
-            return;
-        }
-
-        private void FocusIn_Click(object sender, EventArgs e)
-        {
-            if (IntPtr.Zero == NETDEVSDK.m_lpDevHandle)
-            {
-                return;
-            }
-            int lChannelID = 1;
-            int bRet = NETDEVSDK.NETDEV_PTZControl_Other(NETDEVSDK.m_lpDevHandle, lChannelID, (int)NETDEV_PTZ_E.NETDEV_PTZ_ZOOMTELE, m_dwPtzSpeed);
-            if (NETDEVSDK.TRUE != bRet)
-            {
-                MessageBox.Show("PTZ control zoom-tele failed.");
-            }
-
-            return;
-        }
-
-        private void FocusOut_Click(object sender, EventArgs e)
-        {
-            if (IntPtr.Zero == NETDEVSDK.m_lpDevHandle)
-            {
-                return;
-            }
-            int lChannelID = 1;
-            int bRet = NETDEVSDK.NETDEV_PTZControl_Other(NETDEVSDK.m_lpDevHandle, lChannelID, (int)NETDEV_PTZ_E.NETDEV_PTZ_ZOOMWIDE, m_dwPtzSpeed);
-            if (NETDEVSDK.TRUE != bRet)
-            {
-                MessageBox.Show("PTZ control zoom-wide failed.");
-            }
-
-            return;
-        }
-
-        private void FocusFar_Click(object sender, EventArgs e)
-        {
-            if (IntPtr.Zero == NETDEVSDK.m_lpDevHandle)
-            {
-                return;
-            }
-            int lChannelID = 1;
-            int lRet = NETDEVSDK.NETDEV_PTZControl_Other(NETDEVSDK.m_lpDevHandle, lChannelID, (int)NETDEV_PTZ_E.NETDEV_PTZ_FOCUSFAR, m_dwPtzSpeed);
-            if (NETDEVSDK.TRUE != lRet)
-            {
-                MessageBox.Show("PTZ control Focus Far failed.");
-            }
-
-            return;
-        }
-
-        private void FocusNear_Click(object sender, EventArgs e)
-        {
-            if (IntPtr.Zero == NETDEVSDK.m_lpDevHandle)
-            {
-                return;
-            }
-            int lChannelID = 1;
-            int lRet = NETDEVSDK.NETDEV_PTZControl_Other(NETDEVSDK.m_lpDevHandle, lChannelID, (int)NETDEV_PTZ_E.NETDEV_PTZ_FOCUSNEAR, m_dwPtzSpeed);
-            if (NETDEVSDK.TRUE != lRet)
-            {
-                MessageBox.Show("PTZ control Focus Near failed.");
-            }
-
-            return;
-        }
-
-        private void PTZCTR_NW_Click(object sender, EventArgs e)
-        {
-            if (IntPtr.Zero == NETDEVSDK.m_lpDevHandle)
-            {
-                return;
-            }
-            int lChannelID = 1;
-            int bRet = NETDEVSDK.NETDEV_PTZControl_Other(NETDEVSDK.m_lpDevHandle, lChannelID, (int)NETDEV_PTZ_E.NETDEV_PTZ_LEFTUP, m_dwPtzSpeed);
-            if (NETDEVSDK.TRUE != bRet)
-            {
-                MessageBox.Show("PTZ control left-up failed.");
-            }
-
-            return;
-        }
-
-        private void PTZCTR_L_Click(object sender, EventArgs e)
-        {
-            if (IntPtr.Zero == NETDEVSDK.m_lpDevHandle)
-            {
-                return;
-            }
-            int lChannelID = 1;
-            int bRet = NETDEVSDK.NETDEV_PTZControl_Other(NETDEVSDK.m_lpDevHandle, lChannelID, (int)NETDEV_PTZ_E.NETDEV_PTZ_PANLEFT, m_dwPtzSpeed);
-            if (NETDEVSDK.TRUE != bRet)
-            {
-                MessageBox.Show("PTZ control left failed.");
-            }
-
-            return;
-        }
-
-        private void PTZCTR_SW_Click(object sender, EventArgs e)
-        {
-            if (IntPtr.Zero == NETDEVSDK.m_lpDevHandle)
-            {
-                return;
-            }
-            int lChannelID = 1;
-            int bRet = NETDEVSDK.NETDEV_PTZControl_Other(NETDEVSDK.m_lpDevHandle, lChannelID, (int)NETDEV_PTZ_E.NETDEV_PTZ_LEFTDOWN, m_dwPtzSpeed);
-            if (NETDEVSDK.TRUE != bRet)
-            {
-                MessageBox.Show("PTZ control left-down failed.");
-            }
-
-            return;
-        }
-
-        private void PTZCTR_UP_Click(object sender, EventArgs e)
-        {
-            if (IntPtr.Zero == NETDEVSDK.m_lpDevHandle)
-            {
-                return;
-            }
-            int lChannelID = 1;
-            int bRet = NETDEVSDK.NETDEV_PTZControl_Other(NETDEVSDK.m_lpDevHandle, lChannelID, (int)NETDEV_PTZ_E.NETDEV_PTZ_TILTUP, m_dwPtzSpeed);
-            if (NETDEVSDK.TRUE != bRet)
-            {
-                MessageBox.Show("PTZ control tilt-up failed.");
-            }
-
-            return;
-        }
-
-        private void PTZCTR_STOP_Click(object sender, EventArgs e)
-        {
-            if (IntPtr.Zero == NETDEVSDK.m_lpDevHandle)
-            {
-                return;
-            }
-            int lChannelID = 1;
-            int bRet = NETDEVSDK.NETDEV_PTZControl_Other(NETDEVSDK.m_lpDevHandle, lChannelID, (int)NETDEV_PTZ_E.NETDEV_PTZ_ALLSTOP, 0);
-            if (NETDEVSDK.TRUE != bRet)
-            {
-                MessageBox.Show("PTZ control all stop failed.");
-            }
-
-            return;
-        }
-
-        private void PTZCTR_DN_Click(object sender, EventArgs e)
-        {
-            if (IntPtr.Zero == NETDEVSDK.m_lpDevHandle)
-            {
-                return;
-            }
-            int lChannelID = 1;
-            int bRet = NETDEVSDK.NETDEV_PTZControl_Other(NETDEVSDK.m_lpDevHandle, lChannelID, (int)NETDEV_PTZ_E.NETDEV_PTZ_TILTDOWN, m_dwPtzSpeed);
-            if (NETDEVSDK.TRUE != bRet)
-            {
-                MessageBox.Show("PTZ control down failed.");
-            }
-
-            return;
-        }
-
-        private void PTZCTR_NE_Click(object sender, EventArgs e)
-        {
-            if (IntPtr.Zero == NETDEVSDK.m_lpDevHandle)
-            {
-                return;
-            }
-            int lChannelID = 1;
-            int bRet = NETDEVSDK.NETDEV_PTZControl_Other(NETDEVSDK.m_lpDevHandle, lChannelID, (int)NETDEV_PTZ_E.NETDEV_PTZ_RIGHTUP, m_dwPtzSpeed);
-            if (NETDEVSDK.TRUE != bRet)
-            {
-                MessageBox.Show("PTZ control right-up failed.");
-            }
-
-            return;
-        }
-
-        private void PTZCTR_R_Click(object sender, EventArgs e)
-        {
-            if (IntPtr.Zero == NETDEVSDK.m_lpDevHandle)
-            {
-                return;
-            }
-            int lChannelID = 1;
-            int bRet = NETDEVSDK.NETDEV_PTZControl_Other(NETDEVSDK.m_lpDevHandle, lChannelID, (int)NETDEV_PTZ_E.NETDEV_PTZ_PANRIGHT, m_dwPtzSpeed);
-            if (NETDEVSDK.TRUE != bRet)
-            {
-                MessageBox.Show("PTZ control right failed.");
-            }
-
-            return;
-        }
-
-        private void PTZCTR_SE_Click(object sender, EventArgs e)
-        {
-            if (IntPtr.Zero == NETDEVSDK.m_lpDevHandle)
-            {
-                return;
-            }
-            int lChannelID = 1;
-            int bRet = NETDEVSDK.NETDEV_PTZControl_Other(NETDEVSDK.m_lpDevHandle, lChannelID, (int)NETDEV_PTZ_E.NETDEV_PTZ_RIGHTDOWN, m_dwPtzSpeed);
-            if (NETDEVSDK.TRUE != bRet)
-            {
-                MessageBox.Show("PTZ control right-down failed.");
-            }
-
-            return;
-        }
-
-        private void SetPreset_Click(object sender, EventArgs e)
-        {
-            if (IntPtr.Zero == NETDEVSDK.m_lpDevHandle)
-            {
-                return;
-            }
-            Int32 l_PresetID = Convert.ToInt32(PresetID.Text);
-            if (0 > l_PresetID || l_PresetID >= NETDEVSDK.NETDEV_MAX_PRESET_NUM)
-            {
-                MessageBox.Show("Preset ID invalid.");
-            }
-            String szPresetName = PresetID.Text + "\0";
-            int lChannelID = 1;
-            int bRet = NETDEVSDK.NETDEV_PTZPreset_Other(NETDEVSDK.m_lpDevHandle, lChannelID, (int)NETDEV_PTZ_PRESETCMD_E.NETDEV_PTZ_SET_PRESET, szPresetName, l_PresetID);
-            if (NETDEVSDK.TRUE != bRet)
-            {
-                MessageBox.Show("Set preset failed.");
-            }
-            else
-            {
-                GetPreset_Click(sender, e);
-            }
-        }
-
-        private void GetPreset_Click(object sender, EventArgs e)
-        {
-            if (IntPtr.Zero == NETDEVSDK.m_lpDevHandle)
-            {
-                return;
-            }
-            NETDEV_PTZ_ALLPRESETS_S stPtzPresets = new NETDEV_PTZ_ALLPRESETS_S();
-            stPtzPresets.astPreset = new NETDEV_PTZ_PRESET_S[256];
-
-            Int32 dwBytesReturned = 0;
-            int lChannelID = 1;
-            int bRet = NETDEVSDK.NETDEV_GetDevConfig(NETDEVSDK.m_lpDevHandle, lChannelID, (int)NETDEV_CONFIG_COMMAND_E.NETDEV_GET_PTZPRESETS, ref stPtzPresets, Marshal.SizeOf(stPtzPresets), ref dwBytesReturned);
-            if (NETDEVSDK.TRUE != bRet)
-            {
-                MessageBox.Show("Get presets failed.");
-            }
-            else
-            {
-                String strTemp;
-                String strOut = "";
-
-                for (Int32 i = 0; i < stPtzPresets.dwSize; i++)
-                {
-                    strTemp = "NO." + i + "   ID：" + stPtzPresets.astPreset[i].dwPresetID.ToString() + "\n";
-                    strOut += strTemp;
-                }
-
-                MessageBox.Show(strOut);
-            }
-
-            return;
-        }
-
-        private void GotoPreset_Click(object sender, EventArgs e)
-        {
-            if (IntPtr.Zero == NETDEVSDK.m_lpDevHandle)
-            {
-                return;
-            }
-            Int32 l_PresetID = Convert.ToInt32(PresetID.Text);
-            if (0 > l_PresetID && l_PresetID >= NETDEVSDK.NETDEV_MAX_PRESET_NUM)
-            {
-                MessageBox.Show("Preset ID invalid.");
-            }
-
-            String strPresetName = "";
-
-            int lChannelID = 1;
-            int bRet = NETDEVSDK.NETDEV_PTZPreset_Other(NETDEVSDK.m_lpDevHandle, lChannelID, (int)NETDEV_PTZ_PRESETCMD_E.NETDEV_PTZ_GOTO_PRESET, strPresetName, l_PresetID);
-            if (NETDEVSDK.TRUE != bRet)
-            {
-                MessageBox.Show("Go to preset failed.");
-            }
-
-            return;
-        }
-
-        private void DeletePreset_Click(object sender, EventArgs e)
-        {
-            Int32 l_PresetID = Convert.ToInt32(PresetID.Text);
-            if (0 > l_PresetID && l_PresetID >= NETDEVSDK.NETDEV_MAX_PRESET_NUM)
-            {
-                MessageBox.Show("Preset ID invalid.");
-            }
-
-            String strPresetName = "";
-            if (IntPtr.Zero == NETDEVSDK.m_lpDevHandle)
-            {
-                return;
-            }
-            int lChannelID = 1;
-            int bRet = NETDEVSDK.NETDEV_PTZPreset_Other(NETDEVSDK.m_lpDevHandle, lChannelID, (int)NETDEV_PTZ_PRESETCMD_E.NETDEV_PTZ_CLE_PRESET, strPresetName, l_PresetID);
-            if (NETDEVSDK.TRUE != bRet)
-            {
-                MessageBox.Show("Delete preset failed.");
-            }
-            else
-            {
-                GetPreset_Click(sender, e);
-            }
-        }
-
-        private void GetPatrol_Click(object sender, EventArgs e)
-        {
-            NETDEV_CRUISE_LIST_S stCuriseList = new NETDEV_CRUISE_LIST_S();
-            stCuriseList.astCruiseInfo = new NETDEV_CRUISE_INFO_S[16];
-            if (IntPtr.Zero == NETDEVSDK.m_lpDevHandle)
-            {
-                return;
-            }
-            int lChannelID = 1;
-            int bRet = NETDEVSDK.NETDEV_PTZGetCruise(NETDEVSDK.m_lpDevHandle, lChannelID, ref stCuriseList);
-            if (NETDEVSDK.TRUE != bRet)
-            {
-                MessageBox.Show("Get Cruise failed.");
-            }
-            else
-            {
-                String strTemp;
-                String strOut = "";
-                for (Int32 i = 0; i < stCuriseList.dwSize; i++)
-                {
-                    strTemp = "[Cruise]NO." + i + "   ID：" + stCuriseList.astCruiseInfo[i].dwCuriseID.ToString() + "\n";
-                    strOut += strTemp;
-
-                    for (Int32 k = 0; k < stCuriseList.astCruiseInfo[i].dwSize; k++)
-                    {
-                        strTemp = "\t [Preset] NO." + k + "   ID：" + stCuriseList.astCruiseInfo[i].astCruisePoint[k].dwPresetID.ToString() + "  StayTime： " + stCuriseList.astCruiseInfo[i].astCruisePoint[k].dwStayTime.ToString() + "\n";
-                        strOut += strTemp;
-                    }
-                }
-
-                MessageBox.Show(strOut);
-            }
-
-            return;
-        }
-
-        private void EditPatrol_Click(object sender, EventArgs e)
-        {
-            Int32 m_lCruiseID = Convert.ToInt32(PatrolID.Text);
-
-            NETDEV_CRUISE_INFO_S stCruiseInfo = new NETDEV_CRUISE_INFO_S();
-            stCruiseInfo.szCuriseName = new char[32];
-            stCruiseInfo.astCruisePoint = new NETDEV_CRUISE_POINT_S[32];
-            stCruiseInfo.dwCuriseID = m_lCruiseID;
-            //(VOID)_snprintf(stCruiseInfo.szCuriseName, (NETDEV_LEN_32 - 1), "%u", stCruiseInfo.dwCuriseID);
-            stCruiseInfo.dwSize = 3;
-
-            stCruiseInfo.astCruisePoint[0].dwPresetID = 3;
-            stCruiseInfo.astCruisePoint[0].dwStayTime = 14000;
-
-            stCruiseInfo.astCruisePoint[1].dwPresetID = 4;
-            stCruiseInfo.astCruisePoint[1].dwStayTime = 15000;
-
-            stCruiseInfo.astCruisePoint[2].dwPresetID = 5;
-            stCruiseInfo.astCruisePoint[2].dwStayTime = 16000;
-            if (IntPtr.Zero == NETDEVSDK.m_lpDevHandle)
-            {
-                return;
-            }
-            int lChannelID = 1;
-            int bRet = NETDEVSDK.NETDEV_PTZCruise_Other(NETDEVSDK.m_lpDevHandle, lChannelID, (int)NETDEV_PTZ_CRUISECMD_E.NETDEV_PTZ_MODIFY_CRUISE, ref stCruiseInfo);
-            if (NETDEVSDK.TRUE != bRet)
-            {
-                MessageBox.Show("Edit Cruise failed.");
-            }
-            else
-            {
-                GetPatrol_Click(sender, e);
-            }
-
-            return;
-        }
-
-        private void AddPatrol_Click(object sender, EventArgs e)
-        {
-            NETDEV_CRUISE_INFO_S stCruiseInfo = new NETDEV_CRUISE_INFO_S();
-            stCruiseInfo.szCuriseName = new char[32];
-            stCruiseInfo.astCruisePoint = new NETDEV_CRUISE_POINT_S[32];
-
-            stCruiseInfo.dwSize = 2;
-            stCruiseInfo.astCruisePoint[0].dwPresetID = 1;
-            stCruiseInfo.astCruisePoint[0].dwStayTime = 11000;
-
-            stCruiseInfo.astCruisePoint[1].dwPresetID = 2;
-            stCruiseInfo.astCruisePoint[1].dwStayTime = 12000;
-            if (IntPtr.Zero == NETDEVSDK.m_lpDevHandle)
-            {
-                return;
-            }
-            int lChannelID = 1;
-            int bRet = NETDEVSDK.NETDEV_PTZCruise_Other(NETDEVSDK.m_lpDevHandle, lChannelID, (int)NETDEV_PTZ_CRUISECMD_E.NETDEV_PTZ_ADD_CRUISE, ref stCruiseInfo);
-            if (NETDEVSDK.TRUE != bRet)
-            {
-                MessageBox.Show("Add Cruise failed.");
-            }
-            else
-            {
-                GetPatrol_Click(sender, e);
-            }
-
-            return;
-        }
-
-        private void DeletePatrol_Click(object sender, EventArgs e)
-        {
-            Int32 m_lCruiseID = Convert.ToInt32(PatrolID.Text);
-            NETDEV_CRUISE_INFO_S stCruiseInfo = new NETDEV_CRUISE_INFO_S();
-            stCruiseInfo.dwCuriseID = m_lCruiseID;
-            if (IntPtr.Zero == NETDEVSDK.m_lpDevHandle)
-            {
-                return;
-            }
-            int lChannelID = 1;
-            int bRet = NETDEVSDK.NETDEV_PTZCruise_Other(NETDEVSDK.m_lpDevHandle, lChannelID, (int)NETDEV_PTZ_CRUISECMD_E.NETDEV_PTZ_DEL_CRUISE, ref stCruiseInfo);
-            if (NETDEVSDK.TRUE != bRet)
-            {
-                MessageBox.Show("failed.");
-            }
-            else
-            {
-                GetPatrol_Click(sender, e);
-            }
-
-            return;
-        }
-
-        private void StartPatrol_Click(object sender, EventArgs e)
-        {
-            Int32 m_lCruiseID = Convert.ToInt32(PatrolID.Text);
-            NETDEV_CRUISE_INFO_S stCruiseInfo = new NETDEV_CRUISE_INFO_S();
-            stCruiseInfo.dwCuriseID = m_lCruiseID;
-            if (IntPtr.Zero == NETDEVSDK.m_lpDevHandle)
-            {
-                return;
-            }
-            int lChannelID = 1;
-            int bRet = NETDEVSDK.NETDEV_PTZCruise_Other(NETDEVSDK.m_lpDevHandle, lChannelID, (int)NETDEV_PTZ_CRUISECMD_E.NETDEV_PTZ_RUN_CRUISE, ref stCruiseInfo);
-            if (NETDEVSDK.TRUE != bRet)
-            {
-                MessageBox.Show("Start Curise failed.");
-            }
-
-            return;
-        }
-
-        private void StopPatrol_Click(object sender, EventArgs e)
-        {
-            Int32 m_lCruiseID = Convert.ToInt32(PatrolID.Text);
-            NETDEV_CRUISE_INFO_S stCruiseInfo = new NETDEV_CRUISE_INFO_S();
-            stCruiseInfo.dwCuriseID = m_lCruiseID;
-            if (IntPtr.Zero == NETDEVSDK.m_lpDevHandle)
-            {
-                return;
-            }
-            int lChannelID = 1;
-            int bRet = NETDEVSDK.NETDEV_PTZCruise_Other(NETDEVSDK.m_lpDevHandle, lChannelID, (int)NETDEV_PTZ_CRUISECMD_E.NETDEV_PTZ_STOP_CRUISE, ref stCruiseInfo);
-            if (NETDEVSDK.TRUE != bRet)
-            {
-                MessageBox.Show("Stop Cruise failed.");
-            }
-
-            return;
         }
 
         public object BytesToStruct(byte[] bytes, Type strcutType)
@@ -994,304 +89,1429 @@ namespace YuShiITSSDK.NWinFormUI
             }
         }
 
-        public void PicDataCallback(IntPtr pstUniviewData, uint ulStreamHandle)
+        /*Status report callback. used to get the status of connection between the SDK and the device */
+        public void ParkStatusReportCallback(IntPtr lpUserID, UInt32 ulReportType, IntPtr pParam, IntPtr lpUserData)
         {
-            //指针转换为对应结构体
-            NETDEVSDK.NETDEV_PIC_DATA_S info = new NETDEVSDK.NETDEV_PIC_DATA_S();
-            byte[] pByte = new byte[Marshal.SizeOf(info)];
-            Marshal.Copy(pstUniviewData, pByte, 0, Marshal.SizeOf(info));
-            info = (NETDEVSDK.NETDEV_PIC_DATA_S)BytesToStruct(pByte, info.GetType());
 
-            //车牌号码
-            string carPlate = new string(info.szCarPlate).TrimEnd('\0');
-
-            //时间
-            string time = new string(info.szPassTime).TrimEnd('\0');
-
-            //保存过车图片
-            for (int i = 0; i < info.ulPicNumber; i++)
+            switch (ulReportType)
             {
-                string passTime = new string(info.acPassTime);
-
-                int size = (int)info.aulDataLen[i];
-                byte[] buffer = new byte[size];
-                Marshal.Copy(info.apcData[i], buffer, 0, size);
-
-                using (MemoryStream ms = new MemoryStream(buffer))
-                {
-                    using (Image image = Image.FromStream(ms))
+                case (uint)NETDEV_ITS_STATUS_REPORT_E.NETDEV_ITS_DEV_OFFLINE_E:
                     {
-                        image.Save(string.Format(@".\{0}_{1}.bmp", time, i));
+                        if (lpUserID == m_lpDevHandle)
+                        {
+                            DeviceStatuslabel.Text = "Offline";
+                        }
+                        break;
+                    }
+                case (uint)NETDEV_ITS_STATUS_REPORT_E.NETDEV_ITS_DEV_RONLINE_E:
+                    {
+                        if (lpUserID == m_lpDevHandle)
+                        {
+                            DeviceStatuslabel.Text = "Online";
+                        }
+
+                        break;
+                    }
+                case (uint)NETDEV_ITS_STATUS_REPORT_E.NETDEV_ITS_MEDIA_OFFLINE_E:
+                    {
+                        if (pParam == m_oPicHandleMap)
+                        {
+                            PicStreamlabel.Text = "Offline";
+                        }
+                        else if (pParam == m_oPlayHandleMap)
+                        {
+                            RealStreamlabel.Text = "Offline";
+                        }
+
+                        break;
+                    }
+                case (uint)NETDEV_ITS_STATUS_REPORT_E.NETDEV_ITS_MEDIA_RONLINE_E:
+                    {
+                        if (pParam == m_oPicHandleMap)
+                        {
+                            PicStreamlabel.Text = "Online";
+                        }
+                        else if (pParam == m_oPlayHandleMap)
+                        {
+                            RealStreamlabel.Text = "Online";
+                        }
+
+                        break;
+                    }
+                default:
+                    break;
+            }
+
+
+        }
+
+        /*Photo data callback function*/
+        public void PicDataCallback(ref NETDEV_PIC_DATA_S pstPicData, IntPtr lpUserData)
+        {
+            string carPlate = GetDefaultString(pstPicData.szCarPlate);
+            string time = GetDefaultString(pstPicData.szPassTime);
+            string TollgateID = GetDefaultString(pstPicData.szTollgateID);
+
+            string[] plateColour = new string[] { "white", "yellow", "blue", "black", "other", "green", "red", "y-g", "green" };
+
+            ListViewItem oListViewItem = new ListViewItem(TollgateID);
+            oListViewItem.SubItems.Add(time);
+            oListViewItem.SubItems.Add(Convert.ToString(pstPicData.lLaneID));
+            oListViewItem.SubItems.Add(plateColour[pstPicData.lPlateColor]);
+            oListViewItem.SubItems.Add(carPlate);
+            oListViewItem.SubItems.Add("No");
+
+            oListViewItem.EnsureVisible();
+
+
+            for (int i = 0; i < pstPicData.ulPicNumber; i++)
+            {
+                String strFileName = time + "_" + carPlate + "_" + i.ToString() + ".jpg";
+
+                int size = (int)pstPicData.aulDataLen[i];
+                byte[] buffer = new byte[size];
+                Marshal.Copy(pstPicData.apcData[i], buffer, 0, size);
+
+                FileStream fs = new FileStream(strFileName, FileMode.Create);
+
+                fs.Write(buffer, 0, buffer.Length);
+
+                fs.Close();
+            }
+
+            return;
+        }
+
+        /*TMS Photo data callback function*/
+        public void TmsPicDataCallback(ref NETDEV_PIC_DATA_S pstPicData, IntPtr lpUserData)
+        {
+            string carPlate = GetDefaultString(pstPicData.szCarPlate);
+            string time = GetDefaultString(pstPicData.szPassTime);
+            string TollgateID = GetDefaultString(pstPicData.szTollgateID);
+
+            string[] plateColour = new string[] { "white", "yellow", "blue", "black", "other", "green", "red", "y-g", "green" };
+
+            ListViewItem oListViewItem = new ListViewItem(TollgateID);
+            oListViewItem.SubItems.Add(time);
+            oListViewItem.SubItems.Add(Convert.ToString(pstPicData.lLaneID));
+            oListViewItem.SubItems.Add(carPlate);
+            oListViewItem.SubItems.Add(plateColour[pstPicData.lPlateColor]);
+            oListViewItem.EnsureVisible();
+
+            //save pic
+            for (int i = 0; i < pstPicData.ulPicNumber; i++)
+            {
+                String strFileName = time + "_" + carPlate + "_" + i.ToString() + ".jpg";
+
+                int size = (int)pstPicData.aulDataLen[i];
+                byte[] buffer = new byte[size];
+                Marshal.Copy(pstPicData.apcData[i], buffer, 0, size);
+
+                FileStream fs = new FileStream(strFileName, FileMode.Create);
+                fs.Write(buffer, 0, buffer.Length);
+                fs.Close();
+            }
+
+            return;
+        }
+
+
+        /*Parking lot Status callback*/
+        public void ParkingStatusCallback(IntPtr lpFindHandle, ref NETDEV_TMS_PARKINGSTATUS_S pstParkStatusData, IntPtr lpUserData)
+        {
+            string[] carStatus = new string[] { "out", "in", "other" };
+
+            ListViewItem item = new ListViewItem(Convert.ToString(pstParkStatusData.szTollgateID));
+            item.SubItems.Add(Convert.ToString(pstParkStatusData.szSampleTime));
+            item.SubItems.Add(Convert.ToString(pstParkStatusData.lParkingLotID));
+            item.SubItems.Add(Convert.ToString(pstParkStatusData.szCarPlate));
+            item.SubItems.Add(carStatus[pstParkStatusData.lParkingLotStatus]);
+
+            item.EnsureVisible();
+
+            return;
+        }
+
+
+
+        public void DecodeVideoDataCallBack(IntPtr lpRealHandle, ref NETDEV_PICTURE_DATA_S pstPictureData, IntPtr lpUserParam)
+        {
+            return;
+        }
+
+        public void ParseVideoDataCallBack(IntPtr lpRealHandle, ref NETDEV_PARSE_VIDEO_DATA_S pstParseVideoData, IntPtr lpUserParam)
+        {
+            return;
+        }
+
+
+        public MainForm()
+        {
+            ItsParkStatusReportCB = new NETDEV_ParkStatusReportCallBack_PF(ParkStatusReportCallback);
+
+            ItsMultiParkStatusReportCB = new NETDEV_ParkStatusReportCallBack_PF(ParkMultiStatusReportCallback);
+
+            ItsPicCB = new NETDEV_PIC_UPLOAD_PF(ParkPicDataCallback);
+
+            ItsTmsPicCB = new NETDEV_PIC_UPLOAD_PF(TmsPicDataCallback);
+
+            ItsMultiPicCB = new NETDEV_PIC_UPLOAD_PF(ParkMultiPicDataCallback);
+
+            ItsTmsParkingStatusCB = new NETDEV_PARKING_STATUS_PF(ParkingStatusCallback);
+
+            ItsParseVideoCB = new NETDEV_PARSE_VIDEO_DATA_CALLBACK_PF(ParseVideoDataCallBack);
+
+            ItsDecodeVideoCB = new NETDEV_DECODE_VIDEO_DATA_CALLBACK_PF(DecodeVideoDataCallBack);
+
+            InitializeComponent();
+
+            CheckForIllegalCrossThreadCalls = false;
+
+            InitNetDemo();
+            InitNetTab();
+            PathSetting();
+        }
+
+        protected override void OnClosed(EventArgs e)
+        {
+            base.OnClosed(e);
+        }
+
+        public void initPlayPanel()
+        {
+
+        }
+
+        public void PathSetting()
+        {
+            m_strLogPath = System.Environment.CurrentDirectory;
+            m_strRecordSavePath = System.Environment.CurrentDirectory;
+            m_strsnapshotFilePath = System.Environment.CurrentDirectory;
+            m_strVideoCBDataPath = System.Environment.CurrentDirectory;
+            m_strVehicleListPath = System.Environment.CurrentDirectory;
+
+        }
+
+        private void InitNetTab()
+        {
+            string[] RecordStyle = new string[] { "MP4(audio+video).mp4", "TS(audio+video).ts", "MP4(audio+video+time).mp4", "TS(audio+video+time).ts", "TS(audio).ts", "MP4(audio).mp4", "TS(audio+time).ts", "MP4(audio+time).mp4" };
+            LiveRecordcomboBox.Items.AddRange(RecordStyle);
+            LiveRecordcomboBox.SelectedIndex = 0;
+
+            string[] LiveDataFormat = new string[] { "Parse video data", "Decode video data" };
+            LiveDataFormatcomboBox.Items.AddRange(LiveDataFormat);
+            LiveDataFormatcomboBox.SelectedIndex = 0;
+
+            string[] getParameter = new string[] { "Device Info", "OSD configuration info", "Let Through Policy" };
+            getParametercomboBox.Items.AddRange(getParameter);
+            getParametercomboBox.SelectedIndex = 0;
+
+            string[] setParameter = new string[] { "OSD configuration info", "Let Through Policy" };
+            setParametercomboBox.Items.AddRange(setParameter);
+            getParametercomboBox.SelectedIndex = 0;
+
+            string[] getCapability = new string[] { "OSD parameter capability", "Video encoding capability(extended, recommended)" };
+            CapabilitycomboBox.Items.AddRange(getCapability);
+            CapabilitycomboBox.SelectedIndex = 0;
+
+            string[] OsdFontStytle = new string[] { "Background", "Stroke", "Hollow", "Normal", "Inverse" };
+            EffectcomboBox.Items.AddRange(OsdFontStytle);
+            EffectcomboBox.SelectedIndex = 0;
+
+            string[] OsdFontSize = new string[] { "X-large", "large", "Medium", "small" };
+            FontSizecomboBox.Items.AddRange(OsdFontSize);
+            FontSizecomboBox.SelectedIndex = 0;
+
+            string[] OsdMin = new string[] { "None", "Single", "Double" };
+            MinMargincomboBox.Items.AddRange(OsdMin);
+            MinMargincomboBox.SelectedIndex = 0;
+
+            string[] OsdColor = new string[] { "Black", "Red", "Blue", "Green" };
+            FontColorcomboBox.Items.AddRange(OsdColor);
+            FontColorcomboBox.SelectedIndex = 0;
+
+            string[] PlateEnable = new string[] { "UTF-8", "GBK" };
+            PlateencodingCombox.Items.AddRange(PlateEnable);
+            PlateencodingCombox.SelectedIndex = 0;
+
+            AllowListradioButton.Checked = true;
+            BlockListradioButton.Checked = false;
+        }
+
+        //init demo app
+        private void InitNetDemo()
+        {
+            int iRet = NetDevSdk.NETDEV_Init();
+            if (ItsNetDevSdk.TRUE != iRet)
+            {
+                MessageBox.Show("it is not a admin oper");
+            }
+
+        }
+
+        private void PhotoView_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void UserLogin_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        /*****Local Features*****/
+        private void Loginbutton_Click(object sender, EventArgs e)
+        {
+
+            String strIP = DeviceIPtextBox.Text;
+            int iPort = Convert.ToInt32(porttextBox.Text);
+            String strUser = admintextBox.Text;
+            String strPasswd = PasswordtextBox.Text;
+
+            NETDEV_DEVICE_INFO_S pstDevInfo = new NETDEV_DEVICE_INFO_S();
+            m_lpDevHandle = NetDevSdk.NETDEV_Login(strIP, (Int16)iPort, strUser, strPasswd, ref pstDevInfo);
+            if (m_lpDevHandle == IntPtr.Zero)
+            {
+                MessageBox.Show("Login failed.", "warning");
+            }
+            else
+            {
+                DeviceStatuslabel.Text = "Online";
+
+                NetDevSdk.NETDEV_SetParkStatusCallBack(m_lpDevHandle, ItsParkStatusReportCB, IntPtr.Zero);
+
+                MessageBox.Show("Login succeed.");
+            }
+
+            return;
+        }
+
+        private void logoutbutton_Click(object sender, EventArgs e)
+        {
+            if (IntPtr.Zero == m_lpDevHandle)
+            {
+                return;
+            }
+
+            Int32 bRet = NetDevSdk.NETDEV_Logout(m_lpDevHandle);
+            if (ItsNetDevSdk.TRUE != bRet)
+            {
+                MessageBox.Show("Logout failed.", "warning");
+            }
+            else
+            {
+                DeviceStatuslabel.Text = "Offline";
+
+                MessageBox.Show("Logout succeed.");
+            }
+
+        }
+
+
+        /******Live Operation*****/
+
+        private void LiveOpen_Click(object sender, EventArgs e)
+        {
+
+            int bRet;
+            if (IntPtr.Zero == m_lpDevHandle)
+            {
+                return;
+            }
+
+            if (IntPtr.Zero != m_oPlayHandleMap)
+            {
+                bRet = NetDevSdk.NETDEV_StopRealPlay(m_oPlayHandleMap);
+                if (ItsNetDevSdk.TRUE == bRet)
+                {
+                    m_oPlayHandleMap = IntPtr.Zero;
+                }
+            }
+
+            NETDEV_PREVIEWINFO_S stNetInfo = new NETDEV_PREVIEWINFO_S();
+
+            stNetInfo.dwChannelID = 1;
+            stNetInfo.hPlayWnd = VID_STREAM.Handle;
+            stNetInfo.dwStreamType = (Int32)NETDEV_LIVE_STREAM_INDEX_E.NETDEV_LIVE_STREAM_INDEX_MAIN;
+            stNetInfo.dwLinkMode = (Int32)NETDEV_PROTOCAL_E.NETDEV_TRANSPROTOCAL_RTPTCP;//only support
+
+            m_oPlayHandleMap = NetDevSdk.NETDEV_RealPlay(m_lpDevHandle, ref stNetInfo, IntPtr.Zero, IntPtr.Zero);
+            if (IntPtr.Zero == m_oPlayHandleMap)
+            {
+                MessageBox.Show("start RealPlay failed.", "Warning");
+            }
+            else
+            {
+                RealStreamlabel.Text = "Online";
+                MessageBox.Show("start RealPlay succeed.");
+            }
+
+        }
+
+        private void LiveClose_Click(object sender, EventArgs e)
+        {
+            int bRet;
+            if (IntPtr.Zero != m_oPlayHandleMap)
+            {
+                bRet = NetDevSdk.NETDEV_StopRealPlay(m_oPlayHandleMap);
+                if (ItsNetDevSdk.TRUE == bRet)
+                {
+                    m_oPlayHandleMap = IntPtr.Zero;
+                    MessageBox.Show("stop RealPlay succeed.");
+                    RealStreamlabel.Text = "Offline";
+                }
+                else
+                {
+                    MessageBox.Show("stop RealPlay failed.");
+                }
+            }
+        }
+
+        private void Snapshot_Click(object sender, EventArgs e)
+        {
+
+            String strNowTime = DateTime.Now.ToString("HH-mm-ss-ms");
+
+            String strFileName = m_strsnapshotFilePath + "\\snapFile\\" + strNowTime;
+            byte[] picSavePath;
+            GetUTF8Buffer(strFileName, ItsNetDevSdk.NETDEV_LEN_260, out picSavePath);
+
+            if (IntPtr.Zero != m_oPlayHandleMap)
+            {
+                String strOut;
+                int bRet = NetDevSdk.NETDEV_CapturePicture(m_oPlayHandleMap, picSavePath, (int)NETDEV_PICTURE_FORMAT_E.NETDEV_PICTURE_JPG);
+                if (ItsNetDevSdk.TRUE != bRet)
+                {
+                    strOut = "snap shot failed.";
+                }
+                else
+                {
+                    strOut = "snap shot succeed";
+                }
+                MessageBox.Show(strOut);
+            }
+            else
+            {
+                String strOut = "snap shot failed.";
+                MessageBox.Show(strOut);
+            }
+        }
+
+        private void StartRecording_Click(object sender, EventArgs e)
+        {
+
+            string[] carStatus = new string[] { "MP4(audio+video).mp4", "TS(audio+video).ts", "MP4(audio+video+time).mp4", "TS(audio+video+time).ts", "TS(audio).ts", "MP4(audio).mp4", "TS(audio+time).ts", "MP4(audio+time).mp4" };
+            string strRecordSavePath = "";
+            //strRecordSavePath = m_strRecordSavePath + "\\RecordFile\\";
+
+            FolderBrowserDialog dialog = new FolderBrowserDialog();
+            dialog.Description = "Please select RcordSave path";
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                strRecordSavePath = dialog.SelectedPath + "\\RecordFile\\";
+                MessageBox.Show("Select Folder" + strRecordSavePath, "Select Folder Tips", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                try
+                {
+                    if (!Directory.Exists(strRecordSavePath))
+                    {
+                        Directory.CreateDirectory(strRecordSavePath);
+                    }
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("create path fail", "warning");
+                }
+            }
+            else
+            {
+                MessageBox.Show("No Select RealData SavePath", "warning");
+                return;
+            }
+
+            byte[] localRecordPath;
+            strRecordSavePath = strRecordSavePath + carStatus[LiveRecordcomboBox.SelectedIndex];
+            GetUTF8Buffer(strRecordSavePath, ItsNetDevSdk.NETDEV_LEN_260, out localRecordPath);
+
+            if (IntPtr.Zero != m_oPlayHandleMap)
+            {
+                int iRet = NetDevSdk.NETDEV_SaveRealData(m_oPlayHandleMap, localRecordPath, LiveRecordcomboBox.SelectedIndex);
+                if (ItsNetDevSdk.FALSE == iRet)
+                {
+                    MessageBox.Show("Save RealData failed.");
+                }
+                else
+                {
+                    LiveRecordingSavePath.Text = strRecordSavePath; ;
+                    MessageBox.Show("Save RealData succeed.");
+                }
+            }
+            LiveRecordingSavePath.Text = strRecordSavePath;
+        }
+
+        private void StopRecording_Click(object sender, EventArgs e)
+        {
+            if (IntPtr.Zero == m_oPlayHandleMap)
+            {
+                return;
+            }
+
+            int iRet = NetDevSdk.NETDEV_StopSaveRealData(m_oPlayHandleMap);
+            if (ItsNetDevSdk.TRUE == iRet)
+            {
+                LiveRecordingSavePath.Text = "";
+                MessageBox.Show("Stop SaveRealData succeed.");
+                return;
+            }
+            else
+            {
+                MessageBox.Show("Stop SaveRealData failed.", "Warning");
+            }
+        }
+
+        private void LiveDataSetCallback_Click(object sender, EventArgs e)
+        {
+
+            string strVideoSavePath = "";
+
+            if (0 == LiveDataFormatcomboBox.SelectedIndex)
+            {
+                strVideoSavePath = m_strVideoCBDataPath + "\\ParseVideo";
+            }
+            else if (1 == LiveDataFormatcomboBox.SelectedIndex)
+            {
+                strVideoSavePath = m_strVideoCBDataPath + "\\DecodeVideo";
+            }
+
+            try
+            {
+                if (!Directory.Exists(strVideoSavePath))
+                {
+                    Directory.CreateDirectory(strVideoSavePath);
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("create path fail", "warning");
+            }
+
+            if (IntPtr.Zero != m_oPlayHandleMap)
+            {
+                int iRet = 0;
+                if (0 == LiveDataFormatcomboBox.SelectedIndex)
+                {
+                    iRet = NetDevSdk.NETDEV_SetPlayParseCB(m_oPlayHandleMap, ref ItsParseVideoCB, ItsNetDevSdk.TRUE, IntPtr.Zero);
+                    if (ItsNetDevSdk.TRUE != iRet)
+                    {
+                        MessageBox.Show("set playParse fail", "warning");
+                    }
+                    else
+                    {
+                        MessageBox.Show("set playParse succeed");
+                    }
+                }
+                else if (1 == LiveDataFormatcomboBox.SelectedIndex)
+                {
+                    iRet = NetDevSdk.NETDEV_SetPlayDecodeVideoCB(m_oPlayHandleMap, ref ItsDecodeVideoCB, ItsNetDevSdk.TRUE, IntPtr.Zero);
+                    if (ItsNetDevSdk.TRUE != iRet)
+                    {
+                        MessageBox.Show("set playDecode fail", "warning");
+                    }
+                    else
+                    {
+                        MessageBox.Show("set playDecode succeed");
                     }
                 }
             }
+
         }
 
-        private void PicPlay_Click(object sender, EventArgs e)
+        private void LiveDataReset_Click(object sender, EventArgs e)
         {
-            if (IntPtr.Zero == NETDEVSDK.m_lpDevHandle)
-            {
-                return;
-            }
 
-            if (IntPtr.Zero != NETDEVSDK.m_oPicHandleMap)
+            NETDEV_PARSE_VIDEO_DATA_CALLBACK_PF oItsParseVideoCB = null;
+            NETDEV_DECODE_VIDEO_DATA_CALLBACK_PF oItsDecodeVideoCB = null;
+
+            if (IntPtr.Zero != m_oPlayHandleMap)
             {
-                int bRet = NETDEVSDK.NETDEV_StopPicStream(NETDEVSDK.m_oPicHandleMap);
-                if (NETDEVSDK.TRUE == bRet)
+                int iRet = 0;
+                if (0 == LiveDataFormatcomboBox.SelectedIndex)
                 {
-                    NETDEVSDK.m_oPicHandleMap = IntPtr.Zero;
+                    iRet = NetDevSdk.NETDEV_SetPlayParseCB(m_oPlayHandleMap, ref oItsParseVideoCB, ItsNetDevSdk.TRUE, IntPtr.Zero);
+                    if (ItsNetDevSdk.TRUE != iRet)
+                    {
+                        MessageBox.Show("close playParse fail", "warning");
+                    }
+                    else
+                    {
+                        MessageBox.Show("close playParse succeed");
+                    }
+                }
+                else if (1 == LiveDataFormatcomboBox.SelectedIndex)
+                {
+                    iRet = NetDevSdk.NETDEV_SetPlayDecodeVideoCB(m_oPlayHandleMap, ref oItsDecodeVideoCB, ItsNetDevSdk.TRUE, IntPtr.Zero);
+                    if (ItsNetDevSdk.TRUE != iRet)
+                    {
+                        MessageBox.Show("close playDecode fail", "warning");
+                    }
+                    else
+                    {
+                        MessageBox.Show("close playDecode succeed");
+                    }
                 }
             }
-            MultiPicDataCallBackFun = PicDataCallback;
-            NETDEVSDK.m_oPicHandleMap = (IntPtr)NETDEVSDK.NETDEV_StartPicStream(NETDEVSDK.m_lpDevHandle, PIC_STREAM.Handle, false, "", MultiPicDataCallBackFun, IntPtr.Zero);
-            if (IntPtr.Zero == NETDEVSDK.m_oPicHandleMap)
+
+            return;
+
+        }
+
+
+        /******Local Features*****/
+        private void GetVersion_Click(object sender, EventArgs e)
+        {
+            byte[] szVersion = new byte[64];
+            NetDevSdk.NETDEV_GetPARKVersion(szVersion);
+            string strVersion = GetDefaultString(szVersion);
+            VersiontextBox.Text = strVersion;
+        }
+
+        private void SetlogPath_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog dialog = new FolderBrowserDialog();
+            dialog.Description = "Please select File path";
+            if (dialog.ShowDialog() == DialogResult.OK)
             {
-                MessageBox.Show("NETDEV_StartPicStream fail");
+                m_strLogPath = dialog.SelectedPath + "\\log";
+                MessageBox.Show("Select Folder" + m_strLogPath, "Select Folder Tips", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                try
+                {
+                    if (!Directory.Exists(m_strLogPath))
+                    {
+                        Directory.CreateDirectory(m_strLogPath);
+                        int bRet = NetDevSdk.NETDEV_SetLogPath(m_strLogPath);
+                        if (ItsNetDevSdk.TRUE != bRet)
+                        {
+                            MessageBox.Show("Set log path fail: " + NetDevSdk.NETDEV_GetLastError(), "warning");
+                        }
+                        else
+                        {
+                            MessageBox.Show("Set log path Success", "warning");
+                        }
+                    }
+                    LogPath.Text = m_strLogPath;
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("create path fail", "warning");
+                }
             }
+        }
+
+        private void SetlogSizeNum_Click(object sender, EventArgs e)
+        {
+            int iLogFileSize = Convert.ToInt32(LogSize.Text);
+            int iLogFileNum = Convert.ToInt32(LogNumber.Text);
+
+            int iRet = NetDevSdk.NETDEV_ConfigLogFile(iLogFileSize * 1024 * 1024, iLogFileNum);
+            if (ItsNetDevSdk.TRUE != iRet)
+            {
+                MessageBox.Show("NETDEV_ConfigLogFile fail: " + NetDevSdk.NETDEV_GetLastError(), "warning");
+            }
+            else
+            {
+                LogPath.Text = m_strLogPath;
+                MessageBox.Show("ConfigLogFile Success", "warning");
+            }
+        }
+
+        /******Photo Operation*****/
+
+        public void ParkPicDataCallback(ref NETDEV_PIC_DATA_S pstPicData, IntPtr lpUserData)
+        {
+
+            string[] strColor = new string[] { "white", "yellow", "blue", "black", "other", "green", "red", "yellow-green", "gradual-green" };
+
+            string carPlate = GetDefaultString(pstPicData.szCarPlate);
+            string time = GetDefaultString(pstPicData.szPassTime);
+            string TollgateID = GetDefaultString(pstPicData.szTollgateID);
+
+            ListViewItem oListViewItem = new ListViewItem(TollgateID);
+            oListViewItem.SubItems.Add(time);
+            oListViewItem.SubItems.Add(Convert.ToString(pstPicData.lLaneID));
+            if (pstPicData.lPlateColor > strColor.Length)
+            {
+                oListViewItem.SubItems.Add("other");
+            }
+            else
+            {
+                oListViewItem.SubItems.Add(strColor[pstPicData.lPlateColor]);
+            }
+            oListViewItem.SubItems.Add(carPlate);
+            oListViewItem.SubItems.Add("No");
+
+            this.PhotoListView.Items.Add(oListViewItem);
+            oListViewItem.EnsureVisible();
+
+            //获取当前文件夹路径
+            string currPath = Application.StartupPath;
+            //检查是否存在文件夹
+            string subPath = currPath + "/pic/";
+            if (false == System.IO.Directory.Exists(subPath))
+            {
+                //创建pic文件夹
+                System.IO.Directory.CreateDirectory(subPath);
+            }
+
+            //save pic
+            for (int i = 0; i < pstPicData.ulPicNumber; i++)
+            {
+                String strFileName = subPath + time + "_" + carPlate + "_" + i.ToString() + ".jpg";
+
+                int size = (int)pstPicData.aulDataLen[i];
+                byte[] buffer = new byte[size];
+                Marshal.Copy(pstPicData.apcData[i], buffer, 0, size);
+
+                FileStream fs = new FileStream(strFileName, FileMode.Create);
+                fs.Write(buffer, 0, buffer.Length);
+                fs.Close();
+            }
+
             return;
         }
 
-        private void StopPicPlay_Click(object sender, EventArgs e)
+        private void PhotoOpen_Click(object sender, EventArgs e)
         {
-            if (IntPtr.Zero == NETDEVSDK.m_oPicHandleMap)
+
+            if (IntPtr.Zero == m_lpDevHandle)
             {
                 return;
             }
-            if (IntPtr.Zero != NETDEVSDK.m_oPicHandleMap)
+
+            if (IntPtr.Zero != m_oPicHandleMap)
             {
-                int ulRet = NETDEVSDK.NETDEV_StopPicStream(NETDEVSDK.m_oPicHandleMap);
-                if (NETDEVSDK.TRUE != ulRet)
+                int bRet = NetDevSdk.NETDEV_StopPicStream(m_oPicHandleMap);
+                if (ItsNetDevSdk.TRUE == bRet)
                 {
-                    MessageBox.Show("NETDEV_StopPicStream fail");
+                    m_oPicHandleMap = IntPtr.Zero;
+                }
+            }
+
+            m_oPicHandleMap = (IntPtr)NetDevSdk.NETDEV_StartPicStream(m_lpDevHandle, PIC_STREAM.Handle, false, "", ItsPicCB, IntPtr.Zero);
+            if (IntPtr.Zero == m_oPicHandleMap)
+            {
+                MessageBox.Show("Start PicStream fail", "warning");
+            }
+            else
+            {
+                PicStreamlabel.Text = "Online";
+
+                MessageBox.Show("Start PicStream succeed");
+            }
+
+            return;
+
+        }
+
+        private void PhotoClose_Click(object sender, EventArgs e)
+        {
+            if (IntPtr.Zero == m_oPicHandleMap)
+            {
+                return;
+            }
+            if (IntPtr.Zero != m_oPicHandleMap)
+            {
+                int ulRet = NetDevSdk.NETDEV_StopPicStream(m_oPicHandleMap);
+                if (ItsNetDevSdk.TRUE != ulRet)
+                {
+                    MessageBox.Show("Stop PicStream fail", "warning");
                     return;
                 }
+                else
+                {
+                    PicStreamlabel.Text = "Offline";
+                    MessageBox.Show("Stop PicStream Succeed!");
+                }
             }
-            MessageBox.Show("Succeed!");
-            NETDEVSDK.m_oPicHandleMap = IntPtr.Zero;
+
+            m_oPicHandleMap = IntPtr.Zero;
+
             return;
         }
 
-        private void Capture_Click(object sender, EventArgs e)
+        private void PhotoCapture_Click(object sender, EventArgs e)
         {
-            Int32 ulRet = NETDEVSDK.NETDEV_Trigger(NETDEVSDK.m_lpDevHandle);
-            if (NETDEVSDK.TRUE != ulRet)
+            if (IntPtr.Zero == m_lpDevHandle || IntPtr.Zero == m_oPicHandleMap)
+            {
+                MessageBox.Show("No Start Picstream");
+                return;
+            }
+
+            Int32 ulRet = NetDevSdk.NETDEV_Trigger(m_lpDevHandle);
+            if (ItsNetDevSdk.TRUE != ulRet)
             {
                 MessageBox.Show("NETDEV_Trigger fail");
                 return;
             }
-            MessageBox.Show("抓拍成功");
-
         }
 
-        private void CaptureSyn_Click(object sender, EventArgs e)
+        private void PhotoCaptureSys_Click(object sender, EventArgs e)
         {
+            if (IntPtr.Zero == m_lpDevHandle || IntPtr.Zero == m_oPicHandleMap)
+            {
+                MessageBox.Show("No Start Picstream");
+                return;
+            }
+
             IntPtr pPicDataInfo = IntPtr.Zero;
 
-            Int32 ulRet = NETDEVSDK.NETDEV_TriggerSync(NETDEVSDK.m_lpDevHandle, ref pPicDataInfo);
-            if (NETDEVSDK.TRUE != ulRet)
+            Int32 ulRet = NetDevSdk.NETDEV_TriggerSync(m_lpDevHandle, ref pPicDataInfo);
+            if (ItsNetDevSdk.TRUE != ulRet)
             {
                 MessageBox.Show("NETDEV_TriggerSync fail, error code=" + ulRet);
                 return;
             }
 
-            NETDEVSDK.NETDEV_PIC_DATA_S stDevInfo = new NETDEVSDK.NETDEV_PIC_DATA_S();
+            NETDEV_PIC_DATA_S stDevInfo = new NETDEV_PIC_DATA_S();
             byte[] pByte = new byte[Marshal.SizeOf(stDevInfo)];
             Marshal.Copy(pPicDataInfo, pByte, 0, Marshal.SizeOf(stDevInfo));
-            stDevInfo = (NETDEVSDK.NETDEV_PIC_DATA_S)BytesToStruct(pByte, stDevInfo.GetType());
+            stDevInfo = (NETDEV_PIC_DATA_S)BytesToStruct(pByte, stDevInfo.GetType());
 
-            MessageBox.Show("抓拍成功");
+            string carPlate = GetDefaultString(stDevInfo.szCarPlate);
+            string time = GetDefaultString(stDevInfo.szPassTime);
+            string TollgateID = GetDefaultString(stDevInfo.szTollgateID);
 
-            //时间
-            string time = new string(stDevInfo.szPassTime).TrimEnd('\0');
+            string[] plateColour = new string[] { "white", "yellow", "blue", "black", "other", "green", "red", "y-g", "gradualgreen" };
+
+            ListViewItem oListViewItem = new ListViewItem(TollgateID);
+            oListViewItem.SubItems.Add(time);
+            oListViewItem.SubItems.Add(Convert.ToString(stDevInfo.lLaneID));
+            oListViewItem.SubItems.Add(plateColour[stDevInfo.lPlateColor]);
+            oListViewItem.SubItems.Add(carPlate);
+            oListViewItem.SubItems.Add("Yes");
+            this.PhotoListView.Items.Add(oListViewItem);
+            oListViewItem.EnsureVisible();
+
+            //获取当前文件夹路径
+            string currPath = Application.StartupPath;
+            //检查是否存在文件夹
+            string subPath = currPath + "/pic/";
+            if (false == System.IO.Directory.Exists(subPath))
+            {
+                //创建pic文件夹
+                System.IO.Directory.CreateDirectory(subPath);
+            }
+
+            //save pic
             for (int i = 0; i < stDevInfo.ulPicNumber; i++)
             {
+                String strFileName = subPath + time + "_" + carPlate + "_" + i.ToString() + ".jpg";
+
                 int size = (int)stDevInfo.aulDataLen[i];
                 byte[] buffer = new byte[size];
                 Marshal.Copy(stDevInfo.apcData[i], buffer, 0, size);
 
-                using (MemoryStream ms = new MemoryStream(buffer))
-                {
-                    using (Image image = Image.FromStream(ms))
-                    {
-                        image.Save(string.Format(@".\{0}_{1}.bmp", time, i));
-                    }
-                }
+                FileStream fs = new FileStream(strFileName, FileMode.Create);
+                fs.Write(buffer, 0, buffer.Length);
+                fs.Close();
             }
-
-        }
-
-        private void ParkStatus_Click(object sender, EventArgs e)
-        {
-            Int32 i = 0;
-            String status = "";
-            Int32 lChannelID = 1;
-            Int32 dwBytesReturned = 0;
-            NETDEV_PARKSTATUS_INFO_S parkStatusAll = new NETDEV_PARKSTATUS_INFO_S();
-            NETDEV_CARPORT_CFG_S carportInfo = new NETDEV_CARPORT_CFG_S();
-
-            IntPtr ptrStatusAll = Marshal.AllocHGlobal(Marshal.SizeOf(parkStatusAll));
-            IntPtr ptrCarportInfo = Marshal.AllocHGlobal(Marshal.SizeOf(carportInfo));
-
-            Int32 bRet = NETDEVSDK.NETDEV_GetDevConfig(NETDEVSDK.m_lpDevHandle, lChannelID, (int)NETDEV_CONFIG_COMMAND_E.NETDEV_GET_PARKSTATUSINFO, ref parkStatusAll, Marshal.SizeOf(parkStatusAll), ref dwBytesReturned);
-            if (NETDEVSDK.TRUE != bRet)
-            {
-                MessageBox.Show("获取所有车位状态失败，错误码=" + bRet);
-                return;
-            }
-
-            Int32 result = NETDEVSDK.NETDEV_GetDevConfig(NETDEVSDK.m_lpDevHandle, lChannelID, (int)NETDEV_CONFIG_COMMAND_E.NETDEV_GET_CARPORTCFG, ref carportInfo, Marshal.SizeOf(carportInfo), ref dwBytesReturned);
-            if (NETDEVSDK.TRUE != result)
-            {
-                MessageBox.Show("获取所有车位状态失败，错误码=" + result);
-                return;
-            }
-
-            for (i = 0; i < parkStatusAll.ulParkNum; i++)
-            {
-                status = status + "车位：" + parkStatusAll.astParkSatus[i].lParkID + "有车:" + parkStatusAll.astParkSatus[i].lParkingLotStatus + "使能:" + carportInfo.astParkAreaInfo[i].ulParkDetstaus + "\r\n";
-            }
-
-            MessageBox.Show(status);
-        }
-
-        private void GetVersion_Click(object sender, EventArgs e)
-        {
-            Int32 iVersion = 0;
-            iVersion = NETDEVSDK.NETDEV_GetSDKVersion();
-
-            Int32 iVerMain = Convert.ToInt32((iVersion & 0xFFFF0000) >> 16);
-            Int32 iVerSub = Convert.ToInt32((iVersion & 0x0000FFFF));
-            MessageBox.Show("SDK Version: V" + iVerMain + "." + iVerSub);
             return;
         }
 
-        public void DEV_DISCOVERY_CB(IntPtr pstDevInfo, IntPtr lpUserData)
+
+        /*****************************************VechicleList Operation***************************************/
+        private void VechicleListBrowse_Click(object sender, EventArgs e)
         {
-            //指针转换为对应结构体
-            NETDEV_DISCOVERY_DEVINFO_S info = new NETDEV_DISCOVERY_DEVINFO_S();
-            byte[] pByte = new byte[Marshal.SizeOf(info)];
-            Marshal.Copy(pstDevInfo, pByte, 0, Marshal.SizeOf(info));
-            info = (NETDEV_DISCOVERY_DEVINFO_S)BytesToStruct(pByte, info.GetType());
-
-        }
-
-        private void Discovery_Click(object sender, EventArgs e)
-        {
-            SetDevDiscoveryCallBackHandl = DEV_DISCOVERY_CB;
-            NETDEVSDK.NETDEV_SetDiscoveryCallBack(SetDevDiscoveryCallBackHandl, IntPtr.Zero);
-
-            Int32 lRet = NETDEVSDK.NETDEV_Discovery("0.0.0.0", "0.0.0.0");
-            if (NETDEVSDK.TRUE != lRet)
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.Multiselect = false;
+            dialog.Title = "Please select file of csv";
+            dialog.Filter = "csv files(*.csv)|*.csv||";
+            if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                MessageBox.Show("设备发现失败，错误码=" + lRet);
-                return;
+                VechicleListFilePath.Text = dialog.FileName;
+                m_strVechicleListfile = dialog.FileName;
             }
         }
 
-        private void AutoDiscovery_Click(object sender, EventArgs e)
+        private void VechicleListImport_Click(object sender, EventArgs e)
         {
-            SetDevDiscoveryCallBackHandl = DEV_DISCOVERY_CB;
-            NETDEVSDK.NETDEV_SetDiscoveryCallBack(SetDevDiscoveryCallBackHandl, IntPtr.Zero);
-
-            Int32 lRet = NETDEVSDK.NETDEV_Discovery(BEGIN_IP.Text, END_IP.Text);
-            if (NETDEVSDK.TRUE != lRet)
+            if (IntPtr.Zero == m_lpDevHandle)
             {
-                MessageBox.Show("设备自动发现失败，请输入IP");
-                return;
-            }
-        }
-
-        private void InitOSDTab()
-        {
-            string[] fontStyle = new string[] { "背景", "描边", "空心", "正常" };
-            cbFontStyle.Items.AddRange(fontStyle);
-
-            string[] fontSize = new string[] {"特大", "大", "中", "小"};
-            cbFontSize.Items.AddRange(fontSize);
-        }
-
-        private void btnGetOSDStyle_Click(object sender, EventArgs e)
-        {
-            if (IntPtr.Zero == NETDEVSDK.m_lpDevHandle)
-            {
-                MessageBox.Show("当前无用户登录");
+                MessageBox.Show("Import BlackWhiteList File, device is NULL", "warning");
                 return;
             }
 
-            int ulRet = NETDEVSDK.TRUE;
-            Int32 dwBytesReturned = 0;
-            NETDEVSDK.NETDEV_OSD_CONTENT_STYLE_S stuStyleCfgs = new NETDEVSDK.NETDEV_OSD_CONTENT_STYLE_S();
-            IntPtr ptrStuStyleCfgs = IntPtr.Zero;
-
-            //获取叠加OSD样式
-            try
+            int iRet = NetDevSdk.NETDEV_ImportBlackWhiteListFile(m_lpDevHandle, m_strVechicleListfile);
+            if (0 != iRet)
             {
-                ptrStuStyleCfgs = Marshal.AllocHGlobal(Marshal.SizeOf(stuStyleCfgs));
-                Marshal.StructureToPtr(stuStyleCfgs, ptrStuStyleCfgs, true);
+                MessageBox.Show("Import BlackWhiteList File fail.");
+            }
+            else
+            {
+                MessageBox.Show("Import BlackWhiteList File succeed.");
+            }
 
-                ulRet = NETDEVSDK.NETDEV_GetDevConfig(NETDEVSDK.m_lpDevHandle, 1, (int)NETDEV_CONFIG_COMMAND_E.NETDEV_GET_OSD_CONTENT_STYLE_CFG, ptrStuStyleCfgs, Marshal.SizeOf(stuStyleCfgs), ref dwBytesReturned);
-                if (NETDEVSDK.TRUE != ulRet)
+            return;
+        }
+
+        private void VehicleListAllowExport_Click(object sender, EventArgs e)
+        {
+            if (IntPtr.Zero == m_lpDevHandle)
+            {
+                MessageBox.Show("Export Whitelist File, device is NULL", "warning");
+                return;
+            }
+
+            string strCurPath = m_strVehicleListPath + "\\Whitelist\\GateWhitelist.csv";
+
+            int iRet = NetDevSdk.NETDEV_ExportBlackWhiteListFile(m_lpDevHandle, strCurPath);
+            if (0 == iRet)
+            {
+                MessageBox.Show("Export Whitelist succeed.");
+            }
+            else
+            {
+                MessageBox.Show("Export Whitelist fail.");
+            }
+
+            return;
+        }
+
+        private void VehicleListBlockExport_Click(object sender, EventArgs e)
+        {
+            if (IntPtr.Zero == m_lpDevHandle)
+            {
+                MessageBox.Show("Export Blacklist, device is NULL", "warning");
+                return;
+            }
+
+
+            string strCurPath = m_strVehicleListPath + "\\Blacklist\\GateBlacklist.csv";
+
+            int iRet = NetDevSdk.NETDEV_ExportBlackWhiteListFile(m_lpDevHandle, strCurPath);
+            if (0 == iRet)
+            {
+                MessageBox.Show("Export Blacklist succeed.");
+            }
+            else
+            {
+                MessageBox.Show("Export Blacklist fail.");
+            }
+
+            return;
+        }
+
+        private string getInputStartDataTime()
+        {
+            String beginDateTimeStr = this.EffectiveData.Value.Year.ToString();
+            beginDateTimeStr += ("-" + this.EffectiveData.Value.Month.ToString());
+            beginDateTimeStr += ("-" + this.EffectiveData.Value.Day.ToString());
+
+            beginDateTimeStr += (" " + this.EffectiveTime.Value.Hour.ToString());
+            beginDateTimeStr += (":" + this.EffectiveTime.Value.Minute.ToString());
+            beginDateTimeStr += (":" + this.EffectiveTime.Value.Second.ToString());
+
+            return beginDateTimeStr;
+        }
+
+        private string getInputEndDataTime()
+        {
+            String endDateTimeStr = this.ExpirationDate.Value.Year.ToString();
+            endDateTimeStr += ("-" + this.ExpirationDate.Value.Month.ToString());
+            endDateTimeStr += ("-" + this.ExpirationDate.Value.Day.ToString());
+
+            endDateTimeStr += (" " + this.ExpirationTime.Value.Hour.ToString());
+            endDateTimeStr += (":" + this.ExpirationTime.Value.Minute.ToString());
+            endDateTimeStr += (":" + this.ExpirationTime.Value.Second.ToString());
+            return endDateTimeStr;
+        }
+
+        private long getLongTime(String strTime)
+        {
+            DateTime dateTime = Convert.ToDateTime(strTime);
+            System.DateTime startTime = TimeZone.CurrentTimeZone.ToLocalTime(new System.DateTime(1970, 1, 1)); // 
+            return (long)(dateTime - startTime).TotalSeconds; // 
+        }
+
+        private string getStrTime(long time)
+        {
+            DateTime startDateTime = TimeZone.CurrentTimeZone.ToLocalTime(new System.DateTime(1970, 1, 1)); // 
+            return startDateTime.AddSeconds(time).ToString("yyyy/MM/dd HH:mm:ss");
+
+        }
+
+        private void AddRecord_Click(object sender, EventArgs e)
+        {
+
+            if (IntPtr.Zero == m_lpDevHandle)
+            {
+                MessageBox.Show("add Vehicle Record, device is NULL", "warning");
+                return;
+            }
+
+            NETDEV_PARK_VEHICLE_RECORD_S pstVehicleRecord = new NETDEV_PARK_VEHICLE_RECORD_S();
+
+            pstVehicleRecord.dwId = Convert.ToInt32(VechicleListIDtextBox.Text);
+            pstVehicleRecord.dwEnableType = 0;
+            pstVehicleRecord.szPlateNo = Encoding.UTF8.GetBytes(VechicleListNotextBox.Text.PadRight(32, '\0').ToCharArray());
+
+            String beginDateTimeStr = getInputStartDataTime();
+            String endDateTimeStr = getInputEndDataTime();
+
+            pstVehicleRecord.dwEffectiveTime = this.getLongTime(beginDateTimeStr);
+            pstVehicleRecord.dwExpirationTime = this.getLongTime(endDateTimeStr);
+
+
+            NETDEV_PARK_VEHICLE_RECORD_EXTERN_S pstVehicleRecordExtern = new NETDEV_PARK_VEHICLE_RECORD_EXTERN_S();
+
+            if (true == AllowListradioButton.Checked)
+            {
+                pstVehicleRecordExtern.dwListType = 0;
+            }
+            else if (true == BlockListradioButton.Checked)
+            {
+                pstVehicleRecordExtern.dwListType = 1;
+            }
+
+            pstVehicleRecordExtern.dwDBOperateType = (int)NETDEV_DB_OPERATE_E.NETDEV_DB_OPERATE_ADD;
+            pstVehicleRecordExtern.stVehicleRecordList = new NETDEV_PARK_VEHICLE_RECORD_LIST_S();
+            pstVehicleRecordExtern.stVehicleRecordList.dwNum = 1;
+
+            int nSize = Marshal.SizeOf(pstVehicleRecord);
+            pstVehicleRecordExtern.stVehicleRecordList.pastVehicleRecord = Marshal.AllocHGlobal(nSize);
+
+            Marshal.StructureToPtr(pstVehicleRecord, pstVehicleRecordExtern.stVehicleRecordList.pastVehicleRecord, true);
+
+
+            Int32 iRet = NetDevSdk.NETDEV_AddVehicleRecord(m_lpDevHandle, ref pstVehicleRecordExtern);
+            if (0 != iRet)
+            {
+
+                MessageBox.Show("Add VehicleRecord fail.", "warning");
+            }
+            else
+            {
+                MessageBox.Show("Add VehicleRecord succeed.");
+            }
+
+            Marshal.FreeHGlobal(pstVehicleRecordExtern.stVehicleRecordList.pastVehicleRecord);
+
+            return;
+        }
+
+
+
+        private void AllowListradioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            BlockListradioButton.Checked = false;
+        }
+
+        private void BlockListradioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            AllowListradioButton.Checked = false;
+        }
+
+
+        private void ModifyRecord_Click(object sender, EventArgs e)
+        {
+
+            if (IntPtr.Zero == m_lpDevHandle)
+            {
+                MessageBox.Show("Modify vehicle record, device is NULL", "warning");
+                return;
+            }
+
+            NETDEV_PARK_VEHICLE_RECORD_S pstVehicleRecord = new NETDEV_PARK_VEHICLE_RECORD_S();
+
+            pstVehicleRecord.dwId = Convert.ToInt32(VechicleListIDtextBox.Text);
+            pstVehicleRecord.dwEnableType = 0;
+            pstVehicleRecord.szPlateNo = Encoding.UTF8.GetBytes(VechicleListNotextBox.Text.PadRight(32, '\0').ToCharArray());
+
+            String beginDateTimeStr = getInputStartDataTime();
+            String endDateTimeStr = getInputEndDataTime();
+
+            pstVehicleRecord.dwEffectiveTime = this.getLongTime(beginDateTimeStr);
+            pstVehicleRecord.dwExpirationTime = this.getLongTime(endDateTimeStr);
+
+
+            if (true == AllowListradioButton.Checked)
+            {
+                Int32 iRet = NetDevSdk.NETDEV_ModifyAllowVehicleRecord(m_lpDevHandle, ref pstVehicleRecord);
+                if (0 != iRet)
                 {
-                    string strError = string.Format("Get OSD style config fail.");
-                    MessageBox.Show(strError);
-                    return;
+                    MessageBox.Show("Modify Allow vehicle record fail.", "warning");
                 }
-                stuStyleCfgs = (NETDEVSDK.NETDEV_OSD_CONTENT_STYLE_S)Marshal.PtrToStructure(ptrStuStyleCfgs, stuStyleCfgs.GetType());
+                else
+                {
+                    MessageBox.Show("Modify Allow vehicle record succeed.");
+                }
             }
-            catch (Exception exception)
+            else if (true == BlockListradioButton.Checked)
             {
-                MessageBox.Show(exception.Message);
-            }
-            finally
-            {
-                Marshal.FreeHGlobal(ptrStuStyleCfgs);
+                Int32 iRet = NetDevSdk.NETDEV_ModifyBlockVehicleRecord(m_lpDevHandle, ref pstVehicleRecord);
+                if (0 != iRet)
+                {
+                    MessageBox.Show("Modify Block vehicle record fail.", "warning");
+                }
+                else
+                {
+                    MessageBox.Show("Modify Block vehicle record succeed.");
+                }
             }
 
-            //combobox各项目的索引号与字体效果和字体大小的值分别对应相等，直接赋值给索引
-            if (stuStyleCfgs.udwFontStyle >= (uint)NETDEV_OSD_FONT_STYLE_E.NETDEV_OSD_FONT_STYLE_BACKGROUND && stuStyleCfgs.udwFontStyle <= (uint)NETDEV_OSD_FONT_STYLE_E.NETDEV_OSD_FONT_STYLE_NORMAL)
-            {
-                cbFontStyle.SelectedIndex = (int)stuStyleCfgs.udwFontStyle;
-            }
-
-            if (stuStyleCfgs.udwFontSize >= (uint)NETDEV_OSD_FONT_SIZE_E.NETDEV_OSD_FONT_SIZE_LARGE && stuStyleCfgs.udwFontSize <= (uint)NETDEV_OSD_FONT_SIZE_E.NETDEV_OSD_FONT_SIZE_SMALL)
-            {
-                cbFontSize.SelectedIndex = (int)stuStyleCfgs.udwFontSize;
-            }
+            return;
         }
 
-        private void btnSetOSD_Click(object sender, EventArgs e)
+        private void DeleteRecord_Click(object sender, EventArgs e)
         {
-            if (IntPtr.Zero == NETDEVSDK.m_lpDevHandle)
+
+            if (IntPtr.Zero == m_lpDevHandle)
             {
-                MessageBox.Show("当前无用户登录");
+                MessageBox.Show("Modify vehicle record, device is NULL", "warning");
                 return;
             }
 
-            int ulRet = NETDEVSDK.TRUE;
-            Int32 dwBytesReturned = 0;
+            if (true == AllowListradioButton.Checked)
+            {
+                Int32 iRet = NetDevSdk.NETDEV_DeleteAllowVehicleRecord(m_lpDevHandle, Convert.ToInt32(VechicleListIDtextBox.Text));
+                if (0 != iRet)
+                {
+                    MessageBox.Show("Delete allow vehicle record fail.", "warning");
+                }
+                else
+                {
+                    MessageBox.Show("Delete allow vehicle record succeed.");
+                }
+            }
+            else if (true == BlockListradioButton.Checked)
+            {
+                Int32 iRet = NetDevSdk.NETDEV_DeleteBlockVehicleRecord(m_lpDevHandle, Convert.ToInt32(VechicleListIDtextBox.Text));
+                if (0 != iRet)
+                {
+                    MessageBox.Show("Delete block vehicle record fail.", "warning");
+                }
+                else
+                {
+                    MessageBox.Show("Delete block vehicle record succeed.");
+                }
+            }
 
-            string strOsdTest = tbOSDContent.Text;
-            NETDEVSDK.NETDEV_OSD_CONTENT_S stuInfoOsdCfgs = new NETDEVSDK.NETDEV_OSD_CONTENT_S();
-            NETDEVSDK.NETDEV_OSD_CONTENT_STYLE_S stuStyleCfgs = new NETDEVSDK.NETDEV_OSD_CONTENT_STYLE_S();
+            return;
+        }
+
+
+        /********************************************Parameter******************************************/
+
+        private void Getparameter_Click(object sender, EventArgs e)
+        {
+
+            if (IntPtr.Zero == m_lpDevHandle)
+            {
+                MessageBox.Show("get parameter cfg, device is NULL", "warning");
+                return;
+            }
+
+
+            int index = getParametercomboBox.SelectedIndex;
+
+            switch (index)
+            {
+                case 0:
+                    {
+                        GetDeviceConfig();
+                        break;
+                    }
+                case 1:
+                    {
+                        GetOSDInfo();
+                        break;
+                    }
+                case 2:
+                    {
+                        GetReleaserInfo();
+                        break;
+                    }
+                default:
+                    break;
+
+            }
+
+            return;
+        }
+
+        private void GetDeviceConfig()
+        {
+            Int32 dwBytesReturned = 0;
+            Int32 dwChannelID = 0;
+            NETDEV_DEVICE_BASICINFO_S stDeviceBasicInfo = new NETDEV_DEVICE_BASICINFO_S();
+
+            int iRet = NetDevSdk.NETDEV_GetDevConfig(m_lpDevHandle, dwChannelID, (int)NETDEV_CONFIG_COMMAND_E.NETDEV_GET_DEVICECFG, ref stDeviceBasicInfo, Marshal.SizeOf(stDeviceBasicInfo), ref dwBytesReturned);
+            if (ItsNetDevSdk.TRUE != iRet)
+            {
+                MessageBox.Show("Get device name fail.");
+            }
+            else
+            {
+                String strText;
+                strText = "Device model：" + Convert.ToString(stDeviceBasicInfo.szDevModel) + "Hardware serial number：" + Convert.ToString(stDeviceBasicInfo.szSerialNum) + "Software version number：" + Convert.ToString(stDeviceBasicInfo.szFirmwareVersion)
+                    + "IPv4 MAC address" + Convert.ToString(stDeviceBasicInfo.szMacAddress) + "Device name：" + Convert.ToString(stDeviceBasicInfo.szDeviceName);
+
+                MessageBox.Show(strText);
+            }
+            return;
+        }
+
+        public void GetOSDInfo()
+        {
+            /* Get OSD */
+            Int32 dwBytesReturned = 0;
+            Int32 dwChannelID = 1;
+
+            NETDEV_VIDEO_OSD_CFG_S stOSDInfo = new NETDEV_VIDEO_OSD_CFG_S();
+            stOSDInfo.astTextOverlay = new NETDEV_OSD_TEXT_OVERLAY_S[ItsNetDevSdk.NETDEV_OSD_TEXTOVERLAY_NUM];
+
+            int iRet = NetDevSdk.NETDEV_GetDevConfig(m_lpDevHandle, dwChannelID, (int)NETDEV_CONFIG_COMMAND_E.NETDEV_GET_OSDCFG, ref stOSDInfo, Marshal.SizeOf(stOSDInfo), ref dwBytesReturned);
+            if (ItsNetDevSdk.TRUE != iRet)
+            {
+                MessageBox.Show("Get OSD Cfg fail.", "warning");
+            }
+            else
+            {
+                MessageBox.Show("Get OSD Cfg succeed.");
+            }
+
+        }
+
+
+        public void GetReleaserInfo()
+        {
+            /* Get OSD */
+            Int32 dwBytesReturned = 0;
+            Int32 dwChannelID = 0;
+
+            NETDEV_INFORELEASE_CFG_S stReleaserInfo = new NETDEV_INFORELEASE_CFG_S();
+
+            int iRet = NetDevSdk.NETDEV_GetDevConfig(m_lpDevHandle, dwChannelID, (int)NETDEV_CONFIG_COMMAND_E.NETDEV_GET_INFORELEASE, ref stReleaserInfo, Marshal.SizeOf(stReleaserInfo), ref dwBytesReturned);
+            if (ItsNetDevSdk.TRUE != iRet)
+            {
+                MessageBox.Show("Get Releaser Info fail.", "warning");
+                return;
+            }
+            else
+            {
+                MessageBox.Show("Get Releaser Info succeed.");
+            }
+
+        }
+
+        private void Setparameter_Click(object sender, EventArgs e)
+        {
+            if (IntPtr.Zero == m_lpDevHandle)
+            {
+                MessageBox.Show("set led cfg, device is NULL", "warning");
+                return;
+            }
+
+            int index = setParametercomboBox.SelectedIndex;
+
+            switch (index)
+            {
+
+                case 0:
+                    {
+                        SetOSDInfo();
+                        break;
+                    }
+                case 1:
+                    {
+                        SetReleaserInfo();
+                        break;
+                    }
+                default:
+                    break;
+
+            }
+
+            return;
+        }
+
+        public void SetOSDInfo()
+        {
+            /* Get OSD */
+            Int32 dwBytesReturned = 0;
+            Int32 dwChannelID = 1;
+
+            NETDEV_VIDEO_OSD_CFG_S stOSDInfo = new NETDEV_VIDEO_OSD_CFG_S();
+            stOSDInfo.astTextOverlay = new NETDEV_OSD_TEXT_OVERLAY_S[ItsNetDevSdk.NETDEV_OSD_TEXTOVERLAY_NUM];
+
+            int iRet = NetDevSdk.NETDEV_GetDevConfig(m_lpDevHandle, dwChannelID, (int)NETDEV_CONFIG_COMMAND_E.NETDEV_GET_OSDCFG, ref stOSDInfo, Marshal.SizeOf(stOSDInfo), ref dwBytesReturned);
+            if (ItsNetDevSdk.TRUE != iRet)
+            {
+                MessageBox.Show("Set OSD Cfg fail.");
+                return;
+            }
+
+            iRet = NetDevSdk.NETDEV_SetDevConfig(m_lpDevHandle, dwChannelID, (int)NETDEV_CONFIG_COMMAND_E.NETDEV_SET_OSDCFG, ref stOSDInfo, Marshal.SizeOf(stOSDInfo));
+            if (ItsNetDevSdk.TRUE != iRet)
+            {
+                MessageBox.Show("Set OSD Cfg fail.");
+                return;
+            }
+            else
+            {
+                MessageBox.Show("Set OSD Cfg succeed.");
+                return;
+            }
+
+        }
+
+
+        public void SetReleaserInfo()
+        {
+            /* Get OSD */
+            Int32 dwBytesReturned = 0;
+            Int32 dwChannelID = 0;
+
+            NETDEV_INFORELEASE_CFG_S stReleaserInfo = new NETDEV_INFORELEASE_CFG_S();
+
+            int iRet = NetDevSdk.NETDEV_GetDevConfig(m_lpDevHandle, dwChannelID, (int)NETDEV_CONFIG_COMMAND_E.NETDEV_GET_INFORELEASE, ref stReleaserInfo, Marshal.SizeOf(stReleaserInfo), ref dwBytesReturned);
+            if (ItsNetDevSdk.TRUE != iRet)
+            {
+                MessageBox.Show("Set Releaser Info fail.");
+                return;
+            }
+
+            iRet = NetDevSdk.NETDEV_SetDevConfig(m_lpDevHandle, dwChannelID, (int)NETDEV_CONFIG_COMMAND_E.NETDEV_SET_INFORELEASE, ref stReleaserInfo, Marshal.SizeOf(stReleaserInfo));
+            if (ItsNetDevSdk.TRUE != iRet)
+            {
+                MessageBox.Show("Set Releaser Info fail.");
+                return;
+            }
+            else
+            {
+                MessageBox.Show("Set Releaser Info succeed.");
+                return;
+            }
+
+        }
+
+        private void getcapability_Click(object sender, EventArgs e)
+        {
+            if (IntPtr.Zero == m_lpDevHandle)
+            {
+                MessageBox.Show("get capability cfg, device is NULL", "warning");
+                return;
+            }
+
+            int index = CapabilitycomboBox.SelectedIndex;
+
+            switch (index)
+            {
+
+                case 0:
+                    {
+                        GetOsdCapability();
+                        break;
+                    }
+                case 1:
+                    {
+                        GetVideoEncodeExCap();
+                        break;
+                    }
+                default:
+                    break;
+
+            }
+
+            return;
+        }
+
+        public void GetOsdCapability()
+        {
+            /* Get OsdCapability */
+            Int32 dwBytesReturned = 0;
+            Int32 dwChannelID = 0;
+
+            NETDEV_OSD_CAP_S stOsdCapInfo = new NETDEV_OSD_CAP_S();
+
+
+            int iRet = NetDevSdk.NETDEV_GetDeviceCapability(m_lpDevHandle, dwChannelID, (int)NETDEV_CAPABILITY_COMMOND_E.NETDEV_CAP_OSD, ref stOsdCapInfo, Marshal.SizeOf(stOsdCapInfo), ref dwBytesReturned);
+            if (ItsNetDevSdk.TRUE != iRet)
+            {
+                MessageBox.Show("Get OsdCapability Info fail.");
+            }
+            else
+            {
+                MessageBox.Show("Get OsdCapability Info succeed.");
+            }
+
+            return;
+        }
+
+        public void GetVideoEncodeExCap()
+        {
+            /* Get VideoEncodeExCap */
+            Int32 dwBytesReturned = 0;
+            Int32 dwChannelID = 0;
+
+            NETDEV_VIDEO_STREAM_CAP_EX_S stVideoStreamCapEx = new NETDEV_VIDEO_STREAM_CAP_EX_S();
+
+            int iRet = NetDevSdk.NETDEV_GetDeviceCapability(m_lpDevHandle, dwChannelID, (int)NETDEV_CAPABILITY_COMMOND_E.NETDEV_CAP_VIDEO_ENCODE_EX, ref stVideoStreamCapEx, Marshal.SizeOf(stVideoStreamCapEx), ref dwBytesReturned);
+            if (ItsNetDevSdk.TRUE != iRet)
+            {
+                MessageBox.Show("Get Video StreamCap Info fail.");
+            }
+            else
+            {
+                MessageBox.Show("Get Video StreamCap Info succeed.");
+            }
+
+            return;
+
+        }
+
+        private void SettingOSDContent_Click(object sender, EventArgs e)
+        {
+
+            if (IntPtr.Zero == m_lpDevHandle)
+            {
+                MessageBox.Show("set osdcontent cfg, device is NULL", "warning");
+                return;
+            }
+
+            Int32 dwBytesReturned = 0;
+            Int32 dwChannelID = 0;
+            Int32 ulRet = 0;
+
+            Int32[] sOsdcolor = new Int32[4];
+            sOsdcolor[0] = 0x000000;            /*Black*/
+            sOsdcolor[1] = 0xFF0000;            /*Red*/
+            sOsdcolor[2] = 0x0000FF;            /*Blue*/
+            sOsdcolor[3] = 0x00FF00;            /**Green*/
+
+
+            string strOsdTest = OSDContenttextBox.Text;
+            NETDEV_OSD_CONTENT_S stuInfoOsdCfgs = new NETDEV_OSD_CONTENT_S();
+            NETDEV_OSD_CONTENT_STYLE_S stuStyleCfgs = new NETDEV_OSD_CONTENT_STYLE_S();
             IntPtr pInfoOsdCfgsA = IntPtr.Zero;
             IntPtr pInfoOsdCfgsB = IntPtr.Zero;
             IntPtr pstuStyleCfgsA = IntPtr.Zero;
             IntPtr pstuStyleCfgsB = IntPtr.Zero;
 
-            //获取叠加OSD配置
+            //get osd text
             try
             {
                 pInfoOsdCfgsA = Marshal.AllocHGlobal(Marshal.SizeOf(stuInfoOsdCfgs));
                 Marshal.StructureToPtr(stuInfoOsdCfgs, pInfoOsdCfgsA, true);
 
-                ulRet = NETDEVSDK.NETDEV_GetDevConfig(NETDEVSDK.m_lpDevHandle, 1, (int)NETDEV_CONFIG_COMMAND_E.NETDEV_GET_INFOOSDCFG, pInfoOsdCfgsA, Marshal.SizeOf(stuInfoOsdCfgs), ref dwBytesReturned);
-                if (NETDEVSDK.TRUE != ulRet)
+                ulRet = NetDevSdk.NETDEV_GetDevConfig(m_lpDevHandle, dwChannelID, (int)NETDEV_CONFIG_COMMAND_E.NETDEV_GET_INFOOSDCFG, pInfoOsdCfgsA, Marshal.SizeOf(stuInfoOsdCfgs), ref dwBytesReturned);
+                if (ItsNetDevSdk.TRUE != ulRet)
                 {
                     string strError = string.Format("Get OSD info config fail, error code:{0:D}", ulRet);
                     MessageBox.Show(strError);
                     return;
                 }
-                stuInfoOsdCfgs = (NETDEVSDK.NETDEV_OSD_CONTENT_S)Marshal.PtrToStructure(pInfoOsdCfgsA, stuInfoOsdCfgs.GetType());
+                stuInfoOsdCfgs = (NETDEV_OSD_CONTENT_S)Marshal.PtrToStructure(pInfoOsdCfgsA, stuInfoOsdCfgs.GetType());
             }
             catch (Exception exception)
             {
@@ -1302,7 +1522,7 @@ namespace YuShiITSSDK.NWinFormUI
                 Marshal.FreeHGlobal(pInfoOsdCfgsA);
             }
 
-            //区域1
+
             for (int i = 0; i < stuInfoOsdCfgs.udwNum; i++)
             {
                 stuInfoOsdCfgs.astContentList[i].udwOSDID = (uint)i;
@@ -1330,7 +1550,7 @@ namespace YuShiITSSDK.NWinFormUI
                     if (i == 0 && j == 0)
                     {
                         stuInfoOsdCfgs.astContentList[i].astContentInfo[j].udwContentType = (uint)NETDEV_OSD_CONTENT_TYPE_E.NETDEV_OSD_CONTENT_TYPE_CUSTOM;
-                        stuInfoOsdCfgs.astContentList[i].astContentInfo[j].szOSDText = System.Text.Encoding.UTF8.GetBytes(strOsdTest.PadRight(64, '\0'));
+                        stuInfoOsdCfgs.astContentList[i].astContentInfo[j].szOSDText = Encoding.UTF8.GetBytes(strOsdTest.PadRight(68, '\0').ToCharArray());
                     }
                     else
                     {
@@ -1338,15 +1558,15 @@ namespace YuShiITSSDK.NWinFormUI
                     }
                 }
             }
-
-            //设置叠加OSD配置
+            //set OSD text
             try
             {
+
                 pInfoOsdCfgsB = Marshal.AllocHGlobal(Marshal.SizeOf(stuInfoOsdCfgs));
                 Marshal.StructureToPtr(stuInfoOsdCfgs, pInfoOsdCfgsB, true);
 
-                ulRet = NETDEVSDK.NETDEV_SetDevConfig(NETDEVSDK.m_lpDevHandle, 1, (int)NETDEV_CONFIG_COMMAND_E.NETDEV_SET_OSD_CONTENT_CFG, pInfoOsdCfgsB, ref dwBytesReturned);
-                if (NETDEVSDK.TRUE != ulRet)
+                ulRet = NetDevSdk.NETDEV_SetDevConfig(m_lpDevHandle, 1, (int)NETDEV_CONFIG_COMMAND_E.NETDEV_SET_OSD_CONTENT_CFG, pInfoOsdCfgsB, ref dwBytesReturned);
+                if (ItsNetDevSdk.TRUE != ulRet)
                 {
                     string strError = string.Format("Set OSD info config fail");
                     MessageBox.Show(strError);
@@ -1362,50 +1582,52 @@ namespace YuShiITSSDK.NWinFormUI
                 Marshal.FreeHGlobal(pInfoOsdCfgsB);
             }
 
-            //获取叠加OSD样式
+            //get OSD cfg
             try
             {
-                pstuStyleCfgsA = Marshal.AllocHGlobal(Marshal.SizeOf(stuStyleCfgs));
-                Marshal.StructureToPtr(stuStyleCfgs, pstuStyleCfgsA, true);
+                dwBytesReturned = 0;
 
-                ulRet = NETDEVSDK.NETDEV_GetDevConfig(NETDEVSDK.m_lpDevHandle, 1, (int)NETDEV_CONFIG_COMMAND_E.NETDEV_GET_OSD_CONTENT_STYLE_CFG, pstuStyleCfgsA, Marshal.SizeOf(stuStyleCfgs), ref dwBytesReturned);
-                if (NETDEVSDK.TRUE != ulRet)
+                ulRet = NetDevSdk.NETDEV_GetDevConfig(m_lpDevHandle, 1, (int)NETDEV_CONFIG_COMMAND_E.NETDEV_GET_OSD_CONTENT_STYLE_CFG, ref stuStyleCfgs, Marshal.SizeOf(stuStyleCfgs), ref dwBytesReturned);
+                if (ItsNetDevSdk.TRUE != ulRet)
                 {
                     string strError = string.Format("Get OSD style config fail.");
                     MessageBox.Show(strError);
                     return;
                 }
-                stuStyleCfgs = (NETDEVSDK.NETDEV_OSD_CONTENT_STYLE_S)Marshal.PtrToStructure(pstuStyleCfgsA, stuStyleCfgs.GetType());
             }
             catch (Exception exception)
             {
                 MessageBox.Show(exception.Message);
             }
-            finally
+
+            if (EffectcomboBox.SelectedIndex >= (int)NETDEV_OSD_FONT_STYLE_E.NETDEV_OSD_FONT_STYLE_BACKGROUND && EffectcomboBox.SelectedIndex <= (int)NETDEV_OSD_FONT_STYLE_E.NETDEV_OSD_FONT_STYLE_NORMAL)
             {
-                Marshal.FreeHGlobal(pstuStyleCfgsA);
+                stuStyleCfgs.udwFontStyle = (uint)EffectcomboBox.SelectedIndex;
             }
 
-            //将选择的字体效果和字体大小的索引值赋给叠加OSD样式结构体对应的字段
-            if (cbFontStyle.SelectedIndex >= (int)NETDEV_OSD_FONT_STYLE_E.NETDEV_OSD_FONT_STYLE_BACKGROUND && cbFontStyle.SelectedIndex <= (int)NETDEV_OSD_FONT_STYLE_E.NETDEV_OSD_FONT_STYLE_NORMAL)
+            if (FontSizecomboBox.SelectedIndex >= (int)NETDEV_OSD_FONT_SIZE_E.NETDEV_OSD_FONT_SIZE_LARGE && FontSizecomboBox.SelectedIndex <= (int)NETDEV_OSD_FONT_SIZE_E.NETDEV_OSD_FONT_SIZE_SMALL)
             {
-                stuStyleCfgs.udwFontStyle = (uint)cbFontStyle.SelectedIndex;
+                stuStyleCfgs.udwFontSize = (uint)FontSizecomboBox.SelectedIndex;
             }
 
-            if (cbFontSize.SelectedIndex >= (int)NETDEV_OSD_FONT_SIZE_E.NETDEV_OSD_FONT_SIZE_LARGE && cbFontSize.SelectedIndex <= (int)NETDEV_OSD_FONT_SIZE_E.NETDEV_OSD_FONT_SIZE_SMALL)
+            if (FontColorcomboBox.SelectedIndex >= (int)NETDEV_OSD_MIN_MARGIN_E.NETDEV_OSD_MIN_MARGIN_NONE && FontColorcomboBox.SelectedIndex <= (int)NETDEV_OSD_MIN_MARGIN_E.NETDEV_OSD_MIN_MARGIN_DOUBLE)
             {
-                stuStyleCfgs.udwFontSize = (uint)cbFontSize.SelectedIndex;
+                stuStyleCfgs.udwColor = (uint)sOsdcolor[FontColorcomboBox.SelectedIndex];
             }
 
-            //设置叠加OSD样式
+
+            if (MinMargincomboBox.SelectedIndex >= (int)NETDEV_OSD_MIN_MARGIN_E.NETDEV_OSD_MIN_MARGIN_NONE && MinMargincomboBox.SelectedIndex <= (int)NETDEV_OSD_MIN_MARGIN_E.NETDEV_OSD_MIN_MARGIN_DOUBLE)
+            {
+                stuStyleCfgs.udwMargin = (uint)MinMargincomboBox.SelectedIndex;
+            }
+
+            //set OSD cfg
             try
             {
                 int ulStyleCfgsSize = Marshal.SizeOf(stuStyleCfgs);
-                pstuStyleCfgsB = Marshal.AllocHGlobal(Marshal.SizeOf(stuStyleCfgs));
-                Marshal.StructureToPtr(stuStyleCfgs, pstuStyleCfgsB, true);
 
-                ulRet = NETDEVSDK.NETDEV_SetDevConfig(NETDEVSDK.m_lpDevHandle, 1, (int)NETDEV_CONFIG_COMMAND_E.NETDEV_SET_OSD_CONTENT_STYLE_CFG, pstuStyleCfgsB, ref ulStyleCfgsSize);
-                if (NETDEVSDK.TRUE != ulRet)
+                ulRet = NetDevSdk.NETDEV_SetDevConfig(m_lpDevHandle, 1, (int)NETDEV_CONFIG_COMMAND_E.NETDEV_SET_OSD_CONTENT_STYLE_CFG, ref stuStyleCfgs, ulStyleCfgsSize);
+                if (ItsNetDevSdk.TRUE != ulRet)
                 {
                     string strError = string.Format("Set OSD style config fail.");
                     MessageBox.Show(strError);
@@ -1416,330 +1638,548 @@ namespace YuShiITSSDK.NWinFormUI
             {
                 MessageBox.Show(exception.Message);
             }
-            finally
+
+            return;
+        }
+
+        private void ParkLedtextBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        /***********************************System Maintenance*****************************/
+
+        /*<Refresh version info>*/
+        private void VedrsionInfoRefresh_Click(object sender, EventArgs e)
+        {
+            if (IntPtr.Zero == m_lpDevHandle)
             {
-                Marshal.FreeHGlobal(pstuStyleCfgsB);
+                return;
+            }
+
+            NETDEV_DEVICE_BASICINFO_S stDeviceInfo = new NETDEV_DEVICE_BASICINFO_S();
+
+            Int32 dwBytesReturned = 0;
+            Int32 lChannelID = 1;
+            int bRet = NetDevSdk.NETDEV_GetDevConfig(m_lpDevHandle, lChannelID, (int)NETDEV_CONFIG_COMMAND_E.NETDEV_GET_DEVICECFG, ref stDeviceInfo, Marshal.SizeOf(stDeviceInfo), ref dwBytesReturned);
+            if (ItsNetDevSdk.TRUE != bRet)
+            {
+                MessageBox.Show("Get device info failed.", "waring");
+            }
+            else
+            {
+                string DevName = stDeviceInfo.szDeviceName;
+                string SerialNum = stDeviceInfo.szSerialNum;
+                string FirmwareVersion = stDeviceInfo.szFirmwareVersion;
+                string DevModel = stDeviceInfo.szSerialNum;
+                string MacAddress = stDeviceInfo.szMacAddress;
+
+
+                HardwaretextBox.Text = DevModel;
+                DeviceNametextBox.Text = DevName;
+                SerialNotextBox.Text = SerialNum;
+                FirmwaretextBox.Text = FirmwareVersion;
+                MacAdresstextBox.Text = MacAddress;
             }
         }
 
-        private void initDgUserInfo()
+        /*<get device net cfg info>*/
+        private void GetNetInfo_Click(object sender, EventArgs e)
         {
-            dgUserInfo.Columns[0].Width = 60;
-            dgUserInfo.Columns[0].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dgUserInfo.Columns[1].Width = 140;
-            dgUserInfo.Columns[1].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dgUserInfo.Columns[2].Width = 100;
-            dgUserInfo.Columns[2].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dgUserInfo.Columns[3].Width = 100;
-            dgUserInfo.Columns[3].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dgUserInfo.Columns[4].Width = 142;
-            dgUserInfo.Columns[4].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            if (IntPtr.Zero == m_lpDevHandle)
+            {
+                return;
+            }
+
+            NETDEV_NETWORKCFG_S stNetworkcfg = new NETDEV_NETWORKCFG_S();
+
+            Int32 dwBytesReturned = 0;
+            Int32 lChannelID = 0;
+            int iRet = NetDevSdk.NETDEV_GetDevConfig(m_lpDevHandle, lChannelID, (int)NETDEV_CONFIG_COMMAND_E.NETDEV_GET_NETWORKCFG, ref stNetworkcfg, Marshal.SizeOf(stNetworkcfg), ref dwBytesReturned);
+            if (ItsNetDevSdk.TRUE != iRet)
+            {
+                MessageBox.Show("Get network cfg fail");
+                return;
+            }
+            else
+            {
+                string IPAddress = stNetworkcfg.Ipv4AddressStr;
+                string SubnetMask = stNetworkcfg.szIPv4SubnetMask;
+                string DHCP = Convert.ToString(stNetworkcfg.dwIPv4DHCP);
+                string MTU = Convert.ToString(stNetworkcfg.dwMTU);
+
+                IPAddressBox.Text = IPAddress;
+                SubnetMasktextBox.Text = SubnetMask;
+                DHCPtextBox.Text = DHCP;
+                MTUtextBox.Text = MTU;
+            }
+
+            return;
         }
 
-        private void getUsersLoginInfo()
+        /*<set device net cfg info>*/
+        private void SetNetInfo_Click(object sender, EventArgs e)
         {
-            string strPathName;
-            string strUserIndex;
-            StringBuilder strIniValue = new StringBuilder();
-            StuDevInfo oStuDevInfo = new StuDevInfo();
-
-            //写日志文件
-            strPathName = string.Format("{0}\\UserLoginInfo.ini", strModulePath);
-
-            while (gstBvecDevInfo == NETDEVSDK.FALSE)
+            if (IntPtr.Zero == m_lpDevHandle)
             {
-                gstBvecDevInfo = NETDEVSDK.TRUE;
-                m_VecDevInfo.Clear();
-                if (dgUserInfo.Rows.Count > 0)
+                return;
+            }
+
+            NETDEV_NETWORKCFG_S stNetworkcfg = new NETDEV_NETWORKCFG_S();
+
+            Int32 dwBytesReturned = 0;
+            Int32 lChannelID = 0;
+            int iRet = NetDevSdk.NETDEV_GetDevConfig(m_lpDevHandle, lChannelID, (int)NETDEV_CONFIG_COMMAND_E.NETDEV_GET_NETWORKCFG, ref stNetworkcfg, Marshal.SizeOf(stNetworkcfg), ref dwBytesReturned);
+            if (ItsNetDevSdk.TRUE != iRet)
+            {
+                MessageBox.Show("Set network cfg fail", "waring");
+                return;
+            }
+
+            stNetworkcfg.Ipv4AddressStr = IPAddressBox.Text;
+            stNetworkcfg.szIPv4SubnetMask = SubnetMasktextBox.Text;
+            stNetworkcfg.dwIPv4DHCP = Convert.ToInt32(DHCPtextBox.Text);
+            stNetworkcfg.dwMTU = Convert.ToInt32(MTUtextBox.Text);
+
+
+
+            iRet = NetDevSdk.NETDEV_SetDevConfig(m_lpDevHandle, lChannelID, (int)NETDEV_CONFIG_COMMAND_E.NETDEV_SET_NETWORKCFG, ref stNetworkcfg, Marshal.SizeOf(stNetworkcfg));
+            if (ItsNetDevSdk.TRUE != iRet)
+            {
+                MessageBox.Show("Set network cfg fail", "waring");
+                return;
+            }
+            else
+            {
+                MessageBox.Show("Set network cfg succeed");
+            }
+        }
+
+        private void Browse_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.Multiselect = false;
+            dialog.Title = "Please select file of version";
+            dialog.Filter = "zip files(*.zip)|*.zip||";
+            if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                return;
+            }
+        }
+
+        private void Upgrade_Click(object sender, EventArgs e)
+        {
+            if (IntPtr.Zero == m_lpDevHandle)
+            {
+                return;
+            }
+
+
+        }
+
+        private void Reboot_Click(object sender, EventArgs e)
+        {
+            if (IntPtr.Zero == m_lpDevHandle)
+            {
+                return;
+            }
+
+            int iRet = NetDevSdk.NETDEV_Reboot(m_lpDevHandle);
+            if (ItsNetDevSdk.TRUE != iRet)
+            {
+                MessageBox.Show("reboot fail", "waring");
+            }
+            else
+            {
+                MessageBox.Show("reboot succeed");
+            }
+
+            return;
+        }
+
+        private void SetEncodingFormat_Click(object sender, EventArgs e)
+        {
+            Int32 iType = 0;
+            if (0 == PlateencodingCombox.SelectedIndex)
+            {
+                iType = 1;
+            }
+            else if (1 == PlateencodingCombox.SelectedIndex)
+            {
+                iType = 0;
+            }
+            Int32 iRet = NetDevSdk.NETDEV_EnableCarplate(iType);
+            if (ItsNetDevSdk.TRUE != iRet)
+            {
+                MessageBox.Show("Set Enable Carplate fail", "waring");
+            }
+            else
+            {
+                MessageBox.Show("Set Enable Carplate succeed");
+            }
+
+        }
+
+        private void PicturePreview_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+
+        /*******************************Multiuser-login*******************************/
+
+        /* Status report callback. used to get the status of connection between the SDK and the device */
+
+        public void ParkMultiStatusReportCallback(IntPtr lpUserID, UInt32 ulReportType, IntPtr pParam, IntPtr lpUserData)
+        {
+            string strCameraIP = "";
+
+            if (ulReportType == (uint)NETDEV_ITS_STATUS_REPORT_E.NETDEV_ITS_DEV_OFFLINE_E || ulReportType == (uint)NETDEV_ITS_STATUS_REPORT_E.NETDEV_ITS_DEV_RONLINE_E)
+            {
+                string strStatus = "";
+
+                stuUserInfo oStuDevInfo;
+                for (int i = 0; i < m_VecDevInfo.Count; i++)
                 {
-                    dgUserInfo.Rows.Clear();
-                }
+                    oStuDevInfo = (stuUserInfo)m_VecDevInfo.GetByIndex(i);
 
-                lblUserNum.Text = "用户数量：0";
-
-                for (int i = 0; i < 80; i++)
-                {
-                    strUserIndex = string.Format("DEVICE{0:D}", i);
-                    GetPrivateProfileString(strUserIndex, "IP", null, strIniValue, NETDEVSDK.MAX_PATH, strPathName);
-                    oStuDevInfo.strDevIP = strIniValue.ToString();
-                    GetPrivateProfileString(strUserIndex, "admin", null, strIniValue, NETDEVSDK.MAX_PATH, strPathName);
-                    oStuDevInfo.strDevAdmin = strIniValue.ToString();
-                    GetPrivateProfileString(strUserIndex, "password", null, strIniValue, NETDEVSDK.MAX_PATH, strPathName);
-                    oStuDevInfo.strDevPassWord = strIniValue.ToString();
-
-                    if (string.IsNullOrEmpty(oStuDevInfo.strDevIP) || string.IsNullOrEmpty(oStuDevInfo.strDevAdmin) ||
-                        string.IsNullOrEmpty(oStuDevInfo.strDevPassWord))
+                    if (ulReportType == (uint)NETDEV_ITS_STATUS_REPORT_E.NETDEV_ITS_DEV_OFFLINE_E)
                     {
-                        break;
+                        oStuDevInfo.bLogin = false;
+                        strStatus = "Offline";
+                    }
+                    else
+                    {
+                        oStuDevInfo.bLogin = true;
+                        strStatus = "Online";
                     }
 
-                    oStuDevInfo.bLogin = NETDEVSDK.FALSE;
-                    oStuDevInfo.bStartStream = NETDEVSDK.FALSE;
-                    oStuDevInfo.lpDevHandle = IntPtr.Zero;
-                    oStuDevInfo.lpPicHandle = IntPtr.Zero;
-                    oStuDevInfo.lpStreamHandle = IntPtr.Zero;
-                    oStuDevInfo.ulPicCount = 0;
 
-                    m_VecDevInfo.Add(i, oStuDevInfo);
+                    if (oStuDevInfo.lpDevHandle == lpUserID)
+                    {
+                        strCameraIP = oStuDevInfo.strDevIP;
+                        string strText = "";
+                        for (int j = 0; j < UserInfolistView.Items.Count; j++)
+                        {
+                            strText = this.UserInfolistView.Items[j].SubItems[0].Text;
+                            if (strCameraIP == strText)
+                            {
+                                this.UserInfolistView.Items[j].SubItems[2].Text = strStatus;
+                                break;
+                            }
+                        }
+
+                        m_VecDevInfo.SetByIndex(i, oStuDevInfo);
+                        break;
+                    }
                 }
             }
-            gstBvecDevInfo = NETDEVSDK.FALSE;
-
-            return;
-        }
-
-        public void SetListCtrl()
-        {
-            int iCount = m_VecDevInfo.Count;
-            string strIndex = "";
-
-            while (gstBvecDevInfo == NETDEVSDK.FALSE)
+            else if (ulReportType == (uint)NETDEV_ITS_STATUS_REPORT_E.NETDEV_ITS_MEDIA_OFFLINE_E || ulReportType == (uint)NETDEV_ITS_STATUS_REPORT_E.NETDEV_ITS_MEDIA_RONLINE_E)
             {
-                gstBvecDevInfo = NETDEVSDK.TRUE;
-                int iRowIndex = 0;
 
-                for (int i = 0; i < iCount; i++)
-                {
-                    strIndex = string.Format("{0:D}", i + 1);
-                    StuDevInfo oStuDevInfo = (StuDevInfo)m_VecDevInfo.GetByIndex(m_VecDevInfo.IndexOfKey(i));
-
-                    iRowIndex = dgUserInfo.Rows.Add();    //插入行
-                    dgUserInfo.Rows[iRowIndex].Cells[0].Value = strIndex;     //设置数据
-                    dgUserInfo.Rows[iRowIndex].Cells[1].Value = oStuDevInfo.strDevIP;    //设置数据
-                    dgUserInfo.Rows[iRowIndex].Cells[2].Value = oStuDevInfo.strDevAdmin.ToString();
-                    dgUserInfo.Rows[iRowIndex].Cells[3].Value = "未连接";
-                    dgUserInfo.Rows[iRowIndex].Cells[4].Value = "0";
-                }
             }
-            gstBvecDevInfo = NETDEVSDK.FALSE;
 
             return;
         }
 
-        public void PicDataCallBackFun(IntPtr pstUniviewData, uint ulStreamHandle)
+        /* Multiuser Photo data callback function */
+        public void ParkMultiPicDataCallback(ref NETDEV_PIC_DATA_S pstPicData, IntPtr lpUserData)
         {
-            //指针转换为对应结构体
-            NETDEVSDK.NETDEV_PIC_DATA_S info = new NETDEVSDK.NETDEV_PIC_DATA_S();
-            byte[] pByte = new byte[Marshal.SizeOf(info)];
-            Marshal.Copy(pstUniviewData, pByte, 0, Marshal.SizeOf(info));
-            info = (NETDEVSDK.NETDEV_PIC_DATA_S)BytesToStruct(pByte, info.GetType());
-            string szTmp = "";
-            string cameraIP = "";
-            int iRowIndex = 0;
-
-            char szclor = (char)info.cVehicleColor;
+            string carPlate = GetDefaultString(pstPicData.szCarPlate);
+            string time = GetDefaultString(pstPicData.szPassTime);
+            string TollgateID = GetDefaultString(pstPicData.szTollgateID);
+            string strCameraIP = "";
+            string strText = "";
+            int picCount = 0;
+            stuUserInfo oStuDevInfo;
 
             for (int i = 0; i < m_VecDevInfo.Count; i++)
             {
-                StuDevInfo oStuDevInfo = (StuDevInfo)m_VecDevInfo.GetByIndex(m_VecDevInfo.IndexOfKey(i));
-                if ((uint)oStuDevInfo.lpStreamHandle == ulStreamHandle)
+                oStuDevInfo = (stuUserInfo)m_VecDevInfo.GetByIndex(i);
+                if (oStuDevInfo.lpUserData == lpUserData)
                 {
-                    iRowIndex = i;
-                    cameraIP = oStuDevInfo.strDevIP;
+                    strCameraIP = oStuDevInfo.strDevIP;
+                    picCount = oStuDevInfo.ulPicCount++;
+                    picCount = picCount + 1;
+
+                    for (int j = 0; j < UserInfolistView.Items.Count; j++)
+                    {
+                        strText = this.UserInfolistView.Items[j].SubItems[0].Text;
+                        if (strCameraIP == strText)
+                        {
+                            this.UserInfolistView.Items[j].SubItems[3].Text = picCount.ToString();
+                            break;
+                        }
+                    }
+
+                    m_VecDevInfo.SetByIndex(i, oStuDevInfo);
                     break;
                 }
             }
 
-            szTmp = string.Format("{0}\\pic_{1}", strModulePath, cameraIP);
-            try
+            //获取当前文件夹路径
+            string currPath = Application.StartupPath;
+            //检查是否存在文件夹
+            string subPath = currPath + "/pic/";
+            if (false == System.IO.Directory.Exists(subPath))
             {
-                if (!Directory.Exists(szTmp))
+                //创建pic文件夹
+                System.IO.Directory.CreateDirectory(subPath);
+            }
+
+            /* save pic */
+            for (int i = 0; i < pstPicData.ulPicNumber; i++)
+            {
+                String strFileName = subPath + time + "_" + carPlate + "_" + i.ToString() + ".jpg";
+
+                int size = (int)pstPicData.aulDataLen[i];
+                byte[] buffer = new byte[size];
+                Marshal.Copy(pstPicData.apcData[i], buffer, 0, size);
+
+                FileStream fs = new FileStream(strFileName, FileMode.Create);
+                fs.Write(buffer, 0, buffer.Length);
+                fs.Close();
+            }
+
+            return;
+        }
+
+
+        private void addUserInfolistItem(stuUserInfo pstUerInfo)
+        {
+
+            int gUserNo = UserInfolistView.Items.Count;
+            ListViewItem item = new ListViewItem(pstUerInfo.strDevIP);
+            item.SubItems.Add(pstUerInfo.strDevAdmin);
+            item.SubItems.Add("Offline");
+            item.SubItems.Add("0");
+
+            UserInfolistView.Items.Insert(gUserNo, item);
+            item.EnsureVisible();
+
+            return;
+        }
+
+        private void DeleteUserInfolistItem(string strIP)
+        {
+            string strText = "";
+            for (int j = 0; j < UserInfolistView.Items.Count; j++)
+            {
+                strText = this.UserInfolistView.Items[j].SubItems[0].Text;
+                if (strIP == strText)
                 {
-                    Directory.CreateDirectory(szTmp);
+                    this.UserInfolistView.Items.Remove(this.UserInfolistView.Items[j]);
+                    break;
                 }
             }
-            catch (Exception e)
+
+            return;
+        }
+
+        private void MultiLoginbutton_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < m_VecDevInfo.Count; i++)
             {
-                string strError = string.Format("Create path \"{0}\" fail.", szTmp);
-                MessageBox.Show(strError);
+                stuUserInfo pstUerInfo = new stuUserInfo();
+                pstUerInfo = (stuUserInfo)m_VecDevInfo.GetByIndex(i);
+                NETDEV_DEVICE_INFO_S pstDevInfo = new NETDEV_DEVICE_INFO_S();
+                pstUerInfo.lpDevHandle = NetDevSdk.NETDEV_Login(pstUerInfo.strDevIP, (Int16)pstUerInfo.iPort, pstUerInfo.strDevAdmin, pstUerInfo.strDevPassWord, ref pstDevInfo);
+                if (pstUerInfo.lpDevHandle == IntPtr.Zero)
+                {
+                    continue;
+                }
+                else
+                {
+                    pstUerInfo.bLogin = true;
+                    for (int j = 0; j < UserInfolistView.Items.Count; j++)
+                    {
+                        string strText = this.UserInfolistView.Items[j].SubItems[0].Text;
+                        if (pstUerInfo.strDevIP == strText)
+                        {
+                            this.UserInfolistView.Items[j].SubItems[2].Text = "Online";
+                        }
+                        else
+                        {
+                            continue;
+                        }
+                    }
+
+                    /* Delete the value from the table, get the handle, 
+                    and add the value to the table again at the end of the function */
+                    m_VecDevInfo.Remove(pstUerInfo.strDevIP);
+
+                    NetDevSdk.NETDEV_SetParkStatusCallBack(pstUerInfo.lpDevHandle, ItsMultiParkStatusReportCB, IntPtr.Zero);
+
+                    /* start picstream */
+                    pstUerInfo.lpPicHandle = (IntPtr)NetDevSdk.NETDEV_StartPicStream(pstUerInfo.lpDevHandle, IntPtr.Zero, false, "", ItsMultiPicCB, pstUerInfo.lpDevHandle);
+                    if (IntPtr.Zero == pstUerInfo.lpPicHandle)
+                    {
+                        NetDevSdk.NETDEV_Logout(pstUerInfo.lpDevHandle);
+                    }
+
+                    pstUerInfo.bLogin = true;
+                    pstUerInfo.bStartStream = true;
+                    pstUerInfo.lpUserData = pstUerInfo.lpDevHandle;
+
+                    /* sava user information */
+                    m_VecDevInfo.Add(pstUerInfo.strDevIP, pstUerInfo);
+                }
+            }
+        }
+
+        private void MultiLogoutbutton_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < m_VecDevInfo.Count; i++)
+            {
+                stuUserInfo pstUerInfo = new stuUserInfo();
+                pstUerInfo = (stuUserInfo)m_VecDevInfo.GetByIndex(i);
+
+                /* stop-picstream */
+                if (IntPtr.Zero != pstUerInfo.lpPicHandle)
+                {
+                    int bRet = NetDevSdk.NETDEV_StopPicStream(pstUerInfo.lpPicHandle);
+
+                    if (ItsNetDevSdk.TRUE == bRet)
+                    {
+                        pstUerInfo.lpPicHandle = IntPtr.Zero;
+                        pstUerInfo.bStartStream = false;
+
+                    }
+                    else
+                    {
+                        MessageBox.Show("stop picStream fail.", "warning");
+                    }
+                }
+                if (IntPtr.Zero == pstUerInfo.lpPicHandle && IntPtr.Zero != pstUerInfo.lpDevHandle)
+                {
+                    /* logout */
+                    int bRet = NetDevSdk.NETDEV_Logout(pstUerInfo.lpDevHandle);
+                    if (ItsNetDevSdk.TRUE != bRet)
+                    {
+                        MessageBox.Show("Logout failed.", "warning");
+                    }
+                    else
+                    {
+                        for (int j = 0; j < UserInfolistView.Items.Count; j++)
+                        {
+                            string strText = this.UserInfolistView.Items[j].SubItems[0].Text;
+                            if (pstUerInfo.strDevIP == strText)
+                            {
+                                this.UserInfolistView.Items[j].SubItems[2].Text = "Offline";
+                                continue;
+                            }
+                        }
+                        pstUerInfo.lpDevHandle = IntPtr.Zero;
+                        pstUerInfo.bLogin = false;
+                    }
+                }
+            }
+            return;
+        }
+
+        private void UserInfolistView_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+            ListView.SelectedIndexCollection indexes = this.UserInfolistView.SelectedIndices;
+            if (indexes.Count > 0)
+            {
+                int index = indexes[0];
+                string strIP = this.UserInfolistView.Items[index].SubItems[0].Text;
+
+                stuUserInfo pstUerInfo = (stuUserInfo)m_VecDevInfo.GetByIndex(m_VecDevInfo.IndexOfKey(strIP));
+
+                MultiIPtextBox.Text = strIP;
+                MultiPorttextBox.Text = Convert.ToString(pstUerInfo.iPort);
+                MultiUsernametextBox.Text = pstUerInfo.strDevAdmin;
+                MultiPasswordtextBox.Text = pstUerInfo.strDevPassWord;
+
+            }
+
+            return;
+
+        }
+
+        private void addDevice_Click(object sender, EventArgs e)
+        {
+            /* login */
+            String strIP = MultiIPtextBox.Text;
+            int iPort = Convert.ToInt32(MultiPorttextBox.Text);
+            String strUser = MultiUsernametextBox.Text;
+            String strPasswd = MultiPasswordtextBox.Text;
+
+            /* find-device */
+            if (m_VecDevInfo.ContainsKey(strIP))
+            {
+                MessageBox.Show("Device already exist.", "warning");
                 return;
             }
-            
-            //车牌号码
-            string carPlate = new string(info.szCarPlate).TrimEnd('\0');
 
-            //时间
-            string time = new string(info.szPassTime).TrimEnd('\0');
+            stuUserInfo pstUerInfo = new stuUserInfo();
+            pstUerInfo.strDevIP = strIP;
+            pstUerInfo.strDevAdmin = strUser;
+            pstUerInfo.strDevPassWord = strPasswd;
+            pstUerInfo.iPort = iPort;
+            pstUerInfo.ulPicCount = 0;
 
-            //保存过车图片
-            for (int i = 0; i < info.ulPicNumber; i++)
-            {
-                string passTime = new string(info.acPassTime);
+            addUserInfolistItem(pstUerInfo);
 
-                int size = (int)info.aulDataLen[i];
-                byte[] buffer = new byte[size];
-                Marshal.Copy(info.apcData[i], buffer, 0, size);
-
-                using (MemoryStream ms = new MemoryStream(buffer))
-                {
-                    using (Image image = Image.FromStream(ms))
-                    {
-                        image.Save(string.Format("{0}\\{1}_{2}.bmp", szTmp, time, i));
-                    }
-                }
-
-                StuDevInfo oStuDevInfo = (StuDevInfo)m_VecDevInfo.GetByIndex(m_VecDevInfo.IndexOfKey(iRowIndex));
-                oStuDevInfo.ulPicCount++;
-
-                dgUserInfo.Rows[iRowIndex].Cells[4].Value = oStuDevInfo.ulPicCount.ToString();
-                m_VecDevInfo.SetByIndex(m_VecDevInfo.IndexOfKey(iRowIndex), oStuDevInfo);
-            }
+            m_VecDevInfo.Add(pstUerInfo.strDevIP, pstUerInfo);
         }
 
-        public void Demo_LoginThread()
+        private void deleteDevice_Click(object sender, EventArgs e)
         {
-            IntPtr lpDevHandle = IntPtr.Zero;
-            IntPtr lpPicHandle = IntPtr.Zero;
-            string strUserIp;
-            string strUserName;
-            string strUserWord;
-            int iCount = 0;
-            int iIndexLog = 0;
+            String strIP = MultiIPtextBox.Text;
+            int iPort = Convert.ToInt32(MultiPorttextBox.Text);
+            String strUser = MultiUsernametextBox.Text;
+            String strPasswd = MultiPasswordtextBox.Text;
 
-            while (gstBvecDevInfo == NETDEVSDK.FALSE)
+            /* find-device */
+            if (!m_VecDevInfo.ContainsKey(strIP))
             {
-                gstBvecDevInfo = NETDEVSDK.TRUE;
-                int iSize = m_VecDevInfo.Count;
-
-                for (int i = 0; i < iSize; i++)
-                {
-                    IntPtr pstDevInfo = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(NETDEVSDK.NETDEV_DEVICE_INFO_S)));
-                    StuDevInfo oStuDevInfo = (StuDevInfo)m_VecDevInfo.GetByIndex(m_VecDevInfo.IndexOfKey(i));
-                    strUserIp = oStuDevInfo.strDevIP;
-                    strUserName = oStuDevInfo.strDevAdmin;
-                    strUserWord = oStuDevInfo.strDevPassWord;
-
-                    if (oStuDevInfo.bLogin == NETDEVSDK.FALSE)
-                    {
-                        lpDevHandle = NETDEVSDK.NETDEV_Login(strUserIp, 0, strUserName, strUserWord, pstDevInfo);
-                        if (IntPtr.Zero == lpDevHandle)
-                        {
-                            iIndexLog++;
-                            if (iIndexLog > 2)
-                            {
-                                iIndexLog = 0;
-                                continue;
-                            }
-                            i--;
-                            continue;
-                        }
-
-                        oStuDevInfo.bLogin = NETDEVSDK.TRUE;
-                        oStuDevInfo.lpDevHandle = lpDevHandle;
-
-                        IntPtr pi = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(int)));
-                        MultiPicDataCallBackFun = PicDataCallBackFun;
-                        lpPicHandle = (IntPtr)NETDEVSDK.NETDEV_StartPicStream(lpDevHandle, IntPtr.Zero, false, "", MultiPicDataCallBackFun, pi);
-                        oStuDevInfo.lpStreamHandle = pi;
-                        Marshal.FreeHGlobal(pi);
-                        if (IntPtr.Zero == lpPicHandle)
-                        {
-                            NETDEVSDK.NETDEV_Logout(lpDevHandle);
-                            oStuDevInfo.bLogin = NETDEVSDK.FALSE;
-                            oStuDevInfo.lpDevHandle = IntPtr.Zero;
-                            iIndexLog++;
-                            if (iIndexLog > 2)
-                            {
-                                iIndexLog = 0;
-                                continue;
-                            }
-                            i--;
-                            continue;
-                        }
-                        iCount++;
-                        oStuDevInfo.ulUserId = (uint)i;
-                        oStuDevInfo.bStartStream = NETDEVSDK.TRUE;
-                        oStuDevInfo.lpPicHandle = lpPicHandle;
-                        m_VecDevInfo.SetByIndex(m_VecDevInfo.IndexOfKey(i), oStuDevInfo);
-                        dgUserInfo.Rows[i].Cells[3].Value = "已连接";    //设置数据
-                    }
-
-                    Marshal.FreeHGlobal(pstDevInfo);
-                }
-
-                lblUserNum.Text = string.Format("用户数量：{0:D}", iCount);
-                btnMultiLogout.Enabled = true;
-                MessageBox.Show("连接完成");
+                MessageBox.Show("not find Device.", "warning");
+                return;
             }
-            gstBvecDevInfo = NETDEVSDK.FALSE;
 
+            int index = m_VecDevInfo.IndexOfKey(strIP);
+            stuUserInfo pstUerInfo = (stuUserInfo)m_VecDevInfo.GetByIndex(index);
+
+            /* stop-picstream */
+            if (IntPtr.Zero != pstUerInfo.lpPicHandle)
+            {
+                int bRet = NetDevSdk.NETDEV_StopPicStream(pstUerInfo.lpPicHandle);
+
+                if (ItsNetDevSdk.TRUE == bRet)
+                {
+                    pstUerInfo.lpPicHandle = IntPtr.Zero;
+                    pstUerInfo.bStartStream = false;
+
+                }
+                else
+                {
+                    MessageBox.Show("picStream already stop.", "warning");
+                }
+            }
+
+            if (IntPtr.Zero == pstUerInfo.lpPicHandle && IntPtr.Zero != pstUerInfo.lpDevHandle)
+            {
+                /* logout */
+                int bRet = NetDevSdk.NETDEV_Logout(pstUerInfo.lpDevHandle);
+                if (ItsNetDevSdk.TRUE != bRet)
+                {
+                    MessageBox.Show("Logout failed.", "warning");
+                }
+                else
+                {
+                    pstUerInfo.lpDevHandle = IntPtr.Zero;
+                    pstUerInfo.bLogin = false;
+                    DeleteUserInfolistItem(pstUerInfo.strDevIP);
+                    m_VecDevInfo.Remove(pstUerInfo.strDevIP);
+                    return;
+                }
+            }
+            DeleteUserInfolistItem(pstUerInfo.strDevIP);
+            m_VecDevInfo.Remove(pstUerInfo.strDevIP);
             return;
-        }
-
-        private void btnMultiLogin_Click(object sender, EventArgs e)
-        {
-            btnMultiLogin.Enabled = false;
-
-            getUsersLoginInfo();
-
-            SetListCtrl();
-
-            Thread thread = new Thread(Demo_LoginThread);
-            thread.IsBackground = true;
-            thread.Start();//启动新线程
-
-            return;
-        }
-
-        private void btnMultiLogout_Click(object sender, EventArgs e)
-        {
-            string strUserIp = "";
-            string strUserName = "";
-            string strUserWord = "";
-
-            btnMultiLogout.Enabled = false;           
-
-            while (gstBvecDevInfo == NETDEVSDK.FALSE)
-            {
-                gstBvecDevInfo = NETDEVSDK.TRUE;
-
-                ICollection key = m_VecDevInfo.Keys;
-
-                foreach (int k in key)
-                {
-                    StuDevInfo oStuDevInfo = (StuDevInfo)m_VecDevInfo.GetByIndex(m_VecDevInfo.IndexOfKey(k));
-                    strUserIp = oStuDevInfo.strDevIP;
-                    strUserName = oStuDevInfo.strDevAdmin;
-                    strUserWord = oStuDevInfo.strDevPassWord;
-
-                    if (oStuDevInfo.bStartStream == NETDEVSDK.TRUE)
-                    {
-                        int ulRet = NETDEVSDK.NETDEV_StopPicStream(oStuDevInfo.lpPicHandle);
-                        if (NETDEVSDK.TRUE != ulRet)
-                        {
-                            gstBvecDevInfo = NETDEVSDK.FALSE;
-                            return;
-                        }
-                        oStuDevInfo.bStartStream = NETDEVSDK.FALSE;
-                        oStuDevInfo.lpPicHandle = IntPtr.Zero;
-                        oStuDevInfo.lpStreamHandle = IntPtr.Zero;
-                        oStuDevInfo.ulPicCount = 0;
-                    }
-
-                    if (oStuDevInfo.bLogin == NETDEVSDK.TRUE)
-                    {
-                        int ulRet = NETDEVSDK.NETDEV_Logout(oStuDevInfo.lpDevHandle);
-                        if (NETDEVSDK.TRUE != ulRet)
-                        {
-                            gstBvecDevInfo = NETDEVSDK.FALSE;
-                            return;
-                        }
-                        oStuDevInfo.bLogin = NETDEVSDK.FALSE;
-                        oStuDevInfo.lpDevHandle = IntPtr.Zero;
-                    }
-                    oStuDevInfo.strDevAdmin = "";
-                    oStuDevInfo.strDevIP = "";
-                    oStuDevInfo.ulUserId = 0;
-                }
-                if (dgUserInfo.Rows.Count > 0)
-                {
-                    dgUserInfo.Rows.Clear();
-                }
-                lblUserNum.Text = "用户数量：0";
-            }
-
-            gstBvecDevInfo = NETDEVSDK.FALSE;
-            btnMultiLogin.Enabled = true;
         }
     }
 }

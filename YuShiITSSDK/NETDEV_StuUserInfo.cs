@@ -3,7 +3,7 @@
 namespace System.Data.YuShiITSSDK
 {
     [StructLayout(LayoutKind.Sequential)]
-    public struct StuUserInfo
+    public struct NETDEV_StuUserInfo
     {
         public string strDevIP;
         public string strDevAdmin;

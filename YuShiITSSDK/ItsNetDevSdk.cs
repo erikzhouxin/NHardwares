@@ -35,7 +35,7 @@ namespace System.Data.YuShiITSSDK
         /// <summary>
         /// SDK全名称
         /// </summary>
-        public static String DllFullName { get; } = Path.GetFullPath(DllVirtualPath);
+        public static String DllFullName { get; } = Path.Combine(DllFullPath, DllFileName);
         public const int NETDEV_MODEL_LEN_64 = 64;
 
         public const int REAL_PANEL_MAX_SIZE = 16;//16
@@ -501,22 +501,6 @@ namespace System.Data.YuShiITSSDK
         public const int NETDEV_CAR_VEHICLE_BRAND_LEN = 4;
         public const int NETDEV_PECCANCYTYPE_CODE_MAX_NUM = 16;
 
-        // 疑似无用字段
-        public static IntPtr m_lpDevHandle = IntPtr.Zero;
-        public static IntPtr m_oPlayHandleMap = IntPtr.Zero;
-        public static IntPtr m_oPicHandleMap = IntPtr.Zero;
-        public static IntPtr m_lpTmsPicHandle = IntPtr.Zero;
-        public static IntPtr m_talkHandle = IntPtr.Zero;
-        public static String m_strLogPath = null;
-        public static String m_strRecordSavePath = null;
-        public static String m_strsnapshotFilePath = null;
-        public static String m_strVideoCBDataPath = null;
-        public static String m_strVechicleListfile = null;
-        public static String m_strDeviceUpPathfile = null;
-        public static String m_strVehicleListPath = null;
-        public static String m_strPicListPath = null;
-
-
         static Lazy<IItsNetDevSdkProxy> _netDevSdk = new Lazy<IItsNetDevSdkProxy>(() => new ItsNetDevSdkLoader(), true);
         /// <summary>
         /// 静态构造
@@ -524,20 +508,94 @@ namespace System.Data.YuShiITSSDK
         static ItsNetDevSdk()
         {
             Directory.CreateDirectory(DllFullPath);
-            //if (Environment.Is64BitProcess)
-            //{
-            //    if (!SdkFileComponent.CompareResourceFile(DllFullName, Properties.Resources.X))
-            //    {
-            //        SdkFileComponent.WriteResourceFile(Properties.Resources.X64_VzLPRSDK, Path.Combine(DllFullPath, "VzLPRSDK.dll"));
-            //    }
-            //}
-            //else
-            //{
-            //    if (!SdkFileComponent.CompareResourceFile(DllFullName, Properties.Resources.X86_VzLPRSDK))
-            //    {
-            //        SdkFileComponent.WriteResourceFile(Properties.Resources.X86_VzLPRSDK, Path.Combine(DllFullPath, "VzLPRSDK.dll"));
-            //    }
-            //}
+            if (Environment.Is64BitProcess)
+            {
+                if (!SdkFileComponent.CompareResourceFile(DllFullName, Properties.Resources.X64_NetDEVSDK))
+                {
+                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_NetDEVSDK, Path.Combine(DllFullPath, "NetDEVSDK.dll"));
+                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_avutil_audio_aac, Path.Combine(DllFullPath, "avutil_audio_aac.dll"));
+                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_dsp_audio_aac, Path.Combine(DllFullPath, "dsp_audio_aac.dll"));
+                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_dsp_audio_aac_enc, Path.Combine(DllFullPath, "dsp_audio_aac_enc.dll"));
+                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_dsp_audio_g711, Path.Combine(DllFullPath, "dsp_audio_g711.dll"));
+                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_dsp_h264_gpu_dec, Path.Combine(DllFullPath, "dsp_h264_gpu_dec.dll"));
+                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_dsp_video_h264_1, Path.Combine(DllFullPath, "dsp_video_h264_1.dll"));
+                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_dsp_video_mjpeg, Path.Combine(DllFullPath, "dsp_video_mjpeg.dll"));
+                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_FaceDetection, Path.Combine(DllFullPath, "FaceDetection.dll"));
+                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_fisheye_rectify, Path.Combine(DllFullPath, "fisheye_rectify.dll"));
+                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_iconv, Path.Combine(DllFullPath, "iconv.dll"));
+                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_ISF_ImageProc, Path.Combine(DllFullPath, "ISF_ImageProc.dll"));
+                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_libcloud, Path.Combine(DllFullPath, "libcloud.dll"));
+                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_libcloudclient, Path.Combine(DllFullPath, "libcloudclient.dll"));
+                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_libcloudhttpcurl, Path.Combine(DllFullPath, "libcloudhttpcurl.dll"));
+                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_libcurl, Path.Combine(DllFullPath, "libcurl.dll"));
+                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_libstun, Path.Combine(DllFullPath, "libstun.dll"));
+                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_libwinpthread_1, Path.Combine(DllFullPath, "libwinpthread-1.dll"));
+                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_mfc90, Path.Combine(DllFullPath, "mfc90.dll"));
+                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_mfc90u, Path.Combine(DllFullPath, "mfc90u.dll"));
+                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_mfcm90, Path.Combine(DllFullPath, "mfcm90.dll"));
+                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_mfcm90u, Path.Combine(DllFullPath, "mfcm90u.dll"));
+                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_msvcm90, Path.Combine(DllFullPath, "msvcm90.dll"));
+                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_msvcp90, Path.Combine(DllFullPath, "msvcp90.dll"));
+                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_msvcp120, Path.Combine(DllFullPath, "msvcp120.dll"));
+                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_msvcr90, Path.Combine(DllFullPath, "msvcr90.dll"));
+                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_msvcr120, Path.Combine(DllFullPath, "msvcr120.dll"));
+                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_mxml1, Path.Combine(DllFullPath, "mxml1.dll"));
+                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_NDAO, Path.Combine(DllFullPath, "NDAO.dll"));
+                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_NDPlayer, Path.Combine(DllFullPath, "NDPlayer.dll"));
+                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_NDRM_Module, Path.Combine(DllFullPath, "NDRM_Module.dll"));
+                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_NDRSA, Path.Combine(DllFullPath, "NDRSA.dll"));
+                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_NDRtmp, Path.Combine(DllFullPath, "NDRtmp.dll"));
+                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_NetCloudSDK, Path.Combine(DllFullPath, "NetCloudSDK.dll"));
+                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_NetDEVDiscovery, Path.Combine(DllFullPath, "NetDEVDiscovery.dll"));
+                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_nvidia_gpu_dec, Path.Combine(DllFullPath, "nvidia_gpu_dec.dll"));
+                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_pthreadVC2, Path.Combine(DllFullPath, "pthreadVC2.dll"));
+                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_RSA, Path.Combine(DllFullPath, "RSA.dll"));
+                }
+            }
+            else
+            {
+                if (!SdkFileComponent.CompareResourceFile(DllFullName, Properties.Resources.X86_NetDEVSDK))
+                {
+                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_NetDEVSDK, Path.Combine(DllFullPath, "NetDEVSDK.dll"));
+                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_dsp_audio_aac, Path.Combine(DllFullPath, "dsp_audio_aac.dll"));
+                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_dsp_audio_aac_enc, Path.Combine(DllFullPath, "dsp_audio_aac_enc.dll"));
+                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_dsp_audio_g711, Path.Combine(DllFullPath, "dsp_audio_g711.dll"));
+                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_dsp_h264_gpu_dec, Path.Combine(DllFullPath, "dsp_h264_gpu_dec.dll"));
+                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_dsp_video_h264_1, Path.Combine(DllFullPath, "dsp_video_h264_1.dll"));
+                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_dsp_video_mjpeg, Path.Combine(DllFullPath, "dsp_video_mjpeg.dll"));
+                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_FaceDetection, Path.Combine(DllFullPath, "FaceDetection.dll"));
+                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_fisheye_rectify, Path.Combine(DllFullPath, "fisheye_rectify.dll"));
+                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_HW_H265dec_Win32D, Path.Combine(DllFullPath, "HW_H265dec_Win32D.dll"));
+                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_iconv, Path.Combine(DllFullPath, "iconv.dll"));
+                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_ISF_ImageProc, Path.Combine(DllFullPath, "ISF_ImageProc.dll"));
+                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_libcloud, Path.Combine(DllFullPath, "libcloud.dll"));
+                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_libcloudclient, Path.Combine(DllFullPath, "libcloudclient.dll"));
+                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_libcloudhttpcurl, Path.Combine(DllFullPath, "libcloudhttpcurl.dll"));
+                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_libcurl, Path.Combine(DllFullPath, "libcurl.dll"));
+                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_libstun, Path.Combine(DllFullPath, "libstun.dll"));
+                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_mfc90, Path.Combine(DllFullPath, "mfc90.dll"));
+                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_mfc90u, Path.Combine(DllFullPath, "mfc90u.dll"));
+                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_mfcm90, Path.Combine(DllFullPath, "mfcm90.dll"));
+                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_mfcm90u, Path.Combine(DllFullPath, "mfcm90u.dll"));
+                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_msvcm90, Path.Combine(DllFullPath, "msvcm90.dll"));
+                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_msvcp90, Path.Combine(DllFullPath, "msvcp90.dll"));
+                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_msvcp120, Path.Combine(DllFullPath, "msvcp120.dll"));
+                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_msvcr90, Path.Combine(DllFullPath, "msvcr90.dll"));
+                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_msvcr120, Path.Combine(DllFullPath, "msvcr120.dll"));
+                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_mxml1, Path.Combine(DllFullPath, "mxml1.dll"));
+                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_NDAO, Path.Combine(DllFullPath, "NDAO.dll"));
+                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_NDPlayer, Path.Combine(DllFullPath, "NDPlayer.dll"));
+                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_NDRM_Module, Path.Combine(DllFullPath, "NDRM_Module.dll"));
+                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_NDRSA, Path.Combine(DllFullPath, "NDRSA.dll"));
+                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_NDRtmp, Path.Combine(DllFullPath, "NDRtmp.dll"));
+                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_NetCloudSDK, Path.Combine(DllFullPath, "NetCloudSDK.dll"));
+                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_NetDEVDiscovery, Path.Combine(DllFullPath, "NetDEVDiscovery.dll"));
+                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_nvidia_gpu_dec, Path.Combine(DllFullPath, "nvidia_gpu_dec.dll"));
+                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_pthreadGC2, Path.Combine(DllFullPath, "pthreadGC2.dll"));
+                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_pthreadVC2, Path.Combine(DllFullPath, "pthreadVC2.dll"));
+                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_RSA, Path.Combine(DllFullPath, "RSA.dll"));
+                }
+            }
         }
         /// <summary>
         /// 创建SDK代理
@@ -547,7 +605,7 @@ namespace System.Data.YuShiITSSDK
         public static IItsNetDevSdkProxy Create(bool isBase = false)
         {
             if (!isBase) { return _netDevSdk.Value; }
-            if (!File.Exists(DllFullName))
+            if (!File.Exists(BaseDllFullName))
             { SdkFileComponent.TryCopyDirectory(DllFullPath, BaseDllFullPath); }
             return ItsNetDevSdkDller.Instance;
         }

@@ -12,7 +12,8 @@ namespace System.Data.HardwareInterfaces
     public enum SdkDynamicLoadLibFlags : uint
     {
         /// <summary>
-        /// DONT_RESOLVE_DLL_REFERENCES
+        /// 这个标志用于告诉系统将DLL映射到调用进程的地址空间中，
+        /// 但是不调用DllMain并且不加载依赖Dll（只映射自己本身）。
         /// </summary>
         DONT_RESOLVE_DLL_REFERENCES = 0x00000001,
 
@@ -22,7 +23,9 @@ namespace System.Data.HardwareInterfaces
         LOAD_IGNORE_CODE_AUTHZ_LEVEL = 0x00000010,
 
         /// <summary>
-        /// LOAD_LIBRARY_AS_DATAFILE
+        /// 这个标志与DONT_RESOLVE_DLL_REFERENCES标志相类似，
+        /// 因为系统只是将DLL映射到进程的地址空间中，就像它是数据文件一样。
+        /// 系统并不花费额外的时间来准备执行文件中的任何代码。
         /// </summary>
         LOAD_LIBRARY_AS_DATAFILE = 0x00000002,
 
@@ -37,7 +40,7 @@ namespace System.Data.HardwareInterfaces
         LOAD_LIBRARY_AS_IMAGE_RESOURCE = 0x00000020,
 
         /// <summary>
-        /// LOAD_LIBRARY_SEARCH_APPLICATION_DIR
+        /// 应用程序安装路径搜索Dll和其依赖项。
         /// </summary>
         LOAD_LIBRARY_SEARCH_APPLICATION_DIR = 0x00000200,
 
@@ -52,17 +55,25 @@ namespace System.Data.HardwareInterfaces
         LOAD_LIBRARY_SEARCH_DLL_LOAD_DIR = 0x00000100,
 
         /// <summary>
-        /// LOAD_LIBRARY_SEARCH_SYSTEM32
+        /// 从%windows%\system32加载Dll和其依赖项。
         /// </summary>
         LOAD_LIBRARY_SEARCH_SYSTEM32 = 0x00000800,
 
         /// <summary>
-        /// LOAD_LIBRARY_SEARCH_USER_DIRS
+        /// 搜索路径的使用使用AddDllDirectory和SetDllDirectory设置的路径（保护Dll自己和依赖Dll）。
         /// </summary>
         LOAD_LIBRARY_SEARCH_USER_DIRS = 0x00000400,
 
         /// <summary>
-        /// LOAD_WITH_ALTERED_SEARCH_PATH
+        /// 让系统dll得搜索顺序从当前dll目录下开始，该方法会强制加载该dll关联得同目录下得所有dll，
+        /// 例如A.dll 依赖同目录下得 B.dll ，系统目录下也有B.dll，
+        /// 则使用LoadLibraryEx（A.dll, NULL, LOAD_WITH_ALTERED_SEARCH_PATH）避免加载到系统目录下得B.dll
+        /// 按照如下目录搜索：
+        /// 1.进程当前目录。
+        /// 2.Windows的系统目录。
+        /// 3.16 位Windows的系统目录。
+        /// 4.Windows目录。
+        /// 5.path环境变量目录。
         /// </summary>
         LOAD_WITH_ALTERED_SEARCH_PATH = 0x00000008
     }

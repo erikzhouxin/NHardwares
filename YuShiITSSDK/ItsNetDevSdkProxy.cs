@@ -529,9 +529,19 @@ namespace System.Data.YuShiITSSDK
         * @note
         */
         Int32 NETDEV_Logout(IntPtr lpUserID);
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="lpRealHandle"></param>
+        /// <returns></returns>
+        [Obsolete("SDK中未找到对应函数")]
         Int32 NETDEV_PlaySound(IntPtr lpRealHandle);
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="lpRealHandle"></param>
+        /// <returns></returns>
+        [Obsolete("SDK中未找到对应函数")]
         Int32 NETDEV_StopPlaySound(IntPtr lpRealHandle);
 
         /**
@@ -1431,9 +1441,23 @@ namespace System.Data.YuShiITSSDK
         * @note
         */
         Int32 NETDEV_StopVoiceCom(IntPtr lpVoiceComHandle);
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="lpUserID"></param>
+        /// <param name="pszRegisterCode"></param>
+        /// <param name="pstDevInfo"></param>
+        /// <returns></returns>
+        [Obsolete("SDK中未找到对应函数")]
         Int32 NETDEV_GetCloudDevInfoByName(IntPtr lpUserID, String pszRegisterCode, ref NETDEV_CLOUD_DEV_INFO_S pstDevInfo);
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="lpUserID"></param>
+        /// <param name="pszRegisterName"></param>
+        /// <param name="pstDevInfo"></param>
+        /// <returns></returns>
+        [Obsolete("SDK中未找到对应函数")]
         Int32 NETDEV_GetCloudDevInfoByRegCode(IntPtr lpUserID, String pszRegisterName, ref NETDEV_CLOUD_DEV_INFO_S pstDevInfo);
 
         /**
@@ -2550,6 +2574,8 @@ namespace System.Data.YuShiITSSDK
         private ItsNetDevSdkDller() { }
         [DllImport("msvcrt.dll", EntryPoint = "memcpy", CallingConvention = CallingConvention.Cdecl, SetLastError = false)]
         public static extern void MemCopy(byte[] dest, IntPtr src, int count);
+        [DllImport("kernel32.dll", CharSet = CharSet.Auto)]
+        public static extern void OutputDebugString(string message);
 
         [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_SetFaceSnapshotCallBack(IntPtr lpUserID, NETDEV_FaceSnapshotCallBack_PF cbFaceSnapshotCallBack, IntPtr lpUserData);
@@ -3128,9 +3154,6 @@ namespace System.Data.YuShiITSSDK
         */
         [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_Logout(IntPtr lpUserID);
-
-        [DllImport("kernel32.dll", CharSet = CharSet.Auto)]
-        public static extern void OutputDebugString(string message);
 
         [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_PlaySound(IntPtr lpRealHandle);
@@ -6058,38 +6081,38 @@ namespace System.Data.YuShiITSSDK
             _NETDEV_GetBuiltinIndicatorCtrl = GetDelegate<DCreater.NETDEV_GetBuiltinIndicatorCtrl>(nameof(DCreater.NETDEV_GetBuiltinIndicatorCtrl));
             _NETDEV_GetChnDetailByChnType = GetDelegate<DCreater.NETDEV_GetChnDetailByChnType>(nameof(DCreater.NETDEV_GetChnDetailByChnType));
             _NETDEV_GetChnType = GetDelegate<DCreater.NETDEV_GetChnType>(nameof(DCreater.NETDEV_GetChnType));
-            _NETDEV_GetCloudDevInfoByName = GetDelegate<DCreater.NETDEV_GetCloudDevInfoByName>(nameof(DCreater.NETDEV_GetCloudDevInfoByName));
-            _NETDEV_GetCloudDevInfoByRegCode = GetDelegate<DCreater.NETDEV_GetCloudDevInfoByRegCode>(nameof(DCreater.NETDEV_GetCloudDevInfoByRegCode));
+            //_NETDEV_GetCloudDevInfoByName = GetDelegate<DCreater.NETDEV_GetCloudDevInfoByName>(nameof(DCreater.NETDEV_GetCloudDevInfoByName));
+            //_NETDEV_GetCloudDevInfoByRegCode = GetDelegate<DCreater.NETDEV_GetCloudDevInfoByRegCode>(nameof(DCreater.NETDEV_GetCloudDevInfoByRegCode));
             _NETDEV_GetCompassInfo = GetDelegate<DCreater.NETDEV_GetCompassInfo>(nameof(DCreater.NETDEV_GetCompassInfo));
             _NETDEV_GetConfigFile = GetDelegate<DCreater.NETDEV_GetConfigFile>(nameof(DCreater.NETDEV_GetConfigFile));
-            _NETDEV_GetDevConfig1 = GetDelegate<DCreater.NETDEV_GetDevConfig1>(nameof(DCreater.NETDEV_GetDevConfig1));
-            _NETDEV_GetDevConfig2 = GetDelegate<DCreater.NETDEV_GetDevConfig2>(nameof(DCreater.NETDEV_GetDevConfig2));
-            _NETDEV_GetDevConfig3 = GetDelegate<DCreater.NETDEV_GetDevConfig3>(nameof(DCreater.NETDEV_GetDevConfig3));
-            _NETDEV_GetDevConfig4 = GetDelegate<DCreater.NETDEV_GetDevConfig4>(nameof(DCreater.NETDEV_GetDevConfig4));
-            _NETDEV_GetDevConfig5 = GetDelegate<DCreater.NETDEV_GetDevConfig5>(nameof(DCreater.NETDEV_GetDevConfig5));
-            _NETDEV_GetDevConfig6 = GetDelegate<DCreater.NETDEV_GetDevConfig6>(nameof(DCreater.NETDEV_GetDevConfig6));
-            _NETDEV_GetDevConfig7 = GetDelegate<DCreater.NETDEV_GetDevConfig7>(nameof(DCreater.NETDEV_GetDevConfig7));
-            _NETDEV_GetDevConfig8 = GetDelegate<DCreater.NETDEV_GetDevConfig8>(nameof(DCreater.NETDEV_GetDevConfig8));
-            _NETDEV_GetDevConfig9 = GetDelegate<DCreater.NETDEV_GetDevConfig9>(nameof(DCreater.NETDEV_GetDevConfig9));
-            _NETDEV_GetDevConfigA = GetDelegate<DCreater.NETDEV_GetDevConfigA>(nameof(DCreater.NETDEV_GetDevConfigA));
-            _NETDEV_GetDevConfigB = GetDelegate<DCreater.NETDEV_GetDevConfigB>(nameof(DCreater.NETDEV_GetDevConfigB));
-            _NETDEV_GetDevConfigC = GetDelegate<DCreater.NETDEV_GetDevConfigC>(nameof(DCreater.NETDEV_GetDevConfigC));
-            _NETDEV_GetDevConfigD = GetDelegate<DCreater.NETDEV_GetDevConfigD>(nameof(DCreater.NETDEV_GetDevConfigD));
-            _NETDEV_GetDevConfigE = GetDelegate<DCreater.NETDEV_GetDevConfigE>(nameof(DCreater.NETDEV_GetDevConfigE));
-            _NETDEV_GetDevConfigF = GetDelegate<DCreater.NETDEV_GetDevConfigF>(nameof(DCreater.NETDEV_GetDevConfigF));
-            _NETDEV_GetDevConfigG = GetDelegate<DCreater.NETDEV_GetDevConfigG>(nameof(DCreater.NETDEV_GetDevConfigG));
-            _NETDEV_GetDevConfigH = GetDelegate<DCreater.NETDEV_GetDevConfigH>(nameof(DCreater.NETDEV_GetDevConfigH));
-            _NETDEV_GetDevConfigI = GetDelegate<DCreater.NETDEV_GetDevConfigI>(nameof(DCreater.NETDEV_GetDevConfigI));
-            _NETDEV_GetDevConfigJ = GetDelegate<DCreater.NETDEV_GetDevConfigJ>(nameof(DCreater.NETDEV_GetDevConfigJ));
-            _NETDEV_GetDevConfigK = GetDelegate<DCreater.NETDEV_GetDevConfigK>(nameof(DCreater.NETDEV_GetDevConfigK));
-            _NETDEV_GetDevConfigL = GetDelegate<DCreater.NETDEV_GetDevConfigL>(nameof(DCreater.NETDEV_GetDevConfigL));
-            _NETDEV_GetDevConfigM = GetDelegate<DCreater.NETDEV_GetDevConfigM>(nameof(DCreater.NETDEV_GetDevConfigM));
-            _NETDEV_GetDevConfigN = GetDelegate<DCreater.NETDEV_GetDevConfigN>(nameof(DCreater.NETDEV_GetDevConfigN));
-            _NETDEV_GetDevConfigO = GetDelegate<DCreater.NETDEV_GetDevConfigO>(nameof(DCreater.NETDEV_GetDevConfigO));
-            _NETDEV_GetDevConfigP = GetDelegate<DCreater.NETDEV_GetDevConfigP>(nameof(DCreater.NETDEV_GetDevConfigP));
-            _NETDEV_GetDevConfigQ = GetDelegate<DCreater.NETDEV_GetDevConfigQ>(nameof(DCreater.NETDEV_GetDevConfigQ));
-            _NETDEV_GetDeviceCapability1 = GetDelegate<DCreater.NETDEV_GetDeviceCapability1>(nameof(DCreater.NETDEV_GetDeviceCapability1));
-            _NETDEV_GetDeviceCapability2 = GetDelegate<DCreater.NETDEV_GetDeviceCapability2>(nameof(DCreater.NETDEV_GetDeviceCapability2));
+            _NETDEV_GetDevConfig1 = GetDelegate<DCreater.NETDEV_GetDevConfig1>(nameof(IItsNetDevSdkProxy.NETDEV_GetDevConfig));
+            _NETDEV_GetDevConfig2 = GetDelegate<DCreater.NETDEV_GetDevConfig2>(nameof(IItsNetDevSdkProxy.NETDEV_GetDevConfig));
+            _NETDEV_GetDevConfig3 = GetDelegate<DCreater.NETDEV_GetDevConfig3>(nameof(IItsNetDevSdkProxy.NETDEV_GetDevConfig));
+            _NETDEV_GetDevConfig4 = GetDelegate<DCreater.NETDEV_GetDevConfig4>(nameof(IItsNetDevSdkProxy.NETDEV_GetDevConfig));
+            _NETDEV_GetDevConfig5 = GetDelegate<DCreater.NETDEV_GetDevConfig5>(nameof(IItsNetDevSdkProxy.NETDEV_GetDevConfig));
+            _NETDEV_GetDevConfig6 = GetDelegate<DCreater.NETDEV_GetDevConfig6>(nameof(IItsNetDevSdkProxy.NETDEV_GetDevConfig));
+            _NETDEV_GetDevConfig7 = GetDelegate<DCreater.NETDEV_GetDevConfig7>(nameof(IItsNetDevSdkProxy.NETDEV_GetDevConfig));
+            _NETDEV_GetDevConfig8 = GetDelegate<DCreater.NETDEV_GetDevConfig8>(nameof(IItsNetDevSdkProxy.NETDEV_GetDevConfig));
+            _NETDEV_GetDevConfig9 = GetDelegate<DCreater.NETDEV_GetDevConfig9>(nameof(IItsNetDevSdkProxy.NETDEV_GetDevConfig));
+            _NETDEV_GetDevConfigA = GetDelegate<DCreater.NETDEV_GetDevConfigA>(nameof(IItsNetDevSdkProxy.NETDEV_GetDevConfig));
+            _NETDEV_GetDevConfigB = GetDelegate<DCreater.NETDEV_GetDevConfigB>(nameof(IItsNetDevSdkProxy.NETDEV_GetDevConfig));
+            _NETDEV_GetDevConfigC = GetDelegate<DCreater.NETDEV_GetDevConfigC>(nameof(IItsNetDevSdkProxy.NETDEV_GetDevConfig));
+            _NETDEV_GetDevConfigD = GetDelegate<DCreater.NETDEV_GetDevConfigD>(nameof(IItsNetDevSdkProxy.NETDEV_GetDevConfig));
+            _NETDEV_GetDevConfigE = GetDelegate<DCreater.NETDEV_GetDevConfigE>(nameof(IItsNetDevSdkProxy.NETDEV_GetDevConfig));
+            _NETDEV_GetDevConfigF = GetDelegate<DCreater.NETDEV_GetDevConfigF>(nameof(IItsNetDevSdkProxy.NETDEV_GetDevConfig));
+            _NETDEV_GetDevConfigG = GetDelegate<DCreater.NETDEV_GetDevConfigG>(nameof(IItsNetDevSdkProxy.NETDEV_GetDevConfig));
+            _NETDEV_GetDevConfigH = GetDelegate<DCreater.NETDEV_GetDevConfigH>(nameof(IItsNetDevSdkProxy.NETDEV_GetDevConfig));
+            _NETDEV_GetDevConfigI = GetDelegate<DCreater.NETDEV_GetDevConfigI>(nameof(IItsNetDevSdkProxy.NETDEV_GetDevConfig));
+            _NETDEV_GetDevConfigJ = GetDelegate<DCreater.NETDEV_GetDevConfigJ>(nameof(IItsNetDevSdkProxy.NETDEV_GetDevConfig));
+            _NETDEV_GetDevConfigK = GetDelegate<DCreater.NETDEV_GetDevConfigK>(nameof(IItsNetDevSdkProxy.NETDEV_GetDevConfig));
+            _NETDEV_GetDevConfigL = GetDelegate<DCreater.NETDEV_GetDevConfigL>(nameof(IItsNetDevSdkProxy.NETDEV_GetDevConfig));
+            _NETDEV_GetDevConfigM = GetDelegate<DCreater.NETDEV_GetDevConfigM>(nameof(IItsNetDevSdkProxy.NETDEV_GetDevConfig));
+            _NETDEV_GetDevConfigN = GetDelegate<DCreater.NETDEV_GetDevConfigN>(nameof(IItsNetDevSdkProxy.NETDEV_GetDevConfig));
+            _NETDEV_GetDevConfigO = GetDelegate<DCreater.NETDEV_GetDevConfigO>(nameof(IItsNetDevSdkProxy.NETDEV_GetDevConfig));
+            _NETDEV_GetDevConfigP = GetDelegate<DCreater.NETDEV_GetDevConfigP>(nameof(IItsNetDevSdkProxy.NETDEV_GetDevConfig));
+            _NETDEV_GetDevConfigQ = GetDelegate<DCreater.NETDEV_GetDevConfigQ>(nameof(IItsNetDevSdkProxy.NETDEV_GetDevConfig));
+            _NETDEV_GetDeviceCapability1 = GetDelegate<DCreater.NETDEV_GetDeviceCapability1>(nameof(IItsNetDevSdkProxy.NETDEV_GetDeviceCapability));
+            _NETDEV_GetDeviceCapability2 = GetDelegate<DCreater.NETDEV_GetDeviceCapability2>(nameof(IItsNetDevSdkProxy.NETDEV_GetDeviceCapability));
             _NETDEV_GetDeviceInfo = GetDelegate<DCreater.NETDEV_GetDeviceInfo>(nameof(DCreater.NETDEV_GetDeviceInfo));
             _NETDEV_GetDeviceInfo_V30 = GetDelegate<DCreater.NETDEV_GetDeviceInfo_V30>(nameof(DCreater.NETDEV_GetDeviceInfo_V30));
             _NETDEV_GetFaceRecordImageInfo = GetDelegate<DCreater.NETDEV_GetFaceRecordImageInfo>(nameof(DCreater.NETDEV_GetFaceRecordImageInfo));
@@ -6148,7 +6171,7 @@ namespace System.Data.YuShiITSSDK
             _NETDEV_PlayBackByName = GetDelegate<DCreater.NETDEV_PlayBackByName>(nameof(DCreater.NETDEV_PlayBackByName));
             _NETDEV_PlayBackByTime = GetDelegate<DCreater.NETDEV_PlayBackByTime>(nameof(DCreater.NETDEV_PlayBackByTime));
             _NETDEV_PlayBackControl = GetDelegate<DCreater.NETDEV_PlayBackControl>(nameof(DCreater.NETDEV_PlayBackControl));
-            _NETDEV_PlaySound = GetDelegate<DCreater.NETDEV_PlaySound>(nameof(DCreater.NETDEV_PlaySound));
+            // _NETDEV_PlaySound = GetDelegate<DCreater.NETDEV_PlaySound>(nameof(DCreater.NETDEV_PlaySound));
             _NETDEV_PTZCalibrate = GetDelegate<DCreater.NETDEV_PTZCalibrate>(nameof(DCreater.NETDEV_PTZCalibrate));
             _NETDEV_PTZControl = GetDelegate<DCreater.NETDEV_PTZControl>(nameof(DCreater.NETDEV_PTZControl));
             _NETDEV_PTZControl_Other = GetDelegate<DCreater.NETDEV_PTZControl_Other>(nameof(DCreater.NETDEV_PTZControl_Other));
@@ -6172,25 +6195,25 @@ namespace System.Data.YuShiITSSDK
             _NETDEV_SetBuiltinIndicatorCtrl = GetDelegate<DCreater.NETDEV_SetBuiltinIndicatorCtrl>(nameof(DCreater.NETDEV_SetBuiltinIndicatorCtrl));
             _NETDEV_SetConfigFile = GetDelegate<DCreater.NETDEV_SetConfigFile>(nameof(DCreater.NETDEV_SetConfigFile));
             _NETDEV_SetConnectTime = GetDelegate<DCreater.NETDEV_SetConnectTime>(nameof(DCreater.NETDEV_SetConnectTime));
-            _NETDEV_SetDevConfig1 = GetDelegate<DCreater.NETDEV_SetDevConfig1>(nameof(DCreater.NETDEV_SetDevConfig1));
-            _NETDEV_SetDevConfig2 = GetDelegate<DCreater.NETDEV_SetDevConfig2>(nameof(DCreater.NETDEV_SetDevConfig2));
-            _NETDEV_SetDevConfig3 = GetDelegate<DCreater.NETDEV_SetDevConfig3>(nameof(DCreater.NETDEV_SetDevConfig3));
-            _NETDEV_SetDevConfig4 = GetDelegate<DCreater.NETDEV_SetDevConfig4>(nameof(DCreater.NETDEV_SetDevConfig4));
-            _NETDEV_SetDevConfig5 = GetDelegate<DCreater.NETDEV_SetDevConfig5>(nameof(DCreater.NETDEV_SetDevConfig5));
-            _NETDEV_SetDevConfig6 = GetDelegate<DCreater.NETDEV_SetDevConfig6>(nameof(DCreater.NETDEV_SetDevConfig6));
-            _NETDEV_SetDevConfig7 = GetDelegate<DCreater.NETDEV_SetDevConfig7>(nameof(DCreater.NETDEV_SetDevConfig7));
-            _NETDEV_SetDevConfig8 = GetDelegate<DCreater.NETDEV_SetDevConfig8>(nameof(DCreater.NETDEV_SetDevConfig8));
-            _NETDEV_SetDevConfig9 = GetDelegate<DCreater.NETDEV_SetDevConfig9>(nameof(DCreater.NETDEV_SetDevConfig9));
-            _NETDEV_SetDevConfigA = GetDelegate<DCreater.NETDEV_SetDevConfigA>(nameof(DCreater.NETDEV_SetDevConfigA));
-            _NETDEV_SetDevConfigB = GetDelegate<DCreater.NETDEV_SetDevConfigB>(nameof(DCreater.NETDEV_SetDevConfigB));
-            _NETDEV_SetDevConfigC = GetDelegate<DCreater.NETDEV_SetDevConfigC>(nameof(DCreater.NETDEV_SetDevConfigC));
-            _NETDEV_SetDevConfigD = GetDelegate<DCreater.NETDEV_SetDevConfigD>(nameof(DCreater.NETDEV_SetDevConfigD));
-            _NETDEV_SetDevConfigE = GetDelegate<DCreater.NETDEV_SetDevConfigE>(nameof(DCreater.NETDEV_SetDevConfigE));
-            _NETDEV_SetDevConfigF = GetDelegate<DCreater.NETDEV_SetDevConfigF>(nameof(DCreater.NETDEV_SetDevConfigF));
-            _NETDEV_SetDevConfigG = GetDelegate<DCreater.NETDEV_SetDevConfigG>(nameof(DCreater.NETDEV_SetDevConfigG));
-            _NETDEV_SetDevConfigH = GetDelegate<DCreater.NETDEV_SetDevConfigH>(nameof(DCreater.NETDEV_SetDevConfigH));
-            _NETDEV_SetDevConfigI = GetDelegate<DCreater.NETDEV_SetDevConfigI>(nameof(DCreater.NETDEV_SetDevConfigI));
-            _NETDEV_SetDevConfigJ = GetDelegate<DCreater.NETDEV_SetDevConfigJ>(nameof(DCreater.NETDEV_SetDevConfigJ));
+            _NETDEV_SetDevConfig1 = GetDelegate<DCreater.NETDEV_SetDevConfig1>(nameof(IItsNetDevSdkProxy.NETDEV_SetDevConfig));
+            _NETDEV_SetDevConfig2 = GetDelegate<DCreater.NETDEV_SetDevConfig2>(nameof(IItsNetDevSdkProxy.NETDEV_SetDevConfig));
+            _NETDEV_SetDevConfig3 = GetDelegate<DCreater.NETDEV_SetDevConfig3>(nameof(IItsNetDevSdkProxy.NETDEV_SetDevConfig));
+            _NETDEV_SetDevConfig4 = GetDelegate<DCreater.NETDEV_SetDevConfig4>(nameof(IItsNetDevSdkProxy.NETDEV_SetDevConfig));
+            _NETDEV_SetDevConfig5 = GetDelegate<DCreater.NETDEV_SetDevConfig5>(nameof(IItsNetDevSdkProxy.NETDEV_SetDevConfig));
+            _NETDEV_SetDevConfig6 = GetDelegate<DCreater.NETDEV_SetDevConfig6>(nameof(IItsNetDevSdkProxy.NETDEV_SetDevConfig));
+            _NETDEV_SetDevConfig7 = GetDelegate<DCreater.NETDEV_SetDevConfig7>(nameof(IItsNetDevSdkProxy.NETDEV_SetDevConfig));
+            _NETDEV_SetDevConfig8 = GetDelegate<DCreater.NETDEV_SetDevConfig8>(nameof(IItsNetDevSdkProxy.NETDEV_SetDevConfig));
+            _NETDEV_SetDevConfig9 = GetDelegate<DCreater.NETDEV_SetDevConfig9>(nameof(IItsNetDevSdkProxy.NETDEV_SetDevConfig));
+            _NETDEV_SetDevConfigA = GetDelegate<DCreater.NETDEV_SetDevConfigA>(nameof(IItsNetDevSdkProxy.NETDEV_SetDevConfig));
+            _NETDEV_SetDevConfigB = GetDelegate<DCreater.NETDEV_SetDevConfigB>(nameof(IItsNetDevSdkProxy.NETDEV_SetDevConfig));
+            _NETDEV_SetDevConfigC = GetDelegate<DCreater.NETDEV_SetDevConfigC>(nameof(IItsNetDevSdkProxy.NETDEV_SetDevConfig));
+            _NETDEV_SetDevConfigD = GetDelegate<DCreater.NETDEV_SetDevConfigD>(nameof(IItsNetDevSdkProxy.NETDEV_SetDevConfig));
+            _NETDEV_SetDevConfigE = GetDelegate<DCreater.NETDEV_SetDevConfigE>(nameof(IItsNetDevSdkProxy.NETDEV_SetDevConfig));
+            _NETDEV_SetDevConfigF = GetDelegate<DCreater.NETDEV_SetDevConfigF>(nameof(IItsNetDevSdkProxy.NETDEV_SetDevConfig));
+            _NETDEV_SetDevConfigG = GetDelegate<DCreater.NETDEV_SetDevConfigG>(nameof(IItsNetDevSdkProxy.NETDEV_SetDevConfig));
+            _NETDEV_SetDevConfigH = GetDelegate<DCreater.NETDEV_SetDevConfigH>(nameof(IItsNetDevSdkProxy.NETDEV_SetDevConfig));
+            _NETDEV_SetDevConfigI = GetDelegate<DCreater.NETDEV_SetDevConfigI>(nameof(IItsNetDevSdkProxy.NETDEV_SetDevConfig));
+            _NETDEV_SetDevConfigJ = GetDelegate<DCreater.NETDEV_SetDevConfigJ>(nameof(IItsNetDevSdkProxy.NETDEV_SetDevConfig));
             _NETDEV_setDeviceLedCfg = GetDelegate<DCreater.NETDEV_setDeviceLedCfg>(nameof(DCreater.NETDEV_setDeviceLedCfg));
             _NETDEV_SetDigitalZoom = GetDelegate<DCreater.NETDEV_SetDigitalZoom>(nameof(DCreater.NETDEV_SetDigitalZoom));
             _NETDEV_SetDiscoveryCallBack = GetDelegate<DCreater.NETDEV_SetDiscoveryCallBack>(nameof(DCreater.NETDEV_SetDiscoveryCallBack));
@@ -6226,7 +6249,7 @@ namespace System.Data.YuShiITSSDK
             _NETDEV_StopInputVoiceSrv = GetDelegate<DCreater.NETDEV_StopInputVoiceSrv>(nameof(DCreater.NETDEV_StopInputVoiceSrv));
             _NETDEV_StopPicStream = GetDelegate<DCreater.NETDEV_StopPicStream>(nameof(DCreater.NETDEV_StopPicStream));
             _NETDEV_StopPlayBack = GetDelegate<DCreater.NETDEV_StopPlayBack>(nameof(DCreater.NETDEV_StopPlayBack));
-            _NETDEV_StopPlaySound = GetDelegate<DCreater.NETDEV_StopPlaySound>(nameof(DCreater.NETDEV_StopPlaySound));
+            //_NETDEV_StopPlaySound = GetDelegate<DCreater.NETDEV_StopPlaySound>(nameof(DCreater.NETDEV_StopPlaySound));
             _NETDEV_StopRealPlay = GetDelegate<DCreater.NETDEV_StopRealPlay>(nameof(DCreater.NETDEV_StopRealPlay));
             _NETDEV_StopSaveRealData = GetDelegate<DCreater.NETDEV_StopSaveRealData>(nameof(DCreater.NETDEV_StopSaveRealData));
             _NETDEV_StopVoiceCom = GetDelegate<DCreater.NETDEV_StopVoiceCom>(nameof(DCreater.NETDEV_StopVoiceCom));
@@ -6236,7 +6259,6 @@ namespace System.Data.YuShiITSSDK
             _NETDEV_TriggerSync = GetDelegate<DCreater.NETDEV_TriggerSync>(nameof(DCreater.NETDEV_TriggerSync));
             _NETDEV_UnSubLapiAlarm = GetDelegate<DCreater.NETDEV_UnSubLapiAlarm>(nameof(DCreater.NETDEV_UnSubLapiAlarm));
             _NETDEV_UnsubscribeSmart = GetDelegate<DCreater.NETDEV_UnsubscribeSmart>(nameof(DCreater.NETDEV_UnsubscribeSmart));
-
         }
         public override string GetFileFullName()
         {
