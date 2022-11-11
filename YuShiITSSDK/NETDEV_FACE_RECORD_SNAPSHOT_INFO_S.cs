@@ -16,7 +16,7 @@ namespace System.Data.YuShiITSSDK
         public UInt32 udwEventType;
         public UInt32 udwChannelID;
         public UInt32 udwMonitorRuleID;
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = NETDEVSDK.NETDEV_LEN_260)]
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = ItsNetDevSdk.NETDEV_LEN_260)]
         public byte[] szChannelName;
         public NETDEV_FACE_ALARM_CMP_INFO_S stCompareInfo;
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 124)]

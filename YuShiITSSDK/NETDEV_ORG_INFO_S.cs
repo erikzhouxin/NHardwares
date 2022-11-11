@@ -8,9 +8,9 @@ namespace System.Data.YuShiITSSDK
         public Int32 dwOrgID;
         public Int32 dwParentID;
         public Int32 dwType;                               /*  see NETDEV_ORG_TYPE_E */
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = NETDEVSDK.NETDEV_NAME_MAX_LEN)]
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = ItsNetDevSdk.NETDEV_NAME_MAX_LEN)]
         public byte[] szNodeName;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = NETDEVSDK.NETDEV_DESCRIBE_MAX_LEN)]
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = ItsNetDevSdk.NETDEV_DESCRIBE_MAX_LEN)]
         public string szDesc;
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 128)]
         public byte[] byRes;

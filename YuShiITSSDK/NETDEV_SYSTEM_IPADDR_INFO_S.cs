@@ -7,9 +7,9 @@ namespace System.Data.YuShiITSSDK
     {
         public string bEnabled;                      /*NTP Server enable 0:unable  1:enable */
         public Int64 ulAddressType;                 /*Address type  0:IPv4  1:IPv6(Temporary does not support)  2:domain name(NVR and AIO support)*/
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = NETDEVSDK.NETDEV_LEN_64)]
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = ItsNetDevSdk.NETDEV_LEN_64)]
         public string szIPAddress;                   /* The IP address of the NTP server ,character length range [0,64]. When address type is 0,the node must be selected. */
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = NETDEVSDK.NETDEV_LEN_64)]
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = ItsNetDevSdk.NETDEV_LEN_64)]
         public string szDomainName;                  /*The domain name of the NTP server ,character length range [0,64]. When address type is 2,the node must be selected.*/
 
         public Int64 ulPort;                         /*NTP Port ,the range of [1-65535]. IPC does not support this configuration. */

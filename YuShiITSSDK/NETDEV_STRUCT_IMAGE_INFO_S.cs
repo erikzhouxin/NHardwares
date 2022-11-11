@@ -16,7 +16,7 @@ namespace System.Data.YuShiITSSDK
         public UInt32 udwWidth;
         public UInt32 udwHeight;
         public UInt32 udwCaptureTime;
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = NETDEVSDK.NETDEV_LEN_260)]
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = ItsNetDevSdk.NETDEV_LEN_260)]
         public byte[] szUrl;
         public UInt32 udwSize;
         public IntPtr pszData;

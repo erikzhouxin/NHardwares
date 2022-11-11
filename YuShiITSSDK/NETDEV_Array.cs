@@ -3,9 +3,9 @@
 namespace System.Data.YuShiITSSDK
 {
     [StructLayout(LayoutKind.Sequential)]
-    public struct array
+    public struct NETDEV_Array
     {
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = NETDEVSDK.NETDEV_SCREEN_INFO_COLUMN)]
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = ItsNetDevSdk.NETDEV_SCREEN_INFO_COLUMN)]
         public Int16[] wTemp;
     }
 

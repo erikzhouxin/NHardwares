@@ -9,7 +9,7 @@ namespace System.Data.YuShiITSSDK
     [StructLayout(LayoutKind.Sequential)]
     public struct NETDEV_ALARM_OUTPUT_INFO_S
     {
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = NETDEVSDK.NETDEV_LEN_64)]
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = ItsNetDevSdk.NETDEV_LEN_64)]
         public string szName;                                           /* 开关量名称  Boolean name */
         public Int32 dwChancelId;                                       /* 通道号 Channel number */
         public Int32 enDefaultStatus;                                   /* 输出开关量默认状态 参见#NETDEV_BOOLEAN_MODE_E Default status of boolean output, see enumeration #NETDEV_BOOLEAN_MODE_E */

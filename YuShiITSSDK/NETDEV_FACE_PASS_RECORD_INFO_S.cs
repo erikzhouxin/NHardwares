@@ -14,7 +14,7 @@ namespace System.Data.YuShiITSSDK
         public UInt32 udwType;
         public Int64 tPassingTime;
         public UInt32 udwChannelID;
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = NETDEVSDK.NETDEV_LEN_128)]
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = ItsNetDevSdk.NETDEV_LEN_128)]
         public byte[] szChlName;
         public NETDEV_PERSON_COMPARE_INFO_S stCompareInfo;
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 256)]

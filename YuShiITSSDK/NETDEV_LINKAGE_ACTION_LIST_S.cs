@@ -11,7 +11,7 @@ namespace System.Data.YuShiITSSDK
     public struct NETDEV_LINKAGE_ACTION_LIST_S
     {
         public UInt32 udwNum;
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = NETDEVSDK.NETDEV_MAX_LINK_ACTION_NUM)]
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = ItsNetDevSdk.NETDEV_MAX_LINK_ACTION_NUM)]
         public NETDEV_LINKAGE_ACTION_INFO_S[] stActionInfo;
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 256)]
         public byte[] byRes;

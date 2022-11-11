@@ -11,11 +11,11 @@ namespace System.Data.YuShiITSSDK
     {
         public Int32 dwUpgradeType;
         public Int32 dwSize;
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = NETDEVSDK.NETDEV_CHANNEL_MAX)]
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = ItsNetDevSdk.NETDEV_CHANNEL_MAX)]
         public Int32[] adwChannelID;
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = NETDEVSDK.NETDEV_PATH_LEN)]
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = ItsNetDevSdk.NETDEV_PATH_LEN)]
         public byte[] szPath;
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = NETDEVSDK.NETDEV_LEN_256)]
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = ItsNetDevSdk.NETDEV_LEN_256)]
         public byte[] byRes;
     }
 

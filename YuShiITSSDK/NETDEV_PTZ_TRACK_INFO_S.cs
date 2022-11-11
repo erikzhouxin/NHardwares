@@ -9,7 +9,7 @@ namespace System.Data.YuShiITSSDK
     public struct NETDEV_PTZ_TRACK_INFO_S
     {
         public Int32 dwTrackNum;                                           /* 已存在的巡航轨迹的数量  Number of existing patrol routes */
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = NETDEVSDK.NETDEV_LEN_64)]
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = ItsNetDevSdk.NETDEV_LEN_64)]
         public String TrackName;                                           /* 轨迹名称  Route name */
     }
 

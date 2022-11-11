@@ -7,7 +7,7 @@ namespace System.Data.YuShiITSSDK
     {
         public Int32 bEnabled;
         public Int32 udwDayNum;
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = NETDEVSDK.NETDEV_PLAN_NUM_AWEEK)]
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = ItsNetDevSdk.NETDEV_PLAN_NUM_AWEEK)]
         public NETDEV_VIDEO_DAY_PLAN_S[] astDayPlan;
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 32)]
         public byte[] byRes;              /*   Reserved field*/

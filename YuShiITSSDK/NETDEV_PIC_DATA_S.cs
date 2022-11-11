@@ -10,16 +10,16 @@ namespace System.Data.YuShiITSSDK
     [StructLayout(LayoutKind.Sequential)]
     public struct NETDEV_PIC_DATA_S
     {
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = NETDEVSDK.NETDEV_TRAFFIC_PIC_MAX_NUM)]
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = ItsNetDevSdk.NETDEV_TRAFFIC_PIC_MAX_NUM)]
         public IntPtr[] apcData;                 /* 数据指针 Pointer to photo data */
 
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = NETDEVSDK.NETDEV_TRAFFIC_PIC_MAX_NUM)]
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = ItsNetDevSdk.NETDEV_TRAFFIC_PIC_MAX_NUM)]
         public Int32[] aulDataLen;               /* 数据长度 Photo data length */
 
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = NETDEVSDK.NETDEV_TRAFFIC_PIC_MAX_NUM)]
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = ItsNetDevSdk.NETDEV_TRAFFIC_PIC_MAX_NUM)]
         public Int32[] aulPicType;              /* 照片类型,参考枚举#NETDEV_IMAGE_VEHICLE,Photo type See:IMOS_MW_IMAGE_VEHICLE */
 
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = (int)(NETDEVSDK.NETDEV_TRAFFIC_PIC_MAX_NUM * NETDEVSDK.NETDEV_UNIVIEW_MAX_TIME_LEN))]
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = (int)(ItsNetDevSdk.NETDEV_TRAFFIC_PIC_MAX_NUM * ItsNetDevSdk.NETDEV_UNIVIEW_MAX_TIME_LEN))]
         public byte[] acPassTime;               /* 经过时间, Time of passing */
 
         public Int32 ulPicNumber;               /* 照片张数, Number of photos (up to 8)*/
@@ -27,15 +27,15 @@ namespace System.Data.YuShiITSSDK
         /* Application type: The corresponding product. 0-vehicle checkpoint 1-e-police 2-people counting 3-general checkpoint 4-violation detection dome camera */
         public Int32 lApplicationType;
 
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = NETDEVSDK.NETDEV_DEV_ID_MAX_LEN)]
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = ItsNetDevSdk.NETDEV_DEV_ID_MAX_LEN)]
         public byte[] szCamID;                  /*设备编号:采集设备统一编号或卡口相机编码, 不可为空  
                                                      * Device ID: unified ID of collection device or checkpoint camera ID */
 
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = NETDEVSDK.NETDEV_DEV_ID_MAX_LEN)]
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = ItsNetDevSdk.NETDEV_DEV_ID_MAX_LEN)]
         public byte[] szTollgateID;             /*卡口编号:产生该信息的卡口代码  
                                                      * Checkpoint ID: ID of the checkpoint where the information is generated.*/
 
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = NETDEVSDK.NETDEV_TOLLGATE_NAME_MAX_LEN)]
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = ItsNetDevSdk.NETDEV_TOLLGATE_NAME_MAX_LEN)]
         public byte[] szTollgateName;           /*卡口名称:可选字段Checkpoint name */
 
         public Int32 ulCameraType;             /* 相机类型 0 全景 1特性 Camera type 0-Panoramic camera, 1-Lane camera */
@@ -43,11 +43,11 @@ namespace System.Data.YuShiITSSDK
                                                     * Vehicle record ID: increases automatically from the beginning (must not exceed xxx bytes after being converted into a character string) */
 
 
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = NETDEVSDK.NETDEV_UNIVIEW_MAX_TIME_LEN)]
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = ItsNetDevSdk.NETDEV_UNIVIEW_MAX_TIME_LEN)]
         public byte[] szPassTime;              /* 经过时间:YYYYMMDDHHMMSS, 时间按24小时制 
                                                     * Pass-through time, YYYYMMDDHHMMSS, in xxx-hour format.*/
 
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = NETDEVSDK.NETDEV_PLACE_NAME_MAX_LEN)]
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = ItsNetDevSdk.NETDEV_PLACE_NAME_MAX_LEN)]
         public byte[] szPlaceName;             /* 地点名称 Location name */
 
         public Int32 lLaneID;                  /* 车道编号:从1开始,车辆行驶方向最左车道为1,由左向右顺序编号
@@ -58,10 +58,10 @@ namespace System.Data.YuShiITSSDK
         /* Direction ID: 1-East to west 2-West to east 3-South to north 4-North to south 5-Southeast to northwest 6-Northwest to southeast 7-Northeast to southwest 8-Southwest to northeast*/
         public Int32 lDirection;
 
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = NETDEVSDK.NETDEV_DIRECTION_NAME_MAX_LEN)]
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = ItsNetDevSdk.NETDEV_DIRECTION_NAME_MAX_LEN)]
         public byte[] szDirectionName;         /*方向名称:可选字段 Direction name: optional field */
 
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = NETDEVSDK.NETDEV_CAR_PLATE_MAX_LEN)]
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = ItsNetDevSdk.NETDEV_CAR_PLATE_MAX_LEN)]
         public byte[] szCarPlate;              /* 号牌号码:不能自动识别的用"-"表示
                                                     * Vehicle plate number, represented by “-” if the number cannot be recognized automatically*/
 
@@ -81,7 +81,7 @@ namespace System.Data.YuShiITSSDK
         /*0-车头和车尾号牌号码不一致 1-车头和车尾号牌号码完全一致 2-车头号牌号码无法自动识别 3-车尾号牌号码无法自动识别 4-车头和车尾号牌号码均无法自动识别 */
         public Int32 lPlateCoincide;                                     /*号牌一致, LPR currently unavailable*/
 
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = NETDEVSDK.NETDEV_CAR_PLATE_MAX_LEN)]
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = ItsNetDevSdk.NETDEV_CAR_PLATE_MAX_LEN)]
         public byte[] szRearVehiclePlateID;                              /*尾部号牌号码:被查控车辆车尾号牌号码，允许车辆尾部号牌号码不全。不能自动识别的用"-"表示, LPR currently unavailable*/
 
         public Int32 lRearPlateColor;                                    /*尾部号牌颜色, LPR currently unavailable*/
@@ -91,7 +91,7 @@ namespace System.Data.YuShiITSSDK
         public Int32[] aulVehicleXY;                                     /*车辆坐标:XL=a[0], YL=a[1], XR=a[2], YR=a[3]
                                                                               * Vehicle coordinates XL=a[0], YL=a[1], XR=a[2], YR=a[3]*/
 
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = NETDEVSDK.NETDEV_CAR_VEHICLE_BRAND_LEN)]
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = ItsNetDevSdk.NETDEV_CAR_VEHICLE_BRAND_LEN)]
         public byte[] szVehicleBrand;                                    /*车辆厂牌编码，详见文档 考虑到字节对齐定义长度为4，实际使用长度为2  
                                                                               * LPR currently unavailable*/
         /* 0-未知，1-小型车 2-中型车 3-大型车 4-其它 5-行人 6-二轮车 7-三轮车 8-摩托车 9-拖拉机 10-农用货车 11-轿车 12-SUV 13-面包车 14-小货车
@@ -126,28 +126,28 @@ namespace System.Data.YuShiITSSDK
 
         public Int32 lRedLightTime;                                  /*红灯时间, LPR currently unavailable*/
 
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = NETDEVSDK.NETDEV_UNIVIEW_MAX_TIME_LEN)]
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = ItsNetDevSdk.NETDEV_UNIVIEW_MAX_TIME_LEN)]
         public byte[] szRedLightStartTime;  /*红灯开始时间:YYYYMMDDHHMMSS, 精确到毫秒, 时间按24小时制, LPR currently unavailable*/
 
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = NETDEVSDK.NETDEV_UNIVIEW_MAX_TIME_LEN)]
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = ItsNetDevSdk.NETDEV_UNIVIEW_MAX_TIME_LEN)]
         public byte[] szRedLightEndTime;    /*红灯结束时间:YYYYMMDDHHMMSS, 精确到毫秒, 时间按24小时制, LPR currently unavailable*/
 
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = NETDEVSDK.NETDEV_PECCANCYTYPE_CODE_MAX_NUM + 4)]
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = ItsNetDevSdk.NETDEV_PECCANCYTYPE_CODE_MAX_NUM + 4)]
         public byte[] szDriveStatus;        /*行驶状态:0-正常 1-嫌疑或按GA408.1编码, 支持字符串，为了兼容不删除lDriveStatus, LPR currently unavailable*/
 
         public Int32 lTriggerType;          /*抓拍类型 参考NETDEV_CAPTURE_TYPE_E, Capture type. See #NETDEV_CAPTURE_TYPE_E */
         public Int32 lParkStatus;           /*车位状态信息*/
 
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = NETDEVSDK.NETDEV_LEN_8 + NETDEVSDK.NETDEV_LEN_4)]
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = ItsNetDevSdk.NETDEV_LEN_8 + ItsNetDevSdk.NETDEV_LEN_4)]
         public byte[] cReserved1;            /*保留字段1 后续扩展用 */
 
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = NETDEVSDK.NETDEV_LEN_16)]
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = ItsNetDevSdk.NETDEV_LEN_16)]
         public byte[] cReserved2;            /*保留字段1 后续扩展用 */
 
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = NETDEVSDK.NETDEV_LEN_16)]
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = ItsNetDevSdk.NETDEV_LEN_16)]
         public byte[] cReserved3;            /*保留字段1 后续扩展用 */
 
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = NETDEVSDK.NETDEV_LEN_16)]
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = ItsNetDevSdk.NETDEV_LEN_16)]
         public byte[] cReserved4;            /*保留字段1 后续扩展用 */
 
     };

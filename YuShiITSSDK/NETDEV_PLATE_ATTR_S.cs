@@ -10,7 +10,7 @@ namespace System.Data.YuShiITSSDK
     [StructLayout(LayoutKind.Sequential)]
     public struct NETDEV_PLATE_ATTR_S
     {
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = NETDEVSDK.NETDEV_LEN_64)]
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = ItsNetDevSdk.NETDEV_LEN_64)]
         public byte[] szPlateNo;
         public UInt32 udwColor;
         public UInt32 udwType;

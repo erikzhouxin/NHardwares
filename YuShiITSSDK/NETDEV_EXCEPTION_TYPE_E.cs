@@ -11,8 +11,8 @@
         NETDEV_EXCEPTION_REPORT_BACKUP_ABEND = 305,          /* Backup failure caused by other reasons */
 
         NETDEV_EXCEPTION_EXCHANGE = 0x8000,       /* Exception occurred during user interaction (keep-alive timeout) */
+        NETDEV_EXCEPTION_REPORT_ALARM_INTERRUPT = 0x8001,       /* Alarm report abnormal end ,keep live failure or long connection disconnection*/
 
         NETDEV_EXCEPTION_REPORT_INVALID = 0xFFFF        /* Invalid value */
     }
-
 }

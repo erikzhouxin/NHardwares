@@ -11,7 +11,7 @@ namespace System.Data.YuShiITSSDK
     public struct NETDEV_VISITOR_INFO_S
     {
         public UInt32 udwVisitorCount;
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = NETDEVSDK.NETDEV_LEN_256)]
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = ItsNetDevSdk.NETDEV_LEN_256)]
         public byte[] szCompany;
         public UInt32 udwIntervieweeID;
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 256)]

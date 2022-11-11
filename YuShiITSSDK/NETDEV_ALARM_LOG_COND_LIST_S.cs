@@ -13,7 +13,7 @@ namespace System.Data.YuShiITSSDK
         public Int32 dwPageRow;
         public Int32 dwFirstRow;
         public Int32 dwCondSize;
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = NETDEVSDK.NETDEV_LOG_QUERY_COND_NUM)]
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = ItsNetDevSdk.NETDEV_LOG_QUERY_COND_NUM)]
         public NETDEV_QUERY_INFO_S[] astCondition;
     }
 

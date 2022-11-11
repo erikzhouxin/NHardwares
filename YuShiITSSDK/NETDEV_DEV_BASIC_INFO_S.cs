@@ -25,11 +25,11 @@ namespace System.Data.YuShiITSSDK
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 48)]
         public string szVIIDCode;
         public Int32 dwVIIDStatus;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = NETDEVSDK.NETDEV_LEN_64)]
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = ItsNetDevSdk.NETDEV_LEN_64)]
         public string szSerialNum;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = NETDEVSDK.NETDEV_LEN_128)]
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = ItsNetDevSdk.NETDEV_LEN_128)]
         public string szSoftVersion;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = NETDEVSDK.NETDEV_LEN_32)]
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = ItsNetDevSdk.NETDEV_LEN_32)]
         public string szMacAddr;
         public Int32 dwStoreStatus;
         public NETDEV_ONVIF_INFO_S stOnvifInfo;

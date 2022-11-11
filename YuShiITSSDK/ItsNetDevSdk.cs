@@ -10,7 +10,7 @@ namespace System.Data.YuShiITSSDK
     /// <summary>
     /// 智能交通SDK
     /// </summary>
-    public static class NetDevSdk
+    public static class ItsNetDevSdk
     {
         /// <summary>
         /// SDK文件名称
@@ -517,11 +517,11 @@ namespace System.Data.YuShiITSSDK
         public static String m_strPicListPath = null;
 
 
-        static Lazy<INetDevSdkProxy> _netDevSdk = new Lazy<INetDevSdkProxy>(() => new NetDevSdkLoader(), true);
+        static Lazy<IItsNetDevSdkProxy> _netDevSdk = new Lazy<IItsNetDevSdkProxy>(() => new ItsNetDevSdkLoader(), true);
         /// <summary>
         /// 静态构造
         /// </summary>
-        static NetDevSdk()
+        static ItsNetDevSdk()
         {
             Directory.CreateDirectory(DllFullPath);
             //if (Environment.Is64BitProcess)
@@ -544,12 +544,12 @@ namespace System.Data.YuShiITSSDK
         /// </summary>
         /// <param name="isBase"></param>
         /// <returns></returns>
-        public static INetDevSdkProxy Create(bool isBase = false)
+        public static IItsNetDevSdkProxy Create(bool isBase = false)
         {
             if (!isBase) { return _netDevSdk.Value; }
             if (!File.Exists(DllFullName))
             { SdkFileComponent.TryCopyDirectory(DllFullPath, BaseDllFullPath); }
-            return NetDevSdkDller.Instance;
+            return ItsNetDevSdkDller.Instance;
         }
     }
 }

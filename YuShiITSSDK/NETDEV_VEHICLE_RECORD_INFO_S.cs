@@ -13,7 +13,7 @@ namespace System.Data.YuShiITSSDK
         public UInt32 udwRecordID;
         public UInt32 udwChannelID;
         public UInt32 udwPassingTime;
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = NETDEVSDK.NETDEV_LEN_260)]
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = ItsNetDevSdk.NETDEV_LEN_260)]
         public byte[] szChannelName;
         public NETDEV_PLATE_ATTR_INFO_S stPlateAttr;
         public NETDEV_VEH_ATTR_S stVehAttr;

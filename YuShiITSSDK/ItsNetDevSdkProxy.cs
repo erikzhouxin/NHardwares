@@ -10,7 +10,7 @@ namespace System.Data.YuShiITSSDK
     /// <summary>
     /// SDK代理
     /// </summary>
-    public interface INetDevSdkProxy
+    public interface IItsNetDevSdkProxy
     {
         /// <summary>
         /// 内存复制
@@ -2544,41 +2544,41 @@ namespace System.Data.YuShiITSSDK
         */
         Int32 NETDEV_SetParkingStatusCB(IntPtr lpFindHandle, NETDEV_PARKING_STATUS_PF pfnParkStatusCBFun, IntPtr lpUserData);
     }
-    internal class NetDevSdkDller : INetDevSdkProxy
+    internal class ItsNetDevSdkDller : IItsNetDevSdkProxy
     {
-        public static INetDevSdkProxy Instance { get; } = new NetDevSdkDller();
-        private NetDevSdkDller() { }
+        public static IItsNetDevSdkProxy Instance { get; } = new ItsNetDevSdkDller();
+        private ItsNetDevSdkDller() { }
         [DllImport("msvcrt.dll", EntryPoint = "memcpy", CallingConvention = CallingConvention.Cdecl, SetLastError = false)]
         public static extern void MemCopy(byte[] dest, IntPtr src, int count);
 
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_SetFaceSnapshotCallBack(IntPtr lpUserID, NETDEV_FaceSnapshotCallBack_PF cbFaceSnapshotCallBack, IntPtr lpUserData);
 
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_SetAlarmCallBack(IntPtr lpUserID, NETDEV_AlarmMessCallBack_PF cbAlarmMessCallBack, IntPtr lpUserData);
 
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_SetAlarmCallBack_V30(IntPtr lpUserID, NETDEV_AlarmMessCallBack_PF_V30 cbAlarmMessCallBack, IntPtr lpUserData);
 
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_SetExceptionCallBack(NETDEV_ExceptionCallBack_PF cbExceptionCallBack, IntPtr lpUserData);
 
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_SetDiscoveryCallBack(NETDEV_DISCOVERY_CALLBACK_PF cbDiscoveryCallBack, IntPtr lpUserData);
 
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_SetPassengerFlowStatisticCallBack(IntPtr lpUserID, NETDEV_PassengerFlowStatisticCallBack_PF cbPassengerFlowStatisticCallBack, IntPtr lpUserData);
 
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_SetPersonAlarmCallBack(IntPtr lpUserID, NETDEV_PersonAlarmMessCallBack_PF cbAlarmMessCallBack, IntPtr lpUserData);
 
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_SetVehicleAlarmCallBack(IntPtr lpUserID, NETDEV_VehicleAlarmMessCallBack_PF cbVehicleAlarmMessCallBack, IntPtr lpUserData);
 
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_SetStructAlarmCallBack(IntPtr lpUserID, NETDEV_StructAlarmMessCallBack_PF cbAlarmMessCallBack, IntPtr lpUserData);
 
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_SetAlarmFGCallBack(IntPtr lpUserID, NETDEV_AlarmMessFGCallBack_PF cbAlarmMessCallBack, IntPtr lpUserData);
 
         /**
@@ -2586,7 +2586,7 @@ namespace System.Data.YuShiITSSDK
         * @return 1 表示成功,其他表示失败 1 means success, and any other value means failure.
         * @note 线程不安全 Thread not safe
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_Init();
 
         /**
@@ -2594,25 +2594,25 @@ namespace System.Data.YuShiITSSDK
          * @return 1 表示成功,其他表示失败 1 means success, and any other value means failure.
          * @note
          */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_Cleanup();
 
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_QueryVideoChlDetailList(IntPtr lpUserID, ref int pdwChlCount, IntPtr pstVideoChlList);
 
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern IntPtr NETDEV_LoginCloud(String pszCloudSrvUrl, String pszUserName, String pszPassWord);
 
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern IntPtr NETDEV_LoginCloudDevice_V30(IntPtr lpUserID, ref NETDEV_CLOUD_DEV_LOGIN_INFO_S pstCloudInfo);
 
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern IntPtr NETDEV_FindCloudDevListEx(IntPtr lpUserID);
 
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_FindNextCloudDevInfoEx(IntPtr lpFindHandle, ref NETDEV_CLOUD_DEV_BASIC_INFO_S pstDevInfo);
 
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_FindCloseCloudDevListEx(IntPtr lpFindHandle);
 
         /**
@@ -2623,7 +2623,7 @@ namespace System.Data.YuShiITSSDK
         * @return 1 表示成功,其他表示失败
         * @note 若pszBeginIP和pszEndIP都是"0.0.0.0",则搜索本网段设备
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_Discovery(String pszBeginIP, String pszEndIP);
 
         /**
@@ -2635,7 +2635,7 @@ namespace System.Data.YuShiITSSDK
          * @return 返回的用户登录句柄,返回 0 表示失败,其他值表示返回的用户登录句柄值. Returned live Handle. 0 indicates failure, and other values indicate the user ID.
          * @note
          */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern IntPtr NETDEV_RealPlay(IntPtr lpUserID, ref NETDEV_PREVIEWINFO_S pstPreviewInfo, IntPtr cbPlayDataCallBack, IntPtr lpUserData);
 
         /**
@@ -2644,7 +2644,7 @@ namespace System.Data.YuShiITSSDK
         * @return 1 表示成功,其他表示失败 1 means success, and any other value means failure.
         * @note 对应关闭NETDEV_RealPlay开启的实况 Stop the live view started by NETDEV_RealPlay
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_StopRealPlay(IntPtr lpRealHandle);
 
         /**
@@ -2654,7 +2654,7 @@ namespace System.Data.YuShiITSSDK
         * @return 1表示成功,其他表示失败 1 means success, and any other value means failure.
         * @note
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_GetBitRate(IntPtr lpRealHandle, ref int pdwBitRate);
 
         /*
@@ -2664,7 +2664,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功,其他表示失败 TRUE means success, and any other value means failure.
         * @note
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_GetFrameRate(IntPtr lpRealHandle, ref int pdwFrameRate);
 
         /**
@@ -2674,7 +2674,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功,其他表示失败 TRUE means success, and any other value means failure.
         * @note
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_GetVideoEncodeFmt(IntPtr lpRealHandle, ref int pdwVideoEncFmt);
 
         /**
@@ -2685,7 +2685,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功,其他表示失败 TRUE means success, and any other value means failure.
         * @note
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_GetResolution(IntPtr lpRealHandle, ref int pdwWidth, ref int pdwHeight);
 
         /**
@@ -2696,13 +2696,13 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功,其他表示失败 TRUE means success, and any other value means failure.
         * @note
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_GetLostPacketRate(IntPtr lpRealHandle, ref int pulRecvPktNum, ref int pulLostPktNum);
 
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_PTZControl(IntPtr lpPlayHandle, Int32 dwPTZCommand, Int32 dwSpeed);
 
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_PTZControl_Other(IntPtr lpUserID, Int32 dwChannelID, Int32 dwPTZCommand, Int32 dwSpeed);
 
         /**
@@ -2713,7 +2713,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功,其他表示失败 TRUE means success, and any other value means failure.
         * @note 文件名中可以不携带抓拍格式的后缀名 File format suffix is not required in the file name
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_CapturePicture(IntPtr lpRealHandle, byte[] szFileName, Int32 dwCaptureMode);
 
         /**
@@ -2724,7 +2724,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功,其他表示失败 TRUE means success, and any other value means failure.
         * @note
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_SaveRealData(IntPtr lpRealHandle, byte[] szSaveFileName, Int32 dwFormat);
 
         /**
@@ -2733,7 +2733,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功,其他表示失败 TRUE means success, and any other value means failure.
         * @note
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_StopSaveRealData(IntPtr lpRealHandle);
 
         /**
@@ -2746,7 +2746,7 @@ namespace System.Data.YuShiITSSDK
         *         一.将上述业务号作为NETDEV_FindNextFile函数的入参lpFindHandle,多次调用NETDEV_FindNextFile函数,以逐个获取详细录像文件信息.
         *         二.查询结束后,必须以上述业务号作为NETDEV_FindClose函数的入参lpFindHandle,调用NETDEV_FindClose函数,以释放资源,关闭查找.
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern IntPtr NETDEV_FindFile(IntPtr lpUserID, ref NETDEV_FILECOND_S pFindCond);
 
         /**
@@ -2756,7 +2756,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功,其他表示失败 TRUE means success, and any other value means failure.
         * @note 返回失败说明查询结束 A returned failure indicates the end of search.
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_FindNextFile(IntPtr lpFindHandle, ref NETDEV_FINDDATA_S lpFindData); /*NETDEV_FINDDATA_S*/
 
         /**
@@ -2765,7 +2765,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功,其他表示失败 TRUE means success, and any other value means failure.
         * @note
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_FindClose(IntPtr lpFindHandle);
 
         /**
@@ -2776,7 +2776,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功,其他表示失败 TRUE means success, and any other value means failure.
         * @note 开始.暂停.恢复播放时,lpBuffer置为NULL When playing, pause or resume videos, set IpBuffer as NULL.
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_PlayBackControl(IntPtr lpPlayHandle, Int32 dwControlCode, ref Int64 pdwBuffer);
 
         /**
@@ -2788,7 +2788,7 @@ namespace System.Data.YuShiITSSDK
         * @return 下载句柄, 返回0表示失败,其他值作为NETDEV_StopGetFile等函数的参数. Download handle. 0 means failure. Other values are used as the handle parameters of functions like NETDEV_StopGetFile.
         * @note
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern IntPtr NETDEV_GetFileByTime(IntPtr lpUserID, ref NETDEV_PLAYBACKCOND_S pstPlayBackCond, byte[] pszSaveFileName, Int32 dwFormat);
 
         /**
@@ -2797,16 +2797,16 @@ namespace System.Data.YuShiITSSDK
          * @return TRUE表示成功,其他表示失败 TRUE means success, and any other value means failure.
          * @note
          */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_StopGetFile(IntPtr lpPlayHandle);
 
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_PTZPreset_Other(IntPtr lpUserID, Int32 dwChannelID, Int32 dwPTZPresetCmd, byte[] szPresetName, Int32 dwPresetID);
 
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_GetPTZPresetList(IntPtr lpUserID, Int32 dwChannelID, ref NETDEV_PTZ_ALLPRESETS_S lpOutBuffer);
 
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_SetUpnpNatState(IntPtr lpUserID, ref NETDEV_UPNP_NAT_STATE_S pstNatState);
 
         /**
@@ -2819,7 +2819,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功,其他表示失败 TRUE means success, and any other value means failure.
         * @note
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_SetDevConfig(IntPtr lpUserID, Int32 dwChannelID, Int32 dwCommand, ref int index, int dwInBufferSize);
 
         /**
@@ -2832,7 +2832,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功,其他表示失败 TRUE means success, and any other value means failure.
         * @note
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_SetDevConfig(IntPtr lpUserID, Int32 dwChannelID, Int32 dwCommand, ref NETDEV_DEFOGGING_INFO_S lpInBuffer, int dwInBufferSize);
 
         /**
@@ -2846,7 +2846,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功,其他表示失败 TRUE means success, and any other value means failure.
         * @note
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_GetDevConfig(IntPtr lpUserID, Int32 dwChannelID, Int32 dwCommand, ref NETDEV_DEFOGGING_INFO_S lpInBuffer, Int32 dwOutBufferSize, ref int pdwBytesReturned);
 
         /**
@@ -2859,7 +2859,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功,其他表示失败 TRUE means success, and any other value means failure.
         * @note
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_SetDevConfig(IntPtr lpUserID, Int32 dwChannelID, Int32 dwCommand, ref NETDEV_MOTION_ALARM_INFO_S lpInBuffer, Int32 dwInBufferSize);
 
         /**
@@ -2873,7 +2873,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功,其他表示失败 TRUE means success, and any other value means failure.
         * @note
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_GetDevConfig(IntPtr lpUserID, Int32 dwChannelID, Int32 dwCommand, ref NETDEV_MOTION_ALARM_INFO_S lpInBuffer, Int32 dwOutBufferSize, ref int pdwBytesReturned);
 
         /**
@@ -2886,7 +2886,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功,其他表示失败 TRUE means success, and any other value means failure.
         * @note
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_GetDevConfig(IntPtr lpUserID, Int32 dwChannelID, Int32 dwCommand, ref NETDEV_TAMPER_ALARM_INFO_S lpOutBuffer, Int32 dwOutBufferSize, ref int pdwBytesReturned);
 
         /**
@@ -2899,7 +2899,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功,其他表示失败 TRUE means success, and any other value means failure.
         * @note
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_SetDevConfig(IntPtr lpUserID, Int32 dwChannelID, Int32 dwCommand, ref NETDEV_TAMPER_ALARM_INFO_S lpInBuffer, Int32 dwInBufferSize);
 
         /**
@@ -2912,7 +2912,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功,其他表示失败 TRUE means success, and any other value means failure.
         * @note
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_SetDevConfig(IntPtr lpUserID, Int32 dwChannelID, Int32 dwCommand, ref NETDEV_SYSTEM_NTP_INFO_LIST_S lpInBuffer, Int32 dwInBufferSize);
 
         /**
@@ -2925,7 +2925,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功,其他表示失败 TRUE means success, and any other value means failure.
         * @note
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_GetDevConfig(IntPtr lpUserID, Int32 dwChannelID, Int32 dwCommand, ref NETDEV_OSD_CAP_S lpOutBuffer, Int32 dwOutBufferSize, ref int pdwBytesReturned);
 
         /**
@@ -2938,7 +2938,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功,其他表示失败 TRUE means success, and any other value means failure.
         * @note
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_GetDevConfig(IntPtr lpUserID, Int32 dwChannelID, Int32 dwCommand, ref NETDEV_VIDEO_STREAM_CAP_EX_S lpOutBuffer, Int32 dwOutBufferSize, ref int pdwBytesReturned);
 
         /**
@@ -2951,7 +2951,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功,其他表示失败 TRUE means success, and any other value means failure.
         * @note
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_GetDeviceCapability(IntPtr lpUserID, Int32 dwChannelID, Int32 dwCommand, ref NETDEV_OSD_CAP_S lpOutBuffer, Int32 dwOutBufferSize, ref int pdwBytesReturned);
 
         /**
@@ -2964,7 +2964,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功,其他表示失败 TRUE means success, and any other value means failure.
         * @note
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_GetDeviceCapability(IntPtr lpUserID, Int32 dwChannelID, Int32 dwCommand, ref NETDEV_VIDEO_STREAM_CAP_EX_S lpOutBuffer, Int32 dwOutBufferSize, ref int pdwBytesReturned);
 
         /**
@@ -2974,7 +2974,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功,其他表示失败 TRUE means success, any other value indicates failure.
         * @note无
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_GetTrafficStatistic(IntPtr lpUserID, ref NETDEV_TRAFFIC_STATISTICS_COND_S pstStatisticCond, ref NETDEV_TRAFFIC_STATISTICS_DATA_S pstTrafficStatistic);
 
         /**
@@ -2984,7 +2984,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功,其他表示失败 TRUE means success, and any other value means failure.
         * @note
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_SetConnectTime(Int32 dwWaitTime, Int32 dwTrytimes);
 
         /**
@@ -2994,7 +2994,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功,其他表示失败 TRUE means success, and any other value means failure.
         * @note
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_SetPictureFluency(IntPtr lpPlayHandle, Int32 dwFluency);
 
         /**
@@ -3005,7 +3005,7 @@ namespace System.Data.YuShiITSSDK
         * @return NETDEV_E_SUCCEED   表示成功,其他表示失败  NETDEV_E_SUCCEED means success, and any other value means failure.
         * @note
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_MakeKeyFrame(IntPtr lpUserID, Int32 dwChannelID, Int32 dwStreamType);
 
         /**
@@ -3015,7 +3015,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功,其他表示失败 TRUE means success, and any other value means failure.
         * @note
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_GetSoundVolume(IntPtr lpPlayHandle, ref Int32 pdwVolume);
 
         /**
@@ -3025,7 +3025,7 @@ namespace System.Data.YuShiITSSDK
          * @return TRUE表示成功,其他表示失败 TRUE means success, and any other value means failure.
          * @note
          */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_SoundVolumeControl(IntPtr lpPlayHandle, Int32 dwVolume);
 
         /**
@@ -3035,7 +3035,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功,其他表示失败 TRUE means success, and any other value means failure.
         * @note
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_GetMicVolume(IntPtr lpPlayHandle, ref Int32 dwVolume);
 
         /**
@@ -3045,7 +3045,7 @@ namespace System.Data.YuShiITSSDK
          * @return TRUE表示成功,其他表示失败 TRUE means success, and any other value means failure.
          * @note
          */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_MicVolumeControl(IntPtr lpPlayHandle, Int32 dwVolume);
 
         /**
@@ -3054,7 +3054,7 @@ namespace System.Data.YuShiITSSDK
          * @return TRUE表示成功,其他表示失败 TRUE means success, and any other value means failure.
          * @note
          */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_OpenMic(IntPtr lpPlayHandle);
 
         /**
@@ -3063,7 +3063,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功,其他表示失败 TRUE means success, and any other value means failure.
         * @note
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_CloseMic(IntPtr lpPlayHandle);
 
         /**
@@ -3075,7 +3075,7 @@ namespace System.Data.YuShiITSSDK
         * @return 返回的语音对讲句柄,返回 0 表示失败
         * @note
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern IntPtr NETDEV_StartInputVoiceSrv(IntPtr lpUserID, Int32 dwChannelID);
 
         /**
@@ -3084,7 +3084,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功,其他表示失败
         * @note
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_StopInputVoiceSrv(IntPtr lpVoiceComHandle);
 
         /**
@@ -3096,7 +3096,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功,其他表示失败
         * @note无
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_InputVoiceData(IntPtr lpUserID, byte[] lpDataBuf, Int32 dwDataLen, ref NETDEV_AUDIO_SAMPLE_PARAM_S pstVoiceParam);
 
         // [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
@@ -3104,7 +3104,7 @@ namespace System.Data.YuShiITSSDK
 
         /* interface function end */
 
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_GetSDKVersion();
 
         /**
@@ -3117,7 +3117,7 @@ namespace System.Data.YuShiITSSDK
         * @return 返回的用户登录句柄,返回 0 表示失败,其他值表示返回的用户登录句柄值. Returned user login ID. 0 indicates failure, and other values indicate the user ID.
         * @note
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern IntPtr NETDEV_Login(String szDevIP, Int16 wDevPort, String szUserName, String szPassword, ref NETDEV_DEVICE_INFO_S pstDevInfo);
 
         /**
@@ -3126,16 +3126,16 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功,其他表示失败 TRUE means success, and any other value means failure.
         * @note
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_Logout(IntPtr lpUserID);
 
         [DllImport("kernel32.dll", CharSet = CharSet.Auto)]
         public static extern void OutputDebugString(string message);
 
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_PlaySound(IntPtr lpRealHandle);
 
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_StopPlaySound(IntPtr lpRealHandle);
 
         /**
@@ -3144,7 +3144,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功,其他表示失败 TRUE means success, and any other value means failure.
         * @note
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_ResetLostPacketRate(IntPtr lpRealHandle);
 
         /**
@@ -3159,7 +3159,7 @@ namespace System.Data.YuShiITSSDK
                 仅支持JPG格式.
                 Only JPG format is supported.
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_CaptureNoPreview(IntPtr lpUserID, Int32 dwChannelID, Int32 dwStreamType, String szFileName, Int32 dwCaptureMode);
 
         /**
@@ -3169,7 +3169,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功,其他表示失败 TRUE means success, and any other value means failure.
         * @note
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_SetRenderScale(IntPtr lpRealHandle, Int32 enRenderScale); /*NETDEV_RENDER_SCALE_E*/
 
         /**
@@ -3179,7 +3179,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功,其他表示失败 TRUE means success, and any other value means failure.
         * @note
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern IntPtr NETDEV_PlayBackByName(IntPtr lpUserID, ref NETDEV_PLAYBACKINFO_S pstPlayBackInfo);
 
         /**
@@ -3189,7 +3189,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功,其他表示失败 TRUE means success, and any other value means failure.
         * @note
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern IntPtr NETDEV_PlayBackByTime(IntPtr lpUserID, ref NETDEV_PLAYBACKCOND_S pstPlayBackInfo);
 
         /**
@@ -3198,7 +3198,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功,其他表示失败 TRUE means success, and any other value means failure.
         * @note
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_StopPlayBack(IntPtr lpPlayHandle);
 
         /**
@@ -3210,7 +3210,7 @@ namespace System.Data.YuShiITSSDK
         * @return 下载句柄, 返回0表示失败,其他值作为NETDEV_StopGetFile等函数的参数. Download handle. 0 means failure. Other values are used as the handle parameters of functions like NETDEV_StopGetFile.
         * @note
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern IntPtr NETDEV_GetFileByName(IntPtr lpUserID, ref NETDEV_PLAYBACKINFO_S pstPlayBackInfo, String szSaveFileName, Int32 dwFormat);
 
         /**
@@ -3222,7 +3222,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功,其他表示失败 TRUE means success, and any other value means failure.
         * @note
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_PTZPreset(IntPtr lpPlayHandle, Int32 dwPTZPresetCmd, String pszPresetName, Int32 dwPresetID);
 
         /**
@@ -3239,7 +3239,7 @@ namespace System.Data.YuShiITSSDK
         * - 2.新增巡航路径时,默认按顺序新增.  New routes are added one after another.
         * - 3.删除.开始.停止巡航路径时,pstCruiseInfo中只需要填写巡航路径ID即可.  When deleting, starting or stoping a patrol route, enter route ID in pstCruiseInfo.
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_GetDevConfig(IntPtr lpUserID, Int32 dwChannelID, Int32 dwCommand, IntPtr lpInBuffer, Int32 dwOutBufferSize, ref int pdwBytesReturned);
 
         /**
@@ -3252,7 +3252,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功,其他表示失败 TRUE means success, and any other value means failure.
         * @note
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_SetDevConfig(IntPtr lpUserID, Int32 dwChannelID, Int32 dwCommand, IntPtr lpInBuffer, ref int dwInBufferSize);
 
         /**
@@ -3261,7 +3261,7 @@ namespace System.Data.YuShiITSSDK
          * @param [IN]  lpUserID     用户登录句柄 User login ID
          * @return TRUE表示成功,其他表示失败 TRUE means success, and any other value means failure.
          */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_Reboot(IntPtr lpUserID);
 
         /**
@@ -3270,7 +3270,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功,其他表示失败 TRUE means success, and any other value means failure.
         * @note
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_OpenSound(IntPtr lpRealHandle);
 
         /**
@@ -3279,14 +3279,14 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功,其他表示失败 TRUE means success, and any other value means failure.
         * @note
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_CloseSound(IntPtr lpRealHandle);
 
         /**
         * 获取错误码  Get error codes
         * @return 错误码 Error codes
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_GetLastError();
 
         /**
@@ -3297,7 +3297,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功,其他表示失败 TRUE means success, and any other value means failure.
         * @note 在我司NVR下,需通过私有协议连接我司IPC才支持该接口  In our NVR, this interface is supported only when our camera is connected through private protocol.
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_PTZSelZoomIn_Other(IntPtr lpUserID, Int32 dwChannelID, ref NETDEV_PTZ_OPERATEAREA_S pstPtzOperateArea);
 
         /**
@@ -3308,7 +3308,7 @@ namespace System.Data.YuShiITSSDK
         * @note 安全登录信息此字段仅适用于使用LAPI协议登录的设备
         * -
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern IntPtr NETDEV_Login_V30(ref NETDEV_DEVICE_LOGIN_INFO_S pstDevLoginInfo, ref NETDEV_SELOG_INFO_S pstSELogInfo);
 
         /**
@@ -3318,7 +3318,7 @@ namespace System.Data.YuShiITSSDK
         * @return 查询句柄,返回0表示失败，其他值作为NETDEV_FindNextOrgInfo、NETDEV_FindCloseOrgInfo等函数的参数。
         * @note
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern IntPtr NETDEV_FindOrgInfoList(IntPtr lpUserID, ref NETDEV_ORG_FIND_COND_S pstFindCond);
 
         /**
@@ -3328,7 +3328,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功，其他表示失败 TRUE means success, and any other value means failure.
         * @note 返回失败说明查询结束 A returned failure indicates the end of search.
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_FindNextOrgInfo(IntPtr lpFindHandle, ref NETDEV_ORG_INFO_S pstOrgInfo);
 
         /**
@@ -3337,7 +3337,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功，其他表示失败 TRUE means success, and any other value means failure.
         * @note
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_FindCloseOrgInfo(IntPtr lpFindHandle);
 
         /**
@@ -3348,7 +3348,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE           表示成功，其他表示失败 TRUE means success, and any other value means failure.
         * @note 
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_AddOrgInfo(IntPtr lpUserID, ref NETDEV_ORG_INFO_S pstOrgInfo, ref Int32 pdwOrgID);
 
         /**
@@ -3359,7 +3359,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE           表示成功，其他表示失败 TRUE means success, and any other value means failure.
         * @note 
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_ModifyOrgInfo(IntPtr lpUserID, ref NETDEV_ORG_INFO_S pstOrgInfo);
 
         /**
@@ -3370,7 +3370,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE           表示成功，其他表示失败 TRUE means success, and any other value means failure.
         * @note 
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_BatchDeleteOrgInfo(IntPtr lpUserID, ref NETDEV_DEL_ORG_INFO_S pstOrgDelInfo, ref NETDEV_ORG_BATCH_DEL_INFO_S pstOrgDelResultInfo);
 
         /**
@@ -3380,7 +3380,7 @@ namespace System.Data.YuShiITSSDK
         * @return 查询句柄,返回0表示失败，其他值作为NETDEV_FindNextOrgInfo、NETDEV_FindCloseOrgInfo等函数的参数。
         * @note
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern IntPtr NETDEV_FindDevList(IntPtr lpUserID, Int32 dwDevType);
 
         /**
@@ -3390,7 +3390,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功，其他表示失败 TRUE means success, and any other value means failure.
         * @note 返回失败说明查询结束 A returned failure indicates the end of search.
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_FindNextDevInfo(IntPtr lpFindHandle, ref NETDEV_DEV_BASIC_INFO_S pstDevBasicInfo);
 
         /**
@@ -3399,7 +3399,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功，其他表示失败 TRUE means success, and any other value means failure.
         * @note
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_FindCloseDevInfo(IntPtr lpFindHandle);
 
         /**
@@ -3410,7 +3410,7 @@ namespace System.Data.YuShiITSSDK
         * @return 查询句柄,返回0表示失败，其他值作为NETDEV_FindNextDevChn、NETDEV_FindCloseDevChn等函数的参数。
         * @note     1、只根据通道类型查询时，将设备ID设置为0.
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern IntPtr NETDEV_FindDevChnList(IntPtr lpUserID, Int32 dwDevID, Int32 dwChnType);
 
         /**
@@ -3422,7 +3422,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功，其他表示失败 TRUE means success, and any other value means failure.
         * @note 返回失败说明查询结束 A returned failure indicates the end of search.
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_FindNextDevChn(IntPtr lpFindHandle, IntPtr lpOutBuffer, int dwOutBufferSize, ref int pdwBytesReturned);
 
         /**
@@ -3431,7 +3431,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功，其他表示失败 TRUE means success, and any other value means failure.
         * @note  A returned failure indicates the end of search.
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_FindCloseDevChn(IntPtr lpFindHandle);
 
         /**
@@ -3441,7 +3441,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功,其他表示失败 TRUE means success, and any other value means failure.
         * @note
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_GetDeviceInfo(IntPtr lpUserID, ref NETDEV_DEVICE_INFO_S pstDevInfo);
 
         /**
@@ -3453,7 +3453,7 @@ namespace System.Data.YuShiITSSDK
         * @note
         * -
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_GetDeviceInfo_V30(IntPtr lpUserID, Int32 dwDevID, ref NETDEV_DEV_INFO_V30_S pstDevInfo);
 
         /**
@@ -3464,7 +3464,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功，其他表示失败 TRUE means success, and any other value means failure.
         * @note 
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_GetChnType(IntPtr lpUserID, Int32 dwChnID, ref Int32 pdwChnType);// pdwChnType: see NETDEV_CHN_TYPE_E
 
         /**
@@ -3478,7 +3478,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功，其他表示失败 TRUE means success, and any other value means failure.
         * @note 一体机
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_GetChnDetailByChnType(IntPtr lpUserID, Int32 dwChnID, Int32 dwChnType, IntPtr lpOutBuffer, int dwOutBufferSize, ref int pdwBytesReturned);
 
         /**
@@ -3489,7 +3489,7 @@ namespace System.Data.YuShiITSSDK
         * @return  TRUE表示成功,其他表示失败 TRUE means success, and any other value means failure.
         * @note
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_PTZGetCruise(IntPtr lpUserID, Int32 dwChannelID, ref NETDEV_CRUISE_LIST_S pstCruiseList);
 
         /**
@@ -3504,7 +3504,7 @@ namespace System.Data.YuShiITSSDK
         * - 2.巡航点,最多支持32个点（序号从1开始） Patrol point. Up to 32 points are supported (starting from 1).
         * - 3.预置位(最大255).时间(最大255).速度(最大40)  Preset (max 255), time (max 255) and speed (max 40).
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_PTZCruise_Other(IntPtr lpUserID, Int32 dwChannelID, Int32 dwPTZCruiseCmd, ref NETDEV_CRUISE_INFO_S pstCruiseInfo);
 
         /**
@@ -3515,7 +3515,7 @@ namespace System.Data.YuShiITSSDK
         * @return  TRUE表示成功,其他表示失败 TRUE means success, and any other value means failure.
         * @note
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_PTZGetTrackCruise(IntPtr lpUserID, Int32 dwChannelID, ref NETDEV_PTZ_TRACK_INFO_S pstTrackCruiseInfo);
 
         /**
@@ -3528,7 +3528,7 @@ namespace System.Data.YuShiITSSDK
         * @note
         * - 1.巡航轨迹路径,最多支持1条路径  Only one patrol route allowed.
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_PTZTrackCruise(IntPtr lpUserID, Int32 dwChannelID, Int32 dwPTZTrackCruiseCmd, string pszTrackCruiseName);
 
         /**
@@ -3541,7 +3541,7 @@ namespace System.Data.YuShiITSSDK
          * @return TRUE表示成功,其他表示失败 TRUE means success, and any other value means failure.
          * @note
          */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_SetDevConfig(IntPtr lpUserID, Int32 dwChannelID, Int32 dwCommand, ref NETDEV_VIDEO_STREAM_INFO_S lpInBuffer, Int32 dwInBufferSize);
 
         /**
@@ -3555,7 +3555,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功,其他表示失败 TRUE means success, and any other value means failure.
         * @note
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_GetDevConfig(IntPtr lpUserID, Int32 dwChannelID, Int32 dwCommand, ref NETDEV_PTZ_STATUS_S lpInBuffer, Int32 dwInBufferSize, ref int pdwBytesReturned);
 
         /**
@@ -3566,7 +3566,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功,其他表示失败 TRUE means success, and any other value means failure.
         * @note
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_PTZCalibrate(IntPtr lpUserID, Int32 dwChannelID, ref NETDEV_PTZ_ORIENTATION_INFO_S pstOrientationInfo);
 
         /**
@@ -3580,7 +3580,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功,其他表示失败 TRUE means success, and any other value means failure.
         * @note
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_GetDevConfig(IntPtr lpUserID, Int32 dwChannelID, Int32 dwCommand, ref NETDEV_VIDEO_STREAM_INFO_S lpInBuffer, Int32 dwOutBufferSize, ref int pdwBytesReturned);
 
         /**
@@ -3593,7 +3593,7 @@ namespace System.Data.YuShiITSSDK
          * @return TRUE表示成功,其他表示失败 TRUE means success, and any other value means failure.
          * @note
          */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_SetDevConfig(IntPtr lpUserID, Int32 dwChannelID, Int32 dwCommand, ref NETDEV_IMAGE_SETTING_S lpInBuffer, Int32 dwInBufferSize);
 
         /**
@@ -3606,7 +3606,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功,其他表示失败 TRUE means success, and any other value means failure.
         * @note
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_GetDevConfig(IntPtr lpUserID, Int32 dwChannelID, Int32 dwCommand, ref NETDEV_IMAGE_SETTING_S lpInBuffer, Int32 dwOutBufferSize, ref int pdwBytesReturned);
 
         /**
@@ -3619,7 +3619,7 @@ namespace System.Data.YuShiITSSDK
          * @return TRUE表示成功,其他表示失败 TRUE means success, and any other value means failure.
          * @note
          */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_SetDevConfig(IntPtr lpUserID, Int32 dwChannelID, Int32 dwCommand, ref NETDEV_SYSTEM_NTP_INFO_S lpInBuffer, Int32 dwInBufferSize);
 
         /**
@@ -3632,7 +3632,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功,其他表示失败 TRUE means success, and any other value means failure.
         * @note
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_GetDevConfig(IntPtr lpUserID, Int32 dwChannelID, Int32 dwCommand, ref NETDEV_SYSTEM_NTP_INFO_S lpInBuffer, Int32 dwOutBufferSize, ref int pdwBytesReturned);
 
         /**
@@ -3645,7 +3645,7 @@ namespace System.Data.YuShiITSSDK
          * @return TRUE表示成功,其他表示失败 TRUE means success, and any other value means failure.
          * @note
          */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_SetDevConfig(IntPtr lpUserID, Int32 dwChannelID, Int32 dwCommand, ref NETDEV_NETWORKCFG_S lpInBuffer, Int32 dwInBufferSize);
 
         /**
@@ -3658,7 +3658,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功,其他表示失败 TRUE means success, and any other value means failure.
         * @note
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_GetDevConfig(IntPtr lpUserID, Int32 dwChannelID, Int32 dwCommand, ref NETDEV_NETWORKCFG_S lpInBuffer, Int32 dwOutBufferSize, ref int pdwBytesReturned);
 
         /**
@@ -3671,7 +3671,7 @@ namespace System.Data.YuShiITSSDK
          * @return TRUE表示成功,其他表示失败 TRUE means success, and any other value means failure.
          * @note
          */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_SetDevConfig(IntPtr lpUserID, Int32 dwChannelID, Int32 dwCommand, ref NETDEV_ALARM_OUTPUT_INFO_S lpInBuffer, Int32 dwInBufferSize);
 
         /**
@@ -3684,7 +3684,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功,其他表示失败 TRUE means success, and any other value means failure.
         * @note
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_GetDevConfig(IntPtr lpUserID, Int32 dwChannelID, Int32 dwCommand, ref NETDEV_ALARM_OUTPUT_INFO_S lpInBuffer, Int32 dwOutBufferSize, ref int pdwBytesReturned);
 
         /**
@@ -3697,7 +3697,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功,其他表示失败 TRUE means success, and any other value means failure.
         * @note
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_SetDevConfig(IntPtr lpUserID, Int32 dwChannelID, Int32 dwCommand, ref NETDEV_RECORD_PLAN_CFG_INFO_S lpInBuffer, Int32 dwInBufferSize);
 
         /**
@@ -3710,7 +3710,7 @@ namespace System.Data.YuShiITSSDK
        * @return TRUE表示成功,其他表示失败 TRUE means success, and any other value means failure.
        * @note
        */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_GetDevConfig(IntPtr lpUserID, Int32 dwChannelID, Int32 dwCommand, ref NETDEV_RECORD_PLAN_CFG_INFO_S lpInBuffer, Int32 dwOutBufferSize, ref int pdwBytesReturned);
 
         /**
@@ -3723,7 +3723,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功,其他表示失败 TRUE means success, and any other value means failure.
         * @note
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_SetDevConfig(IntPtr lpUserID, Int32 dwChannelID, Int32 dwCommand, ref NETDEV_TRIGGER_ALARM_OUTPUT_S lpInBuffer, Int32 dwInBufferSize);
 
         /**
@@ -3736,7 +3736,7 @@ namespace System.Data.YuShiITSSDK
        * @return TRUE表示成功,其他表示失败 TRUE means success, and any other value means failure.
        * @note
        */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_GetDevConfig(IntPtr lpUserID, Int32 dwChannelID, Int32 dwCommand, ref NETDEV_TRIGGER_ALARM_OUTPUT_S lpInBuffer, Int32 dwOutBufferSize, ref int pdwBytesReturned);
 
         /**
@@ -3749,7 +3749,7 @@ namespace System.Data.YuShiITSSDK
        * @return TRUE表示成功,其他表示失败 TRUE means success, and any other value means failure.
        * @note
        */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_SetDevConfig(IntPtr lpUserID, Int32 dwChannelID, Int32 dwCommand, ref NETDEV_VIDEO_OSD_CFG_S lpInBuffer, Int32 dwInBufferSize);
 
         /**
@@ -3762,7 +3762,7 @@ namespace System.Data.YuShiITSSDK
          * @return TRUE表示成功,其他表示失败 TRUE means success, and any other value means failure.
          * @note
          */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_GetDevConfig(IntPtr lpUserID, Int32 dwChannelID, Int32 dwCommand, ref NETDEV_VIDEO_OSD_CFG_S lpInBuffer, Int32 dwOutBufferSize, ref int pdwBytesReturned);
 
         /**
@@ -3775,7 +3775,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功,其他表示失败 TRUE means success, and any other value means failure.
         * @note
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_GetDevConfig(IntPtr lpUserID, Int32 dwChannelID, Int32 dwCommand, ref NETDEV_ALARM_INPUT_LIST_S lpInBuffer, Int32 dwOutBufferSize, ref int pdwBytesReturned);
 
         /**
@@ -3788,7 +3788,7 @@ namespace System.Data.YuShiITSSDK
          * @return TRUE表示成功,其他表示失败 TRUE means success, and any other value means failure.
          * @note
          */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_GetDevConfig(IntPtr lpUserID, Int32 dwChannelID, Int32 dwCommand, ref NETDEV_ALARM_OUTPUT_LIST_S lpInBuffer, Int32 dwOutBufferSize, ref int pdwBytesReturned);
 
         /**
@@ -3801,10 +3801,10 @@ namespace System.Data.YuShiITSSDK
          * @return TRUE表示成功,其他表示失败 TRUE means success, and any other value means failure.
          * @note
          */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_GetDevConfig(IntPtr lpUserID, Int32 dwChannelID, Int32 dwCommand, ref NETDEV_DEVICE_BASICINFO_S lpInBuffer, Int32 dwOutBufferSize, ref int pdwBytesReturned);
 
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_GetDevConfig(IntPtr lpUserID, Int32 dwChannelID, Int32 dwCommand, ref NETDEV_DISK_INFO_LIST_S lpInBuffer, Int32 dwOutBufferSize, ref int pdwBytesReturned);
 
         /**
@@ -3817,7 +3817,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功,其他表示失败 TRUE means success, and any other value means failure.
         * @note
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_GetDevConfig(IntPtr lpUserID, Int32 dwChannelID, Int32 dwCommand, ref NETDEV_PRIVACY_MASK_CFG_S lpInBuffer, Int32 dwOutBufferSize, ref int pdwBytesReturned);
 
         /**
@@ -3830,7 +3830,7 @@ namespace System.Data.YuShiITSSDK
          * @return TRUE表示成功,其他表示失败 TRUE means success, and any other value means failure.
          * @note
          */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_SetDevConfig(IntPtr lpUserID, Int32 dwChannelID, Int32 dwCommand, ref NETDEV_PRIVACY_MASK_CFG_S lpInBuffer, Int32 dwInBufferSize);
 
         /**
@@ -3843,7 +3843,7 @@ namespace System.Data.YuShiITSSDK
          * @return TRUE表示成功,其他表示失败 TRUE means success, and any other value means failure.
          * @note
          */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_GetDevConfig(IntPtr lpUserID, Int32 dwChannelID, Int32 dwCommand, ref NETDEV_SYSTEM_NTP_INFO_LIST_S lpInBuffer, Int32 dwOutBufferSize, ref int pdwBytesReturned);
 
         /**
@@ -3856,7 +3856,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功,其他表示失败 TRUE means success, and any other value means failure.
         * @note
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_GetDevConfig(IntPtr lpUserID, Int32 dwChannelID, Int32 dwCommand, ref NETDEV_IMAGE_EXPOSURE_S lpInBuffer, Int32 dwOutBufferSize, ref int pdwBytesReturned);
 
         /**
@@ -3869,7 +3869,7 @@ namespace System.Data.YuShiITSSDK
          * @return TRUE表示成功,其他表示失败 TRUE means success, and any other value means failure.
          * @note
          */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_SetDevConfig(IntPtr lpUserID, Int32 dwChannelID, Int32 dwCommand, ref NETDEV_IMAGE_EXPOSURE_S lpInBuffer, Int32 dwOutBufferSize);
 
         /**
@@ -3882,7 +3882,7 @@ namespace System.Data.YuShiITSSDK
           * @return TRUE表示成功,其他表示失败 TRUE means success, and any other value means failure.
           * @note
           */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_GetDevConfig(IntPtr lpUserID, Int32 dwChannelID, Int32 dwCommand, ref NETDEV_IRCUT_FILTER_INFO_S lpInBuffer, Int32 dwOutBufferSize, ref int pdwBytesReturned);
 
         /**
@@ -3895,13 +3895,13 @@ namespace System.Data.YuShiITSSDK
          * @return TRUE表示成功,其他表示失败 TRUE means success, and any other value means failure.
          * @note
          */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_SetDevConfig(IntPtr lpUserID, Int32 dwChannelID, Int32 dwCommand, ref NETDEV_IRCUT_FILTER_INFO_S lpInBuffer, Int32 dwInBufferSize);
 
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_GetDevConfig(IntPtr lpUserID, Int32 dwChannelID, Int32 dwCommand, ref NETDEV_INFORELEASE_CFG_S lpInBuffer, Int32 dwOutBufferSize, ref int pdwBytesReturned);
 
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_SetDevConfig(IntPtr lpUserID, Int32 dwChannelID, Int32 dwCommand, ref NETDEV_INFORELEASE_CFG_S lpInBuffer, Int32 dwInBufferSize);
 
         /**
@@ -3914,7 +3914,7 @@ namespace System.Data.YuShiITSSDK
           * @return TRUE表示成功,其他表示失败 TRUE means success, and any other value means failure.
           * @note
           */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_GetDevConfig(IntPtr lpUserID, Int32 dwChannelID, Int32 dwCommand, ref NETDEV_ITS_PARKING_DETECTION_S lpInBuffer, Int32 dwOutBufferSize, ref int pdwBytesReturned);
 
         /**
@@ -3927,7 +3927,7 @@ namespace System.Data.YuShiITSSDK
           * @return TRUE表示成功,其他表示失败 TRUE means success, and any other value means failure.
           * @note
           */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_GetDevConfig(IntPtr lpUserID, Int32 dwChannelID, Int32 dwCommand, ref NETDEV_OSD_CONTENT_STYLE_S lpInBuffer, Int32 dwOutBufferSize, ref int pdwBytesReturned);
 
         /**
@@ -3940,7 +3940,7 @@ namespace System.Data.YuShiITSSDK
          * @return TRUE表示成功,其他表示失败 TRUE means success, and any other value means failure.
          * @note
          */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_SetDevConfig(IntPtr lpUserID, Int32 dwChannelID, Int32 dwCommand, ref NETDEV_OSD_CONTENT_STYLE_S lpInBuffer, Int32 dwInBufferSize);
 
         /**
@@ -3949,7 +3949,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功,其他表示失败 TRUE means success, and any other value means failure.
         * @note 保留网络配置和用户配置,其他参数恢复到出厂设置. Restore all parameters to factory settings, except network settings and user settings.
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_RestoreConfig(IntPtr lpUserID);
 
         /**
@@ -3959,7 +3959,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功,其他表示失败 TRUE means success, and any other value means failure.
         * @note
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_GetVideoEffect(IntPtr lpRealHandle, ref NETDEV_VIDEO_EFFECT_S pstImageInfo);
 
         /**
@@ -3969,7 +3969,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功,其他表示失败 TRUE means success, and any other value means failure.
         * @note
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_SetVideoEffect(IntPtr lpRealHandle, ref NETDEV_VIDEO_EFFECT_S pstImageInfo);
 
         /**
@@ -3980,7 +3980,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功,其他表示失败 TRUE means success, and any other value means failure.
         * @note pstRect为空时,显示全部画面,即退出数字放大 All images will be displayed with digital zoom disabled when pstRect is null
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_SetDigitalZoom(IntPtr lpRealHandle, IntPtr hWnd, IntPtr pstRect);
 
         /**
@@ -3990,7 +3990,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功,其他表示失败  TRUE means success, and any other value means failure.
         * @note
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_GetUpnpNatState(IntPtr lpUserID, ref NETDEV_UPNP_NAT_STATE_S pstNatState);
 
         /**
@@ -4000,7 +4000,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功,其他表示失败  TRUE means success, and any other value means failure.
         * @note
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_ModifyDeviceName(IntPtr lpUserID, byte[] strDeviceName);
 
         /**
@@ -4009,7 +4009,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功,其他表示失败  TRUE means success, and any other value means failure.
         * @note
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_SetLogPath(String strLogPath);
 
         /**
@@ -4019,7 +4019,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功,其他表示失败 TRUE means success, any other value indicates failure.
         * @note
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_ConfigLogFile(Int32 dwLogFileSize, Int32 dwLogFileNum);
 
         /**
@@ -4027,7 +4027,7 @@ namespace System.Data.YuShiITSSDK
         * @param [IN]  pstSystemTimeInfo    时间配置结构体指针  Pointer to time configuration structure
         * @return TRUE表示成功,其他表示失败  TRUE means success, and any other value means failure.
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_GetSystemTimeCfg(IntPtr lpUserID, ref NETDEV_TIME_CFG_S pstSystemTimeInfo);
 
         /**
@@ -4035,7 +4035,7 @@ namespace System.Data.YuShiITSSDK
         * @param [IN]  pstSystemTimeInfo    时间配置结构体指针  Pointer to time configuration structure
         * @return TRUE表示成功,其他表示失败  TRUE means success, and any other value means failure.
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_SetSystemTimeCfg(IntPtr lpUserID, ref NETDEV_TIME_CFG_S pstSystemTimeInfo);
 
         /**
@@ -4044,7 +4044,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功,其他表示失败    TRUE means success, and any other value means failure.
         * @note
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_SetRevTimeOut(ref NETDEV_REV_TIMEOUT_S pstRevTimeout);
 
         /**
@@ -4058,7 +4058,7 @@ namespace System.Data.YuShiITSSDK
         * - 若关闭回调函数,将第二个参数置为NULL.
         * - To shut the callback function, set the second parameter as NULL.
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_SetPlayDecodeVideoCB(IntPtr lpRealHandle, ref NETDEV_DECODE_VIDEO_DATA_CALLBACK_PF cbPlayDecodeVideoCallBack, Int32 bContinue, IntPtr lpUserData);
         // public static extern Int32 NETDEV_SetPlayDecodeVideoCB(IntPtr lpRealHandle, IntPtr cbPlayDecodeVideoCallBack, Int32 bContinue, IntPtr lpUserData);
 
@@ -4071,7 +4071,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功,其他表示失败 TRUE means success, and any other value means failure.
         * @note
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_SetPlayDataCallBack(IntPtr lpRealHandle, IntPtr cbPlayDataCallBack, Int32 bContinue, IntPtr lpUserData);
 
         /**
@@ -4084,7 +4084,7 @@ namespace System.Data.YuShiITSSDK
         * - 若关闭回调函数,将第二个参数置为NULL.
         * - To shut the callback function, set the second parameter as NULL.
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_SetPlayDisplayCB(IntPtr lpRealHandle, IntPtr cbPlayDisplayCallBack, IntPtr lpUserData);
 
         /**
@@ -4098,7 +4098,7 @@ namespace System.Data.YuShiITSSDK
         * - 若关闭回调函数,将第二个参数置为NULL.
         * - To shut the callback function, set the second parameter as NULL.
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_SetPlayParseCB(IntPtr lpRealHandle, ref NETDEV_PARSE_VIDEO_DATA_CALLBACK_PF cbPlayParseCallBack, Int32 bContinue, IntPtr lpUserData);
         //public static extern Int32 NETDEV_SetPlayParseCB(IntPtr lpRealHandle, IntPtr cbPlayParseCallBack, Int32 bContinue, IntPtr lpUserData);
 
@@ -4111,7 +4111,7 @@ namespace System.Data.YuShiITSSDK
         * @return 返回的用户登录句柄,返回 0 表示失败,其他值表示返回的用户登录句柄值 Returned user ID. 0 means failure, and any other value is a user ID.
         * @note
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern IntPtr NETDEV_StartVoiceCom(IntPtr lpUserID, Int32 dwChannelID, IntPtr cbPlayDataCallBack, IntPtr lpUserData);
 
         /**
@@ -4120,13 +4120,13 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功,其他表示失败 TRUE means success, any other value indicates failure.
         * @note
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_StopVoiceCom(IntPtr lpVoiceComHandle);
 
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_GetCloudDevInfoByName(IntPtr lpUserID, String pszRegisterCode, ref NETDEV_CLOUD_DEV_INFO_S pstDevInfo);
 
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_GetCloudDevInfoByRegCode(IntPtr lpUserID, String pszRegisterName, ref NETDEV_CLOUD_DEV_INFO_S pstDevInfo);
 
         /**
@@ -4136,7 +4136,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功,其他表示失败     TRUE means success, and any other value means failure.
         * @note 
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_GetUserDetailList(IntPtr lpUserID, IntPtr pstUserDetailList);
 
         /**
@@ -4146,7 +4146,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功,其他表示失败     TRUE means success, and any other value means failure.
         * @note 无 None
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_DeleteUser(IntPtr lpUserID, String strUserName);
 
         /**
@@ -4156,7 +4156,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功,其他表示失败  TRUE means success, and any other value means failure.
         * @note
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_CreateUser(IntPtr lpUserID, IntPtr stUserInfo);
 
         /**
@@ -4168,7 +4168,7 @@ namespace System.Data.YuShiITSSDK
             1、仅管理员用户支持修改权限，管理员用户修改其他用户信息不需要携带旧密码
             2、操作员及普通用户只能修改自己的密码
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_ModifyUser(IntPtr lpUserID, IntPtr pstUserInfo);
 
         /**
@@ -4179,7 +4179,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功,其他表示失败     TRUE means success, and any other value means failure.
         * @note无
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_GetCompassInfo(IntPtr lpUserID, Int32 dwChannelID, ref float fCompassInfo);
 
         /**
@@ -4190,7 +4190,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功,其他表示失败 TRUE means success, and any other value means failure.
         * @note无
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_GetGeolocationInfo(IntPtr lpUserID, Int32 dwChannelID, ref NETDEV_GEOLACATION_INFO_S pstGPSInfo);
 
         /**
@@ -4200,7 +4200,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功,其他表示失败       TRUE means success, and any other value means failure.
         * @note
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_GetConfigFile(IntPtr lpUserID, String strConfigPath);
 
         /**  
@@ -4211,7 +4211,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功,其他表示失败       TRUE means success, and any other value means failure
         * @note
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_SetConfigFile(IntPtr lpUserID, String strConfigPath);
 
         /**
@@ -4221,7 +4221,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功,其他表示失败
         * @note无
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_SetIVAEnable(IntPtr lpUserID, Int32 dwEnableIVA);
 
         /**
@@ -4233,7 +4233,7 @@ namespace System.Data.YuShiITSSDK
         * -    2.请将规则进行组合,比如显示规则线框和触发规则目标框,下发的ulShowParam = NETDEV_IVA_SHOW_RULE|NETDEV_IVA_SHOW_RESULT_TOUTH_RULE；以此类推
         * -    3.已最后一次设置的显示类型为准,之前设置的显示操作取消
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_SetIVAShowParam(Int32 dwShowParam);
 
         /**
@@ -4244,7 +4244,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功,其他表示失败
         * @note无
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_GetPersonLibCapacity(IntPtr lpUserID, Int32 dwTimeOut, ref NETDEV_PERSON_LIB_CAP_LIST_S pstCapacityList);
 
         /**
@@ -4255,7 +4255,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功,其他表示失败
         * @note无
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_CreatePersonLibInfo(IntPtr lpUserID, ref NETDEV_LIB_INFO_S pstPersonLibInfo, ref UInt32 pudwID);
 
         /**
@@ -4264,7 +4264,7 @@ namespace System.Data.YuShiITSSDK
         * @return 查询句柄,返回0表示失败，其他值作为NETDEV_FindNextPersonLibInfo、NETDEV_FindClosePersonLibList等函数的参数。
         * @note无
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern IntPtr NETDEV_FindPersonLibList(IntPtr lpUserID);
 
         /**
@@ -4274,7 +4274,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功，其他表示失败 TRUE means success, and any other value means failure.
         * @note 返回失败说明查询结束 A returned failure indicates the end of search.
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_FindNextPersonLibInfo(IntPtr lpFindHandle, ref NETDEV_LIB_INFO_S pstPersonLibInfo);
 
         /**
@@ -4283,7 +4283,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功，其他表示失败 TRUE means success, and any other value means failure.
         * @note
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_FindClosePersonLibList(IntPtr lpFindHandle);
 
         /**
@@ -4293,7 +4293,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功,其他表示失败
         * @note无
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_ModifyPersonLibInfo(IntPtr lpUserID, ref NETDEV_PERSON_LIB_LIST_S pstPersonLibList);
 
         /**
@@ -4304,7 +4304,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功,其他表示失败
         * @note无
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_DeletePersonLibInfo(IntPtr lpUserID, UInt32 udwPersonLibID, ref NETDEV_DELETE_DB_FLAG_INFO_S pstFlagInfo);
 
         /**
@@ -4316,7 +4316,7 @@ namespace System.Data.YuShiITSSDK
         * @return 查询句柄,返回0表示失败，其他值作为NETDEV_FindNextPersonInfo、NETDEV_FindClosePersonInfoList等函数的参数
         * @note
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern IntPtr NETDEV_FindPersonInfoList(IntPtr lpUserID, UInt32 udwPersonLibID, ref NETDEV_PERSON_QUERY_INFO_S pstQueryInfo, ref NETDEV_BATCH_OPERATE_BASIC_S pstQueryResultInfo);
 
         /**
@@ -4326,7 +4326,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功，其他表示失败 TRUE means success, and any other value means failure.
         * @note 返回失败说明查询结束 A returned failure indicates the end of search.
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_FindNextPersonInfo(IntPtr lpFindHandle, ref NETDEV_PERSON_INFO_S pstPersonInfo);
 
         /**
@@ -4335,10 +4335,10 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功，其他表示失败 TRUE means success, and any other value means failure.
         * @note
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_FindClosePersonInfoList(IntPtr lpFindHandle);
 
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_GetPersonMemberInfo(IntPtr lpUserID, UInt32 udwPersonID, ref NETDEV_PERSON_INFO_S pstPersonInfo);
 
         /**
@@ -4351,7 +4351,7 @@ namespace System.Data.YuShiITSSDK
         * @note pstPersonResultList->pstPersonList need malloc by caller
                 keep pstPersonResultList->udwNum == pstPersonInfoList->udwNum
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_AddPersonInfo(IntPtr lpUserID, UInt32 udwPersonLibID, ref NETDEV_PERSON_INFO_LIST_S pstPersonInfoList, ref NETDEV_PERSON_RESULT_LIST_S pstPersonResultList);
 
         /**
@@ -4364,7 +4364,7 @@ namespace System.Data.YuShiITSSDK
         * @note pstPersonResultList->pstPersonList need malloc by caller
                 keep pstPersonResultList->udwNum == pstPersonInfoList->udwNum
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_ModifyPersonInfo(IntPtr lpUserID, UInt32 udwPersonLibID, ref NETDEV_PERSON_INFO_LIST_S pstPersonInfoList, ref NETDEV_PERSON_RESULT_LIST_S pstPersonResultList);
 
         /**
@@ -4376,7 +4376,7 @@ namespace System.Data.YuShiITSSDK
          * @return TRUE表示成功,其他表示失败
          * @note无
          */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_DeletePersonInfo(IntPtr lpUserID, UInt32 udwPersonLibID, UInt32 udwPersonID, UInt32 udwLastChange);
 
         /**
@@ -4388,7 +4388,7 @@ namespace System.Data.YuShiITSSDK
         * @return 查询句柄,返回0表示失败，
         * @note 仅VMS支持
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_DeletePersonInfoList(IntPtr lpUserID, UInt32 udwPersonLibID, ref NETDEV_BATCH_OPERATE_MEMBER_LIST_S pstIDList, ref NETDEV_BATCH_OPERATOR_LIST_S pstResutList);
 
         /**
@@ -4399,7 +4399,7 @@ namespace System.Data.YuShiITSSDK
         * @return 查询句柄,返回0表示失败，其他值作为NETDEV_FindFaceNextRecordDetail、NETDEV_FindFaceCloseRecordDetail等函数的参数。
         * @note     查询完成之后需要保证调用NETDEV_FindFaceNextRecordDetail将所有数据取出，否则会造成内存泄露
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern IntPtr NETDEV_FindFaceRecordDetailList(IntPtr lpUserID, ref NETDEV_ALARM_LOG_COND_LIST_S pstFindCond, ref NETDEV_SMART_ALARM_LOG_RESULT_INFO_S pstResultInfo);
 
         /**
@@ -4409,7 +4409,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功，其他表示失败 TRUE means success, and any other value means failure.
         * @note 返回失败说明查询结束 A returned failure indicates the end of search.
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_FindNextFaceRecordDetail(IntPtr lpFindHandle, ref NETDEV_FACE_RECORD_SNAPSHOT_INFO_S pstRecordInfo);
 
         /**
@@ -4418,7 +4418,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功，其他表示失败 TRUE means success, and any other value means failure.
         * @note
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_FindCloseFaceRecordDetail(IntPtr lpFindHandle);
 
         /**
@@ -4430,7 +4430,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功，其他表示失败 TRUE means success, and any other value means failure.
         * @note pstFileInfo中人脸图片内存由使用者维护，入参时需指定udwSize大小，内存不够调用失败时，udwSize会返回实际需要大小
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_GetFaceRecordImageInfo(IntPtr lpUserID, UInt32 udwRecordID, UInt32 udwFaceImageType, ref NETDEV_FILE_INFO_S pstFileInfo);
 
         /**
@@ -4441,7 +4441,7 @@ namespace System.Data.YuShiITSSDK
         * @return 查询句柄,返回0表示失败，其他值作为NETDEV_FindNextPersonMonitorInfo、NETDEV_FindCloseMonitorInfo等函数的参数。
         * @note    
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern IntPtr NETDEV_FindPersonMonitorList(IntPtr lpUserID, UInt32 udwChannelID, ref NETDEV_MONITOR_QUERY_INFO_S pstQueryInfo);
 
         /**
@@ -4453,7 +4453,7 @@ namespace System.Data.YuShiITSSDK
         *.      返回NETDEV_E_NEED_MORE_MEMORY说明分配不足，并返回实际应申请的内存大小；涉及的数据：pstMonitorInfo->udwLinkStrategyNum、
                  pstMonitorInfo->stMonitorRuleInfo.udwChannelNum
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_FindNextPersonMonitorInfo(IntPtr lpFindHandle, ref NETDEV_MONITION_INFO_S pstMonitorInfo);
 
         /**
@@ -4462,7 +4462,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功，其他表示失败 TRUE means success, and any other value means failure.
         * @note
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_FindClosePersonMonitorList(IntPtr lpFindHandle);
 
         /**
@@ -4474,7 +4474,7 @@ namespace System.Data.YuShiITSSDK
         * @note  pstMonitorResultInfo->udwChannelNum不应小于pstMonitorInfo stMonitorRuleInfo.udwChannelNum
                  pstMonitorResultInfo->udwChannelNum must be Greater thanpstMonitorInfo stMonitorRuleInfo.udwChannelNum    
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_AddPersonMonitorInfo(IntPtr lpUserID, ref NETDEV_MONITION_INFO_S pstMonitorInfo, ref NETDEV_MONITOR_RESULT_INFO_S pstMonitorResultInfo);
 
         /**
@@ -4484,7 +4484,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功，其他表示失败 TRUE means success, and any other value means failure.
         * @note 
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_BatchDeletePersonMonitorInfo(IntPtr lpUserID, ref NETDEV_BATCH_OPERATOR_LIST_S pstResultList);
 
         /**
@@ -4494,7 +4494,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功，其他表示失败 TRUE means success, and any other value means failure.
         * @note pudwMonitorChlIDList由上层申请；接口失败(NETDEV_E_NEED_MORE_MEMORY)时通过udwChannelNum判断是否内存申请过小
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_GetPersonMonitorRuleInfo(IntPtr lpUserID, ref NETDEV_MONITION_INFO_S pstMonitorInfo);
 
         /**
@@ -4504,31 +4504,31 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功，其他表示失败 TRUE means success, and any other value means failure.
         * @note 
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_SetPersonMonitorRuleInfo(IntPtr lpUserID, ref NETDEV_MONITION_INFO_S pstMonitorInfo);
 
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_GetMonitorProgress(IntPtr lpUserID, ref UInt32 pudwProgressRate);
 
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern IntPtr NETDEV_FindMonitorDevResult(IntPtr lpUserID, ref UInt32 pudwDevNum);
 
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_FindNextMonitorDevResult(IntPtr lpFindHandle, ref NETDEV_MONITOR_DEV_RESULT_INFO_S pstMonitorDevResultInfo);
 
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_FindCloseMonitorDevResult(IntPtr lpFindHandle);
 
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern IntPtr NETDEV_FindMonitorStatusList(IntPtr lpUserID, Int32 enType, ref UInt32 udwMonitorID, ref NETDEV_ALARM_LOG_COND_LIST_S pstFindLimit, ref NETDEV_SMART_ALARM_LOG_RESULT_INFO_S pstList);
 
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_FindNextMonitorStatusInfo(IntPtr lpFindHandle, ref NETDEV_MONITOR_MEMBER_INFO_S pstMonitorStats);
 
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_FindCloseMonitorStatusList(IntPtr lpFindHandle);
 
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_GetMonitorCapacity(IntPtr lpUserID, ref NETDEV_MONITOR_CAPACITY_INFO_S pstCapacityInfo, ref NETDEV_MONITOR_CAPACITY_LIST_S pstCapacityList);
 
         /**
@@ -4537,7 +4537,7 @@ namespace System.Data.YuShiITSSDK
         * @return 查询句柄,返回0表示失败，其他值作为NETDEV_FindNextVehicleLibInfo、NETDEV_FindCloseVehicleLibList等函数的参数。
         * @note     
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern IntPtr NETDEV_FindVehicleLibList(IntPtr lpUserID);
 
         /**
@@ -4547,7 +4547,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功，其他表示失败 TRUE means success, and any other value means failure.
         * @note 返回失败说明查询结束 A returned failure indicates the end of search.
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_FindNextVehicleLibInfo(IntPtr lpFindHandle, ref NETDEV_LIB_INFO_S pstVehicleLibInfo);
 
         /**
@@ -4557,7 +4557,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功，其他表示失败 TRUE means success, and any other value means failure.
         * @note
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_FindCloseVehicleLibList(IntPtr lpFindHandle);
 
         /**
@@ -4568,7 +4568,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功，其他表示失败 TRUE means success, and any other value means failure.
         * @note
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_AddVehicleLibInfo(IntPtr lpUserID, ref NETDEV_LIB_INFO_S pstVehicleLibInfo);
 
         /**
@@ -4579,7 +4579,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功，其他表示失败 TRUE means success, and any other value means failure.
         * @note
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_ModifyVehicleLibInfo(IntPtr lpUserID, ref NETDEV_PERSON_LIB_LIST_S pstVehicleLibList);
 
         /**
@@ -4591,7 +4591,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功，其他表示失败 TRUE means success, and any other value means failure.
         * @note
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_DeleteVehicleLibInfo(IntPtr lpUserID, UInt32 udwVehicleLibID, ref NETDEV_DELETE_DB_FLAG_INFO_S pstDelLibFlag);
 
         /**
@@ -4603,7 +4603,7 @@ namespace System.Data.YuShiITSSDK
         * @return 查询句柄,返回0表示失败，
         * @note    
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_AddVehicleMemberList(IntPtr lpUserID, UInt32 udwLibID, ref NETDEV_VEHICLE_INFO_LIST_S pstVehicleMemberList, ref NETDEV_BATCH_OPERATOR_LIST_S pstResultList);
 
         /**
@@ -4616,7 +4616,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功，其他表示失败 TRUE means success, and any other value means failure.
         * @note
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_ModifyVehicleMemberInfo(IntPtr lpUserID, UInt32 udwVehicleLibID, ref NETDEV_VEHICLE_INFO_LIST_S pstVehicleMemberList, ref NETDEV_BATCH_OPERATOR_LIST_S pstResultList);
 
         /**
@@ -4628,7 +4628,7 @@ namespace System.Data.YuShiITSSDK
         * @return 查询句柄,返回0表示失败，
         * @note    
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_DelVehicleMemberList(IntPtr lpUserID, UInt32 udwLib, ref NETDEV_VEHICLE_INFO_LIST_S pstVehicleMemberList, ref NETDEV_BATCH_OPERATOR_LIST_S pstBatchList);
 
         /**
@@ -4641,7 +4641,7 @@ namespace System.Data.YuShiITSSDK
          * @note    1、人脸库中成员的基本信息由NETDEV_FindNextVehicleMemberDetail查询返回，pstFaceDBList只带回成员的基本信息
          *@           2、调用成功后需要调用NETDEV_FindNextVehicleMemberDetail将数据取完，否则会出现内存泄露
          */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern IntPtr NETDEV_FindVehicleMemberDetailList(IntPtr lpUserID, UInt32 udwVehicleLibID, ref NETDEV_PERSON_QUERY_INFO_S pstFindCond, ref NETDEV_BATCH_OPERATE_BASIC_S pstDBMemberList);
 
         /**
@@ -4651,7 +4651,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功，其他表示失败 TRUE means success, and any other value means failure.
         * @note 返回失败说明查询结束 A returned failure indicates the end of search.
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_FindNextVehicleMemberDetail(IntPtr lpFindHandle, ref NETDEV_VEHICLE_DETAIL_INFO_S pstVehicleMemberInfo);
 
         /**
@@ -4660,7 +4660,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功，其他表示失败 TRUE means success, and any other value means failure.
         * @note
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_FindCloseVehicleMemberDetail(IntPtr lpFindHandle);
 
         /**
@@ -4671,7 +4671,7 @@ namespace System.Data.YuShiITSSDK
         * @return 查询句柄,返回0表示失败，其他值作为NETDEV_FindVehicleNextRecordInfo、NETDEV_FindVehicleCloseRecordInfo等函数的参数。
         * @note
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern IntPtr NETDEV_FindVehicleRecordInfoList(IntPtr lpUserID, ref NETDEV_ALARM_LOG_COND_LIST_S pstFindCond, ref NETDEV_SMART_ALARM_LOG_RESULT_INFO_S pstResultInfo);
 
         /**
@@ -4682,7 +4682,7 @@ namespace System.Data.YuShiITSSDK
         * @note 返回失败说明查询结束 A returned failure indicates the end of search.
             图片数据需要取出另存，否则在调用NETDEV_FindVehicleCloseRecordInfo接口后内存将被释放
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_FindNextVehicleRecordInfo(IntPtr lpFindHandle, ref NETDEV_VEHICLE_RECORD_INFO_S pstRecordInfo);
 
         /**
@@ -4691,7 +4691,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功，其他表示失败 TRUE means success, and any other value means failure.
         * @note
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_FindCloseVehicleRecordList(IntPtr lpFindHandle);
 
         /**
@@ -4703,7 +4703,7 @@ namespace System.Data.YuShiITSSDK
         * @note  pstFileInfo内存由使用者维护，入参时需指定udwSize大小，内存不够调用失败时，udwSize会返回实际需要大小
         对应错误码：NETDEV_E_NEED_MORE_MEMORY   用户分配内存不够；
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_GetVehicleRecordImageInfo(IntPtr lpUserID, UInt32 udwRecordID, ref NETDEV_FILE_INFO_S pstFileInfo);
 
         /**
@@ -4716,7 +4716,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功，其他表示失败 TRUE means success, and any other value means failure.
         * @note
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_AddVehicleLibMember(IntPtr lpUserID, UInt32 udwVehicleLibID, ref NETDEV_BATCH_OPERATE_MEMBER_LIST_S pstMemberList, ref NETDEV_BATCH_OPERATOR_LIST_S pstBatchResultList);
 
         /**
@@ -4729,7 +4729,7 @@ namespace System.Data.YuShiITSSDK
          * @return TRUE表示成功，其他表示失败 TRUE means success, and any other value means failure.
          * @note
          */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_DeleteVehicleLibMember(IntPtr lpUserID, UInt32 udwVehicleLibID, ref NETDEV_BATCH_OPERATE_MEMBER_LIST_S pstMemberList, ref NETDEV_BATCH_OPERATOR_LIST_S pstBatchResultList);
 
         /**
@@ -4740,7 +4740,7 @@ namespace System.Data.YuShiITSSDK
         * @note 车辆布控比对照片不超过2M,内存由使用者维护
                 udwMonitorID 车辆布控任务序号此处作为出参使用，其余参数为入参
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_AddVehicleMonitorInfo(IntPtr lpUserID, ref NETDEV_MONITION_INFO_S pstMonitorInfo);
 
         /**
@@ -4750,7 +4750,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功，其他表示失败 TRUE means success, and any other value means failure.
         * @note
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_DeleteVehicleMonitorInfo(IntPtr lpUserID, ref NETDEV_BATCH_OPERATOR_LIST_S pstBatchList);
 
         /**
@@ -4759,7 +4759,7 @@ namespace System.Data.YuShiITSSDK
         * @return 查询句柄,返回0表示失败，其他值作为NETDEV_FindNextVehicleMonitorInfo、NETDEV_FindCloseVehicleMonitorInfo等函数的参数。
         * @note
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern IntPtr NETDEV_FindVehicleMonitorList(IntPtr lpUserID);
 
         /**
@@ -4771,7 +4771,7 @@ namespace System.Data.YuShiITSSDK
                 如果没有布控图片时，布控图片的大小将会被置为0;
                 图片数据需要取出另存，否则在调用NETDEV_FindVehicleCloseRecordInfo接口后内存将被释放;
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_FindNextVehicleMonitorInfo(IntPtr lpFindHandle, ref NETDEV_MONITION_INFO_S pstVehicleMonitorInfo);
 
         /**
@@ -4780,7 +4780,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功，其他表示失败 TRUE means success, and any other value means failure.
         * @note
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_FindCloseVehicleMonitorList(IntPtr lpFindHandle);
 
         /**
@@ -4796,7 +4796,7 @@ namespace System.Data.YuShiITSSDK
         对应错误码：NETDEV_E_NEED_MORE_MEMORY   用户分配内存不够；
         如果没有布控图片时，布控图片的大小将会被置为0;
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_GetVehicleMonitorInfo(IntPtr lpUserID, UInt32 udwID, ref NETDEV_MONITION_RULE_INFO_S pstMonitorInfo);
 
         /**
@@ -4807,7 +4807,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功，其他表示失败 TRUE means success, and any other value means failure.
         * @note 车辆布控比对照片不超过2M,内存由使用者维护
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_SetVehicleMonitorInfo(IntPtr lpUserID, UInt32 udwID, ref NETDEV_MONITION_RULE_INFO_S pstMonitorInfo);
 
         /**
@@ -4819,7 +4819,7 @@ namespace System.Data.YuShiITSSDK
         * @note   订阅前需要先调用NETDEV_SetAlarmCallBack接口注册回调函数
         * -
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_SubscribeSmart(IntPtr lpUserID, ref NETDEV_SUBSCRIBE_SMART_INFO_S pstSubscribeInfo, ref NETDEV_SMART_INFO_S pstSmartInfo);
 
         /**
@@ -4830,7 +4830,7 @@ namespace System.Data.YuShiITSSDK
         * @note
         * -
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_UnsubscribeSmart(IntPtr lpUserID, ref NETDEV_SMART_INFO_S pstSmartInfo);
 
         /**
@@ -4841,7 +4841,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功,其他表示失败 
         * @note Type字段指定订阅类型
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_SubscibeLapiAlarm(IntPtr lpUserID, ref NETDEV_LAPI_SUB_INFO_S pstSubInfo, ref NETDEV_SUBSCRIBE_SUCC_INFO_S pstSubSuccInfo);
 
         /**
@@ -4851,7 +4851,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功,其他表示失败 
         * @note
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_UnSubLapiAlarm(IntPtr lpUserID, UInt32 udwID);
 
         /**
@@ -4861,7 +4861,7 @@ namespace System.Data.YuShiITSSDK
         * @param [OUT] pstResultInfo                                返回信息
         * @return 查询句柄，返回NULL表示失败，其他作为NETDEV_FindNextACSPersonInfo,NETDEV_FindCloseACSPersonInfo等函数的参数
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern IntPtr NETDEV_FindACSPersonList(IntPtr lpUserID, ref NETDEV_PERSON_QUERY_INFO_S pstQueryCond, ref NETDEV_BATCH_OPERATE_BASIC_S pstResultInfo);
 
         /**
@@ -4870,7 +4870,7 @@ namespace System.Data.YuShiITSSDK
         * @param [OUT] pstACSPersonInfo                             门禁人员信息
         * @return TRUE表示成功，其他表示失败
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_FindNextACSPersonInfo(IntPtr lpFindHandle, ref NETDEV_ACS_PERSON_BASE_INFO_S pstACSPersonInfo);
 
         /**
@@ -4878,7 +4878,7 @@ namespace System.Data.YuShiITSSDK
         * @param [IN] lpFindHandle                                      门禁人员信息列表句柄
         * @return TRUE表示成功，其他表示失败
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_FindCloseACSPersonInfo(IntPtr lpFindHandle);
 
         /**
@@ -4888,7 +4888,7 @@ namespace System.Data.YuShiITSSDK
         * @param [INOUT] pstACSPersonInfo                           门禁人员信息
         * @return TRUE表示成功，其他表示失败
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_ACSPersonCtrl(IntPtr lpUserID, Int32 dwCommand, ref NETDEV_ACS_PERSON_INFO_S pstACSPersonInfo);
 
         /**
@@ -4899,7 +4899,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功，其他表示失败 TRUE means success, and any other value means failure.
         * @note 
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_AddACSPersonList(IntPtr lpUserID, ref NETDEV_ACS_PERSON_LIST_S pstACSPersonList, ref NETDEV_XW_BATCH_RESULT_LIST_S pstResultList);
 
         /**
@@ -4908,13 +4908,13 @@ namespace System.Data.YuShiITSSDK
         * @param [INOUT] pstBatchCtrlInfo                           批量控制信息
         * @return TRUE表示成功，其他表示失败
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_DeleteACSPersonList(IntPtr lpUserID, ref NETDEV_FACE_BATCH_LIST_S pstBatchCtrlInfo);
 
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_GetTimeTemplateList(IntPtr lpUserID, Int32 dwTamplateType, ref NETDEV_TIME_TEMPLATE_LIST_S pstTemplateList);
 
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_GetTimeTemplateInfo(IntPtr lpUserID, Int32 dwTemplateID, ref NETDEV_TIME_TEMPLATE_INFO_V30_S pstTimeTemplateInfo);
 
         /**
@@ -4925,7 +4925,7 @@ namespace System.Data.YuShiITSSDK
         * @return 查询句柄，返回NULL表示失败，其他作为NETDEV_FindNextACSPermissionGroupInfo,NETDEV_FindCloseACSPermissionGroupInfo等函数的参数
         * @note 查询之后需要调用NETDEV_FindNextACSPermissionGroupInfo和NETDEV_FindCloseACSPermissionGroupInfo将数据获取完，否则会造成内存泄露
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern IntPtr NETDEV_FindACSPermissionGroupList(IntPtr lpUserID, ref NETDEV_PERSON_QUERY_INFO_S pstQueryCond, ref NETDEV_BATCH_OPERATE_BASIC_S pstResultInfo);
 
         /**
@@ -4934,7 +4934,7 @@ namespace System.Data.YuShiITSSDK
         * @param [OUT] pstACSPermissionInfo                     门禁授权组列表信息
         * @return TRUE表示成功，其他表示失败
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_FindNextACSPermissionGroupInfo(IntPtr lpFindHandle, ref NETDEV_ACS_PERMISSION_INFO_S pstACSPermissionInfo);
 
         /**
@@ -4942,7 +4942,7 @@ namespace System.Data.YuShiITSSDK
         * @param [IN] lpFindHandle                                  门禁授权组列表句柄
         * @return TRUE表示成功，其他表示失败
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_FindCloseACSPermissionGroupList(IntPtr lpFindHandle);
 
         /**
@@ -4951,7 +4951,7 @@ namespace System.Data.YuShiITSSDK
         * @param [IN] pstPermissionGroupInfo        授权组信息
         * @return TRUE表示成功，其他表示失败 TRUE means success, and any other value means failure.
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_AddACSPersonPermissionGroup(IntPtr lpUserID, ref NETDEV_ACS_PERMISSION_INFO_S pstPermissionGroupInfo, ref UInt32 pUdwGroupID);
 
         /**
@@ -4960,7 +4960,7 @@ namespace System.Data.YuShiITSSDK
         * @param [IN] pstPermissionInfo        授权组信息
         * @return TRUE表示成功，其他表示失败 TRUE means success, and any other value means failure.
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_ModifyACSPersonPermissionGroup(IntPtr lpUserID, ref NETDEV_ACS_PERMISSION_INFO_S pstPermissionInfo);
 
         /**
@@ -4971,7 +4971,7 @@ namespace System.Data.YuShiITSSDK
         * @param [OUT] 
         * @return 
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_DeleteACSPersonPermissionGroup(IntPtr lpUserID, ref NETDEV_OPERATE_LIST_S pstPermissionIDList, ref NETDEV_BATCH_OPERATOR_LIST_S pstResutList);
 
         /**
@@ -4982,16 +4982,16 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功，其他表示失败 TRUE means success, and any other value means failure.
         * @note
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_GetSinglePermGroupInfo(IntPtr lpUserID, UInt32 udwPermissionGroupID, ref NETDEV_ACS_PERMISSION_INFO_S pstAcsPerssionInfo);
 
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern IntPtr NETDEV_FindPermStatusList(IntPtr lpUserID, ref UInt32 udwPermGroupID, ref NETDEV_ALARM_LOG_COND_LIST_S pstQueryInfo, ref NETDEV_BATCH_OPERATE_BASIC_S pstResultInfo);
 
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_FindNextPermStatusInfo(IntPtr lpFindHandle, ref NETDEV_ACS_PERM_STATUS_S pstACSPermStatus);
 
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_FindClosePermStatusList(IntPtr lpFindHandle);
 
         /**
@@ -5002,7 +5002,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功，其他表示失败 TRUE means success, and any other value means failure.
         * @note 
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_GetACSPersonPermission(IntPtr lpUserID, UInt32 udwPersonID, ref NETDEV_ACS_DOOR_PERMISSION_INFO_S pstPermissionInfo);
 
         /**
@@ -5012,7 +5012,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功，其他表示失败 TRUE means success, and any other value means failure.
         * @note 
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_SetACSPersonPermission(IntPtr lpUserID, UInt32 udwPersonID, ref NETDEV_ACS_DOOR_PERMISSION_INFO_S pstPermissionInfo);
 
         /**
@@ -5022,7 +5022,7 @@ namespace System.Data.YuShiITSSDK
         * @param [IN] dwCommand                                     门禁通道控制命令可参考#NETDEV_DOORCTRL_ACTION_TYPE_E
         * @return TRUE表示成功，其他表示失败
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_DoorCtrl(IntPtr lpUserID, Int32 dwChannelID, Int32 dwCommand);
 
         /**
@@ -5032,7 +5032,7 @@ namespace System.Data.YuShiITSSDK
         * @param [IN] pstBatchCtrlInfo                              批量控制信息
         * @return TRUE表示成功，其他表示失败
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_DoorBatchCtrl(IntPtr lpUserID, Int32 dwCommand, ref NETDEV_OPERATE_LIST_S pstBatchCtrlInfo);
 
         /**
@@ -5042,7 +5042,7 @@ namespace System.Data.YuShiITSSDK
         * @param [OUT] pstResultInfo                                访客记录实际总条数
         * @return 查询句柄，返回NULL表示失败，其他作为NETDEV_FindNextACSVisitLog,NETDEV_FindCloseACSVisitLog等函数的参数
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern IntPtr NETDEV_FindACSVisitLogList(IntPtr lpUserID, ref NETDEV_ALARM_LOG_COND_LIST_S pstFindCond, ref NETDEV_BATCH_OPERATE_BASIC_S pstResultInfo);
 
         /**
@@ -5051,7 +5051,7 @@ namespace System.Data.YuShiITSSDK
         * @param [OUT] pstACSLogInfo                            出入记录信息
         * @return TRUE表示成功，其他表示失败
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_FindNextACSVisitLog(IntPtr lpFindHandle, ref NETDEV_ACS_VISIT_LOG_INFO_S pstACSLogInfo);
 
         /**
@@ -5059,7 +5059,7 @@ namespace System.Data.YuShiITSSDK
         * @param [IN] lpFindHandle                                  出入记录信息列表句柄
         * @return TRUE表示成功，其他表示失败
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_FindCloseACSVisitLog(IntPtr lpFindHandle);
 
         /**
@@ -5070,7 +5070,7 @@ namespace System.Data.YuShiITSSDK
         * @return 查询句柄，返回NULL表示失败，其他作为NETDEV_FindNextACSPersonBlackList,NETDEV_FindCloseACSPersonBlackList等函数的参数
         * @note 查询之后需要调用NETDEV_FindNextACSPersonBlackList和NETDEV_FindCloseACSPersonBlackList将数据获取完，否则会造成内存泄露
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern IntPtr NETDEV_FindACSPersonBlackList(IntPtr lpUserID, ref NETDEV_PAGED_QUERY_INFO_S pstQueryCond, ref NETDEV_BATCH_OPERATE_BASIC_S pstResultInfo);
 
         /**
@@ -5079,7 +5079,7 @@ namespace System.Data.YuShiITSSDK
         * @param [OUT] pstACSPermissionInfo                     访客黑名单列表信息        
         * @return TRUE表示成功，其他表示失败
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_FindNextACSPersonBlackListInfo(IntPtr lpFindHandle, ref NETDEV_ACS_PERSON_BLACKLIST_INFO_S pstBlackListInfo);
 
         /**
@@ -5087,7 +5087,7 @@ namespace System.Data.YuShiITSSDK
         * @param [IN] lpFindHandle  访客黑名单列表句柄
         * @return TRUE表示成功，其他表示失败                TRUE means success, and any other value means failure.
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_FindCloseACSPersonBlackList(IntPtr lpFindHandle);
 
         /**
@@ -5096,7 +5096,7 @@ namespace System.Data.YuShiITSSDK
         * @param [IN] pstBlackListInfo          黑名单信息           BlackList Info
         * @return 
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_AddACSPersonBlackList(IntPtr lpUserID, ref NETDEV_ACS_PERSON_BLACKLIST_INFO_S pstBlackListInfo, ref UInt32 pUdwBlackListID);
 
         /**
@@ -5107,7 +5107,7 @@ namespace System.Data.YuShiITSSDK
         * @param [OUT] 
         * @return 
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_DeleteACSPersonBlackList(IntPtr lpUserID, ref NETDEV_OPERATE_LIST_S pstBlackList);
 
         /**
@@ -5116,7 +5116,7 @@ namespace System.Data.YuShiITSSDK
         * @param [IN] pstBlackListInfo          黑名单信息     BlackList Info
         * @return 
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_ModifyACSPersonBlackList(IntPtr lpUserID, ref NETDEV_ACS_PERSON_BLACKLIST_INFO_S pstBlackListInfo);
 
         /**
@@ -5127,7 +5127,7 @@ namespace System.Data.YuShiITSSDK
         * @param [OUT] 
         * @return 
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_GetACSPersonBlackList(IntPtr lpUserID, ref NETDEV_ACS_PERSON_BLACKLIST_INFO_S pstBlackListInfo);
 
         /**
@@ -5138,7 +5138,7 @@ namespace System.Data.YuShiITSSDK
         * @return 查询句柄，返回NULL表示失败，其他作为NETDEV_FindNextACSAttendanceLog,NETDEV_FindCloseACSAttendanceLogList等函数的参数
         * @note 查询之后需要调用NETDEV_FindNextACSAttendanceLog和NETDEV_FindCloseACSAttendanceLogList将数据获取完，否则会造成内存泄露
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern IntPtr NETDEV_FindACSAttendanceLogList(IntPtr lpUserID, ref NETDEV_ALARM_LOG_COND_LIST_S pstFindCond, ref NETDEV_BATCH_OPERATE_BASIC_S pstResultInfo);
 
         /**
@@ -5147,7 +5147,7 @@ namespace System.Data.YuShiITSSDK
         * @param [OUT] pstACSLogInfo                            出入记录信息
         * @return TRUE表示成功，其他表示失败 TRUE means success, and any other value means failure.
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_FindNextACSAttendanceLog(IntPtr lpFindHandle, ref NETDEV_ACS_ATTENDANCE_LOG_INFO_S pstACSLogInfo);
 
         /**
@@ -5155,7 +5155,7 @@ namespace System.Data.YuShiITSSDK
         * @param [IN] lpFindHandle  出入记录信息列表句柄
         * @return  TRUE means success, and any other value means failure.
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_FindCloseACSAttendanceLogList(IntPtr lpFindHandle);
 
         /**
@@ -5167,7 +5167,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功，其他表示失败
         * @note无
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_GetSystemPicture(IntPtr lpUserID, string pszURL, UInt32 udwSize, IntPtr pszdata);
 
         /**
@@ -5176,7 +5176,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE 表示成功,其他表示失败 TRUE means success, otherwise means failure.
         * @note pszVersion内存由调用者申请释放
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_GetPARKVersion(byte[] strVersion);
 
         /* 设置SDK与设备连接异常/恢复信息数据上报回调函数  Set status callback.(NEW)
@@ -5186,7 +5186,7 @@ namespace System.Data.YuShiITSSDK
        * @return TRUE表示成功,其他表示失败 TRUE means success, otherwise means failure.
        * @note  
        */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_SetParkStatusCallBack(IntPtr lpUserID, NETDEV_ParkStatusReportCallBack_PF cbParkStatusReportCallBack, IntPtr lpUserData);        /**
         * 启动照片流 Start Photo stream.
         * @param [IN]  lpUserID          用户登录ID   User login ID
@@ -5202,7 +5202,7 @@ namespace System.Data.YuShiITSSDK
         * @return  返回的照片流句柄,返回 0 表示失败.  Return Stream startup handle, 0 means failure.
         * @note 
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern IntPtr NETDEV_StartPicStream(IntPtr lpUserID, IntPtr hPlayWnd, bool bReTran, string pcReTranIP, NETDEV_PIC_UPLOAD_PF pfnPicDataCBFun, IntPtr lpUserData);
 
         /**
@@ -5211,7 +5211,7 @@ namespace System.Data.YuShiITSSDK
          * @return TRUE表示成功,其他表示失败.  TRUE means success, otherwise means failure.
          * @note 对应关闭NETDEV_StartPicStream开启的照片流 Stop the  Photo stream started by NETDEV_StartPicStream
          */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_StopPicStream(IntPtr lpPlayHandle);
 
         /**
@@ -5220,7 +5220,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功,其他表示失败 TRUE means success, otherwise means failure.
         * @note None
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_Trigger(IntPtr lpFindHandle);
 
         /**
@@ -5230,7 +5230,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功,其他表示失败 TRUE means success, otherwise means failure.
         * @note None
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_TriggerSync(IntPtr lpFindHandle, ref IntPtr ppstPicData);
 
         /**
@@ -5239,7 +5239,7 @@ namespace System.Data.YuShiITSSDK
         * @return TRUE表示成功,其他表示失败
         * @note PARK出入口接入道闸，可采用此接口命令开闸
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_SetOutputSwitchStatusCfg(IntPtr lpFindHandle);
 
         /**
@@ -5250,7 +5250,7 @@ namespace System.Data.YuShiITSSDK
          * @note 文件路径示例:“C:\车辆设备黑白名单模板\ GateBlacklist.csv”,黑名单文件命名(GateBlacklist.csv),白名单文件命名(GateWhitelist.csv)
          * Example: “C:\blacklist or whitelist template\ GateBlacklist.csv”,blacklist filename(GateBlacklist.csv),whitelist filename(GateWhitelist.csv)
          */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_ImportBlackWhiteListFile(IntPtr lpFindHandle, String pcFile);
 
         /**
@@ -5260,7 +5260,7 @@ namespace System.Data.YuShiITSSDK
          * @return INT32 0 表示成功，其他见详见错误码
          * @note 文件路径示例:“C:\车辆设备黑白名单模板\ GateBlacklist.csv”,黑名单文件命名(GateBlacklist.csv),白名单文件命名(GateWhitelist.csv)
          */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_ExportBlackWhiteListFile(IntPtr lpFindHandle, String pcFile);
 
         /**
@@ -5270,7 +5270,7 @@ namespace System.Data.YuShiITSSDK
          * @return INT32 0表示成功，其他见相关错误码  NETVMS_E_SUCCEED means success, otherwise means failure.
          * @note 无 None
          */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_AddVehicleRecord(IntPtr lpFindHandle, ref NETDEV_PARK_VEHICLE_RECORD_EXTERN_S pstVehicleRecordExtern);
 
         /*
@@ -5280,7 +5280,7 @@ namespace System.Data.YuShiITSSDK
          * @return INT32 0表示成功，其他见相关错误码  NETVMS_E_SUCCEED means success, otherwise means failure.
          * @note 无 None
          */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_ModifyAllowVehicleRecord(IntPtr lpFindHandle, ref NETDEV_PARK_VEHICLE_RECORD_S pstVehicleRecordExtern);
 
         /*
@@ -5290,7 +5290,7 @@ namespace System.Data.YuShiITSSDK
          * @return INT32 0表示成功，其他见相关错误码  NETVMS_E_SUCCEED means success, otherwise means failure.
          * @note 无 None
          */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_ModifyBlockVehicleRecord(IntPtr lpFindHandle, ref NETDEV_PARK_VEHICLE_RECORD_S pstVehicleRecordExtern);
 
         /*
@@ -5300,7 +5300,7 @@ namespace System.Data.YuShiITSSDK
          * @return INT32 0表示成功，其他见相关错误码 NETVMS_E_SUCCEED means success, otherwise means failure.
          * @note 无
          */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_DeleteAllowVehicleRecord(IntPtr lpFindHandle, Int32 ulRecordID);
 
         /*
@@ -5310,7 +5310,7 @@ namespace System.Data.YuShiITSSDK
          * @return INT32 0表示成功，其他见相关错误码 NETVMS_E_SUCCEED means success, otherwise means failure.
          * @note 无
          */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_DeleteBlockVehicleRecord(IntPtr lpFindHandle, Int32 ulRecordID);
 
         /* 
@@ -5320,7 +5320,7 @@ namespace System.Data.YuShiITSSDK
          * @return INT32 0表示成功，其他见相关错误码 NETVMS_E_SUCCEED means success, otherwise means failure.
          * @note   时间实时显示可下发内容“#T”,由设备自行控制显示
          */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_setDeviceLedCfg(IntPtr lpFindHandle, ref NETDEV_LED_LIST_CFG_S pstLedListCfgs);
 
         /**
@@ -5330,7 +5330,7 @@ namespace System.Data.YuShiITSSDK
         * @return 0 表示成功,其他表示失败 TRUE means success, otherwise means failure.
         * @note 
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_GetBuiltinIndicatorCtrl(IntPtr lpFindHandle, ref NETDEV_CARPORT_CONTROLLED_S pstuCarportControlled);
 
         /**
@@ -5340,7 +5340,7 @@ namespace System.Data.YuShiITSSDK
         * @return 0 表示成功,其他表示失败  TRUE means success, otherwise means failure.
         * @note 
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_SetBuiltinIndicatorCtrl(IntPtr lpFindHandle, ref NETDEV_CARPORT_CONTROLLED_S pstuCarportControlled);
 
         /**
@@ -5349,7 +5349,7 @@ namespace System.Data.YuShiITSSDK
          * @return TRUE表示成功,其他表示失败 TRUE means success, otherwise means failure.
          * @note None
          */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_EnableCarplate(Int32 bEnable);
 
         /**
@@ -5360,301 +5360,301 @@ namespace System.Data.YuShiITSSDK
         * @return  TRUE表示成功,其他表示失败  TRUE means success, otherwise means failure.
         * @note  
         */
-        [DllImport(NetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport(ItsNetDevSdk.DllFileName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public static extern Int32 NETDEV_SetParkingStatusCB(IntPtr lpFindHandle, NETDEV_PARKING_STATUS_PF pfnParkStatusCBFun, IntPtr lpUserData);
         #region // 显示实现
-        void INetDevSdkProxy.MemCopy(byte[] dest, IntPtr src, int count) => MemCopy(dest, src, count);
-        void INetDevSdkProxy.OutputDebugString(string message) => OutputDebugString(message);
-        int INetDevSdkProxy.NETDEV_ACSPersonCtrl(IntPtr lpUserID, int dwCommand, ref NETDEV_ACS_PERSON_INFO_S pstACSPersonInfo) => NETDEV_ACSPersonCtrl(lpUserID, dwCommand, ref pstACSPersonInfo);
-        int INetDevSdkProxy.NETDEV_AddACSPersonBlackList(IntPtr lpUserID, ref NETDEV_ACS_PERSON_BLACKLIST_INFO_S pstBlackListInfo, ref uint pUdwBlackListID) => NETDEV_AddACSPersonBlackList(lpUserID, ref pstBlackListInfo, ref pUdwBlackListID);
-        int INetDevSdkProxy.NETDEV_AddACSPersonList(IntPtr lpUserID, ref NETDEV_ACS_PERSON_LIST_S pstACSPersonList, ref NETDEV_XW_BATCH_RESULT_LIST_S pstResultList) => NETDEV_AddACSPersonList(lpUserID, ref pstACSPersonList, ref pstResultList);
-        int INetDevSdkProxy.NETDEV_AddACSPersonPermissionGroup(IntPtr lpUserID, ref NETDEV_ACS_PERMISSION_INFO_S pstPermissionGroupInfo, ref uint pUdwGroupID) => NETDEV_AddACSPersonPermissionGroup(lpUserID, ref pstPermissionGroupInfo, ref pUdwGroupID);
-        int INetDevSdkProxy.NETDEV_AddOrgInfo(IntPtr lpUserID, ref NETDEV_ORG_INFO_S pstOrgInfo, ref int pdwOrgID) => NETDEV_AddOrgInfo(lpUserID, ref pstOrgInfo, ref pdwOrgID);
-        int INetDevSdkProxy.NETDEV_AddPersonInfo(IntPtr lpUserID, uint udwPersonLibID, ref NETDEV_PERSON_INFO_LIST_S pstPersonInfoList, ref NETDEV_PERSON_RESULT_LIST_S pstPersonResultList) => NETDEV_AddPersonInfo(lpUserID, udwPersonLibID, ref pstPersonInfoList, ref pstPersonResultList);
-        int INetDevSdkProxy.NETDEV_AddPersonMonitorInfo(IntPtr lpUserID, ref NETDEV_MONITION_INFO_S pstMonitorInfo, ref NETDEV_MONITOR_RESULT_INFO_S pstMonitorResultInfo) => NETDEV_AddPersonMonitorInfo(lpUserID, ref pstMonitorInfo, ref pstMonitorResultInfo);
-        int INetDevSdkProxy.NETDEV_AddVehicleLibInfo(IntPtr lpUserID, ref NETDEV_LIB_INFO_S pstVehicleLibInfo) => NETDEV_AddVehicleLibInfo(lpUserID, ref pstVehicleLibInfo);
-        int INetDevSdkProxy.NETDEV_AddVehicleLibMember(IntPtr lpUserID, uint udwVehicleLibID, ref NETDEV_BATCH_OPERATE_MEMBER_LIST_S pstMemberList, ref NETDEV_BATCH_OPERATOR_LIST_S pstBatchResultList) => NETDEV_AddVehicleLibMember(lpUserID, udwVehicleLibID, ref pstMemberList, ref pstBatchResultList);
-        int INetDevSdkProxy.NETDEV_AddVehicleMemberList(IntPtr lpUserID, uint udwLibID, ref NETDEV_VEHICLE_INFO_LIST_S pstVehicleMemberList, ref NETDEV_BATCH_OPERATOR_LIST_S pstResultList) => NETDEV_AddVehicleMemberList(lpUserID, udwLibID, ref pstVehicleMemberList, ref pstResultList);
-        int INetDevSdkProxy.NETDEV_AddVehicleMonitorInfo(IntPtr lpUserID, ref NETDEV_MONITION_INFO_S pstMonitorInfo) => NETDEV_AddVehicleMonitorInfo(lpUserID, ref pstMonitorInfo);
-        int INetDevSdkProxy.NETDEV_AddVehicleRecord(IntPtr lpFindHandle, ref NETDEV_PARK_VEHICLE_RECORD_EXTERN_S pstVehicleRecordExtern) => NETDEV_AddVehicleRecord(lpFindHandle, ref pstVehicleRecordExtern);
-        int INetDevSdkProxy.NETDEV_BatchDeleteOrgInfo(IntPtr lpUserID, ref NETDEV_DEL_ORG_INFO_S pstOrgDelInfo, ref NETDEV_ORG_BATCH_DEL_INFO_S pstOrgDelResultInfo) => NETDEV_BatchDeleteOrgInfo(lpUserID, ref pstOrgDelInfo, ref pstOrgDelResultInfo);
-        int INetDevSdkProxy.NETDEV_BatchDeletePersonMonitorInfo(IntPtr lpUserID, ref NETDEV_BATCH_OPERATOR_LIST_S pstResultList) => NETDEV_BatchDeletePersonMonitorInfo(lpUserID, ref pstResultList);
-        int INetDevSdkProxy.NETDEV_CaptureNoPreview(IntPtr lpUserID, int dwChannelID, int dwStreamType, string szFileName, int dwCaptureMode) => NETDEV_CaptureNoPreview(lpUserID, dwChannelID, dwStreamType, szFileName, dwCaptureMode);
-        int INetDevSdkProxy.NETDEV_CapturePicture(IntPtr lpRealHandle, byte[] szFileName, int dwCaptureMode) => NETDEV_CapturePicture(lpRealHandle, szFileName, dwCaptureMode);
-        int INetDevSdkProxy.NETDEV_Cleanup() => NETDEV_Cleanup();
-        int INetDevSdkProxy.NETDEV_CloseMic(IntPtr lpPlayHandle) => NETDEV_CloseMic(lpPlayHandle);
-        int INetDevSdkProxy.NETDEV_CloseSound(IntPtr lpRealHandle) => NETDEV_CloseSound(lpRealHandle);
-        int INetDevSdkProxy.NETDEV_ConfigLogFile(int dwLogFileSize, int dwLogFileNum) => NETDEV_ConfigLogFile(dwLogFileSize, dwLogFileNum);
-        int INetDevSdkProxy.NETDEV_CreatePersonLibInfo(IntPtr lpUserID, ref NETDEV_LIB_INFO_S pstPersonLibInfo, ref uint pudwID) => NETDEV_CreatePersonLibInfo(lpUserID, ref pstPersonLibInfo, ref pudwID);
-        int INetDevSdkProxy.NETDEV_CreateUser(IntPtr lpUserID, IntPtr stUserInfo) => NETDEV_CreateUser(lpUserID, stUserInfo);
-        int INetDevSdkProxy.NETDEV_DeleteACSPersonBlackList(IntPtr lpUserID, ref NETDEV_OPERATE_LIST_S pstBlackList) => NETDEV_DeleteACSPersonBlackList(lpUserID, ref pstBlackList);
-        int INetDevSdkProxy.NETDEV_DeleteACSPersonList(IntPtr lpUserID, ref NETDEV_FACE_BATCH_LIST_S pstBatchCtrlInfo) => NETDEV_DeleteACSPersonList(lpUserID, ref pstBatchCtrlInfo);
-        int INetDevSdkProxy.NETDEV_DeleteACSPersonPermissionGroup(IntPtr lpUserID, ref NETDEV_OPERATE_LIST_S pstPermissionIDList, ref NETDEV_BATCH_OPERATOR_LIST_S pstResutList) => NETDEV_DeleteACSPersonPermissionGroup(lpUserID, ref pstPermissionIDList, ref pstResutList);
-        int INetDevSdkProxy.NETDEV_DeleteAllowVehicleRecord(IntPtr lpFindHandle, int ulRecordID) => NETDEV_DeleteAllowVehicleRecord(lpFindHandle, ulRecordID);
-        int INetDevSdkProxy.NETDEV_DeleteBlockVehicleRecord(IntPtr lpFindHandle, int ulRecordID) => NETDEV_DeleteBlockVehicleRecord(lpFindHandle, ulRecordID);
-        int INetDevSdkProxy.NETDEV_DeletePersonInfo(IntPtr lpUserID, uint udwPersonLibID, uint udwPersonID, uint udwLastChange) => NETDEV_DeletePersonInfo(lpUserID, udwPersonLibID, udwPersonID, udwLastChange);
-        int INetDevSdkProxy.NETDEV_DeletePersonInfoList(IntPtr lpUserID, uint udwPersonLibID, ref NETDEV_BATCH_OPERATE_MEMBER_LIST_S pstIDList, ref NETDEV_BATCH_OPERATOR_LIST_S pstResutList) => NETDEV_DeletePersonInfoList(lpUserID, udwPersonLibID, ref pstIDList, ref pstResutList);
-        int INetDevSdkProxy.NETDEV_DeletePersonLibInfo(IntPtr lpUserID, uint udwPersonLibID, ref NETDEV_DELETE_DB_FLAG_INFO_S pstFlagInfo) => NETDEV_DeletePersonLibInfo(lpUserID, udwPersonLibID, ref pstFlagInfo);
-        int INetDevSdkProxy.NETDEV_DeleteUser(IntPtr lpUserID, string strUserName) => NETDEV_DeleteUser(lpUserID, strUserName);
-        int INetDevSdkProxy.NETDEV_DeleteVehicleLibInfo(IntPtr lpUserID, uint udwVehicleLibID, ref NETDEV_DELETE_DB_FLAG_INFO_S pstDelLibFlag) => NETDEV_DeleteVehicleLibInfo(lpUserID, udwVehicleLibID, ref pstDelLibFlag);
-        int INetDevSdkProxy.NETDEV_DeleteVehicleLibMember(IntPtr lpUserID, uint udwVehicleLibID, ref NETDEV_BATCH_OPERATE_MEMBER_LIST_S pstMemberList, ref NETDEV_BATCH_OPERATOR_LIST_S pstBatchResultList) => NETDEV_DeleteVehicleLibMember(lpUserID, udwVehicleLibID, ref pstMemberList, ref pstBatchResultList);
-        int INetDevSdkProxy.NETDEV_DeleteVehicleMonitorInfo(IntPtr lpUserID, ref NETDEV_BATCH_OPERATOR_LIST_S pstBatchList) => NETDEV_DeleteVehicleMonitorInfo(lpUserID, ref pstBatchList);
-        int INetDevSdkProxy.NETDEV_DelVehicleMemberList(IntPtr lpUserID, uint udwLib, ref NETDEV_VEHICLE_INFO_LIST_S pstVehicleMemberList, ref NETDEV_BATCH_OPERATOR_LIST_S pstBatchList) => NETDEV_DelVehicleMemberList(lpUserID, udwLib, ref pstVehicleMemberList, ref pstBatchList);
-        int INetDevSdkProxy.NETDEV_Discovery(string pszBeginIP, string pszEndIP) => NETDEV_Discovery(pszBeginIP, pszEndIP);
-        int INetDevSdkProxy.NETDEV_DoorBatchCtrl(IntPtr lpUserID, int dwCommand, ref NETDEV_OPERATE_LIST_S pstBatchCtrlInfo) => NETDEV_DoorBatchCtrl(lpUserID, dwCommand, ref pstBatchCtrlInfo);
-        int INetDevSdkProxy.NETDEV_DoorCtrl(IntPtr lpUserID, int dwChannelID, int dwCommand) => NETDEV_DoorCtrl(lpUserID, dwChannelID, dwCommand);
-        int INetDevSdkProxy.NETDEV_EnableCarplate(int bEnable) => NETDEV_EnableCarplate(bEnable);
-        int INetDevSdkProxy.NETDEV_ExportBlackWhiteListFile(IntPtr lpFindHandle, string pcFile) => NETDEV_ExportBlackWhiteListFile(lpFindHandle, pcFile);
-        IntPtr INetDevSdkProxy.NETDEV_FindACSAttendanceLogList(IntPtr lpUserID, ref NETDEV_ALARM_LOG_COND_LIST_S pstFindCond, ref NETDEV_BATCH_OPERATE_BASIC_S pstResultInfo) => NETDEV_FindACSAttendanceLogList(lpUserID, ref pstFindCond, ref pstResultInfo);
-        IntPtr INetDevSdkProxy.NETDEV_FindACSPermissionGroupList(IntPtr lpUserID, ref NETDEV_PERSON_QUERY_INFO_S pstQueryCond, ref NETDEV_BATCH_OPERATE_BASIC_S pstResultInfo) => NETDEV_FindACSPermissionGroupList(lpUserID, ref pstQueryCond, ref pstResultInfo);
-        IntPtr INetDevSdkProxy.NETDEV_FindACSPersonBlackList(IntPtr lpUserID, ref NETDEV_PAGED_QUERY_INFO_S pstQueryCond, ref NETDEV_BATCH_OPERATE_BASIC_S pstResultInfo) => NETDEV_FindACSPersonBlackList(lpUserID, ref pstQueryCond, ref pstResultInfo);
-        IntPtr INetDevSdkProxy.NETDEV_FindACSPersonList(IntPtr lpUserID, ref NETDEV_PERSON_QUERY_INFO_S pstQueryCond, ref NETDEV_BATCH_OPERATE_BASIC_S pstResultInfo) => NETDEV_FindACSPersonList(lpUserID, ref pstQueryCond, ref pstResultInfo);
-        IntPtr INetDevSdkProxy.NETDEV_FindACSVisitLogList(IntPtr lpUserID, ref NETDEV_ALARM_LOG_COND_LIST_S pstFindCond, ref NETDEV_BATCH_OPERATE_BASIC_S pstResultInfo) => NETDEV_FindACSVisitLogList(lpUserID, ref pstFindCond, ref pstResultInfo);
-        int INetDevSdkProxy.NETDEV_FindClose(IntPtr lpFindHandle) => NETDEV_FindClose(lpFindHandle);
-        int INetDevSdkProxy.NETDEV_FindCloseACSAttendanceLogList(IntPtr lpFindHandle) => NETDEV_FindCloseACSAttendanceLogList(lpFindHandle);
-        int INetDevSdkProxy.NETDEV_FindCloseACSPermissionGroupList(IntPtr lpFindHandle) => NETDEV_FindCloseACSPermissionGroupList(lpFindHandle);
-        int INetDevSdkProxy.NETDEV_FindCloseACSPersonBlackList(IntPtr lpFindHandle) => NETDEV_FindCloseACSPersonBlackList(lpFindHandle);
-        int INetDevSdkProxy.NETDEV_FindCloseACSPersonInfo(IntPtr lpFindHandle) => NETDEV_FindCloseACSPersonInfo(lpFindHandle);
-        int INetDevSdkProxy.NETDEV_FindCloseACSVisitLog(IntPtr lpFindHandle) => NETDEV_FindCloseACSVisitLog(lpFindHandle);
-        int INetDevSdkProxy.NETDEV_FindCloseCloudDevListEx(IntPtr lpFindHandle) => NETDEV_FindCloseCloudDevListEx(lpFindHandle);
-        int INetDevSdkProxy.NETDEV_FindCloseDevChn(IntPtr lpFindHandle) => NETDEV_FindCloseDevChn(lpFindHandle);
-        int INetDevSdkProxy.NETDEV_FindCloseDevInfo(IntPtr lpFindHandle) => NETDEV_FindCloseDevInfo(lpFindHandle);
-        int INetDevSdkProxy.NETDEV_FindCloseFaceRecordDetail(IntPtr lpFindHandle) => NETDEV_FindCloseFaceRecordDetail(lpFindHandle);
-        int INetDevSdkProxy.NETDEV_FindCloseMonitorDevResult(IntPtr lpFindHandle) => NETDEV_FindCloseMonitorDevResult(lpFindHandle);
-        int INetDevSdkProxy.NETDEV_FindCloseMonitorStatusList(IntPtr lpFindHandle) => NETDEV_FindCloseMonitorStatusList(lpFindHandle);
-        int INetDevSdkProxy.NETDEV_FindCloseOrgInfo(IntPtr lpFindHandle) => NETDEV_FindCloseOrgInfo(lpFindHandle);
-        int INetDevSdkProxy.NETDEV_FindClosePermStatusList(IntPtr lpFindHandle) => NETDEV_FindClosePermStatusList(lpFindHandle);
-        int INetDevSdkProxy.NETDEV_FindClosePersonInfoList(IntPtr lpFindHandle) => NETDEV_FindClosePersonInfoList(lpFindHandle);
-        int INetDevSdkProxy.NETDEV_FindClosePersonLibList(IntPtr lpFindHandle) => NETDEV_FindClosePersonLibList(lpFindHandle);
-        int INetDevSdkProxy.NETDEV_FindClosePersonMonitorList(IntPtr lpFindHandle) => NETDEV_FindClosePersonMonitorList(lpFindHandle);
-        int INetDevSdkProxy.NETDEV_FindCloseVehicleLibList(IntPtr lpFindHandle) => NETDEV_FindCloseVehicleLibList(lpFindHandle);
-        int INetDevSdkProxy.NETDEV_FindCloseVehicleMemberDetail(IntPtr lpFindHandle) => NETDEV_FindCloseVehicleMemberDetail(lpFindHandle);
-        int INetDevSdkProxy.NETDEV_FindCloseVehicleMonitorList(IntPtr lpFindHandle) => NETDEV_FindCloseVehicleMonitorList(lpFindHandle);
-        int INetDevSdkProxy.NETDEV_FindCloseVehicleRecordList(IntPtr lpFindHandle) => NETDEV_FindCloseVehicleRecordList(lpFindHandle);
-        IntPtr INetDevSdkProxy.NETDEV_FindCloudDevListEx(IntPtr lpUserID) => NETDEV_FindCloudDevListEx(lpUserID);
-        IntPtr INetDevSdkProxy.NETDEV_FindDevChnList(IntPtr lpUserID, int dwDevID, int dwChnType) => NETDEV_FindDevChnList(lpUserID, dwDevID, dwChnType);
-        IntPtr INetDevSdkProxy.NETDEV_FindDevList(IntPtr lpUserID, int dwDevType) => NETDEV_FindDevList(lpUserID, dwDevType);
-        IntPtr INetDevSdkProxy.NETDEV_FindFaceRecordDetailList(IntPtr lpUserID, ref NETDEV_ALARM_LOG_COND_LIST_S pstFindCond, ref NETDEV_SMART_ALARM_LOG_RESULT_INFO_S pstResultInfo) => NETDEV_FindFaceRecordDetailList(lpUserID, ref pstFindCond, ref pstResultInfo);
-        IntPtr INetDevSdkProxy.NETDEV_FindFile(IntPtr lpUserID, ref NETDEV_FILECOND_S pFindCond) => NETDEV_FindFile(lpUserID, ref pFindCond);
-        IntPtr INetDevSdkProxy.NETDEV_FindMonitorDevResult(IntPtr lpUserID, ref uint pudwDevNum) => NETDEV_FindMonitorDevResult(lpUserID, ref pudwDevNum);
-        IntPtr INetDevSdkProxy.NETDEV_FindMonitorStatusList(IntPtr lpUserID, int enType, ref uint udwMonitorID, ref NETDEV_ALARM_LOG_COND_LIST_S pstFindLimit, ref NETDEV_SMART_ALARM_LOG_RESULT_INFO_S pstList) => NETDEV_FindMonitorStatusList(lpUserID, enType, ref udwMonitorID, ref pstFindLimit, ref pstList);
-        int INetDevSdkProxy.NETDEV_FindNextACSAttendanceLog(IntPtr lpFindHandle, ref NETDEV_ACS_ATTENDANCE_LOG_INFO_S pstACSLogInfo) => NETDEV_FindNextACSAttendanceLog(lpFindHandle, ref pstACSLogInfo);
-        int INetDevSdkProxy.NETDEV_FindNextACSPermissionGroupInfo(IntPtr lpFindHandle, ref NETDEV_ACS_PERMISSION_INFO_S pstACSPermissionInfo) => NETDEV_FindNextACSPermissionGroupInfo(lpFindHandle, ref pstACSPermissionInfo);
-        int INetDevSdkProxy.NETDEV_FindNextACSPersonBlackListInfo(IntPtr lpFindHandle, ref NETDEV_ACS_PERSON_BLACKLIST_INFO_S pstBlackListInfo) => NETDEV_FindNextACSPersonBlackListInfo(lpFindHandle, ref pstBlackListInfo);
-        int INetDevSdkProxy.NETDEV_FindNextACSPersonInfo(IntPtr lpFindHandle, ref NETDEV_ACS_PERSON_BASE_INFO_S pstACSPersonInfo) => NETDEV_FindNextACSPersonInfo(lpFindHandle, ref pstACSPersonInfo);
-        int INetDevSdkProxy.NETDEV_FindNextACSVisitLog(IntPtr lpFindHandle, ref NETDEV_ACS_VISIT_LOG_INFO_S pstACSLogInfo) => NETDEV_FindNextACSVisitLog(lpFindHandle, ref pstACSLogInfo);
-        int INetDevSdkProxy.NETDEV_FindNextCloudDevInfoEx(IntPtr lpFindHandle, ref NETDEV_CLOUD_DEV_BASIC_INFO_S pstDevInfo) => NETDEV_FindNextCloudDevInfoEx(lpFindHandle, ref pstDevInfo);
-        int INetDevSdkProxy.NETDEV_FindNextDevChn(IntPtr lpFindHandle, IntPtr lpOutBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => NETDEV_FindNextDevChn(lpFindHandle, lpOutBuffer, dwOutBufferSize, ref pdwBytesReturned);
-        int INetDevSdkProxy.NETDEV_FindNextDevInfo(IntPtr lpFindHandle, ref NETDEV_DEV_BASIC_INFO_S pstDevBasicInfo) => NETDEV_FindNextDevInfo(lpFindHandle, ref pstDevBasicInfo);
-        int INetDevSdkProxy.NETDEV_FindNextFaceRecordDetail(IntPtr lpFindHandle, ref NETDEV_FACE_RECORD_SNAPSHOT_INFO_S pstRecordInfo) => NETDEV_FindNextFaceRecordDetail(lpFindHandle, ref pstRecordInfo);
-        int INetDevSdkProxy.NETDEV_FindNextFile(IntPtr lpFindHandle, ref NETDEV_FINDDATA_S lpFindData) => NETDEV_FindNextFile(lpFindHandle, ref lpFindData);
-        int INetDevSdkProxy.NETDEV_FindNextMonitorDevResult(IntPtr lpFindHandle, ref NETDEV_MONITOR_DEV_RESULT_INFO_S pstMonitorDevResultInfo) => NETDEV_FindNextMonitorDevResult(lpFindHandle, ref pstMonitorDevResultInfo);
-        int INetDevSdkProxy.NETDEV_FindNextMonitorStatusInfo(IntPtr lpFindHandle, ref NETDEV_MONITOR_MEMBER_INFO_S pstMonitorStats) => NETDEV_FindNextMonitorStatusInfo(lpFindHandle, ref pstMonitorStats);
-        int INetDevSdkProxy.NETDEV_FindNextOrgInfo(IntPtr lpFindHandle, ref NETDEV_ORG_INFO_S pstOrgInfo) => NETDEV_FindNextOrgInfo(lpFindHandle, ref pstOrgInfo);
-        int INetDevSdkProxy.NETDEV_FindNextPermStatusInfo(IntPtr lpFindHandle, ref NETDEV_ACS_PERM_STATUS_S pstACSPermStatus) => NETDEV_FindNextPermStatusInfo(lpFindHandle, ref pstACSPermStatus);
-        int INetDevSdkProxy.NETDEV_FindNextPersonInfo(IntPtr lpFindHandle, ref NETDEV_PERSON_INFO_S pstPersonInfo) => NETDEV_FindNextPersonInfo(lpFindHandle, ref pstPersonInfo);
-        int INetDevSdkProxy.NETDEV_FindNextPersonLibInfo(IntPtr lpFindHandle, ref NETDEV_LIB_INFO_S pstPersonLibInfo) => NETDEV_FindNextPersonLibInfo(lpFindHandle, ref pstPersonLibInfo);
-        int INetDevSdkProxy.NETDEV_FindNextPersonMonitorInfo(IntPtr lpFindHandle, ref NETDEV_MONITION_INFO_S pstMonitorInfo) => NETDEV_FindNextPersonMonitorInfo(lpFindHandle, ref pstMonitorInfo);
-        int INetDevSdkProxy.NETDEV_FindNextVehicleLibInfo(IntPtr lpFindHandle, ref NETDEV_LIB_INFO_S pstVehicleLibInfo) => NETDEV_FindNextVehicleLibInfo(lpFindHandle, ref pstVehicleLibInfo);
-        int INetDevSdkProxy.NETDEV_FindNextVehicleMemberDetail(IntPtr lpFindHandle, ref NETDEV_VEHICLE_DETAIL_INFO_S pstVehicleMemberInfo) => NETDEV_FindNextVehicleMemberDetail(lpFindHandle, ref pstVehicleMemberInfo);
-        int INetDevSdkProxy.NETDEV_FindNextVehicleMonitorInfo(IntPtr lpFindHandle, ref NETDEV_MONITION_INFO_S pstVehicleMonitorInfo) => NETDEV_FindNextVehicleMonitorInfo(lpFindHandle, ref pstVehicleMonitorInfo);
-        int INetDevSdkProxy.NETDEV_FindNextVehicleRecordInfo(IntPtr lpFindHandle, ref NETDEV_VEHICLE_RECORD_INFO_S pstRecordInfo) => NETDEV_FindNextVehicleRecordInfo(lpFindHandle, ref pstRecordInfo);
-        IntPtr INetDevSdkProxy.NETDEV_FindOrgInfoList(IntPtr lpUserID, ref NETDEV_ORG_FIND_COND_S pstFindCond) => NETDEV_FindOrgInfoList(lpUserID, ref pstFindCond);
-        IntPtr INetDevSdkProxy.NETDEV_FindPermStatusList(IntPtr lpUserID, ref uint udwPermGroupID, ref NETDEV_ALARM_LOG_COND_LIST_S pstQueryInfo, ref NETDEV_BATCH_OPERATE_BASIC_S pstResultInfo) => NETDEV_FindPermStatusList(lpUserID, ref udwPermGroupID, ref pstQueryInfo, ref pstResultInfo);
-        IntPtr INetDevSdkProxy.NETDEV_FindPersonInfoList(IntPtr lpUserID, uint udwPersonLibID, ref NETDEV_PERSON_QUERY_INFO_S pstQueryInfo, ref NETDEV_BATCH_OPERATE_BASIC_S pstQueryResultInfo) => NETDEV_FindPersonInfoList(lpUserID, udwPersonLibID, ref pstQueryInfo, ref pstQueryResultInfo);
-        IntPtr INetDevSdkProxy.NETDEV_FindPersonLibList(IntPtr lpUserID) => NETDEV_FindPersonLibList(lpUserID);
-        IntPtr INetDevSdkProxy.NETDEV_FindPersonMonitorList(IntPtr lpUserID, uint udwChannelID, ref NETDEV_MONITOR_QUERY_INFO_S pstQueryInfo) => NETDEV_FindPersonMonitorList(lpUserID, udwChannelID, ref pstQueryInfo);
-        IntPtr INetDevSdkProxy.NETDEV_FindVehicleLibList(IntPtr lpUserID) => NETDEV_FindVehicleLibList(lpUserID);
-        IntPtr INetDevSdkProxy.NETDEV_FindVehicleMemberDetailList(IntPtr lpUserID, uint udwVehicleLibID, ref NETDEV_PERSON_QUERY_INFO_S pstFindCond, ref NETDEV_BATCH_OPERATE_BASIC_S pstDBMemberList) => NETDEV_FindVehicleMemberDetailList(lpUserID, udwVehicleLibID, ref pstFindCond, ref pstDBMemberList);
-        IntPtr INetDevSdkProxy.NETDEV_FindVehicleMonitorList(IntPtr lpUserID) => NETDEV_FindVehicleMonitorList(lpUserID);
-        IntPtr INetDevSdkProxy.NETDEV_FindVehicleRecordInfoList(IntPtr lpUserID, ref NETDEV_ALARM_LOG_COND_LIST_S pstFindCond, ref NETDEV_SMART_ALARM_LOG_RESULT_INFO_S pstResultInfo) => NETDEV_FindVehicleRecordInfoList(lpUserID, ref pstFindCond, ref pstResultInfo);
-        int INetDevSdkProxy.NETDEV_GetACSPersonBlackList(IntPtr lpUserID, ref NETDEV_ACS_PERSON_BLACKLIST_INFO_S pstBlackListInfo) => NETDEV_GetACSPersonBlackList(lpUserID, ref pstBlackListInfo);
-        int INetDevSdkProxy.NETDEV_GetACSPersonPermission(IntPtr lpUserID, uint udwPersonID, ref NETDEV_ACS_DOOR_PERMISSION_INFO_S pstPermissionInfo) => NETDEV_GetACSPersonPermission(lpUserID, udwPersonID, ref pstPermissionInfo);
-        int INetDevSdkProxy.NETDEV_GetBitRate(IntPtr lpRealHandle, ref int pdwBitRate) => NETDEV_GetBitRate(lpRealHandle, ref pdwBitRate);
-        int INetDevSdkProxy.NETDEV_GetBuiltinIndicatorCtrl(IntPtr lpFindHandle, ref NETDEV_CARPORT_CONTROLLED_S pstuCarportControlled) => NETDEV_GetBuiltinIndicatorCtrl(lpFindHandle, ref pstuCarportControlled);
-        int INetDevSdkProxy.NETDEV_GetChnDetailByChnType(IntPtr lpUserID, int dwChnID, int dwChnType, IntPtr lpOutBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => NETDEV_GetChnDetailByChnType(lpUserID, dwChnID, dwChnType, lpOutBuffer, dwOutBufferSize, ref pdwBytesReturned);
-        int INetDevSdkProxy.NETDEV_GetChnType(IntPtr lpUserID, int dwChnID, ref int pdwChnType) => NETDEV_GetChnType(lpUserID, dwChnID, ref pdwChnType);
-        int INetDevSdkProxy.NETDEV_GetCloudDevInfoByName(IntPtr lpUserID, string pszRegisterCode, ref NETDEV_CLOUD_DEV_INFO_S pstDevInfo) => NETDEV_GetCloudDevInfoByName(lpUserID, pszRegisterCode, ref pstDevInfo);
-        int INetDevSdkProxy.NETDEV_GetCloudDevInfoByRegCode(IntPtr lpUserID, string pszRegisterName, ref NETDEV_CLOUD_DEV_INFO_S pstDevInfo) => NETDEV_GetCloudDevInfoByRegCode(lpUserID, pszRegisterName, ref pstDevInfo);
-        int INetDevSdkProxy.NETDEV_GetCompassInfo(IntPtr lpUserID, int dwChannelID, ref float fCompassInfo) => NETDEV_GetCompassInfo(lpUserID, dwChannelID, ref fCompassInfo);
-        int INetDevSdkProxy.NETDEV_GetConfigFile(IntPtr lpUserID, string strConfigPath) => NETDEV_GetConfigFile(lpUserID, strConfigPath);
-        int INetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_DEFOGGING_INFO_S lpInBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => NETDEV_GetDevConfig(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwOutBufferSize, ref pdwBytesReturned);
-        int INetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_MOTION_ALARM_INFO_S lpInBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => NETDEV_GetDevConfig(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwOutBufferSize, ref pdwBytesReturned);
-        int INetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_TAMPER_ALARM_INFO_S lpOutBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => NETDEV_GetDevConfig(lpUserID, dwChannelID, dwCommand, ref lpOutBuffer, dwOutBufferSize, ref pdwBytesReturned);
-        int INetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_OSD_CAP_S lpOutBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => NETDEV_GetDevConfig(lpUserID, dwChannelID, dwCommand, ref lpOutBuffer, dwOutBufferSize, ref pdwBytesReturned);
-        int INetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_VIDEO_STREAM_CAP_EX_S lpOutBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => NETDEV_GetDevConfig(lpUserID, dwChannelID, dwCommand, ref lpOutBuffer, dwOutBufferSize, ref pdwBytesReturned);
-        int INetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, IntPtr lpInBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => NETDEV_GetDevConfig(lpUserID, dwChannelID, dwCommand, lpInBuffer, dwOutBufferSize, ref pdwBytesReturned);
-        int INetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_PTZ_STATUS_S lpInBuffer, int dwInBufferSize, ref int pdwBytesReturned) => NETDEV_GetDevConfig(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwInBufferSize, ref pdwBytesReturned);
-        int INetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_VIDEO_STREAM_INFO_S lpInBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => NETDEV_GetDevConfig(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwOutBufferSize, ref pdwBytesReturned);
-        int INetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_IMAGE_SETTING_S lpInBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => NETDEV_GetDevConfig(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwOutBufferSize, ref pdwBytesReturned);
-        int INetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_SYSTEM_NTP_INFO_S lpInBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => NETDEV_GetDevConfig(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwOutBufferSize, ref pdwBytesReturned);
-        int INetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_NETWORKCFG_S lpInBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => NETDEV_GetDevConfig(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwOutBufferSize, ref pdwBytesReturned);
-        int INetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_ALARM_OUTPUT_INFO_S lpInBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => NETDEV_GetDevConfig(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwOutBufferSize, ref pdwBytesReturned);
-        int INetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_RECORD_PLAN_CFG_INFO_S lpInBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => NETDEV_GetDevConfig(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwOutBufferSize, ref pdwBytesReturned);
-        int INetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_TRIGGER_ALARM_OUTPUT_S lpInBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => NETDEV_GetDevConfig(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwOutBufferSize, ref pdwBytesReturned);
-        int INetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_VIDEO_OSD_CFG_S lpInBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => NETDEV_GetDevConfig(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwOutBufferSize, ref pdwBytesReturned);
-        int INetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_ALARM_INPUT_LIST_S lpInBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => NETDEV_GetDevConfig(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwOutBufferSize, ref pdwBytesReturned);
-        int INetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_ALARM_OUTPUT_LIST_S lpInBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => NETDEV_GetDevConfig(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwOutBufferSize, ref pdwBytesReturned);
-        int INetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_DEVICE_BASICINFO_S lpInBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => NETDEV_GetDevConfig(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwOutBufferSize, ref pdwBytesReturned);
-        int INetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_DISK_INFO_LIST_S lpInBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => NETDEV_GetDevConfig(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwOutBufferSize, ref pdwBytesReturned);
-        int INetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_PRIVACY_MASK_CFG_S lpInBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => NETDEV_GetDevConfig(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwOutBufferSize, ref pdwBytesReturned);
-        int INetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_SYSTEM_NTP_INFO_LIST_S lpInBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => NETDEV_GetDevConfig(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwOutBufferSize, ref pdwBytesReturned);
-        int INetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_IMAGE_EXPOSURE_S lpInBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => NETDEV_GetDevConfig(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwOutBufferSize, ref pdwBytesReturned);
-        int INetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_IRCUT_FILTER_INFO_S lpInBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => NETDEV_GetDevConfig(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwOutBufferSize, ref pdwBytesReturned);
-        int INetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_INFORELEASE_CFG_S lpInBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => NETDEV_GetDevConfig(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwOutBufferSize, ref pdwBytesReturned);
-        int INetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_ITS_PARKING_DETECTION_S lpInBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => NETDEV_GetDevConfig(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwOutBufferSize, ref pdwBytesReturned);
-        int INetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_OSD_CONTENT_STYLE_S lpInBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => NETDEV_GetDevConfig(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwOutBufferSize, ref pdwBytesReturned);
-        int INetDevSdkProxy.NETDEV_GetDeviceCapability(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_OSD_CAP_S lpOutBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => NETDEV_GetDeviceCapability(lpUserID, dwChannelID, dwCommand, ref lpOutBuffer, dwOutBufferSize, ref pdwBytesReturned);
-        int INetDevSdkProxy.NETDEV_GetDeviceCapability(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_VIDEO_STREAM_CAP_EX_S lpOutBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => NETDEV_GetDeviceCapability(lpUserID, dwChannelID, dwCommand, ref lpOutBuffer, dwOutBufferSize, ref pdwBytesReturned);
-        int INetDevSdkProxy.NETDEV_GetDeviceInfo(IntPtr lpUserID, ref NETDEV_DEVICE_INFO_S pstDevInfo) => NETDEV_GetDeviceInfo(lpUserID, ref pstDevInfo);
-        int INetDevSdkProxy.NETDEV_GetDeviceInfo_V30(IntPtr lpUserID, int dwDevID, ref NETDEV_DEV_INFO_V30_S pstDevInfo) => NETDEV_GetDeviceInfo_V30(lpUserID, dwDevID, ref pstDevInfo);
-        int INetDevSdkProxy.NETDEV_GetFaceRecordImageInfo(IntPtr lpUserID, uint udwRecordID, uint udwFaceImageType, ref NETDEV_FILE_INFO_S pstFileInfo) => NETDEV_GetFaceRecordImageInfo(lpUserID, udwRecordID, udwFaceImageType, ref pstFileInfo);
-        IntPtr INetDevSdkProxy.NETDEV_GetFileByName(IntPtr lpUserID, ref NETDEV_PLAYBACKINFO_S pstPlayBackInfo, string szSaveFileName, int dwFormat) => NETDEV_GetFileByName(lpUserID, ref pstPlayBackInfo, szSaveFileName, dwFormat);
-        IntPtr INetDevSdkProxy.NETDEV_GetFileByTime(IntPtr lpUserID, ref NETDEV_PLAYBACKCOND_S pstPlayBackCond, byte[] pszSaveFileName, int dwFormat) => NETDEV_GetFileByTime(lpUserID, ref pstPlayBackCond, pszSaveFileName, dwFormat);
-        int INetDevSdkProxy.NETDEV_GetFrameRate(IntPtr lpRealHandle, ref int pdwFrameRate) => NETDEV_GetFrameRate(lpRealHandle, ref pdwFrameRate);
-        int INetDevSdkProxy.NETDEV_GetGeolocationInfo(IntPtr lpUserID, int dwChannelID, ref NETDEV_GEOLACATION_INFO_S pstGPSInfo) => NETDEV_GetGeolocationInfo(lpUserID, dwChannelID, ref pstGPSInfo);
-        int INetDevSdkProxy.NETDEV_GetLastError() => NETDEV_GetLastError();
-        int INetDevSdkProxy.NETDEV_GetLostPacketRate(IntPtr lpRealHandle, ref int pulRecvPktNum, ref int pulLostPktNum) => NETDEV_GetLostPacketRate(lpRealHandle, ref pulRecvPktNum, ref pulLostPktNum);
-        int INetDevSdkProxy.NETDEV_GetMicVolume(IntPtr lpPlayHandle, ref int dwVolume) => NETDEV_GetMicVolume(lpPlayHandle, ref dwVolume);
-        int INetDevSdkProxy.NETDEV_GetMonitorCapacity(IntPtr lpUserID, ref NETDEV_MONITOR_CAPACITY_INFO_S pstCapacityInfo, ref NETDEV_MONITOR_CAPACITY_LIST_S pstCapacityList) => NETDEV_GetMonitorCapacity(lpUserID, ref pstCapacityInfo, ref pstCapacityList);
-        int INetDevSdkProxy.NETDEV_GetMonitorProgress(IntPtr lpUserID, ref uint pudwProgressRate) => NETDEV_GetMonitorProgress(lpUserID, ref pudwProgressRate);
-        int INetDevSdkProxy.NETDEV_GetPARKVersion(byte[] strVersion) => NETDEV_GetPARKVersion(strVersion);
-        int INetDevSdkProxy.NETDEV_GetPersonLibCapacity(IntPtr lpUserID, int dwTimeOut, ref NETDEV_PERSON_LIB_CAP_LIST_S pstCapacityList) => NETDEV_GetPersonLibCapacity(lpUserID, dwTimeOut, ref pstCapacityList);
-        int INetDevSdkProxy.NETDEV_GetPersonMemberInfo(IntPtr lpUserID, uint udwPersonID, ref NETDEV_PERSON_INFO_S pstPersonInfo) => NETDEV_GetPersonMemberInfo(lpUserID, udwPersonID, ref pstPersonInfo);
-        int INetDevSdkProxy.NETDEV_GetPersonMonitorRuleInfo(IntPtr lpUserID, ref NETDEV_MONITION_INFO_S pstMonitorInfo) => NETDEV_GetPersonMonitorRuleInfo(lpUserID, ref pstMonitorInfo);
-        int INetDevSdkProxy.NETDEV_GetPTZPresetList(IntPtr lpUserID, int dwChannelID, ref NETDEV_PTZ_ALLPRESETS_S lpOutBuffer) => NETDEV_GetPTZPresetList(lpUserID, dwChannelID, ref lpOutBuffer);
-        int INetDevSdkProxy.NETDEV_GetResolution(IntPtr lpRealHandle, ref int pdwWidth, ref int pdwHeight) => NETDEV_GetResolution(lpRealHandle, ref pdwWidth, ref pdwHeight);
-        int INetDevSdkProxy.NETDEV_GetSDKVersion() => NETDEV_GetSDKVersion();
-        int INetDevSdkProxy.NETDEV_GetSinglePermGroupInfo(IntPtr lpUserID, uint udwPermissionGroupID, ref NETDEV_ACS_PERMISSION_INFO_S pstAcsPerssionInfo) => NETDEV_GetSinglePermGroupInfo(lpUserID, udwPermissionGroupID, ref pstAcsPerssionInfo);
-        int INetDevSdkProxy.NETDEV_GetSoundVolume(IntPtr lpPlayHandle, ref int pdwVolume) => NETDEV_GetSoundVolume(lpPlayHandle, ref pdwVolume);
-        int INetDevSdkProxy.NETDEV_GetSystemPicture(IntPtr lpUserID, string pszURL, uint udwSize, IntPtr pszdata) => NETDEV_GetSystemPicture(lpUserID, pszURL, udwSize, pszdata);
-        int INetDevSdkProxy.NETDEV_GetSystemTimeCfg(IntPtr lpUserID, ref NETDEV_TIME_CFG_S pstSystemTimeInfo) => NETDEV_GetSystemTimeCfg(lpUserID, ref pstSystemTimeInfo);
-        int INetDevSdkProxy.NETDEV_GetTimeTemplateInfo(IntPtr lpUserID, int dwTemplateID, ref NETDEV_TIME_TEMPLATE_INFO_V30_S pstTimeTemplateInfo) => NETDEV_GetTimeTemplateInfo(lpUserID, dwTemplateID, ref pstTimeTemplateInfo);
-        int INetDevSdkProxy.NETDEV_GetTimeTemplateList(IntPtr lpUserID, int dwTamplateType, ref NETDEV_TIME_TEMPLATE_LIST_S pstTemplateList) => NETDEV_GetTimeTemplateList(lpUserID, dwTamplateType, ref pstTemplateList);
-        int INetDevSdkProxy.NETDEV_GetTrafficStatistic(IntPtr lpUserID, ref NETDEV_TRAFFIC_STATISTICS_COND_S pstStatisticCond, ref NETDEV_TRAFFIC_STATISTICS_DATA_S pstTrafficStatistic) => NETDEV_GetTrafficStatistic(lpUserID, ref pstStatisticCond, ref pstTrafficStatistic);
-        int INetDevSdkProxy.NETDEV_GetUpnpNatState(IntPtr lpUserID, ref NETDEV_UPNP_NAT_STATE_S pstNatState) => NETDEV_GetUpnpNatState(lpUserID, ref pstNatState);
-        int INetDevSdkProxy.NETDEV_GetUserDetailList(IntPtr lpUserID, IntPtr pstUserDetailList) => NETDEV_GetUserDetailList(lpUserID, pstUserDetailList);
-        int INetDevSdkProxy.NETDEV_GetVehicleMonitorInfo(IntPtr lpUserID, uint udwID, ref NETDEV_MONITION_RULE_INFO_S pstMonitorInfo) => NETDEV_GetVehicleMonitorInfo(lpUserID, udwID, ref pstMonitorInfo);
-        int INetDevSdkProxy.NETDEV_GetVehicleRecordImageInfo(IntPtr lpUserID, uint udwRecordID, ref NETDEV_FILE_INFO_S pstFileInfo) => NETDEV_GetVehicleRecordImageInfo(lpUserID, udwRecordID, ref pstFileInfo);
-        int INetDevSdkProxy.NETDEV_GetVideoEffect(IntPtr lpRealHandle, ref NETDEV_VIDEO_EFFECT_S pstImageInfo) => NETDEV_GetVideoEffect(lpRealHandle, ref pstImageInfo);
-        int INetDevSdkProxy.NETDEV_GetVideoEncodeFmt(IntPtr lpRealHandle, ref int pdwVideoEncFmt) => NETDEV_GetVideoEncodeFmt(lpRealHandle, ref pdwVideoEncFmt);
-        int INetDevSdkProxy.NETDEV_ImportBlackWhiteListFile(IntPtr lpFindHandle, string pcFile) => NETDEV_ImportBlackWhiteListFile(lpFindHandle, pcFile);
-        int INetDevSdkProxy.NETDEV_Init() => NETDEV_Init();
-        int INetDevSdkProxy.NETDEV_InputVoiceData(IntPtr lpUserID, byte[] lpDataBuf, int dwDataLen, ref NETDEV_AUDIO_SAMPLE_PARAM_S pstVoiceParam) => NETDEV_InputVoiceData(lpUserID, lpDataBuf, dwDataLen, ref pstVoiceParam);
-        IntPtr INetDevSdkProxy.NETDEV_Login(string szDevIP, short wDevPort, string szUserName, string szPassword, ref NETDEV_DEVICE_INFO_S pstDevInfo) => NETDEV_Login(szDevIP, wDevPort, szUserName, szPassword, ref pstDevInfo);
-        IntPtr INetDevSdkProxy.NETDEV_LoginCloud(string pszCloudSrvUrl, string pszUserName, string pszPassWord) => NETDEV_LoginCloud(pszCloudSrvUrl, pszUserName, pszPassWord);
-        IntPtr INetDevSdkProxy.NETDEV_LoginCloudDevice_V30(IntPtr lpUserID, ref NETDEV_CLOUD_DEV_LOGIN_INFO_S pstCloudInfo) => NETDEV_LoginCloudDevice_V30(lpUserID, ref pstCloudInfo);
-        IntPtr INetDevSdkProxy.NETDEV_Login_V30(ref NETDEV_DEVICE_LOGIN_INFO_S pstDevLoginInfo, ref NETDEV_SELOG_INFO_S pstSELogInfo) => NETDEV_Login_V30(ref pstDevLoginInfo, ref pstSELogInfo);
-        int INetDevSdkProxy.NETDEV_Logout(IntPtr lpUserID) => NETDEV_Logout(lpUserID);
-        int INetDevSdkProxy.NETDEV_MakeKeyFrame(IntPtr lpUserID, int dwChannelID, int dwStreamType) => NETDEV_MakeKeyFrame(lpUserID, dwChannelID, dwStreamType);
-        int INetDevSdkProxy.NETDEV_MicVolumeControl(IntPtr lpPlayHandle, int dwVolume) => NETDEV_MicVolumeControl(lpPlayHandle, dwVolume);
-        int INetDevSdkProxy.NETDEV_ModifyACSPersonBlackList(IntPtr lpUserID, ref NETDEV_ACS_PERSON_BLACKLIST_INFO_S pstBlackListInfo) => NETDEV_ModifyACSPersonBlackList(lpUserID, ref pstBlackListInfo);
-        int INetDevSdkProxy.NETDEV_ModifyACSPersonPermissionGroup(IntPtr lpUserID, ref NETDEV_ACS_PERMISSION_INFO_S pstPermissionInfo) => NETDEV_ModifyACSPersonPermissionGroup(lpUserID, ref pstPermissionInfo);
-        int INetDevSdkProxy.NETDEV_ModifyAllowVehicleRecord(IntPtr lpFindHandle, ref NETDEV_PARK_VEHICLE_RECORD_S pstVehicleRecordExtern) => NETDEV_ModifyAllowVehicleRecord(lpFindHandle, ref pstVehicleRecordExtern);
-        int INetDevSdkProxy.NETDEV_ModifyBlockVehicleRecord(IntPtr lpFindHandle, ref NETDEV_PARK_VEHICLE_RECORD_S pstVehicleRecordExtern) => NETDEV_ModifyBlockVehicleRecord(lpFindHandle, ref pstVehicleRecordExtern);
-        int INetDevSdkProxy.NETDEV_ModifyDeviceName(IntPtr lpUserID, byte[] strDeviceName) => NETDEV_ModifyDeviceName(lpUserID, strDeviceName);
-        int INetDevSdkProxy.NETDEV_ModifyOrgInfo(IntPtr lpUserID, ref NETDEV_ORG_INFO_S pstOrgInfo) => NETDEV_ModifyOrgInfo(lpUserID, ref pstOrgInfo);
-        int INetDevSdkProxy.NETDEV_ModifyPersonInfo(IntPtr lpUserID, uint udwPersonLibID, ref NETDEV_PERSON_INFO_LIST_S pstPersonInfoList, ref NETDEV_PERSON_RESULT_LIST_S pstPersonResultList) => NETDEV_ModifyPersonInfo(lpUserID, udwPersonLibID, ref pstPersonInfoList, ref pstPersonResultList);
-        int INetDevSdkProxy.NETDEV_ModifyPersonLibInfo(IntPtr lpUserID, ref NETDEV_PERSON_LIB_LIST_S pstPersonLibList) => NETDEV_ModifyPersonLibInfo(lpUserID, ref pstPersonLibList);
-        int INetDevSdkProxy.NETDEV_ModifyUser(IntPtr lpUserID, IntPtr pstUserInfo) => NETDEV_ModifyUser(lpUserID, pstUserInfo);
-        int INetDevSdkProxy.NETDEV_ModifyVehicleLibInfo(IntPtr lpUserID, ref NETDEV_PERSON_LIB_LIST_S pstVehicleLibList) => NETDEV_ModifyVehicleLibInfo(lpUserID, ref pstVehicleLibList);
-        int INetDevSdkProxy.NETDEV_ModifyVehicleMemberInfo(IntPtr lpUserID, uint udwVehicleLibID, ref NETDEV_VEHICLE_INFO_LIST_S pstVehicleMemberList, ref NETDEV_BATCH_OPERATOR_LIST_S pstResultList) => NETDEV_ModifyVehicleMemberInfo(lpUserID, udwVehicleLibID, ref pstVehicleMemberList, ref pstResultList);
-        int INetDevSdkProxy.NETDEV_OpenMic(IntPtr lpPlayHandle) => NETDEV_OpenMic(lpPlayHandle);
-        int INetDevSdkProxy.NETDEV_OpenSound(IntPtr lpRealHandle) => NETDEV_OpenSound(lpRealHandle);
-        IntPtr INetDevSdkProxy.NETDEV_PlayBackByName(IntPtr lpUserID, ref NETDEV_PLAYBACKINFO_S pstPlayBackInfo) => NETDEV_PlayBackByName(lpUserID, ref pstPlayBackInfo);
-        IntPtr INetDevSdkProxy.NETDEV_PlayBackByTime(IntPtr lpUserID, ref NETDEV_PLAYBACKCOND_S pstPlayBackInfo) => NETDEV_PlayBackByTime(lpUserID, ref pstPlayBackInfo);
-        int INetDevSdkProxy.NETDEV_PlayBackControl(IntPtr lpPlayHandle, int dwControlCode, ref long pdwBuffer) => NETDEV_PlayBackControl(lpPlayHandle, dwControlCode, ref pdwBuffer);
-        int INetDevSdkProxy.NETDEV_PlaySound(IntPtr lpRealHandle) => NETDEV_PlaySound(lpRealHandle);
-        int INetDevSdkProxy.NETDEV_PTZCalibrate(IntPtr lpUserID, int dwChannelID, ref NETDEV_PTZ_ORIENTATION_INFO_S pstOrientationInfo) => NETDEV_PTZCalibrate(lpUserID, dwChannelID, ref pstOrientationInfo);
-        int INetDevSdkProxy.NETDEV_PTZControl(IntPtr lpPlayHandle, int dwPTZCommand, int dwSpeed) => NETDEV_PTZControl(lpPlayHandle, dwPTZCommand, dwSpeed);
-        int INetDevSdkProxy.NETDEV_PTZControl_Other(IntPtr lpUserID, int dwChannelID, int dwPTZCommand, int dwSpeed) => NETDEV_PTZControl_Other(lpUserID, dwChannelID, dwPTZCommand, dwSpeed);
-        int INetDevSdkProxy.NETDEV_PTZCruise_Other(IntPtr lpUserID, int dwChannelID, int dwPTZCruiseCmd, ref NETDEV_CRUISE_INFO_S pstCruiseInfo) => NETDEV_PTZCruise_Other(lpUserID, dwChannelID, dwPTZCruiseCmd, ref pstCruiseInfo);
-        int INetDevSdkProxy.NETDEV_PTZGetCruise(IntPtr lpUserID, int dwChannelID, ref NETDEV_CRUISE_LIST_S pstCruiseList) => NETDEV_PTZGetCruise(lpUserID, dwChannelID, ref pstCruiseList);
-        int INetDevSdkProxy.NETDEV_PTZGetTrackCruise(IntPtr lpUserID, int dwChannelID, ref NETDEV_PTZ_TRACK_INFO_S pstTrackCruiseInfo) => NETDEV_PTZGetTrackCruise(lpUserID, dwChannelID, ref pstTrackCruiseInfo);
-        int INetDevSdkProxy.NETDEV_PTZPreset(IntPtr lpPlayHandle, int dwPTZPresetCmd, string pszPresetName, int dwPresetID) => NETDEV_PTZPreset(lpPlayHandle, dwPTZPresetCmd, pszPresetName, dwPresetID);
-        int INetDevSdkProxy.NETDEV_PTZPreset_Other(IntPtr lpUserID, int dwChannelID, int dwPTZPresetCmd, byte[] szPresetName, int dwPresetID) => NETDEV_PTZPreset_Other(lpUserID, dwChannelID, dwPTZPresetCmd, szPresetName, dwPresetID);
-        int INetDevSdkProxy.NETDEV_PTZSelZoomIn_Other(IntPtr lpUserID, int dwChannelID, ref NETDEV_PTZ_OPERATEAREA_S pstPtzOperateArea) => NETDEV_PTZSelZoomIn_Other(lpUserID, dwChannelID, ref pstPtzOperateArea);
-        int INetDevSdkProxy.NETDEV_PTZTrackCruise(IntPtr lpUserID, int dwChannelID, int dwPTZTrackCruiseCmd, string pszTrackCruiseName) => NETDEV_PTZTrackCruise(lpUserID, dwChannelID, dwPTZTrackCruiseCmd, pszTrackCruiseName);
-        int INetDevSdkProxy.NETDEV_QueryVideoChlDetailList(IntPtr lpUserID, ref int pdwChlCount, IntPtr pstVideoChlList) => NETDEV_QueryVideoChlDetailList(lpUserID, ref pdwChlCount, pstVideoChlList);
-        IntPtr INetDevSdkProxy.NETDEV_RealPlay(IntPtr lpUserID, ref NETDEV_PREVIEWINFO_S pstPreviewInfo, IntPtr cbPlayDataCallBack, IntPtr lpUserData) => NETDEV_RealPlay(lpUserID, ref pstPreviewInfo, cbPlayDataCallBack, lpUserData);
-        int INetDevSdkProxy.NETDEV_Reboot(IntPtr lpUserID) => NETDEV_Reboot(lpUserID);
-        int INetDevSdkProxy.NETDEV_ResetLostPacketRate(IntPtr lpRealHandle) => NETDEV_ResetLostPacketRate(lpRealHandle);
-        int INetDevSdkProxy.NETDEV_RestoreConfig(IntPtr lpUserID) => NETDEV_RestoreConfig(lpUserID);
-        int INetDevSdkProxy.NETDEV_SaveRealData(IntPtr lpRealHandle, byte[] szSaveFileName, int dwFormat) => NETDEV_SaveRealData(lpRealHandle, szSaveFileName, dwFormat);
-        int INetDevSdkProxy.NETDEV_SetACSPersonPermission(IntPtr lpUserID, uint udwPersonID, ref NETDEV_ACS_DOOR_PERMISSION_INFO_S pstPermissionInfo) => NETDEV_SetACSPersonPermission(lpUserID, udwPersonID, ref pstPermissionInfo);
-        int INetDevSdkProxy.NETDEV_SetAlarmCallBack(IntPtr lpUserID, NETDEV_AlarmMessCallBack_PF cbAlarmMessCallBack, IntPtr lpUserData) => NETDEV_SetAlarmCallBack(lpUserID, cbAlarmMessCallBack, lpUserData);
-        int INetDevSdkProxy.NETDEV_SetAlarmCallBack_V30(IntPtr lpUserID, NETDEV_AlarmMessCallBack_PF_V30 cbAlarmMessCallBack, IntPtr lpUserData) => NETDEV_SetAlarmCallBack_V30(lpUserID, cbAlarmMessCallBack, lpUserData);
-        int INetDevSdkProxy.NETDEV_SetAlarmFGCallBack(IntPtr lpUserID, NETDEV_AlarmMessFGCallBack_PF cbAlarmMessCallBack, IntPtr lpUserData) => NETDEV_SetAlarmFGCallBack(lpUserID, cbAlarmMessCallBack, lpUserData);
-        int INetDevSdkProxy.NETDEV_SetBuiltinIndicatorCtrl(IntPtr lpFindHandle, ref NETDEV_CARPORT_CONTROLLED_S pstuCarportControlled) => NETDEV_SetBuiltinIndicatorCtrl(lpFindHandle, ref pstuCarportControlled);
-        int INetDevSdkProxy.NETDEV_SetConfigFile(IntPtr lpUserID, string strConfigPath) => NETDEV_SetConfigFile(lpUserID, strConfigPath);
-        int INetDevSdkProxy.NETDEV_SetConnectTime(int dwWaitTime, int dwTrytimes) => NETDEV_SetConnectTime(dwWaitTime, dwTrytimes);
-        int INetDevSdkProxy.NETDEV_SetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref int index, int dwInBufferSize) => NETDEV_SetDevConfig(lpUserID, dwChannelID, dwCommand, ref index, dwInBufferSize);
-        int INetDevSdkProxy.NETDEV_SetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_DEFOGGING_INFO_S lpInBuffer, int dwInBufferSize) => NETDEV_SetDevConfig(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwInBufferSize);
-        int INetDevSdkProxy.NETDEV_SetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_MOTION_ALARM_INFO_S lpInBuffer, int dwInBufferSize) => NETDEV_SetDevConfig(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwInBufferSize);
-        int INetDevSdkProxy.NETDEV_SetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_TAMPER_ALARM_INFO_S lpInBuffer, int dwInBufferSize) => NETDEV_SetDevConfig(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwInBufferSize);
-        int INetDevSdkProxy.NETDEV_SetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_SYSTEM_NTP_INFO_LIST_S lpInBuffer, int dwInBufferSize) => NETDEV_SetDevConfig(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwInBufferSize);
-        int INetDevSdkProxy.NETDEV_SetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, IntPtr lpInBuffer, ref int dwInBufferSize) => NETDEV_SetDevConfig(lpUserID, dwChannelID, dwCommand, lpInBuffer, ref dwInBufferSize);
-        int INetDevSdkProxy.NETDEV_SetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_VIDEO_STREAM_INFO_S lpInBuffer, int dwInBufferSize) => NETDEV_SetDevConfig(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwInBufferSize);
-        int INetDevSdkProxy.NETDEV_SetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_IMAGE_SETTING_S lpInBuffer, int dwInBufferSize) => NETDEV_SetDevConfig(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwInBufferSize);
-        int INetDevSdkProxy.NETDEV_SetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_SYSTEM_NTP_INFO_S lpInBuffer, int dwInBufferSize) => NETDEV_SetDevConfig(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwInBufferSize);
-        int INetDevSdkProxy.NETDEV_SetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_NETWORKCFG_S lpInBuffer, int dwInBufferSize) => NETDEV_SetDevConfig(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwInBufferSize);
-        int INetDevSdkProxy.NETDEV_SetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_ALARM_OUTPUT_INFO_S lpInBuffer, int dwInBufferSize) => NETDEV_SetDevConfig(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwInBufferSize);
-        int INetDevSdkProxy.NETDEV_SetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_RECORD_PLAN_CFG_INFO_S lpInBuffer, int dwInBufferSize) => NETDEV_SetDevConfig(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwInBufferSize);
-        int INetDevSdkProxy.NETDEV_SetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_TRIGGER_ALARM_OUTPUT_S lpInBuffer, int dwInBufferSize) => NETDEV_SetDevConfig(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwInBufferSize);
-        int INetDevSdkProxy.NETDEV_SetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_VIDEO_OSD_CFG_S lpInBuffer, int dwInBufferSize) => NETDEV_SetDevConfig(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwInBufferSize);
-        int INetDevSdkProxy.NETDEV_SetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_PRIVACY_MASK_CFG_S lpInBuffer, int dwInBufferSize) => NETDEV_SetDevConfig(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwInBufferSize);
-        int INetDevSdkProxy.NETDEV_SetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_IMAGE_EXPOSURE_S lpInBuffer, int dwOutBufferSize) => NETDEV_SetDevConfig(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwOutBufferSize);
-        int INetDevSdkProxy.NETDEV_SetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_IRCUT_FILTER_INFO_S lpInBuffer, int dwInBufferSize) => NETDEV_SetDevConfig(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwInBufferSize);
-        int INetDevSdkProxy.NETDEV_SetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_INFORELEASE_CFG_S lpInBuffer, int dwInBufferSize) => NETDEV_SetDevConfig(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwInBufferSize);
-        int INetDevSdkProxy.NETDEV_SetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_OSD_CONTENT_STYLE_S lpInBuffer, int dwInBufferSize) => NETDEV_SetDevConfig(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwInBufferSize);
-        int INetDevSdkProxy.NETDEV_setDeviceLedCfg(IntPtr lpFindHandle, ref NETDEV_LED_LIST_CFG_S pstLedListCfgs) => NETDEV_setDeviceLedCfg(lpFindHandle, ref pstLedListCfgs);
-        int INetDevSdkProxy.NETDEV_SetDigitalZoom(IntPtr lpRealHandle, IntPtr hWnd, IntPtr pstRect) => NETDEV_SetDigitalZoom(lpRealHandle, hWnd, pstRect);
-        int INetDevSdkProxy.NETDEV_SetDiscoveryCallBack(NETDEV_DISCOVERY_CALLBACK_PF cbDiscoveryCallBack, IntPtr lpUserData) => NETDEV_SetDiscoveryCallBack(cbDiscoveryCallBack, lpUserData);
-        int INetDevSdkProxy.NETDEV_SetExceptionCallBack(NETDEV_ExceptionCallBack_PF cbExceptionCallBack, IntPtr lpUserData) => NETDEV_SetExceptionCallBack(cbExceptionCallBack, lpUserData);
-        int INetDevSdkProxy.NETDEV_SetFaceSnapshotCallBack(IntPtr lpUserID, NETDEV_FaceSnapshotCallBack_PF cbFaceSnapshotCallBack, IntPtr lpUserData) => NETDEV_SetFaceSnapshotCallBack(lpUserID, cbFaceSnapshotCallBack, lpUserData);
-        int INetDevSdkProxy.NETDEV_SetIVAEnable(IntPtr lpUserID, int dwEnableIVA) => NETDEV_SetIVAEnable(lpUserID, dwEnableIVA);
-        int INetDevSdkProxy.NETDEV_SetIVAShowParam(int dwShowParam) => NETDEV_SetIVAShowParam(dwShowParam);
-        int INetDevSdkProxy.NETDEV_SetLogPath(string strLogPath) => NETDEV_SetLogPath(strLogPath);
-        int INetDevSdkProxy.NETDEV_SetOutputSwitchStatusCfg(IntPtr lpFindHandle) => NETDEV_SetOutputSwitchStatusCfg(lpFindHandle);
-        int INetDevSdkProxy.NETDEV_SetParkingStatusCB(IntPtr lpFindHandle, NETDEV_PARKING_STATUS_PF pfnParkStatusCBFun, IntPtr lpUserData) => NETDEV_SetParkingStatusCB(lpFindHandle, pfnParkStatusCBFun, lpUserData);
-        int INetDevSdkProxy.NETDEV_SetParkStatusCallBack(IntPtr lpUserID, NETDEV_ParkStatusReportCallBack_PF cbParkStatusReportCallBack, IntPtr lpUserData) => NETDEV_SetParkStatusCallBack(lpUserID, cbParkStatusReportCallBack, lpUserData);
-        int INetDevSdkProxy.NETDEV_SetPassengerFlowStatisticCallBack(IntPtr lpUserID, NETDEV_PassengerFlowStatisticCallBack_PF cbPassengerFlowStatisticCallBack, IntPtr lpUserData) => NETDEV_SetPassengerFlowStatisticCallBack(lpUserID, cbPassengerFlowStatisticCallBack, lpUserData);
-        int INetDevSdkProxy.NETDEV_SetPersonAlarmCallBack(IntPtr lpUserID, NETDEV_PersonAlarmMessCallBack_PF cbAlarmMessCallBack, IntPtr lpUserData) => NETDEV_SetPersonAlarmCallBack(lpUserID, cbAlarmMessCallBack, lpUserData);
-        int INetDevSdkProxy.NETDEV_SetPersonMonitorRuleInfo(IntPtr lpUserID, ref NETDEV_MONITION_INFO_S pstMonitorInfo) => NETDEV_SetPersonMonitorRuleInfo(lpUserID, ref pstMonitorInfo);
-        int INetDevSdkProxy.NETDEV_SetPictureFluency(IntPtr lpPlayHandle, int dwFluency) => NETDEV_SetPictureFluency(lpPlayHandle, dwFluency);
-        int INetDevSdkProxy.NETDEV_SetPlayDataCallBack(IntPtr lpRealHandle, IntPtr cbPlayDataCallBack, int bContinue, IntPtr lpUserData) => NETDEV_SetPlayDataCallBack(lpRealHandle, cbPlayDataCallBack, bContinue, lpUserData);
-        int INetDevSdkProxy.NETDEV_SetPlayDecodeVideoCB(IntPtr lpRealHandle, ref NETDEV_DECODE_VIDEO_DATA_CALLBACK_PF cbPlayDecodeVideoCallBack, int bContinue, IntPtr lpUserData) => NETDEV_SetPlayDecodeVideoCB(lpRealHandle, ref cbPlayDecodeVideoCallBack, bContinue, lpUserData);
-        int INetDevSdkProxy.NETDEV_SetPlayDisplayCB(IntPtr lpRealHandle, IntPtr cbPlayDisplayCallBack, IntPtr lpUserData) => NETDEV_SetPlayDisplayCB(lpRealHandle, cbPlayDisplayCallBack, lpUserData);
-        int INetDevSdkProxy.NETDEV_SetPlayParseCB(IntPtr lpRealHandle, ref NETDEV_PARSE_VIDEO_DATA_CALLBACK_PF cbPlayParseCallBack, int bContinue, IntPtr lpUserData) => NETDEV_SetPlayParseCB(lpRealHandle, ref cbPlayParseCallBack, bContinue, lpUserData);
-        int INetDevSdkProxy.NETDEV_SetRenderScale(IntPtr lpRealHandle, int enRenderScale) => NETDEV_SetRenderScale(lpRealHandle, enRenderScale);
-        int INetDevSdkProxy.NETDEV_SetRevTimeOut(ref NETDEV_REV_TIMEOUT_S pstRevTimeout) => NETDEV_SetRevTimeOut(ref pstRevTimeout);
-        int INetDevSdkProxy.NETDEV_SetStructAlarmCallBack(IntPtr lpUserID, NETDEV_StructAlarmMessCallBack_PF cbAlarmMessCallBack, IntPtr lpUserData) => NETDEV_SetStructAlarmCallBack(lpUserID, cbAlarmMessCallBack, lpUserData);
-        int INetDevSdkProxy.NETDEV_SetSystemTimeCfg(IntPtr lpUserID, ref NETDEV_TIME_CFG_S pstSystemTimeInfo) => NETDEV_SetSystemTimeCfg(lpUserID, ref pstSystemTimeInfo);
-        int INetDevSdkProxy.NETDEV_SetUpnpNatState(IntPtr lpUserID, ref NETDEV_UPNP_NAT_STATE_S pstNatState) => NETDEV_SetUpnpNatState(lpUserID, ref pstNatState);
-        int INetDevSdkProxy.NETDEV_SetVehicleAlarmCallBack(IntPtr lpUserID, NETDEV_VehicleAlarmMessCallBack_PF cbVehicleAlarmMessCallBack, IntPtr lpUserData) => NETDEV_SetVehicleAlarmCallBack(lpUserID, cbVehicleAlarmMessCallBack, lpUserData);
-        int INetDevSdkProxy.NETDEV_SetVehicleMonitorInfo(IntPtr lpUserID, uint udwID, ref NETDEV_MONITION_RULE_INFO_S pstMonitorInfo) => NETDEV_SetVehicleMonitorInfo(lpUserID, udwID, ref pstMonitorInfo);
-        int INetDevSdkProxy.NETDEV_SetVideoEffect(IntPtr lpRealHandle, ref NETDEV_VIDEO_EFFECT_S pstImageInfo) => NETDEV_SetVideoEffect(lpRealHandle, ref pstImageInfo);
-        int INetDevSdkProxy.NETDEV_SoundVolumeControl(IntPtr lpPlayHandle, int dwVolume) => NETDEV_SoundVolumeControl(lpPlayHandle, dwVolume);
-        IntPtr INetDevSdkProxy.NETDEV_StartInputVoiceSrv(IntPtr lpUserID, int dwChannelID) => NETDEV_StartInputVoiceSrv(lpUserID, dwChannelID);
-        IntPtr INetDevSdkProxy.NETDEV_StartPicStream(IntPtr lpUserID, IntPtr hPlayWnd, bool bReTran, string pcReTranIP, NETDEV_PIC_UPLOAD_PF pfnPicDataCBFun, IntPtr lpUserData) => NETDEV_StartPicStream(lpUserID, hPlayWnd, bReTran, pcReTranIP, pfnPicDataCBFun, lpUserData);
-        IntPtr INetDevSdkProxy.NETDEV_StartVoiceCom(IntPtr lpUserID, int dwChannelID, IntPtr cbPlayDataCallBack, IntPtr lpUserData) => NETDEV_StartVoiceCom(lpUserID, dwChannelID, cbPlayDataCallBack, lpUserData);
-        int INetDevSdkProxy.NETDEV_StopGetFile(IntPtr lpPlayHandle) => NETDEV_StopGetFile(lpPlayHandle);
-        int INetDevSdkProxy.NETDEV_StopInputVoiceSrv(IntPtr lpVoiceComHandle) => NETDEV_StopInputVoiceSrv(lpVoiceComHandle);
-        int INetDevSdkProxy.NETDEV_StopPicStream(IntPtr lpPlayHandle) => NETDEV_StopPicStream(lpPlayHandle);
-        int INetDevSdkProxy.NETDEV_StopPlayBack(IntPtr lpPlayHandle) => NETDEV_StopPlayBack(lpPlayHandle);
-        int INetDevSdkProxy.NETDEV_StopPlaySound(IntPtr lpRealHandle) => NETDEV_StopPlaySound(lpRealHandle);
-        int INetDevSdkProxy.NETDEV_StopRealPlay(IntPtr lpRealHandle) => NETDEV_StopRealPlay(lpRealHandle);
-        int INetDevSdkProxy.NETDEV_StopSaveRealData(IntPtr lpRealHandle) => NETDEV_StopSaveRealData(lpRealHandle);
-        int INetDevSdkProxy.NETDEV_StopVoiceCom(IntPtr lpVoiceComHandle) => NETDEV_StopVoiceCom(lpVoiceComHandle);
-        int INetDevSdkProxy.NETDEV_SubscibeLapiAlarm(IntPtr lpUserID, ref NETDEV_LAPI_SUB_INFO_S pstSubInfo, ref NETDEV_SUBSCRIBE_SUCC_INFO_S pstSubSuccInfo) => NETDEV_SubscibeLapiAlarm(lpUserID, ref pstSubInfo, ref pstSubSuccInfo);
-        int INetDevSdkProxy.NETDEV_SubscribeSmart(IntPtr lpUserID, ref NETDEV_SUBSCRIBE_SMART_INFO_S pstSubscribeInfo, ref NETDEV_SMART_INFO_S pstSmartInfo) => NETDEV_SubscribeSmart(lpUserID, ref pstSubscribeInfo, ref pstSmartInfo);
-        int INetDevSdkProxy.NETDEV_Trigger(IntPtr lpFindHandle) => NETDEV_Trigger(lpFindHandle);
-        int INetDevSdkProxy.NETDEV_TriggerSync(IntPtr lpFindHandle, ref IntPtr ppstPicData) => NETDEV_TriggerSync(lpFindHandle, ref ppstPicData);
-        int INetDevSdkProxy.NETDEV_UnSubLapiAlarm(IntPtr lpUserID, uint udwID) => NETDEV_UnSubLapiAlarm(lpUserID, udwID);
-        int INetDevSdkProxy.NETDEV_UnsubscribeSmart(IntPtr lpUserID, ref NETDEV_SMART_INFO_S pstSmartInfo) => NETDEV_UnsubscribeSmart(lpUserID, ref pstSmartInfo);
+        void IItsNetDevSdkProxy.MemCopy(byte[] dest, IntPtr src, int count) => MemCopy(dest, src, count);
+        void IItsNetDevSdkProxy.OutputDebugString(string message) => OutputDebugString(message);
+        int IItsNetDevSdkProxy.NETDEV_ACSPersonCtrl(IntPtr lpUserID, int dwCommand, ref NETDEV_ACS_PERSON_INFO_S pstACSPersonInfo) => NETDEV_ACSPersonCtrl(lpUserID, dwCommand, ref pstACSPersonInfo);
+        int IItsNetDevSdkProxy.NETDEV_AddACSPersonBlackList(IntPtr lpUserID, ref NETDEV_ACS_PERSON_BLACKLIST_INFO_S pstBlackListInfo, ref uint pUdwBlackListID) => NETDEV_AddACSPersonBlackList(lpUserID, ref pstBlackListInfo, ref pUdwBlackListID);
+        int IItsNetDevSdkProxy.NETDEV_AddACSPersonList(IntPtr lpUserID, ref NETDEV_ACS_PERSON_LIST_S pstACSPersonList, ref NETDEV_XW_BATCH_RESULT_LIST_S pstResultList) => NETDEV_AddACSPersonList(lpUserID, ref pstACSPersonList, ref pstResultList);
+        int IItsNetDevSdkProxy.NETDEV_AddACSPersonPermissionGroup(IntPtr lpUserID, ref NETDEV_ACS_PERMISSION_INFO_S pstPermissionGroupInfo, ref uint pUdwGroupID) => NETDEV_AddACSPersonPermissionGroup(lpUserID, ref pstPermissionGroupInfo, ref pUdwGroupID);
+        int IItsNetDevSdkProxy.NETDEV_AddOrgInfo(IntPtr lpUserID, ref NETDEV_ORG_INFO_S pstOrgInfo, ref int pdwOrgID) => NETDEV_AddOrgInfo(lpUserID, ref pstOrgInfo, ref pdwOrgID);
+        int IItsNetDevSdkProxy.NETDEV_AddPersonInfo(IntPtr lpUserID, uint udwPersonLibID, ref NETDEV_PERSON_INFO_LIST_S pstPersonInfoList, ref NETDEV_PERSON_RESULT_LIST_S pstPersonResultList) => NETDEV_AddPersonInfo(lpUserID, udwPersonLibID, ref pstPersonInfoList, ref pstPersonResultList);
+        int IItsNetDevSdkProxy.NETDEV_AddPersonMonitorInfo(IntPtr lpUserID, ref NETDEV_MONITION_INFO_S pstMonitorInfo, ref NETDEV_MONITOR_RESULT_INFO_S pstMonitorResultInfo) => NETDEV_AddPersonMonitorInfo(lpUserID, ref pstMonitorInfo, ref pstMonitorResultInfo);
+        int IItsNetDevSdkProxy.NETDEV_AddVehicleLibInfo(IntPtr lpUserID, ref NETDEV_LIB_INFO_S pstVehicleLibInfo) => NETDEV_AddVehicleLibInfo(lpUserID, ref pstVehicleLibInfo);
+        int IItsNetDevSdkProxy.NETDEV_AddVehicleLibMember(IntPtr lpUserID, uint udwVehicleLibID, ref NETDEV_BATCH_OPERATE_MEMBER_LIST_S pstMemberList, ref NETDEV_BATCH_OPERATOR_LIST_S pstBatchResultList) => NETDEV_AddVehicleLibMember(lpUserID, udwVehicleLibID, ref pstMemberList, ref pstBatchResultList);
+        int IItsNetDevSdkProxy.NETDEV_AddVehicleMemberList(IntPtr lpUserID, uint udwLibID, ref NETDEV_VEHICLE_INFO_LIST_S pstVehicleMemberList, ref NETDEV_BATCH_OPERATOR_LIST_S pstResultList) => NETDEV_AddVehicleMemberList(lpUserID, udwLibID, ref pstVehicleMemberList, ref pstResultList);
+        int IItsNetDevSdkProxy.NETDEV_AddVehicleMonitorInfo(IntPtr lpUserID, ref NETDEV_MONITION_INFO_S pstMonitorInfo) => NETDEV_AddVehicleMonitorInfo(lpUserID, ref pstMonitorInfo);
+        int IItsNetDevSdkProxy.NETDEV_AddVehicleRecord(IntPtr lpFindHandle, ref NETDEV_PARK_VEHICLE_RECORD_EXTERN_S pstVehicleRecordExtern) => NETDEV_AddVehicleRecord(lpFindHandle, ref pstVehicleRecordExtern);
+        int IItsNetDevSdkProxy.NETDEV_BatchDeleteOrgInfo(IntPtr lpUserID, ref NETDEV_DEL_ORG_INFO_S pstOrgDelInfo, ref NETDEV_ORG_BATCH_DEL_INFO_S pstOrgDelResultInfo) => NETDEV_BatchDeleteOrgInfo(lpUserID, ref pstOrgDelInfo, ref pstOrgDelResultInfo);
+        int IItsNetDevSdkProxy.NETDEV_BatchDeletePersonMonitorInfo(IntPtr lpUserID, ref NETDEV_BATCH_OPERATOR_LIST_S pstResultList) => NETDEV_BatchDeletePersonMonitorInfo(lpUserID, ref pstResultList);
+        int IItsNetDevSdkProxy.NETDEV_CaptureNoPreview(IntPtr lpUserID, int dwChannelID, int dwStreamType, string szFileName, int dwCaptureMode) => NETDEV_CaptureNoPreview(lpUserID, dwChannelID, dwStreamType, szFileName, dwCaptureMode);
+        int IItsNetDevSdkProxy.NETDEV_CapturePicture(IntPtr lpRealHandle, byte[] szFileName, int dwCaptureMode) => NETDEV_CapturePicture(lpRealHandle, szFileName, dwCaptureMode);
+        int IItsNetDevSdkProxy.NETDEV_Cleanup() => NETDEV_Cleanup();
+        int IItsNetDevSdkProxy.NETDEV_CloseMic(IntPtr lpPlayHandle) => NETDEV_CloseMic(lpPlayHandle);
+        int IItsNetDevSdkProxy.NETDEV_CloseSound(IntPtr lpRealHandle) => NETDEV_CloseSound(lpRealHandle);
+        int IItsNetDevSdkProxy.NETDEV_ConfigLogFile(int dwLogFileSize, int dwLogFileNum) => NETDEV_ConfigLogFile(dwLogFileSize, dwLogFileNum);
+        int IItsNetDevSdkProxy.NETDEV_CreatePersonLibInfo(IntPtr lpUserID, ref NETDEV_LIB_INFO_S pstPersonLibInfo, ref uint pudwID) => NETDEV_CreatePersonLibInfo(lpUserID, ref pstPersonLibInfo, ref pudwID);
+        int IItsNetDevSdkProxy.NETDEV_CreateUser(IntPtr lpUserID, IntPtr stUserInfo) => NETDEV_CreateUser(lpUserID, stUserInfo);
+        int IItsNetDevSdkProxy.NETDEV_DeleteACSPersonBlackList(IntPtr lpUserID, ref NETDEV_OPERATE_LIST_S pstBlackList) => NETDEV_DeleteACSPersonBlackList(lpUserID, ref pstBlackList);
+        int IItsNetDevSdkProxy.NETDEV_DeleteACSPersonList(IntPtr lpUserID, ref NETDEV_FACE_BATCH_LIST_S pstBatchCtrlInfo) => NETDEV_DeleteACSPersonList(lpUserID, ref pstBatchCtrlInfo);
+        int IItsNetDevSdkProxy.NETDEV_DeleteACSPersonPermissionGroup(IntPtr lpUserID, ref NETDEV_OPERATE_LIST_S pstPermissionIDList, ref NETDEV_BATCH_OPERATOR_LIST_S pstResutList) => NETDEV_DeleteACSPersonPermissionGroup(lpUserID, ref pstPermissionIDList, ref pstResutList);
+        int IItsNetDevSdkProxy.NETDEV_DeleteAllowVehicleRecord(IntPtr lpFindHandle, int ulRecordID) => NETDEV_DeleteAllowVehicleRecord(lpFindHandle, ulRecordID);
+        int IItsNetDevSdkProxy.NETDEV_DeleteBlockVehicleRecord(IntPtr lpFindHandle, int ulRecordID) => NETDEV_DeleteBlockVehicleRecord(lpFindHandle, ulRecordID);
+        int IItsNetDevSdkProxy.NETDEV_DeletePersonInfo(IntPtr lpUserID, uint udwPersonLibID, uint udwPersonID, uint udwLastChange) => NETDEV_DeletePersonInfo(lpUserID, udwPersonLibID, udwPersonID, udwLastChange);
+        int IItsNetDevSdkProxy.NETDEV_DeletePersonInfoList(IntPtr lpUserID, uint udwPersonLibID, ref NETDEV_BATCH_OPERATE_MEMBER_LIST_S pstIDList, ref NETDEV_BATCH_OPERATOR_LIST_S pstResutList) => NETDEV_DeletePersonInfoList(lpUserID, udwPersonLibID, ref pstIDList, ref pstResutList);
+        int IItsNetDevSdkProxy.NETDEV_DeletePersonLibInfo(IntPtr lpUserID, uint udwPersonLibID, ref NETDEV_DELETE_DB_FLAG_INFO_S pstFlagInfo) => NETDEV_DeletePersonLibInfo(lpUserID, udwPersonLibID, ref pstFlagInfo);
+        int IItsNetDevSdkProxy.NETDEV_DeleteUser(IntPtr lpUserID, string strUserName) => NETDEV_DeleteUser(lpUserID, strUserName);
+        int IItsNetDevSdkProxy.NETDEV_DeleteVehicleLibInfo(IntPtr lpUserID, uint udwVehicleLibID, ref NETDEV_DELETE_DB_FLAG_INFO_S pstDelLibFlag) => NETDEV_DeleteVehicleLibInfo(lpUserID, udwVehicleLibID, ref pstDelLibFlag);
+        int IItsNetDevSdkProxy.NETDEV_DeleteVehicleLibMember(IntPtr lpUserID, uint udwVehicleLibID, ref NETDEV_BATCH_OPERATE_MEMBER_LIST_S pstMemberList, ref NETDEV_BATCH_OPERATOR_LIST_S pstBatchResultList) => NETDEV_DeleteVehicleLibMember(lpUserID, udwVehicleLibID, ref pstMemberList, ref pstBatchResultList);
+        int IItsNetDevSdkProxy.NETDEV_DeleteVehicleMonitorInfo(IntPtr lpUserID, ref NETDEV_BATCH_OPERATOR_LIST_S pstBatchList) => NETDEV_DeleteVehicleMonitorInfo(lpUserID, ref pstBatchList);
+        int IItsNetDevSdkProxy.NETDEV_DelVehicleMemberList(IntPtr lpUserID, uint udwLib, ref NETDEV_VEHICLE_INFO_LIST_S pstVehicleMemberList, ref NETDEV_BATCH_OPERATOR_LIST_S pstBatchList) => NETDEV_DelVehicleMemberList(lpUserID, udwLib, ref pstVehicleMemberList, ref pstBatchList);
+        int IItsNetDevSdkProxy.NETDEV_Discovery(string pszBeginIP, string pszEndIP) => NETDEV_Discovery(pszBeginIP, pszEndIP);
+        int IItsNetDevSdkProxy.NETDEV_DoorBatchCtrl(IntPtr lpUserID, int dwCommand, ref NETDEV_OPERATE_LIST_S pstBatchCtrlInfo) => NETDEV_DoorBatchCtrl(lpUserID, dwCommand, ref pstBatchCtrlInfo);
+        int IItsNetDevSdkProxy.NETDEV_DoorCtrl(IntPtr lpUserID, int dwChannelID, int dwCommand) => NETDEV_DoorCtrl(lpUserID, dwChannelID, dwCommand);
+        int IItsNetDevSdkProxy.NETDEV_EnableCarplate(int bEnable) => NETDEV_EnableCarplate(bEnable);
+        int IItsNetDevSdkProxy.NETDEV_ExportBlackWhiteListFile(IntPtr lpFindHandle, string pcFile) => NETDEV_ExportBlackWhiteListFile(lpFindHandle, pcFile);
+        IntPtr IItsNetDevSdkProxy.NETDEV_FindACSAttendanceLogList(IntPtr lpUserID, ref NETDEV_ALARM_LOG_COND_LIST_S pstFindCond, ref NETDEV_BATCH_OPERATE_BASIC_S pstResultInfo) => NETDEV_FindACSAttendanceLogList(lpUserID, ref pstFindCond, ref pstResultInfo);
+        IntPtr IItsNetDevSdkProxy.NETDEV_FindACSPermissionGroupList(IntPtr lpUserID, ref NETDEV_PERSON_QUERY_INFO_S pstQueryCond, ref NETDEV_BATCH_OPERATE_BASIC_S pstResultInfo) => NETDEV_FindACSPermissionGroupList(lpUserID, ref pstQueryCond, ref pstResultInfo);
+        IntPtr IItsNetDevSdkProxy.NETDEV_FindACSPersonBlackList(IntPtr lpUserID, ref NETDEV_PAGED_QUERY_INFO_S pstQueryCond, ref NETDEV_BATCH_OPERATE_BASIC_S pstResultInfo) => NETDEV_FindACSPersonBlackList(lpUserID, ref pstQueryCond, ref pstResultInfo);
+        IntPtr IItsNetDevSdkProxy.NETDEV_FindACSPersonList(IntPtr lpUserID, ref NETDEV_PERSON_QUERY_INFO_S pstQueryCond, ref NETDEV_BATCH_OPERATE_BASIC_S pstResultInfo) => NETDEV_FindACSPersonList(lpUserID, ref pstQueryCond, ref pstResultInfo);
+        IntPtr IItsNetDevSdkProxy.NETDEV_FindACSVisitLogList(IntPtr lpUserID, ref NETDEV_ALARM_LOG_COND_LIST_S pstFindCond, ref NETDEV_BATCH_OPERATE_BASIC_S pstResultInfo) => NETDEV_FindACSVisitLogList(lpUserID, ref pstFindCond, ref pstResultInfo);
+        int IItsNetDevSdkProxy.NETDEV_FindClose(IntPtr lpFindHandle) => NETDEV_FindClose(lpFindHandle);
+        int IItsNetDevSdkProxy.NETDEV_FindCloseACSAttendanceLogList(IntPtr lpFindHandle) => NETDEV_FindCloseACSAttendanceLogList(lpFindHandle);
+        int IItsNetDevSdkProxy.NETDEV_FindCloseACSPermissionGroupList(IntPtr lpFindHandle) => NETDEV_FindCloseACSPermissionGroupList(lpFindHandle);
+        int IItsNetDevSdkProxy.NETDEV_FindCloseACSPersonBlackList(IntPtr lpFindHandle) => NETDEV_FindCloseACSPersonBlackList(lpFindHandle);
+        int IItsNetDevSdkProxy.NETDEV_FindCloseACSPersonInfo(IntPtr lpFindHandle) => NETDEV_FindCloseACSPersonInfo(lpFindHandle);
+        int IItsNetDevSdkProxy.NETDEV_FindCloseACSVisitLog(IntPtr lpFindHandle) => NETDEV_FindCloseACSVisitLog(lpFindHandle);
+        int IItsNetDevSdkProxy.NETDEV_FindCloseCloudDevListEx(IntPtr lpFindHandle) => NETDEV_FindCloseCloudDevListEx(lpFindHandle);
+        int IItsNetDevSdkProxy.NETDEV_FindCloseDevChn(IntPtr lpFindHandle) => NETDEV_FindCloseDevChn(lpFindHandle);
+        int IItsNetDevSdkProxy.NETDEV_FindCloseDevInfo(IntPtr lpFindHandle) => NETDEV_FindCloseDevInfo(lpFindHandle);
+        int IItsNetDevSdkProxy.NETDEV_FindCloseFaceRecordDetail(IntPtr lpFindHandle) => NETDEV_FindCloseFaceRecordDetail(lpFindHandle);
+        int IItsNetDevSdkProxy.NETDEV_FindCloseMonitorDevResult(IntPtr lpFindHandle) => NETDEV_FindCloseMonitorDevResult(lpFindHandle);
+        int IItsNetDevSdkProxy.NETDEV_FindCloseMonitorStatusList(IntPtr lpFindHandle) => NETDEV_FindCloseMonitorStatusList(lpFindHandle);
+        int IItsNetDevSdkProxy.NETDEV_FindCloseOrgInfo(IntPtr lpFindHandle) => NETDEV_FindCloseOrgInfo(lpFindHandle);
+        int IItsNetDevSdkProxy.NETDEV_FindClosePermStatusList(IntPtr lpFindHandle) => NETDEV_FindClosePermStatusList(lpFindHandle);
+        int IItsNetDevSdkProxy.NETDEV_FindClosePersonInfoList(IntPtr lpFindHandle) => NETDEV_FindClosePersonInfoList(lpFindHandle);
+        int IItsNetDevSdkProxy.NETDEV_FindClosePersonLibList(IntPtr lpFindHandle) => NETDEV_FindClosePersonLibList(lpFindHandle);
+        int IItsNetDevSdkProxy.NETDEV_FindClosePersonMonitorList(IntPtr lpFindHandle) => NETDEV_FindClosePersonMonitorList(lpFindHandle);
+        int IItsNetDevSdkProxy.NETDEV_FindCloseVehicleLibList(IntPtr lpFindHandle) => NETDEV_FindCloseVehicleLibList(lpFindHandle);
+        int IItsNetDevSdkProxy.NETDEV_FindCloseVehicleMemberDetail(IntPtr lpFindHandle) => NETDEV_FindCloseVehicleMemberDetail(lpFindHandle);
+        int IItsNetDevSdkProxy.NETDEV_FindCloseVehicleMonitorList(IntPtr lpFindHandle) => NETDEV_FindCloseVehicleMonitorList(lpFindHandle);
+        int IItsNetDevSdkProxy.NETDEV_FindCloseVehicleRecordList(IntPtr lpFindHandle) => NETDEV_FindCloseVehicleRecordList(lpFindHandle);
+        IntPtr IItsNetDevSdkProxy.NETDEV_FindCloudDevListEx(IntPtr lpUserID) => NETDEV_FindCloudDevListEx(lpUserID);
+        IntPtr IItsNetDevSdkProxy.NETDEV_FindDevChnList(IntPtr lpUserID, int dwDevID, int dwChnType) => NETDEV_FindDevChnList(lpUserID, dwDevID, dwChnType);
+        IntPtr IItsNetDevSdkProxy.NETDEV_FindDevList(IntPtr lpUserID, int dwDevType) => NETDEV_FindDevList(lpUserID, dwDevType);
+        IntPtr IItsNetDevSdkProxy.NETDEV_FindFaceRecordDetailList(IntPtr lpUserID, ref NETDEV_ALARM_LOG_COND_LIST_S pstFindCond, ref NETDEV_SMART_ALARM_LOG_RESULT_INFO_S pstResultInfo) => NETDEV_FindFaceRecordDetailList(lpUserID, ref pstFindCond, ref pstResultInfo);
+        IntPtr IItsNetDevSdkProxy.NETDEV_FindFile(IntPtr lpUserID, ref NETDEV_FILECOND_S pFindCond) => NETDEV_FindFile(lpUserID, ref pFindCond);
+        IntPtr IItsNetDevSdkProxy.NETDEV_FindMonitorDevResult(IntPtr lpUserID, ref uint pudwDevNum) => NETDEV_FindMonitorDevResult(lpUserID, ref pudwDevNum);
+        IntPtr IItsNetDevSdkProxy.NETDEV_FindMonitorStatusList(IntPtr lpUserID, int enType, ref uint udwMonitorID, ref NETDEV_ALARM_LOG_COND_LIST_S pstFindLimit, ref NETDEV_SMART_ALARM_LOG_RESULT_INFO_S pstList) => NETDEV_FindMonitorStatusList(lpUserID, enType, ref udwMonitorID, ref pstFindLimit, ref pstList);
+        int IItsNetDevSdkProxy.NETDEV_FindNextACSAttendanceLog(IntPtr lpFindHandle, ref NETDEV_ACS_ATTENDANCE_LOG_INFO_S pstACSLogInfo) => NETDEV_FindNextACSAttendanceLog(lpFindHandle, ref pstACSLogInfo);
+        int IItsNetDevSdkProxy.NETDEV_FindNextACSPermissionGroupInfo(IntPtr lpFindHandle, ref NETDEV_ACS_PERMISSION_INFO_S pstACSPermissionInfo) => NETDEV_FindNextACSPermissionGroupInfo(lpFindHandle, ref pstACSPermissionInfo);
+        int IItsNetDevSdkProxy.NETDEV_FindNextACSPersonBlackListInfo(IntPtr lpFindHandle, ref NETDEV_ACS_PERSON_BLACKLIST_INFO_S pstBlackListInfo) => NETDEV_FindNextACSPersonBlackListInfo(lpFindHandle, ref pstBlackListInfo);
+        int IItsNetDevSdkProxy.NETDEV_FindNextACSPersonInfo(IntPtr lpFindHandle, ref NETDEV_ACS_PERSON_BASE_INFO_S pstACSPersonInfo) => NETDEV_FindNextACSPersonInfo(lpFindHandle, ref pstACSPersonInfo);
+        int IItsNetDevSdkProxy.NETDEV_FindNextACSVisitLog(IntPtr lpFindHandle, ref NETDEV_ACS_VISIT_LOG_INFO_S pstACSLogInfo) => NETDEV_FindNextACSVisitLog(lpFindHandle, ref pstACSLogInfo);
+        int IItsNetDevSdkProxy.NETDEV_FindNextCloudDevInfoEx(IntPtr lpFindHandle, ref NETDEV_CLOUD_DEV_BASIC_INFO_S pstDevInfo) => NETDEV_FindNextCloudDevInfoEx(lpFindHandle, ref pstDevInfo);
+        int IItsNetDevSdkProxy.NETDEV_FindNextDevChn(IntPtr lpFindHandle, IntPtr lpOutBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => NETDEV_FindNextDevChn(lpFindHandle, lpOutBuffer, dwOutBufferSize, ref pdwBytesReturned);
+        int IItsNetDevSdkProxy.NETDEV_FindNextDevInfo(IntPtr lpFindHandle, ref NETDEV_DEV_BASIC_INFO_S pstDevBasicInfo) => NETDEV_FindNextDevInfo(lpFindHandle, ref pstDevBasicInfo);
+        int IItsNetDevSdkProxy.NETDEV_FindNextFaceRecordDetail(IntPtr lpFindHandle, ref NETDEV_FACE_RECORD_SNAPSHOT_INFO_S pstRecordInfo) => NETDEV_FindNextFaceRecordDetail(lpFindHandle, ref pstRecordInfo);
+        int IItsNetDevSdkProxy.NETDEV_FindNextFile(IntPtr lpFindHandle, ref NETDEV_FINDDATA_S lpFindData) => NETDEV_FindNextFile(lpFindHandle, ref lpFindData);
+        int IItsNetDevSdkProxy.NETDEV_FindNextMonitorDevResult(IntPtr lpFindHandle, ref NETDEV_MONITOR_DEV_RESULT_INFO_S pstMonitorDevResultInfo) => NETDEV_FindNextMonitorDevResult(lpFindHandle, ref pstMonitorDevResultInfo);
+        int IItsNetDevSdkProxy.NETDEV_FindNextMonitorStatusInfo(IntPtr lpFindHandle, ref NETDEV_MONITOR_MEMBER_INFO_S pstMonitorStats) => NETDEV_FindNextMonitorStatusInfo(lpFindHandle, ref pstMonitorStats);
+        int IItsNetDevSdkProxy.NETDEV_FindNextOrgInfo(IntPtr lpFindHandle, ref NETDEV_ORG_INFO_S pstOrgInfo) => NETDEV_FindNextOrgInfo(lpFindHandle, ref pstOrgInfo);
+        int IItsNetDevSdkProxy.NETDEV_FindNextPermStatusInfo(IntPtr lpFindHandle, ref NETDEV_ACS_PERM_STATUS_S pstACSPermStatus) => NETDEV_FindNextPermStatusInfo(lpFindHandle, ref pstACSPermStatus);
+        int IItsNetDevSdkProxy.NETDEV_FindNextPersonInfo(IntPtr lpFindHandle, ref NETDEV_PERSON_INFO_S pstPersonInfo) => NETDEV_FindNextPersonInfo(lpFindHandle, ref pstPersonInfo);
+        int IItsNetDevSdkProxy.NETDEV_FindNextPersonLibInfo(IntPtr lpFindHandle, ref NETDEV_LIB_INFO_S pstPersonLibInfo) => NETDEV_FindNextPersonLibInfo(lpFindHandle, ref pstPersonLibInfo);
+        int IItsNetDevSdkProxy.NETDEV_FindNextPersonMonitorInfo(IntPtr lpFindHandle, ref NETDEV_MONITION_INFO_S pstMonitorInfo) => NETDEV_FindNextPersonMonitorInfo(lpFindHandle, ref pstMonitorInfo);
+        int IItsNetDevSdkProxy.NETDEV_FindNextVehicleLibInfo(IntPtr lpFindHandle, ref NETDEV_LIB_INFO_S pstVehicleLibInfo) => NETDEV_FindNextVehicleLibInfo(lpFindHandle, ref pstVehicleLibInfo);
+        int IItsNetDevSdkProxy.NETDEV_FindNextVehicleMemberDetail(IntPtr lpFindHandle, ref NETDEV_VEHICLE_DETAIL_INFO_S pstVehicleMemberInfo) => NETDEV_FindNextVehicleMemberDetail(lpFindHandle, ref pstVehicleMemberInfo);
+        int IItsNetDevSdkProxy.NETDEV_FindNextVehicleMonitorInfo(IntPtr lpFindHandle, ref NETDEV_MONITION_INFO_S pstVehicleMonitorInfo) => NETDEV_FindNextVehicleMonitorInfo(lpFindHandle, ref pstVehicleMonitorInfo);
+        int IItsNetDevSdkProxy.NETDEV_FindNextVehicleRecordInfo(IntPtr lpFindHandle, ref NETDEV_VEHICLE_RECORD_INFO_S pstRecordInfo) => NETDEV_FindNextVehicleRecordInfo(lpFindHandle, ref pstRecordInfo);
+        IntPtr IItsNetDevSdkProxy.NETDEV_FindOrgInfoList(IntPtr lpUserID, ref NETDEV_ORG_FIND_COND_S pstFindCond) => NETDEV_FindOrgInfoList(lpUserID, ref pstFindCond);
+        IntPtr IItsNetDevSdkProxy.NETDEV_FindPermStatusList(IntPtr lpUserID, ref uint udwPermGroupID, ref NETDEV_ALARM_LOG_COND_LIST_S pstQueryInfo, ref NETDEV_BATCH_OPERATE_BASIC_S pstResultInfo) => NETDEV_FindPermStatusList(lpUserID, ref udwPermGroupID, ref pstQueryInfo, ref pstResultInfo);
+        IntPtr IItsNetDevSdkProxy.NETDEV_FindPersonInfoList(IntPtr lpUserID, uint udwPersonLibID, ref NETDEV_PERSON_QUERY_INFO_S pstQueryInfo, ref NETDEV_BATCH_OPERATE_BASIC_S pstQueryResultInfo) => NETDEV_FindPersonInfoList(lpUserID, udwPersonLibID, ref pstQueryInfo, ref pstQueryResultInfo);
+        IntPtr IItsNetDevSdkProxy.NETDEV_FindPersonLibList(IntPtr lpUserID) => NETDEV_FindPersonLibList(lpUserID);
+        IntPtr IItsNetDevSdkProxy.NETDEV_FindPersonMonitorList(IntPtr lpUserID, uint udwChannelID, ref NETDEV_MONITOR_QUERY_INFO_S pstQueryInfo) => NETDEV_FindPersonMonitorList(lpUserID, udwChannelID, ref pstQueryInfo);
+        IntPtr IItsNetDevSdkProxy.NETDEV_FindVehicleLibList(IntPtr lpUserID) => NETDEV_FindVehicleLibList(lpUserID);
+        IntPtr IItsNetDevSdkProxy.NETDEV_FindVehicleMemberDetailList(IntPtr lpUserID, uint udwVehicleLibID, ref NETDEV_PERSON_QUERY_INFO_S pstFindCond, ref NETDEV_BATCH_OPERATE_BASIC_S pstDBMemberList) => NETDEV_FindVehicleMemberDetailList(lpUserID, udwVehicleLibID, ref pstFindCond, ref pstDBMemberList);
+        IntPtr IItsNetDevSdkProxy.NETDEV_FindVehicleMonitorList(IntPtr lpUserID) => NETDEV_FindVehicleMonitorList(lpUserID);
+        IntPtr IItsNetDevSdkProxy.NETDEV_FindVehicleRecordInfoList(IntPtr lpUserID, ref NETDEV_ALARM_LOG_COND_LIST_S pstFindCond, ref NETDEV_SMART_ALARM_LOG_RESULT_INFO_S pstResultInfo) => NETDEV_FindVehicleRecordInfoList(lpUserID, ref pstFindCond, ref pstResultInfo);
+        int IItsNetDevSdkProxy.NETDEV_GetACSPersonBlackList(IntPtr lpUserID, ref NETDEV_ACS_PERSON_BLACKLIST_INFO_S pstBlackListInfo) => NETDEV_GetACSPersonBlackList(lpUserID, ref pstBlackListInfo);
+        int IItsNetDevSdkProxy.NETDEV_GetACSPersonPermission(IntPtr lpUserID, uint udwPersonID, ref NETDEV_ACS_DOOR_PERMISSION_INFO_S pstPermissionInfo) => NETDEV_GetACSPersonPermission(lpUserID, udwPersonID, ref pstPermissionInfo);
+        int IItsNetDevSdkProxy.NETDEV_GetBitRate(IntPtr lpRealHandle, ref int pdwBitRate) => NETDEV_GetBitRate(lpRealHandle, ref pdwBitRate);
+        int IItsNetDevSdkProxy.NETDEV_GetBuiltinIndicatorCtrl(IntPtr lpFindHandle, ref NETDEV_CARPORT_CONTROLLED_S pstuCarportControlled) => NETDEV_GetBuiltinIndicatorCtrl(lpFindHandle, ref pstuCarportControlled);
+        int IItsNetDevSdkProxy.NETDEV_GetChnDetailByChnType(IntPtr lpUserID, int dwChnID, int dwChnType, IntPtr lpOutBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => NETDEV_GetChnDetailByChnType(lpUserID, dwChnID, dwChnType, lpOutBuffer, dwOutBufferSize, ref pdwBytesReturned);
+        int IItsNetDevSdkProxy.NETDEV_GetChnType(IntPtr lpUserID, int dwChnID, ref int pdwChnType) => NETDEV_GetChnType(lpUserID, dwChnID, ref pdwChnType);
+        int IItsNetDevSdkProxy.NETDEV_GetCloudDevInfoByName(IntPtr lpUserID, string pszRegisterCode, ref NETDEV_CLOUD_DEV_INFO_S pstDevInfo) => NETDEV_GetCloudDevInfoByName(lpUserID, pszRegisterCode, ref pstDevInfo);
+        int IItsNetDevSdkProxy.NETDEV_GetCloudDevInfoByRegCode(IntPtr lpUserID, string pszRegisterName, ref NETDEV_CLOUD_DEV_INFO_S pstDevInfo) => NETDEV_GetCloudDevInfoByRegCode(lpUserID, pszRegisterName, ref pstDevInfo);
+        int IItsNetDevSdkProxy.NETDEV_GetCompassInfo(IntPtr lpUserID, int dwChannelID, ref float fCompassInfo) => NETDEV_GetCompassInfo(lpUserID, dwChannelID, ref fCompassInfo);
+        int IItsNetDevSdkProxy.NETDEV_GetConfigFile(IntPtr lpUserID, string strConfigPath) => NETDEV_GetConfigFile(lpUserID, strConfigPath);
+        int IItsNetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_DEFOGGING_INFO_S lpInBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => NETDEV_GetDevConfig(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwOutBufferSize, ref pdwBytesReturned);
+        int IItsNetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_MOTION_ALARM_INFO_S lpInBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => NETDEV_GetDevConfig(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwOutBufferSize, ref pdwBytesReturned);
+        int IItsNetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_TAMPER_ALARM_INFO_S lpOutBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => NETDEV_GetDevConfig(lpUserID, dwChannelID, dwCommand, ref lpOutBuffer, dwOutBufferSize, ref pdwBytesReturned);
+        int IItsNetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_OSD_CAP_S lpOutBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => NETDEV_GetDevConfig(lpUserID, dwChannelID, dwCommand, ref lpOutBuffer, dwOutBufferSize, ref pdwBytesReturned);
+        int IItsNetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_VIDEO_STREAM_CAP_EX_S lpOutBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => NETDEV_GetDevConfig(lpUserID, dwChannelID, dwCommand, ref lpOutBuffer, dwOutBufferSize, ref pdwBytesReturned);
+        int IItsNetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, IntPtr lpInBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => NETDEV_GetDevConfig(lpUserID, dwChannelID, dwCommand, lpInBuffer, dwOutBufferSize, ref pdwBytesReturned);
+        int IItsNetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_PTZ_STATUS_S lpInBuffer, int dwInBufferSize, ref int pdwBytesReturned) => NETDEV_GetDevConfig(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwInBufferSize, ref pdwBytesReturned);
+        int IItsNetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_VIDEO_STREAM_INFO_S lpInBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => NETDEV_GetDevConfig(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwOutBufferSize, ref pdwBytesReturned);
+        int IItsNetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_IMAGE_SETTING_S lpInBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => NETDEV_GetDevConfig(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwOutBufferSize, ref pdwBytesReturned);
+        int IItsNetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_SYSTEM_NTP_INFO_S lpInBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => NETDEV_GetDevConfig(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwOutBufferSize, ref pdwBytesReturned);
+        int IItsNetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_NETWORKCFG_S lpInBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => NETDEV_GetDevConfig(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwOutBufferSize, ref pdwBytesReturned);
+        int IItsNetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_ALARM_OUTPUT_INFO_S lpInBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => NETDEV_GetDevConfig(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwOutBufferSize, ref pdwBytesReturned);
+        int IItsNetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_RECORD_PLAN_CFG_INFO_S lpInBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => NETDEV_GetDevConfig(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwOutBufferSize, ref pdwBytesReturned);
+        int IItsNetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_TRIGGER_ALARM_OUTPUT_S lpInBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => NETDEV_GetDevConfig(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwOutBufferSize, ref pdwBytesReturned);
+        int IItsNetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_VIDEO_OSD_CFG_S lpInBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => NETDEV_GetDevConfig(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwOutBufferSize, ref pdwBytesReturned);
+        int IItsNetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_ALARM_INPUT_LIST_S lpInBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => NETDEV_GetDevConfig(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwOutBufferSize, ref pdwBytesReturned);
+        int IItsNetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_ALARM_OUTPUT_LIST_S lpInBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => NETDEV_GetDevConfig(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwOutBufferSize, ref pdwBytesReturned);
+        int IItsNetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_DEVICE_BASICINFO_S lpInBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => NETDEV_GetDevConfig(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwOutBufferSize, ref pdwBytesReturned);
+        int IItsNetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_DISK_INFO_LIST_S lpInBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => NETDEV_GetDevConfig(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwOutBufferSize, ref pdwBytesReturned);
+        int IItsNetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_PRIVACY_MASK_CFG_S lpInBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => NETDEV_GetDevConfig(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwOutBufferSize, ref pdwBytesReturned);
+        int IItsNetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_SYSTEM_NTP_INFO_LIST_S lpInBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => NETDEV_GetDevConfig(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwOutBufferSize, ref pdwBytesReturned);
+        int IItsNetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_IMAGE_EXPOSURE_S lpInBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => NETDEV_GetDevConfig(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwOutBufferSize, ref pdwBytesReturned);
+        int IItsNetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_IRCUT_FILTER_INFO_S lpInBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => NETDEV_GetDevConfig(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwOutBufferSize, ref pdwBytesReturned);
+        int IItsNetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_INFORELEASE_CFG_S lpInBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => NETDEV_GetDevConfig(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwOutBufferSize, ref pdwBytesReturned);
+        int IItsNetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_ITS_PARKING_DETECTION_S lpInBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => NETDEV_GetDevConfig(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwOutBufferSize, ref pdwBytesReturned);
+        int IItsNetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_OSD_CONTENT_STYLE_S lpInBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => NETDEV_GetDevConfig(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwOutBufferSize, ref pdwBytesReturned);
+        int IItsNetDevSdkProxy.NETDEV_GetDeviceCapability(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_OSD_CAP_S lpOutBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => NETDEV_GetDeviceCapability(lpUserID, dwChannelID, dwCommand, ref lpOutBuffer, dwOutBufferSize, ref pdwBytesReturned);
+        int IItsNetDevSdkProxy.NETDEV_GetDeviceCapability(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_VIDEO_STREAM_CAP_EX_S lpOutBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => NETDEV_GetDeviceCapability(lpUserID, dwChannelID, dwCommand, ref lpOutBuffer, dwOutBufferSize, ref pdwBytesReturned);
+        int IItsNetDevSdkProxy.NETDEV_GetDeviceInfo(IntPtr lpUserID, ref NETDEV_DEVICE_INFO_S pstDevInfo) => NETDEV_GetDeviceInfo(lpUserID, ref pstDevInfo);
+        int IItsNetDevSdkProxy.NETDEV_GetDeviceInfo_V30(IntPtr lpUserID, int dwDevID, ref NETDEV_DEV_INFO_V30_S pstDevInfo) => NETDEV_GetDeviceInfo_V30(lpUserID, dwDevID, ref pstDevInfo);
+        int IItsNetDevSdkProxy.NETDEV_GetFaceRecordImageInfo(IntPtr lpUserID, uint udwRecordID, uint udwFaceImageType, ref NETDEV_FILE_INFO_S pstFileInfo) => NETDEV_GetFaceRecordImageInfo(lpUserID, udwRecordID, udwFaceImageType, ref pstFileInfo);
+        IntPtr IItsNetDevSdkProxy.NETDEV_GetFileByName(IntPtr lpUserID, ref NETDEV_PLAYBACKINFO_S pstPlayBackInfo, string szSaveFileName, int dwFormat) => NETDEV_GetFileByName(lpUserID, ref pstPlayBackInfo, szSaveFileName, dwFormat);
+        IntPtr IItsNetDevSdkProxy.NETDEV_GetFileByTime(IntPtr lpUserID, ref NETDEV_PLAYBACKCOND_S pstPlayBackCond, byte[] pszSaveFileName, int dwFormat) => NETDEV_GetFileByTime(lpUserID, ref pstPlayBackCond, pszSaveFileName, dwFormat);
+        int IItsNetDevSdkProxy.NETDEV_GetFrameRate(IntPtr lpRealHandle, ref int pdwFrameRate) => NETDEV_GetFrameRate(lpRealHandle, ref pdwFrameRate);
+        int IItsNetDevSdkProxy.NETDEV_GetGeolocationInfo(IntPtr lpUserID, int dwChannelID, ref NETDEV_GEOLACATION_INFO_S pstGPSInfo) => NETDEV_GetGeolocationInfo(lpUserID, dwChannelID, ref pstGPSInfo);
+        int IItsNetDevSdkProxy.NETDEV_GetLastError() => NETDEV_GetLastError();
+        int IItsNetDevSdkProxy.NETDEV_GetLostPacketRate(IntPtr lpRealHandle, ref int pulRecvPktNum, ref int pulLostPktNum) => NETDEV_GetLostPacketRate(lpRealHandle, ref pulRecvPktNum, ref pulLostPktNum);
+        int IItsNetDevSdkProxy.NETDEV_GetMicVolume(IntPtr lpPlayHandle, ref int dwVolume) => NETDEV_GetMicVolume(lpPlayHandle, ref dwVolume);
+        int IItsNetDevSdkProxy.NETDEV_GetMonitorCapacity(IntPtr lpUserID, ref NETDEV_MONITOR_CAPACITY_INFO_S pstCapacityInfo, ref NETDEV_MONITOR_CAPACITY_LIST_S pstCapacityList) => NETDEV_GetMonitorCapacity(lpUserID, ref pstCapacityInfo, ref pstCapacityList);
+        int IItsNetDevSdkProxy.NETDEV_GetMonitorProgress(IntPtr lpUserID, ref uint pudwProgressRate) => NETDEV_GetMonitorProgress(lpUserID, ref pudwProgressRate);
+        int IItsNetDevSdkProxy.NETDEV_GetPARKVersion(byte[] strVersion) => NETDEV_GetPARKVersion(strVersion);
+        int IItsNetDevSdkProxy.NETDEV_GetPersonLibCapacity(IntPtr lpUserID, int dwTimeOut, ref NETDEV_PERSON_LIB_CAP_LIST_S pstCapacityList) => NETDEV_GetPersonLibCapacity(lpUserID, dwTimeOut, ref pstCapacityList);
+        int IItsNetDevSdkProxy.NETDEV_GetPersonMemberInfo(IntPtr lpUserID, uint udwPersonID, ref NETDEV_PERSON_INFO_S pstPersonInfo) => NETDEV_GetPersonMemberInfo(lpUserID, udwPersonID, ref pstPersonInfo);
+        int IItsNetDevSdkProxy.NETDEV_GetPersonMonitorRuleInfo(IntPtr lpUserID, ref NETDEV_MONITION_INFO_S pstMonitorInfo) => NETDEV_GetPersonMonitorRuleInfo(lpUserID, ref pstMonitorInfo);
+        int IItsNetDevSdkProxy.NETDEV_GetPTZPresetList(IntPtr lpUserID, int dwChannelID, ref NETDEV_PTZ_ALLPRESETS_S lpOutBuffer) => NETDEV_GetPTZPresetList(lpUserID, dwChannelID, ref lpOutBuffer);
+        int IItsNetDevSdkProxy.NETDEV_GetResolution(IntPtr lpRealHandle, ref int pdwWidth, ref int pdwHeight) => NETDEV_GetResolution(lpRealHandle, ref pdwWidth, ref pdwHeight);
+        int IItsNetDevSdkProxy.NETDEV_GetSDKVersion() => NETDEV_GetSDKVersion();
+        int IItsNetDevSdkProxy.NETDEV_GetSinglePermGroupInfo(IntPtr lpUserID, uint udwPermissionGroupID, ref NETDEV_ACS_PERMISSION_INFO_S pstAcsPerssionInfo) => NETDEV_GetSinglePermGroupInfo(lpUserID, udwPermissionGroupID, ref pstAcsPerssionInfo);
+        int IItsNetDevSdkProxy.NETDEV_GetSoundVolume(IntPtr lpPlayHandle, ref int pdwVolume) => NETDEV_GetSoundVolume(lpPlayHandle, ref pdwVolume);
+        int IItsNetDevSdkProxy.NETDEV_GetSystemPicture(IntPtr lpUserID, string pszURL, uint udwSize, IntPtr pszdata) => NETDEV_GetSystemPicture(lpUserID, pszURL, udwSize, pszdata);
+        int IItsNetDevSdkProxy.NETDEV_GetSystemTimeCfg(IntPtr lpUserID, ref NETDEV_TIME_CFG_S pstSystemTimeInfo) => NETDEV_GetSystemTimeCfg(lpUserID, ref pstSystemTimeInfo);
+        int IItsNetDevSdkProxy.NETDEV_GetTimeTemplateInfo(IntPtr lpUserID, int dwTemplateID, ref NETDEV_TIME_TEMPLATE_INFO_V30_S pstTimeTemplateInfo) => NETDEV_GetTimeTemplateInfo(lpUserID, dwTemplateID, ref pstTimeTemplateInfo);
+        int IItsNetDevSdkProxy.NETDEV_GetTimeTemplateList(IntPtr lpUserID, int dwTamplateType, ref NETDEV_TIME_TEMPLATE_LIST_S pstTemplateList) => NETDEV_GetTimeTemplateList(lpUserID, dwTamplateType, ref pstTemplateList);
+        int IItsNetDevSdkProxy.NETDEV_GetTrafficStatistic(IntPtr lpUserID, ref NETDEV_TRAFFIC_STATISTICS_COND_S pstStatisticCond, ref NETDEV_TRAFFIC_STATISTICS_DATA_S pstTrafficStatistic) => NETDEV_GetTrafficStatistic(lpUserID, ref pstStatisticCond, ref pstTrafficStatistic);
+        int IItsNetDevSdkProxy.NETDEV_GetUpnpNatState(IntPtr lpUserID, ref NETDEV_UPNP_NAT_STATE_S pstNatState) => NETDEV_GetUpnpNatState(lpUserID, ref pstNatState);
+        int IItsNetDevSdkProxy.NETDEV_GetUserDetailList(IntPtr lpUserID, IntPtr pstUserDetailList) => NETDEV_GetUserDetailList(lpUserID, pstUserDetailList);
+        int IItsNetDevSdkProxy.NETDEV_GetVehicleMonitorInfo(IntPtr lpUserID, uint udwID, ref NETDEV_MONITION_RULE_INFO_S pstMonitorInfo) => NETDEV_GetVehicleMonitorInfo(lpUserID, udwID, ref pstMonitorInfo);
+        int IItsNetDevSdkProxy.NETDEV_GetVehicleRecordImageInfo(IntPtr lpUserID, uint udwRecordID, ref NETDEV_FILE_INFO_S pstFileInfo) => NETDEV_GetVehicleRecordImageInfo(lpUserID, udwRecordID, ref pstFileInfo);
+        int IItsNetDevSdkProxy.NETDEV_GetVideoEffect(IntPtr lpRealHandle, ref NETDEV_VIDEO_EFFECT_S pstImageInfo) => NETDEV_GetVideoEffect(lpRealHandle, ref pstImageInfo);
+        int IItsNetDevSdkProxy.NETDEV_GetVideoEncodeFmt(IntPtr lpRealHandle, ref int pdwVideoEncFmt) => NETDEV_GetVideoEncodeFmt(lpRealHandle, ref pdwVideoEncFmt);
+        int IItsNetDevSdkProxy.NETDEV_ImportBlackWhiteListFile(IntPtr lpFindHandle, string pcFile) => NETDEV_ImportBlackWhiteListFile(lpFindHandle, pcFile);
+        int IItsNetDevSdkProxy.NETDEV_Init() => NETDEV_Init();
+        int IItsNetDevSdkProxy.NETDEV_InputVoiceData(IntPtr lpUserID, byte[] lpDataBuf, int dwDataLen, ref NETDEV_AUDIO_SAMPLE_PARAM_S pstVoiceParam) => NETDEV_InputVoiceData(lpUserID, lpDataBuf, dwDataLen, ref pstVoiceParam);
+        IntPtr IItsNetDevSdkProxy.NETDEV_Login(string szDevIP, short wDevPort, string szUserName, string szPassword, ref NETDEV_DEVICE_INFO_S pstDevInfo) => NETDEV_Login(szDevIP, wDevPort, szUserName, szPassword, ref pstDevInfo);
+        IntPtr IItsNetDevSdkProxy.NETDEV_LoginCloud(string pszCloudSrvUrl, string pszUserName, string pszPassWord) => NETDEV_LoginCloud(pszCloudSrvUrl, pszUserName, pszPassWord);
+        IntPtr IItsNetDevSdkProxy.NETDEV_LoginCloudDevice_V30(IntPtr lpUserID, ref NETDEV_CLOUD_DEV_LOGIN_INFO_S pstCloudInfo) => NETDEV_LoginCloudDevice_V30(lpUserID, ref pstCloudInfo);
+        IntPtr IItsNetDevSdkProxy.NETDEV_Login_V30(ref NETDEV_DEVICE_LOGIN_INFO_S pstDevLoginInfo, ref NETDEV_SELOG_INFO_S pstSELogInfo) => NETDEV_Login_V30(ref pstDevLoginInfo, ref pstSELogInfo);
+        int IItsNetDevSdkProxy.NETDEV_Logout(IntPtr lpUserID) => NETDEV_Logout(lpUserID);
+        int IItsNetDevSdkProxy.NETDEV_MakeKeyFrame(IntPtr lpUserID, int dwChannelID, int dwStreamType) => NETDEV_MakeKeyFrame(lpUserID, dwChannelID, dwStreamType);
+        int IItsNetDevSdkProxy.NETDEV_MicVolumeControl(IntPtr lpPlayHandle, int dwVolume) => NETDEV_MicVolumeControl(lpPlayHandle, dwVolume);
+        int IItsNetDevSdkProxy.NETDEV_ModifyACSPersonBlackList(IntPtr lpUserID, ref NETDEV_ACS_PERSON_BLACKLIST_INFO_S pstBlackListInfo) => NETDEV_ModifyACSPersonBlackList(lpUserID, ref pstBlackListInfo);
+        int IItsNetDevSdkProxy.NETDEV_ModifyACSPersonPermissionGroup(IntPtr lpUserID, ref NETDEV_ACS_PERMISSION_INFO_S pstPermissionInfo) => NETDEV_ModifyACSPersonPermissionGroup(lpUserID, ref pstPermissionInfo);
+        int IItsNetDevSdkProxy.NETDEV_ModifyAllowVehicleRecord(IntPtr lpFindHandle, ref NETDEV_PARK_VEHICLE_RECORD_S pstVehicleRecordExtern) => NETDEV_ModifyAllowVehicleRecord(lpFindHandle, ref pstVehicleRecordExtern);
+        int IItsNetDevSdkProxy.NETDEV_ModifyBlockVehicleRecord(IntPtr lpFindHandle, ref NETDEV_PARK_VEHICLE_RECORD_S pstVehicleRecordExtern) => NETDEV_ModifyBlockVehicleRecord(lpFindHandle, ref pstVehicleRecordExtern);
+        int IItsNetDevSdkProxy.NETDEV_ModifyDeviceName(IntPtr lpUserID, byte[] strDeviceName) => NETDEV_ModifyDeviceName(lpUserID, strDeviceName);
+        int IItsNetDevSdkProxy.NETDEV_ModifyOrgInfo(IntPtr lpUserID, ref NETDEV_ORG_INFO_S pstOrgInfo) => NETDEV_ModifyOrgInfo(lpUserID, ref pstOrgInfo);
+        int IItsNetDevSdkProxy.NETDEV_ModifyPersonInfo(IntPtr lpUserID, uint udwPersonLibID, ref NETDEV_PERSON_INFO_LIST_S pstPersonInfoList, ref NETDEV_PERSON_RESULT_LIST_S pstPersonResultList) => NETDEV_ModifyPersonInfo(lpUserID, udwPersonLibID, ref pstPersonInfoList, ref pstPersonResultList);
+        int IItsNetDevSdkProxy.NETDEV_ModifyPersonLibInfo(IntPtr lpUserID, ref NETDEV_PERSON_LIB_LIST_S pstPersonLibList) => NETDEV_ModifyPersonLibInfo(lpUserID, ref pstPersonLibList);
+        int IItsNetDevSdkProxy.NETDEV_ModifyUser(IntPtr lpUserID, IntPtr pstUserInfo) => NETDEV_ModifyUser(lpUserID, pstUserInfo);
+        int IItsNetDevSdkProxy.NETDEV_ModifyVehicleLibInfo(IntPtr lpUserID, ref NETDEV_PERSON_LIB_LIST_S pstVehicleLibList) => NETDEV_ModifyVehicleLibInfo(lpUserID, ref pstVehicleLibList);
+        int IItsNetDevSdkProxy.NETDEV_ModifyVehicleMemberInfo(IntPtr lpUserID, uint udwVehicleLibID, ref NETDEV_VEHICLE_INFO_LIST_S pstVehicleMemberList, ref NETDEV_BATCH_OPERATOR_LIST_S pstResultList) => NETDEV_ModifyVehicleMemberInfo(lpUserID, udwVehicleLibID, ref pstVehicleMemberList, ref pstResultList);
+        int IItsNetDevSdkProxy.NETDEV_OpenMic(IntPtr lpPlayHandle) => NETDEV_OpenMic(lpPlayHandle);
+        int IItsNetDevSdkProxy.NETDEV_OpenSound(IntPtr lpRealHandle) => NETDEV_OpenSound(lpRealHandle);
+        IntPtr IItsNetDevSdkProxy.NETDEV_PlayBackByName(IntPtr lpUserID, ref NETDEV_PLAYBACKINFO_S pstPlayBackInfo) => NETDEV_PlayBackByName(lpUserID, ref pstPlayBackInfo);
+        IntPtr IItsNetDevSdkProxy.NETDEV_PlayBackByTime(IntPtr lpUserID, ref NETDEV_PLAYBACKCOND_S pstPlayBackInfo) => NETDEV_PlayBackByTime(lpUserID, ref pstPlayBackInfo);
+        int IItsNetDevSdkProxy.NETDEV_PlayBackControl(IntPtr lpPlayHandle, int dwControlCode, ref long pdwBuffer) => NETDEV_PlayBackControl(lpPlayHandle, dwControlCode, ref pdwBuffer);
+        int IItsNetDevSdkProxy.NETDEV_PlaySound(IntPtr lpRealHandle) => NETDEV_PlaySound(lpRealHandle);
+        int IItsNetDevSdkProxy.NETDEV_PTZCalibrate(IntPtr lpUserID, int dwChannelID, ref NETDEV_PTZ_ORIENTATION_INFO_S pstOrientationInfo) => NETDEV_PTZCalibrate(lpUserID, dwChannelID, ref pstOrientationInfo);
+        int IItsNetDevSdkProxy.NETDEV_PTZControl(IntPtr lpPlayHandle, int dwPTZCommand, int dwSpeed) => NETDEV_PTZControl(lpPlayHandle, dwPTZCommand, dwSpeed);
+        int IItsNetDevSdkProxy.NETDEV_PTZControl_Other(IntPtr lpUserID, int dwChannelID, int dwPTZCommand, int dwSpeed) => NETDEV_PTZControl_Other(lpUserID, dwChannelID, dwPTZCommand, dwSpeed);
+        int IItsNetDevSdkProxy.NETDEV_PTZCruise_Other(IntPtr lpUserID, int dwChannelID, int dwPTZCruiseCmd, ref NETDEV_CRUISE_INFO_S pstCruiseInfo) => NETDEV_PTZCruise_Other(lpUserID, dwChannelID, dwPTZCruiseCmd, ref pstCruiseInfo);
+        int IItsNetDevSdkProxy.NETDEV_PTZGetCruise(IntPtr lpUserID, int dwChannelID, ref NETDEV_CRUISE_LIST_S pstCruiseList) => NETDEV_PTZGetCruise(lpUserID, dwChannelID, ref pstCruiseList);
+        int IItsNetDevSdkProxy.NETDEV_PTZGetTrackCruise(IntPtr lpUserID, int dwChannelID, ref NETDEV_PTZ_TRACK_INFO_S pstTrackCruiseInfo) => NETDEV_PTZGetTrackCruise(lpUserID, dwChannelID, ref pstTrackCruiseInfo);
+        int IItsNetDevSdkProxy.NETDEV_PTZPreset(IntPtr lpPlayHandle, int dwPTZPresetCmd, string pszPresetName, int dwPresetID) => NETDEV_PTZPreset(lpPlayHandle, dwPTZPresetCmd, pszPresetName, dwPresetID);
+        int IItsNetDevSdkProxy.NETDEV_PTZPreset_Other(IntPtr lpUserID, int dwChannelID, int dwPTZPresetCmd, byte[] szPresetName, int dwPresetID) => NETDEV_PTZPreset_Other(lpUserID, dwChannelID, dwPTZPresetCmd, szPresetName, dwPresetID);
+        int IItsNetDevSdkProxy.NETDEV_PTZSelZoomIn_Other(IntPtr lpUserID, int dwChannelID, ref NETDEV_PTZ_OPERATEAREA_S pstPtzOperateArea) => NETDEV_PTZSelZoomIn_Other(lpUserID, dwChannelID, ref pstPtzOperateArea);
+        int IItsNetDevSdkProxy.NETDEV_PTZTrackCruise(IntPtr lpUserID, int dwChannelID, int dwPTZTrackCruiseCmd, string pszTrackCruiseName) => NETDEV_PTZTrackCruise(lpUserID, dwChannelID, dwPTZTrackCruiseCmd, pszTrackCruiseName);
+        int IItsNetDevSdkProxy.NETDEV_QueryVideoChlDetailList(IntPtr lpUserID, ref int pdwChlCount, IntPtr pstVideoChlList) => NETDEV_QueryVideoChlDetailList(lpUserID, ref pdwChlCount, pstVideoChlList);
+        IntPtr IItsNetDevSdkProxy.NETDEV_RealPlay(IntPtr lpUserID, ref NETDEV_PREVIEWINFO_S pstPreviewInfo, IntPtr cbPlayDataCallBack, IntPtr lpUserData) => NETDEV_RealPlay(lpUserID, ref pstPreviewInfo, cbPlayDataCallBack, lpUserData);
+        int IItsNetDevSdkProxy.NETDEV_Reboot(IntPtr lpUserID) => NETDEV_Reboot(lpUserID);
+        int IItsNetDevSdkProxy.NETDEV_ResetLostPacketRate(IntPtr lpRealHandle) => NETDEV_ResetLostPacketRate(lpRealHandle);
+        int IItsNetDevSdkProxy.NETDEV_RestoreConfig(IntPtr lpUserID) => NETDEV_RestoreConfig(lpUserID);
+        int IItsNetDevSdkProxy.NETDEV_SaveRealData(IntPtr lpRealHandle, byte[] szSaveFileName, int dwFormat) => NETDEV_SaveRealData(lpRealHandle, szSaveFileName, dwFormat);
+        int IItsNetDevSdkProxy.NETDEV_SetACSPersonPermission(IntPtr lpUserID, uint udwPersonID, ref NETDEV_ACS_DOOR_PERMISSION_INFO_S pstPermissionInfo) => NETDEV_SetACSPersonPermission(lpUserID, udwPersonID, ref pstPermissionInfo);
+        int IItsNetDevSdkProxy.NETDEV_SetAlarmCallBack(IntPtr lpUserID, NETDEV_AlarmMessCallBack_PF cbAlarmMessCallBack, IntPtr lpUserData) => NETDEV_SetAlarmCallBack(lpUserID, cbAlarmMessCallBack, lpUserData);
+        int IItsNetDevSdkProxy.NETDEV_SetAlarmCallBack_V30(IntPtr lpUserID, NETDEV_AlarmMessCallBack_PF_V30 cbAlarmMessCallBack, IntPtr lpUserData) => NETDEV_SetAlarmCallBack_V30(lpUserID, cbAlarmMessCallBack, lpUserData);
+        int IItsNetDevSdkProxy.NETDEV_SetAlarmFGCallBack(IntPtr lpUserID, NETDEV_AlarmMessFGCallBack_PF cbAlarmMessCallBack, IntPtr lpUserData) => NETDEV_SetAlarmFGCallBack(lpUserID, cbAlarmMessCallBack, lpUserData);
+        int IItsNetDevSdkProxy.NETDEV_SetBuiltinIndicatorCtrl(IntPtr lpFindHandle, ref NETDEV_CARPORT_CONTROLLED_S pstuCarportControlled) => NETDEV_SetBuiltinIndicatorCtrl(lpFindHandle, ref pstuCarportControlled);
+        int IItsNetDevSdkProxy.NETDEV_SetConfigFile(IntPtr lpUserID, string strConfigPath) => NETDEV_SetConfigFile(lpUserID, strConfigPath);
+        int IItsNetDevSdkProxy.NETDEV_SetConnectTime(int dwWaitTime, int dwTrytimes) => NETDEV_SetConnectTime(dwWaitTime, dwTrytimes);
+        int IItsNetDevSdkProxy.NETDEV_SetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref int index, int dwInBufferSize) => NETDEV_SetDevConfig(lpUserID, dwChannelID, dwCommand, ref index, dwInBufferSize);
+        int IItsNetDevSdkProxy.NETDEV_SetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_DEFOGGING_INFO_S lpInBuffer, int dwInBufferSize) => NETDEV_SetDevConfig(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwInBufferSize);
+        int IItsNetDevSdkProxy.NETDEV_SetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_MOTION_ALARM_INFO_S lpInBuffer, int dwInBufferSize) => NETDEV_SetDevConfig(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwInBufferSize);
+        int IItsNetDevSdkProxy.NETDEV_SetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_TAMPER_ALARM_INFO_S lpInBuffer, int dwInBufferSize) => NETDEV_SetDevConfig(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwInBufferSize);
+        int IItsNetDevSdkProxy.NETDEV_SetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_SYSTEM_NTP_INFO_LIST_S lpInBuffer, int dwInBufferSize) => NETDEV_SetDevConfig(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwInBufferSize);
+        int IItsNetDevSdkProxy.NETDEV_SetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, IntPtr lpInBuffer, ref int dwInBufferSize) => NETDEV_SetDevConfig(lpUserID, dwChannelID, dwCommand, lpInBuffer, ref dwInBufferSize);
+        int IItsNetDevSdkProxy.NETDEV_SetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_VIDEO_STREAM_INFO_S lpInBuffer, int dwInBufferSize) => NETDEV_SetDevConfig(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwInBufferSize);
+        int IItsNetDevSdkProxy.NETDEV_SetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_IMAGE_SETTING_S lpInBuffer, int dwInBufferSize) => NETDEV_SetDevConfig(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwInBufferSize);
+        int IItsNetDevSdkProxy.NETDEV_SetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_SYSTEM_NTP_INFO_S lpInBuffer, int dwInBufferSize) => NETDEV_SetDevConfig(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwInBufferSize);
+        int IItsNetDevSdkProxy.NETDEV_SetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_NETWORKCFG_S lpInBuffer, int dwInBufferSize) => NETDEV_SetDevConfig(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwInBufferSize);
+        int IItsNetDevSdkProxy.NETDEV_SetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_ALARM_OUTPUT_INFO_S lpInBuffer, int dwInBufferSize) => NETDEV_SetDevConfig(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwInBufferSize);
+        int IItsNetDevSdkProxy.NETDEV_SetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_RECORD_PLAN_CFG_INFO_S lpInBuffer, int dwInBufferSize) => NETDEV_SetDevConfig(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwInBufferSize);
+        int IItsNetDevSdkProxy.NETDEV_SetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_TRIGGER_ALARM_OUTPUT_S lpInBuffer, int dwInBufferSize) => NETDEV_SetDevConfig(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwInBufferSize);
+        int IItsNetDevSdkProxy.NETDEV_SetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_VIDEO_OSD_CFG_S lpInBuffer, int dwInBufferSize) => NETDEV_SetDevConfig(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwInBufferSize);
+        int IItsNetDevSdkProxy.NETDEV_SetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_PRIVACY_MASK_CFG_S lpInBuffer, int dwInBufferSize) => NETDEV_SetDevConfig(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwInBufferSize);
+        int IItsNetDevSdkProxy.NETDEV_SetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_IMAGE_EXPOSURE_S lpInBuffer, int dwOutBufferSize) => NETDEV_SetDevConfig(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwOutBufferSize);
+        int IItsNetDevSdkProxy.NETDEV_SetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_IRCUT_FILTER_INFO_S lpInBuffer, int dwInBufferSize) => NETDEV_SetDevConfig(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwInBufferSize);
+        int IItsNetDevSdkProxy.NETDEV_SetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_INFORELEASE_CFG_S lpInBuffer, int dwInBufferSize) => NETDEV_SetDevConfig(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwInBufferSize);
+        int IItsNetDevSdkProxy.NETDEV_SetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_OSD_CONTENT_STYLE_S lpInBuffer, int dwInBufferSize) => NETDEV_SetDevConfig(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwInBufferSize);
+        int IItsNetDevSdkProxy.NETDEV_setDeviceLedCfg(IntPtr lpFindHandle, ref NETDEV_LED_LIST_CFG_S pstLedListCfgs) => NETDEV_setDeviceLedCfg(lpFindHandle, ref pstLedListCfgs);
+        int IItsNetDevSdkProxy.NETDEV_SetDigitalZoom(IntPtr lpRealHandle, IntPtr hWnd, IntPtr pstRect) => NETDEV_SetDigitalZoom(lpRealHandle, hWnd, pstRect);
+        int IItsNetDevSdkProxy.NETDEV_SetDiscoveryCallBack(NETDEV_DISCOVERY_CALLBACK_PF cbDiscoveryCallBack, IntPtr lpUserData) => NETDEV_SetDiscoveryCallBack(cbDiscoveryCallBack, lpUserData);
+        int IItsNetDevSdkProxy.NETDEV_SetExceptionCallBack(NETDEV_ExceptionCallBack_PF cbExceptionCallBack, IntPtr lpUserData) => NETDEV_SetExceptionCallBack(cbExceptionCallBack, lpUserData);
+        int IItsNetDevSdkProxy.NETDEV_SetFaceSnapshotCallBack(IntPtr lpUserID, NETDEV_FaceSnapshotCallBack_PF cbFaceSnapshotCallBack, IntPtr lpUserData) => NETDEV_SetFaceSnapshotCallBack(lpUserID, cbFaceSnapshotCallBack, lpUserData);
+        int IItsNetDevSdkProxy.NETDEV_SetIVAEnable(IntPtr lpUserID, int dwEnableIVA) => NETDEV_SetIVAEnable(lpUserID, dwEnableIVA);
+        int IItsNetDevSdkProxy.NETDEV_SetIVAShowParam(int dwShowParam) => NETDEV_SetIVAShowParam(dwShowParam);
+        int IItsNetDevSdkProxy.NETDEV_SetLogPath(string strLogPath) => NETDEV_SetLogPath(strLogPath);
+        int IItsNetDevSdkProxy.NETDEV_SetOutputSwitchStatusCfg(IntPtr lpFindHandle) => NETDEV_SetOutputSwitchStatusCfg(lpFindHandle);
+        int IItsNetDevSdkProxy.NETDEV_SetParkingStatusCB(IntPtr lpFindHandle, NETDEV_PARKING_STATUS_PF pfnParkStatusCBFun, IntPtr lpUserData) => NETDEV_SetParkingStatusCB(lpFindHandle, pfnParkStatusCBFun, lpUserData);
+        int IItsNetDevSdkProxy.NETDEV_SetParkStatusCallBack(IntPtr lpUserID, NETDEV_ParkStatusReportCallBack_PF cbParkStatusReportCallBack, IntPtr lpUserData) => NETDEV_SetParkStatusCallBack(lpUserID, cbParkStatusReportCallBack, lpUserData);
+        int IItsNetDevSdkProxy.NETDEV_SetPassengerFlowStatisticCallBack(IntPtr lpUserID, NETDEV_PassengerFlowStatisticCallBack_PF cbPassengerFlowStatisticCallBack, IntPtr lpUserData) => NETDEV_SetPassengerFlowStatisticCallBack(lpUserID, cbPassengerFlowStatisticCallBack, lpUserData);
+        int IItsNetDevSdkProxy.NETDEV_SetPersonAlarmCallBack(IntPtr lpUserID, NETDEV_PersonAlarmMessCallBack_PF cbAlarmMessCallBack, IntPtr lpUserData) => NETDEV_SetPersonAlarmCallBack(lpUserID, cbAlarmMessCallBack, lpUserData);
+        int IItsNetDevSdkProxy.NETDEV_SetPersonMonitorRuleInfo(IntPtr lpUserID, ref NETDEV_MONITION_INFO_S pstMonitorInfo) => NETDEV_SetPersonMonitorRuleInfo(lpUserID, ref pstMonitorInfo);
+        int IItsNetDevSdkProxy.NETDEV_SetPictureFluency(IntPtr lpPlayHandle, int dwFluency) => NETDEV_SetPictureFluency(lpPlayHandle, dwFluency);
+        int IItsNetDevSdkProxy.NETDEV_SetPlayDataCallBack(IntPtr lpRealHandle, IntPtr cbPlayDataCallBack, int bContinue, IntPtr lpUserData) => NETDEV_SetPlayDataCallBack(lpRealHandle, cbPlayDataCallBack, bContinue, lpUserData);
+        int IItsNetDevSdkProxy.NETDEV_SetPlayDecodeVideoCB(IntPtr lpRealHandle, ref NETDEV_DECODE_VIDEO_DATA_CALLBACK_PF cbPlayDecodeVideoCallBack, int bContinue, IntPtr lpUserData) => NETDEV_SetPlayDecodeVideoCB(lpRealHandle, ref cbPlayDecodeVideoCallBack, bContinue, lpUserData);
+        int IItsNetDevSdkProxy.NETDEV_SetPlayDisplayCB(IntPtr lpRealHandle, IntPtr cbPlayDisplayCallBack, IntPtr lpUserData) => NETDEV_SetPlayDisplayCB(lpRealHandle, cbPlayDisplayCallBack, lpUserData);
+        int IItsNetDevSdkProxy.NETDEV_SetPlayParseCB(IntPtr lpRealHandle, ref NETDEV_PARSE_VIDEO_DATA_CALLBACK_PF cbPlayParseCallBack, int bContinue, IntPtr lpUserData) => NETDEV_SetPlayParseCB(lpRealHandle, ref cbPlayParseCallBack, bContinue, lpUserData);
+        int IItsNetDevSdkProxy.NETDEV_SetRenderScale(IntPtr lpRealHandle, int enRenderScale) => NETDEV_SetRenderScale(lpRealHandle, enRenderScale);
+        int IItsNetDevSdkProxy.NETDEV_SetRevTimeOut(ref NETDEV_REV_TIMEOUT_S pstRevTimeout) => NETDEV_SetRevTimeOut(ref pstRevTimeout);
+        int IItsNetDevSdkProxy.NETDEV_SetStructAlarmCallBack(IntPtr lpUserID, NETDEV_StructAlarmMessCallBack_PF cbAlarmMessCallBack, IntPtr lpUserData) => NETDEV_SetStructAlarmCallBack(lpUserID, cbAlarmMessCallBack, lpUserData);
+        int IItsNetDevSdkProxy.NETDEV_SetSystemTimeCfg(IntPtr lpUserID, ref NETDEV_TIME_CFG_S pstSystemTimeInfo) => NETDEV_SetSystemTimeCfg(lpUserID, ref pstSystemTimeInfo);
+        int IItsNetDevSdkProxy.NETDEV_SetUpnpNatState(IntPtr lpUserID, ref NETDEV_UPNP_NAT_STATE_S pstNatState) => NETDEV_SetUpnpNatState(lpUserID, ref pstNatState);
+        int IItsNetDevSdkProxy.NETDEV_SetVehicleAlarmCallBack(IntPtr lpUserID, NETDEV_VehicleAlarmMessCallBack_PF cbVehicleAlarmMessCallBack, IntPtr lpUserData) => NETDEV_SetVehicleAlarmCallBack(lpUserID, cbVehicleAlarmMessCallBack, lpUserData);
+        int IItsNetDevSdkProxy.NETDEV_SetVehicleMonitorInfo(IntPtr lpUserID, uint udwID, ref NETDEV_MONITION_RULE_INFO_S pstMonitorInfo) => NETDEV_SetVehicleMonitorInfo(lpUserID, udwID, ref pstMonitorInfo);
+        int IItsNetDevSdkProxy.NETDEV_SetVideoEffect(IntPtr lpRealHandle, ref NETDEV_VIDEO_EFFECT_S pstImageInfo) => NETDEV_SetVideoEffect(lpRealHandle, ref pstImageInfo);
+        int IItsNetDevSdkProxy.NETDEV_SoundVolumeControl(IntPtr lpPlayHandle, int dwVolume) => NETDEV_SoundVolumeControl(lpPlayHandle, dwVolume);
+        IntPtr IItsNetDevSdkProxy.NETDEV_StartInputVoiceSrv(IntPtr lpUserID, int dwChannelID) => NETDEV_StartInputVoiceSrv(lpUserID, dwChannelID);
+        IntPtr IItsNetDevSdkProxy.NETDEV_StartPicStream(IntPtr lpUserID, IntPtr hPlayWnd, bool bReTran, string pcReTranIP, NETDEV_PIC_UPLOAD_PF pfnPicDataCBFun, IntPtr lpUserData) => NETDEV_StartPicStream(lpUserID, hPlayWnd, bReTran, pcReTranIP, pfnPicDataCBFun, lpUserData);
+        IntPtr IItsNetDevSdkProxy.NETDEV_StartVoiceCom(IntPtr lpUserID, int dwChannelID, IntPtr cbPlayDataCallBack, IntPtr lpUserData) => NETDEV_StartVoiceCom(lpUserID, dwChannelID, cbPlayDataCallBack, lpUserData);
+        int IItsNetDevSdkProxy.NETDEV_StopGetFile(IntPtr lpPlayHandle) => NETDEV_StopGetFile(lpPlayHandle);
+        int IItsNetDevSdkProxy.NETDEV_StopInputVoiceSrv(IntPtr lpVoiceComHandle) => NETDEV_StopInputVoiceSrv(lpVoiceComHandle);
+        int IItsNetDevSdkProxy.NETDEV_StopPicStream(IntPtr lpPlayHandle) => NETDEV_StopPicStream(lpPlayHandle);
+        int IItsNetDevSdkProxy.NETDEV_StopPlayBack(IntPtr lpPlayHandle) => NETDEV_StopPlayBack(lpPlayHandle);
+        int IItsNetDevSdkProxy.NETDEV_StopPlaySound(IntPtr lpRealHandle) => NETDEV_StopPlaySound(lpRealHandle);
+        int IItsNetDevSdkProxy.NETDEV_StopRealPlay(IntPtr lpRealHandle) => NETDEV_StopRealPlay(lpRealHandle);
+        int IItsNetDevSdkProxy.NETDEV_StopSaveRealData(IntPtr lpRealHandle) => NETDEV_StopSaveRealData(lpRealHandle);
+        int IItsNetDevSdkProxy.NETDEV_StopVoiceCom(IntPtr lpVoiceComHandle) => NETDEV_StopVoiceCom(lpVoiceComHandle);
+        int IItsNetDevSdkProxy.NETDEV_SubscibeLapiAlarm(IntPtr lpUserID, ref NETDEV_LAPI_SUB_INFO_S pstSubInfo, ref NETDEV_SUBSCRIBE_SUCC_INFO_S pstSubSuccInfo) => NETDEV_SubscibeLapiAlarm(lpUserID, ref pstSubInfo, ref pstSubSuccInfo);
+        int IItsNetDevSdkProxy.NETDEV_SubscribeSmart(IntPtr lpUserID, ref NETDEV_SUBSCRIBE_SMART_INFO_S pstSubscribeInfo, ref NETDEV_SMART_INFO_S pstSmartInfo) => NETDEV_SubscribeSmart(lpUserID, ref pstSubscribeInfo, ref pstSmartInfo);
+        int IItsNetDevSdkProxy.NETDEV_Trigger(IntPtr lpFindHandle) => NETDEV_Trigger(lpFindHandle);
+        int IItsNetDevSdkProxy.NETDEV_TriggerSync(IntPtr lpFindHandle, ref IntPtr ppstPicData) => NETDEV_TriggerSync(lpFindHandle, ref ppstPicData);
+        int IItsNetDevSdkProxy.NETDEV_UnSubLapiAlarm(IntPtr lpUserID, uint udwID) => NETDEV_UnSubLapiAlarm(lpUserID, udwID);
+        int IItsNetDevSdkProxy.NETDEV_UnsubscribeSmart(IntPtr lpUserID, ref NETDEV_SMART_INFO_S pstSmartInfo) => NETDEV_UnsubscribeSmart(lpUserID, ref pstSmartInfo);
         #endregion 显示实现
     }
-    internal class NetDevSdkLoader : ASdkDynamicLoader, INetDevSdkProxy
+    internal class ItsNetDevSdkLoader : ASdkDynamicLoader, IItsNetDevSdkProxy
     {
         #region // 委托定义
         private DCreater.MemCopy _MemCopy;
@@ -5947,7 +5947,7 @@ namespace System.Data.YuShiITSSDK
         private DCreater.NETDEV_UnsubscribeSmart _NETDEV_UnsubscribeSmart;
         private DCreater.OutputDebugString _OutputDebugString;
         #endregion 委托定义
-        public NetDevSdkLoader()
+        public ItsNetDevSdkLoader()
         {
             _NETDEV_ACSPersonCtrl = GetDelegate<DCreater.NETDEV_ACSPersonCtrl>(nameof(DCreater.NETDEV_ACSPersonCtrl));
             _NETDEV_AddACSPersonBlackList = GetDelegate<DCreater.NETDEV_AddACSPersonBlackList>(nameof(DCreater.NETDEV_AddACSPersonBlackList));
@@ -6240,302 +6240,302 @@ namespace System.Data.YuShiITSSDK
         }
         public override string GetFileFullName()
         {
-            return NetDevSdk.DllFullName;
+            return ItsNetDevSdk.DllFullName;
         }
         [DllImport("msvcrt.dll", EntryPoint = "memcpy", CallingConvention = CallingConvention.Cdecl, SetLastError = false)]
         public static extern void MemCopy(byte[] dest, IntPtr src, int count);
         [DllImport("kernel32.dll", CharSet = CharSet.Auto)]
         public static extern void OutputDebugString(string message);
         #region // 显示实现
-        void INetDevSdkProxy.MemCopy(byte[] dest, IntPtr src, int count) => MemCopy(dest, src, count);
-        void INetDevSdkProxy.OutputDebugString(string message) => OutputDebugString(message);
-        int INetDevSdkProxy.NETDEV_ACSPersonCtrl(IntPtr lpUserID, int dwCommand, ref NETDEV_ACS_PERSON_INFO_S pstACSPersonInfo) => _NETDEV_ACSPersonCtrl.Invoke(lpUserID, dwCommand, ref pstACSPersonInfo);
-        int INetDevSdkProxy.NETDEV_AddACSPersonBlackList(IntPtr lpUserID, ref NETDEV_ACS_PERSON_BLACKLIST_INFO_S pstBlackListInfo, ref uint pUdwBlackListID) => _NETDEV_AddACSPersonBlackList.Invoke(lpUserID, ref pstBlackListInfo, ref pUdwBlackListID);
-        int INetDevSdkProxy.NETDEV_AddACSPersonList(IntPtr lpUserID, ref NETDEV_ACS_PERSON_LIST_S pstACSPersonList, ref NETDEV_XW_BATCH_RESULT_LIST_S pstResultList) => _NETDEV_AddACSPersonList.Invoke(lpUserID, ref pstACSPersonList, ref pstResultList);
-        int INetDevSdkProxy.NETDEV_AddACSPersonPermissionGroup(IntPtr lpUserID, ref NETDEV_ACS_PERMISSION_INFO_S pstPermissionGroupInfo, ref uint pUdwGroupID) => _NETDEV_AddACSPersonPermissionGroup.Invoke(lpUserID, ref pstPermissionGroupInfo, ref pUdwGroupID);
-        int INetDevSdkProxy.NETDEV_AddOrgInfo(IntPtr lpUserID, ref NETDEV_ORG_INFO_S pstOrgInfo, ref int pdwOrgID) => _NETDEV_AddOrgInfo.Invoke(lpUserID, ref pstOrgInfo, ref pdwOrgID);
-        int INetDevSdkProxy.NETDEV_AddPersonInfo(IntPtr lpUserID, uint udwPersonLibID, ref NETDEV_PERSON_INFO_LIST_S pstPersonInfoList, ref NETDEV_PERSON_RESULT_LIST_S pstPersonResultList) => _NETDEV_AddPersonInfo.Invoke(lpUserID, udwPersonLibID, ref pstPersonInfoList, ref pstPersonResultList);
-        int INetDevSdkProxy.NETDEV_AddPersonMonitorInfo(IntPtr lpUserID, ref NETDEV_MONITION_INFO_S pstMonitorInfo, ref NETDEV_MONITOR_RESULT_INFO_S pstMonitorResultInfo) => _NETDEV_AddPersonMonitorInfo.Invoke(lpUserID, ref pstMonitorInfo, ref pstMonitorResultInfo);
-        int INetDevSdkProxy.NETDEV_AddVehicleLibInfo(IntPtr lpUserID, ref NETDEV_LIB_INFO_S pstVehicleLibInfo) => _NETDEV_AddVehicleLibInfo.Invoke(lpUserID, ref pstVehicleLibInfo);
-        int INetDevSdkProxy.NETDEV_AddVehicleLibMember(IntPtr lpUserID, uint udwVehicleLibID, ref NETDEV_BATCH_OPERATE_MEMBER_LIST_S pstMemberList, ref NETDEV_BATCH_OPERATOR_LIST_S pstBatchResultList) => _NETDEV_AddVehicleLibMember.Invoke(lpUserID, udwVehicleLibID, ref pstMemberList, ref pstBatchResultList);
-        int INetDevSdkProxy.NETDEV_AddVehicleMemberList(IntPtr lpUserID, uint udwLibID, ref NETDEV_VEHICLE_INFO_LIST_S pstVehicleMemberList, ref NETDEV_BATCH_OPERATOR_LIST_S pstResultList) => _NETDEV_AddVehicleMemberList.Invoke(lpUserID, udwLibID, ref pstVehicleMemberList, ref pstResultList);
-        int INetDevSdkProxy.NETDEV_AddVehicleMonitorInfo(IntPtr lpUserID, ref NETDEV_MONITION_INFO_S pstMonitorInfo) => _NETDEV_AddVehicleMonitorInfo.Invoke(lpUserID, ref pstMonitorInfo);
-        int INetDevSdkProxy.NETDEV_AddVehicleRecord(IntPtr lpFindHandle, ref NETDEV_PARK_VEHICLE_RECORD_EXTERN_S pstVehicleRecordExtern) => _NETDEV_AddVehicleRecord.Invoke(lpFindHandle, ref pstVehicleRecordExtern);
-        int INetDevSdkProxy.NETDEV_BatchDeleteOrgInfo(IntPtr lpUserID, ref NETDEV_DEL_ORG_INFO_S pstOrgDelInfo, ref NETDEV_ORG_BATCH_DEL_INFO_S pstOrgDelResultInfo) => _NETDEV_BatchDeleteOrgInfo.Invoke(lpUserID, ref pstOrgDelInfo, ref pstOrgDelResultInfo);
-        int INetDevSdkProxy.NETDEV_BatchDeletePersonMonitorInfo(IntPtr lpUserID, ref NETDEV_BATCH_OPERATOR_LIST_S pstResultList) => _NETDEV_BatchDeletePersonMonitorInfo.Invoke(lpUserID, ref pstResultList);
-        int INetDevSdkProxy.NETDEV_CaptureNoPreview(IntPtr lpUserID, int dwChannelID, int dwStreamType, string szFileName, int dwCaptureMode) => _NETDEV_CaptureNoPreview.Invoke(lpUserID, dwChannelID, dwStreamType, szFileName, dwCaptureMode);
-        int INetDevSdkProxy.NETDEV_CapturePicture(IntPtr lpRealHandle, byte[] szFileName, int dwCaptureMode) => _NETDEV_CapturePicture.Invoke(lpRealHandle, szFileName, dwCaptureMode);
-        int INetDevSdkProxy.NETDEV_Cleanup() => _NETDEV_Cleanup.Invoke();
-        int INetDevSdkProxy.NETDEV_CloseMic(IntPtr lpPlayHandle) => _NETDEV_CloseMic.Invoke(lpPlayHandle);
-        int INetDevSdkProxy.NETDEV_CloseSound(IntPtr lpRealHandle) => _NETDEV_CloseSound.Invoke(lpRealHandle);
-        int INetDevSdkProxy.NETDEV_ConfigLogFile(int dwLogFileSize, int dwLogFileNum) => _NETDEV_ConfigLogFile.Invoke(dwLogFileSize, dwLogFileNum);
-        int INetDevSdkProxy.NETDEV_CreatePersonLibInfo(IntPtr lpUserID, ref NETDEV_LIB_INFO_S pstPersonLibInfo, ref uint pudwID) => _NETDEV_CreatePersonLibInfo.Invoke(lpUserID, ref pstPersonLibInfo, ref pudwID);
-        int INetDevSdkProxy.NETDEV_CreateUser(IntPtr lpUserID, IntPtr stUserInfo) => _NETDEV_CreateUser.Invoke(lpUserID, stUserInfo);
-        int INetDevSdkProxy.NETDEV_DeleteACSPersonBlackList(IntPtr lpUserID, ref NETDEV_OPERATE_LIST_S pstBlackList) => _NETDEV_DeleteACSPersonBlackList.Invoke(lpUserID, ref pstBlackList);
-        int INetDevSdkProxy.NETDEV_DeleteACSPersonList(IntPtr lpUserID, ref NETDEV_FACE_BATCH_LIST_S pstBatchCtrlInfo) => _NETDEV_DeleteACSPersonList.Invoke(lpUserID, ref pstBatchCtrlInfo);
-        int INetDevSdkProxy.NETDEV_DeleteACSPersonPermissionGroup(IntPtr lpUserID, ref NETDEV_OPERATE_LIST_S pstPermissionIDList, ref NETDEV_BATCH_OPERATOR_LIST_S pstResutList) => _NETDEV_DeleteACSPersonPermissionGroup.Invoke(lpUserID, ref pstPermissionIDList, ref pstResutList);
-        int INetDevSdkProxy.NETDEV_DeleteAllowVehicleRecord(IntPtr lpFindHandle, int ulRecordID) => _NETDEV_DeleteAllowVehicleRecord.Invoke(lpFindHandle, ulRecordID);
-        int INetDevSdkProxy.NETDEV_DeleteBlockVehicleRecord(IntPtr lpFindHandle, int ulRecordID) => _NETDEV_DeleteBlockVehicleRecord.Invoke(lpFindHandle, ulRecordID);
-        int INetDevSdkProxy.NETDEV_DeletePersonInfo(IntPtr lpUserID, uint udwPersonLibID, uint udwPersonID, uint udwLastChange) => _NETDEV_DeletePersonInfo.Invoke(lpUserID, udwPersonLibID, udwPersonID, udwLastChange);
-        int INetDevSdkProxy.NETDEV_DeletePersonInfoList(IntPtr lpUserID, uint udwPersonLibID, ref NETDEV_BATCH_OPERATE_MEMBER_LIST_S pstIDList, ref NETDEV_BATCH_OPERATOR_LIST_S pstResutList) => _NETDEV_DeletePersonInfoList.Invoke(lpUserID, udwPersonLibID, ref pstIDList, ref pstResutList);
-        int INetDevSdkProxy.NETDEV_DeletePersonLibInfo(IntPtr lpUserID, uint udwPersonLibID, ref NETDEV_DELETE_DB_FLAG_INFO_S pstFlagInfo) => _NETDEV_DeletePersonLibInfo.Invoke(lpUserID, udwPersonLibID, ref pstFlagInfo);
-        int INetDevSdkProxy.NETDEV_DeleteUser(IntPtr lpUserID, string strUserName) => _NETDEV_DeleteUser.Invoke(lpUserID, strUserName);
-        int INetDevSdkProxy.NETDEV_DeleteVehicleLibInfo(IntPtr lpUserID, uint udwVehicleLibID, ref NETDEV_DELETE_DB_FLAG_INFO_S pstDelLibFlag) => _NETDEV_DeleteVehicleLibInfo.Invoke(lpUserID, udwVehicleLibID, ref pstDelLibFlag);
-        int INetDevSdkProxy.NETDEV_DeleteVehicleLibMember(IntPtr lpUserID, uint udwVehicleLibID, ref NETDEV_BATCH_OPERATE_MEMBER_LIST_S pstMemberList, ref NETDEV_BATCH_OPERATOR_LIST_S pstBatchResultList) => _NETDEV_DeleteVehicleLibMember.Invoke(lpUserID, udwVehicleLibID, ref pstMemberList, ref pstBatchResultList);
-        int INetDevSdkProxy.NETDEV_DeleteVehicleMonitorInfo(IntPtr lpUserID, ref NETDEV_BATCH_OPERATOR_LIST_S pstBatchList) => _NETDEV_DeleteVehicleMonitorInfo.Invoke(lpUserID, ref pstBatchList);
-        int INetDevSdkProxy.NETDEV_DelVehicleMemberList(IntPtr lpUserID, uint udwLib, ref NETDEV_VEHICLE_INFO_LIST_S pstVehicleMemberList, ref NETDEV_BATCH_OPERATOR_LIST_S pstBatchList) => _NETDEV_DelVehicleMemberList.Invoke(lpUserID, udwLib, ref pstVehicleMemberList, ref pstBatchList);
-        int INetDevSdkProxy.NETDEV_Discovery(string pszBeginIP, string pszEndIP) => _NETDEV_Discovery.Invoke(pszBeginIP, pszEndIP);
-        int INetDevSdkProxy.NETDEV_DoorBatchCtrl(IntPtr lpUserID, int dwCommand, ref NETDEV_OPERATE_LIST_S pstBatchCtrlInfo) => _NETDEV_DoorBatchCtrl.Invoke(lpUserID, dwCommand, ref pstBatchCtrlInfo);
-        int INetDevSdkProxy.NETDEV_DoorCtrl(IntPtr lpUserID, int dwChannelID, int dwCommand) => _NETDEV_DoorCtrl.Invoke(lpUserID, dwChannelID, dwCommand);
-        int INetDevSdkProxy.NETDEV_EnableCarplate(int bEnable) => _NETDEV_EnableCarplate.Invoke(bEnable);
-        int INetDevSdkProxy.NETDEV_ExportBlackWhiteListFile(IntPtr lpFindHandle, string pcFile) => _NETDEV_ExportBlackWhiteListFile.Invoke(lpFindHandle, pcFile);
-        IntPtr INetDevSdkProxy.NETDEV_FindACSAttendanceLogList(IntPtr lpUserID, ref NETDEV_ALARM_LOG_COND_LIST_S pstFindCond, ref NETDEV_BATCH_OPERATE_BASIC_S pstResultInfo) => _NETDEV_FindACSAttendanceLogList.Invoke(lpUserID, ref pstFindCond, ref pstResultInfo);
-        IntPtr INetDevSdkProxy.NETDEV_FindACSPermissionGroupList(IntPtr lpUserID, ref NETDEV_PERSON_QUERY_INFO_S pstQueryCond, ref NETDEV_BATCH_OPERATE_BASIC_S pstResultInfo) => _NETDEV_FindACSPermissionGroupList.Invoke(lpUserID, ref pstQueryCond, ref pstResultInfo);
-        IntPtr INetDevSdkProxy.NETDEV_FindACSPersonBlackList(IntPtr lpUserID, ref NETDEV_PAGED_QUERY_INFO_S pstQueryCond, ref NETDEV_BATCH_OPERATE_BASIC_S pstResultInfo) => _NETDEV_FindACSPersonBlackList.Invoke(lpUserID, ref pstQueryCond, ref pstResultInfo);
-        IntPtr INetDevSdkProxy.NETDEV_FindACSPersonList(IntPtr lpUserID, ref NETDEV_PERSON_QUERY_INFO_S pstQueryCond, ref NETDEV_BATCH_OPERATE_BASIC_S pstResultInfo) => _NETDEV_FindACSPersonList.Invoke(lpUserID, ref pstQueryCond, ref pstResultInfo);
-        IntPtr INetDevSdkProxy.NETDEV_FindACSVisitLogList(IntPtr lpUserID, ref NETDEV_ALARM_LOG_COND_LIST_S pstFindCond, ref NETDEV_BATCH_OPERATE_BASIC_S pstResultInfo) => _NETDEV_FindACSVisitLogList.Invoke(lpUserID, ref pstFindCond, ref pstResultInfo);
-        int INetDevSdkProxy.NETDEV_FindClose(IntPtr lpFindHandle) => _NETDEV_FindClose.Invoke(lpFindHandle);
-        int INetDevSdkProxy.NETDEV_FindCloseACSAttendanceLogList(IntPtr lpFindHandle) => _NETDEV_FindCloseACSAttendanceLogList.Invoke(lpFindHandle);
-        int INetDevSdkProxy.NETDEV_FindCloseACSPermissionGroupList(IntPtr lpFindHandle) => _NETDEV_FindCloseACSPermissionGroupList.Invoke(lpFindHandle);
-        int INetDevSdkProxy.NETDEV_FindCloseACSPersonBlackList(IntPtr lpFindHandle) => _NETDEV_FindCloseACSPersonBlackList.Invoke(lpFindHandle);
-        int INetDevSdkProxy.NETDEV_FindCloseACSPersonInfo(IntPtr lpFindHandle) => _NETDEV_FindCloseACSPersonInfo.Invoke(lpFindHandle);
-        int INetDevSdkProxy.NETDEV_FindCloseACSVisitLog(IntPtr lpFindHandle) => _NETDEV_FindCloseACSVisitLog.Invoke(lpFindHandle);
-        int INetDevSdkProxy.NETDEV_FindCloseCloudDevListEx(IntPtr lpFindHandle) => _NETDEV_FindCloseCloudDevListEx.Invoke(lpFindHandle);
-        int INetDevSdkProxy.NETDEV_FindCloseDevChn(IntPtr lpFindHandle) => _NETDEV_FindCloseDevChn.Invoke(lpFindHandle);
-        int INetDevSdkProxy.NETDEV_FindCloseDevInfo(IntPtr lpFindHandle) => _NETDEV_FindCloseDevInfo.Invoke(lpFindHandle);
-        int INetDevSdkProxy.NETDEV_FindCloseFaceRecordDetail(IntPtr lpFindHandle) => _NETDEV_FindCloseFaceRecordDetail.Invoke(lpFindHandle);
-        int INetDevSdkProxy.NETDEV_FindCloseMonitorDevResult(IntPtr lpFindHandle) => _NETDEV_FindCloseMonitorDevResult.Invoke(lpFindHandle);
-        int INetDevSdkProxy.NETDEV_FindCloseMonitorStatusList(IntPtr lpFindHandle) => _NETDEV_FindCloseMonitorStatusList.Invoke(lpFindHandle);
-        int INetDevSdkProxy.NETDEV_FindCloseOrgInfo(IntPtr lpFindHandle) => _NETDEV_FindCloseOrgInfo.Invoke(lpFindHandle);
-        int INetDevSdkProxy.NETDEV_FindClosePermStatusList(IntPtr lpFindHandle) => _NETDEV_FindClosePermStatusList.Invoke(lpFindHandle);
-        int INetDevSdkProxy.NETDEV_FindClosePersonInfoList(IntPtr lpFindHandle) => _NETDEV_FindClosePersonInfoList.Invoke(lpFindHandle);
-        int INetDevSdkProxy.NETDEV_FindClosePersonLibList(IntPtr lpFindHandle) => _NETDEV_FindClosePersonLibList.Invoke(lpFindHandle);
-        int INetDevSdkProxy.NETDEV_FindClosePersonMonitorList(IntPtr lpFindHandle) => _NETDEV_FindClosePersonMonitorList.Invoke(lpFindHandle);
-        int INetDevSdkProxy.NETDEV_FindCloseVehicleLibList(IntPtr lpFindHandle) => _NETDEV_FindCloseVehicleLibList.Invoke(lpFindHandle);
-        int INetDevSdkProxy.NETDEV_FindCloseVehicleMemberDetail(IntPtr lpFindHandle) => _NETDEV_FindCloseVehicleMemberDetail.Invoke(lpFindHandle);
-        int INetDevSdkProxy.NETDEV_FindCloseVehicleMonitorList(IntPtr lpFindHandle) => _NETDEV_FindCloseVehicleMonitorList.Invoke(lpFindHandle);
-        int INetDevSdkProxy.NETDEV_FindCloseVehicleRecordList(IntPtr lpFindHandle) => _NETDEV_FindCloseVehicleRecordList.Invoke(lpFindHandle);
-        IntPtr INetDevSdkProxy.NETDEV_FindCloudDevListEx(IntPtr lpUserID) => _NETDEV_FindCloudDevListEx.Invoke(lpUserID);
-        IntPtr INetDevSdkProxy.NETDEV_FindDevChnList(IntPtr lpUserID, int dwDevID, int dwChnType) => _NETDEV_FindDevChnList.Invoke(lpUserID, dwDevID, dwChnType);
-        IntPtr INetDevSdkProxy.NETDEV_FindDevList(IntPtr lpUserID, int dwDevType) => _NETDEV_FindDevList.Invoke(lpUserID, dwDevType);
-        IntPtr INetDevSdkProxy.NETDEV_FindFaceRecordDetailList(IntPtr lpUserID, ref NETDEV_ALARM_LOG_COND_LIST_S pstFindCond, ref NETDEV_SMART_ALARM_LOG_RESULT_INFO_S pstResultInfo) => _NETDEV_FindFaceRecordDetailList.Invoke(lpUserID, ref pstFindCond, ref pstResultInfo);
-        IntPtr INetDevSdkProxy.NETDEV_FindFile(IntPtr lpUserID, ref NETDEV_FILECOND_S pFindCond) => _NETDEV_FindFile.Invoke(lpUserID, ref pFindCond);
-        IntPtr INetDevSdkProxy.NETDEV_FindMonitorDevResult(IntPtr lpUserID, ref uint pudwDevNum) => _NETDEV_FindMonitorDevResult.Invoke(lpUserID, ref pudwDevNum);
-        IntPtr INetDevSdkProxy.NETDEV_FindMonitorStatusList(IntPtr lpUserID, int enType, ref uint udwMonitorID, ref NETDEV_ALARM_LOG_COND_LIST_S pstFindLimit, ref NETDEV_SMART_ALARM_LOG_RESULT_INFO_S pstList) => _NETDEV_FindMonitorStatusList.Invoke(lpUserID, enType, ref udwMonitorID, ref pstFindLimit, ref pstList);
-        int INetDevSdkProxy.NETDEV_FindNextACSAttendanceLog(IntPtr lpFindHandle, ref NETDEV_ACS_ATTENDANCE_LOG_INFO_S pstACSLogInfo) => _NETDEV_FindNextACSAttendanceLog.Invoke(lpFindHandle, ref pstACSLogInfo);
-        int INetDevSdkProxy.NETDEV_FindNextACSPermissionGroupInfo(IntPtr lpFindHandle, ref NETDEV_ACS_PERMISSION_INFO_S pstACSPermissionInfo) => _NETDEV_FindNextACSPermissionGroupInfo.Invoke(lpFindHandle, ref pstACSPermissionInfo);
-        int INetDevSdkProxy.NETDEV_FindNextACSPersonBlackListInfo(IntPtr lpFindHandle, ref NETDEV_ACS_PERSON_BLACKLIST_INFO_S pstBlackListInfo) => _NETDEV_FindNextACSPersonBlackListInfo.Invoke(lpFindHandle, ref pstBlackListInfo);
-        int INetDevSdkProxy.NETDEV_FindNextACSPersonInfo(IntPtr lpFindHandle, ref NETDEV_ACS_PERSON_BASE_INFO_S pstACSPersonInfo) => _NETDEV_FindNextACSPersonInfo.Invoke(lpFindHandle, ref pstACSPersonInfo);
-        int INetDevSdkProxy.NETDEV_FindNextACSVisitLog(IntPtr lpFindHandle, ref NETDEV_ACS_VISIT_LOG_INFO_S pstACSLogInfo) => _NETDEV_FindNextACSVisitLog.Invoke(lpFindHandle, ref pstACSLogInfo);
-        int INetDevSdkProxy.NETDEV_FindNextCloudDevInfoEx(IntPtr lpFindHandle, ref NETDEV_CLOUD_DEV_BASIC_INFO_S pstDevInfo) => _NETDEV_FindNextCloudDevInfoEx.Invoke(lpFindHandle, ref pstDevInfo);
-        int INetDevSdkProxy.NETDEV_FindNextDevChn(IntPtr lpFindHandle, IntPtr lpOutBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => _NETDEV_FindNextDevChn.Invoke(lpFindHandle, lpOutBuffer, dwOutBufferSize, ref pdwBytesReturned);
-        int INetDevSdkProxy.NETDEV_FindNextDevInfo(IntPtr lpFindHandle, ref NETDEV_DEV_BASIC_INFO_S pstDevBasicInfo) => _NETDEV_FindNextDevInfo.Invoke(lpFindHandle, ref pstDevBasicInfo);
-        int INetDevSdkProxy.NETDEV_FindNextFaceRecordDetail(IntPtr lpFindHandle, ref NETDEV_FACE_RECORD_SNAPSHOT_INFO_S pstRecordInfo) => _NETDEV_FindNextFaceRecordDetail.Invoke(lpFindHandle, ref pstRecordInfo);
-        int INetDevSdkProxy.NETDEV_FindNextFile(IntPtr lpFindHandle, ref NETDEV_FINDDATA_S lpFindData) => _NETDEV_FindNextFile.Invoke(lpFindHandle, ref lpFindData);
-        int INetDevSdkProxy.NETDEV_FindNextMonitorDevResult(IntPtr lpFindHandle, ref NETDEV_MONITOR_DEV_RESULT_INFO_S pstMonitorDevResultInfo) => _NETDEV_FindNextMonitorDevResult.Invoke(lpFindHandle, ref pstMonitorDevResultInfo);
-        int INetDevSdkProxy.NETDEV_FindNextMonitorStatusInfo(IntPtr lpFindHandle, ref NETDEV_MONITOR_MEMBER_INFO_S pstMonitorStats) => _NETDEV_FindNextMonitorStatusInfo.Invoke(lpFindHandle, ref pstMonitorStats);
-        int INetDevSdkProxy.NETDEV_FindNextOrgInfo(IntPtr lpFindHandle, ref NETDEV_ORG_INFO_S pstOrgInfo) => _NETDEV_FindNextOrgInfo.Invoke(lpFindHandle, ref pstOrgInfo);
-        int INetDevSdkProxy.NETDEV_FindNextPermStatusInfo(IntPtr lpFindHandle, ref NETDEV_ACS_PERM_STATUS_S pstACSPermStatus) => _NETDEV_FindNextPermStatusInfo.Invoke(lpFindHandle, ref pstACSPermStatus);
-        int INetDevSdkProxy.NETDEV_FindNextPersonInfo(IntPtr lpFindHandle, ref NETDEV_PERSON_INFO_S pstPersonInfo) => _NETDEV_FindNextPersonInfo.Invoke(lpFindHandle, ref pstPersonInfo);
-        int INetDevSdkProxy.NETDEV_FindNextPersonLibInfo(IntPtr lpFindHandle, ref NETDEV_LIB_INFO_S pstPersonLibInfo) => _NETDEV_FindNextPersonLibInfo.Invoke(lpFindHandle, ref pstPersonLibInfo);
-        int INetDevSdkProxy.NETDEV_FindNextPersonMonitorInfo(IntPtr lpFindHandle, ref NETDEV_MONITION_INFO_S pstMonitorInfo) => _NETDEV_FindNextPersonMonitorInfo.Invoke(lpFindHandle, ref pstMonitorInfo);
-        int INetDevSdkProxy.NETDEV_FindNextVehicleLibInfo(IntPtr lpFindHandle, ref NETDEV_LIB_INFO_S pstVehicleLibInfo) => _NETDEV_FindNextVehicleLibInfo.Invoke(lpFindHandle, ref pstVehicleLibInfo);
-        int INetDevSdkProxy.NETDEV_FindNextVehicleMemberDetail(IntPtr lpFindHandle, ref NETDEV_VEHICLE_DETAIL_INFO_S pstVehicleMemberInfo) => _NETDEV_FindNextVehicleMemberDetail.Invoke(lpFindHandle, ref pstVehicleMemberInfo);
-        int INetDevSdkProxy.NETDEV_FindNextVehicleMonitorInfo(IntPtr lpFindHandle, ref NETDEV_MONITION_INFO_S pstVehicleMonitorInfo) => _NETDEV_FindNextVehicleMonitorInfo.Invoke(lpFindHandle, ref pstVehicleMonitorInfo);
-        int INetDevSdkProxy.NETDEV_FindNextVehicleRecordInfo(IntPtr lpFindHandle, ref NETDEV_VEHICLE_RECORD_INFO_S pstRecordInfo) => _NETDEV_FindNextVehicleRecordInfo.Invoke(lpFindHandle, ref pstRecordInfo);
-        IntPtr INetDevSdkProxy.NETDEV_FindOrgInfoList(IntPtr lpUserID, ref NETDEV_ORG_FIND_COND_S pstFindCond) => _NETDEV_FindOrgInfoList.Invoke(lpUserID, ref pstFindCond);
-        IntPtr INetDevSdkProxy.NETDEV_FindPermStatusList(IntPtr lpUserID, ref uint udwPermGroupID, ref NETDEV_ALARM_LOG_COND_LIST_S pstQueryInfo, ref NETDEV_BATCH_OPERATE_BASIC_S pstResultInfo) => _NETDEV_FindPermStatusList.Invoke(lpUserID, ref udwPermGroupID, ref pstQueryInfo, ref pstResultInfo);
-        IntPtr INetDevSdkProxy.NETDEV_FindPersonInfoList(IntPtr lpUserID, uint udwPersonLibID, ref NETDEV_PERSON_QUERY_INFO_S pstQueryInfo, ref NETDEV_BATCH_OPERATE_BASIC_S pstQueryResultInfo) => _NETDEV_FindPersonInfoList.Invoke(lpUserID, udwPersonLibID, ref pstQueryInfo, ref pstQueryResultInfo);
-        IntPtr INetDevSdkProxy.NETDEV_FindPersonLibList(IntPtr lpUserID) => _NETDEV_FindPersonLibList.Invoke(lpUserID);
-        IntPtr INetDevSdkProxy.NETDEV_FindPersonMonitorList(IntPtr lpUserID, uint udwChannelID, ref NETDEV_MONITOR_QUERY_INFO_S pstQueryInfo) => _NETDEV_FindPersonMonitorList.Invoke(lpUserID, udwChannelID, ref pstQueryInfo);
-        IntPtr INetDevSdkProxy.NETDEV_FindVehicleLibList(IntPtr lpUserID) => _NETDEV_FindVehicleLibList.Invoke(lpUserID);
-        IntPtr INetDevSdkProxy.NETDEV_FindVehicleMemberDetailList(IntPtr lpUserID, uint udwVehicleLibID, ref NETDEV_PERSON_QUERY_INFO_S pstFindCond, ref NETDEV_BATCH_OPERATE_BASIC_S pstDBMemberList) => _NETDEV_FindVehicleMemberDetailList.Invoke(lpUserID, udwVehicleLibID, ref pstFindCond, ref pstDBMemberList);
-        IntPtr INetDevSdkProxy.NETDEV_FindVehicleMonitorList(IntPtr lpUserID) => _NETDEV_FindVehicleMonitorList.Invoke(lpUserID);
-        IntPtr INetDevSdkProxy.NETDEV_FindVehicleRecordInfoList(IntPtr lpUserID, ref NETDEV_ALARM_LOG_COND_LIST_S pstFindCond, ref NETDEV_SMART_ALARM_LOG_RESULT_INFO_S pstResultInfo) => _NETDEV_FindVehicleRecordInfoList.Invoke(lpUserID, ref pstFindCond, ref pstResultInfo);
-        int INetDevSdkProxy.NETDEV_GetACSPersonBlackList(IntPtr lpUserID, ref NETDEV_ACS_PERSON_BLACKLIST_INFO_S pstBlackListInfo) => _NETDEV_GetACSPersonBlackList.Invoke(lpUserID, ref pstBlackListInfo);
-        int INetDevSdkProxy.NETDEV_GetACSPersonPermission(IntPtr lpUserID, uint udwPersonID, ref NETDEV_ACS_DOOR_PERMISSION_INFO_S pstPermissionInfo) => _NETDEV_GetACSPersonPermission.Invoke(lpUserID, udwPersonID, ref pstPermissionInfo);
-        int INetDevSdkProxy.NETDEV_GetBitRate(IntPtr lpRealHandle, ref int pdwBitRate) => _NETDEV_GetBitRate.Invoke(lpRealHandle, ref pdwBitRate);
-        int INetDevSdkProxy.NETDEV_GetBuiltinIndicatorCtrl(IntPtr lpFindHandle, ref NETDEV_CARPORT_CONTROLLED_S pstuCarportControlled) => _NETDEV_GetBuiltinIndicatorCtrl.Invoke(lpFindHandle, ref pstuCarportControlled);
-        int INetDevSdkProxy.NETDEV_GetChnDetailByChnType(IntPtr lpUserID, int dwChnID, int dwChnType, IntPtr lpOutBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => _NETDEV_GetChnDetailByChnType.Invoke(lpUserID, dwChnID, dwChnType, lpOutBuffer, dwOutBufferSize, ref pdwBytesReturned);
-        int INetDevSdkProxy.NETDEV_GetChnType(IntPtr lpUserID, int dwChnID, ref int pdwChnType) => _NETDEV_GetChnType.Invoke(lpUserID, dwChnID, ref pdwChnType);
-        int INetDevSdkProxy.NETDEV_GetCloudDevInfoByName(IntPtr lpUserID, string pszRegisterCode, ref NETDEV_CLOUD_DEV_INFO_S pstDevInfo) => _NETDEV_GetCloudDevInfoByName.Invoke(lpUserID, pszRegisterCode, ref pstDevInfo);
-        int INetDevSdkProxy.NETDEV_GetCloudDevInfoByRegCode(IntPtr lpUserID, string pszRegisterName, ref NETDEV_CLOUD_DEV_INFO_S pstDevInfo) => _NETDEV_GetCloudDevInfoByRegCode.Invoke(lpUserID, pszRegisterName, ref pstDevInfo);
-        int INetDevSdkProxy.NETDEV_GetCompassInfo(IntPtr lpUserID, int dwChannelID, ref float fCompassInfo) => _NETDEV_GetCompassInfo.Invoke(lpUserID, dwChannelID, ref fCompassInfo);
-        int INetDevSdkProxy.NETDEV_GetConfigFile(IntPtr lpUserID, string strConfigPath) => _NETDEV_GetConfigFile.Invoke(lpUserID, strConfigPath);
-        int INetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_DEFOGGING_INFO_S lpInBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => _NETDEV_GetDevConfig1.Invoke(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwOutBufferSize, ref pdwBytesReturned);
-        int INetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_MOTION_ALARM_INFO_S lpInBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => _NETDEV_GetDevConfig2.Invoke(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwOutBufferSize, ref pdwBytesReturned);
-        int INetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_TAMPER_ALARM_INFO_S lpOutBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => _NETDEV_GetDevConfig3.Invoke(lpUserID, dwChannelID, dwCommand, ref lpOutBuffer, dwOutBufferSize, ref pdwBytesReturned);
-        int INetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_OSD_CAP_S lpOutBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => _NETDEV_GetDevConfig4.Invoke(lpUserID, dwChannelID, dwCommand, ref lpOutBuffer, dwOutBufferSize, ref pdwBytesReturned);
-        int INetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_VIDEO_STREAM_CAP_EX_S lpOutBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => _NETDEV_GetDevConfig5.Invoke(lpUserID, dwChannelID, dwCommand, ref lpOutBuffer, dwOutBufferSize, ref pdwBytesReturned);
-        int INetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, IntPtr lpInBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => _NETDEV_GetDevConfig6.Invoke(lpUserID, dwChannelID, dwCommand, lpInBuffer, dwOutBufferSize, ref pdwBytesReturned);
-        int INetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_PTZ_STATUS_S lpInBuffer, int dwInBufferSize, ref int pdwBytesReturned) => _NETDEV_GetDevConfig7.Invoke(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwInBufferSize, ref pdwBytesReturned);
-        int INetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_VIDEO_STREAM_INFO_S lpInBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => _NETDEV_GetDevConfig8.Invoke(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwOutBufferSize, ref pdwBytesReturned);
-        int INetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_IMAGE_SETTING_S lpInBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => _NETDEV_GetDevConfig9.Invoke(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwOutBufferSize, ref pdwBytesReturned);
-        int INetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_SYSTEM_NTP_INFO_S lpInBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => _NETDEV_GetDevConfigA.Invoke(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwOutBufferSize, ref pdwBytesReturned);
-        int INetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_NETWORKCFG_S lpInBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => _NETDEV_GetDevConfigB.Invoke(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwOutBufferSize, ref pdwBytesReturned);
-        int INetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_ALARM_OUTPUT_INFO_S lpInBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => _NETDEV_GetDevConfigC.Invoke(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwOutBufferSize, ref pdwBytesReturned);
-        int INetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_RECORD_PLAN_CFG_INFO_S lpInBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => _NETDEV_GetDevConfigD.Invoke(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwOutBufferSize, ref pdwBytesReturned);
-        int INetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_TRIGGER_ALARM_OUTPUT_S lpInBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => _NETDEV_GetDevConfigE.Invoke(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwOutBufferSize, ref pdwBytesReturned);
-        int INetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_VIDEO_OSD_CFG_S lpInBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => _NETDEV_GetDevConfigQ.Invoke(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwOutBufferSize, ref pdwBytesReturned);
-        int INetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_ALARM_INPUT_LIST_S lpInBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => _NETDEV_GetDevConfigF.Invoke(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwOutBufferSize, ref pdwBytesReturned);
-        int INetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_ALARM_OUTPUT_LIST_S lpInBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => _NETDEV_GetDevConfigG.Invoke(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwOutBufferSize, ref pdwBytesReturned);
-        int INetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_DEVICE_BASICINFO_S lpInBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => _NETDEV_GetDevConfigH.Invoke(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwOutBufferSize, ref pdwBytesReturned);
-        int INetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_DISK_INFO_LIST_S lpInBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => _NETDEV_GetDevConfigI.Invoke(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwOutBufferSize, ref pdwBytesReturned);
-        int INetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_PRIVACY_MASK_CFG_S lpInBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => _NETDEV_GetDevConfigJ.Invoke(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwOutBufferSize, ref pdwBytesReturned);
-        int INetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_SYSTEM_NTP_INFO_LIST_S lpInBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => _NETDEV_GetDevConfigK.Invoke(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwOutBufferSize, ref pdwBytesReturned);
-        int INetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_IMAGE_EXPOSURE_S lpInBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => _NETDEV_GetDevConfigL.Invoke(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwOutBufferSize, ref pdwBytesReturned);
-        int INetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_IRCUT_FILTER_INFO_S lpInBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => _NETDEV_GetDevConfigM.Invoke(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwOutBufferSize, ref pdwBytesReturned);
-        int INetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_INFORELEASE_CFG_S lpInBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => _NETDEV_GetDevConfigN.Invoke(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwOutBufferSize, ref pdwBytesReturned);
-        int INetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_ITS_PARKING_DETECTION_S lpInBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => _NETDEV_GetDevConfigO.Invoke(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwOutBufferSize, ref pdwBytesReturned);
-        int INetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_OSD_CONTENT_STYLE_S lpInBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => _NETDEV_GetDevConfigP.Invoke(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwOutBufferSize, ref pdwBytesReturned);
-        int INetDevSdkProxy.NETDEV_GetDeviceCapability(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_OSD_CAP_S lpOutBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => _NETDEV_GetDeviceCapability1.Invoke(lpUserID, dwChannelID, dwCommand, ref lpOutBuffer, dwOutBufferSize, ref pdwBytesReturned);
-        int INetDevSdkProxy.NETDEV_GetDeviceCapability(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_VIDEO_STREAM_CAP_EX_S lpOutBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => _NETDEV_GetDeviceCapability2.Invoke(lpUserID, dwChannelID, dwCommand, ref lpOutBuffer, dwOutBufferSize, ref pdwBytesReturned);
-        int INetDevSdkProxy.NETDEV_GetDeviceInfo(IntPtr lpUserID, ref NETDEV_DEVICE_INFO_S pstDevInfo) => _NETDEV_GetDeviceInfo.Invoke(lpUserID, ref pstDevInfo);
-        int INetDevSdkProxy.NETDEV_GetDeviceInfo_V30(IntPtr lpUserID, int dwDevID, ref NETDEV_DEV_INFO_V30_S pstDevInfo) => _NETDEV_GetDeviceInfo_V30.Invoke(lpUserID, dwDevID, ref pstDevInfo);
-        int INetDevSdkProxy.NETDEV_GetFaceRecordImageInfo(IntPtr lpUserID, uint udwRecordID, uint udwFaceImageType, ref NETDEV_FILE_INFO_S pstFileInfo) => _NETDEV_GetFaceRecordImageInfo.Invoke(lpUserID, udwRecordID, udwFaceImageType, ref pstFileInfo);
-        IntPtr INetDevSdkProxy.NETDEV_GetFileByName(IntPtr lpUserID, ref NETDEV_PLAYBACKINFO_S pstPlayBackInfo, string szSaveFileName, int dwFormat) => _NETDEV_GetFileByName.Invoke(lpUserID, ref pstPlayBackInfo, szSaveFileName, dwFormat);
-        IntPtr INetDevSdkProxy.NETDEV_GetFileByTime(IntPtr lpUserID, ref NETDEV_PLAYBACKCOND_S pstPlayBackCond, byte[] pszSaveFileName, int dwFormat) => _NETDEV_GetFileByTime.Invoke(lpUserID, ref pstPlayBackCond, pszSaveFileName, dwFormat);
-        int INetDevSdkProxy.NETDEV_GetFrameRate(IntPtr lpRealHandle, ref int pdwFrameRate) => _NETDEV_GetFrameRate.Invoke(lpRealHandle, ref pdwFrameRate);
-        int INetDevSdkProxy.NETDEV_GetGeolocationInfo(IntPtr lpUserID, int dwChannelID, ref NETDEV_GEOLACATION_INFO_S pstGPSInfo) => _NETDEV_GetGeolocationInfo.Invoke(lpUserID, dwChannelID, ref pstGPSInfo);
-        int INetDevSdkProxy.NETDEV_GetLastError() => _NETDEV_GetLastError.Invoke();
-        int INetDevSdkProxy.NETDEV_GetLostPacketRate(IntPtr lpRealHandle, ref int pulRecvPktNum, ref int pulLostPktNum) => _NETDEV_GetLostPacketRate.Invoke(lpRealHandle, ref pulRecvPktNum, ref pulLostPktNum);
-        int INetDevSdkProxy.NETDEV_GetMicVolume(IntPtr lpPlayHandle, ref int dwVolume) => _NETDEV_GetMicVolume.Invoke(lpPlayHandle, ref dwVolume);
-        int INetDevSdkProxy.NETDEV_GetMonitorCapacity(IntPtr lpUserID, ref NETDEV_MONITOR_CAPACITY_INFO_S pstCapacityInfo, ref NETDEV_MONITOR_CAPACITY_LIST_S pstCapacityList) => _NETDEV_GetMonitorCapacity.Invoke(lpUserID, ref pstCapacityInfo, ref pstCapacityList);
-        int INetDevSdkProxy.NETDEV_GetMonitorProgress(IntPtr lpUserID, ref uint pudwProgressRate) => _NETDEV_GetMonitorProgress.Invoke(lpUserID, ref pudwProgressRate);
-        int INetDevSdkProxy.NETDEV_GetPARKVersion(byte[] strVersion) => _NETDEV_GetPARKVersion.Invoke(strVersion);
-        int INetDevSdkProxy.NETDEV_GetPersonLibCapacity(IntPtr lpUserID, int dwTimeOut, ref NETDEV_PERSON_LIB_CAP_LIST_S pstCapacityList) => _NETDEV_GetPersonLibCapacity.Invoke(lpUserID, dwTimeOut, ref pstCapacityList);
-        int INetDevSdkProxy.NETDEV_GetPersonMemberInfo(IntPtr lpUserID, uint udwPersonID, ref NETDEV_PERSON_INFO_S pstPersonInfo) => _NETDEV_GetPersonMemberInfo.Invoke(lpUserID, udwPersonID, ref pstPersonInfo);
-        int INetDevSdkProxy.NETDEV_GetPersonMonitorRuleInfo(IntPtr lpUserID, ref NETDEV_MONITION_INFO_S pstMonitorInfo) => _NETDEV_GetPersonMonitorRuleInfo.Invoke(lpUserID, ref pstMonitorInfo);
-        int INetDevSdkProxy.NETDEV_GetPTZPresetList(IntPtr lpUserID, int dwChannelID, ref NETDEV_PTZ_ALLPRESETS_S lpOutBuffer) => _NETDEV_GetPTZPresetList.Invoke(lpUserID, dwChannelID, ref lpOutBuffer);
-        int INetDevSdkProxy.NETDEV_GetResolution(IntPtr lpRealHandle, ref int pdwWidth, ref int pdwHeight) => _NETDEV_GetResolution.Invoke(lpRealHandle, ref pdwWidth, ref pdwHeight);
-        int INetDevSdkProxy.NETDEV_GetSDKVersion() => _NETDEV_GetSDKVersion.Invoke();
-        int INetDevSdkProxy.NETDEV_GetSinglePermGroupInfo(IntPtr lpUserID, uint udwPermissionGroupID, ref NETDEV_ACS_PERMISSION_INFO_S pstAcsPerssionInfo) => _NETDEV_GetSinglePermGroupInfo.Invoke(lpUserID, udwPermissionGroupID, ref pstAcsPerssionInfo);
-        int INetDevSdkProxy.NETDEV_GetSoundVolume(IntPtr lpPlayHandle, ref int pdwVolume) => _NETDEV_GetSoundVolume.Invoke(lpPlayHandle, ref pdwVolume);
-        int INetDevSdkProxy.NETDEV_GetSystemPicture(IntPtr lpUserID, string pszURL, uint udwSize, IntPtr pszdata) => _NETDEV_GetSystemPicture.Invoke(lpUserID, pszURL, udwSize, pszdata);
-        int INetDevSdkProxy.NETDEV_GetSystemTimeCfg(IntPtr lpUserID, ref NETDEV_TIME_CFG_S pstSystemTimeInfo) => _NETDEV_GetSystemTimeCfg.Invoke(lpUserID, ref pstSystemTimeInfo);
-        int INetDevSdkProxy.NETDEV_GetTimeTemplateInfo(IntPtr lpUserID, int dwTemplateID, ref NETDEV_TIME_TEMPLATE_INFO_V30_S pstTimeTemplateInfo) => _NETDEV_GetTimeTemplateInfo.Invoke(lpUserID, dwTemplateID, ref pstTimeTemplateInfo);
-        int INetDevSdkProxy.NETDEV_GetTimeTemplateList(IntPtr lpUserID, int dwTamplateType, ref NETDEV_TIME_TEMPLATE_LIST_S pstTemplateList) => _NETDEV_GetTimeTemplateList.Invoke(lpUserID, dwTamplateType, ref pstTemplateList);
-        int INetDevSdkProxy.NETDEV_GetTrafficStatistic(IntPtr lpUserID, ref NETDEV_TRAFFIC_STATISTICS_COND_S pstStatisticCond, ref NETDEV_TRAFFIC_STATISTICS_DATA_S pstTrafficStatistic) => _NETDEV_GetTrafficStatistic.Invoke(lpUserID, ref pstStatisticCond, ref pstTrafficStatistic);
-        int INetDevSdkProxy.NETDEV_GetUpnpNatState(IntPtr lpUserID, ref NETDEV_UPNP_NAT_STATE_S pstNatState) => _NETDEV_GetUpnpNatState.Invoke(lpUserID, ref pstNatState);
-        int INetDevSdkProxy.NETDEV_GetUserDetailList(IntPtr lpUserID, IntPtr pstUserDetailList) => _NETDEV_GetUserDetailList.Invoke(lpUserID, pstUserDetailList);
-        int INetDevSdkProxy.NETDEV_GetVehicleMonitorInfo(IntPtr lpUserID, uint udwID, ref NETDEV_MONITION_RULE_INFO_S pstMonitorInfo) => _NETDEV_GetVehicleMonitorInfo.Invoke(lpUserID, udwID, ref pstMonitorInfo);
-        int INetDevSdkProxy.NETDEV_GetVehicleRecordImageInfo(IntPtr lpUserID, uint udwRecordID, ref NETDEV_FILE_INFO_S pstFileInfo) => _NETDEV_GetVehicleRecordImageInfo.Invoke(lpUserID, udwRecordID, ref pstFileInfo);
-        int INetDevSdkProxy.NETDEV_GetVideoEffect(IntPtr lpRealHandle, ref NETDEV_VIDEO_EFFECT_S pstImageInfo) => _NETDEV_GetVideoEffect.Invoke(lpRealHandle, ref pstImageInfo);
-        int INetDevSdkProxy.NETDEV_GetVideoEncodeFmt(IntPtr lpRealHandle, ref int pdwVideoEncFmt) => _NETDEV_GetVideoEncodeFmt.Invoke(lpRealHandle, ref pdwVideoEncFmt);
-        int INetDevSdkProxy.NETDEV_ImportBlackWhiteListFile(IntPtr lpFindHandle, string pcFile) => _NETDEV_ImportBlackWhiteListFile.Invoke(lpFindHandle, pcFile);
-        int INetDevSdkProxy.NETDEV_Init() => _NETDEV_Init.Invoke();
-        int INetDevSdkProxy.NETDEV_InputVoiceData(IntPtr lpUserID, byte[] lpDataBuf, int dwDataLen, ref NETDEV_AUDIO_SAMPLE_PARAM_S pstVoiceParam) => _NETDEV_InputVoiceData.Invoke(lpUserID, lpDataBuf, dwDataLen, ref pstVoiceParam);
-        IntPtr INetDevSdkProxy.NETDEV_Login(string szDevIP, short wDevPort, string szUserName, string szPassword, ref NETDEV_DEVICE_INFO_S pstDevInfo) => _NETDEV_Login.Invoke(szDevIP, wDevPort, szUserName, szPassword, ref pstDevInfo);
-        IntPtr INetDevSdkProxy.NETDEV_LoginCloud(string pszCloudSrvUrl, string pszUserName, string pszPassWord) => _NETDEV_LoginCloud.Invoke(pszCloudSrvUrl, pszUserName, pszPassWord);
-        IntPtr INetDevSdkProxy.NETDEV_LoginCloudDevice_V30(IntPtr lpUserID, ref NETDEV_CLOUD_DEV_LOGIN_INFO_S pstCloudInfo) => _NETDEV_LoginCloudDevice_V30.Invoke(lpUserID, ref pstCloudInfo);
-        IntPtr INetDevSdkProxy.NETDEV_Login_V30(ref NETDEV_DEVICE_LOGIN_INFO_S pstDevLoginInfo, ref NETDEV_SELOG_INFO_S pstSELogInfo) => _NETDEV_Login_V30.Invoke(ref pstDevLoginInfo, ref pstSELogInfo);
-        int INetDevSdkProxy.NETDEV_Logout(IntPtr lpUserID) => _NETDEV_Logout.Invoke(lpUserID);
-        int INetDevSdkProxy.NETDEV_MakeKeyFrame(IntPtr lpUserID, int dwChannelID, int dwStreamType) => _NETDEV_MakeKeyFrame.Invoke(lpUserID, dwChannelID, dwStreamType);
-        int INetDevSdkProxy.NETDEV_MicVolumeControl(IntPtr lpPlayHandle, int dwVolume) => _NETDEV_MicVolumeControl.Invoke(lpPlayHandle, dwVolume);
-        int INetDevSdkProxy.NETDEV_ModifyACSPersonBlackList(IntPtr lpUserID, ref NETDEV_ACS_PERSON_BLACKLIST_INFO_S pstBlackListInfo) => _NETDEV_ModifyACSPersonBlackList.Invoke(lpUserID, ref pstBlackListInfo);
-        int INetDevSdkProxy.NETDEV_ModifyACSPersonPermissionGroup(IntPtr lpUserID, ref NETDEV_ACS_PERMISSION_INFO_S pstPermissionInfo) => _NETDEV_ModifyACSPersonPermissionGroup.Invoke(lpUserID, ref pstPermissionInfo);
-        int INetDevSdkProxy.NETDEV_ModifyAllowVehicleRecord(IntPtr lpFindHandle, ref NETDEV_PARK_VEHICLE_RECORD_S pstVehicleRecordExtern) => _NETDEV_ModifyAllowVehicleRecord.Invoke(lpFindHandle, ref pstVehicleRecordExtern);
-        int INetDevSdkProxy.NETDEV_ModifyBlockVehicleRecord(IntPtr lpFindHandle, ref NETDEV_PARK_VEHICLE_RECORD_S pstVehicleRecordExtern) => _NETDEV_ModifyBlockVehicleRecord.Invoke(lpFindHandle, ref pstVehicleRecordExtern);
-        int INetDevSdkProxy.NETDEV_ModifyDeviceName(IntPtr lpUserID, byte[] strDeviceName) => _NETDEV_ModifyDeviceName.Invoke(lpUserID, strDeviceName);
-        int INetDevSdkProxy.NETDEV_ModifyOrgInfo(IntPtr lpUserID, ref NETDEV_ORG_INFO_S pstOrgInfo) => _NETDEV_ModifyOrgInfo.Invoke(lpUserID, ref pstOrgInfo);
-        int INetDevSdkProxy.NETDEV_ModifyPersonInfo(IntPtr lpUserID, uint udwPersonLibID, ref NETDEV_PERSON_INFO_LIST_S pstPersonInfoList, ref NETDEV_PERSON_RESULT_LIST_S pstPersonResultList) => _NETDEV_ModifyPersonInfo.Invoke(lpUserID, udwPersonLibID, ref pstPersonInfoList, ref pstPersonResultList);
-        int INetDevSdkProxy.NETDEV_ModifyPersonLibInfo(IntPtr lpUserID, ref NETDEV_PERSON_LIB_LIST_S pstPersonLibList) => _NETDEV_ModifyPersonLibInfo.Invoke(lpUserID, ref pstPersonLibList);
-        int INetDevSdkProxy.NETDEV_ModifyUser(IntPtr lpUserID, IntPtr pstUserInfo) => _NETDEV_ModifyUser.Invoke(lpUserID, pstUserInfo);
-        int INetDevSdkProxy.NETDEV_ModifyVehicleLibInfo(IntPtr lpUserID, ref NETDEV_PERSON_LIB_LIST_S pstVehicleLibList) => _NETDEV_ModifyVehicleLibInfo.Invoke(lpUserID, ref pstVehicleLibList);
-        int INetDevSdkProxy.NETDEV_ModifyVehicleMemberInfo(IntPtr lpUserID, uint udwVehicleLibID, ref NETDEV_VEHICLE_INFO_LIST_S pstVehicleMemberList, ref NETDEV_BATCH_OPERATOR_LIST_S pstResultList) => _NETDEV_ModifyVehicleMemberInfo.Invoke(lpUserID, udwVehicleLibID, ref pstVehicleMemberList, ref pstResultList);
-        int INetDevSdkProxy.NETDEV_OpenMic(IntPtr lpPlayHandle) => _NETDEV_OpenMic.Invoke(lpPlayHandle);
-        int INetDevSdkProxy.NETDEV_OpenSound(IntPtr lpRealHandle) => _NETDEV_OpenSound.Invoke(lpRealHandle);
-        IntPtr INetDevSdkProxy.NETDEV_PlayBackByName(IntPtr lpUserID, ref NETDEV_PLAYBACKINFO_S pstPlayBackInfo) => _NETDEV_PlayBackByName.Invoke(lpUserID, ref pstPlayBackInfo);
-        IntPtr INetDevSdkProxy.NETDEV_PlayBackByTime(IntPtr lpUserID, ref NETDEV_PLAYBACKCOND_S pstPlayBackInfo) => _NETDEV_PlayBackByTime.Invoke(lpUserID, ref pstPlayBackInfo);
-        int INetDevSdkProxy.NETDEV_PlayBackControl(IntPtr lpPlayHandle, int dwControlCode, ref long pdwBuffer) => _NETDEV_PlayBackControl.Invoke(lpPlayHandle, dwControlCode, ref pdwBuffer);
-        int INetDevSdkProxy.NETDEV_PlaySound(IntPtr lpRealHandle) => _NETDEV_PlaySound.Invoke(lpRealHandle);
-        int INetDevSdkProxy.NETDEV_PTZCalibrate(IntPtr lpUserID, int dwChannelID, ref NETDEV_PTZ_ORIENTATION_INFO_S pstOrientationInfo) => _NETDEV_PTZCalibrate.Invoke(lpUserID, dwChannelID, ref pstOrientationInfo);
-        int INetDevSdkProxy.NETDEV_PTZControl(IntPtr lpPlayHandle, int dwPTZCommand, int dwSpeed) => _NETDEV_PTZControl.Invoke(lpPlayHandle, dwPTZCommand, dwSpeed);
-        int INetDevSdkProxy.NETDEV_PTZControl_Other(IntPtr lpUserID, int dwChannelID, int dwPTZCommand, int dwSpeed) => _NETDEV_PTZControl_Other.Invoke(lpUserID, dwChannelID, dwPTZCommand, dwSpeed);
-        int INetDevSdkProxy.NETDEV_PTZCruise_Other(IntPtr lpUserID, int dwChannelID, int dwPTZCruiseCmd, ref NETDEV_CRUISE_INFO_S pstCruiseInfo) => _NETDEV_PTZCruise_Other.Invoke(lpUserID, dwChannelID, dwPTZCruiseCmd, ref pstCruiseInfo);
-        int INetDevSdkProxy.NETDEV_PTZGetCruise(IntPtr lpUserID, int dwChannelID, ref NETDEV_CRUISE_LIST_S pstCruiseList) => _NETDEV_PTZGetCruise.Invoke(lpUserID, dwChannelID, ref pstCruiseList);
-        int INetDevSdkProxy.NETDEV_PTZGetTrackCruise(IntPtr lpUserID, int dwChannelID, ref NETDEV_PTZ_TRACK_INFO_S pstTrackCruiseInfo) => _NETDEV_PTZGetTrackCruise.Invoke(lpUserID, dwChannelID, ref pstTrackCruiseInfo);
-        int INetDevSdkProxy.NETDEV_PTZPreset(IntPtr lpPlayHandle, int dwPTZPresetCmd, string pszPresetName, int dwPresetID) => _NETDEV_PTZPreset.Invoke(lpPlayHandle, dwPTZPresetCmd, pszPresetName, dwPresetID);
-        int INetDevSdkProxy.NETDEV_PTZPreset_Other(IntPtr lpUserID, int dwChannelID, int dwPTZPresetCmd, byte[] szPresetName, int dwPresetID) => _NETDEV_PTZPreset_Other.Invoke(lpUserID, dwChannelID, dwPTZPresetCmd, szPresetName, dwPresetID);
-        int INetDevSdkProxy.NETDEV_PTZSelZoomIn_Other(IntPtr lpUserID, int dwChannelID, ref NETDEV_PTZ_OPERATEAREA_S pstPtzOperateArea) => _NETDEV_PTZSelZoomIn_Other.Invoke(lpUserID, dwChannelID, ref pstPtzOperateArea);
-        int INetDevSdkProxy.NETDEV_PTZTrackCruise(IntPtr lpUserID, int dwChannelID, int dwPTZTrackCruiseCmd, string pszTrackCruiseName) => _NETDEV_PTZTrackCruise.Invoke(lpUserID, dwChannelID, dwPTZTrackCruiseCmd, pszTrackCruiseName);
-        int INetDevSdkProxy.NETDEV_QueryVideoChlDetailList(IntPtr lpUserID, ref int pdwChlCount, IntPtr pstVideoChlList) => _NETDEV_QueryVideoChlDetailList.Invoke(lpUserID, ref pdwChlCount, pstVideoChlList);
-        IntPtr INetDevSdkProxy.NETDEV_RealPlay(IntPtr lpUserID, ref NETDEV_PREVIEWINFO_S pstPreviewInfo, IntPtr cbPlayDataCallBack, IntPtr lpUserData) => _NETDEV_RealPlay.Invoke(lpUserID, ref pstPreviewInfo, cbPlayDataCallBack, lpUserData);
-        int INetDevSdkProxy.NETDEV_Reboot(IntPtr lpUserID) => _NETDEV_Reboot.Invoke(lpUserID);
-        int INetDevSdkProxy.NETDEV_ResetLostPacketRate(IntPtr lpRealHandle) => _NETDEV_ResetLostPacketRate.Invoke(lpRealHandle);
-        int INetDevSdkProxy.NETDEV_RestoreConfig(IntPtr lpUserID) => _NETDEV_RestoreConfig.Invoke(lpUserID);
-        int INetDevSdkProxy.NETDEV_SaveRealData(IntPtr lpRealHandle, byte[] szSaveFileName, int dwFormat) => _NETDEV_SaveRealData.Invoke(lpRealHandle, szSaveFileName, dwFormat);
-        int INetDevSdkProxy.NETDEV_SetACSPersonPermission(IntPtr lpUserID, uint udwPersonID, ref NETDEV_ACS_DOOR_PERMISSION_INFO_S pstPermissionInfo) => _NETDEV_SetACSPersonPermission.Invoke(lpUserID, udwPersonID, ref pstPermissionInfo);
-        int INetDevSdkProxy.NETDEV_SetAlarmCallBack(IntPtr lpUserID, NETDEV_AlarmMessCallBack_PF cbAlarmMessCallBack, IntPtr lpUserData) => _NETDEV_SetAlarmCallBack.Invoke(lpUserID, cbAlarmMessCallBack, lpUserData);
-        int INetDevSdkProxy.NETDEV_SetAlarmCallBack_V30(IntPtr lpUserID, NETDEV_AlarmMessCallBack_PF_V30 cbAlarmMessCallBack, IntPtr lpUserData) => _NETDEV_SetAlarmCallBack_V30.Invoke(lpUserID, cbAlarmMessCallBack, lpUserData);
-        int INetDevSdkProxy.NETDEV_SetAlarmFGCallBack(IntPtr lpUserID, NETDEV_AlarmMessFGCallBack_PF cbAlarmMessCallBack, IntPtr lpUserData) => _NETDEV_SetAlarmFGCallBack.Invoke(lpUserID, cbAlarmMessCallBack, lpUserData);
-        int INetDevSdkProxy.NETDEV_SetBuiltinIndicatorCtrl(IntPtr lpFindHandle, ref NETDEV_CARPORT_CONTROLLED_S pstuCarportControlled) => _NETDEV_SetBuiltinIndicatorCtrl.Invoke(lpFindHandle, ref pstuCarportControlled);
-        int INetDevSdkProxy.NETDEV_SetConfigFile(IntPtr lpUserID, string strConfigPath) => _NETDEV_SetConfigFile.Invoke(lpUserID, strConfigPath);
-        int INetDevSdkProxy.NETDEV_SetConnectTime(int dwWaitTime, int dwTrytimes) => _NETDEV_SetConnectTime.Invoke(dwWaitTime, dwTrytimes);
-        int INetDevSdkProxy.NETDEV_SetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref int index, int dwInBufferSize) => _NETDEV_SetDevConfig1.Invoke(lpUserID, dwChannelID, dwCommand, ref index, dwInBufferSize);
-        int INetDevSdkProxy.NETDEV_SetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_DEFOGGING_INFO_S lpInBuffer, int dwInBufferSize) => _NETDEV_SetDevConfig2.Invoke(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwInBufferSize);
-        int INetDevSdkProxy.NETDEV_SetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_MOTION_ALARM_INFO_S lpInBuffer, int dwInBufferSize) => _NETDEV_SetDevConfig3.Invoke(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwInBufferSize);
-        int INetDevSdkProxy.NETDEV_SetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_TAMPER_ALARM_INFO_S lpInBuffer, int dwInBufferSize) => _NETDEV_SetDevConfig4.Invoke(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwInBufferSize);
-        int INetDevSdkProxy.NETDEV_SetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_SYSTEM_NTP_INFO_LIST_S lpInBuffer, int dwInBufferSize) => _NETDEV_SetDevConfig5.Invoke(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwInBufferSize);
-        int INetDevSdkProxy.NETDEV_SetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, IntPtr lpInBuffer, ref int dwInBufferSize) => _NETDEV_SetDevConfig6.Invoke(lpUserID, dwChannelID, dwCommand, lpInBuffer, ref dwInBufferSize);
-        int INetDevSdkProxy.NETDEV_SetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_VIDEO_STREAM_INFO_S lpInBuffer, int dwInBufferSize) => _NETDEV_SetDevConfig7.Invoke(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwInBufferSize);
-        int INetDevSdkProxy.NETDEV_SetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_IMAGE_SETTING_S lpInBuffer, int dwInBufferSize) => _NETDEV_SetDevConfig8.Invoke(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwInBufferSize);
-        int INetDevSdkProxy.NETDEV_SetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_SYSTEM_NTP_INFO_S lpInBuffer, int dwInBufferSize) => _NETDEV_SetDevConfig9.Invoke(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwInBufferSize);
-        int INetDevSdkProxy.NETDEV_SetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_NETWORKCFG_S lpInBuffer, int dwInBufferSize) => _NETDEV_SetDevConfigA.Invoke(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwInBufferSize);
-        int INetDevSdkProxy.NETDEV_SetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_ALARM_OUTPUT_INFO_S lpInBuffer, int dwInBufferSize) => _NETDEV_SetDevConfigB.Invoke(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwInBufferSize);
-        int INetDevSdkProxy.NETDEV_SetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_RECORD_PLAN_CFG_INFO_S lpInBuffer, int dwInBufferSize) => _NETDEV_SetDevConfigC.Invoke(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwInBufferSize);
-        int INetDevSdkProxy.NETDEV_SetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_TRIGGER_ALARM_OUTPUT_S lpInBuffer, int dwInBufferSize) => _NETDEV_SetDevConfigD.Invoke(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwInBufferSize);
-        int INetDevSdkProxy.NETDEV_SetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_VIDEO_OSD_CFG_S lpInBuffer, int dwInBufferSize) => _NETDEV_SetDevConfigE.Invoke(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwInBufferSize);
-        int INetDevSdkProxy.NETDEV_SetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_PRIVACY_MASK_CFG_S lpInBuffer, int dwInBufferSize) => _NETDEV_SetDevConfigF.Invoke(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwInBufferSize);
-        int INetDevSdkProxy.NETDEV_SetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_IMAGE_EXPOSURE_S lpInBuffer, int dwOutBufferSize) => _NETDEV_SetDevConfigG.Invoke(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwOutBufferSize);
-        int INetDevSdkProxy.NETDEV_SetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_IRCUT_FILTER_INFO_S lpInBuffer, int dwInBufferSize) => _NETDEV_SetDevConfigH.Invoke(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwInBufferSize);
-        int INetDevSdkProxy.NETDEV_SetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_INFORELEASE_CFG_S lpInBuffer, int dwInBufferSize) => _NETDEV_SetDevConfigI.Invoke(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwInBufferSize);
-        int INetDevSdkProxy.NETDEV_SetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_OSD_CONTENT_STYLE_S lpInBuffer, int dwInBufferSize) => _NETDEV_SetDevConfigJ.Invoke(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwInBufferSize);
-        int INetDevSdkProxy.NETDEV_setDeviceLedCfg(IntPtr lpFindHandle, ref NETDEV_LED_LIST_CFG_S pstLedListCfgs) => _NETDEV_setDeviceLedCfg.Invoke(lpFindHandle, ref pstLedListCfgs);
-        int INetDevSdkProxy.NETDEV_SetDigitalZoom(IntPtr lpRealHandle, IntPtr hWnd, IntPtr pstRect) => _NETDEV_SetDigitalZoom.Invoke(lpRealHandle, hWnd, pstRect);
-        int INetDevSdkProxy.NETDEV_SetDiscoveryCallBack(NETDEV_DISCOVERY_CALLBACK_PF cbDiscoveryCallBack, IntPtr lpUserData) => _NETDEV_SetDiscoveryCallBack.Invoke(cbDiscoveryCallBack, lpUserData);
-        int INetDevSdkProxy.NETDEV_SetExceptionCallBack(NETDEV_ExceptionCallBack_PF cbExceptionCallBack, IntPtr lpUserData) => _NETDEV_SetExceptionCallBack.Invoke(cbExceptionCallBack, lpUserData);
-        int INetDevSdkProxy.NETDEV_SetFaceSnapshotCallBack(IntPtr lpUserID, NETDEV_FaceSnapshotCallBack_PF cbFaceSnapshotCallBack, IntPtr lpUserData) => _NETDEV_SetFaceSnapshotCallBack.Invoke(lpUserID, cbFaceSnapshotCallBack, lpUserData);
-        int INetDevSdkProxy.NETDEV_SetIVAEnable(IntPtr lpUserID, int dwEnableIVA) => _NETDEV_SetIVAEnable.Invoke(lpUserID, dwEnableIVA);
-        int INetDevSdkProxy.NETDEV_SetIVAShowParam(int dwShowParam) => _NETDEV_SetIVAShowParam.Invoke(dwShowParam);
-        int INetDevSdkProxy.NETDEV_SetLogPath(string strLogPath) => _NETDEV_SetLogPath.Invoke(strLogPath);
-        int INetDevSdkProxy.NETDEV_SetOutputSwitchStatusCfg(IntPtr lpFindHandle) => _NETDEV_SetOutputSwitchStatusCfg.Invoke(lpFindHandle);
-        int INetDevSdkProxy.NETDEV_SetParkingStatusCB(IntPtr lpFindHandle, NETDEV_PARKING_STATUS_PF pfnParkStatusCBFun, IntPtr lpUserData) => _NETDEV_SetParkingStatusCB.Invoke(lpFindHandle, pfnParkStatusCBFun, lpUserData);
-        int INetDevSdkProxy.NETDEV_SetParkStatusCallBack(IntPtr lpUserID, NETDEV_ParkStatusReportCallBack_PF cbParkStatusReportCallBack, IntPtr lpUserData) => _NETDEV_SetParkStatusCallBack.Invoke(lpUserID, cbParkStatusReportCallBack, lpUserData);
-        int INetDevSdkProxy.NETDEV_SetPassengerFlowStatisticCallBack(IntPtr lpUserID, NETDEV_PassengerFlowStatisticCallBack_PF cbPassengerFlowStatisticCallBack, IntPtr lpUserData) => _NETDEV_SetPassengerFlowStatisticCallBack.Invoke(lpUserID, cbPassengerFlowStatisticCallBack, lpUserData);
-        int INetDevSdkProxy.NETDEV_SetPersonAlarmCallBack(IntPtr lpUserID, NETDEV_PersonAlarmMessCallBack_PF cbAlarmMessCallBack, IntPtr lpUserData) => _NETDEV_SetPersonAlarmCallBack.Invoke(lpUserID, cbAlarmMessCallBack, lpUserData);
-        int INetDevSdkProxy.NETDEV_SetPersonMonitorRuleInfo(IntPtr lpUserID, ref NETDEV_MONITION_INFO_S pstMonitorInfo) => _NETDEV_SetPersonMonitorRuleInfo.Invoke(lpUserID, ref pstMonitorInfo);
-        int INetDevSdkProxy.NETDEV_SetPictureFluency(IntPtr lpPlayHandle, int dwFluency) => _NETDEV_SetPictureFluency.Invoke(lpPlayHandle, dwFluency);
-        int INetDevSdkProxy.NETDEV_SetPlayDataCallBack(IntPtr lpRealHandle, IntPtr cbPlayDataCallBack, int bContinue, IntPtr lpUserData) => _NETDEV_SetPlayDataCallBack.Invoke(lpRealHandle, cbPlayDataCallBack, bContinue, lpUserData);
-        int INetDevSdkProxy.NETDEV_SetPlayDecodeVideoCB(IntPtr lpRealHandle, ref NETDEV_DECODE_VIDEO_DATA_CALLBACK_PF cbPlayDecodeVideoCallBack, int bContinue, IntPtr lpUserData) => _NETDEV_SetPlayDecodeVideoCB.Invoke(lpRealHandle, ref cbPlayDecodeVideoCallBack, bContinue, lpUserData);
-        int INetDevSdkProxy.NETDEV_SetPlayDisplayCB(IntPtr lpRealHandle, IntPtr cbPlayDisplayCallBack, IntPtr lpUserData) => _NETDEV_SetPlayDisplayCB.Invoke(lpRealHandle, cbPlayDisplayCallBack, lpUserData);
-        int INetDevSdkProxy.NETDEV_SetPlayParseCB(IntPtr lpRealHandle, ref NETDEV_PARSE_VIDEO_DATA_CALLBACK_PF cbPlayParseCallBack, int bContinue, IntPtr lpUserData) => _NETDEV_SetPlayParseCB.Invoke(lpRealHandle, ref cbPlayParseCallBack, bContinue, lpUserData);
-        int INetDevSdkProxy.NETDEV_SetRenderScale(IntPtr lpRealHandle, int enRenderScale) => _NETDEV_SetRenderScale.Invoke(lpRealHandle, enRenderScale);
-        int INetDevSdkProxy.NETDEV_SetRevTimeOut(ref NETDEV_REV_TIMEOUT_S pstRevTimeout) => _NETDEV_SetRevTimeOut.Invoke(ref pstRevTimeout);
-        int INetDevSdkProxy.NETDEV_SetStructAlarmCallBack(IntPtr lpUserID, NETDEV_StructAlarmMessCallBack_PF cbAlarmMessCallBack, IntPtr lpUserData) => _NETDEV_SetStructAlarmCallBack.Invoke(lpUserID, cbAlarmMessCallBack, lpUserData);
-        int INetDevSdkProxy.NETDEV_SetSystemTimeCfg(IntPtr lpUserID, ref NETDEV_TIME_CFG_S pstSystemTimeInfo) => _NETDEV_SetSystemTimeCfg.Invoke(lpUserID, ref pstSystemTimeInfo);
-        int INetDevSdkProxy.NETDEV_SetUpnpNatState(IntPtr lpUserID, ref NETDEV_UPNP_NAT_STATE_S pstNatState) => _NETDEV_SetUpnpNatState.Invoke(lpUserID, ref pstNatState);
-        int INetDevSdkProxy.NETDEV_SetVehicleAlarmCallBack(IntPtr lpUserID, NETDEV_VehicleAlarmMessCallBack_PF cbVehicleAlarmMessCallBack, IntPtr lpUserData) => _NETDEV_SetVehicleAlarmCallBack.Invoke(lpUserID, cbVehicleAlarmMessCallBack, lpUserData);
-        int INetDevSdkProxy.NETDEV_SetVehicleMonitorInfo(IntPtr lpUserID, uint udwID, ref NETDEV_MONITION_RULE_INFO_S pstMonitorInfo) => _NETDEV_SetVehicleMonitorInfo.Invoke(lpUserID, udwID, ref pstMonitorInfo);
-        int INetDevSdkProxy.NETDEV_SetVideoEffect(IntPtr lpRealHandle, ref NETDEV_VIDEO_EFFECT_S pstImageInfo) => _NETDEV_SetVideoEffect.Invoke(lpRealHandle, ref pstImageInfo);
-        int INetDevSdkProxy.NETDEV_SoundVolumeControl(IntPtr lpPlayHandle, int dwVolume) => _NETDEV_SoundVolumeControl.Invoke(lpPlayHandle, dwVolume);
-        IntPtr INetDevSdkProxy.NETDEV_StartInputVoiceSrv(IntPtr lpUserID, int dwChannelID) => _NETDEV_StartInputVoiceSrv.Invoke(lpUserID, dwChannelID);
-        IntPtr INetDevSdkProxy.NETDEV_StartPicStream(IntPtr lpUserID, IntPtr hPlayWnd, bool bReTran, string pcReTranIP, NETDEV_PIC_UPLOAD_PF pfnPicDataCBFun, IntPtr lpUserData) => _NETDEV_StartPicStream.Invoke(lpUserID, hPlayWnd, bReTran, pcReTranIP, pfnPicDataCBFun, lpUserData);
-        IntPtr INetDevSdkProxy.NETDEV_StartVoiceCom(IntPtr lpUserID, int dwChannelID, IntPtr cbPlayDataCallBack, IntPtr lpUserData) => _NETDEV_StartVoiceCom.Invoke(lpUserID, dwChannelID, cbPlayDataCallBack, lpUserData);
-        int INetDevSdkProxy.NETDEV_StopGetFile(IntPtr lpPlayHandle) => _NETDEV_StopGetFile.Invoke(lpPlayHandle);
-        int INetDevSdkProxy.NETDEV_StopInputVoiceSrv(IntPtr lpVoiceComHandle) => _NETDEV_StopInputVoiceSrv.Invoke(lpVoiceComHandle);
-        int INetDevSdkProxy.NETDEV_StopPicStream(IntPtr lpPlayHandle) => _NETDEV_StopPicStream.Invoke(lpPlayHandle);
-        int INetDevSdkProxy.NETDEV_StopPlayBack(IntPtr lpPlayHandle) => _NETDEV_StopPlayBack.Invoke(lpPlayHandle);
-        int INetDevSdkProxy.NETDEV_StopPlaySound(IntPtr lpRealHandle) => _NETDEV_StopPlaySound.Invoke(lpRealHandle);
-        int INetDevSdkProxy.NETDEV_StopRealPlay(IntPtr lpRealHandle) => _NETDEV_StopRealPlay.Invoke(lpRealHandle);
-        int INetDevSdkProxy.NETDEV_StopSaveRealData(IntPtr lpRealHandle) => _NETDEV_StopSaveRealData.Invoke(lpRealHandle);
-        int INetDevSdkProxy.NETDEV_StopVoiceCom(IntPtr lpVoiceComHandle) => _NETDEV_StopVoiceCom.Invoke(lpVoiceComHandle);
-        int INetDevSdkProxy.NETDEV_SubscibeLapiAlarm(IntPtr lpUserID, ref NETDEV_LAPI_SUB_INFO_S pstSubInfo, ref NETDEV_SUBSCRIBE_SUCC_INFO_S pstSubSuccInfo) => _NETDEV_SubscibeLapiAlarm.Invoke(lpUserID, ref pstSubInfo, ref pstSubSuccInfo);
-        int INetDevSdkProxy.NETDEV_SubscribeSmart(IntPtr lpUserID, ref NETDEV_SUBSCRIBE_SMART_INFO_S pstSubscribeInfo, ref NETDEV_SMART_INFO_S pstSmartInfo) => _NETDEV_SubscribeSmart.Invoke(lpUserID, ref pstSubscribeInfo, ref pstSmartInfo);
-        int INetDevSdkProxy.NETDEV_Trigger(IntPtr lpFindHandle) => _NETDEV_Trigger.Invoke(lpFindHandle);
-        int INetDevSdkProxy.NETDEV_TriggerSync(IntPtr lpFindHandle, ref IntPtr ppstPicData) => _NETDEV_TriggerSync.Invoke(lpFindHandle, ref ppstPicData);
-        int INetDevSdkProxy.NETDEV_UnSubLapiAlarm(IntPtr lpUserID, uint udwID) => _NETDEV_UnSubLapiAlarm.Invoke(lpUserID, udwID);
-        int INetDevSdkProxy.NETDEV_UnsubscribeSmart(IntPtr lpUserID, ref NETDEV_SMART_INFO_S pstSmartInfo) => _NETDEV_UnsubscribeSmart.Invoke(lpUserID, ref pstSmartInfo);
+        void IItsNetDevSdkProxy.MemCopy(byte[] dest, IntPtr src, int count) => MemCopy(dest, src, count);
+        void IItsNetDevSdkProxy.OutputDebugString(string message) => OutputDebugString(message);
+        int IItsNetDevSdkProxy.NETDEV_ACSPersonCtrl(IntPtr lpUserID, int dwCommand, ref NETDEV_ACS_PERSON_INFO_S pstACSPersonInfo) => _NETDEV_ACSPersonCtrl.Invoke(lpUserID, dwCommand, ref pstACSPersonInfo);
+        int IItsNetDevSdkProxy.NETDEV_AddACSPersonBlackList(IntPtr lpUserID, ref NETDEV_ACS_PERSON_BLACKLIST_INFO_S pstBlackListInfo, ref uint pUdwBlackListID) => _NETDEV_AddACSPersonBlackList.Invoke(lpUserID, ref pstBlackListInfo, ref pUdwBlackListID);
+        int IItsNetDevSdkProxy.NETDEV_AddACSPersonList(IntPtr lpUserID, ref NETDEV_ACS_PERSON_LIST_S pstACSPersonList, ref NETDEV_XW_BATCH_RESULT_LIST_S pstResultList) => _NETDEV_AddACSPersonList.Invoke(lpUserID, ref pstACSPersonList, ref pstResultList);
+        int IItsNetDevSdkProxy.NETDEV_AddACSPersonPermissionGroup(IntPtr lpUserID, ref NETDEV_ACS_PERMISSION_INFO_S pstPermissionGroupInfo, ref uint pUdwGroupID) => _NETDEV_AddACSPersonPermissionGroup.Invoke(lpUserID, ref pstPermissionGroupInfo, ref pUdwGroupID);
+        int IItsNetDevSdkProxy.NETDEV_AddOrgInfo(IntPtr lpUserID, ref NETDEV_ORG_INFO_S pstOrgInfo, ref int pdwOrgID) => _NETDEV_AddOrgInfo.Invoke(lpUserID, ref pstOrgInfo, ref pdwOrgID);
+        int IItsNetDevSdkProxy.NETDEV_AddPersonInfo(IntPtr lpUserID, uint udwPersonLibID, ref NETDEV_PERSON_INFO_LIST_S pstPersonInfoList, ref NETDEV_PERSON_RESULT_LIST_S pstPersonResultList) => _NETDEV_AddPersonInfo.Invoke(lpUserID, udwPersonLibID, ref pstPersonInfoList, ref pstPersonResultList);
+        int IItsNetDevSdkProxy.NETDEV_AddPersonMonitorInfo(IntPtr lpUserID, ref NETDEV_MONITION_INFO_S pstMonitorInfo, ref NETDEV_MONITOR_RESULT_INFO_S pstMonitorResultInfo) => _NETDEV_AddPersonMonitorInfo.Invoke(lpUserID, ref pstMonitorInfo, ref pstMonitorResultInfo);
+        int IItsNetDevSdkProxy.NETDEV_AddVehicleLibInfo(IntPtr lpUserID, ref NETDEV_LIB_INFO_S pstVehicleLibInfo) => _NETDEV_AddVehicleLibInfo.Invoke(lpUserID, ref pstVehicleLibInfo);
+        int IItsNetDevSdkProxy.NETDEV_AddVehicleLibMember(IntPtr lpUserID, uint udwVehicleLibID, ref NETDEV_BATCH_OPERATE_MEMBER_LIST_S pstMemberList, ref NETDEV_BATCH_OPERATOR_LIST_S pstBatchResultList) => _NETDEV_AddVehicleLibMember.Invoke(lpUserID, udwVehicleLibID, ref pstMemberList, ref pstBatchResultList);
+        int IItsNetDevSdkProxy.NETDEV_AddVehicleMemberList(IntPtr lpUserID, uint udwLibID, ref NETDEV_VEHICLE_INFO_LIST_S pstVehicleMemberList, ref NETDEV_BATCH_OPERATOR_LIST_S pstResultList) => _NETDEV_AddVehicleMemberList.Invoke(lpUserID, udwLibID, ref pstVehicleMemberList, ref pstResultList);
+        int IItsNetDevSdkProxy.NETDEV_AddVehicleMonitorInfo(IntPtr lpUserID, ref NETDEV_MONITION_INFO_S pstMonitorInfo) => _NETDEV_AddVehicleMonitorInfo.Invoke(lpUserID, ref pstMonitorInfo);
+        int IItsNetDevSdkProxy.NETDEV_AddVehicleRecord(IntPtr lpFindHandle, ref NETDEV_PARK_VEHICLE_RECORD_EXTERN_S pstVehicleRecordExtern) => _NETDEV_AddVehicleRecord.Invoke(lpFindHandle, ref pstVehicleRecordExtern);
+        int IItsNetDevSdkProxy.NETDEV_BatchDeleteOrgInfo(IntPtr lpUserID, ref NETDEV_DEL_ORG_INFO_S pstOrgDelInfo, ref NETDEV_ORG_BATCH_DEL_INFO_S pstOrgDelResultInfo) => _NETDEV_BatchDeleteOrgInfo.Invoke(lpUserID, ref pstOrgDelInfo, ref pstOrgDelResultInfo);
+        int IItsNetDevSdkProxy.NETDEV_BatchDeletePersonMonitorInfo(IntPtr lpUserID, ref NETDEV_BATCH_OPERATOR_LIST_S pstResultList) => _NETDEV_BatchDeletePersonMonitorInfo.Invoke(lpUserID, ref pstResultList);
+        int IItsNetDevSdkProxy.NETDEV_CaptureNoPreview(IntPtr lpUserID, int dwChannelID, int dwStreamType, string szFileName, int dwCaptureMode) => _NETDEV_CaptureNoPreview.Invoke(lpUserID, dwChannelID, dwStreamType, szFileName, dwCaptureMode);
+        int IItsNetDevSdkProxy.NETDEV_CapturePicture(IntPtr lpRealHandle, byte[] szFileName, int dwCaptureMode) => _NETDEV_CapturePicture.Invoke(lpRealHandle, szFileName, dwCaptureMode);
+        int IItsNetDevSdkProxy.NETDEV_Cleanup() => _NETDEV_Cleanup.Invoke();
+        int IItsNetDevSdkProxy.NETDEV_CloseMic(IntPtr lpPlayHandle) => _NETDEV_CloseMic.Invoke(lpPlayHandle);
+        int IItsNetDevSdkProxy.NETDEV_CloseSound(IntPtr lpRealHandle) => _NETDEV_CloseSound.Invoke(lpRealHandle);
+        int IItsNetDevSdkProxy.NETDEV_ConfigLogFile(int dwLogFileSize, int dwLogFileNum) => _NETDEV_ConfigLogFile.Invoke(dwLogFileSize, dwLogFileNum);
+        int IItsNetDevSdkProxy.NETDEV_CreatePersonLibInfo(IntPtr lpUserID, ref NETDEV_LIB_INFO_S pstPersonLibInfo, ref uint pudwID) => _NETDEV_CreatePersonLibInfo.Invoke(lpUserID, ref pstPersonLibInfo, ref pudwID);
+        int IItsNetDevSdkProxy.NETDEV_CreateUser(IntPtr lpUserID, IntPtr stUserInfo) => _NETDEV_CreateUser.Invoke(lpUserID, stUserInfo);
+        int IItsNetDevSdkProxy.NETDEV_DeleteACSPersonBlackList(IntPtr lpUserID, ref NETDEV_OPERATE_LIST_S pstBlackList) => _NETDEV_DeleteACSPersonBlackList.Invoke(lpUserID, ref pstBlackList);
+        int IItsNetDevSdkProxy.NETDEV_DeleteACSPersonList(IntPtr lpUserID, ref NETDEV_FACE_BATCH_LIST_S pstBatchCtrlInfo) => _NETDEV_DeleteACSPersonList.Invoke(lpUserID, ref pstBatchCtrlInfo);
+        int IItsNetDevSdkProxy.NETDEV_DeleteACSPersonPermissionGroup(IntPtr lpUserID, ref NETDEV_OPERATE_LIST_S pstPermissionIDList, ref NETDEV_BATCH_OPERATOR_LIST_S pstResutList) => _NETDEV_DeleteACSPersonPermissionGroup.Invoke(lpUserID, ref pstPermissionIDList, ref pstResutList);
+        int IItsNetDevSdkProxy.NETDEV_DeleteAllowVehicleRecord(IntPtr lpFindHandle, int ulRecordID) => _NETDEV_DeleteAllowVehicleRecord.Invoke(lpFindHandle, ulRecordID);
+        int IItsNetDevSdkProxy.NETDEV_DeleteBlockVehicleRecord(IntPtr lpFindHandle, int ulRecordID) => _NETDEV_DeleteBlockVehicleRecord.Invoke(lpFindHandle, ulRecordID);
+        int IItsNetDevSdkProxy.NETDEV_DeletePersonInfo(IntPtr lpUserID, uint udwPersonLibID, uint udwPersonID, uint udwLastChange) => _NETDEV_DeletePersonInfo.Invoke(lpUserID, udwPersonLibID, udwPersonID, udwLastChange);
+        int IItsNetDevSdkProxy.NETDEV_DeletePersonInfoList(IntPtr lpUserID, uint udwPersonLibID, ref NETDEV_BATCH_OPERATE_MEMBER_LIST_S pstIDList, ref NETDEV_BATCH_OPERATOR_LIST_S pstResutList) => _NETDEV_DeletePersonInfoList.Invoke(lpUserID, udwPersonLibID, ref pstIDList, ref pstResutList);
+        int IItsNetDevSdkProxy.NETDEV_DeletePersonLibInfo(IntPtr lpUserID, uint udwPersonLibID, ref NETDEV_DELETE_DB_FLAG_INFO_S pstFlagInfo) => _NETDEV_DeletePersonLibInfo.Invoke(lpUserID, udwPersonLibID, ref pstFlagInfo);
+        int IItsNetDevSdkProxy.NETDEV_DeleteUser(IntPtr lpUserID, string strUserName) => _NETDEV_DeleteUser.Invoke(lpUserID, strUserName);
+        int IItsNetDevSdkProxy.NETDEV_DeleteVehicleLibInfo(IntPtr lpUserID, uint udwVehicleLibID, ref NETDEV_DELETE_DB_FLAG_INFO_S pstDelLibFlag) => _NETDEV_DeleteVehicleLibInfo.Invoke(lpUserID, udwVehicleLibID, ref pstDelLibFlag);
+        int IItsNetDevSdkProxy.NETDEV_DeleteVehicleLibMember(IntPtr lpUserID, uint udwVehicleLibID, ref NETDEV_BATCH_OPERATE_MEMBER_LIST_S pstMemberList, ref NETDEV_BATCH_OPERATOR_LIST_S pstBatchResultList) => _NETDEV_DeleteVehicleLibMember.Invoke(lpUserID, udwVehicleLibID, ref pstMemberList, ref pstBatchResultList);
+        int IItsNetDevSdkProxy.NETDEV_DeleteVehicleMonitorInfo(IntPtr lpUserID, ref NETDEV_BATCH_OPERATOR_LIST_S pstBatchList) => _NETDEV_DeleteVehicleMonitorInfo.Invoke(lpUserID, ref pstBatchList);
+        int IItsNetDevSdkProxy.NETDEV_DelVehicleMemberList(IntPtr lpUserID, uint udwLib, ref NETDEV_VEHICLE_INFO_LIST_S pstVehicleMemberList, ref NETDEV_BATCH_OPERATOR_LIST_S pstBatchList) => _NETDEV_DelVehicleMemberList.Invoke(lpUserID, udwLib, ref pstVehicleMemberList, ref pstBatchList);
+        int IItsNetDevSdkProxy.NETDEV_Discovery(string pszBeginIP, string pszEndIP) => _NETDEV_Discovery.Invoke(pszBeginIP, pszEndIP);
+        int IItsNetDevSdkProxy.NETDEV_DoorBatchCtrl(IntPtr lpUserID, int dwCommand, ref NETDEV_OPERATE_LIST_S pstBatchCtrlInfo) => _NETDEV_DoorBatchCtrl.Invoke(lpUserID, dwCommand, ref pstBatchCtrlInfo);
+        int IItsNetDevSdkProxy.NETDEV_DoorCtrl(IntPtr lpUserID, int dwChannelID, int dwCommand) => _NETDEV_DoorCtrl.Invoke(lpUserID, dwChannelID, dwCommand);
+        int IItsNetDevSdkProxy.NETDEV_EnableCarplate(int bEnable) => _NETDEV_EnableCarplate.Invoke(bEnable);
+        int IItsNetDevSdkProxy.NETDEV_ExportBlackWhiteListFile(IntPtr lpFindHandle, string pcFile) => _NETDEV_ExportBlackWhiteListFile.Invoke(lpFindHandle, pcFile);
+        IntPtr IItsNetDevSdkProxy.NETDEV_FindACSAttendanceLogList(IntPtr lpUserID, ref NETDEV_ALARM_LOG_COND_LIST_S pstFindCond, ref NETDEV_BATCH_OPERATE_BASIC_S pstResultInfo) => _NETDEV_FindACSAttendanceLogList.Invoke(lpUserID, ref pstFindCond, ref pstResultInfo);
+        IntPtr IItsNetDevSdkProxy.NETDEV_FindACSPermissionGroupList(IntPtr lpUserID, ref NETDEV_PERSON_QUERY_INFO_S pstQueryCond, ref NETDEV_BATCH_OPERATE_BASIC_S pstResultInfo) => _NETDEV_FindACSPermissionGroupList.Invoke(lpUserID, ref pstQueryCond, ref pstResultInfo);
+        IntPtr IItsNetDevSdkProxy.NETDEV_FindACSPersonBlackList(IntPtr lpUserID, ref NETDEV_PAGED_QUERY_INFO_S pstQueryCond, ref NETDEV_BATCH_OPERATE_BASIC_S pstResultInfo) => _NETDEV_FindACSPersonBlackList.Invoke(lpUserID, ref pstQueryCond, ref pstResultInfo);
+        IntPtr IItsNetDevSdkProxy.NETDEV_FindACSPersonList(IntPtr lpUserID, ref NETDEV_PERSON_QUERY_INFO_S pstQueryCond, ref NETDEV_BATCH_OPERATE_BASIC_S pstResultInfo) => _NETDEV_FindACSPersonList.Invoke(lpUserID, ref pstQueryCond, ref pstResultInfo);
+        IntPtr IItsNetDevSdkProxy.NETDEV_FindACSVisitLogList(IntPtr lpUserID, ref NETDEV_ALARM_LOG_COND_LIST_S pstFindCond, ref NETDEV_BATCH_OPERATE_BASIC_S pstResultInfo) => _NETDEV_FindACSVisitLogList.Invoke(lpUserID, ref pstFindCond, ref pstResultInfo);
+        int IItsNetDevSdkProxy.NETDEV_FindClose(IntPtr lpFindHandle) => _NETDEV_FindClose.Invoke(lpFindHandle);
+        int IItsNetDevSdkProxy.NETDEV_FindCloseACSAttendanceLogList(IntPtr lpFindHandle) => _NETDEV_FindCloseACSAttendanceLogList.Invoke(lpFindHandle);
+        int IItsNetDevSdkProxy.NETDEV_FindCloseACSPermissionGroupList(IntPtr lpFindHandle) => _NETDEV_FindCloseACSPermissionGroupList.Invoke(lpFindHandle);
+        int IItsNetDevSdkProxy.NETDEV_FindCloseACSPersonBlackList(IntPtr lpFindHandle) => _NETDEV_FindCloseACSPersonBlackList.Invoke(lpFindHandle);
+        int IItsNetDevSdkProxy.NETDEV_FindCloseACSPersonInfo(IntPtr lpFindHandle) => _NETDEV_FindCloseACSPersonInfo.Invoke(lpFindHandle);
+        int IItsNetDevSdkProxy.NETDEV_FindCloseACSVisitLog(IntPtr lpFindHandle) => _NETDEV_FindCloseACSVisitLog.Invoke(lpFindHandle);
+        int IItsNetDevSdkProxy.NETDEV_FindCloseCloudDevListEx(IntPtr lpFindHandle) => _NETDEV_FindCloseCloudDevListEx.Invoke(lpFindHandle);
+        int IItsNetDevSdkProxy.NETDEV_FindCloseDevChn(IntPtr lpFindHandle) => _NETDEV_FindCloseDevChn.Invoke(lpFindHandle);
+        int IItsNetDevSdkProxy.NETDEV_FindCloseDevInfo(IntPtr lpFindHandle) => _NETDEV_FindCloseDevInfo.Invoke(lpFindHandle);
+        int IItsNetDevSdkProxy.NETDEV_FindCloseFaceRecordDetail(IntPtr lpFindHandle) => _NETDEV_FindCloseFaceRecordDetail.Invoke(lpFindHandle);
+        int IItsNetDevSdkProxy.NETDEV_FindCloseMonitorDevResult(IntPtr lpFindHandle) => _NETDEV_FindCloseMonitorDevResult.Invoke(lpFindHandle);
+        int IItsNetDevSdkProxy.NETDEV_FindCloseMonitorStatusList(IntPtr lpFindHandle) => _NETDEV_FindCloseMonitorStatusList.Invoke(lpFindHandle);
+        int IItsNetDevSdkProxy.NETDEV_FindCloseOrgInfo(IntPtr lpFindHandle) => _NETDEV_FindCloseOrgInfo.Invoke(lpFindHandle);
+        int IItsNetDevSdkProxy.NETDEV_FindClosePermStatusList(IntPtr lpFindHandle) => _NETDEV_FindClosePermStatusList.Invoke(lpFindHandle);
+        int IItsNetDevSdkProxy.NETDEV_FindClosePersonInfoList(IntPtr lpFindHandle) => _NETDEV_FindClosePersonInfoList.Invoke(lpFindHandle);
+        int IItsNetDevSdkProxy.NETDEV_FindClosePersonLibList(IntPtr lpFindHandle) => _NETDEV_FindClosePersonLibList.Invoke(lpFindHandle);
+        int IItsNetDevSdkProxy.NETDEV_FindClosePersonMonitorList(IntPtr lpFindHandle) => _NETDEV_FindClosePersonMonitorList.Invoke(lpFindHandle);
+        int IItsNetDevSdkProxy.NETDEV_FindCloseVehicleLibList(IntPtr lpFindHandle) => _NETDEV_FindCloseVehicleLibList.Invoke(lpFindHandle);
+        int IItsNetDevSdkProxy.NETDEV_FindCloseVehicleMemberDetail(IntPtr lpFindHandle) => _NETDEV_FindCloseVehicleMemberDetail.Invoke(lpFindHandle);
+        int IItsNetDevSdkProxy.NETDEV_FindCloseVehicleMonitorList(IntPtr lpFindHandle) => _NETDEV_FindCloseVehicleMonitorList.Invoke(lpFindHandle);
+        int IItsNetDevSdkProxy.NETDEV_FindCloseVehicleRecordList(IntPtr lpFindHandle) => _NETDEV_FindCloseVehicleRecordList.Invoke(lpFindHandle);
+        IntPtr IItsNetDevSdkProxy.NETDEV_FindCloudDevListEx(IntPtr lpUserID) => _NETDEV_FindCloudDevListEx.Invoke(lpUserID);
+        IntPtr IItsNetDevSdkProxy.NETDEV_FindDevChnList(IntPtr lpUserID, int dwDevID, int dwChnType) => _NETDEV_FindDevChnList.Invoke(lpUserID, dwDevID, dwChnType);
+        IntPtr IItsNetDevSdkProxy.NETDEV_FindDevList(IntPtr lpUserID, int dwDevType) => _NETDEV_FindDevList.Invoke(lpUserID, dwDevType);
+        IntPtr IItsNetDevSdkProxy.NETDEV_FindFaceRecordDetailList(IntPtr lpUserID, ref NETDEV_ALARM_LOG_COND_LIST_S pstFindCond, ref NETDEV_SMART_ALARM_LOG_RESULT_INFO_S pstResultInfo) => _NETDEV_FindFaceRecordDetailList.Invoke(lpUserID, ref pstFindCond, ref pstResultInfo);
+        IntPtr IItsNetDevSdkProxy.NETDEV_FindFile(IntPtr lpUserID, ref NETDEV_FILECOND_S pFindCond) => _NETDEV_FindFile.Invoke(lpUserID, ref pFindCond);
+        IntPtr IItsNetDevSdkProxy.NETDEV_FindMonitorDevResult(IntPtr lpUserID, ref uint pudwDevNum) => _NETDEV_FindMonitorDevResult.Invoke(lpUserID, ref pudwDevNum);
+        IntPtr IItsNetDevSdkProxy.NETDEV_FindMonitorStatusList(IntPtr lpUserID, int enType, ref uint udwMonitorID, ref NETDEV_ALARM_LOG_COND_LIST_S pstFindLimit, ref NETDEV_SMART_ALARM_LOG_RESULT_INFO_S pstList) => _NETDEV_FindMonitorStatusList.Invoke(lpUserID, enType, ref udwMonitorID, ref pstFindLimit, ref pstList);
+        int IItsNetDevSdkProxy.NETDEV_FindNextACSAttendanceLog(IntPtr lpFindHandle, ref NETDEV_ACS_ATTENDANCE_LOG_INFO_S pstACSLogInfo) => _NETDEV_FindNextACSAttendanceLog.Invoke(lpFindHandle, ref pstACSLogInfo);
+        int IItsNetDevSdkProxy.NETDEV_FindNextACSPermissionGroupInfo(IntPtr lpFindHandle, ref NETDEV_ACS_PERMISSION_INFO_S pstACSPermissionInfo) => _NETDEV_FindNextACSPermissionGroupInfo.Invoke(lpFindHandle, ref pstACSPermissionInfo);
+        int IItsNetDevSdkProxy.NETDEV_FindNextACSPersonBlackListInfo(IntPtr lpFindHandle, ref NETDEV_ACS_PERSON_BLACKLIST_INFO_S pstBlackListInfo) => _NETDEV_FindNextACSPersonBlackListInfo.Invoke(lpFindHandle, ref pstBlackListInfo);
+        int IItsNetDevSdkProxy.NETDEV_FindNextACSPersonInfo(IntPtr lpFindHandle, ref NETDEV_ACS_PERSON_BASE_INFO_S pstACSPersonInfo) => _NETDEV_FindNextACSPersonInfo.Invoke(lpFindHandle, ref pstACSPersonInfo);
+        int IItsNetDevSdkProxy.NETDEV_FindNextACSVisitLog(IntPtr lpFindHandle, ref NETDEV_ACS_VISIT_LOG_INFO_S pstACSLogInfo) => _NETDEV_FindNextACSVisitLog.Invoke(lpFindHandle, ref pstACSLogInfo);
+        int IItsNetDevSdkProxy.NETDEV_FindNextCloudDevInfoEx(IntPtr lpFindHandle, ref NETDEV_CLOUD_DEV_BASIC_INFO_S pstDevInfo) => _NETDEV_FindNextCloudDevInfoEx.Invoke(lpFindHandle, ref pstDevInfo);
+        int IItsNetDevSdkProxy.NETDEV_FindNextDevChn(IntPtr lpFindHandle, IntPtr lpOutBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => _NETDEV_FindNextDevChn.Invoke(lpFindHandle, lpOutBuffer, dwOutBufferSize, ref pdwBytesReturned);
+        int IItsNetDevSdkProxy.NETDEV_FindNextDevInfo(IntPtr lpFindHandle, ref NETDEV_DEV_BASIC_INFO_S pstDevBasicInfo) => _NETDEV_FindNextDevInfo.Invoke(lpFindHandle, ref pstDevBasicInfo);
+        int IItsNetDevSdkProxy.NETDEV_FindNextFaceRecordDetail(IntPtr lpFindHandle, ref NETDEV_FACE_RECORD_SNAPSHOT_INFO_S pstRecordInfo) => _NETDEV_FindNextFaceRecordDetail.Invoke(lpFindHandle, ref pstRecordInfo);
+        int IItsNetDevSdkProxy.NETDEV_FindNextFile(IntPtr lpFindHandle, ref NETDEV_FINDDATA_S lpFindData) => _NETDEV_FindNextFile.Invoke(lpFindHandle, ref lpFindData);
+        int IItsNetDevSdkProxy.NETDEV_FindNextMonitorDevResult(IntPtr lpFindHandle, ref NETDEV_MONITOR_DEV_RESULT_INFO_S pstMonitorDevResultInfo) => _NETDEV_FindNextMonitorDevResult.Invoke(lpFindHandle, ref pstMonitorDevResultInfo);
+        int IItsNetDevSdkProxy.NETDEV_FindNextMonitorStatusInfo(IntPtr lpFindHandle, ref NETDEV_MONITOR_MEMBER_INFO_S pstMonitorStats) => _NETDEV_FindNextMonitorStatusInfo.Invoke(lpFindHandle, ref pstMonitorStats);
+        int IItsNetDevSdkProxy.NETDEV_FindNextOrgInfo(IntPtr lpFindHandle, ref NETDEV_ORG_INFO_S pstOrgInfo) => _NETDEV_FindNextOrgInfo.Invoke(lpFindHandle, ref pstOrgInfo);
+        int IItsNetDevSdkProxy.NETDEV_FindNextPermStatusInfo(IntPtr lpFindHandle, ref NETDEV_ACS_PERM_STATUS_S pstACSPermStatus) => _NETDEV_FindNextPermStatusInfo.Invoke(lpFindHandle, ref pstACSPermStatus);
+        int IItsNetDevSdkProxy.NETDEV_FindNextPersonInfo(IntPtr lpFindHandle, ref NETDEV_PERSON_INFO_S pstPersonInfo) => _NETDEV_FindNextPersonInfo.Invoke(lpFindHandle, ref pstPersonInfo);
+        int IItsNetDevSdkProxy.NETDEV_FindNextPersonLibInfo(IntPtr lpFindHandle, ref NETDEV_LIB_INFO_S pstPersonLibInfo) => _NETDEV_FindNextPersonLibInfo.Invoke(lpFindHandle, ref pstPersonLibInfo);
+        int IItsNetDevSdkProxy.NETDEV_FindNextPersonMonitorInfo(IntPtr lpFindHandle, ref NETDEV_MONITION_INFO_S pstMonitorInfo) => _NETDEV_FindNextPersonMonitorInfo.Invoke(lpFindHandle, ref pstMonitorInfo);
+        int IItsNetDevSdkProxy.NETDEV_FindNextVehicleLibInfo(IntPtr lpFindHandle, ref NETDEV_LIB_INFO_S pstVehicleLibInfo) => _NETDEV_FindNextVehicleLibInfo.Invoke(lpFindHandle, ref pstVehicleLibInfo);
+        int IItsNetDevSdkProxy.NETDEV_FindNextVehicleMemberDetail(IntPtr lpFindHandle, ref NETDEV_VEHICLE_DETAIL_INFO_S pstVehicleMemberInfo) => _NETDEV_FindNextVehicleMemberDetail.Invoke(lpFindHandle, ref pstVehicleMemberInfo);
+        int IItsNetDevSdkProxy.NETDEV_FindNextVehicleMonitorInfo(IntPtr lpFindHandle, ref NETDEV_MONITION_INFO_S pstVehicleMonitorInfo) => _NETDEV_FindNextVehicleMonitorInfo.Invoke(lpFindHandle, ref pstVehicleMonitorInfo);
+        int IItsNetDevSdkProxy.NETDEV_FindNextVehicleRecordInfo(IntPtr lpFindHandle, ref NETDEV_VEHICLE_RECORD_INFO_S pstRecordInfo) => _NETDEV_FindNextVehicleRecordInfo.Invoke(lpFindHandle, ref pstRecordInfo);
+        IntPtr IItsNetDevSdkProxy.NETDEV_FindOrgInfoList(IntPtr lpUserID, ref NETDEV_ORG_FIND_COND_S pstFindCond) => _NETDEV_FindOrgInfoList.Invoke(lpUserID, ref pstFindCond);
+        IntPtr IItsNetDevSdkProxy.NETDEV_FindPermStatusList(IntPtr lpUserID, ref uint udwPermGroupID, ref NETDEV_ALARM_LOG_COND_LIST_S pstQueryInfo, ref NETDEV_BATCH_OPERATE_BASIC_S pstResultInfo) => _NETDEV_FindPermStatusList.Invoke(lpUserID, ref udwPermGroupID, ref pstQueryInfo, ref pstResultInfo);
+        IntPtr IItsNetDevSdkProxy.NETDEV_FindPersonInfoList(IntPtr lpUserID, uint udwPersonLibID, ref NETDEV_PERSON_QUERY_INFO_S pstQueryInfo, ref NETDEV_BATCH_OPERATE_BASIC_S pstQueryResultInfo) => _NETDEV_FindPersonInfoList.Invoke(lpUserID, udwPersonLibID, ref pstQueryInfo, ref pstQueryResultInfo);
+        IntPtr IItsNetDevSdkProxy.NETDEV_FindPersonLibList(IntPtr lpUserID) => _NETDEV_FindPersonLibList.Invoke(lpUserID);
+        IntPtr IItsNetDevSdkProxy.NETDEV_FindPersonMonitorList(IntPtr lpUserID, uint udwChannelID, ref NETDEV_MONITOR_QUERY_INFO_S pstQueryInfo) => _NETDEV_FindPersonMonitorList.Invoke(lpUserID, udwChannelID, ref pstQueryInfo);
+        IntPtr IItsNetDevSdkProxy.NETDEV_FindVehicleLibList(IntPtr lpUserID) => _NETDEV_FindVehicleLibList.Invoke(lpUserID);
+        IntPtr IItsNetDevSdkProxy.NETDEV_FindVehicleMemberDetailList(IntPtr lpUserID, uint udwVehicleLibID, ref NETDEV_PERSON_QUERY_INFO_S pstFindCond, ref NETDEV_BATCH_OPERATE_BASIC_S pstDBMemberList) => _NETDEV_FindVehicleMemberDetailList.Invoke(lpUserID, udwVehicleLibID, ref pstFindCond, ref pstDBMemberList);
+        IntPtr IItsNetDevSdkProxy.NETDEV_FindVehicleMonitorList(IntPtr lpUserID) => _NETDEV_FindVehicleMonitorList.Invoke(lpUserID);
+        IntPtr IItsNetDevSdkProxy.NETDEV_FindVehicleRecordInfoList(IntPtr lpUserID, ref NETDEV_ALARM_LOG_COND_LIST_S pstFindCond, ref NETDEV_SMART_ALARM_LOG_RESULT_INFO_S pstResultInfo) => _NETDEV_FindVehicleRecordInfoList.Invoke(lpUserID, ref pstFindCond, ref pstResultInfo);
+        int IItsNetDevSdkProxy.NETDEV_GetACSPersonBlackList(IntPtr lpUserID, ref NETDEV_ACS_PERSON_BLACKLIST_INFO_S pstBlackListInfo) => _NETDEV_GetACSPersonBlackList.Invoke(lpUserID, ref pstBlackListInfo);
+        int IItsNetDevSdkProxy.NETDEV_GetACSPersonPermission(IntPtr lpUserID, uint udwPersonID, ref NETDEV_ACS_DOOR_PERMISSION_INFO_S pstPermissionInfo) => _NETDEV_GetACSPersonPermission.Invoke(lpUserID, udwPersonID, ref pstPermissionInfo);
+        int IItsNetDevSdkProxy.NETDEV_GetBitRate(IntPtr lpRealHandle, ref int pdwBitRate) => _NETDEV_GetBitRate.Invoke(lpRealHandle, ref pdwBitRate);
+        int IItsNetDevSdkProxy.NETDEV_GetBuiltinIndicatorCtrl(IntPtr lpFindHandle, ref NETDEV_CARPORT_CONTROLLED_S pstuCarportControlled) => _NETDEV_GetBuiltinIndicatorCtrl.Invoke(lpFindHandle, ref pstuCarportControlled);
+        int IItsNetDevSdkProxy.NETDEV_GetChnDetailByChnType(IntPtr lpUserID, int dwChnID, int dwChnType, IntPtr lpOutBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => _NETDEV_GetChnDetailByChnType.Invoke(lpUserID, dwChnID, dwChnType, lpOutBuffer, dwOutBufferSize, ref pdwBytesReturned);
+        int IItsNetDevSdkProxy.NETDEV_GetChnType(IntPtr lpUserID, int dwChnID, ref int pdwChnType) => _NETDEV_GetChnType.Invoke(lpUserID, dwChnID, ref pdwChnType);
+        int IItsNetDevSdkProxy.NETDEV_GetCloudDevInfoByName(IntPtr lpUserID, string pszRegisterCode, ref NETDEV_CLOUD_DEV_INFO_S pstDevInfo) => _NETDEV_GetCloudDevInfoByName.Invoke(lpUserID, pszRegisterCode, ref pstDevInfo);
+        int IItsNetDevSdkProxy.NETDEV_GetCloudDevInfoByRegCode(IntPtr lpUserID, string pszRegisterName, ref NETDEV_CLOUD_DEV_INFO_S pstDevInfo) => _NETDEV_GetCloudDevInfoByRegCode.Invoke(lpUserID, pszRegisterName, ref pstDevInfo);
+        int IItsNetDevSdkProxy.NETDEV_GetCompassInfo(IntPtr lpUserID, int dwChannelID, ref float fCompassInfo) => _NETDEV_GetCompassInfo.Invoke(lpUserID, dwChannelID, ref fCompassInfo);
+        int IItsNetDevSdkProxy.NETDEV_GetConfigFile(IntPtr lpUserID, string strConfigPath) => _NETDEV_GetConfigFile.Invoke(lpUserID, strConfigPath);
+        int IItsNetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_DEFOGGING_INFO_S lpInBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => _NETDEV_GetDevConfig1.Invoke(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwOutBufferSize, ref pdwBytesReturned);
+        int IItsNetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_MOTION_ALARM_INFO_S lpInBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => _NETDEV_GetDevConfig2.Invoke(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwOutBufferSize, ref pdwBytesReturned);
+        int IItsNetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_TAMPER_ALARM_INFO_S lpOutBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => _NETDEV_GetDevConfig3.Invoke(lpUserID, dwChannelID, dwCommand, ref lpOutBuffer, dwOutBufferSize, ref pdwBytesReturned);
+        int IItsNetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_OSD_CAP_S lpOutBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => _NETDEV_GetDevConfig4.Invoke(lpUserID, dwChannelID, dwCommand, ref lpOutBuffer, dwOutBufferSize, ref pdwBytesReturned);
+        int IItsNetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_VIDEO_STREAM_CAP_EX_S lpOutBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => _NETDEV_GetDevConfig5.Invoke(lpUserID, dwChannelID, dwCommand, ref lpOutBuffer, dwOutBufferSize, ref pdwBytesReturned);
+        int IItsNetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, IntPtr lpInBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => _NETDEV_GetDevConfig6.Invoke(lpUserID, dwChannelID, dwCommand, lpInBuffer, dwOutBufferSize, ref pdwBytesReturned);
+        int IItsNetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_PTZ_STATUS_S lpInBuffer, int dwInBufferSize, ref int pdwBytesReturned) => _NETDEV_GetDevConfig7.Invoke(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwInBufferSize, ref pdwBytesReturned);
+        int IItsNetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_VIDEO_STREAM_INFO_S lpInBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => _NETDEV_GetDevConfig8.Invoke(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwOutBufferSize, ref pdwBytesReturned);
+        int IItsNetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_IMAGE_SETTING_S lpInBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => _NETDEV_GetDevConfig9.Invoke(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwOutBufferSize, ref pdwBytesReturned);
+        int IItsNetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_SYSTEM_NTP_INFO_S lpInBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => _NETDEV_GetDevConfigA.Invoke(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwOutBufferSize, ref pdwBytesReturned);
+        int IItsNetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_NETWORKCFG_S lpInBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => _NETDEV_GetDevConfigB.Invoke(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwOutBufferSize, ref pdwBytesReturned);
+        int IItsNetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_ALARM_OUTPUT_INFO_S lpInBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => _NETDEV_GetDevConfigC.Invoke(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwOutBufferSize, ref pdwBytesReturned);
+        int IItsNetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_RECORD_PLAN_CFG_INFO_S lpInBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => _NETDEV_GetDevConfigD.Invoke(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwOutBufferSize, ref pdwBytesReturned);
+        int IItsNetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_TRIGGER_ALARM_OUTPUT_S lpInBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => _NETDEV_GetDevConfigE.Invoke(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwOutBufferSize, ref pdwBytesReturned);
+        int IItsNetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_VIDEO_OSD_CFG_S lpInBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => _NETDEV_GetDevConfigQ.Invoke(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwOutBufferSize, ref pdwBytesReturned);
+        int IItsNetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_ALARM_INPUT_LIST_S lpInBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => _NETDEV_GetDevConfigF.Invoke(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwOutBufferSize, ref pdwBytesReturned);
+        int IItsNetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_ALARM_OUTPUT_LIST_S lpInBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => _NETDEV_GetDevConfigG.Invoke(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwOutBufferSize, ref pdwBytesReturned);
+        int IItsNetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_DEVICE_BASICINFO_S lpInBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => _NETDEV_GetDevConfigH.Invoke(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwOutBufferSize, ref pdwBytesReturned);
+        int IItsNetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_DISK_INFO_LIST_S lpInBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => _NETDEV_GetDevConfigI.Invoke(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwOutBufferSize, ref pdwBytesReturned);
+        int IItsNetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_PRIVACY_MASK_CFG_S lpInBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => _NETDEV_GetDevConfigJ.Invoke(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwOutBufferSize, ref pdwBytesReturned);
+        int IItsNetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_SYSTEM_NTP_INFO_LIST_S lpInBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => _NETDEV_GetDevConfigK.Invoke(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwOutBufferSize, ref pdwBytesReturned);
+        int IItsNetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_IMAGE_EXPOSURE_S lpInBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => _NETDEV_GetDevConfigL.Invoke(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwOutBufferSize, ref pdwBytesReturned);
+        int IItsNetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_IRCUT_FILTER_INFO_S lpInBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => _NETDEV_GetDevConfigM.Invoke(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwOutBufferSize, ref pdwBytesReturned);
+        int IItsNetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_INFORELEASE_CFG_S lpInBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => _NETDEV_GetDevConfigN.Invoke(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwOutBufferSize, ref pdwBytesReturned);
+        int IItsNetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_ITS_PARKING_DETECTION_S lpInBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => _NETDEV_GetDevConfigO.Invoke(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwOutBufferSize, ref pdwBytesReturned);
+        int IItsNetDevSdkProxy.NETDEV_GetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_OSD_CONTENT_STYLE_S lpInBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => _NETDEV_GetDevConfigP.Invoke(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwOutBufferSize, ref pdwBytesReturned);
+        int IItsNetDevSdkProxy.NETDEV_GetDeviceCapability(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_OSD_CAP_S lpOutBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => _NETDEV_GetDeviceCapability1.Invoke(lpUserID, dwChannelID, dwCommand, ref lpOutBuffer, dwOutBufferSize, ref pdwBytesReturned);
+        int IItsNetDevSdkProxy.NETDEV_GetDeviceCapability(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_VIDEO_STREAM_CAP_EX_S lpOutBuffer, int dwOutBufferSize, ref int pdwBytesReturned) => _NETDEV_GetDeviceCapability2.Invoke(lpUserID, dwChannelID, dwCommand, ref lpOutBuffer, dwOutBufferSize, ref pdwBytesReturned);
+        int IItsNetDevSdkProxy.NETDEV_GetDeviceInfo(IntPtr lpUserID, ref NETDEV_DEVICE_INFO_S pstDevInfo) => _NETDEV_GetDeviceInfo.Invoke(lpUserID, ref pstDevInfo);
+        int IItsNetDevSdkProxy.NETDEV_GetDeviceInfo_V30(IntPtr lpUserID, int dwDevID, ref NETDEV_DEV_INFO_V30_S pstDevInfo) => _NETDEV_GetDeviceInfo_V30.Invoke(lpUserID, dwDevID, ref pstDevInfo);
+        int IItsNetDevSdkProxy.NETDEV_GetFaceRecordImageInfo(IntPtr lpUserID, uint udwRecordID, uint udwFaceImageType, ref NETDEV_FILE_INFO_S pstFileInfo) => _NETDEV_GetFaceRecordImageInfo.Invoke(lpUserID, udwRecordID, udwFaceImageType, ref pstFileInfo);
+        IntPtr IItsNetDevSdkProxy.NETDEV_GetFileByName(IntPtr lpUserID, ref NETDEV_PLAYBACKINFO_S pstPlayBackInfo, string szSaveFileName, int dwFormat) => _NETDEV_GetFileByName.Invoke(lpUserID, ref pstPlayBackInfo, szSaveFileName, dwFormat);
+        IntPtr IItsNetDevSdkProxy.NETDEV_GetFileByTime(IntPtr lpUserID, ref NETDEV_PLAYBACKCOND_S pstPlayBackCond, byte[] pszSaveFileName, int dwFormat) => _NETDEV_GetFileByTime.Invoke(lpUserID, ref pstPlayBackCond, pszSaveFileName, dwFormat);
+        int IItsNetDevSdkProxy.NETDEV_GetFrameRate(IntPtr lpRealHandle, ref int pdwFrameRate) => _NETDEV_GetFrameRate.Invoke(lpRealHandle, ref pdwFrameRate);
+        int IItsNetDevSdkProxy.NETDEV_GetGeolocationInfo(IntPtr lpUserID, int dwChannelID, ref NETDEV_GEOLACATION_INFO_S pstGPSInfo) => _NETDEV_GetGeolocationInfo.Invoke(lpUserID, dwChannelID, ref pstGPSInfo);
+        int IItsNetDevSdkProxy.NETDEV_GetLastError() => _NETDEV_GetLastError.Invoke();
+        int IItsNetDevSdkProxy.NETDEV_GetLostPacketRate(IntPtr lpRealHandle, ref int pulRecvPktNum, ref int pulLostPktNum) => _NETDEV_GetLostPacketRate.Invoke(lpRealHandle, ref pulRecvPktNum, ref pulLostPktNum);
+        int IItsNetDevSdkProxy.NETDEV_GetMicVolume(IntPtr lpPlayHandle, ref int dwVolume) => _NETDEV_GetMicVolume.Invoke(lpPlayHandle, ref dwVolume);
+        int IItsNetDevSdkProxy.NETDEV_GetMonitorCapacity(IntPtr lpUserID, ref NETDEV_MONITOR_CAPACITY_INFO_S pstCapacityInfo, ref NETDEV_MONITOR_CAPACITY_LIST_S pstCapacityList) => _NETDEV_GetMonitorCapacity.Invoke(lpUserID, ref pstCapacityInfo, ref pstCapacityList);
+        int IItsNetDevSdkProxy.NETDEV_GetMonitorProgress(IntPtr lpUserID, ref uint pudwProgressRate) => _NETDEV_GetMonitorProgress.Invoke(lpUserID, ref pudwProgressRate);
+        int IItsNetDevSdkProxy.NETDEV_GetPARKVersion(byte[] strVersion) => _NETDEV_GetPARKVersion.Invoke(strVersion);
+        int IItsNetDevSdkProxy.NETDEV_GetPersonLibCapacity(IntPtr lpUserID, int dwTimeOut, ref NETDEV_PERSON_LIB_CAP_LIST_S pstCapacityList) => _NETDEV_GetPersonLibCapacity.Invoke(lpUserID, dwTimeOut, ref pstCapacityList);
+        int IItsNetDevSdkProxy.NETDEV_GetPersonMemberInfo(IntPtr lpUserID, uint udwPersonID, ref NETDEV_PERSON_INFO_S pstPersonInfo) => _NETDEV_GetPersonMemberInfo.Invoke(lpUserID, udwPersonID, ref pstPersonInfo);
+        int IItsNetDevSdkProxy.NETDEV_GetPersonMonitorRuleInfo(IntPtr lpUserID, ref NETDEV_MONITION_INFO_S pstMonitorInfo) => _NETDEV_GetPersonMonitorRuleInfo.Invoke(lpUserID, ref pstMonitorInfo);
+        int IItsNetDevSdkProxy.NETDEV_GetPTZPresetList(IntPtr lpUserID, int dwChannelID, ref NETDEV_PTZ_ALLPRESETS_S lpOutBuffer) => _NETDEV_GetPTZPresetList.Invoke(lpUserID, dwChannelID, ref lpOutBuffer);
+        int IItsNetDevSdkProxy.NETDEV_GetResolution(IntPtr lpRealHandle, ref int pdwWidth, ref int pdwHeight) => _NETDEV_GetResolution.Invoke(lpRealHandle, ref pdwWidth, ref pdwHeight);
+        int IItsNetDevSdkProxy.NETDEV_GetSDKVersion() => _NETDEV_GetSDKVersion.Invoke();
+        int IItsNetDevSdkProxy.NETDEV_GetSinglePermGroupInfo(IntPtr lpUserID, uint udwPermissionGroupID, ref NETDEV_ACS_PERMISSION_INFO_S pstAcsPerssionInfo) => _NETDEV_GetSinglePermGroupInfo.Invoke(lpUserID, udwPermissionGroupID, ref pstAcsPerssionInfo);
+        int IItsNetDevSdkProxy.NETDEV_GetSoundVolume(IntPtr lpPlayHandle, ref int pdwVolume) => _NETDEV_GetSoundVolume.Invoke(lpPlayHandle, ref pdwVolume);
+        int IItsNetDevSdkProxy.NETDEV_GetSystemPicture(IntPtr lpUserID, string pszURL, uint udwSize, IntPtr pszdata) => _NETDEV_GetSystemPicture.Invoke(lpUserID, pszURL, udwSize, pszdata);
+        int IItsNetDevSdkProxy.NETDEV_GetSystemTimeCfg(IntPtr lpUserID, ref NETDEV_TIME_CFG_S pstSystemTimeInfo) => _NETDEV_GetSystemTimeCfg.Invoke(lpUserID, ref pstSystemTimeInfo);
+        int IItsNetDevSdkProxy.NETDEV_GetTimeTemplateInfo(IntPtr lpUserID, int dwTemplateID, ref NETDEV_TIME_TEMPLATE_INFO_V30_S pstTimeTemplateInfo) => _NETDEV_GetTimeTemplateInfo.Invoke(lpUserID, dwTemplateID, ref pstTimeTemplateInfo);
+        int IItsNetDevSdkProxy.NETDEV_GetTimeTemplateList(IntPtr lpUserID, int dwTamplateType, ref NETDEV_TIME_TEMPLATE_LIST_S pstTemplateList) => _NETDEV_GetTimeTemplateList.Invoke(lpUserID, dwTamplateType, ref pstTemplateList);
+        int IItsNetDevSdkProxy.NETDEV_GetTrafficStatistic(IntPtr lpUserID, ref NETDEV_TRAFFIC_STATISTICS_COND_S pstStatisticCond, ref NETDEV_TRAFFIC_STATISTICS_DATA_S pstTrafficStatistic) => _NETDEV_GetTrafficStatistic.Invoke(lpUserID, ref pstStatisticCond, ref pstTrafficStatistic);
+        int IItsNetDevSdkProxy.NETDEV_GetUpnpNatState(IntPtr lpUserID, ref NETDEV_UPNP_NAT_STATE_S pstNatState) => _NETDEV_GetUpnpNatState.Invoke(lpUserID, ref pstNatState);
+        int IItsNetDevSdkProxy.NETDEV_GetUserDetailList(IntPtr lpUserID, IntPtr pstUserDetailList) => _NETDEV_GetUserDetailList.Invoke(lpUserID, pstUserDetailList);
+        int IItsNetDevSdkProxy.NETDEV_GetVehicleMonitorInfo(IntPtr lpUserID, uint udwID, ref NETDEV_MONITION_RULE_INFO_S pstMonitorInfo) => _NETDEV_GetVehicleMonitorInfo.Invoke(lpUserID, udwID, ref pstMonitorInfo);
+        int IItsNetDevSdkProxy.NETDEV_GetVehicleRecordImageInfo(IntPtr lpUserID, uint udwRecordID, ref NETDEV_FILE_INFO_S pstFileInfo) => _NETDEV_GetVehicleRecordImageInfo.Invoke(lpUserID, udwRecordID, ref pstFileInfo);
+        int IItsNetDevSdkProxy.NETDEV_GetVideoEffect(IntPtr lpRealHandle, ref NETDEV_VIDEO_EFFECT_S pstImageInfo) => _NETDEV_GetVideoEffect.Invoke(lpRealHandle, ref pstImageInfo);
+        int IItsNetDevSdkProxy.NETDEV_GetVideoEncodeFmt(IntPtr lpRealHandle, ref int pdwVideoEncFmt) => _NETDEV_GetVideoEncodeFmt.Invoke(lpRealHandle, ref pdwVideoEncFmt);
+        int IItsNetDevSdkProxy.NETDEV_ImportBlackWhiteListFile(IntPtr lpFindHandle, string pcFile) => _NETDEV_ImportBlackWhiteListFile.Invoke(lpFindHandle, pcFile);
+        int IItsNetDevSdkProxy.NETDEV_Init() => _NETDEV_Init.Invoke();
+        int IItsNetDevSdkProxy.NETDEV_InputVoiceData(IntPtr lpUserID, byte[] lpDataBuf, int dwDataLen, ref NETDEV_AUDIO_SAMPLE_PARAM_S pstVoiceParam) => _NETDEV_InputVoiceData.Invoke(lpUserID, lpDataBuf, dwDataLen, ref pstVoiceParam);
+        IntPtr IItsNetDevSdkProxy.NETDEV_Login(string szDevIP, short wDevPort, string szUserName, string szPassword, ref NETDEV_DEVICE_INFO_S pstDevInfo) => _NETDEV_Login.Invoke(szDevIP, wDevPort, szUserName, szPassword, ref pstDevInfo);
+        IntPtr IItsNetDevSdkProxy.NETDEV_LoginCloud(string pszCloudSrvUrl, string pszUserName, string pszPassWord) => _NETDEV_LoginCloud.Invoke(pszCloudSrvUrl, pszUserName, pszPassWord);
+        IntPtr IItsNetDevSdkProxy.NETDEV_LoginCloudDevice_V30(IntPtr lpUserID, ref NETDEV_CLOUD_DEV_LOGIN_INFO_S pstCloudInfo) => _NETDEV_LoginCloudDevice_V30.Invoke(lpUserID, ref pstCloudInfo);
+        IntPtr IItsNetDevSdkProxy.NETDEV_Login_V30(ref NETDEV_DEVICE_LOGIN_INFO_S pstDevLoginInfo, ref NETDEV_SELOG_INFO_S pstSELogInfo) => _NETDEV_Login_V30.Invoke(ref pstDevLoginInfo, ref pstSELogInfo);
+        int IItsNetDevSdkProxy.NETDEV_Logout(IntPtr lpUserID) => _NETDEV_Logout.Invoke(lpUserID);
+        int IItsNetDevSdkProxy.NETDEV_MakeKeyFrame(IntPtr lpUserID, int dwChannelID, int dwStreamType) => _NETDEV_MakeKeyFrame.Invoke(lpUserID, dwChannelID, dwStreamType);
+        int IItsNetDevSdkProxy.NETDEV_MicVolumeControl(IntPtr lpPlayHandle, int dwVolume) => _NETDEV_MicVolumeControl.Invoke(lpPlayHandle, dwVolume);
+        int IItsNetDevSdkProxy.NETDEV_ModifyACSPersonBlackList(IntPtr lpUserID, ref NETDEV_ACS_PERSON_BLACKLIST_INFO_S pstBlackListInfo) => _NETDEV_ModifyACSPersonBlackList.Invoke(lpUserID, ref pstBlackListInfo);
+        int IItsNetDevSdkProxy.NETDEV_ModifyACSPersonPermissionGroup(IntPtr lpUserID, ref NETDEV_ACS_PERMISSION_INFO_S pstPermissionInfo) => _NETDEV_ModifyACSPersonPermissionGroup.Invoke(lpUserID, ref pstPermissionInfo);
+        int IItsNetDevSdkProxy.NETDEV_ModifyAllowVehicleRecord(IntPtr lpFindHandle, ref NETDEV_PARK_VEHICLE_RECORD_S pstVehicleRecordExtern) => _NETDEV_ModifyAllowVehicleRecord.Invoke(lpFindHandle, ref pstVehicleRecordExtern);
+        int IItsNetDevSdkProxy.NETDEV_ModifyBlockVehicleRecord(IntPtr lpFindHandle, ref NETDEV_PARK_VEHICLE_RECORD_S pstVehicleRecordExtern) => _NETDEV_ModifyBlockVehicleRecord.Invoke(lpFindHandle, ref pstVehicleRecordExtern);
+        int IItsNetDevSdkProxy.NETDEV_ModifyDeviceName(IntPtr lpUserID, byte[] strDeviceName) => _NETDEV_ModifyDeviceName.Invoke(lpUserID, strDeviceName);
+        int IItsNetDevSdkProxy.NETDEV_ModifyOrgInfo(IntPtr lpUserID, ref NETDEV_ORG_INFO_S pstOrgInfo) => _NETDEV_ModifyOrgInfo.Invoke(lpUserID, ref pstOrgInfo);
+        int IItsNetDevSdkProxy.NETDEV_ModifyPersonInfo(IntPtr lpUserID, uint udwPersonLibID, ref NETDEV_PERSON_INFO_LIST_S pstPersonInfoList, ref NETDEV_PERSON_RESULT_LIST_S pstPersonResultList) => _NETDEV_ModifyPersonInfo.Invoke(lpUserID, udwPersonLibID, ref pstPersonInfoList, ref pstPersonResultList);
+        int IItsNetDevSdkProxy.NETDEV_ModifyPersonLibInfo(IntPtr lpUserID, ref NETDEV_PERSON_LIB_LIST_S pstPersonLibList) => _NETDEV_ModifyPersonLibInfo.Invoke(lpUserID, ref pstPersonLibList);
+        int IItsNetDevSdkProxy.NETDEV_ModifyUser(IntPtr lpUserID, IntPtr pstUserInfo) => _NETDEV_ModifyUser.Invoke(lpUserID, pstUserInfo);
+        int IItsNetDevSdkProxy.NETDEV_ModifyVehicleLibInfo(IntPtr lpUserID, ref NETDEV_PERSON_LIB_LIST_S pstVehicleLibList) => _NETDEV_ModifyVehicleLibInfo.Invoke(lpUserID, ref pstVehicleLibList);
+        int IItsNetDevSdkProxy.NETDEV_ModifyVehicleMemberInfo(IntPtr lpUserID, uint udwVehicleLibID, ref NETDEV_VEHICLE_INFO_LIST_S pstVehicleMemberList, ref NETDEV_BATCH_OPERATOR_LIST_S pstResultList) => _NETDEV_ModifyVehicleMemberInfo.Invoke(lpUserID, udwVehicleLibID, ref pstVehicleMemberList, ref pstResultList);
+        int IItsNetDevSdkProxy.NETDEV_OpenMic(IntPtr lpPlayHandle) => _NETDEV_OpenMic.Invoke(lpPlayHandle);
+        int IItsNetDevSdkProxy.NETDEV_OpenSound(IntPtr lpRealHandle) => _NETDEV_OpenSound.Invoke(lpRealHandle);
+        IntPtr IItsNetDevSdkProxy.NETDEV_PlayBackByName(IntPtr lpUserID, ref NETDEV_PLAYBACKINFO_S pstPlayBackInfo) => _NETDEV_PlayBackByName.Invoke(lpUserID, ref pstPlayBackInfo);
+        IntPtr IItsNetDevSdkProxy.NETDEV_PlayBackByTime(IntPtr lpUserID, ref NETDEV_PLAYBACKCOND_S pstPlayBackInfo) => _NETDEV_PlayBackByTime.Invoke(lpUserID, ref pstPlayBackInfo);
+        int IItsNetDevSdkProxy.NETDEV_PlayBackControl(IntPtr lpPlayHandle, int dwControlCode, ref long pdwBuffer) => _NETDEV_PlayBackControl.Invoke(lpPlayHandle, dwControlCode, ref pdwBuffer);
+        int IItsNetDevSdkProxy.NETDEV_PlaySound(IntPtr lpRealHandle) => _NETDEV_PlaySound.Invoke(lpRealHandle);
+        int IItsNetDevSdkProxy.NETDEV_PTZCalibrate(IntPtr lpUserID, int dwChannelID, ref NETDEV_PTZ_ORIENTATION_INFO_S pstOrientationInfo) => _NETDEV_PTZCalibrate.Invoke(lpUserID, dwChannelID, ref pstOrientationInfo);
+        int IItsNetDevSdkProxy.NETDEV_PTZControl(IntPtr lpPlayHandle, int dwPTZCommand, int dwSpeed) => _NETDEV_PTZControl.Invoke(lpPlayHandle, dwPTZCommand, dwSpeed);
+        int IItsNetDevSdkProxy.NETDEV_PTZControl_Other(IntPtr lpUserID, int dwChannelID, int dwPTZCommand, int dwSpeed) => _NETDEV_PTZControl_Other.Invoke(lpUserID, dwChannelID, dwPTZCommand, dwSpeed);
+        int IItsNetDevSdkProxy.NETDEV_PTZCruise_Other(IntPtr lpUserID, int dwChannelID, int dwPTZCruiseCmd, ref NETDEV_CRUISE_INFO_S pstCruiseInfo) => _NETDEV_PTZCruise_Other.Invoke(lpUserID, dwChannelID, dwPTZCruiseCmd, ref pstCruiseInfo);
+        int IItsNetDevSdkProxy.NETDEV_PTZGetCruise(IntPtr lpUserID, int dwChannelID, ref NETDEV_CRUISE_LIST_S pstCruiseList) => _NETDEV_PTZGetCruise.Invoke(lpUserID, dwChannelID, ref pstCruiseList);
+        int IItsNetDevSdkProxy.NETDEV_PTZGetTrackCruise(IntPtr lpUserID, int dwChannelID, ref NETDEV_PTZ_TRACK_INFO_S pstTrackCruiseInfo) => _NETDEV_PTZGetTrackCruise.Invoke(lpUserID, dwChannelID, ref pstTrackCruiseInfo);
+        int IItsNetDevSdkProxy.NETDEV_PTZPreset(IntPtr lpPlayHandle, int dwPTZPresetCmd, string pszPresetName, int dwPresetID) => _NETDEV_PTZPreset.Invoke(lpPlayHandle, dwPTZPresetCmd, pszPresetName, dwPresetID);
+        int IItsNetDevSdkProxy.NETDEV_PTZPreset_Other(IntPtr lpUserID, int dwChannelID, int dwPTZPresetCmd, byte[] szPresetName, int dwPresetID) => _NETDEV_PTZPreset_Other.Invoke(lpUserID, dwChannelID, dwPTZPresetCmd, szPresetName, dwPresetID);
+        int IItsNetDevSdkProxy.NETDEV_PTZSelZoomIn_Other(IntPtr lpUserID, int dwChannelID, ref NETDEV_PTZ_OPERATEAREA_S pstPtzOperateArea) => _NETDEV_PTZSelZoomIn_Other.Invoke(lpUserID, dwChannelID, ref pstPtzOperateArea);
+        int IItsNetDevSdkProxy.NETDEV_PTZTrackCruise(IntPtr lpUserID, int dwChannelID, int dwPTZTrackCruiseCmd, string pszTrackCruiseName) => _NETDEV_PTZTrackCruise.Invoke(lpUserID, dwChannelID, dwPTZTrackCruiseCmd, pszTrackCruiseName);
+        int IItsNetDevSdkProxy.NETDEV_QueryVideoChlDetailList(IntPtr lpUserID, ref int pdwChlCount, IntPtr pstVideoChlList) => _NETDEV_QueryVideoChlDetailList.Invoke(lpUserID, ref pdwChlCount, pstVideoChlList);
+        IntPtr IItsNetDevSdkProxy.NETDEV_RealPlay(IntPtr lpUserID, ref NETDEV_PREVIEWINFO_S pstPreviewInfo, IntPtr cbPlayDataCallBack, IntPtr lpUserData) => _NETDEV_RealPlay.Invoke(lpUserID, ref pstPreviewInfo, cbPlayDataCallBack, lpUserData);
+        int IItsNetDevSdkProxy.NETDEV_Reboot(IntPtr lpUserID) => _NETDEV_Reboot.Invoke(lpUserID);
+        int IItsNetDevSdkProxy.NETDEV_ResetLostPacketRate(IntPtr lpRealHandle) => _NETDEV_ResetLostPacketRate.Invoke(lpRealHandle);
+        int IItsNetDevSdkProxy.NETDEV_RestoreConfig(IntPtr lpUserID) => _NETDEV_RestoreConfig.Invoke(lpUserID);
+        int IItsNetDevSdkProxy.NETDEV_SaveRealData(IntPtr lpRealHandle, byte[] szSaveFileName, int dwFormat) => _NETDEV_SaveRealData.Invoke(lpRealHandle, szSaveFileName, dwFormat);
+        int IItsNetDevSdkProxy.NETDEV_SetACSPersonPermission(IntPtr lpUserID, uint udwPersonID, ref NETDEV_ACS_DOOR_PERMISSION_INFO_S pstPermissionInfo) => _NETDEV_SetACSPersonPermission.Invoke(lpUserID, udwPersonID, ref pstPermissionInfo);
+        int IItsNetDevSdkProxy.NETDEV_SetAlarmCallBack(IntPtr lpUserID, NETDEV_AlarmMessCallBack_PF cbAlarmMessCallBack, IntPtr lpUserData) => _NETDEV_SetAlarmCallBack.Invoke(lpUserID, cbAlarmMessCallBack, lpUserData);
+        int IItsNetDevSdkProxy.NETDEV_SetAlarmCallBack_V30(IntPtr lpUserID, NETDEV_AlarmMessCallBack_PF_V30 cbAlarmMessCallBack, IntPtr lpUserData) => _NETDEV_SetAlarmCallBack_V30.Invoke(lpUserID, cbAlarmMessCallBack, lpUserData);
+        int IItsNetDevSdkProxy.NETDEV_SetAlarmFGCallBack(IntPtr lpUserID, NETDEV_AlarmMessFGCallBack_PF cbAlarmMessCallBack, IntPtr lpUserData) => _NETDEV_SetAlarmFGCallBack.Invoke(lpUserID, cbAlarmMessCallBack, lpUserData);
+        int IItsNetDevSdkProxy.NETDEV_SetBuiltinIndicatorCtrl(IntPtr lpFindHandle, ref NETDEV_CARPORT_CONTROLLED_S pstuCarportControlled) => _NETDEV_SetBuiltinIndicatorCtrl.Invoke(lpFindHandle, ref pstuCarportControlled);
+        int IItsNetDevSdkProxy.NETDEV_SetConfigFile(IntPtr lpUserID, string strConfigPath) => _NETDEV_SetConfigFile.Invoke(lpUserID, strConfigPath);
+        int IItsNetDevSdkProxy.NETDEV_SetConnectTime(int dwWaitTime, int dwTrytimes) => _NETDEV_SetConnectTime.Invoke(dwWaitTime, dwTrytimes);
+        int IItsNetDevSdkProxy.NETDEV_SetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref int index, int dwInBufferSize) => _NETDEV_SetDevConfig1.Invoke(lpUserID, dwChannelID, dwCommand, ref index, dwInBufferSize);
+        int IItsNetDevSdkProxy.NETDEV_SetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_DEFOGGING_INFO_S lpInBuffer, int dwInBufferSize) => _NETDEV_SetDevConfig2.Invoke(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwInBufferSize);
+        int IItsNetDevSdkProxy.NETDEV_SetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_MOTION_ALARM_INFO_S lpInBuffer, int dwInBufferSize) => _NETDEV_SetDevConfig3.Invoke(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwInBufferSize);
+        int IItsNetDevSdkProxy.NETDEV_SetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_TAMPER_ALARM_INFO_S lpInBuffer, int dwInBufferSize) => _NETDEV_SetDevConfig4.Invoke(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwInBufferSize);
+        int IItsNetDevSdkProxy.NETDEV_SetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_SYSTEM_NTP_INFO_LIST_S lpInBuffer, int dwInBufferSize) => _NETDEV_SetDevConfig5.Invoke(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwInBufferSize);
+        int IItsNetDevSdkProxy.NETDEV_SetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, IntPtr lpInBuffer, ref int dwInBufferSize) => _NETDEV_SetDevConfig6.Invoke(lpUserID, dwChannelID, dwCommand, lpInBuffer, ref dwInBufferSize);
+        int IItsNetDevSdkProxy.NETDEV_SetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_VIDEO_STREAM_INFO_S lpInBuffer, int dwInBufferSize) => _NETDEV_SetDevConfig7.Invoke(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwInBufferSize);
+        int IItsNetDevSdkProxy.NETDEV_SetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_IMAGE_SETTING_S lpInBuffer, int dwInBufferSize) => _NETDEV_SetDevConfig8.Invoke(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwInBufferSize);
+        int IItsNetDevSdkProxy.NETDEV_SetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_SYSTEM_NTP_INFO_S lpInBuffer, int dwInBufferSize) => _NETDEV_SetDevConfig9.Invoke(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwInBufferSize);
+        int IItsNetDevSdkProxy.NETDEV_SetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_NETWORKCFG_S lpInBuffer, int dwInBufferSize) => _NETDEV_SetDevConfigA.Invoke(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwInBufferSize);
+        int IItsNetDevSdkProxy.NETDEV_SetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_ALARM_OUTPUT_INFO_S lpInBuffer, int dwInBufferSize) => _NETDEV_SetDevConfigB.Invoke(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwInBufferSize);
+        int IItsNetDevSdkProxy.NETDEV_SetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_RECORD_PLAN_CFG_INFO_S lpInBuffer, int dwInBufferSize) => _NETDEV_SetDevConfigC.Invoke(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwInBufferSize);
+        int IItsNetDevSdkProxy.NETDEV_SetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_TRIGGER_ALARM_OUTPUT_S lpInBuffer, int dwInBufferSize) => _NETDEV_SetDevConfigD.Invoke(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwInBufferSize);
+        int IItsNetDevSdkProxy.NETDEV_SetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_VIDEO_OSD_CFG_S lpInBuffer, int dwInBufferSize) => _NETDEV_SetDevConfigE.Invoke(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwInBufferSize);
+        int IItsNetDevSdkProxy.NETDEV_SetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_PRIVACY_MASK_CFG_S lpInBuffer, int dwInBufferSize) => _NETDEV_SetDevConfigF.Invoke(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwInBufferSize);
+        int IItsNetDevSdkProxy.NETDEV_SetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_IMAGE_EXPOSURE_S lpInBuffer, int dwOutBufferSize) => _NETDEV_SetDevConfigG.Invoke(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwOutBufferSize);
+        int IItsNetDevSdkProxy.NETDEV_SetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_IRCUT_FILTER_INFO_S lpInBuffer, int dwInBufferSize) => _NETDEV_SetDevConfigH.Invoke(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwInBufferSize);
+        int IItsNetDevSdkProxy.NETDEV_SetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_INFORELEASE_CFG_S lpInBuffer, int dwInBufferSize) => _NETDEV_SetDevConfigI.Invoke(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwInBufferSize);
+        int IItsNetDevSdkProxy.NETDEV_SetDevConfig(IntPtr lpUserID, int dwChannelID, int dwCommand, ref NETDEV_OSD_CONTENT_STYLE_S lpInBuffer, int dwInBufferSize) => _NETDEV_SetDevConfigJ.Invoke(lpUserID, dwChannelID, dwCommand, ref lpInBuffer, dwInBufferSize);
+        int IItsNetDevSdkProxy.NETDEV_setDeviceLedCfg(IntPtr lpFindHandle, ref NETDEV_LED_LIST_CFG_S pstLedListCfgs) => _NETDEV_setDeviceLedCfg.Invoke(lpFindHandle, ref pstLedListCfgs);
+        int IItsNetDevSdkProxy.NETDEV_SetDigitalZoom(IntPtr lpRealHandle, IntPtr hWnd, IntPtr pstRect) => _NETDEV_SetDigitalZoom.Invoke(lpRealHandle, hWnd, pstRect);
+        int IItsNetDevSdkProxy.NETDEV_SetDiscoveryCallBack(NETDEV_DISCOVERY_CALLBACK_PF cbDiscoveryCallBack, IntPtr lpUserData) => _NETDEV_SetDiscoveryCallBack.Invoke(cbDiscoveryCallBack, lpUserData);
+        int IItsNetDevSdkProxy.NETDEV_SetExceptionCallBack(NETDEV_ExceptionCallBack_PF cbExceptionCallBack, IntPtr lpUserData) => _NETDEV_SetExceptionCallBack.Invoke(cbExceptionCallBack, lpUserData);
+        int IItsNetDevSdkProxy.NETDEV_SetFaceSnapshotCallBack(IntPtr lpUserID, NETDEV_FaceSnapshotCallBack_PF cbFaceSnapshotCallBack, IntPtr lpUserData) => _NETDEV_SetFaceSnapshotCallBack.Invoke(lpUserID, cbFaceSnapshotCallBack, lpUserData);
+        int IItsNetDevSdkProxy.NETDEV_SetIVAEnable(IntPtr lpUserID, int dwEnableIVA) => _NETDEV_SetIVAEnable.Invoke(lpUserID, dwEnableIVA);
+        int IItsNetDevSdkProxy.NETDEV_SetIVAShowParam(int dwShowParam) => _NETDEV_SetIVAShowParam.Invoke(dwShowParam);
+        int IItsNetDevSdkProxy.NETDEV_SetLogPath(string strLogPath) => _NETDEV_SetLogPath.Invoke(strLogPath);
+        int IItsNetDevSdkProxy.NETDEV_SetOutputSwitchStatusCfg(IntPtr lpFindHandle) => _NETDEV_SetOutputSwitchStatusCfg.Invoke(lpFindHandle);
+        int IItsNetDevSdkProxy.NETDEV_SetParkingStatusCB(IntPtr lpFindHandle, NETDEV_PARKING_STATUS_PF pfnParkStatusCBFun, IntPtr lpUserData) => _NETDEV_SetParkingStatusCB.Invoke(lpFindHandle, pfnParkStatusCBFun, lpUserData);
+        int IItsNetDevSdkProxy.NETDEV_SetParkStatusCallBack(IntPtr lpUserID, NETDEV_ParkStatusReportCallBack_PF cbParkStatusReportCallBack, IntPtr lpUserData) => _NETDEV_SetParkStatusCallBack.Invoke(lpUserID, cbParkStatusReportCallBack, lpUserData);
+        int IItsNetDevSdkProxy.NETDEV_SetPassengerFlowStatisticCallBack(IntPtr lpUserID, NETDEV_PassengerFlowStatisticCallBack_PF cbPassengerFlowStatisticCallBack, IntPtr lpUserData) => _NETDEV_SetPassengerFlowStatisticCallBack.Invoke(lpUserID, cbPassengerFlowStatisticCallBack, lpUserData);
+        int IItsNetDevSdkProxy.NETDEV_SetPersonAlarmCallBack(IntPtr lpUserID, NETDEV_PersonAlarmMessCallBack_PF cbAlarmMessCallBack, IntPtr lpUserData) => _NETDEV_SetPersonAlarmCallBack.Invoke(lpUserID, cbAlarmMessCallBack, lpUserData);
+        int IItsNetDevSdkProxy.NETDEV_SetPersonMonitorRuleInfo(IntPtr lpUserID, ref NETDEV_MONITION_INFO_S pstMonitorInfo) => _NETDEV_SetPersonMonitorRuleInfo.Invoke(lpUserID, ref pstMonitorInfo);
+        int IItsNetDevSdkProxy.NETDEV_SetPictureFluency(IntPtr lpPlayHandle, int dwFluency) => _NETDEV_SetPictureFluency.Invoke(lpPlayHandle, dwFluency);
+        int IItsNetDevSdkProxy.NETDEV_SetPlayDataCallBack(IntPtr lpRealHandle, IntPtr cbPlayDataCallBack, int bContinue, IntPtr lpUserData) => _NETDEV_SetPlayDataCallBack.Invoke(lpRealHandle, cbPlayDataCallBack, bContinue, lpUserData);
+        int IItsNetDevSdkProxy.NETDEV_SetPlayDecodeVideoCB(IntPtr lpRealHandle, ref NETDEV_DECODE_VIDEO_DATA_CALLBACK_PF cbPlayDecodeVideoCallBack, int bContinue, IntPtr lpUserData) => _NETDEV_SetPlayDecodeVideoCB.Invoke(lpRealHandle, ref cbPlayDecodeVideoCallBack, bContinue, lpUserData);
+        int IItsNetDevSdkProxy.NETDEV_SetPlayDisplayCB(IntPtr lpRealHandle, IntPtr cbPlayDisplayCallBack, IntPtr lpUserData) => _NETDEV_SetPlayDisplayCB.Invoke(lpRealHandle, cbPlayDisplayCallBack, lpUserData);
+        int IItsNetDevSdkProxy.NETDEV_SetPlayParseCB(IntPtr lpRealHandle, ref NETDEV_PARSE_VIDEO_DATA_CALLBACK_PF cbPlayParseCallBack, int bContinue, IntPtr lpUserData) => _NETDEV_SetPlayParseCB.Invoke(lpRealHandle, ref cbPlayParseCallBack, bContinue, lpUserData);
+        int IItsNetDevSdkProxy.NETDEV_SetRenderScale(IntPtr lpRealHandle, int enRenderScale) => _NETDEV_SetRenderScale.Invoke(lpRealHandle, enRenderScale);
+        int IItsNetDevSdkProxy.NETDEV_SetRevTimeOut(ref NETDEV_REV_TIMEOUT_S pstRevTimeout) => _NETDEV_SetRevTimeOut.Invoke(ref pstRevTimeout);
+        int IItsNetDevSdkProxy.NETDEV_SetStructAlarmCallBack(IntPtr lpUserID, NETDEV_StructAlarmMessCallBack_PF cbAlarmMessCallBack, IntPtr lpUserData) => _NETDEV_SetStructAlarmCallBack.Invoke(lpUserID, cbAlarmMessCallBack, lpUserData);
+        int IItsNetDevSdkProxy.NETDEV_SetSystemTimeCfg(IntPtr lpUserID, ref NETDEV_TIME_CFG_S pstSystemTimeInfo) => _NETDEV_SetSystemTimeCfg.Invoke(lpUserID, ref pstSystemTimeInfo);
+        int IItsNetDevSdkProxy.NETDEV_SetUpnpNatState(IntPtr lpUserID, ref NETDEV_UPNP_NAT_STATE_S pstNatState) => _NETDEV_SetUpnpNatState.Invoke(lpUserID, ref pstNatState);
+        int IItsNetDevSdkProxy.NETDEV_SetVehicleAlarmCallBack(IntPtr lpUserID, NETDEV_VehicleAlarmMessCallBack_PF cbVehicleAlarmMessCallBack, IntPtr lpUserData) => _NETDEV_SetVehicleAlarmCallBack.Invoke(lpUserID, cbVehicleAlarmMessCallBack, lpUserData);
+        int IItsNetDevSdkProxy.NETDEV_SetVehicleMonitorInfo(IntPtr lpUserID, uint udwID, ref NETDEV_MONITION_RULE_INFO_S pstMonitorInfo) => _NETDEV_SetVehicleMonitorInfo.Invoke(lpUserID, udwID, ref pstMonitorInfo);
+        int IItsNetDevSdkProxy.NETDEV_SetVideoEffect(IntPtr lpRealHandle, ref NETDEV_VIDEO_EFFECT_S pstImageInfo) => _NETDEV_SetVideoEffect.Invoke(lpRealHandle, ref pstImageInfo);
+        int IItsNetDevSdkProxy.NETDEV_SoundVolumeControl(IntPtr lpPlayHandle, int dwVolume) => _NETDEV_SoundVolumeControl.Invoke(lpPlayHandle, dwVolume);
+        IntPtr IItsNetDevSdkProxy.NETDEV_StartInputVoiceSrv(IntPtr lpUserID, int dwChannelID) => _NETDEV_StartInputVoiceSrv.Invoke(lpUserID, dwChannelID);
+        IntPtr IItsNetDevSdkProxy.NETDEV_StartPicStream(IntPtr lpUserID, IntPtr hPlayWnd, bool bReTran, string pcReTranIP, NETDEV_PIC_UPLOAD_PF pfnPicDataCBFun, IntPtr lpUserData) => _NETDEV_StartPicStream.Invoke(lpUserID, hPlayWnd, bReTran, pcReTranIP, pfnPicDataCBFun, lpUserData);
+        IntPtr IItsNetDevSdkProxy.NETDEV_StartVoiceCom(IntPtr lpUserID, int dwChannelID, IntPtr cbPlayDataCallBack, IntPtr lpUserData) => _NETDEV_StartVoiceCom.Invoke(lpUserID, dwChannelID, cbPlayDataCallBack, lpUserData);
+        int IItsNetDevSdkProxy.NETDEV_StopGetFile(IntPtr lpPlayHandle) => _NETDEV_StopGetFile.Invoke(lpPlayHandle);
+        int IItsNetDevSdkProxy.NETDEV_StopInputVoiceSrv(IntPtr lpVoiceComHandle) => _NETDEV_StopInputVoiceSrv.Invoke(lpVoiceComHandle);
+        int IItsNetDevSdkProxy.NETDEV_StopPicStream(IntPtr lpPlayHandle) => _NETDEV_StopPicStream.Invoke(lpPlayHandle);
+        int IItsNetDevSdkProxy.NETDEV_StopPlayBack(IntPtr lpPlayHandle) => _NETDEV_StopPlayBack.Invoke(lpPlayHandle);
+        int IItsNetDevSdkProxy.NETDEV_StopPlaySound(IntPtr lpRealHandle) => _NETDEV_StopPlaySound.Invoke(lpRealHandle);
+        int IItsNetDevSdkProxy.NETDEV_StopRealPlay(IntPtr lpRealHandle) => _NETDEV_StopRealPlay.Invoke(lpRealHandle);
+        int IItsNetDevSdkProxy.NETDEV_StopSaveRealData(IntPtr lpRealHandle) => _NETDEV_StopSaveRealData.Invoke(lpRealHandle);
+        int IItsNetDevSdkProxy.NETDEV_StopVoiceCom(IntPtr lpVoiceComHandle) => _NETDEV_StopVoiceCom.Invoke(lpVoiceComHandle);
+        int IItsNetDevSdkProxy.NETDEV_SubscibeLapiAlarm(IntPtr lpUserID, ref NETDEV_LAPI_SUB_INFO_S pstSubInfo, ref NETDEV_SUBSCRIBE_SUCC_INFO_S pstSubSuccInfo) => _NETDEV_SubscibeLapiAlarm.Invoke(lpUserID, ref pstSubInfo, ref pstSubSuccInfo);
+        int IItsNetDevSdkProxy.NETDEV_SubscribeSmart(IntPtr lpUserID, ref NETDEV_SUBSCRIBE_SMART_INFO_S pstSubscribeInfo, ref NETDEV_SMART_INFO_S pstSmartInfo) => _NETDEV_SubscribeSmart.Invoke(lpUserID, ref pstSubscribeInfo, ref pstSmartInfo);
+        int IItsNetDevSdkProxy.NETDEV_Trigger(IntPtr lpFindHandle) => _NETDEV_Trigger.Invoke(lpFindHandle);
+        int IItsNetDevSdkProxy.NETDEV_TriggerSync(IntPtr lpFindHandle, ref IntPtr ppstPicData) => _NETDEV_TriggerSync.Invoke(lpFindHandle, ref ppstPicData);
+        int IItsNetDevSdkProxy.NETDEV_UnSubLapiAlarm(IntPtr lpUserID, uint udwID) => _NETDEV_UnSubLapiAlarm.Invoke(lpUserID, udwID);
+        int IItsNetDevSdkProxy.NETDEV_UnsubscribeSmart(IntPtr lpUserID, ref NETDEV_SMART_INFO_S pstSmartInfo) => _NETDEV_UnsubscribeSmart.Invoke(lpUserID, ref pstSmartInfo);
         #endregion 显示实现
     }
 }

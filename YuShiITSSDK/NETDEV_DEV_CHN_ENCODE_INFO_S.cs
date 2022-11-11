@@ -12,7 +12,7 @@ namespace System.Data.YuShiITSSDK
         public Int32 bSupportPTZ;
         public Int32 bScrambleEnable;
         public Int32 dwAudioResID;
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = NETDEVSDK.NETDEV_LEN_32)]
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = ItsNetDevSdk.NETDEV_LEN_32)]
         public byte[] szGBResID;
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 224)]
         public byte[] byRes;

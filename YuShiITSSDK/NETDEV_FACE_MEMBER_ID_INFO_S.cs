@@ -11,7 +11,7 @@ namespace System.Data.YuShiITSSDK
     public struct NETDEV_FACE_MEMBER_ID_INFO_S
     {
         public UInt32 udwType;                                       /*See #NETDEV_FACE_MEMBER_ID_TYPE_E */
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = NETDEVSDK.NETDEV_FACE_IDNUMBER_LEN)]
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = ItsNetDevSdk.NETDEV_FACE_IDNUMBER_LEN)]
         public string szNumber;
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 128)]
         public byte[] byRes;                                     /* Reserved */

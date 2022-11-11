@@ -10,11 +10,11 @@ namespace System.Data.YuShiITSSDK
     [StructLayout(LayoutKind.Sequential)]
     public struct NETDEV_ACS_STAFF_INFO_S
     {
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = NETDEVSDK.NETDEV_LEN_16)]
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = ItsNetDevSdk.NETDEV_LEN_16)]
         public byte[] szNumber;
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = NETDEVSDK.NETDEV_FACE_MEMBER_BIRTHDAY_LEN)]
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = ItsNetDevSdk.NETDEV_FACE_MEMBER_BIRTHDAY_LEN)]
         public byte[] szBirthday;
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = NETDEVSDK.NETDEV_LEN_260)]
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = ItsNetDevSdk.NETDEV_LEN_260)]
         public byte[] szDeptName;
         public UInt32 udwDeptID;
 

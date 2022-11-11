@@ -6,7 +6,7 @@ namespace System.Data.YuShiITSSDK
     public struct NETDEV_RECORD_STATUS_LIST_S
     {
         public UInt32 udwSize;
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = NETDEVSDK.NETDEV_CHANNEL_MAX)]
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = ItsNetDevSdk.NETDEV_CHANNEL_MAX)]
         public NETDEV_RECORD_STATUS[] astRecordStatus;
     }
 

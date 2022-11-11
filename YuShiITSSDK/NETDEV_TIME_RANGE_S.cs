@@ -11,7 +11,7 @@ namespace System.Data.YuShiITSSDK
     public struct NETDEV_TIME_RANGE_S
     {
         public Int32 dwSize;
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = NETDEVSDK.NETDEV_TIME_RANGE_NUM)]
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = ItsNetDevSdk.NETDEV_TIME_RANGE_NUM)]
         public NETDEV_TIME_DURATION_LIST_S[] astTimeRangeList;
     }
 

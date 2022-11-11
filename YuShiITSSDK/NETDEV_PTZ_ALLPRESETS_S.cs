@@ -10,7 +10,7 @@ namespace System.Data.YuShiITSSDK
     public struct NETDEV_PTZ_ALLPRESETS_S
     {
         public Int32 dwSize;                             /* 预置位总数  Total number of presets */
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = NETDEMO.NETDEV_MAX_PRESET_NUM)]
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = ItsNetDevSdk.NETDEV_MAX_PRESET_NUM)]
         public NETDEV_PTZ_PRESET_S[] astPreset;          /* 预置位信息结构体  Structure of preset information */
     }
 

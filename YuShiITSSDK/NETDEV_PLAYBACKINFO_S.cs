@@ -9,7 +9,7 @@ namespace System.Data.YuShiITSSDK
     [StructLayout(LayoutKind.Sequential)]
     public struct NETDEV_PLAYBACKINFO_S
     {
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = NETDEMO.NETDEV_LEN_260)]
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = ItsNetDevSdk.NETDEV_LEN_260)]
         public String szName;                   /* 回放的控制块名称  Playback control block name*/
         public Int64 tBeginTime;                /* 回放开始时间  Playback start time */
         public Int64 tEndTime;                  /* 回放结束时间  Playback end time */

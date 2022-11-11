@@ -11,7 +11,7 @@ namespace System.Data.YuShiITSSDK
     public struct NETDEV_CHANNEL_ACT_PARAM_INFO_S
     {
         public UInt32 udwNum;
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = NETDEVSDK.NETDEV_CHANNEL_MAX)]
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = ItsNetDevSdk.NETDEV_CHANNEL_MAX)]
         public Int32[] adwChannelID;
     }
 

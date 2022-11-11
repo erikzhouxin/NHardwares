@@ -6,7 +6,7 @@ namespace System.Data.YuShiITSSDK
     public struct NETDEV_DISK_INFO_LIST_S
     {
         public Int32 dwSize;                                  /*Disk number */
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = NETDEVSDK.NETDEV_DISK_MAX_NUM)]
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = ItsNetDevSdk.NETDEV_DISK_MAX_NUM)]
         public NETDEV_DISK_INFO_S[] astDisksInfo;             /* Disk info*/
     };
 

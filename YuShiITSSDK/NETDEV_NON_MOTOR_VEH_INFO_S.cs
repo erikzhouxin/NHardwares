@@ -11,7 +11,7 @@ namespace System.Data.YuShiITSSDK
     public struct NETDEV_NON_MOTOR_VEH_INFO_S
     {
         public UInt32 udwID;
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = NETDEVSDK.NETDEV_LEN_64)]
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = ItsNetDevSdk.NETDEV_LEN_64)]
         public byte[] szPosition;
         public UInt32 udwSmallPicAttachIndex;
         public UInt32 udwLargePicAttachIndex;

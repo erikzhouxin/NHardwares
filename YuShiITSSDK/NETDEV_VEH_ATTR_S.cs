@@ -15,7 +15,7 @@ namespace System.Data.YuShiITSSDK
         public UInt32 udwSpeedUnit;
         public Single fSpeedValue;
         public UInt32 udwSpeedType;                                  /* See #NETDEV_SPEED_TYPE_E */
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = NETDEVSDK.NETDEV_LEN_64)]
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = ItsNetDevSdk.NETDEV_LEN_64)]
         public string szVehicleBrand;
         public UInt32 udwImageDirection;                             /* See #NETDEV_IMAGE_DIRECTION_E */
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 128)]

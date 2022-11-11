@@ -15,7 +15,7 @@ namespace System.Data.YuShiITSSDK
         public UInt32 udwMaxLibNum;
         public UInt32 udwFreeLibNum;
         public UInt32 udwNum;
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = NETDEVSDK.NETDEV_LEN_16)]
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = ItsNetDevSdk.NETDEV_LEN_16)]
         public NETDEV_PERSON_LIB_CAP_INFO_S[] stLibCapInfoList;
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 256)]
         public byte[] byRes;

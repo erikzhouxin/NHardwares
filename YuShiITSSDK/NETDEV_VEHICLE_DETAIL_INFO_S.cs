@@ -16,7 +16,7 @@ namespace System.Data.YuShiITSSDK
         public NETDEV_VEHICLE_MEMBER_ATTR_S stVehicleAttr;
         public Int32 bIsMonitored;
         public UInt32 udwDBNum;
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = NETDEVSDK.NETDEV_LEN_16)]
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = ItsNetDevSdk.NETDEV_LEN_16)]
         public UInt32[] audwDBIDList;
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 124)]
         public byte[] byRes;              /*Reserved */

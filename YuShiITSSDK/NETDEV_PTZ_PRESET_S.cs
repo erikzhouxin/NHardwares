@@ -10,7 +10,7 @@ namespace System.Data.YuShiITSSDK
     public struct NETDEV_PTZ_PRESET_S
     {
         public Int32 dwPresetID;                                  /* 预置位ID  Preset ID */
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = NETDEVSDK.NETDEV_LEN_32)]
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = ItsNetDevSdk.NETDEV_LEN_32)]
         public byte[] szPresetName;                               /* 预置位名称  Preset name */
     }
 

@@ -12,13 +12,13 @@ namespace System.Data.YuShiITSSDK
     {
         public UInt32 udwFaceID;
         public UInt32 udwFaceDoforPersonID;
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = NETDEVSDK.NETDEV_LEN_64)]
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = ItsNetDevSdk.NETDEV_LEN_64)]
         public byte[] szPosition;
         public UInt32 udwSmallPicAttachIndex;
         public UInt32 udwLargePicAttachIndex;
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = NETDEVSDK.NETDEV_LEN_64)]
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = ItsNetDevSdk.NETDEV_LEN_64)]
         public byte[] szFeaturVersion;
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = NETDEVSDK.NETDEV_LEN_1024)]
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = ItsNetDevSdk.NETDEV_LEN_1024)]
         public byte[] szFeature;
         public NETDEV_FACE_ATTR_S stFaceAttr;
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 128)]

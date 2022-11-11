@@ -13,7 +13,7 @@ namespace System.Data.YuShiITSSDK
         public UInt32 udwReqSeq;
         public UInt32 udwResultCode;
         public UInt32 udwID;
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = NETDEVSDK.NETDEV_LEN_260)]
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = ItsNetDevSdk.NETDEV_LEN_260)]
         public byte[] szName;
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 128)]
         public byte[] byRes;

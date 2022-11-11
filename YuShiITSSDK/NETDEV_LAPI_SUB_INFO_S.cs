@@ -12,7 +12,7 @@ namespace System.Data.YuShiITSSDK
     {
         public UInt32 udwType;
         public UInt32 udwLibIDNum;
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = NETDEVSDK.NETDEV_LEN_32)]
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = ItsNetDevSdk.NETDEV_LEN_32)]
         public UInt32[] audwLibIDList;
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 132)]
         public byte[] byRes;

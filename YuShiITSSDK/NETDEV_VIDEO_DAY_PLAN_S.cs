@@ -7,7 +7,7 @@ namespace System.Data.YuShiITSSDK
     {
         public Int32 udwIndex;                                                  /* day index */
         public Int32 udwSectionNum;
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = NETDEVSDK.NETDEV_PLAN_NUM_AWEEK)]
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = ItsNetDevSdk.NETDEV_PLAN_NUM_AWEEK)]
         public NETDEV_VIDEO_TIME_SECTION_S[] astTimeSection;
     };
 

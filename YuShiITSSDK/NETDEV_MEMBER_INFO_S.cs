@@ -11,7 +11,7 @@ namespace System.Data.YuShiITSSDK
     public struct NETDEV_MEMBER_INFO_S
     {
         public UInt32 udwMemberID;
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = NETDEVSDK.NETDEV_LEN_260)]
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = ItsNetDevSdk.NETDEV_LEN_260)]
         public byte[] szMemberName;
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 128)]
         public byte[] byRes;                                            /* Reserved */

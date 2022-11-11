@@ -11,7 +11,7 @@ namespace System.Data.YuShiITSSDK
     public struct NETDEV_CUSTOM_VALUE_S
     {
         public UInt32 udwID;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = NETDEVSDK.NETDEV_FACE_MEMBER_CUSTOM_LEN)]
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = ItsNetDevSdk.NETDEV_FACE_MEMBER_CUSTOM_LEN)]
         public string szValue;
         public UInt32 udwModelStatus;
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 124)]

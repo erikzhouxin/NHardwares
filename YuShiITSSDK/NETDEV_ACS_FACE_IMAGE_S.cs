@@ -11,7 +11,7 @@ namespace System.Data.YuShiITSSDK
     public struct NETDEV_ACS_FACE_IMAGE_S
     {
         public UInt32 udwNum;
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = NETDEVSDK.NETDEV_LEN_16)]
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = ItsNetDevSdk.NETDEV_LEN_16)]
         public NETDEV_FILE_INFO_S[] stImageList;
         public UInt32 udwMajorImageIndex;
 

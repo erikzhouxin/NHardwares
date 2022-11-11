@@ -12,7 +12,7 @@ namespace System.Data.YuShiITSSDK
         public Int32 dwSensitivity;                                                     /* 灵敏度 Sensitivity */
         public Int32 dwObjectSize;                                                      /* 物体大小 Objection Size */
         public Int32 dwHistory;                                                         /* 持续时间 History */
-        [MarshalAs(UnmanagedType.ByValArray, ArraySubType = UnmanagedType.Struct, SizeConst = NETDEVSDK.NETDEV_SCREEN_INFO_ROW)]
+        [MarshalAs(UnmanagedType.ByValArray, ArraySubType = UnmanagedType.Struct, SizeConst = ItsNetDevSdk.NETDEV_SCREEN_INFO_ROW)]
         public NETDEV_SCREENINFO_COLUMN_S[] awScreenInfo;   /* 屏幕宏块信息 Screen Info */
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 64)]
         public byte[] byRes;                            /* 保留字段 Reserved */

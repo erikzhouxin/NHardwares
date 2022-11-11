@@ -11,7 +11,7 @@ namespace System.Data.YuShiITSSDK
     public struct NETDEV_ACS_PERMISSION_INFO_S
     {
         public UInt32 udwPermissionID;
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = NETDEVSDK.NETDEV_LEN_260)]
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = ItsNetDevSdk.NETDEV_LEN_260)]
         public byte[] szPermissionName;
         public UInt32 udwPermissionType;
         public NETDEV_OPERATE_LIST_S stPersonList;

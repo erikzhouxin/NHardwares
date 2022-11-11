@@ -10,7 +10,7 @@ namespace System.Data.YuShiITSSDK
     public struct NETDEV_OSD_CONTENT_S
     {
         public uint udwNum;                                  /*OSD区域数量 Number of OSD area*/
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = NETDEVSDK.NETDEV_LEN_32)]
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = ItsNetDevSdk.NETDEV_LEN_32)]
         public NETDEV_OSD_CONTENT_INFO_S[] astContentList;   /*OSD区域内容信息列表 Content list of OSD area*/
     };
 

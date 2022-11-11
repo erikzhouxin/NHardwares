@@ -12,7 +12,7 @@ namespace System.Data.YuShiITSSDK
         public Int32 dwEnabled;                                                   /*是否启用，0-不启用，1启用*/
         public Int32 dwSceneType;                                                 /*场景类型 参见：NETDEV_PARK_LED_SCENE_TYPE_E*/
         public Int32 dwScreenLineNum;                                             /*屏配置行数，固定行数：4*/
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = NETDEVSDK.NETDEV_LEN_4)]
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = ItsNetDevSdk.NETDEV_LEN_4)]
         public NETDEV_LED_LINE_CFG_S[] stuContextList;                            /*行配置内容*/
     }
 

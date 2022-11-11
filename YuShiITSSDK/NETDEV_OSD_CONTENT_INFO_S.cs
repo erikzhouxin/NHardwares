@@ -15,7 +15,7 @@ namespace System.Data.YuShiITSSDK
         public uint udwTopLeftY;                                     /* OSD区域纵坐标,范围[0,9999] Y-axisof OSD area, ranges from 0 to 999*/
         public uint udwBotRightX;                                    /* old无此参数，OSD区域横坐标,范围[0,9999] X-axis of OSD area, ranges from 0 to 999*/
         public uint udwBotRightY;                                    /* old无此参数，OSD区域纵坐标,范围[0,9999] Y-axisof OSD area, ranges from 0 to 999*/
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = NETDEVSDK.NETDEV_LEN_8)]
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = ItsNetDevSdk.NETDEV_LEN_8)]
         public NETDEV_CONTENT_INFO_S[] astContentInfo;               /* 当前区域内OSD内容信息 OSD content in current area*/
     };
 

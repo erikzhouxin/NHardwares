@@ -19,7 +19,7 @@ namespace System.Data.YuShiITSSDK
         public NETDEV_VIDEO_QUALITY_E enQuality;          /* 图像质量 Image quality */
         public Int32 dwGop;              /* I帧间隔  I-frame interval */
         public Int32 bConstantBitRate;   /* 是否为定码率 0:变码率 1:定码率 Constant Bit Rate or Variable bit rate;0:Variable 1:Constant*/
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = NETDEVSDK.NETDEV_LEN_32)]
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = ItsNetDevSdk.NETDEV_LEN_32)]
         public byte[] byRes;                            /* Reserved */
     }
 

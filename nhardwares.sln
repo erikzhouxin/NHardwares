@@ -75,6 +75,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleTester", "AppDemo\Co
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VzClientSDK.WinForm", "AppDemo\VzClientSDKDemo\WinForm\VzClientSDK.WinForm.csproj", "{22F14D12-9E61-4E87-A2BC-1F12C5767786}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "HaiKangWeiShi", "HaiKangWeiShi", "{FDC825A7-ED86-4B84-8A1C-3FAA9AB8D955}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
