@@ -163,7 +163,7 @@ namespace System.Data.KangMeiIPGBSDK
         public static IIPGBNETSdkProxy Create(bool isBase = false)
         {
             if (!isBase) { return _IPGBNETSdk.Value; }
-            if (!File.Exists(DllFullName))
+            if (!File.Exists(BaseDllFullName))
             { SdkFileComponent.TryCopyDirectory(DllFullPath, BaseDllFullPath); }
             return IPGBNETSdkDller.Instance;
         }
@@ -175,7 +175,7 @@ namespace System.Data.KangMeiIPGBSDK
         public static IIPGBPUSHSdkProxy CreatePush(bool isBase = false)
         {
             if (!isBase) { return _IPGBPUSHSdk.Value; }
-            if (!File.Exists(IPGBPUSHSdk.DllFullName))
+            if (!File.Exists(IPGBPUSHSdk.BaseDllFullName))
             { SdkFileComponent.TryCopyDirectory(IPGBPUSHSdk.DllFullPath, IPGBPUSHSdk.BaseDllFullPath); }
             return IPGBPUSHSdkDller.Instance;
         }

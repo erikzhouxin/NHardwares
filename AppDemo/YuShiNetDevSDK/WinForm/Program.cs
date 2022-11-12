@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace YuShiITSSDK.NWinFormUI
+namespace YuShiNetDevSDK.WinForm
 {
     static class Program
     {
@@ -17,7 +17,7 @@ namespace YuShiITSSDK.NWinFormUI
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainForm());
+            Application.Run(new NetDemo());
         }
     }
 }

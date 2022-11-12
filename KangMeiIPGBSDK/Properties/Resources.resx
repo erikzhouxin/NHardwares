@@ -119,75 +119,75 @@
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="X64_CtlAudioDrv" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\X64_CtlAudioDrv.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>..\beans\x64\CtlAudioDrv.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="X64_IPGBNET" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\X64_IPGBNET.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>..\beans\x64\IPGBNET.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="X64_IPGBNETPush" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\X64_IPGBNETPush.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>..\beans\x64\IPGBNETPush.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="X64_IPGBNETSDK" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\X64_IPGBNETSDK.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>..\beans\x64\IPGBNETSDK.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="X64_IPGBPushStream" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\X64_IPGBPushStream.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>..\beans\x64\IPGBPushStream.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="X64_lame_enc_dll" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\X64_lame_enc_dll.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>..\beans\x64\lame_enc_dll.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="X64_libmp3lame" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\X64_libmp3lame.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>..\beans\x64\libmp3lame.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="X64_mfc100" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\X64_mfc100.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>..\beans\x64\mfc100.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="X64_mfc100u" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\X64_mfc100u.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>..\beans\x64\mfc100u.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="X64_msvcp100" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\X64_msvcp100.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>..\beans\x64\msvcp100.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="X64_msvcr100" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\X64_msvcr100.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>..\beans\x64\msvcr100.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="X64_zlibwapi" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\X64_zlibwapi.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>..\beans\x64\zlibwapi.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="X86_CtlAudioDrv" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\X86_CtlAudioDrv.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>..\beans\x86\CtlAudioDrv.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="X86_IPGBNET" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\X86_IPGBNET.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>..\beans\x86\IPGBNET.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="X86_IPGBNETPush" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\X86_IPGBNETPush.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>..\beans\x86\IPGBNETPush.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="X86_IPGBNETSDK" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\X86_IPGBNETSDK.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>..\beans\x86\IPGBNETSDK.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="X86_IPGBPushStream" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\X86_IPGBPushStream.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>..\beans\x86\IPGBPushStream.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="X86_lame_enc_dll" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\X86_lame_enc_dll.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>..\beans\x86\lame_enc_dll.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="X86_libmp3lame" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\X86_libmp3lame.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>..\beans\x86\libmp3lame.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="X86_mfc100" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\X86_mfc100.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>..\beans\x86\mfc100.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="X86_mfc100u" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\X86_mfc100u.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>..\beans\x86\mfc100u.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="X86_msvcp100" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\X86_msvcp100.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>..\beans\x86\msvcp100.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="X86_msvcr100" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\X86_msvcr100.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>..\beans\x86\msvcr100.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="X86_zlibwapi" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\X86_zlibwapi.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>..\beans\x86\zlibwapi.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>

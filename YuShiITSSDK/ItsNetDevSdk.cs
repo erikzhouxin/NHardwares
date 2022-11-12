@@ -598,6 +598,10 @@ namespace System.Data.YuShiITSSDK
             }
         }
         /// <summary>
+        /// plugins内容实例
+        /// </summary>
+        public static IItsNetDevSdkProxy Instance { get => _netDevSdk.Value; }
+        /// <summary>
         /// 创建SDK代理
         /// </summary>
         /// <param name="isBase"></param>
