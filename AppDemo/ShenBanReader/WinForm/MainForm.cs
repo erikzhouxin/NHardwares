@@ -2,30 +2,80 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using ShenBanReader.WinForm.Views;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Data.Cobber;
 
-namespace System.Data.ShenBanReader.WinForm
+namespace ShenBanReader.WinForm
 {
     public partial class MainForm : Form
     {
-        R2000UartDemo R2000UartDemo { get; set; }
-        AutoReaderForm AutoReaderForm { get; set; }
+        AutoReaderFlew AutoReaderForm { get; set; }
+        TestScanFlew TestScanForm { get; set; }
         public MainForm()
         {
             InitializeComponent();
         }
 
-        private void 打开官方示例ToolStripMenuItem_Click(object sender, EventArgs e)
+        private static bool TryGetTabPageSelect<T>(IEnumerable<TabPage> pages, T scanPanel, out TabPage page)
         {
-            (R2000UartDemo ?? new R2000UartDemo()).ShowDialog();
+            foreach (TabPage item in pages)
+            {
+                foreach (var ctl in item.Controls)
+                {
+                    if (ctl is T scan)
+                    {
+                        if (scan.Equals(scanPanel))
+                        {
+                            page = item;
+                            return true;
+                        }
+                    }
+                }
+            }
+            page = null;
+            return false;
         }
 
-        private void 打开自动读取ToolStripMenuItem_Click(object sender, EventArgs e)
+        private void TrmMainAutoScan_Click(object sender, EventArgs e)
         {
-            (AutoReaderForm ?? new AutoReaderForm()).ShowDialog();
+            var scanPanel = AutoReaderForm ??= new AutoReaderFlew();
+            if (!TryGetTabPageSelect(TacMainContent.TabPages.ToEnumerable<TabPage>(), scanPanel, out TabPage page))
+            {
+                page = new TabPage();
+                page.Text = "自动RFID读取";
+                scanPanel.Dock = DockStyle.Fill;
+                page.Controls.Add(scanPanel);
+                TacMainContent.TabPages.Add(page);
+            }
+            this.TacMainContent.SelectedTab = page;
+        }
+
+        private void TrmMainScanLogic_Click(object sender, EventArgs e)
+        {
+            var scanPanel = TestScanForm ??= new TestScanFlew();
+            if (!TryGetTabPageSelect(TacMainContent.TabPages.ToEnumerable<TabPage>(), scanPanel, out TabPage page))
+            {
+                page = new TabPage();
+                page.Text = "测试扫描逻辑";
+                page.Controls.Add(scanPanel);
+                scanPanel.Dock = DockStyle.Fill;
+                TacMainContent.TabPages.Add(page);
+            }
+            this.TacMainContent.SelectedTab = page;
+        }
+
+        private void TsmiRefreshThis_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void TsmiCloseThis_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

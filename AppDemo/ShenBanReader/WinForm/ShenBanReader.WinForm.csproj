@@ -5,7 +5,8 @@
 		<TargetFramework>netcoreapp3.1</TargetFramework>
 		<UseWindowsForms>true</UseWindowsForms>
 		<AssemblyName>NSystem.Data.ShenBanReader.WinForm</AssemblyName>
-		<RootNamespace>System.Data.ShenBanReader.WinForm</RootNamespace>
+		<RootNamespace>ShenBanReader.WinForm</RootNamespace>
+		<LangVersion>latest</LangVersion>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -27,10 +28,6 @@
 
 	<ItemGroup>
 	  <ProjectReference Include="..\..\..\ShenBanReader\ShenBanReader.csproj" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="Properties\DataSources\" />
 	</ItemGroup>
 
 </Project>
