@@ -552,6 +552,7 @@ namespace System.Data.ShenBanReader
         public override bool Connect(IPAddress ipAddress, int port, out string message)
         {
             message = string.Empty;
+            Disconnect();
             try
             {
                 _client = new TcpClient();
@@ -634,14 +635,16 @@ namespace System.Data.ShenBanReader
         /// </summary>
         public override bool Disconnect()
         {
-            var stream = _stream;
-            _stream = null;
             try
             {
                 _client?.Close();
-                stream?.Dispose();
+                _stream?.Dispose();
             }
-            catch { }
+            finally
+            {
+                _client = null;
+                _stream = null;
+            }
             _isConnect = false;
             return true;
         }
@@ -654,6 +657,11 @@ namespace System.Data.ShenBanReader
         {
             base.Dispose();
             Disconnect();
+            try
+            {
+                _thread?.Interrupt();
+            }
+            catch { }
             _isBreak = true;
             _thread = null;
         }
@@ -765,6 +773,7 @@ namespace System.Data.ShenBanReader
         public override bool Connect(IPAddress ipAddress, int port, out string message)
         {
             message = string.Empty;
+            Disconnect();
             try
             {
                 _client = new TcpClient();
@@ -840,7 +849,11 @@ namespace System.Data.ShenBanReader
                     Errored?.Invoke(new byte[0], ex);
                     break;
                 }
-                catch (Exception ex) { }
+                catch (Exception ex)
+                {
+                    _isConnected = false;
+                    Errored?.Invoke(new byte[0], ex);
+                }
             }
         }
         public override bool Send(byte[] aryBuffer)
@@ -862,14 +875,16 @@ namespace System.Data.ShenBanReader
         }
         public override bool Disconnect()
         {
-            _stream?.Dispose();
-            _client?.Close();
-#if NETFrame
-            _thread.Abort();
-#else
-            _thread.Interrupt();
-            _thread.Join();
-#endif
+            try
+            {
+                _stream?.Dispose();
+                _client?.Close();
+            }
+            finally
+            {
+                _stream = null;
+                _client = null;
+            }
             _isConnected = false;
             return true;
         }
@@ -878,6 +893,17 @@ namespace System.Data.ShenBanReader
         {
             base.Dispose();
             Disconnect();
+            try
+            {
+#if NETFrame
+                _thread.Abort();
+#else
+                _thread.Interrupt();
+#endif
+            }
+            catch { }
+            _isBreak = true;
+            _thread = null;
         }
     }
     /// <summary>
