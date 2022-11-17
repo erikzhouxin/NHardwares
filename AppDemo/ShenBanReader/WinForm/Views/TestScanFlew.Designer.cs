@@ -29,28 +29,35 @@
         private void InitializeComponent()
         {
             this.panel2 = new System.Windows.Forms.Panel();
+            this.BtnClearTags = new System.Windows.Forms.Button();
+            this.BtnConnRemove = new System.Windows.Forms.Button();
             this.BtnConnAdd = new System.Windows.Forms.Button();
+            this.CbxRfidAnt = new System.Windows.Forms.ComboBox();
             this.CbxPortRate = new System.Windows.Forms.ComboBox();
             this.CbxSerialPort = new System.Windows.Forms.ComboBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel6 = new System.Windows.Forms.Panel();
             this.DgvReadResult = new System.Windows.Forms.DataGridView();
             this.panel5 = new System.Windows.Forms.Panel();
+            this.DgvRfidList = new System.Windows.Forms.DataGridView();
             this.panel4 = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
             this.TxtLogger = new System.Windows.Forms.RichTextBox();
-            this.BtnConnRemove = new System.Windows.Forms.Button();
             this.panel2.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DgvReadResult)).BeginInit();
+            this.panel5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.DgvRfidList)).BeginInit();
             this.panel3.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.BtnClearTags);
             this.panel2.Controls.Add(this.BtnConnRemove);
             this.panel2.Controls.Add(this.BtnConnAdd);
+            this.panel2.Controls.Add(this.CbxRfidAnt);
             this.panel2.Controls.Add(this.CbxPortRate);
             this.panel2.Controls.Add(this.CbxSerialPort);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
@@ -59,6 +66,28 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(758, 194);
             this.panel2.TabIndex = 0;
+            // 
+            // BtnClearTags
+            // 
+            this.BtnClearTags.Location = new System.Drawing.Point(532, 103);
+            this.BtnClearTags.Margin = new System.Windows.Forms.Padding(4);
+            this.BtnClearTags.Name = "BtnClearTags";
+            this.BtnClearTags.Size = new System.Drawing.Size(88, 33);
+            this.BtnClearTags.TabIndex = 3;
+            this.BtnClearTags.Text = "清空读取";
+            this.BtnClearTags.UseVisualStyleBackColor = true;
+            this.BtnClearTags.Click += new System.EventHandler(this.BtnClearTags_Click);
+            // 
+            // BtnConnRemove
+            // 
+            this.BtnConnRemove.Location = new System.Drawing.Point(628, 62);
+            this.BtnConnRemove.Margin = new System.Windows.Forms.Padding(4);
+            this.BtnConnRemove.Name = "BtnConnRemove";
+            this.BtnConnRemove.Size = new System.Drawing.Size(88, 33);
+            this.BtnConnRemove.TabIndex = 2;
+            this.BtnConnRemove.Text = "移除设备";
+            this.BtnConnRemove.UseVisualStyleBackColor = true;
+            this.BtnConnRemove.Click += new System.EventHandler(this.BtnConnRemove_Click);
             // 
             // BtnConnAdd
             // 
@@ -69,39 +98,56 @@
             this.BtnConnAdd.TabIndex = 2;
             this.BtnConnAdd.Text = "添加设备";
             this.BtnConnAdd.UseVisualStyleBackColor = true;
+            this.BtnConnAdd.Click += new System.EventHandler(this.BtnConnAdd_Click);
+            // 
+            // CbxRfidAnt
+            // 
+            this.CbxRfidAnt.FormattingEnabled = true;
+            this.CbxRfidAnt.Items.AddRange(new object[] {
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15"});
+            this.CbxRfidAnt.Location = new System.Drawing.Point(338, 62);
+            this.CbxRfidAnt.Margin = new System.Windows.Forms.Padding(4);
+            this.CbxRfidAnt.Name = "CbxRfidAnt";
+            this.CbxRfidAnt.Size = new System.Drawing.Size(140, 25);
+            this.CbxRfidAnt.TabIndex = 1;
+            this.CbxRfidAnt.Text = "0";
             // 
             // CbxPortRate
             // 
             this.CbxPortRate.FormattingEnabled = true;
             this.CbxPortRate.Items.AddRange(new object[] {
             "115200",
-            "9600"});
-            this.CbxPortRate.Location = new System.Drawing.Point(250, 62);
+            "4001"});
+            this.CbxPortRate.Location = new System.Drawing.Point(190, 62);
             this.CbxPortRate.Margin = new System.Windows.Forms.Padding(4);
             this.CbxPortRate.Name = "CbxPortRate";
             this.CbxPortRate.Size = new System.Drawing.Size(140, 25);
             this.CbxPortRate.TabIndex = 1;
-            this.CbxPortRate.Text = "115200";
+            this.CbxPortRate.Text = "4001";
             // 
             // CbxSerialPort
             // 
             this.CbxSerialPort.FormattingEnabled = true;
-            this.CbxSerialPort.Items.AddRange(new object[] {
-            "COM1",
-            "COM2",
-            "COM3",
-            "COM4",
-            "COM5",
-            "COM6",
-            "COM7",
-            "COM8",
-            "COM9"});
             this.CbxSerialPort.Location = new System.Drawing.Point(42, 62);
             this.CbxSerialPort.Margin = new System.Windows.Forms.Padding(4);
             this.CbxSerialPort.Name = "CbxSerialPort";
             this.CbxSerialPort.Size = new System.Drawing.Size(140, 25);
             this.CbxSerialPort.TabIndex = 0;
-            this.CbxSerialPort.Text = "COM1";
             // 
             // panel1
             // 
@@ -129,18 +175,22 @@
             // 
             // DgvReadResult
             // 
+            this.DgvReadResult.AllowUserToAddRows = false;
+            this.DgvReadResult.AllowUserToDeleteRows = false;
             this.DgvReadResult.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.DgvReadResult.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DgvReadResult.Dock = System.Windows.Forms.DockStyle.Fill;
             this.DgvReadResult.Location = new System.Drawing.Point(0, 0);
             this.DgvReadResult.Margin = new System.Windows.Forms.Padding(4);
             this.DgvReadResult.Name = "DgvReadResult";
+            this.DgvReadResult.ReadOnly = true;
             this.DgvReadResult.RowTemplate.Height = 23;
             this.DgvReadResult.Size = new System.Drawing.Size(421, 295);
             this.DgvReadResult.TabIndex = 0;
             // 
             // panel5
             // 
+            this.panel5.Controls.Add(this.DgvRfidList);
             this.panel5.Dock = System.Windows.Forms.DockStyle.Right;
             this.panel5.Location = new System.Drawing.Point(588, 194);
             this.panel5.Margin = new System.Windows.Forms.Padding(4);
@@ -148,8 +198,22 @@
             this.panel5.Size = new System.Drawing.Size(170, 295);
             this.panel5.TabIndex = 3;
             // 
+            // DgvRfidList
+            // 
+            this.DgvRfidList.AllowUserToAddRows = false;
+            this.DgvRfidList.AllowUserToDeleteRows = false;
+            this.DgvRfidList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.DgvRfidList.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.DgvRfidList.Location = new System.Drawing.Point(0, 0);
+            this.DgvRfidList.Name = "DgvRfidList";
+            this.DgvRfidList.ReadOnly = true;
+            this.DgvRfidList.RowTemplate.Height = 25;
+            this.DgvRfidList.Size = new System.Drawing.Size(170, 295);
+            this.DgvRfidList.TabIndex = 0;
+            // 
             // panel4
             // 
+            this.panel4.AutoScroll = true;
             this.panel4.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel4.Location = new System.Drawing.Point(0, 194);
             this.panel4.Margin = new System.Windows.Forms.Padding(4);
@@ -176,16 +240,6 @@
             this.TxtLogger.TabIndex = 0;
             this.TxtLogger.Text = "";
             // 
-            // BtnConnRemove
-            // 
-            this.BtnConnRemove.Location = new System.Drawing.Point(628, 62);
-            this.BtnConnRemove.Margin = new System.Windows.Forms.Padding(4);
-            this.BtnConnRemove.Name = "BtnConnRemove";
-            this.BtnConnRemove.Size = new System.Drawing.Size(88, 33);
-            this.BtnConnRemove.TabIndex = 2;
-            this.BtnConnRemove.Text = "移除设备";
-            this.BtnConnRemove.UseVisualStyleBackColor = true;
-            // 
             // TestScanFlew
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
@@ -193,10 +247,13 @@
             this.Controls.Add(this.panel1);
             this.Name = "TestScanFlew";
             this.Size = new System.Drawing.Size(758, 631);
+            this.Load += new System.EventHandler(this.TestScanner_Load);
             this.panel2.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel6.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.DgvReadResult)).EndInit();
+            this.panel5.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.DgvRfidList)).EndInit();
             this.panel3.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -216,5 +273,8 @@
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.RichTextBox TxtLogger;
         private System.Windows.Forms.Button BtnConnRemove;
+        private System.Windows.Forms.DataGridView DgvRfidList;
+        private System.Windows.Forms.Button BtnClearTags;
+        private System.Windows.Forms.ComboBox CbxRfidAnt;
     }
 }

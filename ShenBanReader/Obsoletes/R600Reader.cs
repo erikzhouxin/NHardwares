@@ -435,7 +435,7 @@ namespace System.Data.ShenBanReader
             _talker.Received = null;
             _talker.Dispose();
             _talker = new SerialTalkReadModel();
-            _talker.Received += RunReceiveDataCallback;
+            _talker.Received = RunReceiveDataCallback;
             return _talker.Connect(portName, baudRate, out exception);
         }
         /// <summary>
@@ -447,10 +447,10 @@ namespace System.Data.ShenBanReader
         /// <returns></returns>
         public override bool Connect(IPAddress ip, int port, out string exception)
         {
-            _talker.Received = null ;
+            _talker.Received = null;
             _talker.Dispose();
             _talker = new TcpTalkReadModel();
-            _talker.Received += RunReceiveDataCallback;
+            _talker.Received = RunReceiveDataCallback;
             return _talker.Connect(ip, port, out exception);
         }
         private void RunReceiveDataCallback(byte[] btAryReceiveData)
@@ -2151,6 +2151,7 @@ namespace System.Data.ShenBanReader
                 SendCallback?.Invoke(data);
                 return 0;
             }
+            SendCallback?.Invoke(data);
             return -1;
         }
         public virtual int SetAutoRead(bool isAuto)

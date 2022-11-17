@@ -75,7 +75,16 @@ namespace ShenBanReader.WinForm
 
         private void TsmiCloseThis_Click(object sender, EventArgs e)
         {
-
+            var thisTab = this.TacMainContent.SelectedTab;
+            if (thisTab.Text == "首页")
+            {
+                return;
+            }
+            var thisIndex = this.TacMainContent.SelectedIndex;
+            if (thisIndex <= 0) { thisIndex = 0; }
+            this.TacMainContent.TabPages.Remove(thisTab);
+            if (thisIndex >= TacMainContent.TabPages.Count) { thisIndex = TacMainContent.TabPages.Count - 1; }
+            this.TacMainContent.SelectedIndex = thisIndex;
         }
     }
 }

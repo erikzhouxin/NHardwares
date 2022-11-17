@@ -44,7 +44,7 @@ namespace System.Data.ShenBanReader
         public bool Connect(string portName, int baudRate, out string exception)
         {
             _talker.Dispose();
-            _talker = new SerialLogicalTalkModel();
+            _talker = new SerialTalkLogicModel();
             _talker.Received = ReceiveDataCallback;
             return _talker.Connect(portName, baudRate, out exception);
         }
@@ -58,7 +58,7 @@ namespace System.Data.ShenBanReader
         public bool Connect(IPAddress ip, int port, out string exception)
         {
             _talker.Dispose();
-            _talker = new TcpLogicalTalkModel();
+            _talker = new TcpTalkLogicModel();
             _talker.Received = ReceiveDataCallback;
             return _talker.Connect(ip, port, out exception);
         }

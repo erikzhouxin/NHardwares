@@ -21,6 +21,7 @@ namespace ShenBanReader.WinForm.Views
 {
     public partial class TestScanFlew : UserControl
     {
+        internal static TestScanFlew Instance { get; set; }
         Thread _downloadService;
         CancellationTokenSource _downloadCts;
         Thread _guardianService;
@@ -28,8 +29,12 @@ namespace ShenBanReader.WinForm.Views
         Thread _uploadService;
         CancellationTokenSource _uploadCts;
         bool _isInitialize;
+        DataTable _tagTable;
+        DataTable _rfidTable;
+        HashSet<string> _cacheTags;
         public TestScanFlew()
         {
+            Instance = this;
             InitializeComponent();
         }
         private void TestScanner_Load(object sender, EventArgs e)
@@ -37,7 +42,21 @@ namespace ShenBanReader.WinForm.Views
             if (!_isInitialize)
             {
                 _isInitialize = true;
-                LoggerCaller.UseFile();
+                _cacheTags = new HashSet<string>();
+
+                _tagTable = new DataTable();
+                _tagTable.Columns.Add(new DataColumn("Info"));
+                _tagTable.Columns.Add(new DataColumn("Epc"));
+                _tagTable.Columns.Add(new DataColumn("Text"));
+                _tagTable.Columns.Add(new DataColumn("Result"));
+                this.DgvReadResult.DataSource = _tagTable;
+
+                _rfidTable = new DataTable();
+                _rfidTable.Columns.Add(new DataColumn("Address"));
+                _rfidTable.Columns.Add(new DataColumn("RatePort"));
+                _rfidTable.Columns.Add(new DataColumn("Description"));
+                this.DgvRfidList.DataSource = _rfidTable;
+
                 _downloadCts = new CancellationTokenSource();
                 _downloadService = new Thread(async () => await DownloadServiceAsync(_downloadCts.Token));
                 _downloadService.IsBackground = true;
@@ -50,6 +69,93 @@ namespace ShenBanReader.WinForm.Views
                 _uploadService = new Thread(async () => await UploadServiceAsync(_uploadCts.Token));
                 _uploadService.IsBackground = true;
                 _uploadService.Start();
+            }
+        }
+        private void AppendRecord(Tuble8String record)
+        {
+            this.Invoke((Action)(() =>
+            {
+                var row = _tagTable.NewRow();
+                row[0] = record.Item1;
+                row[1] = record.Item2;
+                row[2] = record.Item3;
+                row[3] = record.Item4;
+                _tagTable.Rows.Add(row);
+            }));
+            _cacheTags.Add(record.Item5);
+        }
+
+        private void BtnClearTags_Click(object sender, EventArgs e)
+        {
+            _tagTable.Clear();
+            _cacheTags.ToList().ForEach((s) =>
+            {
+                CacheModel.Concurrent.Remove(s);
+            });
+            _cacheTags.Clear();
+            this.TxtLogger.Clear();
+        }
+        private void BtnConnAdd_Click(object sender, EventArgs e)
+        {
+            var list = GetRfidList();
+            var address = this.CbxSerialPort.Text?.Trim() ?? string.Empty;
+            var port = (this.CbxPortRate.Text?.Trim() ?? string.Empty).ToPInt32();
+            var ant = (this.CbxRfidAnt.Text?.Trim() ?? string.Empty).ToPInt32();
+            var model = list.FirstOrDefault(s => s.Address == address && s.Port == port);
+            if (model == null)
+            {
+                var isCom = address.StartsWith("COM");
+                model = new TLocalRfids
+                {
+                    Id = isCom ? 0 : 1,
+                    Uuid = Guid.NewGuid().ToString(),
+                    Address = address,
+                    Port = port,
+                    Ant = ant,
+                    AreaId = 1,
+                    AreaName = "测试区域",
+                    BehindAccount = "",
+                    BehindAddress = "",
+                    BehindPassword = "",
+                    BehindPort = 0,
+                    BehindRemark = "",
+                    EditName = "周鑫",
+                    Editor = 1,
+                    EditTime = DateTime.Now,
+                    Flag = 0,
+                    FrontAccount = "",
+                    FrontAddress = "",
+                    FrontPassword = "",
+                    FrontPort = 0,
+                    FrontRemark = "",
+                    KeyCode = "",
+                    Name = isCom ? "串口测试" : "网口测试",
+                    Remark = "",
+                    Status = 0,
+                    Version = isCom ? 0 : 1,
+                };
+                _rfidModel.Set(model.Uuid, model);
+                list.Add(model);
+            }
+            else
+            {
+                model.Address = address;
+                model.Port = port;
+                model.Ant = ant;
+            }
+            System.IO.File.WriteAllText(_rfidPath, list.GetJsonFormatString());
+        }
+        private void BtnConnRemove_Click(object sender, EventArgs e)
+        {
+            var list = GetRfidList();
+            var address = this.CbxSerialPort.Text?.Trim() ?? string.Empty;
+            var port = (this.CbxPortRate.Text?.Trim() ?? string.Empty).ToPInt32();
+            var model = list.FirstOrDefault(s => s.Address == address && s.Port == port);
+            if (model != null)
+            {
+                list.Remove(model);
+                _rfidModel.Remove(model.Uuid);
+                System.IO.File.WriteAllText(_rfidPath, list.GetJsonFormatString());
             }
         }
         #region // 服务内容
@@ -75,10 +181,8 @@ namespace ShenBanReader.WinForm.Views
                     }
                 }
                 catch (Exception ex)
-                {
-                    Console.WriteLine(ex);
-                }
-                await Task.Delay(600 * 1000, stoppingToken);
+                { Append(ex); }
+                await Task.Delay(Setting.DownloadInterval * 1000, stoppingToken);
             }
         }
         private static TLocalRfids GetDefaultRfid(bool isCom)
@@ -87,9 +191,9 @@ namespace ShenBanReader.WinForm.Views
             {
                 Id = isCom ? 0 : 1,
                 Uuid = Guid.NewGuid().ToString(),
-                Address = isCom ? "COM1" : "192.168.1.178",
-                Port = isCom ? 12800 : 4001,
-                Ant = 0,
+                Address = isCom ? "COM3" : "192.168.1.178",
+                Port = isCom ? 115200 : 4001,
+                Ant = isCom ? 1 : 0,
                 AreaId = 1,
                 AreaName = "测试区域",
                 BehindAccount = "",
@@ -126,13 +230,7 @@ namespace ShenBanReader.WinForm.Views
             {
                 try
                 {
-                    var infos = new List<TLocalRfids>();
-                    foreach (var item in _rfidModel.GetKeys())
-                    {
-                        var model = _rfidModel.Get(item);
-                        if (model == null) { continue; }
-                        infos.Add(model);
-                    }
+                    List<TLocalRfids> infos = GetRfidList();
                     var list = infos.Select(s => s.Uuid).ToList();
                     foreach (var item in RfidDic.Keys.ToList()) // 移除掉已经释放的
                     {
@@ -153,19 +251,42 @@ namespace ShenBanReader.WinForm.Views
                         }
                         RfidDic[info.Uuid] = new ShenBanReaderContent(info);
                     }
-                    var tasks = new List<Task>();
+                    this.Invoke((Action)(() =>
+                    {
+                        _rfidTable.Clear();
+                    }));
                     foreach (var item in RfidDic.Values.ToList())
                     {
-                        tasks.Add(Task.Factory.StartNew(() => item.Starting()));
+                        item.Starting();
+                        var model = item.Model;
+                        this.Invoke((Action)(() =>
+                        {
+                            var row = _rfidTable.NewRow();
+                            row[0] = model.Address;
+                            row[1] = model.Port;
+                            row[2] = $"天线:{model.Ant},状态:{model.Remark}";
+                            _rfidTable.Rows.Add(row);
+                        }));
                     }
-                    await Task.WhenAll(tasks);
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex);
+                    Append(ex);
                 }
                 await Task.Delay(Setting.ChangeInterval * 100, stoppingToken);
             }
+        }
+        private static List<TLocalRfids> GetRfidList()
+        {
+            var infos = new List<TLocalRfids>();
+            foreach (var item in _rfidModel.GetKeys())
+            {
+                var model = _rfidModel.Get(item);
+                if (model == null) { continue; }
+                infos.Add(model);
+            }
+
+            return infos;
         }
         async Task UploadServiceAsync(CancellationToken stoppingToken)
         {
@@ -179,7 +300,7 @@ namespace ShenBanReader.WinForm.Views
                     {
                         try
                         {
-                            Thread.Sleep(1000);
+
                         }
                         finally
                         {
@@ -201,12 +322,17 @@ namespace ShenBanReader.WinForm.Views
                     }
                     if (statusDic.IsNotEmpty())
                     {
-                        Thread.Sleep(1000);
+                        foreach (var item in statusDic)
+                        {
+                            var model = _rfidModel.Get(item.Uuid);
+                            if (model != null)
+                            { AppendInfo($"{model.Address}:{model.Port}    {item.Remark}"); }
+                        }
                     }
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex);
+                    Append(ex);
                 }
                 await Task.Delay(Setting.UploadInterval, stoppingToken);
             }
@@ -265,8 +391,8 @@ namespace ShenBanReader.WinForm.Views
                 _updated = info;
                 if (compareRes.Item1 || compareRes.Item2 || compareRes.Item3 || compareRes.Item4)
                 {
-                    Console.WriteLine($"[{_model.Name}]配置发生变更");
-                    Console.WriteLine(new { New = info, Old = _model });
+                    Instance.AppendInfo($"[{_model.Name}]配置发生变更");
+                    Instance.AppendInfo(new { New = info, Old = _model }.GetJsonFormatString());
                     return true;
                 }
                 return false;
@@ -325,8 +451,8 @@ namespace ShenBanReader.WinForm.Views
                     // 准备设置值,防止中途变更
                     var isReadLine = _model.Ant != 0;
                     var ants = GetAntennaTypes(_model.Ant);
-                    var reconnInterval = 10 * 100;
-                    var inInterval = 3 * 100;
+                    var reconnInterval = Setting.ScanInterval * 100;
+                    var inInterval = Setting.ReadInterval * 100;
                     var result = -1;
                     try
                     {
@@ -349,8 +475,8 @@ namespace ShenBanReader.WinForm.Views
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine($"{nameof(ShenBanReaderContent)}:{nameof(DoJumpWorking)}:{nameof(IR600Reader.FastSwitchInventory)}");
-                        Console.WriteLine(ex);
+                        Instance.AppendError($"{nameof(ShenBanReaderContent)}:{nameof(DoJumpWorking)}:{nameof(IR600Reader.FastSwitchInventory)}");
+                        Instance.Append(ex);
                         continue;
                     }
                     if (result < 0)
@@ -373,10 +499,10 @@ namespace ShenBanReader.WinForm.Views
                 if (result.Count > 0) { return result.ToArray(); }
                 return new ReadAntennaType[]
                 {
-                ReadAntennaType.L1,
-                ReadAntennaType.L2,
-                ReadAntennaType.L3,
-                ReadAntennaType.L4,
+                    ReadAntennaType.L1,
+                    ReadAntennaType.L2,
+                    ReadAntennaType.L3,
+                    ReadAntennaType.L4,
                 };
             }
 
@@ -387,26 +513,24 @@ namespace ShenBanReader.WinForm.Views
                     if (!_reader.Connect(_model.Address, _model.Port, out string comMsg))
                     {
                         SetRfidStatus(false, comMsg);
-                        Console.WriteLine($"{nameof(ShenBanReaderContent)}:{_model.Address}:{_model.Port}---------{comMsg}");
-                        Console.WriteLine(_model);
+                        Instance.AppendError($"{nameof(ShenBanReaderContent)}:{_model.Address}:{_model.Port}---------{comMsg}");
+                        Instance.AppendError(_model.GetJsonFormatString());
                         return false;
                     }
                     SetRfidStatus(true, comMsg);
-                    Console.WriteLine($"{nameof(ShenBanReaderContent)}:{_model.Address}:{_model.Port}---------{comMsg}");
-                    Console.WriteLine(_model);
+                    Instance.AppendSuccess($"{nameof(ShenBanReaderContent)}:{_model.Address}:{_model.Port}---------{comMsg}");
                     return true;
                 }
                 IPAddress.TryParse(_model.Address, out var ipAddress);
                 if (!_reader.Connect(ipAddress, _model.Port, out string msg))
                 {
                     SetRfidStatus(false, msg);
-                    Console.WriteLine($"{nameof(ShenBanReaderContent)}:{_model.Address}:{_model.Port}---------{msg}");
-                    Console.WriteLine(_model);
+                    Instance.AppendError($"{nameof(ShenBanReaderContent)}:{_model.Address}:{_model.Port}---------{msg}");
+                    Instance.AppendError(_model.GetJsonFormatString());
                     return false;
                 }
                 SetRfidStatus(true, msg);
-                Console.WriteLine($"{nameof(ShenBanReaderContent)}:{_model.Address}:{_model.Port}---------{msg}");
-                Console.WriteLine(_model);
+                Instance.AppendSuccess($"{nameof(ShenBanReaderContent)}:{_model.Address}:{_model.Port}---------{msg}");
                 return true;
             }
             private Tuble<bool, bool, bool, bool> IsConfigDiff(TLocalRfids model, TLocalRfids info)
@@ -440,7 +564,7 @@ namespace ShenBanReader.WinForm.Views
             private void InventoryReal(IReadMessage msg, R600TagInfo tag)
             {
                 _readId = msg.ReadId;
-                if (tag.EPC == null || !tag.TakeEpc(16)) { return; }
+                if (tag.EPC == null || tag.EPC.Length == 0) { return; }
                 new Task(() => InventoryRecords(tag)).Start();
                 _tags.Add(tag.Key);
             }
@@ -456,13 +580,13 @@ namespace ShenBanReader.WinForm.Views
                     {
                         try
                         {
-                            var timeout = 30;
+                            var timeout = Setting.TimeOut;
                             var cardCache = CacheModel.Concurrent.Get<TLocalScanRecords>(cacheKey);
                             var currentTime = DateTime.Now;
                             if (cardCache != null && (currentTime - cardCache.ScanTime).TotalMinutes < timeout) { return; }
                             if (!tag.Key.StartsWith(KeyString)) // 不符合标签内容规格
                             {
-                                Console.WriteLine($"{nameof(InventoryRecords)}:{tag.Key}:扫描到不符合资产管理内容的标签");
+                                Instance.AppendError($"{nameof(InventoryRecords)}:{tag.Key}:扫描到不符合资产管理内容的标签");
                                 return;
                             }
                             var tid = tag.EPC.GetHexString().Substring(KeyString.Length);
@@ -490,11 +614,30 @@ namespace ShenBanReader.WinForm.Views
                                 Extra = tag.GetJsonString(),
                             };
                             CacheModel.Concurrent.Set(cacheKey, record, new DateTimeOffset(DateTime.Now.AddHours(1)));
-                            SaveScanRecord(record);
+
+                            var recordKey = $"{record.ScanUuid}:{record.Epc}";
+                            // 去拍第一张照片(如果已经有的话就完结去)
+                            SaveLastAndRemove(recordKey);
+                            var result = new TakePictureInfo
+                            {
+                                Key = recordKey,
+                                Time = DateTime.Now,
+                                Count = 3,
+                            };
+                            KeyDic[recordKey] = result;
+                            Instance.AppendRecord(new Tuble8String
+                            {
+                                Item1 = $"{_model.Address}:{_model.Port}",
+                                Item2 = record.Epc,
+                                Item3 = tag.Key,
+                                Item4 = tag.GetJsonString(),
+                                Item5 = cacheKey,
+                            });
+                            Thread.Sleep(1000);
                         }
                         catch (Exception ex)
                         {
-                            Console.WriteLine(new { record, tag, ex });
+                            Instance.AppendError(new { record, tag, ex }.GetJsonFormatString());
                         }
                         finally
                         {
@@ -504,24 +647,8 @@ namespace ShenBanReader.WinForm.Views
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(new { record, tag, ex });
+                    Instance.AppendError(new { record, tag, ex }.GetJsonFormatString());
                 }
-            }
-
-            private void SaveScanRecord(TLocalScanRecords record)
-            {
-                var key = $"{record.ScanUuid}:{record.Epc}";
-                // 去拍第一张照片(如果已经有的话就完结去)
-                SaveLastAndRemove(key);
-                var result = new TakePictureInfo
-                {
-                    Key = key,
-                    Time = DateTime.Now,
-                    Count = 3,
-                };
-                KeyDic[key] = result;
-                Console.WriteLine($"保存扫描记录=>{new { record, result }.GetJsonFormatString()}");
-                Thread.Sleep(1000);
             }
 
             private string GetCacheKey(string key) => $"RFID:Record:{_model.Uuid}:{key}";
@@ -535,19 +662,19 @@ namespace ShenBanReader.WinForm.Views
 
             private void AlertError(ReadAlertError alert)
             {
-                Console.WriteLine(alert);
+                Instance.AppendError(alert.GetJsonFormatString());
             }
             private void AlertCallbackError(Exception ex)
             {
-                Console.WriteLine(ex);
+                Instance.Append(ex);
             }
             private void ReceiveCallback(byte[] aryData)
             {
-                Console.WriteLine($"接收数据回调[{aryData.GetHexString()}]");
+
             }
             private void SendCallback(byte[] aryData)
             {
-                Console.WriteLine($"发送数据回调[{aryData.GetHexString()}]");
+
             }
             #endregion
             #region // 内部方法
@@ -585,7 +712,7 @@ namespace ShenBanReader.WinForm.Views
                 if (KeyDic.TryRemove(key, out var item))// 如果是它移除的,便进行保存
                 {
                     if (item == null) { return; }
-                    Console.WriteLine($"保存最后一张截图并移除=>{item.GetJsonFormatString()}");
+                    Instance.AppendInfo($"保存最后一张截图并移除=>{item.GetJsonFormatString()}");
                     Thread.Sleep(1000);
                 }
             }
@@ -593,9 +720,9 @@ namespace ShenBanReader.WinForm.Views
             {
                 while (true)
                 {
-                    var secondInterval = 20 * 100;
-                    var thirdInterval = 50 * 100;
-                    var interval = 5 * 100;
+                    var secondInterval = Setting.CaptureSecondInterval * 100;
+                    var thirdInterval = Setting.CaptureThirdInterval * 100;
+                    var interval = Setting.CaptureInterval * 100;
                     try
                     {
                         foreach (var item in KeyDic.Values.ToList())
@@ -606,7 +733,7 @@ namespace ShenBanReader.WinForm.Views
                             {
                                 if (!item.HasSecond && (DateTime.Now - item.Time).TotalMilliseconds > secondInterval)
                                 {
-                                    Console.WriteLine($"保存第二张截图并移除=>{item.GetJsonFormatString()}");
+                                    Instance.AppendInfo($"保存第二张截图并移除=>{item.GetJsonFormatString()}");
                                     Thread.Sleep(1000);
                                     item.HasSecond = true;
                                 }
@@ -617,7 +744,7 @@ namespace ShenBanReader.WinForm.Views
                             {
                                 if (!item.HasThird && (DateTime.Now - item.Time).TotalMilliseconds > thirdInterval)
                                 {
-                                    Console.WriteLine($"保存第三张截图并移除=>{item.GetJsonFormatString()}");
+                                    Instance.AppendInfo($"保存第三张截图并移除=>{item.GetJsonFormatString()}");
                                     Thread.Sleep(1000);
                                     item.HasThird = true;
                                 }
@@ -698,21 +825,9 @@ namespace ShenBanReader.WinForm.Views
             /// </summary>
             public Int32 CachedInterval { get; set; } = 3;
             /// <summary>
-            /// 是读天线
-            /// </summary>
-            public bool IsReadLine { get; set; } = true;
-            /// <summary>
             /// 超时时间(分钟)
             /// </summary>
             public int TimeOut { get; set; } = 30;
-            /// <summary>
-            /// 读天线内容
-            /// 1=>天线一
-            /// 2=>天线二
-            /// 4=>天线三
-            /// 4=>天线四
-            /// </summary>
-            public int ReadLine { get; set; } = 15;
             /// <summary>
             /// 结束次数
             /// </summary>
@@ -1387,6 +1502,70 @@ namespace ShenBanReader.WinForm.Views
             /// 浅表复制
             /// </summary>
             public TDeviceRfids Clone() { return (TDeviceRfids)this.MemberwiseClone(); }
+        }
+        #endregion
+        #region // 日志控件
+        public void AppendTextEx(string strText, Color clAppend)
+        {
+            int nLen = this.TxtLogger.TextLength;
+
+            if (nLen != 0)
+            {
+                TxtLogger.AppendText(Environment.NewLine + System.DateTime.Now.ToString() + " " + strText);
+            }
+            else
+            {
+                TxtLogger.AppendText(System.DateTime.Now.ToString() + " " + strText);
+            }
+
+            TxtLogger.Select(nLen, this.TxtLogger.TextLength - nLen);
+            this.TxtLogger.SelectionColor = clAppend;
+        }
+        public TestScanFlew AppendError(string message)
+        {
+            this.Invoke((Action)(() =>
+            {
+                AppendTextEx(message, Color.Red);
+            }));
+            return this;
+        }
+        public TestScanFlew AppendSuccess(string message)
+        {
+            this.Invoke((Action)(() =>
+            {
+                AppendTextEx(message, Color.Green);
+            }));
+            return this;
+        }
+        public TestScanFlew AppendInfo(string message)
+        {
+            this.Invoke((Action)(() =>
+            {
+                AppendTextEx(message, Color.Blue);
+            }));
+            return this;
+        }
+        public TestScanFlew Append(IAlertMsg alert)
+        {
+            this.Invoke((Action)(() =>
+            {
+                AppendTextEx(alert.Message, alert.IsSuccess ? Color.Green : Color.Red);
+            }));
+            return this;
+        }
+        public TestScanFlew Append(Exception alert)
+        {
+            var sb = new StringBuilder().AppendLine(alert.Message).AppendLine(alert.StackTrace);
+            this.Invoke((Action)(() =>
+            {
+                AppendTextEx(sb.ToString(), Color.Red);
+            }));
+            return this;
+        }
+        private void TxtLogger_TextChanged(object sender, EventArgs e)
+        {
+            TxtLogger.Select(TxtLogger.TextLength, 0);
+            TxtLogger.ScrollToCaret();
         }
         #endregion
     }

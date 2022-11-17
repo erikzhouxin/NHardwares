@@ -130,13 +130,17 @@
             // 
             // DgvReadResult
             // 
+            this.DgvReadResult.AllowUserToAddRows = false;
+            this.DgvReadResult.AllowUserToDeleteRows = false;
             this.DgvReadResult.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.DgvReadResult.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DgvReadResult.Dock = System.Windows.Forms.DockStyle.Fill;
             this.DgvReadResult.Location = new System.Drawing.Point(0, 0);
             this.DgvReadResult.Margin = new System.Windows.Forms.Padding(4);
             this.DgvReadResult.Name = "DgvReadResult";
+            this.DgvReadResult.ReadOnly = true;
             this.DgvReadResult.RowTemplate.Height = 23;
+            this.DgvReadResult.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.DgvReadResult.Size = new System.Drawing.Size(668, 344);
             this.DgvReadResult.TabIndex = 0;
             // 

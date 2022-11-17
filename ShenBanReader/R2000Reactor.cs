@@ -514,7 +514,7 @@ namespace System.Data.ShenBanReader
         {
             this.italker.Dispose();
             italker = new SerialTalkReadModel();
-            italker.Received += RunReceiveDataCallback;
+            italker.Received = RunReceiveDataCallback;
             if (italker.Connect(strPort, nBaudrate, out strException))
             {
                 return 0;
@@ -531,7 +531,7 @@ namespace System.Data.ShenBanReader
         {
             this.italker.Dispose();
             this.italker = new TcpTalkReadModel();
-            italker.Received += RunReceiveDataCallback;
+            italker.Received = RunReceiveDataCallback;
             if (!italker.Connect(ipAddress, nPort, out strException))
             {
                 return -1;

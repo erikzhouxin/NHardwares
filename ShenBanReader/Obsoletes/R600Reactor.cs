@@ -41,7 +41,7 @@ namespace System.Data.ShenBanReader
         {
             _talker?.Dispose();
             _talker = new SerialTalkReadModel();
-            _talker.Received += RunReceiveDataCallback;
+            _talker.Received = RunReceiveDataCallback;
             return _talker.Connect(portName, baudRate, out exception);
         }
         /// <summary>
@@ -55,7 +55,7 @@ namespace System.Data.ShenBanReader
         {
             _talker?.Dispose();
             _talker = new TcpTalkReadModel();
-            _talker.Received += RunReceiveDataCallback;
+            _talker.Received = RunReceiveDataCallback;
             return _talker.Connect(ip, port, out exception);
         }
         #endregion

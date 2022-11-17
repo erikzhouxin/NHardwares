@@ -395,12 +395,12 @@ namespace System.Data.ShenBanReader
                                     AlertCallbackError?.Invoke(ex);
                                 }
 
-                                nLoop += 1 + nLen;
+                                nLoop += (1 + nLen);
                                 nIndex = nLoop + 1;
                             }
                             else
                             {
-                                nLoop += 1 + nLen;
+                                nLoop += (1 + nLen);
                             }
                         }
                         else
