@@ -341,6 +341,8 @@ namespace ShenBanReader.WinForm.Views
         internal class ShenBanReaderContent
         {
             static readonly string KeyString = new byte[] { (byte)'Z', (byte)'C', (byte)'P', (byte)'D' }.GetHexString();
+            static readonly byte[] DefaultFastAnts = new byte[] { 0, 1, 1, 1, 2, 1, 3, 1, 0, 1 };
+            static readonly byte[] DefaultNormalAnts = new byte[] { 0, 1, 2, 3 };
 
             readonly ConcurrentDictionary<string, TakePictureInfo> KeyDic = new();
 
@@ -449,17 +451,20 @@ namespace ShenBanReader.WinForm.Views
                 while (true)
                 {
                     // 准备设置值,防止中途变更
-                    var isReadLine = _model.Ant != 0;
-                    var ants = GetAntennaTypes(_model.Ant);
                     var reconnInterval = Setting.ScanInterval * 100;
                     var inInterval = Setting.ReadInterval * 100;
                     var result = -1;
+                    var antRes = GetAntennaTypes(_model.Ant);
                     try
                     {
                         // 盘点
-                        if (isReadLine)
+                        if (antRes.IsSuccess)
                         {
-                            foreach (var item in ants)
+                            result = _reader.FastSwitchInventory((byte)_readId, antRes.Data);
+                        }
+                        else
+                        {
+                            foreach (var item in antRes.Data)
                             {
                                 _reader.SetWorkAntenna((byte)_readId, (byte)item);
                                 Thread.Sleep(50);
@@ -467,10 +472,6 @@ namespace ShenBanReader.WinForm.Views
                                 if (curr >= 0) { result = 0; }
                                 Thread.Sleep(50);
                             }
-                        }
-                        else
-                        {
-                            result = _reader.FastSwitchInventory(1, new byte[] { 0, 1, 1, 1, 2, 1, 3, 1, 0, 1 });
                         }
                     }
                     catch (Exception ex)
@@ -488,26 +489,37 @@ namespace ShenBanReader.WinForm.Views
                     Thread.Sleep(inInterval * 2);// 稍作休整
                 }
             }
-
-            private ReadAntennaType[] GetAntennaTypes(int ant)
+            private static IAlertMsg<byte[]> GetAntennaTypes(int ant)
             {
-                var result = new List<ReadAntennaType>();
-                if ((ant & 1) > 0) { result.Add(ReadAntennaType.L1); }
-                if ((ant & 2) > 0) { result.Add(ReadAntennaType.L2); }
-                if ((ant & 4) > 0) { result.Add(ReadAntennaType.L3); }
-                if ((ant & 8) > 0) { result.Add(ReadAntennaType.L4); }
-                if (result.Count > 0) { return result.ToArray(); }
-                return new ReadAntennaType[]
+                if (ant <= 0 || ant == 65536)
                 {
-                    ReadAntennaType.L1,
-                    ReadAntennaType.L2,
-                    ReadAntennaType.L3,
-                    ReadAntennaType.L4,
+                    return new AlertMsg<byte[]>(true, "快速四天线-全线")
+                    { Data = DefaultFastAnts };
+                }
+                if (ant > 65535)
+                {
+                    byte[] ants = new byte[] { 0, 0, 1, 0, 2, 0, 3, 0, 0, 1 };
+                    bool hasLine = false;
+                    if ((ant & 1) > 0) { hasLine = true; ants[1] = 1; }
+                    if ((ant & 2) > 0) { hasLine = true; ants[3] = 1; }
+                    if ((ant & 4) > 0) { hasLine = true; ants[5] = 1; }
+                    if ((ant & 8) > 0) { hasLine = true; ants[7] = 1; }
+                    return new AlertMsg<byte[]>(true, "快速四天线-分线")
+                    { Data = hasLine ? ants : DefaultFastAnts };
+                }
+                var result = new List<byte>();
+                if ((ant & 1) > 0) { result.Add((byte)ReadAntennaType.L1); }
+                if ((ant & 2) > 0) { result.Add((byte)ReadAntennaType.L2); }
+                if ((ant & 4) > 0) { result.Add((byte)ReadAntennaType.L3); }
+                if ((ant & 8) > 0) { result.Add((byte)ReadAntennaType.L4); }
+                return new AlertMsg<byte[]>(false, "轮询四天线-分线")
+                {
+                    Data = result.Count > 0 ? result.ToArray() : DefaultNormalAnts
                 };
             }
-
             private bool ConnectRfidDevice()
             {
+                Instance.AppendSuccess(GetAntennaTypes(_model.Ant).Message);
                 if (_model.Address.StartsWith("COM"))
                 {
                     if (!_reader.Connect(_model.Address, _model.Port, out string comMsg))
