@@ -15,10 +15,12 @@
 		<Description>针对深坂科技RFID的R600进行的操作封装</Description>
 		<Copyright>©2020 ErikZhouXin</Copyright>
 		<PackageTags>r600;r2000;rfid;射频识别</PackageTags>
-		<RepositoryUrl>https://www.gitee.com/erikzhouxin/nhardwares</RepositoryUrl>
-		<RepositoryType>git</RepositoryType>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
 		<PackageReleaseNotes>针对深坂科技RFID的R600进行的操作封装</PackageReleaseNotes>
 		<NeutralLanguage>zh</NeutralLanguage>
+		<RepositoryUrl>https://www.gitee.com/erikzhouxin/nhardwares</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)'=='Debug|net40'">
 		<DefineConstants>TRACE;DEBUG;NETFrame;NET40</DefineConstants>
