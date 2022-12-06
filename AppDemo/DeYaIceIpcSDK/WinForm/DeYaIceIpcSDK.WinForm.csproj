@@ -11,6 +11,5 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\..\..\DeYaIceIpcSDK\DeYaIceIpcSDK.csproj" />
-		<PackageReference Include="NSystem.Data.Dabber" Version="2022.7.11" />
 	</ItemGroup>
 </Project>

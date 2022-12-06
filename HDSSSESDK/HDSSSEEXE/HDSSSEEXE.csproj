@@ -2,7 +2,7 @@
 
 	<PropertyGroup>
 		<OutputType>Exe</OutputType>
-		<TargetFrameworks>net40;net45;netcoreapp3.1;net5.0;net6.0</TargetFrameworks>
+		<TargetFrameworks>net40;net45;netcoreapp3.1;net6.0</TargetFrameworks>
 		<AssemblyName>NSystem.Data.HDSSSEEXE</AssemblyName>
 		<PlatformTarget>x86</PlatformTarget>
 		<RootNamespace>System.Data.HDSSSEEXE</RootNamespace>

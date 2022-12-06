@@ -9,10 +9,4 @@
     <ProjectReference Include="..\..\KangMeiIPGBSDK\KangMeiIPGBSDK.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Reference Include="IPGBNET">
-      <HintPath>..\..\KangMeiIPGBSDK\beans\x86\IPGBNET.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-
 </Project>
