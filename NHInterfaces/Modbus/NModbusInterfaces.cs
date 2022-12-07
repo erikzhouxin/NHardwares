@@ -135,7 +135,9 @@ namespace System.Data.NModbus
         IModbusAsciiTransport CreateAsciiTransport(IStreamResource streamResource);
 
         #endregion
-
+        /// <summary>
+        /// 日志
+        /// </summary>
         IModbusLogger Logger { get; }
     }
     /// <summary>

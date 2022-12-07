@@ -6,16 +6,26 @@ using System.Text;
 
 namespace System.Data.NModbus
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class ConsoleModbusLogger : ModbusLogger
     {
         private const int LevelColumnSize = 15;
         private static readonly string BlankHeader = Environment.NewLine + new string(' ', LevelColumnSize);
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="minimumLoggingLevel"></param>
         public ConsoleModbusLogger(LoggingLevel minimumLoggingLevel = LoggingLevel.Debug)
             : base(minimumLoggingLevel)
         {
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="level"></param>
+        /// <param name="message"></param>
         protected override void LogCore(LoggingLevel level, string message)
         {
             message = message?.Replace(Environment.NewLine, BlankHeader);
@@ -30,12 +40,19 @@ namespace System.Data.NModbus
     {
         private const int LevelColumnSize = 15;
         private static readonly string BlankHeader = Environment.NewLine + new string(' ', LevelColumnSize);
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="minimumLoggingLevel"></param>
         public DebugModbusLogger(LoggingLevel minimumLoggingLevel = LoggingLevel.Debug)
             : base(minimumLoggingLevel)
         {
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="level"></param>
+        /// <param name="message"></param>
         protected override void LogCore(LoggingLevel level, string message)
         {
             message = message?.Replace(Environment.NewLine, BlankHeader);
@@ -43,35 +60,62 @@ namespace System.Data.NModbus
             Debug.WriteLine($"[{level}]".PadRight(LevelColumnSize) + message);
         }
     }
+    /// <summary>
+    /// 
+    /// </summary>
     public static class LoggingExtensions
     {
         #region Standard level-based logging
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="logger"></param>
+        /// <param name="message"></param>
         public static void Trace(this IModbusLogger logger, string message)
         {
             logger.Log(LoggingLevel.Trace, message);
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="logger"></param>
+        /// <param name="message"></param>
         public static void Debug(this IModbusLogger logger, string message)
         {
             logger.Log(LoggingLevel.Debug, message);
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="logger"></param>
+        /// <param name="message"></param>
         public static void Information(this IModbusLogger logger, string message)
         {
             logger.Log(LoggingLevel.Information, message);
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="logger"></param>
+        /// <param name="message"></param>
         public static void Warning(this IModbusLogger logger, string message)
         {
             logger.Log(LoggingLevel.Warning, message);
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="logger"></param>
+        /// <param name="message"></param>
         public static void Error(this IModbusLogger logger, string message)
         {
             logger.Log(LoggingLevel.Error, message);
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="logger"></param>
+        /// <param name="message"></param>
         public static void Critical(this IModbusLogger logger, string message)
         {
             logger.Log(LoggingLevel.Critical, message);
@@ -80,6 +124,12 @@ namespace System.Data.NModbus
         #endregion
 
         #region Func Logging
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="logger"></param>
+        /// <param name="level"></param>
+        /// <param name="messageFactory"></param>
         public static void Log(this IModbusLogger logger, LoggingLevel level, Func<string> messageFactory)
         {
             if (logger.ShouldLog(level))
@@ -89,32 +139,56 @@ namespace System.Data.NModbus
                 logger.Log(level, message);
             }
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="logger"></param>
+        /// <param name="messageFactory"></param>
         public static void Trace(this IModbusLogger logger, Func<string> messageFactory)
         {
             logger.Log(LoggingLevel.Trace, messageFactory);
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="logger"></param>
+        /// <param name="messageFactory"></param>
         public static void Debug(this IModbusLogger logger, Func<string> messageFactory)
         {
             logger.Log(LoggingLevel.Debug, messageFactory);
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="logger"></param>
+        /// <param name="messageFactory"></param>
         public static void Information(this IModbusLogger logger, Func<string> messageFactory)
         {
             logger.Log(LoggingLevel.Information, messageFactory);
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="logger"></param>
+        /// <param name="messageFactory"></param>
         public static void Warning(this IModbusLogger logger, Func<string> messageFactory)
         {
             logger.Log(LoggingLevel.Warning, messageFactory);
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="logger"></param>
+        /// <param name="messageFactory"></param>
         public static void Error(this IModbusLogger logger, Func<string> messageFactory)
         {
             logger.Log(LoggingLevel.Error, messageFactory);
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="logger"></param>
+        /// <param name="messageFactory"></param>
         public static void Critical(this IModbusLogger logger, Func<string> messageFactory)
         {
             logger.Log(LoggingLevel.Critical, messageFactory);
@@ -159,11 +233,17 @@ namespace System.Data.NModbus
     /// </summary>
     public abstract class ModbusLogger : IModbusLogger
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="minimumLoggingLevel"></param>
         protected ModbusLogger(LoggingLevel minimumLoggingLevel)
         {
             MinimumLoggingLevel = minimumLoggingLevel;
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
         protected LoggingLevel MinimumLoggingLevel { get; }
 
         /// <summary>
@@ -229,16 +309,26 @@ namespace System.Data.NModbus
             return false;
         }
     }
+    /// <summary>
+    /// 
+    /// </summary>
     public class TraceModbusLogger : ModbusLogger
     {
         private const int LevelColumnSize = 15;
         private static readonly string BlankHeader = Environment.NewLine + new string(' ', LevelColumnSize);
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="minimumLoggingLevel"></param>
         public TraceModbusLogger(LoggingLevel minimumLoggingLevel = LoggingLevel.Debug)
             : base(minimumLoggingLevel)
         {
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="level"></param>
+        /// <param name="message"></param>
         protected override void LogCore(LoggingLevel level, string message)
         {
             message = message?.Replace(Environment.NewLine, BlankHeader);

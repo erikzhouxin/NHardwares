@@ -260,7 +260,12 @@ namespace System.Data.NModbus
                 }
             }
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="unitId"></param>
+        /// <param name="dataStore"></param>
+        /// <returns></returns>
         public IModbusSlave CreateSlave(byte unitId, ISlaveDataStore dataStore = null)
         {
             if (dataStore == null)
@@ -268,51 +273,88 @@ namespace System.Data.NModbus
 
             return new ModbusSlave(unitId, dataStore, GetAllFunctionServices());
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="transport"></param>
+        /// <returns></returns>
         public IModbusSlaveNetwork CreateSlaveNetwork(IModbusRtuTransport transport)
         {
             return new ModbusSerialSlaveNetwork(transport, this, Logger);
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="transport"></param>
+        /// <returns></returns>
         public IModbusSlaveNetwork CreateSlaveNetwork(IModbusAsciiTransport transport)
         {
             return new ModbusSerialSlaveNetwork(transport, this, Logger);
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="tcpListener"></param>
+        /// <returns></returns>
         public IModbusSlaveNetwork CreateSlaveNetwork(TcpListener tcpListener)
         {
             return new ModbusTcpSlaveNetwork(tcpListener, this, Logger);
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="client"></param>
+        /// <returns></returns>
         public IModbusSlaveNetwork CreateSlaveNetwork(UdpClient client)
         {
             return new ModbusUdpSlaveNetwork(client, this, Logger);
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="streamResource"></param>
+        /// <returns></returns>
         public IModbusRtuTransport CreateRtuTransport(IStreamResource streamResource)
         {
             return new ModbusRtuTransport(streamResource, this, Logger);
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="streamResource"></param>
+        /// <returns></returns>
         public IModbusAsciiTransport CreateAsciiTransport(IStreamResource streamResource)
         {
             return new ModbusAsciiTransport(streamResource, this, Logger);
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
         public IModbusLogger Logger { get; }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public IModbusFunctionService[] GetAllFunctionServices()
         {
             return _functionServices
                 .Values
                 .ToArray();
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="transport"></param>
+        /// <returns></returns>
         public IModbusSerialMaster CreateMaster(IModbusSerialTransport transport)
         {
             return new ModbusSerialMaster(transport);
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="client"></param>
+        /// <returns></returns>
         public IModbusMaster CreateMaster(UdpClient client)
         {
             var adapter = new UdpClientAdapter(client);
@@ -321,7 +363,11 @@ namespace System.Data.NModbus
 
             return new ModbusIpMaster(transport);
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="client"></param>
+        /// <returns></returns>
         public IModbusMaster CreateMaster(TcpClient client)
         {
             var adapter = new TcpClientAdapter(client);
@@ -330,7 +376,11 @@ namespace System.Data.NModbus
 
             return new ModbusIpMaster(transport);
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="client"></param>
+        /// <returns></returns>
         public IModbusMaster CreateMaster(Socket client)
         {
             var adapter = new SocketAdapter(client);
@@ -339,7 +389,11 @@ namespace System.Data.NModbus
 
             return new ModbusSerialMaster(transport);
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="functionCode"></param>
+        /// <returns></returns>
         public IModbusFunctionService GetFunctionService(byte functionCode)
         {
             return _functionServices.GetValueOrDefault(functionCode);
@@ -350,28 +404,53 @@ namespace System.Data.NModbus
     /// </summary>
     public static class ModbusFunctionCodes
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public const byte ReadCoils = 1;
-
+        /// <summary>
+        /// 
+        /// </summary>
         public const byte ReadInputs = 2;
-
+        /// <summary>
+        /// 
+        /// </summary>
         public const byte ReadHoldingRegisters = 3;
-
+        /// <summary>
+        /// 
+        /// </summary>
         public const byte ReadInputRegisters = 4;
-
+        /// <summary>
+        /// 
+        /// </summary>
         public const byte WriteSingleCoil = 5;
-
+        /// <summary>
+        /// 
+        /// </summary>
         public const byte WriteSingleRegister = 6;
-
+        /// <summary>
+        /// 
+        /// </summary>
         public const byte Diagnostics = 8;
-
+        /// <summary>
+        /// 
+        /// </summary>
         public const ushort DiagnosticsReturnQueryData = 0;
-
+        /// <summary>
+        /// 
+        /// </summary>
         public const byte WriteMultipleCoils = 15;
-
+        /// <summary>
+        /// 
+        /// </summary>
         public const byte WriteMultipleRegisters = 16;
-
+        /// <summary>
+        /// 
+        /// </summary>
         public const byte WriteFileRecord = 21;
-
+        /// <summary>
+        /// 
+        /// </summary>
         public const byte ReadWriteMultipleRegisters = 23;
     }
     /// <summary>
