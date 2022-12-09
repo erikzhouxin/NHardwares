@@ -436,6 +436,9 @@ namespace System.Data.NModbus
         /// <param name="frame">Bytes of Modbus frame.</param>
         void Initialize(byte[] frame);
     }
+    /// <summary>
+    /// 
+    /// </summary>
     public interface IModbusRtuTransport : IModbusSerialTransport
     {
 

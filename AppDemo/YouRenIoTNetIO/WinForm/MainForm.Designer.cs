@@ -1,4 +1,4 @@
-﻿namespace ShenBanReader.WinForm
+﻿namespace YouRenIoTNetIO.WinForm
 {
     partial class MainForm
     {
@@ -36,7 +36,7 @@
             this.TsmiCloseThis = new System.Windows.Forms.ToolStripMenuItem();
             this.TrmMainStart = new System.Windows.Forms.ToolStripMenuItem();
             this.测试示例ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.TrmMainScanLogic = new System.Windows.Forms.ToolStripMenuItem();
+            this.TrmUSRIO808 = new System.Windows.Forms.ToolStripMenuItem();
             this.MsrMainForm = new System.Windows.Forms.MenuStrip();
             this.TacMainContent.SuspendLayout();
             this.CmtMainPages.SuspendLayout();
@@ -95,17 +95,17 @@
             // 测试示例ToolStripMenuItem
             // 
             this.测试示例ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.TrmMainScanLogic});
+            this.TrmUSRIO808});
             this.测试示例ToolStripMenuItem.Name = "测试示例ToolStripMenuItem";
             this.测试示例ToolStripMenuItem.Size = new System.Drawing.Size(68, 21);
             this.测试示例ToolStripMenuItem.Text = "测试示例";
             // 
-            // TrmMainScanLogic
+            // TrmUSRIO808
             // 
-            this.TrmMainScanLogic.Name = "TrmMainScanLogic";
-            this.TrmMainScanLogic.Size = new System.Drawing.Size(180, 22);
-            this.TrmMainScanLogic.Text = "USR-IO808-EWR";
-            this.TrmMainScanLogic.Click += new System.EventHandler(this.TrmMainScanLogic_Click);
+            this.TrmUSRIO808.Name = "TrmUSRIO808";
+            this.TrmUSRIO808.Size = new System.Drawing.Size(180, 22);
+            this.TrmUSRIO808.Text = "USR-IO808";
+            this.TrmUSRIO808.Click += new System.EventHandler(this.TrmUSRIO808_Click);
             // 
             // MsrMainForm
             // 
@@ -146,7 +146,7 @@
         private System.Windows.Forms.TabControl TacMainContent;
         private System.Windows.Forms.ToolStripMenuItem TrmMainStart;
         private System.Windows.Forms.ToolStripMenuItem 测试示例ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem TrmMainScanLogic;
+        private System.Windows.Forms.ToolStripMenuItem TrmUSRIO808;
         private System.Windows.Forms.MenuStrip MsrMainForm;
         private System.Windows.Forms.ContextMenuStrip CmtMainPages;
         private System.Windows.Forms.ToolStripMenuItem TsmiRefreshThis;

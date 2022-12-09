@@ -338,6 +338,7 @@ namespace System.Data.ShenBanReader
         public override void Dispose()
         {
             base.Dispose();
+            _stream?.Close();
             _client?.Close();
         }
     }
@@ -637,8 +638,8 @@ namespace System.Data.ShenBanReader
         {
             try
             {
-                _client?.Close();
                 _stream?.Dispose();
+                _client?.Close();
             }
             finally
             {

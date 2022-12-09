@@ -9,14 +9,14 @@ using System.Windows.Forms;
 using System.Data.Cobber;
 using YouRenIoTNetIO.WinForm.Views;
 
-namespace ShenBanReader.WinForm
+namespace YouRenIoTNetIO.WinForm
 {
     public partial class MainForm : Form
     {
         /// <summary>
         /// 测试扫描窗体
         /// </summary>
-        TestScanFlew TestScanForm { get; set; }
+        TestUSRIO808 TestScanForm { get; set; }
         public MainForm()
         {
             InitializeComponent();
@@ -42,13 +42,13 @@ namespace ShenBanReader.WinForm
             return false;
         }
 
-        private void TrmMainScanLogic_Click(object sender, EventArgs e)
+        private void TrmUSRIO808_Click(object sender, EventArgs e)
         {
-            var scanPanel = TestScanForm ??= new TestScanFlew();
+            var scanPanel = TestScanForm ??= new TestUSRIO808();
             if (!TryGetTabPageSelect(TacMainContent.TabPages.ToEnumerable<TabPage>(), scanPanel, out TabPage page))
             {
                 page = new TabPage();
-                page.Text = "测试扫描逻辑";
+                page.Text = "测试USR-IO808";
                 page.Controls.Add(scanPanel);
                 scanPanel.Dock = DockStyle.Fill;
                 TacMainContent.TabPages.Add(page);

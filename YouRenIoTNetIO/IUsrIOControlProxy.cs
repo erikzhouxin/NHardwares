@@ -37,6 +37,16 @@ namespace System.Data.YouRenIoTNetIO
         /// <returns></returns>
         IAlertMsg Reconnect();
         /// <summary>
+        /// 获取连接状态
+        /// </summary>
+        /// <returns></returns>
+        IAlertMsg GetConnectStatus();
+        /// <summary>
+        /// 断开连接
+        /// </summary>
+        /// <returns></returns>
+        IAlertMsg Disconnect();
+        /// <summary>
         /// 连接并设置
         /// </summary>
         /// <param name="address"></param>
@@ -74,7 +84,11 @@ namespace System.Data.YouRenIoTNetIO
         public int PortRate => _proxy?.PortRate ?? 0;
         public UsrIOControlProxy(IOControlType type)
         {
-            ControlType = type;
+            switch (ControlType = type)
+            {
+                case IOControlType.USR_IO808_EWR: _proxy = new UsrIO808Device(); break;
+                default: throw new NotSupportedException("不支持的设备类型");
+            }
         }
         public IAlertMsg Reconnect()
         {
@@ -83,11 +97,7 @@ namespace System.Data.YouRenIoTNetIO
 
         public IAlertMsg Connect(IPAddress address, int port)
         {
-            switch (ControlType)
-            {
-                case IOControlType.USR_IO808_EWR: return (_proxy ??= new UsrIO808EWRDevice()).Connect(address, port);
-                default: return new AlertMsg(false, "不支持的设备类型");
-            }
+            return _proxy.Connect(address, port);
         }
         public void Dispose()
         {
@@ -109,32 +119,40 @@ namespace System.Data.YouRenIoTNetIO
         {
             _proxy.SetSlave(address);
         }
+
+        public IAlertMsg GetConnectStatus()
+        {
+            return _proxy.GetConnectStatus();
+        }
+
+        public IAlertMsg Disconnect()
+        {
+            return _proxy.Disconnect();
+        }
     }
-    internal class UsrIO808EWRDevice : IUsrIOControlProxy
+    internal class UsrIO808Device : IUsrIOControlProxy
     {
         private IModbusMaster _modbus;
         private Socket _socket;
-        private string _address;
+        private IPAddress _address;
         private Int32 _portRate;
         private byte _slaveId = 0x11;
         public IOControlType ControlType => IOControlType.USR_IO808_EWR;
-        public string Address => _address;
+        public string Address => _address.ToString();
         public int PortRate => _portRate;
-        public UsrIO808EWRDevice()
+        public UsrIO808Device()
         {
-            _socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            _modbus = new ModbusFactory().CreateMaster(_socket);
+            _address = IPAddress.Loopback;
+            _portRate = 80;
         }
         public IAlertMsg Reconnect()
         {
+            Disconnect();
             try
             {
-                _socket.Disconnect(true);
-            }
-            catch { }
-            try
-            {
-                _socket.Connect(new IPEndPoint(GetIPAddress(), _portRate));
+                _socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                _socket.Connect(new IPEndPoint(_address, _portRate));
+                _modbus = new ModbusFactory().CreateMaster(_socket);
                 return new AlertMsg(true, "连接成功");
             }
             catch (Exception ex)
@@ -142,17 +160,17 @@ namespace System.Data.YouRenIoTNetIO
                 return new AlertException(ex);
             }
         }
-        private IPAddress GetIPAddress()
-        {
-            if (IPAddress.TryParse(_address, out var ipAddress))
-            {
-                return ipAddress;
-            }
-            return IPAddress.Loopback;
-        }
         public IAlertMsg Connect(IPAddress address, int port)
         {
-            _address = address?.ToString();
+            if (_address == address && port == _portRate)
+            {
+                var status = GetConnectStatus();
+                if (status.IsSuccess)
+                {
+                    return status;
+                }
+            }
+            _address = address;
             _portRate = port;
             return Reconnect();
         }
@@ -161,13 +179,14 @@ namespace System.Data.YouRenIoTNetIO
         /// </summary>
         public void Dispose()
         {
-            _socket.Dispose();
-            _socket = null;
-            _modbus.Dispose();
-            _modbus = null;
+            Disconnect();
         }
         public IAlertMsg<bool> GetDOStatus(int num)
         {
+            if (_modbus == null)
+            {
+                return new AlertMsg<bool>(false, $"未连接到【{_address}:{_portRate}】");
+            }
             var res = _modbus.ReadCoils(_slaveId, (ushort)num, 1);
             if (res == null || res.Length != 1)
             {
@@ -177,11 +196,19 @@ namespace System.Data.YouRenIoTNetIO
         }
         public IAlertMsg<bool> SetDOStatus(int num, bool value)
         {
+            if (_modbus == null)
+            {
+                return new AlertMsg<bool>(false, $"未连接到【{_address}:{_portRate}】");
+            }
             _modbus.WriteSingleCoil(_slaveId, (ushort)num, value);
             return GetDOStatus(num);
         }
         public IAlertMsg<bool> GetDIStatus(int num)
         {
+            if (_modbus == null)
+            {
+                return new AlertMsg<bool>(false, $"未连接到【{_address}:{_portRate}】");
+            }
             var res = _modbus.ReadInputs(_slaveId, (ushort)(num + 0x20), 1);
             if (res == null || res.Length != 1)
             {
@@ -192,6 +219,41 @@ namespace System.Data.YouRenIoTNetIO
         public void SetSlave(byte address)
         {
             _slaveId = address;
+        }
+
+        public IAlertMsg GetConnectStatus()
+        {
+            if (_socket?.Connected == true)
+            {
+                return new AlertMsg(true, $"已打开【{_address}:{_portRate}】的连接");
+            }
+            return new AlertMsg(false, $"已关闭【{_address}:{_portRate}】的连接");
+        }
+
+        public IAlertMsg Disconnect()
+        {
+            try
+            {
+                _socket?.Disconnect(false);
+            }
+            catch { }
+            try
+            {
+                _socket?.Dispose();
+            }
+            finally
+            {
+                _socket = null;
+            }
+            try
+            {
+                _modbus?.Dispose();
+            }
+            finally
+            {
+                _modbus = null;
+            }
+            return new AlertMsg(true, $"已关闭【{_address}:{_portRate}】的连接");
         }
     }
 
