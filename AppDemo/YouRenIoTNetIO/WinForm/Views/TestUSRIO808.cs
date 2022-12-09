@@ -81,9 +81,16 @@ namespace YouRenIoTNetIO.WinForm.Views
                 }
                 this.CbxNetConfigs.Items.Add(key);
             }
-            if (list.Count > 0 && (string.IsNullOrWhiteSpace(configText) || !_devices.Any(s => s.Key == configText)))
+            if (list.Count > 0)
             {
-                this.CbxNetConfigs.SelectedIndex = 0;
+                if (string.IsNullOrWhiteSpace(configText) || !_devices.Any(s => s.Key == configText))
+                {
+                    this.CbxNetConfigs.SelectedIndex = 0;
+                }
+                else
+                {
+                    this.CbxNetConfigs.Text = configText;
+                }
             }
         }
         #region // 服务内容
@@ -325,9 +332,10 @@ namespace YouRenIoTNetIO.WinForm.Views
 
         private void BtnNetConfigRemove_Click(object sender, EventArgs e)
         {
-            var key = $"{this.TxtNetConfigIp.Text}:{this.TxtNetConfigPort.Text}";
+            var key = $"{this.TxtNetConfigIp.Text?.Trim()}:{this.TxtNetConfigPort.Text?.Trim()}";
             var model = _devices.FirstOrDefault(s => s.Key == key);
             _devices.Remove(model);
+            model.Control.Dispose();
             try
             {
                 System.IO.File.WriteAllText(_configPath, _devices.Select(s => new Tuble8String() { Item1 = s.IPAddress, Item2 = s.Port.ToString() }).GetJsonFormatString());

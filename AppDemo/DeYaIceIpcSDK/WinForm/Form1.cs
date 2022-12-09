@@ -244,7 +244,7 @@ namespace TestDll
         /// <summary>
         /// 存图
         /// </summary>
-        public IAlertMsg SaveStorePic(byte[] picData, string ext = ".jpg")
+        public IAlertMsg<String> SaveStorePic(byte[] picData, string ext = ".jpg")
         {
             try
             {
@@ -256,11 +256,11 @@ namespace TestDll
                 var fileName = UserCrypto.GetSha1Bytes(picData).GetHexString();
                 var fileFullName = Path.Combine(dir, $"{fileName}{ext}");
                 File.WriteAllBytes(fileFullName, picData);
-                return new AlertMsg(true, "保存成功") { Data = $"{fileName}{ext}" };
+                return new AlertMsg<String>(true, "保存成功") { Data = $"{fileName}{ext}" };
             }
             catch (Exception ex)
             {
-                return new AlertMsg(false, $"保存失败:{ex.Message}");
+                return new AlertMsg<String>(false, $"保存失败:{ex.Message}");
             }
         }
         private bool m_bExit = false;

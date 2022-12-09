@@ -223,11 +223,12 @@ namespace System.Data.YouRenIoTNetIO
 
         public IAlertMsg GetConnectStatus()
         {
-            if (_socket?.Connected == true)
+            if (_socket == null)
             {
-                return new AlertMsg(true, $"已打开【{_address}:{_portRate}】的连接");
+                return new AlertMsg(false, $"已释放【{_address}:{_portRate}】的连接");
             }
-            return new AlertMsg(false, $"已关闭【{_address}:{_portRate}】的连接");
+            var isConnect = _socket.Connected && (_socket.Available != 0 || !_socket.Poll(1000, SelectMode.SelectRead));
+            return isConnect ? new AlertMsg(true, $"已打开【{_address}:{_portRate}】的连接") : (IAlertMsg)new AlertMsg(false, $"已关闭【{_address}:{_portRate}】的连接");
         }
 
         public IAlertMsg Disconnect()
