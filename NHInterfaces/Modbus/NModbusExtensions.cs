@@ -203,6 +203,17 @@ namespace System.Data.NModbus
     /// </summary>
     public class RegisterFunctions
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="slaveAddress"></param>
+        /// <param name="startAddress"></param>
+        /// <param name="numberOfPoints"></param>
+        /// <param name="master"></param>
+        /// <param name="wordSize"></param>
+        /// <param name="endianConverter"></param>
+        /// <param name="wordSwap"></param>
+        /// <returns></returns>
         public static byte[][] ReadRegisters(byte slaveAddress, ushort startAddress, ushort numberOfPoints, IModbusMaster master, uint wordSize, Func<byte[], byte[]> endianConverter, bool wordSwap = false)
         {
             var registerMultiplier = RegisterFunctions.GetRegisterMultiplier(wordSize);
@@ -211,7 +222,17 @@ namespace System.Data.NModbus
             if (wordSwap) Array.Reverse(values);
             return RegisterFunctions.ConvertRegistersToValues(values, registerMultiplier).Select(endianConverter).ToArray();
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="slaveAddress"></param>
+        /// <param name="startAddress"></param>
+        /// <param name="data"></param>
+        /// <param name="master"></param>
+        /// <param name="wordSize"></param>
+        /// <param name="endianConverter"></param>
+        /// <param name="wordSwap"></param>
+        /// <exception cref="ArgumentException"></exception>
         public static void WriteRegistersFunc(byte slaveAddress, ushort startAddress, byte[][] data, IModbusMaster master, uint wordSize, Func<byte[], byte[]> endianConverter, bool wordSwap = false)
         {
             var wordByteArraySize = RegisterFunctions.GetRegisterMultiplier(wordSize) * 2;
@@ -226,7 +247,13 @@ namespace System.Data.NModbus
         }
 
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="frontPadding"></param>
+        /// <param name="singleCharPerRegister"></param>
+        /// <returns></returns>
         public static char[] ByteValueArraysToChars(byte[][] data, bool frontPadding = true, bool singleCharPerRegister = true)
         {
             if (singleCharPerRegister)
@@ -244,43 +271,74 @@ namespace System.Data.NModbus
             }
             return chars;
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="frontPadding"></param>
+        /// <returns></returns>
         public static short[] ByteValueArraysToShorts(byte[][] data, bool frontPadding = true)
         {
             return frontPadding
               ? data.Select(e => BitConverter.ToInt16(e, e.Length - 2)).ToArray()
               : data.Select(e => BitConverter.ToInt16(e, 0)).ToArray();
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="frontPadding"></param>
+        /// <returns></returns>
         public static ushort[] ByteValueArraysToUShorts(byte[][] data, bool frontPadding = true)
         {
             return frontPadding
               ? data.Select(e => BitConverter.ToUInt16(e, e.Length - 2)).ToArray()
               : data.Select(e => BitConverter.ToUInt16(e, 0)).ToArray();
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="frontPadding"></param>
+        /// <returns></returns>
         public static int[] ByteValueArraysToInts(byte[][] data, bool frontPadding = true)
         {
             return frontPadding
               ? data.Select(e => BitConverter.ToInt32(e, e.Length - 4)).ToArray()
               : data.Select(e => BitConverter.ToInt32(e, 0)).ToArray();
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="frontPadding"></param>
+        /// <returns></returns>
         public static uint[] ByteValueArraysToUInts(byte[][] data, bool frontPadding = true)
         {
             return frontPadding
               ? data.Select(e => BitConverter.ToUInt32(e, e.Length - 4)).ToArray()
               : data.Select(e => BitConverter.ToUInt32(e, 0)).ToArray();
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="frontPadding"></param>
+        /// <returns></returns>
         public static float[] ByteValueArraysToFloats(byte[][] data, bool frontPadding = true)
         {
             return frontPadding
               ? data.Select(e => BitConverter.ToSingle(e, e.Length - 4)).ToArray()
               : data.Select(e => BitConverter.ToSingle(e, 0)).ToArray();
         }
-
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="wordSize"></param>
+        /// <param name="frontPadding"></param>
+        /// <param name="singleCharPerRegister"></param>
+        /// <returns></returns>
         public static byte[][] CharsToByteValueArrays(char[] data, uint wordSize, bool frontPadding = true, bool singleCharPerRegister = true)
         {
             var bytesPerWord = RegisterFunctions.GetRegisterMultiplier(wordSize) * 2;
@@ -319,23 +377,53 @@ namespace System.Data.NModbus
                   return bytes;
               }).ToArray();
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="wordSize"></param>
+        /// <param name="frontPadding"></param>
+        /// <returns></returns>
         public static byte[][] ShortsToByteValueArrays(short[] data, uint wordSize, bool frontPadding = true)
           => data.Select(e => RegisterFunctions.PadBytesToWordSize(
             wordSize, BitConverter.GetBytes(e), frontPadding)).ToArray();
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="wordSize"></param>
+        /// <param name="frontPadding"></param>
+        /// <returns></returns>
         public static byte[][] UShortsToByteValueArrays(ushort[] data, uint wordSize, bool frontPadding = true)
           => data.Select(e => RegisterFunctions.PadBytesToWordSize(
             wordSize, BitConverter.GetBytes(e), frontPadding)).ToArray();
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="wordSize"></param>
+        /// <param name="frontPadding"></param>
+        /// <returns></returns>
         public static byte[][] IntToByteValueArrays(int[] data, uint wordSize, bool frontPadding = true)
           => data.Select(e => RegisterFunctions.PadBytesToWordSize(
             wordSize, BitConverter.GetBytes(e), frontPadding)).ToArray();
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="wordSize"></param>
+        /// <param name="frontPadding"></param>
+        /// <returns></returns>
         public static byte[][] UIntToByteValueArrays(uint[] data, uint wordSize, bool frontPadding = true)
           => data.Select(e => RegisterFunctions.PadBytesToWordSize(
             wordSize, BitConverter.GetBytes(e), frontPadding)).ToArray();
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="wordSize"></param>
+        /// <param name="frontPadding"></param>
+        /// <returns></returns>
         public static byte[][] FloatToByteValueArrays(float[] data, uint wordSize, bool frontPadding = true)
           => data.Select(e => RegisterFunctions.PadBytesToWordSize(
             wordSize, BitConverter.GetBytes(e), frontPadding)).ToArray();
@@ -401,6 +489,9 @@ namespace System.Data.NModbus
             }
         }
     }
+    /// <summary>
+    /// 
+    /// </summary>
     public static class CrcExtensions
     {
         /// <summary>

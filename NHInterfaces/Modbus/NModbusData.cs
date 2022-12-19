@@ -10,14 +10,26 @@ using System.Text;
 
 namespace System.Data.NModbus
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class SlaveDataStore : ISlaveDataStore
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public PointSource<ushort> HoldingRegisters { get; } = new PointSource<ushort>();
-
+        /// <summary>
+        /// 
+        /// </summary>
         public PointSource<ushort> InputRegisters { get; } = new PointSource<ushort>();
-
+        /// <summary>
+        /// 
+        /// </summary>
         public PointSource<bool> CoilDiscretes { get; } = new PointSource<bool>();
-
+        /// <summary>
+        /// 
+        /// </summary>
         public PointSource<bool> CoilInputs { get; } = new PointSource<bool>();
 
         #region ISlaveDataStore
@@ -70,7 +82,9 @@ namespace System.Data.NModbus
             : base(registers.IsReadOnly ? new List<ushort>(registers) : registers)
         {
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
         public byte[] NetworkBytes
         {
             get
@@ -110,10 +124,17 @@ namespace System.Data.NModbus
     /// <typeparam name="T"></typeparam>
     public class PointSource<T> : IPointSource<T> where T : struct
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public event EventHandler<PointEventArgs> BeforeRead;
-
+        /// <summary>
+        /// 
+        /// </summary>
         public event EventHandler<PointEventArgs<T>> BeforeWrite;
-
+        /// <summary>
+        /// 
+        /// </summary>
         public event EventHandler<PointEventArgs> AfterWrite;
 
         //Only create this if referenced.
@@ -122,12 +143,19 @@ namespace System.Data.NModbus
         private readonly object _syncRoot = new object();
 
         private const int NumberOfPoints = ushort.MaxValue + 1;
-
+        /// <summary>
+        /// 
+        /// </summary>
         public PointSource()
         {
             _points = new Lazy<T[]>(() => new T[NumberOfPoints]);
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="startAddress"></param>
+        /// <param name="numberOfPoints"></param>
+        /// <returns></returns>
         public T[] ReadPoints(ushort startAddress, ushort numberOfPoints)
         {
             lock (_syncRoot)
@@ -143,7 +171,11 @@ namespace System.Data.NModbus
             BeforeRead?.Invoke(this, new PointEventArgs(startAddress, numberOfPoints));
             return ReadPoints(startAddress, numberOfPoints);
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="startAddress"></param>
+        /// <param name="points"></param>
         public void WritePoints(ushort startAddress, T[] points)
         {
             lock (_syncRoot)

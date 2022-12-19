@@ -9,24 +9,90 @@ using System.Threading.Tasks;
 
 namespace System.Data.NModbus
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public interface IConcurrentModbusMaster : IDisposable
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="slaveAddress"></param>
+        /// <param name="startAddress"></param>
+        /// <param name="numberOfPoints"></param>
+        /// <param name="blockSize"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         Task<ushort[]> ReadInputRegistersAsync(byte slaveAddress, ushort startAddress, ushort numberOfPoints, ushort blockSize = 125, CancellationToken cancellationToken = default(CancellationToken));
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="slaveAddress"></param>
+        /// <param name="startAddress"></param>
+        /// <param name="numberOfPoints"></param>
+        /// <param name="blockSize"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         Task<ushort[]> ReadHoldingRegistersAsync(byte slaveAddress, ushort startAddress, ushort numberOfPoints, ushort blockSize = 125, CancellationToken cancellationToken = default(CancellationToken));
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="slaveAddress"></param>
+        /// <param name="startAddress"></param>
+        /// <param name="data"></param>
+        /// <param name="blockSize"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         Task WriteMultipleRegistersAsync(byte slaveAddress, ushort startAddress, ushort[] data, ushort blockSize = 121, CancellationToken cancellationToken = default(CancellationToken));
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="slaveAddress"></param>
+        /// <param name="startAddress"></param>
+        /// <param name="number"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         Task<bool[]> ReadCoilsAsync(byte slaveAddress, ushort startAddress, ushort number, CancellationToken cancellationToken = default(CancellationToken));
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="slaveAddress"></param>
+        /// <param name="startAddress"></param>
+        /// <param name="number"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         Task<bool[]> ReadDiscretesAsync(byte slaveAddress, ushort startAddress, ushort number, CancellationToken cancellationToken = default(CancellationToken));
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="slaveAddress"></param>
+        /// <param name="startAddress"></param>
+        /// <param name="data"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         Task WriteCoilsAsync(byte slaveAddress, ushort startAddress, bool[] data, CancellationToken cancellationToken = default(CancellationToken));
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="slaveAddress"></param>
+        /// <param name="coilAddress"></param>
+        /// <param name="value"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         Task WriteSingleCoilAsync(byte slaveAddress, ushort coilAddress, bool value, CancellationToken cancellationToken = default(CancellationToken));
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="slaveAddress"></param>
+        /// <param name="address"></param>
+        /// <param name="value"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         Task WriteSingleRegisterAsync(byte slaveAddress, ushort address, ushort value, CancellationToken cancellationToken = default(CancellationToken));
     }
+    /// <summary>
+    /// 
+    /// </summary>
     public interface IModbusAsciiTransport : IModbusSerialTransport
     {
 
@@ -464,14 +530,29 @@ namespace System.Data.NModbus
         /// <returns>Return true if slave device echoed data.</returns>
         bool ReturnQueryData(byte slaveAddress, ushort data);
     }
+    /// <summary>
+    /// 串口转换接口
+    /// </summary>
     public interface IModbusSerialTransport : IModbusTransport
     {
+        /// <summary>
+        /// 启用缓存
+        /// </summary>
         void DiscardInBuffer();
-
+        /// <summary>
+        /// 检查帧
+        /// </summary>
         bool CheckFrame { get; set; }
-
+        /// <summary>
+        /// 核验
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="messageFrame"></param>
+        /// <returns></returns>
         bool ChecksumsMatch(IModbusMessage message, byte[] messageFrame);
-
+        /// <summary>
+        /// 忽略返回
+        /// </summary>
         void IgnoreResponse();
     }
     /// <summary>
@@ -526,28 +607,61 @@ namespace System.Data.NModbus
         /// <param name="unitId"></param>
         void RemoveSlave(byte unitId);
     }
+    /// <summary>
+    /// 
+    /// </summary>
     public interface IModbusTransport : IDisposable
     {
+        /// <summary>
+        /// 
+        /// </summary>
         int Retries { get; set; }
-
+        /// <summary>
+        /// 
+        /// </summary>
         uint RetryOnOldResponseThreshold { get; set; }
-
+        /// <summary>
+        /// 
+        /// </summary>
         bool SlaveBusyUsesRetryCount { get; set; }
-
+        /// <summary>
+        /// 
+        /// </summary>
         int WaitToRetryMilliseconds { get; set; }
-
+        /// <summary>
+        /// 
+        /// </summary>
         int ReadTimeout { get; set; }
-
+        /// <summary>
+        /// 
+        /// </summary>
         int WriteTimeout { get; set; }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="message"></param>
+        /// <returns></returns>
         T UnicastMessage<T>(IModbusMessage message) where T : IModbusMessage, new();
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         byte[] ReadRequest();
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
         byte[] BuildMessageFrame(IModbusMessage message);
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="message"></param>
         void Write(IModbusMessage message);
-
+        /// <summary>
+        /// 
+        /// </summary>
         IStreamResource StreamResource { get; }
     }
     /// <summary>
@@ -596,8 +710,16 @@ namespace System.Data.NModbus
         /// </summary>
         IPointSource<ushort> InputRegisters { get; }
     }
+    /// <summary>
+    /// 
+    /// </summary>
     public interface ISlaveHandlerContext
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="functionCode"></param>
+        /// <returns></returns>
         IModbusFunctionService GetHandler(byte functionCode);
     }
     /// <summary>

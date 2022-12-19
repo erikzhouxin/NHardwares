@@ -441,12 +441,17 @@ namespace System.Data.NModbus
             get => _checkFrame;
             set => _checkFrame = value;
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
         public void DiscardInBuffer()
         {
             StreamResource.DiscardInBuffer();
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="message"></param>
         public override void Write(IModbusMessage message)
         {
             DiscardInBuffer();
@@ -457,7 +462,13 @@ namespace System.Data.NModbus
 
             StreamResource.Write(frame, 0, frame.Length);
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="frame"></param>
+        /// <returns></returns>
+        /// <exception cref="IOException"></exception>
         public override IModbusMessage CreateResponse<T>(byte[] frame)
         {
             IModbusMessage response = base.CreateResponse<T>(frame);
@@ -472,9 +483,16 @@ namespace System.Data.NModbus
 
             return response;
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
         public abstract void IgnoreResponse();
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="messageFrame"></param>
+        /// <returns></returns>
         public abstract bool ChecksumsMatch(IModbusMessage message, byte[] messageFrame);
 
         internal override void OnValidateResponse(IModbusMessage request, IModbusMessage response)
@@ -571,7 +589,9 @@ namespace System.Data.NModbus
         ///     Gets the stream resource.
         /// </summary>
         public IStreamResource StreamResource => _streamResource;
-
+        /// <summary>
+        /// 
+        /// </summary>
         protected IModbusFactory ModbusFactory { get; }
 
         /// <summary>
@@ -587,7 +607,12 @@ namespace System.Data.NModbus
             Dispose(true);
             GC.SuppressFinalize(this);
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="message"></param>
+        /// <returns></returns>
         public virtual T UnicastMessage<T>(IModbusMessage message)
             where T : IModbusMessage, new()
         {
@@ -682,7 +707,12 @@ namespace System.Data.NModbus
 
             return (T)response;
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="frame"></param>
+        /// <returns></returns>
         public virtual IModbusMessage CreateResponse<T>(byte[] frame)
             where T : IModbusMessage, new()
         {
@@ -701,7 +731,12 @@ namespace System.Data.NModbus
 
             return response;
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="response"></param>
+        /// <exception cref="IOException"></exception>
         public void ValidateResponse(IModbusMessage request, IModbusMessage response)
         {
             // always check the function code and slave address, regardless of transport protocol
@@ -759,14 +794,28 @@ namespace System.Data.NModbus
         ///     Provide hook to do transport level message validation.
         /// </summary>
         internal abstract void OnValidateResponse(IModbusMessage request, IModbusMessage response);
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public abstract byte[] ReadRequest();
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
         public abstract IModbusMessage ReadResponse<T>()
             where T : IModbusMessage, new();
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
         public abstract byte[] BuildMessageFrame(IModbusMessage message);
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="message"></param>
         public abstract void Write(IModbusMessage message);
 
         /// <summary>
@@ -796,49 +845,76 @@ namespace System.Data.NModbus
     public class SocketAdapter : IStreamResource
     {
         private Socket _socketClient;
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="socketClient"></param>
         public SocketAdapter(Socket socketClient)
         {
             Debug.Assert(socketClient != null, "Argument socketClient van not be null");
             _socketClient = socketClient;
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
         public int InfiniteTimeout => Timeout.Infinite;
+        /// <summary>
+        /// 
+        /// </summary>
         public int ReadTimeout
         {
             get => _socketClient.SendTimeout;
             set => _socketClient.SendTimeout = value;
-
         }
+        /// <summary>
+        /// 
+        /// </summary>
         public int WriteTimeout
         {
             get => _socketClient.ReceiveTimeout;
             set => _socketClient.ReceiveTimeout = value;
         }
+        /// <summary>
+        /// 
+        /// </summary>
         public void DiscardInBuffer()
         {
             // socket does not hold buffers.
             return;
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="buffer"></param>
+        /// <param name="offset"></param>
+        /// <param name="size"></param>
+        /// <returns></returns>
         public int Read(byte[] buffer, int offset, int size)
         {
-
             return _socketClient.Receive(buffer, offset, size, 0);
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="buffer"></param>
+        /// <param name="offset"></param>
+        /// <param name="size"></param>
         public void Write(byte[] buffer, int offset, int size)
         {
             _socketClient.Send(buffer, offset, size, 0);
         }
-
-
+        /// <summary>
+        /// 
+        /// </summary>
         public void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="disposing"></param>
         protected virtual void Dispose(bool disposing)
         {
             if (disposing)
@@ -874,49 +950,76 @@ namespace System.Data.NModbus
     public class TcpClientAdapter : IStreamResource
     {
         private TcpClient _tcpClient;
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="tcpClient"></param>
         public TcpClientAdapter(TcpClient tcpClient)
         {
             Debug.Assert(tcpClient != null, "Argument tcpClient cannot be null.");
 
             _tcpClient = tcpClient;
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
         public int InfiniteTimeout => Timeout.Infinite;
-
+        /// <summary>
+        /// 
+        /// </summary>
         public int ReadTimeout
         {
             get => _tcpClient.GetStream().ReadTimeout;
             set => _tcpClient.GetStream().ReadTimeout = value;
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
         public int WriteTimeout
         {
             get => _tcpClient.GetStream().WriteTimeout;
             set => _tcpClient.GetStream().WriteTimeout = value;
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="buffer"></param>
+        /// <param name="offset"></param>
+        /// <param name="size"></param>
         public void Write(byte[] buffer, int offset, int size)
         {
             _tcpClient.GetStream().Write(buffer, offset, size);
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="buffer"></param>
+        /// <param name="offset"></param>
+        /// <param name="size"></param>
+        /// <returns></returns>
         public int Read(byte[] buffer, int offset, int size)
         {
             return _tcpClient.GetStream().Read(buffer, offset, size);
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
         public void DiscardInBuffer()
         {
             _tcpClient.GetStream().Flush();
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
         public void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="disposing"></param>
         protected virtual void Dispose(bool disposing)
         {
             if (disposing)
@@ -935,7 +1038,11 @@ namespace System.Data.NModbus
         private UdpClient _udpClient;
         private readonly byte[] _buffer = new byte[MaxBufferSize];
         private int _bufferOffset;
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="udpClient"></param>
+        /// <exception cref="ArgumentNullException"></exception>
         public UdpClientAdapter(UdpClient udpClient)
         {
             if (udpClient == null)
@@ -945,26 +1052,43 @@ namespace System.Data.NModbus
 
             _udpClient = udpClient;
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
         public int InfiniteTimeout => Timeout.Infinite;
-
+        /// <summary>
+        /// 
+        /// </summary>
         public int ReadTimeout
         {
             get => _udpClient.Client.ReceiveTimeout;
             set => _udpClient.Client.ReceiveTimeout = value;
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
         public int WriteTimeout
         {
             get => _udpClient.Client.SendTimeout;
             set => _udpClient.Client.SendTimeout = value;
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
         public void DiscardInBuffer()
         {
             // no-op
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="buffer"></param>
+        /// <param name="offset"></param>
+        /// <param name="count"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
+        /// <exception cref="IOException"></exception>
         public int Read(byte[] buffer, int offset, int count)
         {
             if (buffer == null)
@@ -1016,7 +1140,14 @@ namespace System.Data.NModbus
 
             return count;
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="buffer"></param>
+        /// <param name="offset"></param>
+        /// <param name="count"></param>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         public void Write(byte[] buffer, int offset, int count)
         {
             if (buffer == null)
@@ -1054,13 +1185,18 @@ namespace System.Data.NModbus
 
             _udpClient.Client.Send(buffer.Skip(offset).Take(count).ToArray());
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
         public void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="disposing"></param>
         protected virtual void Dispose(bool disposing)
         {
             if (disposing)

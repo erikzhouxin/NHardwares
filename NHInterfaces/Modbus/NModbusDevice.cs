@@ -27,7 +27,12 @@ namespace System.Data.NModbus
         private readonly Stopwatch _stopwatch = new Stopwatch();
 
         private readonly SemaphoreSlim _semaphore = new SemaphoreSlim(1, 1);
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="master"></param>
+        /// <param name="minInterval"></param>
+        /// <exception cref="ArgumentNullException"></exception>
         public ConcurrentModbusMaster(IModbusMaster master, TimeSpan minInterval)
         {
             _master = master ?? throw new ArgumentNullException(nameof(master));
@@ -72,7 +77,15 @@ namespace System.Data.NModbus
                 _stopwatch.Restart();
             }
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="slaveAddress"></param>
+        /// <param name="startAddress"></param>
+        /// <param name="numberOfPoints"></param>
+        /// <param name="blockSize"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         public async Task<ushort[]> ReadInputRegistersAsync(byte slaveAddress, ushort startAddress, ushort numberOfPoints, ushort blockSize, CancellationToken cancellationToken)
         {
             return await PerformFuncAsync(async () =>
@@ -112,7 +125,15 @@ namespace System.Data.NModbus
 
             }, cancellationToken);
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="slaveAddress"></param>
+        /// <param name="startAddress"></param>
+        /// <param name="numberOfPoints"></param>
+        /// <param name="blockSize"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         public Task<ushort[]> ReadHoldingRegistersAsync(byte slaveAddress, ushort startAddress, ushort numberOfPoints, ushort blockSize, CancellationToken cancellationToken)
         {
             return PerformFuncAsync(async () =>
@@ -152,7 +173,15 @@ namespace System.Data.NModbus
 
             }, cancellationToken);
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="slaveAddress"></param>
+        /// <param name="startAddress"></param>
+        /// <param name="data"></param>
+        /// <param name="blockSize"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         public Task WriteMultipleRegistersAsync(byte slaveAddress, ushort startAddress, ushort[] data, ushort blockSize, CancellationToken cancellationToken)
         {
             return PerformAsync(async () =>
@@ -182,33 +211,70 @@ namespace System.Data.NModbus
 
             }, cancellationToken);
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="slaveAddress"></param>
+        /// <param name="address"></param>
+        /// <param name="value"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         public Task WriteSingleRegisterAsync(byte slaveAddress, ushort address, ushort value, CancellationToken cancellationToken)
         {
             return PerformAsync(() => _master.WriteSingleRegisterAsync(slaveAddress, address, value), cancellationToken);
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="slaveAddress"></param>
+        /// <param name="startAddress"></param>
+        /// <param name="data"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         public Task WriteCoilsAsync(byte slaveAddress, ushort startAddress, bool[] data, CancellationToken cancellationToken)
         {
             return PerformAsync(() => _master.WriteMultipleCoilsAsync(slaveAddress, startAddress, data), cancellationToken);
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="slaveAddress"></param>
+        /// <param name="startAddress"></param>
+        /// <param name="number"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         public Task<bool[]> ReadCoilsAsync(byte slaveAddress, ushort startAddress, ushort number,
             CancellationToken cancellationToken)
         {
             return PerformFuncAsync(() => _master.ReadCoilsAsync(slaveAddress, startAddress, number), cancellationToken);
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="slaveAddress"></param>
+        /// <param name="startAddress"></param>
+        /// <param name="number"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         public Task<bool[]> ReadDiscretesAsync(byte slaveAddress, ushort startAddress, ushort number, CancellationToken cancellationToken)
         {
             return PerformFuncAsync(() => _master.ReadInputsAsync(slaveAddress, startAddress, number), cancellationToken);
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="slaveAddress"></param>
+        /// <param name="coilAddress"></param>
+        /// <param name="value"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         public Task WriteSingleCoilAsync(byte slaveAddress, ushort coilAddress, bool value, CancellationToken cancellationToken)
         {
             return PerformAsync(() => _master.WriteSingleCoilAsync(slaveAddress, coilAddress, value), cancellationToken);
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
         public void Dispose()
         {
             if (!_isDisposed)
@@ -219,15 +285,25 @@ namespace System.Data.NModbus
             }
         }
     }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class PointEventArgs<T> : PointEventArgs where T : struct
     {
         private readonly T[] _points;
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="startAddress"></param>
+        /// <param name="points"></param>
         public PointEventArgs(ushort startAddress, T[] points) : base(startAddress, (ushort)points.Length)
         {
             _points = points;
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
         public T[] Points => _points;
     }
     /// <summary>
@@ -1667,15 +1743,23 @@ namespace System.Data.NModbus
         private ushort _numberOfPoints;
 
         private ushort _startAddress;
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="startAddress"></param>
+        /// <param name="numberOfPoints"></param>
         public PointEventArgs(ushort startAddress, ushort numberOfPoints)
         {
             _startAddress = startAddress;
             _numberOfPoints = numberOfPoints;
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
         public ushort NumberOfPoints => _numberOfPoints;
-
+        /// <summary>
+        /// 
+        /// </summary>
         public ushort StartAddress => _startAddress;
     }
     internal class TcpConnectionEventArgs : EventArgs

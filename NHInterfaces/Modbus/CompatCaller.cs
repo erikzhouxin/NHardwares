@@ -70,16 +70,28 @@ namespace System.Data.NModbus
 #if NET40
 namespace System.Net.Sockets
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public struct UdpReceiveResult : IEquatable<UdpReceiveResult>
     {
         private byte[] m_buffer;
 
         private IPEndPoint m_remoteEndPoint;
-
+        /// <summary>
+        /// 
+        /// </summary>
         public byte[] Buffer => m_buffer;
-
+        /// <summary>
+        /// 
+        /// </summary>
         public IPEndPoint RemoteEndPoint => m_remoteEndPoint;
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="buffer"></param>
+        /// <param name="remoteEndPoint"></param>
+        /// <exception cref="ArgumentNullException"></exception>
         public UdpReceiveResult(byte[] buffer, IPEndPoint remoteEndPoint)
         {
             if (buffer == null)
@@ -95,7 +107,10 @@ namespace System.Net.Sockets
             m_buffer = buffer;
             m_remoteEndPoint = remoteEndPoint;
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public override int GetHashCode()
         {
             if (m_buffer == null)
@@ -105,7 +120,11 @@ namespace System.Net.Sockets
 
             return m_buffer.GetHashCode() ^ m_remoteEndPoint.GetHashCode();
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
         public override bool Equals(object obj)
         {
             if (!(obj is UdpReceiveResult))
@@ -115,7 +134,11 @@ namespace System.Net.Sockets
 
             return Equals((UdpReceiveResult)obj);
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns></returns>
         public bool Equals(UdpReceiveResult other)
         {
             if (object.Equals(m_buffer, other.m_buffer))
@@ -125,12 +148,22 @@ namespace System.Net.Sockets
 
             return false;
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
         public static bool operator ==(UdpReceiveResult left, UdpReceiveResult right)
         {
             return left.Equals(right);
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
         public static bool operator !=(UdpReceiveResult left, UdpReceiveResult right)
         {
             return !left.Equals(right);
