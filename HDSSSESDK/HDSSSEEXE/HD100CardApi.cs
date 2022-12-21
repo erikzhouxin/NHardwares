@@ -3,13 +3,23 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace System.Data.HDSSSEEXE
+namespace System.Data.HDSSSESDK
 {
+    /// <summary>
+    /// SDK创建类
+    /// </summary>
+    internal static class HD100CardSdk
+    {
+        /// <summary>
+        /// SDK文件名称
+        /// </summary>
+        public const String DllFileName = "HDSSSE32.dll";
+    }
     /// <summary>
     /// HDSSSE的32位ICC/PICC等卡接口
     /// 不支持64位程序,请使用
     /// </summary>
-    internal class HD100CardApi
+    internal partial class HD100CardSdkDller
     {
         /// <summary>
         /// 调用

@@ -11,71 +11,102 @@ using System.Threading.Tasks;
 
 namespace System.Data.NModbus
 {
-
+    /// <summary>
+    /// 空传输
+    /// </summary>
     internal class EmptyTransport : ModbusTransport
     {
+        /// <summary>
+        /// 构造
+        /// </summary>
+        /// <param name="modbusFactory"></param>
         public EmptyTransport(IModbusFactory modbusFactory)
             : base(modbusFactory, NullModbusLogger.Instance)
         {
         }
-
+        /// <summary>
+        /// 读请求
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
         public override byte[] ReadRequest()
         {
             throw new NotImplementedException();
         }
-
+        /// <summary>
+        /// 读响应
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
         public override IModbusMessage ReadResponse<T>()
         {
             throw new NotImplementedException();
         }
-
+        /// <summary>
+        /// 创建消息帧
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
         public override byte[] BuildMessageFrame(IModbusMessage message)
         {
             throw new NotImplementedException();
         }
-
+        /// <summary>
+        /// 写
+        /// </summary>
+        /// <param name="message"></param>
+        /// <exception cref="NotImplementedException"></exception>
         public override void Write(IModbusMessage message)
         {
             throw new NotImplementedException();
         }
-
+        /// <summary>
+        /// 成功返回
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="response"></param>
+        /// <exception cref="NotImplementedException"></exception>
         internal override void OnValidateResponse(IModbusMessage request, IModbusMessage response)
         {
             throw new NotImplementedException();
         }
-
-
-
-
     }
     /// <summary>
-    ///     Represents a serial resource.
-    ///     Implementor - http://en.wikipedia.org/wiki/Bridge_Pattern
+    /// 流资源接口
+    /// Represents a serial resource.
+    /// Implementor - http://en.wikipedia.org/wiki/Bridge_Pattern
     /// </summary>
     public interface IStreamResource : IDisposable
     {
         /// <summary>
-        ///     Indicates that no timeout should occur.
+        /// 表示不发生超时
+        /// Indicates that no timeout should occur.
         /// </summary>
         int InfiniteTimeout { get; }
 
         /// <summary>
-        ///     Gets or sets the number of milliseconds before a timeout occurs when a read operation does not finish.
+        /// 获取或设置读取操作未完成时发生超时之前的毫秒数
+        /// Gets or sets the number of milliseconds before a timeout occurs when a read operation does not finish.
         /// </summary>
         int ReadTimeout { get; set; }
 
         /// <summary>
-        ///     Gets or sets the number of milliseconds before a timeout occurs when a write operation does not finish.
+        /// 获取或设置写入操作未完成时发生超时之前的毫秒数
+        /// Gets or sets the number of milliseconds before a timeout occurs when a write operation does not finish.
         /// </summary>
         int WriteTimeout { get; set; }
 
         /// <summary>
-        ///     Purges the receive buffer.
+        /// 清除接收缓冲区
+        /// Purges the receive buffer.
         /// </summary>
         void DiscardInBuffer();
 
         /// <summary>
-        ///     Reads a number of bytes from the input buffer and writes those bytes into a byte array at the specified offset.
+        /// 从输入缓冲区读取一定数量的字节，并将这些字节写入指定偏移位置的字节数组
+        /// Reads a number of bytes from the input buffer and writes those bytes into a byte array at the specified offset.
         /// </summary>
         /// <param name="buffer">The byte array to write the input to.</param>
         /// <param name="offset">The offset in the buffer array to begin writing.</param>

@@ -66,6 +66,7 @@
             // 
             // CmtMainPages
             // 
+            this.CmtMainPages.AllowDrop = true;
             this.CmtMainPages.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.TsmiRefreshThis,
             this.TsmiCloseThis});
@@ -103,7 +104,7 @@
             // TrmUSRIO808
             // 
             this.TrmUSRIO808.Name = "TrmUSRIO808";
-            this.TrmUSRIO808.Size = new System.Drawing.Size(180, 22);
+            this.TrmUSRIO808.Size = new System.Drawing.Size(140, 22);
             this.TrmUSRIO808.Text = "USR-IO808";
             this.TrmUSRIO808.Click += new System.EventHandler(this.TrmUSRIO808_Click);
             // 

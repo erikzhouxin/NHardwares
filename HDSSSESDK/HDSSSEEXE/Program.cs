@@ -24,7 +24,7 @@ namespace System.Data.HDSSSEEXE
                     string response;
                     try
                     {
-                        response = HD100CardApi.Call(line);
+                        response = HD100CardSdkDller.Call(line);
                     }
                     catch (Exception ex)
                     {

@@ -71,7 +71,7 @@ namespace System.Data.NModbus
     /// <summary>
     ///     An exception that provides the exception code that will be sent in response to an invalid Modbus request.
     /// </summary>
-#if NET45 || NET40
+#if NETFrame
     [Serializable]
 #endif
     public class InvalidModbusRequestException : Exception
@@ -119,7 +119,7 @@ namespace System.Data.NModbus
             _exceptionCode = exceptionCode;
         }
 
-#if NET45 || NET40
+#if NETFrame
         /// <summary>
         ///     Initializes a new instance of the <see cref="InvalidModbusRequestException" /> class with serialized data.
         /// </summary>
@@ -137,7 +137,7 @@ namespace System.Data.NModbus
         /// </summary>
         public byte ExceptionCode => _exceptionCode;
 
-#if NET45 || NET40
+#if NETFrame
         /// <summary>Sets the <see cref="SerializationInfo" /> object with the Modbus exception code and additional exception information.</summary>
         /// <param name="info">The <see cref="SerializationInfo" /> that holds the serialized object data about the exception being thrown.</param>
         /// <param name="context">The <see cref="StreamingContext" /> that contains contextual information about the source or destination.</param>
@@ -456,7 +456,7 @@ namespace System.Data.NModbus
     /// <summary>
     ///     Represents slave errors that occur during communication.
     /// </summary>
-#if NET45 || NET40
+#if NETFrame
     [Serializable]
 #endif
     public class SlaveException : Exception
@@ -505,7 +505,7 @@ namespace System.Data.NModbus
             _slaveExceptionResponse = slaveExceptionResponse;
         }
 
-#if NET45 || NET40
+#if NETFrame
         /// <summary>
         ///     Initializes a new instance of the <see cref="SlaveException" /> class.
         /// </summary>
@@ -569,7 +569,7 @@ namespace System.Data.NModbus
         /// <value>The slave address.</value>
         public byte SlaveAddress => _slaveExceptionResponse != null ? _slaveExceptionResponse.SlaveAddress : (byte)0;
 
-#if NET46
+#if NETFrame
         /// <summary>
         ///     When overridden in a derived class, sets the <see cref="T:System.Runtime.Serialization.SerializationInfo"></see>
         ///     with information about the exception.

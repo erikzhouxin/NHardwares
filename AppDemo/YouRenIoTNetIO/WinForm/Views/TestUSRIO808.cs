@@ -131,9 +131,10 @@ namespace YouRenIoTNetIO.WinForm.Views
             {
                 for (int i = 0; i < 8; i++)
                 {
-                    item.UpdateDOStatus(i, null);
+                    item.UpdateDOStatus(i);
                     item.UpdateDIStatus(i);
                 }
+                item.UpdateDOStatusHolding();
             }
             else
             {
@@ -143,6 +144,7 @@ namespace YouRenIoTNetIO.WinForm.Views
             {
                 this.BeginInvoke(() => UpdateDOStatus(item.DOStatus));
                 this.BeginInvoke(() => UpdateDIStatus(item.DIStatus));
+                this.BeginInvoke(() => ChkNetDoHolding.CheckState = GetCheckState(item.DOStatusHolding));
             }
         }
 
@@ -294,7 +296,8 @@ namespace YouRenIoTNetIO.WinForm.Views
             }
         }
 
-        private void PicNetDO_Click(object sender, EventArgs e)
+
+        private void PicNetDO_Click(object sender, MouseEventArgs e)
         {
             var pic = sender as PictureBox;
             switch (pic?.Name)
@@ -310,6 +313,23 @@ namespace YouRenIoTNetIO.WinForm.Views
                 default: break;
             }
             UpdateDOStatus(_config.DOStatus);
+        }
+
+        private void PicNetDo_DoubleClick(object sender, EventArgs e)
+        {
+            var pic = sender as ToolStripMenuItem;
+            switch (pic?.Name)
+            {
+                case nameof(TsrmPicNetDO1): _config.ResetDOStatus(0, !_config.DOStatus[0]); break;
+                case nameof(TsrmPicNetDO2): _config.ResetDOStatus(1, !_config.DOStatus[1]); break;
+                case nameof(TsrmPicNetDO3): _config.ResetDOStatus(2, !_config.DOStatus[2]); break;
+                case nameof(TsrmPicNetDO4): _config.ResetDOStatus(3, !_config.DOStatus[3]); break;
+                case nameof(TsrmPicNetDO5): _config.ResetDOStatus(4, !_config.DOStatus[4]); break;
+                case nameof(TsrmPicNetDO6): _config.ResetDOStatus(5, !_config.DOStatus[5]); break;
+                case nameof(TsrmPicNetDO7): _config.ResetDOStatus(6, !_config.DOStatus[6]); break;
+                case nameof(TsrmPicNetDO8): _config.ResetDOStatus(7, !_config.DOStatus[7]); break;
+                default: break;
+            }
         }
 
         private void PicNetDI_Click(object sender, EventArgs e)
@@ -330,6 +350,48 @@ namespace YouRenIoTNetIO.WinForm.Views
             UpdateDIStatus(_config.DIStatus);
         }
 
+        private void LblNetDO_Click(object sender, EventArgs e)
+        {
+            var chk = sender as CheckBox;
+            switch (chk?.Name)
+            {
+                case nameof(LblNetDO1): _config.UpdateDOStatus(0); break;
+                case nameof(LblNetDO2): _config.UpdateDOStatus(1); break;
+                case nameof(LblNetDO3): _config.UpdateDOStatus(2); break;
+                case nameof(LblNetDO4): _config.UpdateDOStatus(3); break;
+                case nameof(LblNetDO5): _config.UpdateDOStatus(4); break;
+                case nameof(LblNetDO6): _config.UpdateDOStatus(5); break;
+                case nameof(LblNetDO7): _config.UpdateDOStatus(6); break;
+                case nameof(LblNetDO8): _config.UpdateDOStatus(7); break;
+                default: break;
+            }
+            UpdateDOStatus(_config.DOStatus);
+        }
+
+        private void ChkNetDoHolding_Click(object sender, EventArgs e)
+        {
+            _config.UpdateDOStatusHolding(GetCheckValue(ChkNetDoHolding.CheckState));
+            ChkNetDoHolding.CheckState = GetCheckState(_config.DOStatusHolding);
+        }
+
+        private bool? GetCheckValue(CheckState state)
+        {
+            switch (state)
+            {
+                case CheckState.Unchecked: return false;
+                case CheckState.Checked: return true;
+                case CheckState.Indeterminate:
+                default: return null;
+            }
+        }
+        private CheckState GetCheckState(bool? state)
+        {
+            if (state.HasValue)
+            {
+                return state.Value ? CheckState.Checked : CheckState.Unchecked;
+            }
+            return CheckState.Indeterminate;
+        }
         private void BtnNetConfigRemove_Click(object sender, EventArgs e)
         {
             var key = $"{this.TxtNetConfigIp.Text?.Trim()}:{this.TxtNetConfigPort.Text?.Trim()}";
@@ -369,6 +431,10 @@ namespace YouRenIoTNetIO.WinForm.Views
             /// DO状态
             /// </summary>
             public virtual bool[] DOStatus { get; set; }
+            /// <summary>
+            /// DO状态保持
+            /// </summary>
+            public virtual bool? DOStatusHolding { get; set; }
             /// <summary>
             /// DI状态
             /// </summary>
@@ -410,13 +476,13 @@ namespace YouRenIoTNetIO.WinForm.Views
                 }
                 return new AlertMsg(false, "当前连接正在使用中……");
             }
-            public void UpdateDOStatus(int i, bool? value)
+            public void UpdateDOStatus(int i)
             {
                 if (Monitor.TryEnter(Locker, 1000))
                 {
                     try
                     {
-                        var res = value.HasValue ? Control.SetDOStatus(i, value.Value) : Control.GetDOStatus(i);
+                        var res = Control.GetDOStatus(i);
                         Instance.Append(res);
                         if (res.IsSuccess)
                         {
@@ -427,6 +493,106 @@ namespace YouRenIoTNetIO.WinForm.Views
                     {
                         Monitor.Exit(Locker);
                     }
+                }
+                else
+                {
+                    Instance.Append(new AlertMsg(false, "当前连接正在使用中……"));
+                }
+            }
+            public void UpdateDOStatus(int i, bool value)
+            {
+                if (Monitor.TryEnter(Locker, 1000))
+                {
+                    try
+                    {
+                        var res = Control.SetDOStatus(i, value);
+                        Instance.Append(res);
+                        if (res.IsSuccess)
+                        {
+                            DOStatus[i] = res.Data;
+                        }
+                    }
+                    finally
+                    {
+                        Monitor.Exit(Locker);
+                    }
+                }
+                else
+                {
+                    Instance.Append(new AlertMsg(false, "当前连接正在使用中……"));
+                }
+            }
+
+            public void ResetDOStatus(int i, bool value)
+            {
+                if (Monitor.TryEnter(Locker, 1000))
+                {
+                    try
+                    {
+                        Control.SetResetDOStatus(i, value);
+                        var res = Control.GetDOStatus(i);
+                        Instance.Append(res);
+                        if (res.IsSuccess)
+                        {
+                            DOStatus[i] = res.Data;
+                        }
+                    }
+                    finally
+                    {
+                        Monitor.Exit(Locker);
+                    }
+                }
+                else
+                {
+                    Instance.Append(new AlertMsg(false, "当前连接正在使用中……"));
+                }
+            }
+
+            public void UpdateDOStatusHolding()
+            {
+                if (Monitor.TryEnter(Locker, 1000))
+                {
+                    try
+                    {
+                        var res = Control.GetDOStatusHolding();
+                        Instance.Append(res);
+                        if (res.IsSuccess)
+                        {
+                            DOStatusHolding = res.Data == 1 ? true : (res.Data == 3 ? false : null);
+                        }
+                    }
+                    finally
+                    {
+                        Monitor.Exit(Locker);
+                    }
+                }
+                else
+                {
+                    Instance.Append(new AlertMsg(false, "当前连接正在使用中……"));
+                }
+            }
+
+            public void UpdateDOStatusHolding(bool? value)
+            {
+                if (Monitor.TryEnter(Locker, 1000))
+                {
+                    try
+                    {
+                        var res = Control.SetDOStatusHolding(value);
+                        Instance.Append(res);
+                        if (res.IsSuccess)
+                        {
+                            DOStatusHolding = res.Data;
+                        }
+                    }
+                    finally
+                    {
+                        Monitor.Exit(Locker);
+                    }
+                }
+                else
+                {
+                    Instance.Append(new AlertMsg(false, "当前连接正在使用中……"));
                 }
             }
 
@@ -447,6 +613,10 @@ namespace YouRenIoTNetIO.WinForm.Views
                     {
                         Monitor.Exit(Locker);
                     }
+                }
+                else
+                {
+                    Instance.Append(new AlertMsg(false, "当前连接正在使用中……"));
                 }
             }
         }

@@ -11,6 +11,8 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Timers;
+using Timer = System.Timers.Timer;
 
 namespace System.Data.NModbus
 {
@@ -1352,7 +1354,7 @@ namespace System.Data.NModbus
                     (byte)(Modbus.ExceptionOffset + request.FunctionCode),
                     ex.ExceptionCode);
             }
-#if NET45 || NET46
+#if NETFrame
             catch (Exception ex)
             {
                 //Okay - this is no beuno.
