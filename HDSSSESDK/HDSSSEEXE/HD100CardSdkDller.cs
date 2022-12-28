@@ -6,6 +6,9 @@ using System.Text;
 
 namespace System.Data.HDSSSESDK
 {
+    /// <summary>
+    /// 原始访问SDK
+    /// </summary>
     internal partial class HD100CardSdkDller
     {
         /// <summary>

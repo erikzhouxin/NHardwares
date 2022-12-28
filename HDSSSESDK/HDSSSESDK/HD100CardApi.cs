@@ -438,12 +438,12 @@ namespace System.Data.HDSSSESDK
         /// <returns></returns>
         public int ICC_Reader_Open(StringBuilder dev_Name)
         {
-            var model = new PiperSwapModel(nameof(ICC_Reader_Open))
+            var model = new PipeSwapperModel(nameof(ICC_Reader_Open))
             {
                 S1 = dev_Name,
             };
             _writer.WriteLine(model.ToJson());
-            var resObj = PiperSwapModel.GetModel(_reader.Value.ReadLine());
+            var resObj = PipeSwapperModel.GetModel(_reader.Value.ReadLine());
             return resObj.R;
         }
         /// <summary>
@@ -453,12 +453,12 @@ namespace System.Data.HDSSSESDK
         /// <returns></returns>
         public int ICC_Reader_Close(int ReaderHandle)
         {
-            var model = new PiperSwapModel(nameof(ICC_Reader_Close))
+            var model = new PipeSwapperModel(nameof(ICC_Reader_Close))
             {
                 RH = ReaderHandle,
             };
             _writer.WriteLine(model.ToJson());
-            var resObj = PiperSwapModel.GetModel(_reader.Value.ReadLine());
+            var resObj = PipeSwapperModel.GetModel(_reader.Value.ReadLine());
             return resObj.R;
         }
         /// <summary>
@@ -472,7 +472,7 @@ namespace System.Data.HDSSSESDK
         /// <returns></returns>
         public int Rcard(int ReaderHandle, byte ctime, int track, byte[] rlen, StringBuilder data)
         {
-            var model = new PiperSwapModel(nameof(Rcard))
+            var model = new PipeSwapperModel(nameof(Rcard))
             {
                 RH = ReaderHandle,
                 B1 = ctime,
@@ -480,7 +480,7 @@ namespace System.Data.HDSSSESDK
                 S1 = data,
             };
             _writer.WriteLine(model.ToJson());
-            var resObj = PiperSwapModel.GetModel(_reader.Value.ReadLine());
+            var resObj = PipeSwapperModel.GetModel(_reader.Value.ReadLine());
             data.Clear().Append(resObj.S1);
             return resObj.R;
         }
@@ -493,14 +493,14 @@ namespace System.Data.HDSSSESDK
         /// <returns></returns>
         public int ICC_Reader_ScanCode(int ReaderHandle, byte ctime, StringBuilder QRCodeInfo)
         {
-            var model = new PiperSwapModel(nameof(ICC_Reader_ScanCode))
+            var model = new PipeSwapperModel(nameof(ICC_Reader_ScanCode))
             {
                 RH = ReaderHandle,
                 B1 = ctime,
                 S1 = QRCodeInfo,
             };
             _writer.WriteLine(model.ToJson());
-            var resObj = PiperSwapModel.GetModel(_reader.Value.ReadLine());
+            var resObj = PipeSwapperModel.GetModel(_reader.Value.ReadLine());
             QRCodeInfo.Clear().Append(resObj.S1);
             return resObj.R;
         }
@@ -512,13 +512,13 @@ namespace System.Data.HDSSSESDK
         /// <returns></returns>
         public int ICC_PosBeep(int ReaderHandle, byte time)
         {
-            var model = new PiperSwapModel(nameof(ICC_PosBeep))
+            var model = new PipeSwapperModel(nameof(ICC_PosBeep))
             {
                 RH = ReaderHandle,
                 B1 = time,
             };
             _writer.WriteLine(model.ToJson());
-            var resObj = PiperSwapModel.GetModel(_reader.Value.ReadLine());
+            var resObj = PipeSwapperModel.GetModel(_reader.Value.ReadLine());
             return resObj.R;
         }
         /// <summary>
@@ -528,12 +528,12 @@ namespace System.Data.HDSSSESDK
         /// <returns></returns>
         public int PICC_Reader_SetTypeA(int ReaderHandle)
         {
-            var model = new PiperSwapModel(nameof(PICC_Reader_SetTypeA))
+            var model = new PipeSwapperModel(nameof(PICC_Reader_SetTypeA))
             {
                 RH = ReaderHandle,
             };
             _writer.WriteLine(model.ToJson());
-            var resObj = PiperSwapModel.GetModel(_reader.Value.ReadLine());
+            var resObj = PipeSwapperModel.GetModel(_reader.Value.ReadLine());
             return resObj.R;
         }
         /// <summary>
@@ -544,13 +544,13 @@ namespace System.Data.HDSSSESDK
         /// <returns></returns>
         public int PICC_Reader_Select(int ReaderHandle, byte cardtype)
         {
-            var model = new PiperSwapModel(nameof(PICC_Reader_Select))
+            var model = new PipeSwapperModel(nameof(PICC_Reader_Select))
             {
                 RH = ReaderHandle,
                 B1 = cardtype,
             };
             _writer.WriteLine(model.ToJson());
-            var resObj = PiperSwapModel.GetModel(_reader.Value.ReadLine());
+            var resObj = PipeSwapperModel.GetModel(_reader.Value.ReadLine());
             return resObj.R;
         }
         /// <summary>
@@ -560,12 +560,12 @@ namespace System.Data.HDSSSESDK
         /// <returns></returns>
         public int PICC_Reader_Request(int ReaderHandle)
         {
-            var model = new PiperSwapModel(nameof(PICC_Reader_Request))
+            var model = new PipeSwapperModel(nameof(PICC_Reader_Request))
             {
                 RH = ReaderHandle,
             };
             _writer.WriteLine(model.ToJson());
-            var resObj = PiperSwapModel.GetModel(_reader.Value.ReadLine());
+            var resObj = PipeSwapperModel.GetModel(_reader.Value.ReadLine());
             return resObj.R;
         }
         /// <summary>
@@ -576,13 +576,13 @@ namespace System.Data.HDSSSESDK
         /// <returns></returns>
         public int PICC_Reader_anticoll(int ReaderHandle, byte[] uid)
         {
-            var model = new PiperSwapModel(nameof(PICC_Reader_anticoll))
+            var model = new PipeSwapperModel(nameof(PICC_Reader_anticoll))
             {
                 RH = ReaderHandle,
                 A1 = uid,
             };
             _writer.WriteLine(model.ToJson());
-            var resObj = PiperSwapModel.GetModel(_reader.Value.ReadLine());
+            var resObj = PipeSwapperModel.GetModel(_reader.Value.ReadLine());
             return resObj.R;
         }
         /// <summary>
@@ -595,7 +595,7 @@ namespace System.Data.HDSSSESDK
         /// <returns></returns>
         public int PICC_Reader_Authentication_Pass(int ReaderHandle, byte Mode, byte SecNr, byte[] PassWord)
         {
-            var model = new PiperSwapModel(nameof(PICC_Reader_Authentication_Pass))
+            var model = new PipeSwapperModel(nameof(PICC_Reader_Authentication_Pass))
             {
                 RH = ReaderHandle,
                 B1 = Mode,
@@ -603,7 +603,7 @@ namespace System.Data.HDSSSESDK
                 A1 = PassWord,
             };
             _writer.WriteLine(model.ToJson());
-            var resObj = PiperSwapModel.GetModel(_reader.Value.ReadLine());
+            var resObj = PipeSwapperModel.GetModel(_reader.Value.ReadLine());
             return resObj.R;
         }
         /// <summary>
@@ -615,14 +615,14 @@ namespace System.Data.HDSSSESDK
         /// <returns></returns>
         public int PICC_Reader_Read(int ReaderHandle, byte Addr, byte[] Data)
         {
-            var model = new PiperSwapModel(nameof(PICC_Reader_Read))
+            var model = new PipeSwapperModel(nameof(PICC_Reader_Read))
             {
                 RH = ReaderHandle,
                 B1 = Addr,
                 A1 = Data,
             };
             _writer.WriteLine(model.ToJson());
-            var resObj = PiperSwapModel.GetModel(_reader.Value.ReadLine());
+            var resObj = PipeSwapperModel.GetModel(_reader.Value.ReadLine());
             Array.Copy(resObj.A1, 0, Data, 0, resObj.A1.Length);
             return resObj.R;
         }
@@ -635,14 +635,14 @@ namespace System.Data.HDSSSESDK
         /// <returns></returns>
         public int PICC_Reader_Write(int ReaderHandle, byte Addr, byte[] Data)
         {
-            var model = new PiperSwapModel(nameof(PICC_Reader_Write))
+            var model = new PipeSwapperModel(nameof(PICC_Reader_Write))
             {
                 RH = ReaderHandle,
                 B1 = Addr,
                 A1 = Data,
             };
             _writer.WriteLine(model.ToJson());
-            var resObj = PiperSwapModel.GetModel(_reader.Value.ReadLine());
+            var resObj = PipeSwapperModel.GetModel(_reader.Value.ReadLine());
             return resObj.R;
         }
         /// <summary>
@@ -654,14 +654,14 @@ namespace System.Data.HDSSSESDK
         /// <returns></returns>
         public int StrToHex(StringBuilder strIn, int len, Byte[] HexOut)
         {
-            var model = new PiperSwapModel(nameof(StrToHex))
+            var model = new PipeSwapperModel(nameof(StrToHex))
             {
                 S1 = strIn,
                 I1 = len,
                 A1 = HexOut,
             };
             _writer.WriteLine(model.ToJson());
-            var resObj = PiperSwapModel.GetModel(_reader.Value.ReadLine());
+            var resObj = PipeSwapperModel.GetModel(_reader.Value.ReadLine());
             Array.Copy(resObj.A1, 0, HexOut, 0, resObj.A1.Length);
             return resObj.R;
         }
@@ -674,14 +674,14 @@ namespace System.Data.HDSSSESDK
         /// <returns></returns>
         public int HexToStr(Byte[] strIn, int inLen, StringBuilder strOut)
         {
-            var model = new PiperSwapModel(nameof(HexToStr))
+            var model = new PipeSwapperModel(nameof(HexToStr))
             {
                 S1 = strOut,
                 I1 = inLen,
                 A1 = strIn,
             };
             _writer.WriteLine(model.ToJson());
-            var resObj = PiperSwapModel.GetModel(_reader.Value.ReadLine());
+            var resObj = PipeSwapperModel.GetModel(_reader.Value.ReadLine());
             strOut.Clear().Append(resObj.S1);
             return resObj.R;
         }
@@ -695,14 +695,14 @@ namespace System.Data.HDSSSESDK
         /// <returns></returns>
         public int ICC_Reader_pre_PowerOn(int ReaderHandle, byte SLOT, byte[] Response)
         {
-            var model = new PiperSwapModel(nameof(ICC_Reader_pre_PowerOn))
+            var model = new PipeSwapperModel(nameof(ICC_Reader_pre_PowerOn))
             {
                 RH = ReaderHandle,
                 B1 = SLOT,
                 A1 = Response,
             };
             _writer.WriteLine(model.ToJson());
-            var resObj = PiperSwapModel.GetModel(_reader.Value.ReadLine());
+            var resObj = PipeSwapperModel.GetModel(_reader.Value.ReadLine());
             Array.Copy(resObj.A1, 0, Response, 0, resObj.A1.Length);
             return resObj.R;
         }
@@ -717,7 +717,7 @@ namespace System.Data.HDSSSESDK
         /// <returns></returns>
         public int ICC_Reader_Application(int ReaderHandle, byte SLOT, int Lenth_of_Command_APDU, byte[] Command_APDU, byte[] Response_APDU)
         {
-            var model = new PiperSwapModel(nameof(ICC_Reader_Application))
+            var model = new PipeSwapperModel(nameof(ICC_Reader_Application))
             {
                 RH = ReaderHandle,
                 B1 = SLOT,
@@ -726,7 +726,7 @@ namespace System.Data.HDSSSESDK
                 A2 = Response_APDU,
             };
             _writer.WriteLine(model.ToJson());
-            var resObj = PiperSwapModel.GetModel(_reader.Value.ReadLine());
+            var resObj = PipeSwapperModel.GetModel(_reader.Value.ReadLine());
             Array.Copy(resObj.A1, 0, Command_APDU, 0, resObj.A1.Length);
             Array.Copy(resObj.A2, 0, Response_APDU, 0, resObj.A2.Length);
             return resObj.R;
@@ -740,13 +740,13 @@ namespace System.Data.HDSSSESDK
         /// <returns></returns>
         public int PICC_Reader_PowerOnTypeA(int ReaderHandle, byte[] Response)
         {
-            var model = new PiperSwapModel(nameof(PICC_Reader_PowerOnTypeA))
+            var model = new PipeSwapperModel(nameof(PICC_Reader_PowerOnTypeA))
             {
                 RH = ReaderHandle,
                 A1 = Response,
             };
             _writer.WriteLine(model.ToJson());
-            var resObj = PiperSwapModel.GetModel(_reader.Value.ReadLine());
+            var resObj = PipeSwapperModel.GetModel(_reader.Value.ReadLine());
             Array.Copy(resObj.A1, 0, Response, 0, resObj.A1.Length);
             return resObj.R;
         }
@@ -760,7 +760,7 @@ namespace System.Data.HDSSSESDK
         /// <returns></returns>
         public int PICC_Reader_Application(int ReaderHandle, int Lenth_of_Command_APDU, byte[] Command_APDU, byte[] Response_APDU)
         {
-            var model = new PiperSwapModel(nameof(PICC_Reader_Application))
+            var model = new PipeSwapperModel(nameof(PICC_Reader_Application))
             {
                 RH = ReaderHandle,
                 I1 = Lenth_of_Command_APDU,
@@ -768,7 +768,7 @@ namespace System.Data.HDSSSESDK
                 A2 = Response_APDU,
             };
             _writer.WriteLine(model.ToJson());
-            var resObj = PiperSwapModel.GetModel(_reader.Value.ReadLine());
+            var resObj = PipeSwapperModel.GetModel(_reader.Value.ReadLine());
             Array.Copy(resObj.A1, 0, Command_APDU, 0, resObj.A1.Length);
             Array.Copy(resObj.A2, 0, Response_APDU, 0, resObj.A2.Length);
             return resObj.R;
@@ -789,7 +789,7 @@ namespace System.Data.HDSSSESDK
         /// <returns></returns>
         public int PICC_Reader_SICARD(int ReaderHandle, StringBuilder sbkh, StringBuilder xm, StringBuilder xb, StringBuilder mz, StringBuilder csrq, StringBuilder shbzhm, StringBuilder fkrq, StringBuilder kyxq, StringBuilder err)
         {
-            var model = new PiperSwapModel(nameof(PICC_Reader_SICARD))
+            var model = new PipeSwapperModel(nameof(PICC_Reader_SICARD))
             {
                 RH = ReaderHandle,
                 S1 = sbkh,
@@ -803,7 +803,7 @@ namespace System.Data.HDSSSESDK
                 S9 = err,
             };
             _writer.WriteLine(model.ToJson());
-            var resObj = PiperSwapModel.GetModel(_reader.Value.ReadLine());
+            var resObj = PipeSwapperModel.GetModel(_reader.Value.ReadLine());
             sbkh.Clear().Append(resObj.S1);
             xm.Clear().Append(resObj.S2);
             xb.Clear().Append(resObj.S3);
@@ -827,7 +827,7 @@ namespace System.Data.HDSSSESDK
         /// <returns></returns>
         public int PICC_Reader_CardInfo(int ReaderHandle, byte[] sn, byte[] date, byte[] kh, byte[] kh_len, int iType)
         {
-            var model = new PiperSwapModel(nameof(PICC_Reader_CardInfo))
+            var model = new PipeSwapperModel(nameof(PICC_Reader_CardInfo))
             {
                 RH = ReaderHandle,
                 A1 = sn,
@@ -837,7 +837,7 @@ namespace System.Data.HDSSSESDK
                 I1 = iType,
             };
             _writer.WriteLine(model.ToJson());
-            var resObj = PiperSwapModel.GetModel(_reader.Value.ReadLine());
+            var resObj = PipeSwapperModel.GetModel(_reader.Value.ReadLine());
             return resObj.R;
         }
         /// <summary>
@@ -858,7 +858,7 @@ namespace System.Data.HDSSSESDK
         /// <returns></returns>
         public int PICC_Reader_ReadIDMsg(int RHandle, StringBuilder pBmpFile, StringBuilder pName, StringBuilder pSex, StringBuilder pNation, StringBuilder pBirth, StringBuilder pAddress, StringBuilder pCertNo, StringBuilder pDepartment, StringBuilder pEffectData, StringBuilder pExpire, StringBuilder pErrMsg)
         {
-            var model = new PiperSwapModel(nameof(PICC_Reader_ReadIDMsg))
+            var model = new PipeSwapperModel(nameof(PICC_Reader_ReadIDMsg))
             {
                 RH = RHandle,
                 S1 = pBmpFile,
@@ -874,7 +874,7 @@ namespace System.Data.HDSSSESDK
                 SB = pErrMsg,
             };
             _writer.WriteLine(model.ToJson());
-            var resObj = PiperSwapModel.GetModel(_reader.Value.ReadLine());
+            var resObj = PipeSwapperModel.GetModel(_reader.Value.ReadLine());
             pBmpFile.Clear().Append(resObj.S1);
             pName.Clear().Append(resObj.S2);
             pSex.Clear().Append(resObj.S3);
@@ -896,13 +896,13 @@ namespace System.Data.HDSSSESDK
         /// <returns></returns>
         public int PICC_Reader_ID_ReadUID(int ReaderHandle, StringBuilder UID)
         {
-            var model = new PiperSwapModel(nameof(PICC_Reader_ID_ReadUID))
+            var model = new PipeSwapperModel(nameof(PICC_Reader_ID_ReadUID))
             {
                 RH = ReaderHandle,
                 S1 = UID,
             };
             _writer.WriteLine(model.ToJson());
-            var resObj = PiperSwapModel.GetModel(_reader.Value.ReadLine());
+            var resObj = PipeSwapperModel.GetModel(_reader.Value.ReadLine());
             UID.Clear().Append(resObj.S1);
             return resObj.R;
         }
@@ -914,13 +914,13 @@ namespace System.Data.HDSSSESDK
         /// <returns></returns>
         public int PICC_Reader_ReadIDCard(int ReaderHandle, StringBuilder err)
         {
-            var model = new PiperSwapModel(nameof(PICC_Reader_ReadIDCard))
+            var model = new PipeSwapperModel(nameof(PICC_Reader_ReadIDCard))
             {
                 RH = ReaderHandle,
                 S1 = err,
             };
             _writer.WriteLine(model.ToJson());
-            var resObj = PiperSwapModel.GetModel(_reader.Value.ReadLine());
+            var resObj = PipeSwapperModel.GetModel(_reader.Value.ReadLine());
             err.Clear().Append(resObj.S1);
             return resObj.R;
         }
@@ -930,9 +930,9 @@ namespace System.Data.HDSSSESDK
         /// <returns></returns>
         public int GetCardType()
         {
-            var model = new PiperSwapModel(nameof(GetCardType));
+            var model = new PipeSwapperModel(nameof(GetCardType));
             _writer.WriteLine(model.ToJson());
-            var resObj = PiperSwapModel.GetModel(_reader.Value.ReadLine());
+            var resObj = PipeSwapperModel.GetModel(_reader.Value.ReadLine());
             return resObj.R;
         }
         /// <summary>
@@ -942,12 +942,12 @@ namespace System.Data.HDSSSESDK
         /// <returns></returns>
         public int GetName(StringBuilder name)
         {
-            var model = new PiperSwapModel(nameof(GetName))
+            var model = new PipeSwapperModel(nameof(GetName))
             {
                 S1 = name,
             };
             _writer.WriteLine(model.ToJson());
-            var resObj = PiperSwapModel.GetModel(_reader.Value.ReadLine());
+            var resObj = PipeSwapperModel.GetModel(_reader.Value.ReadLine());
             name.Clear().Append(resObj.S1);
             return resObj.R;
         }
@@ -958,12 +958,12 @@ namespace System.Data.HDSSSESDK
         /// <returns></returns>
         public int GetSex(StringBuilder sex)
         {
-            var model = new PiperSwapModel(nameof(GetSex))
+            var model = new PipeSwapperModel(nameof(GetSex))
             {
                 S1 = sex,
             };
             _writer.WriteLine(model.ToJson());
-            var resObj = PiperSwapModel.GetModel(_reader.Value.ReadLine());
+            var resObj = PipeSwapperModel.GetModel(_reader.Value.ReadLine());
             sex.Clear().Append(resObj.S1);
             return resObj.R;
         }
@@ -974,12 +974,12 @@ namespace System.Data.HDSSSESDK
         /// <returns></returns>
         public int GetNation(StringBuilder Nation)
         {
-            var model = new PiperSwapModel(nameof(GetNation))
+            var model = new PipeSwapperModel(nameof(GetNation))
             {
                 S1 = Nation,
             };
             _writer.WriteLine(model.ToJson());
-            var resObj = PiperSwapModel.GetModel(_reader.Value.ReadLine());
+            var resObj = PipeSwapperModel.GetModel(_reader.Value.ReadLine());
             Nation.Clear().Append(resObj.S1);
             return resObj.R;
         }
@@ -990,12 +990,12 @@ namespace System.Data.HDSSSESDK
         /// <returns></returns>
         public int GetBirth(StringBuilder Birth)
         {
-            var model = new PiperSwapModel(nameof(GetBirth))
+            var model = new PipeSwapperModel(nameof(GetBirth))
             {
                 S1 = Birth,
             };
             _writer.WriteLine(model.ToJson());
-            var resObj = PiperSwapModel.GetModel(_reader.Value.ReadLine());
+            var resObj = PipeSwapperModel.GetModel(_reader.Value.ReadLine());
             Birth.Clear().Append(resObj.S1);
             return resObj.R;
         }
@@ -1006,12 +1006,12 @@ namespace System.Data.HDSSSESDK
         /// <returns></returns>
         public int GetAddress(StringBuilder Address)
         {
-            var model = new PiperSwapModel(nameof(GetAddress))
+            var model = new PipeSwapperModel(nameof(GetAddress))
             {
                 S1 = Address,
             };
             _writer.WriteLine(model.ToJson());
-            var resObj = PiperSwapModel.GetModel(_reader.Value.ReadLine());
+            var resObj = PipeSwapperModel.GetModel(_reader.Value.ReadLine());
             Address.Clear().Append(resObj.S1);
             return resObj.R;
         }
@@ -1022,12 +1022,12 @@ namespace System.Data.HDSSSESDK
         /// <returns></returns>
         public int GetCertNo(StringBuilder CertNo)
         {
-            var model = new PiperSwapModel(nameof(GetCertNo))
+            var model = new PipeSwapperModel(nameof(GetCertNo))
             {
                 S1 = CertNo,
             };
             _writer.WriteLine(model.ToJson());
-            var resObj = PiperSwapModel.GetModel(_reader.Value.ReadLine());
+            var resObj = PipeSwapperModel.GetModel(_reader.Value.ReadLine());
             CertNo.Clear().Append(resObj.S1);
             return resObj.R;
         }
@@ -1038,12 +1038,12 @@ namespace System.Data.HDSSSESDK
         /// <returns></returns>
         public int GetDepartemt(StringBuilder Departemt)
         {
-            var model = new PiperSwapModel(nameof(GetDepartemt))
+            var model = new PipeSwapperModel(nameof(GetDepartemt))
             {
                 S1 = Departemt,
             };
             _writer.WriteLine(model.ToJson());
-            var resObj = PiperSwapModel.GetModel(_reader.Value.ReadLine());
+            var resObj = PipeSwapperModel.GetModel(_reader.Value.ReadLine());
             Departemt.Clear().Append(resObj.S1);
             return resObj.R;
         }
@@ -1054,12 +1054,12 @@ namespace System.Data.HDSSSESDK
         /// <returns></returns>
         public int GetEffectDate(StringBuilder EffectDate)
         {
-            var model = new PiperSwapModel(nameof(GetEffectDate))
+            var model = new PipeSwapperModel(nameof(GetEffectDate))
             {
                 S1 = EffectDate,
             };
             _writer.WriteLine(model.ToJson());
-            var resObj = PiperSwapModel.GetModel(_reader.Value.ReadLine());
+            var resObj = PipeSwapperModel.GetModel(_reader.Value.ReadLine());
             EffectDate.Clear().Append(resObj.S1);
             return resObj.R;
         }
@@ -1070,12 +1070,12 @@ namespace System.Data.HDSSSESDK
         /// <returns></returns>
         public int GetExpireDate(StringBuilder ExpireDate)
         {
-            var model = new PiperSwapModel(nameof(GetExpireDate))
+            var model = new PipeSwapperModel(nameof(GetExpireDate))
             {
                 S1 = ExpireDate,
             };
             _writer.WriteLine(model.ToJson());
-            var resObj = PiperSwapModel.GetModel(_reader.Value.ReadLine());
+            var resObj = PipeSwapperModel.GetModel(_reader.Value.ReadLine());
             ExpireDate.Clear().Append(resObj.S1);
             return resObj.R;
         }
@@ -1086,12 +1086,12 @@ namespace System.Data.HDSSSESDK
         /// <returns></returns>
         public int GetBmpFile(StringBuilder pBmpfilepath)
         {
-            var model = new PiperSwapModel(nameof(GetBmpFile))
+            var model = new PipeSwapperModel(nameof(GetBmpFile))
             {
                 S1 = pBmpfilepath,
             };
             _writer.WriteLine(model.ToJson());
-            var resObj = PiperSwapModel.GetModel(_reader.Value.ReadLine());
+            var resObj = PipeSwapperModel.GetModel(_reader.Value.ReadLine());
             pBmpfilepath.Clear().Append(resObj.S1);
             return resObj.R;
         }
@@ -1102,12 +1102,12 @@ namespace System.Data.HDSSSESDK
         /// <returns></returns>
         public int GetEnName(StringBuilder EnName)
         {
-            var model = new PiperSwapModel(nameof(GetEnName))
+            var model = new PipeSwapperModel(nameof(GetEnName))
             {
                 S1 = EnName,
             };
             _writer.WriteLine(model.ToJson());
-            var resObj = PiperSwapModel.GetModel(_reader.Value.ReadLine());
+            var resObj = PipeSwapperModel.GetModel(_reader.Value.ReadLine());
             EnName.Clear().Append(resObj.S1);
             return resObj.R;
         }
@@ -1118,12 +1118,12 @@ namespace System.Data.HDSSSESDK
         /// <returns></returns>
         public int GetNationalityCode(StringBuilder NationalityCode)
         {
-            var model = new PiperSwapModel(nameof(GetNationalityCode))
+            var model = new PipeSwapperModel(nameof(GetNationalityCode))
             {
                 S1 = NationalityCode,
             };
             _writer.WriteLine(model.ToJson());
-            var resObj = PiperSwapModel.GetModel(_reader.Value.ReadLine());
+            var resObj = PipeSwapperModel.GetModel(_reader.Value.ReadLine());
             NationalityCode.Clear().Append(resObj.S1);
             return resObj.R;
         }
@@ -1134,12 +1134,12 @@ namespace System.Data.HDSSSESDK
         /// <returns></returns>
         public int GetTXZHM(StringBuilder txzhm)
         {
-            var model = new PiperSwapModel(nameof(GetTXZHM))
+            var model = new PipeSwapperModel(nameof(GetTXZHM))
             {
                 S1 = txzhm,
             };
             _writer.WriteLine(model.ToJson());
-            var resObj = PiperSwapModel.GetModel(_reader.Value.ReadLine());
+            var resObj = PipeSwapperModel.GetModel(_reader.Value.ReadLine());
             txzhm.Clear().Append(resObj.S1);
             return resObj.R;
         }
@@ -1150,12 +1150,12 @@ namespace System.Data.HDSSSESDK
         /// <returns></returns>
         public int GetTXZQFCS(StringBuilder txzqfcs)
         {
-            var model = new PiperSwapModel(nameof(GetTXZQFCS))
+            var model = new PipeSwapperModel(nameof(GetTXZQFCS))
             {
                 S1 = txzqfcs,
             };
             _writer.WriteLine(model.ToJson());
-            var resObj = PiperSwapModel.GetModel(_reader.Value.ReadLine());
+            var resObj = PipeSwapperModel.GetModel(_reader.Value.ReadLine());
             txzqfcs.Clear().Append(resObj.S1);
             return resObj.R;
         }
@@ -1167,13 +1167,13 @@ namespace System.Data.HDSSSESDK
         /// <returns></returns>
         public int PICC_Reader_Inventory(int Rhandle, byte[] resp)
         {
-            var model = new PiperSwapModel(nameof(PICC_Reader_Inventory))
+            var model = new PipeSwapperModel(nameof(PICC_Reader_Inventory))
             {
                 RH = Rhandle,
                 A1 = resp,
             };
             _writer.WriteLine(model.ToJson());
-            var resObj = PiperSwapModel.GetModel(_reader.Value.ReadLine());
+            var resObj = PipeSwapperModel.GetModel(_reader.Value.ReadLine());
             Array.Copy(resObj.A1, 0, resp, 0, resObj.A1.Length);
             return resObj.R;
         }
@@ -1186,14 +1186,14 @@ namespace System.Data.HDSSSESDK
         /// <returns></returns>
         public int PICC_Reader_15693_Read(int Rhandle, byte blockAddr, byte[] resp)
         {
-            var model = new PiperSwapModel(nameof(PICC_Reader_15693_Read))
+            var model = new PipeSwapperModel(nameof(PICC_Reader_15693_Read))
             {
                 RH = Rhandle,
                 B1 = blockAddr,
                 A1 = resp,
             };
             _writer.WriteLine(model.ToJson());
-            var resObj = PiperSwapModel.GetModel(_reader.Value.ReadLine());
+            var resObj = PipeSwapperModel.GetModel(_reader.Value.ReadLine());
             Array.Copy(resObj.A1, 0, resp, 0, resObj.A1.Length);
             return resObj.R;
         }
@@ -1207,7 +1207,7 @@ namespace System.Data.HDSSSESDK
         /// <returns></returns>
         public int PICC_Reader_15693_Write(int Rhandle, byte blockAddr, byte[] data, byte[] resp)
         {
-            var model = new PiperSwapModel(nameof(PICC_Reader_15693_Write))
+            var model = new PipeSwapperModel(nameof(PICC_Reader_15693_Write))
             {
                 RH = Rhandle,
                 B1 = blockAddr,
@@ -1215,7 +1215,7 @@ namespace System.Data.HDSSSESDK
                 A2 = resp,
             };
             _writer.WriteLine(model.ToJson());
-            var resObj = PiperSwapModel.GetModel(_reader.Value.ReadLine());
+            var resObj = PipeSwapperModel.GetModel(_reader.Value.ReadLine());
             Array.Copy(resObj.A1, 0, data, 0, resObj.A1.Length);
             Array.Copy(resObj.A2, 0, resp, 0, resObj.A2.Length);
             return resObj.R;
@@ -1229,14 +1229,14 @@ namespace System.Data.HDSSSESDK
         /// <returns></returns>
         public int PICC_Reader_AFI(int Rhandle, byte[] data, byte[] resp)
         {
-            var model = new PiperSwapModel(nameof(PICC_Reader_AFI))
+            var model = new PipeSwapperModel(nameof(PICC_Reader_AFI))
             {
                 RH = Rhandle,
                 A1 = data,
                 A2 = resp,
             };
             _writer.WriteLine(model.ToJson());
-            var resObj = PiperSwapModel.GetModel(_reader.Value.ReadLine());
+            var resObj = PipeSwapperModel.GetModel(_reader.Value.ReadLine());
             Array.Copy(resObj.A1, 0, data, 0, resObj.A1.Length);
             Array.Copy(resObj.A2, 0, resp, 0, resObj.A2.Length);
             return resObj.R;
@@ -1250,14 +1250,14 @@ namespace System.Data.HDSSSESDK
         /// <returns></returns>
         public int PICC_Reader_DSFID(int Rhandle, byte[] data, byte[] resp)
         {
-            var model = new PiperSwapModel(nameof(PICC_Reader_DSFID))
+            var model = new PipeSwapperModel(nameof(PICC_Reader_DSFID))
             {
                 RH = Rhandle,
                 A1 = data,
                 A2 = resp,
             };
             _writer.WriteLine(model.ToJson());
-            var resObj = PiperSwapModel.GetModel(_reader.Value.ReadLine());
+            var resObj = PipeSwapperModel.GetModel(_reader.Value.ReadLine());
             Array.Copy(resObj.A1, 0, data, 0, resObj.A1.Length);
             Array.Copy(resObj.A2, 0, resp, 0, resObj.A2.Length);
             return resObj.R;
@@ -1270,13 +1270,13 @@ namespace System.Data.HDSSSESDK
         /// <returns></returns>
         public int PICC_Reader_SystemInfor(int Rhandle, byte[] resp)
         {
-            var model = new PiperSwapModel(nameof(PICC_Reader_SystemInfor))
+            var model = new PipeSwapperModel(nameof(PICC_Reader_SystemInfor))
             {
                 RH = Rhandle,
                 A1 = resp,
             };
             _writer.WriteLine(model.ToJson());
-            var resObj = PiperSwapModel.GetModel(_reader.Value.ReadLine());
+            var resObj = PipeSwapperModel.GetModel(_reader.Value.ReadLine());
             Array.Copy(resObj.A1, 0, resp, 0, resObj.A1.Length);
             return resObj.R;
         }
@@ -1289,14 +1289,14 @@ namespace System.Data.HDSSSESDK
         /// <returns></returns>
         public int PICC_Reader_LockDataBlock(int Rhandle, byte blockAddr, byte[] resp)
         {
-            var model = new PiperSwapModel(nameof(PICC_Reader_LockDataBlock))
+            var model = new PipeSwapperModel(nameof(PICC_Reader_LockDataBlock))
             {
                 RH = Rhandle,
                 B1 = blockAddr,
                 A1 = resp,
             };
             _writer.WriteLine(model.ToJson());
-            var resObj = PiperSwapModel.GetModel(_reader.Value.ReadLine());
+            var resObj = PipeSwapperModel.GetModel(_reader.Value.ReadLine());
             Array.Copy(resObj.A1, 0, resp, 0, resObj.A1.Length);
             return resObj.R;
         }

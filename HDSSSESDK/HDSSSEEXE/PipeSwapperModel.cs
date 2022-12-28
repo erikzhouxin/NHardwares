@@ -8,7 +8,7 @@ namespace System.Data.HDSSSEEXE
     /// <summary>
     /// 管道交换模型
     /// </summary>
-    internal class PiperSwapModel
+    internal class PipeSwapperModel
     {
         /// <summary>
         /// 命令/方法名
@@ -106,7 +106,7 @@ namespace System.Data.HDSSSEEXE
         /// 构造
         /// </summary>
         /// <param name="cmd"></param>
-        public PiperSwapModel(string cmd)
+        public PipeSwapperModel(string cmd)
         {
             Cmd = cmd;
         }
@@ -120,12 +120,12 @@ namespace System.Data.HDSSSEEXE
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public static string GetJson(PiperSwapModel model) => JsonConvert.SerializeObject(model);
+        public static string GetJson(PipeSwapperModel model) => JsonConvert.SerializeObject(model);
         /// <summary>
         /// 得到模型
         /// </summary>
         /// <param name="json"></param>
         /// <returns></returns>
-        public static PiperSwapModel GetModel(string json) => JsonConvert.DeserializeObject<PiperSwapModel>(json);
+        public static PipeSwapperModel GetModel(string json) => JsonConvert.DeserializeObject<PipeSwapperModel>(json);
     }
 }

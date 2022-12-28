@@ -22,6 +22,8 @@
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<PackageTags>odbc;oledb;access97;</PackageTags>
 		<PackageDescription>命名管道打通旧数据库的数据访问</PackageDescription>
+		<AppConfig Condition="'$(TargetFramework)' == 'net40'">app.net40.config</AppConfig>
+		<AutoUnifyAssemblyReferences Condition="'$(TargetFramework)' == 'net40'">false</AutoUnifyAssemblyReferences>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)'=='Debug|net40'">
 		<DefineConstants>TRACE;DEBUG;NETFrame;NET40</DefineConstants>
@@ -69,5 +71,6 @@
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+		<PackageReference Include="NSystem.Data.Dabber" Version="2022.9.9" />
 	</ItemGroup>
 </Project>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.HDSSSESDK;
 using System.IO;
 using System.IO.Pipes;
 using System.Text;
@@ -24,11 +25,11 @@ namespace System.Data.HDSSSEEXE
                     string response;
                     try
                     {
-                        response = HD100CardSdkDller.Call(line);
+                        response = HD100CardSdk.Call(line);
                     }
                     catch (Exception ex)
                     {
-                        response = new PiperSwapModel("Unknown")
+                        response = new PipeSwapperModel("Unknown")
                         {
                             R = -1,
                             IT = false,

@@ -1,5 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Data.Cobber;
+using System.Data.EDBODBCSDK;
 using System.IO;
 using System.IO.Pipes;
 using System.Text;
@@ -16,43 +18,44 @@ namespace System.Data.EDBODBCEXE
                 // 连接
                 clientStream.Connect();
                 StreamReader reader = new StreamReader(clientStream, Encoding.UTF8);
-                StreamWriter writer = new StreamWriter(clientStream, Encoding.UTF8) { AutoFlush = true };
+                StreamWriter writer = null;
                 string line;
                 while ((line = reader.ReadLine()) != null)
                 {
-                    PipeTransformModel receive;
+                    writer ??= new StreamWriter(clientStream, Encoding.UTF8) { AutoFlush = true };
+                    PiperSwapModel receive;
                     try
                     {
-                        receive = PipeTransformModel.GetModel(line);
+                        receive = line.GetJsonObject<PiperSwapModel>();
                     }
                     catch (Exception ex)
                     {
                         Console.WriteLine(ex);
-                        writer.WriteLine(new PipeTransformModel
+                        writer.WriteLine(new PiperSwapModel
                         {
-                            C = PipeTransformModel.ErrorCmd,
+                            C = PiperSwapModel.ErrorCmd,
                             M = ex.Message,
                             P = JsonConvert.SerializeObject(ex),
                             T = DateTime.Now,
-                        }.ToJson());
+                        }.GetJsonString());
                         continue;
                     }
-                    PipeTransformModel response;
+                    PiperSwapModel response;
                     try
                     {
                         response = Analyzing(receive);
                     }
                     catch (Exception ex)
                     {
-                        response = new PipeTransformModel
+                        response = new PiperSwapModel
                         {
-                            C = PipeTransformModel.ErrorCmd,
+                            C = PiperSwapModel.ErrorCmd,
                             M = ex.Message,
                             P = JsonConvert.SerializeObject(ex),
                             T = DateTime.Now,
                         };
                     }
-                    writer.WriteLine(response.ToJson());
+                    writer.WriteLine(response.GetJsonString());
                 }
             }
         }
@@ -61,23 +64,26 @@ namespace System.Data.EDBODBCEXE
         /// </summary>
         /// <param name="receive"></param>
         /// <returns></returns>
-        internal static PipeTransformModel Analyzing(PipeTransformModel receive)
+        internal static PiperSwapModel Analyzing(PiperSwapModel receive)
         {
-            if (receive.C.StartsWith("DbAccess.", StringComparison.OrdinalIgnoreCase))
+            if (receive.C.StartsWith(DbAccessApi.PreKey, StringComparison.OrdinalIgnoreCase))
             {
-                return 
+                return DbAccessApi.Call(receive);
             }
             switch (receive.C)
             {
-                case "":
-                    {
-                        return 
-                    }
                 default:
                     {
-                        return new PipeTransformModel
+                        return new PiperSwapModel
                         {
-                            C = PipeTransformModel.NotFoundCmd,
+                            I = receive.I,
+                            C = PiperSwapModel.NotFoundCmd,
+                            M = receive.M,
+                            P = receive.P,
+                            K = receive.K,
+                            F = false,
+                            R = String.Empty,
+                            T = DateTime.Now,
                         };
                     }
             }
