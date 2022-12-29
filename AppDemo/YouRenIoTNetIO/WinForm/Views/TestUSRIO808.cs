@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Data;
 using System.Data.Cobber;
 using System.Data.Extter;
-using System.Data.HardwareInterfaces;
+using System.Data.NHInterfaces;
 using System.Data.Logger;
 using System.Data.YouRenIoTNetIO;
 using System.Drawing;

@@ -8,7 +8,9 @@ namespace System.Data.HardwareInterfaces
 {
     /// <summary>
     /// LoadLibraryFlags加载动态链接库标记
+    /// <see cref="System.Data.NHInterfaces.SdkDynamicLoadLibFlags"/>
     /// </summary>
+    [Obsolete("替代方案:NHInterfaces.SdkDynamicLoadLibFlags,2023.x.x之后的版本将不再提供")]
     public enum SdkDynamicLoadLibFlags : uint
     {
         /// <summary>
@@ -79,7 +81,9 @@ namespace System.Data.HardwareInterfaces
     }
     /// <summary>
     /// SDK动态加载抽象类
+    /// <see cref="System.Data.NHInterfaces.ASdkDynamicLoader"/>
     /// </summary>
+    [Obsolete("替代方案:NHInterfaces.ASdkDynamicLoader,2023.x.x之后的版本将不再提供")]
     public abstract class ASdkDynamicLoader : IDisposable
     {
         /// <summary>

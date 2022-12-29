@@ -34,7 +34,7 @@ namespace YuShiNetDevSDK.WinForm
 
         private string getStrTime(long time)
         {
-            DateTime startDateTime = TimeZone.CurrentTimeZone.ToLocalTime(new System.DateTime(1970, 1, 1));
+            DateTime startDateTime = new System.DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Local);
             return startDateTime.AddSeconds(time).ToString("yyyy/MM/dd HH:mm:ss");
         }
 

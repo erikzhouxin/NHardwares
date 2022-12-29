@@ -1029,13 +1029,13 @@ namespace YuShiITSSDK.NWinFormUI
         private long getLongTime(String strTime)
         {
             DateTime dateTime = Convert.ToDateTime(strTime);
-            System.DateTime startTime = TimeZone.CurrentTimeZone.ToLocalTime(new System.DateTime(1970, 1, 1)); // 
+            System.DateTime startTime = new System.DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Local); // 
             return (long)(dateTime - startTime).TotalSeconds; // 
         }
 
         private string getStrTime(long time)
         {
-            DateTime startDateTime = TimeZone.CurrentTimeZone.ToLocalTime(new System.DateTime(1970, 1, 1)); // 
+            DateTime startDateTime = new System.DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Local); // 
             return startDateTime.AddSeconds(time).ToString("yyyy/MM/dd HH:mm:ss");
 
         }

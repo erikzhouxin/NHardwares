@@ -5,7 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 
-namespace System.Data.HardwareInterfaces
+namespace System.Data.NHInterfaces
 {
     /// <summary>
     /// 程序集代理加载

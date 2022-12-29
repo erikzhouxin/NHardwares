@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.HardwareInterfaces;
+using System.Data.NHInterfaces;
 using System.Data.NModbus;
 using System.Linq;
 using System.Net;

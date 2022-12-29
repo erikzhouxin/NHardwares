@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Data.HardwareInterfaces;
+using System.Data.NHInterfaces;
 using System.Data.Mabber;
 using System.IO;
 using System.Linq;

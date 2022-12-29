@@ -9,7 +9,9 @@ namespace System.Data.HardwareInterfaces
 {
     /// <summary>
     /// 程序集类加载
+    /// <see cref="System.Data.NHInterfaces.AssemblyClassLoader"/>
     /// </summary>
+    [Obsolete("替代方案:NHInterfaces.AssemblyClassLoader,2023.x.x之后的版本将不再提供")]
     public class AssemblyClassLoader
     {
         private static readonly Type VoidType = Type.GetType("System.Void"); //函数返回 void类型

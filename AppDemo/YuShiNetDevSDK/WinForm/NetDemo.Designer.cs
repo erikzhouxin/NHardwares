@@ -33,7 +33,7 @@ namespace YuShiNetDevSDK.WinForm
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("(Right Click to Add Device)");
+            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("(Right Click to Add Device)");
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NetDemo));
             this.presetIDCobBox = new System.Windows.Forms.ComboBox();
             this.Discovery = new System.Windows.Forms.Button();
@@ -686,7 +686,7 @@ namespace YuShiNetDevSDK.WinForm
             this.Status = new System.Windows.Forms.ColumnHeader();
             this.ErrorCode = new System.Windows.Forms.ColumnHeader();
             this.PannelContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.Close = new System.Windows.Forms.ToolStripMenuItem();
+            this.CloseThis = new System.Windows.Forms.ToolStripMenuItem();
             this.CloseAll = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.ProcessingMode = new System.Windows.Forms.ToolStripMenuItem();
@@ -812,18 +812,20 @@ namespace YuShiNetDevSDK.WinForm
             // presetIDCobBox
             // 
             this.presetIDCobBox.FormattingEnabled = true;
-            this.presetIDCobBox.Location = new System.Drawing.Point(90, 15);
+            this.presetIDCobBox.Location = new System.Drawing.Point(105, 21);
+            this.presetIDCobBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.presetIDCobBox.Name = "presetIDCobBox";
-            this.presetIDCobBox.Size = new System.Drawing.Size(60, 25);
+            this.presetIDCobBox.Size = new System.Drawing.Size(69, 25);
             this.presetIDCobBox.TabIndex = 1;
             this.presetIDCobBox.SelectedIndexChanged += new System.EventHandler(this.presetIDCobBox_SelectedIndexChanged);
             // 
             // Discovery
             // 
-            this.Discovery.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.Discovery.Location = new System.Drawing.Point(35, 14);
+            this.Discovery.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.Discovery.Location = new System.Drawing.Point(41, 20);
+            this.Discovery.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Discovery.Name = "Discovery";
-            this.Discovery.Size = new System.Drawing.Size(80, 30);
+            this.Discovery.Size = new System.Drawing.Size(93, 42);
             this.Discovery.TabIndex = 0;
             this.Discovery.Text = "Discovery";
             this.Discovery.UseVisualStyleBackColor = true;
@@ -831,28 +833,30 @@ namespace YuShiNetDevSDK.WinForm
             // 
             // DeviceTree
             // 
-            this.DeviceTree.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.DeviceTree.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.DeviceTree.FullRowSelect = true;
             this.DeviceTree.HideSelection = false;
             this.DeviceTree.ImageIndex = 0;
             this.DeviceTree.ImageList = this.imageList1;
-            this.DeviceTree.Location = new System.Drawing.Point(12, 65);
+            this.DeviceTree.Location = new System.Drawing.Point(14, 92);
+            this.DeviceTree.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.DeviceTree.Name = "DeviceTree";
-            treeNode1.ImageIndex = 0;
-            treeNode1.Name = "root";
-            treeNode1.Text = "(Right Click to Add Device)";
+            treeNode2.ImageIndex = 0;
+            treeNode2.Name = "root";
+            treeNode2.Text = "(Right Click to Add Device)";
             this.DeviceTree.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode1});
+            treeNode2});
             this.DeviceTree.SelectedImageIndex = 0;
-            this.DeviceTree.Size = new System.Drawing.Size(189, 691);
+            this.DeviceTree.Size = new System.Drawing.Size(220, 977);
             this.DeviceTree.TabIndex = 1;
-            this.DeviceTree.DoubleClick += new System.EventHandler(this.DeviceTree_DoubleClick);
-            this.DeviceTree.MouseUp += new System.Windows.Forms.MouseEventHandler(this.DeviceTree_MouseUp);
-            this.DeviceTree.MouseDown += new System.Windows.Forms.MouseEventHandler(this.DeviceTree_MouseDown);
             this.DeviceTree.Click += new System.EventHandler(this.DeviceTree_Click);
+            this.DeviceTree.DoubleClick += new System.EventHandler(this.DeviceTree_DoubleClick);
+            this.DeviceTree.MouseDown += new System.Windows.Forms.MouseEventHandler(this.DeviceTree_MouseDown);
+            this.DeviceTree.MouseUp += new System.Windows.Forms.MouseEventHandler(this.DeviceTree_MouseUp);
             // 
             // imageList1
             // 
+            this.imageList1.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
             this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
             this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
             this.imageList1.Images.SetKeyName(0, "tree.bmp");
@@ -873,11 +877,12 @@ namespace YuShiNetDevSDK.WinForm
             this.mainTabCtrl.Controls.Add(this.VCA);
             this.mainTabCtrl.Controls.Add(this.Maintenance);
             this.mainTabCtrl.Controls.Add(this.tabPage1);
-            this.mainTabCtrl.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.mainTabCtrl.Location = new System.Drawing.Point(207, 12);
+            this.mainTabCtrl.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.mainTabCtrl.Location = new System.Drawing.Point(241, 17);
+            this.mainTabCtrl.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.mainTabCtrl.Name = "mainTabCtrl";
             this.mainTabCtrl.SelectedIndex = 0;
-            this.mainTabCtrl.Size = new System.Drawing.Size(907, 636);
+            this.mainTabCtrl.Size = new System.Drawing.Size(1058, 901);
             this.mainTabCtrl.TabIndex = 2;
             this.mainTabCtrl.SelectedIndexChanged += new System.EventHandler(this.mainTabCtrlSelectedChanged);
             // 
@@ -894,9 +899,10 @@ namespace YuShiNetDevSDK.WinForm
             this.LiveView.Controls.Add(this.group_win);
             this.LiveView.Controls.Add(this.groupSound);
             this.LiveView.Location = new System.Drawing.Point(4, 26);
+            this.LiveView.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.LiveView.Name = "LiveView";
-            this.LiveView.Padding = new System.Windows.Forms.Padding(3);
-            this.LiveView.Size = new System.Drawing.Size(899, 606);
+            this.LiveView.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.LiveView.Size = new System.Drawing.Size(1050, 871);
             this.LiveView.TabIndex = 0;
             this.LiveView.Text = "Live View";
             this.LiveView.UseVisualStyleBackColor = true;
@@ -909,20 +915,22 @@ namespace YuShiNetDevSDK.WinForm
             this.groupBox39.Controls.Add(this.ButtonStartVoice);
             this.groupBox39.Controls.Add(this.ButtonStoprecord);
             this.groupBox39.Controls.Add(this.ButtonStartrecrod);
-            this.groupBox39.Location = new System.Drawing.Point(709, 433);
+            this.groupBox39.Location = new System.Drawing.Point(827, 613);
+            this.groupBox39.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.groupBox39.Name = "groupBox39";
-            this.groupBox39.Size = new System.Drawing.Size(184, 132);
+            this.groupBox39.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox39.Size = new System.Drawing.Size(215, 187);
             this.groupBox39.TabIndex = 9;
             this.groupBox39.TabStop = false;
             this.groupBox39.Text = "NoPreview";
             // 
             // ButtonStopVoice
             // 
-            this.ButtonStopVoice.Enabled = true;
-            this.ButtonStopVoice.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.ButtonStopVoice.Location = new System.Drawing.Point(97, 60);
+            this.ButtonStopVoice.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.ButtonStopVoice.Location = new System.Drawing.Point(113, 85);
+            this.ButtonStopVoice.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.ButtonStopVoice.Name = "ButtonStopVoice";
-            this.ButtonStopVoice.Size = new System.Drawing.Size(84, 30);
+            this.ButtonStopVoice.Size = new System.Drawing.Size(98, 42);
             this.ButtonStopVoice.TabIndex = 0;
             this.ButtonStopVoice.Text = "StopVoice";
             this.ButtonStopVoice.UseVisualStyleBackColor = true;
@@ -930,11 +938,11 @@ namespace YuShiNetDevSDK.WinForm
             // 
             // ButtoncaptureNoPreview
             // 
-            this.ButtoncaptureNoPreview.Enabled = true;
-            this.ButtoncaptureNoPreview.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.ButtoncaptureNoPreview.Location = new System.Drawing.Point(10, 96);
+            this.ButtoncaptureNoPreview.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.ButtoncaptureNoPreview.Location = new System.Drawing.Point(12, 136);
+            this.ButtoncaptureNoPreview.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.ButtoncaptureNoPreview.Name = "ButtoncaptureNoPreview";
-            this.ButtoncaptureNoPreview.Size = new System.Drawing.Size(79, 30);
+            this.ButtoncaptureNoPreview.Size = new System.Drawing.Size(92, 42);
             this.ButtoncaptureNoPreview.TabIndex = 0;
             this.ButtoncaptureNoPreview.Text = "SnapShot";
             this.ButtoncaptureNoPreview.UseVisualStyleBackColor = true;
@@ -942,11 +950,11 @@ namespace YuShiNetDevSDK.WinForm
             // 
             // ButtonStartVoice
             // 
-            this.ButtonStartVoice.Enabled = true;
-            this.ButtonStartVoice.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.ButtonStartVoice.Location = new System.Drawing.Point(10, 60);
+            this.ButtonStartVoice.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.ButtonStartVoice.Location = new System.Drawing.Point(12, 85);
+            this.ButtonStartVoice.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.ButtonStartVoice.Name = "ButtonStartVoice";
-            this.ButtonStartVoice.Size = new System.Drawing.Size(79, 30);
+            this.ButtonStartVoice.Size = new System.Drawing.Size(92, 42);
             this.ButtonStartVoice.TabIndex = 0;
             this.ButtonStartVoice.Text = "StartVoice";
             this.ButtonStartVoice.UseVisualStyleBackColor = true;
@@ -954,10 +962,11 @@ namespace YuShiNetDevSDK.WinForm
             // 
             // ButtonStoprecord
             // 
-            this.ButtonStoprecord.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.ButtonStoprecord.Location = new System.Drawing.Point(96, 22);
+            this.ButtonStoprecord.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.ButtonStoprecord.Location = new System.Drawing.Point(112, 31);
+            this.ButtonStoprecord.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.ButtonStoprecord.Name = "ButtonStoprecord";
-            this.ButtonStoprecord.Size = new System.Drawing.Size(84, 30);
+            this.ButtonStoprecord.Size = new System.Drawing.Size(98, 42);
             this.ButtonStoprecord.TabIndex = 0;
             this.ButtonStoprecord.Text = "StopRecord";
             this.ButtonStoprecord.UseVisualStyleBackColor = true;
@@ -965,10 +974,11 @@ namespace YuShiNetDevSDK.WinForm
             // 
             // ButtonStartrecrod
             // 
-            this.ButtonStartrecrod.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.ButtonStartrecrod.Location = new System.Drawing.Point(10, 22);
+            this.ButtonStartrecrod.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.ButtonStartrecrod.Location = new System.Drawing.Point(12, 31);
+            this.ButtonStartrecrod.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.ButtonStartrecrod.Name = "ButtonStartrecrod";
-            this.ButtonStartrecrod.Size = new System.Drawing.Size(79, 30);
+            this.ButtonStartrecrod.Size = new System.Drawing.Size(92, 42);
             this.ButtonStartrecrod.TabIndex = 0;
             this.ButtonStartrecrod.Text = "StartRecord";
             this.ButtonStartrecrod.UseVisualStyleBackColor = true;
@@ -976,14 +986,13 @@ namespace YuShiNetDevSDK.WinForm
             // 
             // inputPcmBtn
             // 
-            this.inputPcmBtn.Enabled = true;
-            this.inputPcmBtn.Location = new System.Drawing.Point(735, 574);
+            this.inputPcmBtn.Location = new System.Drawing.Point(858, 813);
+            this.inputPcmBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.inputPcmBtn.Name = "inputPcmBtn";
-            this.inputPcmBtn.Size = new System.Drawing.Size(90, 23);
+            this.inputPcmBtn.Size = new System.Drawing.Size(105, 33);
             this.inputPcmBtn.TabIndex = 9;
             this.inputPcmBtn.Text = "PCM input";
             this.inputPcmBtn.UseVisualStyleBackColor = true;
-            this.inputPcmBtn.Visible = true;
             this.inputPcmBtn.Click += new System.EventHandler(this.inputPcmBtn_Click);
             // 
             // groupBox2
@@ -996,19 +1005,22 @@ namespace YuShiNetDevSDK.WinForm
             this.groupBox2.Controls.Add(this.zoomWideBtn);
             this.groupBox2.Controls.Add(this.label6);
             this.groupBox2.Controls.Add(this.label5);
-            this.groupBox2.Location = new System.Drawing.Point(709, 294);
+            this.groupBox2.Location = new System.Drawing.Point(827, 416);
+            this.groupBox2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(182, 137);
+            this.groupBox2.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox2.Size = new System.Drawing.Size(212, 194);
             this.groupBox2.TabIndex = 8;
             this.groupBox2.TabStop = false;
             // 
             // focusFarBtn
             // 
             this.focusFarBtn.Enabled = false;
-            this.focusFarBtn.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.focusFarBtn.Location = new System.Drawing.Point(100, 62);
+            this.focusFarBtn.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.focusFarBtn.Location = new System.Drawing.Point(117, 88);
+            this.focusFarBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.focusFarBtn.Name = "focusFarBtn";
-            this.focusFarBtn.Size = new System.Drawing.Size(57, 30);
+            this.focusFarBtn.Size = new System.Drawing.Size(66, 42);
             this.focusFarBtn.TabIndex = 0;
             this.focusFarBtn.Text = "Far";
             this.focusFarBtn.UseVisualStyleBackColor = true;
@@ -1018,10 +1030,11 @@ namespace YuShiNetDevSDK.WinForm
             // MoreBtn
             // 
             this.MoreBtn.Enabled = false;
-            this.MoreBtn.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.MoreBtn.Location = new System.Drawing.Point(17, 99);
+            this.MoreBtn.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.MoreBtn.Location = new System.Drawing.Point(20, 140);
+            this.MoreBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.MoreBtn.Name = "MoreBtn";
-            this.MoreBtn.Size = new System.Drawing.Size(57, 30);
+            this.MoreBtn.Size = new System.Drawing.Size(66, 42);
             this.MoreBtn.TabIndex = 0;
             this.MoreBtn.Text = "More...";
             this.MoreBtn.UseVisualStyleBackColor = true;
@@ -1030,10 +1043,11 @@ namespace YuShiNetDevSDK.WinForm
             // zoomTeleBtn
             // 
             this.zoomTeleBtn.Enabled = false;
-            this.zoomTeleBtn.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.zoomTeleBtn.Location = new System.Drawing.Point(17, 62);
+            this.zoomTeleBtn.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.zoomTeleBtn.Location = new System.Drawing.Point(20, 88);
+            this.zoomTeleBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.zoomTeleBtn.Name = "zoomTeleBtn";
-            this.zoomTeleBtn.Size = new System.Drawing.Size(57, 30);
+            this.zoomTeleBtn.Size = new System.Drawing.Size(66, 42);
             this.zoomTeleBtn.TabIndex = 0;
             this.zoomTeleBtn.Text = "Tele";
             this.zoomTeleBtn.UseVisualStyleBackColor = true;
@@ -1043,10 +1057,11 @@ namespace YuShiNetDevSDK.WinForm
             // focusNearBtn
             // 
             this.focusNearBtn.Enabled = false;
-            this.focusNearBtn.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.focusNearBtn.Location = new System.Drawing.Point(100, 13);
+            this.focusNearBtn.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.focusNearBtn.Location = new System.Drawing.Point(117, 18);
+            this.focusNearBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.focusNearBtn.Name = "focusNearBtn";
-            this.focusNearBtn.Size = new System.Drawing.Size(57, 30);
+            this.focusNearBtn.Size = new System.Drawing.Size(66, 42);
             this.focusNearBtn.TabIndex = 0;
             this.focusNearBtn.Text = "Near";
             this.focusNearBtn.UseVisualStyleBackColor = true;
@@ -1056,10 +1071,11 @@ namespace YuShiNetDevSDK.WinForm
             // zoomWideBtn
             // 
             this.zoomWideBtn.Enabled = false;
-            this.zoomWideBtn.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.zoomWideBtn.Location = new System.Drawing.Point(17, 13);
+            this.zoomWideBtn.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.zoomWideBtn.Location = new System.Drawing.Point(20, 18);
+            this.zoomWideBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.zoomWideBtn.Name = "zoomWideBtn";
-            this.zoomWideBtn.Size = new System.Drawing.Size(57, 30);
+            this.zoomWideBtn.Size = new System.Drawing.Size(66, 42);
             this.zoomWideBtn.TabIndex = 0;
             this.zoomWideBtn.Text = "Wide";
             this.zoomWideBtn.UseVisualStyleBackColor = true;
@@ -1069,20 +1085,22 @@ namespace YuShiNetDevSDK.WinForm
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label6.Location = new System.Drawing.Point(111, 44);
+            this.label6.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label6.Location = new System.Drawing.Point(130, 62);
+            this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(39, 16);
+            this.label6.Size = new System.Drawing.Size(38, 16);
             this.label6.TabIndex = 0;
             this.label6.Text = "Focus";
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label5.Location = new System.Drawing.Point(16, 44);
+            this.label5.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label5.Location = new System.Drawing.Point(19, 62);
+            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(39, 16);
+            this.label5.Size = new System.Drawing.Size(38, 16);
             this.label5.TabIndex = 0;
             this.label5.Text = "Zoom";
             // 
@@ -1097,26 +1115,30 @@ namespace YuShiNetDevSDK.WinForm
             this.PresetGBox.Controls.Add(this.presetGetBtn);
             this.PresetGBox.Controls.Add(this.label4);
             this.PresetGBox.Controls.Add(this.label3);
-            this.PresetGBox.Location = new System.Drawing.Point(709, 156);
+            this.PresetGBox.Location = new System.Drawing.Point(827, 221);
+            this.PresetGBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.PresetGBox.Name = "PresetGBox";
-            this.PresetGBox.Size = new System.Drawing.Size(182, 137);
+            this.PresetGBox.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.PresetGBox.Size = new System.Drawing.Size(212, 194);
             this.PresetGBox.TabIndex = 7;
             this.PresetGBox.TabStop = false;
             this.PresetGBox.Text = "Preset";
             // 
             // presetNameText
             // 
-            this.presetNameText.Location = new System.Drawing.Point(91, 42);
+            this.presetNameText.Location = new System.Drawing.Point(106, 60);
+            this.presetNameText.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.presetNameText.Name = "presetNameText";
-            this.presetNameText.Size = new System.Drawing.Size(59, 23);
+            this.presetNameText.Size = new System.Drawing.Size(68, 23);
             this.presetNameText.TabIndex = 2;
             // 
             // presetDeleteBtn
             // 
-            this.presetDeleteBtn.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.presetDeleteBtn.Location = new System.Drawing.Point(93, 102);
+            this.presetDeleteBtn.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.presetDeleteBtn.Location = new System.Drawing.Point(108, 144);
+            this.presetDeleteBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.presetDeleteBtn.Name = "presetDeleteBtn";
-            this.presetDeleteBtn.Size = new System.Drawing.Size(57, 30);
+            this.presetDeleteBtn.Size = new System.Drawing.Size(66, 42);
             this.presetDeleteBtn.TabIndex = 0;
             this.presetDeleteBtn.Text = "Delete";
             this.presetDeleteBtn.UseVisualStyleBackColor = true;
@@ -1124,10 +1146,11 @@ namespace YuShiNetDevSDK.WinForm
             // 
             // presetSetBtn
             // 
-            this.presetSetBtn.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.presetSetBtn.Location = new System.Drawing.Point(93, 67);
+            this.presetSetBtn.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.presetSetBtn.Location = new System.Drawing.Point(108, 95);
+            this.presetSetBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.presetSetBtn.Name = "presetSetBtn";
-            this.presetSetBtn.Size = new System.Drawing.Size(57, 30);
+            this.presetSetBtn.Size = new System.Drawing.Size(66, 42);
             this.presetSetBtn.TabIndex = 0;
             this.presetSetBtn.Text = "Set";
             this.presetSetBtn.UseVisualStyleBackColor = true;
@@ -1135,10 +1158,11 @@ namespace YuShiNetDevSDK.WinForm
             // 
             // presetGoToBtn
             // 
-            this.presetGoToBtn.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.presetGoToBtn.Location = new System.Drawing.Point(19, 102);
+            this.presetGoToBtn.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.presetGoToBtn.Location = new System.Drawing.Point(22, 144);
+            this.presetGoToBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.presetGoToBtn.Name = "presetGoToBtn";
-            this.presetGoToBtn.Size = new System.Drawing.Size(57, 30);
+            this.presetGoToBtn.Size = new System.Drawing.Size(66, 42);
             this.presetGoToBtn.TabIndex = 0;
             this.presetGoToBtn.Text = "Go to";
             this.presetGoToBtn.UseVisualStyleBackColor = true;
@@ -1146,10 +1170,11 @@ namespace YuShiNetDevSDK.WinForm
             // 
             // presetGetBtn
             // 
-            this.presetGetBtn.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.presetGetBtn.Location = new System.Drawing.Point(19, 68);
+            this.presetGetBtn.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.presetGetBtn.Location = new System.Drawing.Point(22, 96);
+            this.presetGetBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.presetGetBtn.Name = "presetGetBtn";
-            this.presetGetBtn.Size = new System.Drawing.Size(57, 30);
+            this.presetGetBtn.Size = new System.Drawing.Size(66, 42);
             this.presetGetBtn.TabIndex = 0;
             this.presetGetBtn.Text = "Get";
             this.presetGetBtn.UseVisualStyleBackColor = true;
@@ -1158,20 +1183,22 @@ namespace YuShiNetDevSDK.WinForm
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label4.Location = new System.Drawing.Point(25, 18);
+            this.label4.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label4.Location = new System.Drawing.Point(29, 26);
+            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(19, 16);
+            this.label4.Size = new System.Drawing.Size(18, 16);
             this.label4.TabIndex = 0;
             this.label4.Text = "ID";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label3.Location = new System.Drawing.Point(25, 43);
+            this.label3.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label3.Location = new System.Drawing.Point(29, 61);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(39, 16);
+            this.label3.Size = new System.Drawing.Size(38, 16);
             this.label3.TabIndex = 0;
             this.label3.Text = "Name";
             // 
@@ -1189,9 +1216,11 @@ namespace YuShiNetDevSDK.WinForm
             this.groupBox1.Controls.Add(this.ptzLUBtn);
             this.groupBox1.Controls.Add(this.PTZSpeedTrackBar);
             this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Location = new System.Drawing.Point(709, 6);
+            this.groupBox1.Location = new System.Drawing.Point(827, 8);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(184, 148);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox1.Size = new System.Drawing.Size(215, 210);
             this.groupBox1.TabIndex = 6;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "PTZ";
@@ -1200,9 +1229,10 @@ namespace YuShiNetDevSDK.WinForm
             // 
             this.PTZRDBtn.BackgroundImage = global::YuShiNetDevSDK.WinForm.Properties.Resources.ico00013;
             this.PTZRDBtn.Enabled = false;
-            this.PTZRDBtn.Location = new System.Drawing.Point(126, 109);
+            this.PTZRDBtn.Location = new System.Drawing.Point(147, 154);
+            this.PTZRDBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.PTZRDBtn.Name = "PTZRDBtn";
-            this.PTZRDBtn.Size = new System.Drawing.Size(30, 30);
+            this.PTZRDBtn.Size = new System.Drawing.Size(35, 42);
             this.PTZRDBtn.TabIndex = 2;
             this.PTZRDBtn.UseVisualStyleBackColor = true;
             this.PTZRDBtn.MouseDown += new System.Windows.Forms.MouseEventHandler(this.PTZRDBtn_MouseDown);
@@ -1212,9 +1242,10 @@ namespace YuShiNetDevSDK.WinForm
             // 
             this.PTZRBtn.BackgroundImage = global::YuShiNetDevSDK.WinForm.Properties.Resources.icon3;
             this.PTZRBtn.Enabled = false;
-            this.PTZRBtn.Location = new System.Drawing.Point(126, 76);
+            this.PTZRBtn.Location = new System.Drawing.Point(147, 108);
+            this.PTZRBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.PTZRBtn.Name = "PTZRBtn";
-            this.PTZRBtn.Size = new System.Drawing.Size(30, 30);
+            this.PTZRBtn.Size = new System.Drawing.Size(35, 42);
             this.PTZRBtn.TabIndex = 2;
             this.PTZRBtn.UseVisualStyleBackColor = true;
             this.PTZRBtn.MouseDown += new System.Windows.Forms.MouseEventHandler(this.PTZRBtn_MouseDown);
@@ -1224,9 +1255,10 @@ namespace YuShiNetDevSDK.WinForm
             // 
             this.PTZRUBtn.BackgroundImage = global::YuShiNetDevSDK.WinForm.Properties.Resources.ico00012;
             this.PTZRUBtn.Enabled = false;
-            this.PTZRUBtn.Location = new System.Drawing.Point(126, 43);
+            this.PTZRUBtn.Location = new System.Drawing.Point(147, 61);
+            this.PTZRUBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.PTZRUBtn.Name = "PTZRUBtn";
-            this.PTZRUBtn.Size = new System.Drawing.Size(30, 30);
+            this.PTZRUBtn.Size = new System.Drawing.Size(35, 42);
             this.PTZRUBtn.TabIndex = 2;
             this.PTZRUBtn.UseVisualStyleBackColor = true;
             this.PTZRUBtn.MouseDown += new System.Windows.Forms.MouseEventHandler(this.PTZRUBtn_MouseDown);
@@ -1236,9 +1268,10 @@ namespace YuShiNetDevSDK.WinForm
             // 
             this.PTZDBtn.BackgroundImage = global::YuShiNetDevSDK.WinForm.Properties.Resources.ico00007;
             this.PTZDBtn.Enabled = false;
-            this.PTZDBtn.Location = new System.Drawing.Point(74, 109);
+            this.PTZDBtn.Location = new System.Drawing.Point(86, 154);
+            this.PTZDBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.PTZDBtn.Name = "PTZDBtn";
-            this.PTZDBtn.Size = new System.Drawing.Size(30, 30);
+            this.PTZDBtn.Size = new System.Drawing.Size(35, 42);
             this.PTZDBtn.TabIndex = 2;
             this.PTZDBtn.UseVisualStyleBackColor = true;
             this.PTZDBtn.MouseDown += new System.Windows.Forms.MouseEventHandler(this.PTZDBtn_MouseDown);
@@ -1248,9 +1281,10 @@ namespace YuShiNetDevSDK.WinForm
             // 
             this.PTZStopBtn.BackgroundImage = global::YuShiNetDevSDK.WinForm.Properties.Resources.ico00010;
             this.PTZStopBtn.Enabled = false;
-            this.PTZStopBtn.Location = new System.Drawing.Point(74, 76);
+            this.PTZStopBtn.Location = new System.Drawing.Point(86, 108);
+            this.PTZStopBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.PTZStopBtn.Name = "PTZStopBtn";
-            this.PTZStopBtn.Size = new System.Drawing.Size(30, 30);
+            this.PTZStopBtn.Size = new System.Drawing.Size(35, 42);
             this.PTZStopBtn.TabIndex = 2;
             this.PTZStopBtn.UseVisualStyleBackColor = true;
             this.PTZStopBtn.Click += new System.EventHandler(this.PTZStopBtn_Click);
@@ -1259,9 +1293,10 @@ namespace YuShiNetDevSDK.WinForm
             // 
             this.PTZUBtn.BackgroundImage = global::YuShiNetDevSDK.WinForm.Properties.Resources.ico00005;
             this.PTZUBtn.Enabled = false;
-            this.PTZUBtn.Location = new System.Drawing.Point(74, 43);
+            this.PTZUBtn.Location = new System.Drawing.Point(86, 61);
+            this.PTZUBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.PTZUBtn.Name = "PTZUBtn";
-            this.PTZUBtn.Size = new System.Drawing.Size(30, 30);
+            this.PTZUBtn.Size = new System.Drawing.Size(35, 42);
             this.PTZUBtn.TabIndex = 2;
             this.PTZUBtn.UseVisualStyleBackColor = true;
             this.PTZUBtn.MouseDown += new System.Windows.Forms.MouseEventHandler(this.PTZUBtn_MouseDown);
@@ -1271,9 +1306,10 @@ namespace YuShiNetDevSDK.WinForm
             // 
             this.PTZLDBtn.BackgroundImage = global::YuShiNetDevSDK.WinForm.Properties.Resources.icon4;
             this.PTZLDBtn.Enabled = false;
-            this.PTZLDBtn.Location = new System.Drawing.Point(21, 109);
+            this.PTZLDBtn.Location = new System.Drawing.Point(24, 154);
+            this.PTZLDBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.PTZLDBtn.Name = "PTZLDBtn";
-            this.PTZLDBtn.Size = new System.Drawing.Size(30, 30);
+            this.PTZLDBtn.Size = new System.Drawing.Size(35, 42);
             this.PTZLDBtn.TabIndex = 2;
             this.PTZLDBtn.UseVisualStyleBackColor = true;
             this.PTZLDBtn.MouseDown += new System.Windows.Forms.MouseEventHandler(this.PTZLDBtn_MouseDown);
@@ -1283,9 +1319,10 @@ namespace YuShiNetDevSDK.WinForm
             // 
             this.PTZLBtn.BackgroundImage = global::YuShiNetDevSDK.WinForm.Properties.Resources.ico00004;
             this.PTZLBtn.Enabled = false;
-            this.PTZLBtn.Location = new System.Drawing.Point(21, 76);
+            this.PTZLBtn.Location = new System.Drawing.Point(24, 108);
+            this.PTZLBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.PTZLBtn.Name = "PTZLBtn";
-            this.PTZLBtn.Size = new System.Drawing.Size(30, 30);
+            this.PTZLBtn.Size = new System.Drawing.Size(35, 42);
             this.PTZLBtn.TabIndex = 2;
             this.PTZLBtn.UseVisualStyleBackColor = true;
             this.PTZLBtn.MouseDown += new System.Windows.Forms.MouseEventHandler(this.PTZLBtn_MouseDown);
@@ -1295,9 +1332,10 @@ namespace YuShiNetDevSDK.WinForm
             // 
             this.ptzLUBtn.BackgroundImage = global::YuShiNetDevSDK.WinForm.Properties.Resources.ico00011;
             this.ptzLUBtn.Enabled = false;
-            this.ptzLUBtn.Location = new System.Drawing.Point(21, 43);
+            this.ptzLUBtn.Location = new System.Drawing.Point(24, 61);
+            this.ptzLUBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.ptzLUBtn.Name = "ptzLUBtn";
-            this.ptzLUBtn.Size = new System.Drawing.Size(30, 30);
+            this.ptzLUBtn.Size = new System.Drawing.Size(35, 42);
             this.ptzLUBtn.TabIndex = 2;
             this.ptzLUBtn.UseVisualStyleBackColor = true;
             this.ptzLUBtn.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ptzLUBtn_MouseDown);
@@ -1307,11 +1345,12 @@ namespace YuShiNetDevSDK.WinForm
             // 
             this.PTZSpeedTrackBar.AutoSize = false;
             this.PTZSpeedTrackBar.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.PTZSpeedTrackBar.Location = new System.Drawing.Point(64, 17);
+            this.PTZSpeedTrackBar.Location = new System.Drawing.Point(75, 24);
+            this.PTZSpeedTrackBar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.PTZSpeedTrackBar.Maximum = 9;
             this.PTZSpeedTrackBar.Minimum = 1;
             this.PTZSpeedTrackBar.Name = "PTZSpeedTrackBar";
-            this.PTZSpeedTrackBar.Size = new System.Drawing.Size(104, 33);
+            this.PTZSpeedTrackBar.Size = new System.Drawing.Size(121, 47);
             this.PTZSpeedTrackBar.TabIndex = 1;
             this.PTZSpeedTrackBar.TickStyle = System.Windows.Forms.TickStyle.None;
             this.PTZSpeedTrackBar.Value = 1;
@@ -1320,20 +1359,22 @@ namespace YuShiNetDevSDK.WinForm
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label2.Location = new System.Drawing.Point(18, 21);
+            this.label2.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label2.Location = new System.Drawing.Point(21, 30);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(40, 16);
+            this.label2.Size = new System.Drawing.Size(39, 16);
             this.label2.TabIndex = 0;
             this.label2.Text = "Speed";
             // 
             // LayoutPanel
             // 
             this.LayoutPanel.BackColor = System.Drawing.SystemColors.Control;
-            this.LayoutPanel.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.LayoutPanel.Location = new System.Drawing.Point(2, 11);
+            this.LayoutPanel.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.LayoutPanel.Location = new System.Drawing.Point(2, 16);
+            this.LayoutPanel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.LayoutPanel.Name = "LayoutPanel";
-            this.LayoutPanel.Size = new System.Drawing.Size(710, 556);
+            this.LayoutPanel.Size = new System.Drawing.Size(828, 788);
             this.LayoutPanel.TabIndex = 0;
             this.LayoutPanel.MouseUp += new System.Windows.Forms.MouseEventHandler(this.LayoutPanel_MouseUp);
             // 
@@ -1345,18 +1386,21 @@ namespace YuShiNetDevSDK.WinForm
             this.PannelPlayCtrl.Controls.Add(this.CapturePicture);
             this.PannelPlayCtrl.Controls.Add(this.StopRealPlay);
             this.PannelPlayCtrl.Controls.Add(this.RealPlay);
-            this.PannelPlayCtrl.Location = new System.Drawing.Point(4, 556);
+            this.PannelPlayCtrl.Location = new System.Drawing.Point(5, 788);
+            this.PannelPlayCtrl.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.PannelPlayCtrl.Name = "PannelPlayCtrl";
-            this.PannelPlayCtrl.Size = new System.Drawing.Size(241, 47);
+            this.PannelPlayCtrl.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.PannelPlayCtrl.Size = new System.Drawing.Size(281, 67);
             this.PannelPlayCtrl.TabIndex = 3;
             this.PannelPlayCtrl.TabStop = false;
             // 
             // Sequence
             // 
-            this.Sequence.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.Sequence.Location = new System.Drawing.Point(170, 11);
+            this.Sequence.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.Sequence.Location = new System.Drawing.Point(198, 16);
+            this.Sequence.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Sequence.Name = "Sequence";
-            this.Sequence.Size = new System.Drawing.Size(67, 30);
+            this.Sequence.Size = new System.Drawing.Size(78, 42);
             this.Sequence.TabIndex = 3;
             this.Sequence.Text = "Sequence";
             this.Sequence.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1365,10 +1409,11 @@ namespace YuShiNetDevSDK.WinForm
             // 
             // LocalRecodBtn
             // 
-            this.LocalRecodBtn.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.LocalRecodBtn.Location = new System.Drawing.Point(112, 11);
+            this.LocalRecodBtn.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.LocalRecodBtn.Location = new System.Drawing.Point(131, 16);
+            this.LocalRecodBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.LocalRecodBtn.Name = "LocalRecodBtn";
-            this.LocalRecodBtn.Size = new System.Drawing.Size(58, 30);
+            this.LocalRecodBtn.Size = new System.Drawing.Size(68, 42);
             this.LocalRecodBtn.TabIndex = 2;
             this.LocalRecodBtn.Text = "Record";
             this.LocalRecodBtn.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1379,9 +1424,10 @@ namespace YuShiNetDevSDK.WinForm
             // 
             this.CapturePicture.AutoSize = true;
             this.CapturePicture.BackgroundImage = global::YuShiNetDevSDK.WinForm.Properties.Resources.camera;
-            this.CapturePicture.Location = new System.Drawing.Point(79, 11);
+            this.CapturePicture.Location = new System.Drawing.Point(92, 16);
+            this.CapturePicture.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.CapturePicture.Name = "CapturePicture";
-            this.CapturePicture.Size = new System.Drawing.Size(30, 30);
+            this.CapturePicture.Size = new System.Drawing.Size(35, 42);
             this.CapturePicture.TabIndex = 1;
             this.CapturePicture.UseVisualStyleBackColor = true;
             this.CapturePicture.Click += new System.EventHandler(this.CapturePicture_Click);
@@ -1389,9 +1435,10 @@ namespace YuShiNetDevSDK.WinForm
             // StopRealPlay
             // 
             this.StopRealPlay.BackgroundImage = global::YuShiNetDevSDK.WinForm.Properties.Resources.STOP;
-            this.StopRealPlay.Location = new System.Drawing.Point(44, 11);
+            this.StopRealPlay.Location = new System.Drawing.Point(51, 16);
+            this.StopRealPlay.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.StopRealPlay.Name = "StopRealPlay";
-            this.StopRealPlay.Size = new System.Drawing.Size(30, 30);
+            this.StopRealPlay.Size = new System.Drawing.Size(35, 42);
             this.StopRealPlay.TabIndex = 1;
             this.StopRealPlay.UseVisualStyleBackColor = true;
             this.StopRealPlay.Click += new System.EventHandler(this.StopRealPlay_Click);
@@ -1399,9 +1446,10 @@ namespace YuShiNetDevSDK.WinForm
             // RealPlay
             // 
             this.RealPlay.BackgroundImage = global::YuShiNetDevSDK.WinForm.Properties.Resources.PLAY_ENABLE;
-            this.RealPlay.Location = new System.Drawing.Point(8, 11);
+            this.RealPlay.Location = new System.Drawing.Point(9, 16);
+            this.RealPlay.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.RealPlay.Name = "RealPlay";
-            this.RealPlay.Size = new System.Drawing.Size(30, 30);
+            this.RealPlay.Size = new System.Drawing.Size(35, 42);
             this.RealPlay.TabIndex = 0;
             this.RealPlay.UseVisualStyleBackColor = true;
             this.RealPlay.Click += new System.EventHandler(this.RealPlay_Click);
@@ -1411,9 +1459,11 @@ namespace YuShiNetDevSDK.WinForm
             this.group_win.BackColor = System.Drawing.Color.WhiteSmoke;
             this.group_win.Controls.Add(this.comboBoxMultiScreen);
             this.group_win.Controls.Add(this.label1);
-            this.group_win.Location = new System.Drawing.Point(247, 556);
+            this.group_win.Location = new System.Drawing.Point(288, 788);
+            this.group_win.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.group_win.Name = "group_win";
-            this.group_win.Size = new System.Drawing.Size(120, 47);
+            this.group_win.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.group_win.Size = new System.Drawing.Size(140, 67);
             this.group_win.TabIndex = 4;
             this.group_win.TabStop = false;
             // 
@@ -1425,19 +1475,21 @@ namespace YuShiNetDevSDK.WinForm
             "4",
             "9",
             "16"});
-            this.comboBoxMultiScreen.Location = new System.Drawing.Point(60, 17);
+            this.comboBoxMultiScreen.Location = new System.Drawing.Point(70, 24);
+            this.comboBoxMultiScreen.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.comboBoxMultiScreen.Name = "comboBoxMultiScreen";
-            this.comboBoxMultiScreen.Size = new System.Drawing.Size(50, 25);
+            this.comboBoxMultiScreen.Size = new System.Drawing.Size(58, 25);
             this.comboBoxMultiScreen.TabIndex = 5;
             this.comboBoxMultiScreen.SelectedIndexChanged += new System.EventHandler(this.comboBoxMultiScreen_SelectedIndexChanged);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label1.Location = new System.Drawing.Point(4, 20);
+            this.label1.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label1.Location = new System.Drawing.Point(5, 28);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(58, 16);
+            this.label1.Size = new System.Drawing.Size(57, 16);
             this.label1.TabIndex = 0;
             this.label1.Text = "Win Num";
             // 
@@ -1448,9 +1500,11 @@ namespace YuShiNetDevSDK.WinForm
             this.groupSound.Controls.Add(this.SoundBtn);
             this.groupSound.Controls.Add(this.SliMicVolume);
             this.groupSound.Controls.Add(this.MicVolumeBtn);
-            this.groupSound.Location = new System.Drawing.Point(370, 556);
+            this.groupSound.Location = new System.Drawing.Point(432, 788);
+            this.groupSound.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.groupSound.Name = "groupSound";
-            this.groupSound.Size = new System.Drawing.Size(336, 47);
+            this.groupSound.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupSound.Size = new System.Drawing.Size(392, 67);
             this.groupSound.TabIndex = 5;
             this.groupSound.TabStop = false;
             // 
@@ -1459,10 +1513,11 @@ namespace YuShiNetDevSDK.WinForm
             this.SliSoundVolume.AutoSize = false;
             this.SliSoundVolume.BackColor = System.Drawing.Color.WhiteSmoke;
             this.SliSoundVolume.Enabled = false;
-            this.SliSoundVolume.Location = new System.Drawing.Point(211, 17);
+            this.SliSoundVolume.Location = new System.Drawing.Point(246, 24);
+            this.SliSoundVolume.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.SliSoundVolume.Maximum = 255;
             this.SliSoundVolume.Name = "SliSoundVolume";
-            this.SliSoundVolume.Size = new System.Drawing.Size(114, 22);
+            this.SliSoundVolume.Size = new System.Drawing.Size(133, 31);
             this.SliSoundVolume.TabIndex = 3;
             this.SliSoundVolume.TickStyle = System.Windows.Forms.TickStyle.None;
             this.SliSoundVolume.Scroll += new System.EventHandler(this.SliSoundVolume_Scroll);
@@ -1472,9 +1527,10 @@ namespace YuShiNetDevSDK.WinForm
             this.SoundBtn.AutoSize = true;
             this.SoundBtn.BackgroundImage = global::YuShiNetDevSDK.WinForm.Properties.Resources.ico00009;
             this.SoundBtn.Enabled = false;
-            this.SoundBtn.Location = new System.Drawing.Point(167, 11);
+            this.SoundBtn.Location = new System.Drawing.Point(195, 16);
+            this.SoundBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.SoundBtn.Name = "SoundBtn";
-            this.SoundBtn.Size = new System.Drawing.Size(30, 30);
+            this.SoundBtn.Size = new System.Drawing.Size(35, 42);
             this.SoundBtn.TabIndex = 2;
             this.SoundBtn.UseVisualStyleBackColor = true;
             this.SoundBtn.Click += new System.EventHandler(this.SoundBtn_Click);
@@ -1484,10 +1540,11 @@ namespace YuShiNetDevSDK.WinForm
             this.SliMicVolume.AutoSize = false;
             this.SliMicVolume.BackColor = System.Drawing.Color.WhiteSmoke;
             this.SliMicVolume.Enabled = false;
-            this.SliMicVolume.Location = new System.Drawing.Point(47, 17);
+            this.SliMicVolume.Location = new System.Drawing.Point(55, 24);
+            this.SliMicVolume.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.SliMicVolume.Maximum = 255;
             this.SliMicVolume.Name = "SliMicVolume";
-            this.SliMicVolume.Size = new System.Drawing.Size(114, 22);
+            this.SliMicVolume.Size = new System.Drawing.Size(133, 31);
             this.SliMicVolume.TabIndex = 1;
             this.SliMicVolume.TickStyle = System.Windows.Forms.TickStyle.None;
             this.SliMicVolume.Scroll += new System.EventHandler(this.SliMicVolume_Scroll);
@@ -1496,9 +1553,10 @@ namespace YuShiNetDevSDK.WinForm
             // 
             this.MicVolumeBtn.AutoSize = true;
             this.MicVolumeBtn.BackgroundImage = global::YuShiNetDevSDK.WinForm.Properties.Resources._222;
-            this.MicVolumeBtn.Location = new System.Drawing.Point(6, 12);
+            this.MicVolumeBtn.Location = new System.Drawing.Point(7, 17);
+            this.MicVolumeBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.MicVolumeBtn.Name = "MicVolumeBtn";
-            this.MicVolumeBtn.Size = new System.Drawing.Size(38, 30);
+            this.MicVolumeBtn.Size = new System.Drawing.Size(44, 42);
             this.MicVolumeBtn.TabIndex = 0;
             this.MicVolumeBtn.UseVisualStyleBackColor = true;
             this.MicVolumeBtn.Click += new System.EventHandler(this.MicVolumeBtn_Click);
@@ -1536,18 +1594,20 @@ namespace YuShiNetDevSDK.WinForm
             this.Playback.Controls.Add(this.PBPauseBtn);
             this.Playback.Controls.Add(this.PBStartBtn);
             this.Playback.Location = new System.Drawing.Point(4, 26);
+            this.Playback.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Playback.Name = "Playback";
-            this.Playback.Padding = new System.Windows.Forms.Padding(3);
-            this.Playback.Size = new System.Drawing.Size(899, 606);
+            this.Playback.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Playback.Size = new System.Drawing.Size(1050, 871);
             this.Playback.TabIndex = 1;
             this.Playback.Text = "Playback";
             this.Playback.UseVisualStyleBackColor = true;
             // 
             // GetRecordDays
             // 
-            this.GetRecordDays.Location = new System.Drawing.Point(690, 27);
+            this.GetRecordDays.Location = new System.Drawing.Point(805, 38);
+            this.GetRecordDays.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.GetRecordDays.Name = "GetRecordDays";
-            this.GetRecordDays.Size = new System.Drawing.Size(114, 30);
+            this.GetRecordDays.Size = new System.Drawing.Size(133, 42);
             this.GetRecordDays.TabIndex = 9;
             this.GetRecordDays.Text = "GetRecordDays";
             this.GetRecordDays.UseVisualStyleBackColor = true;
@@ -1555,22 +1615,24 @@ namespace YuShiNetDevSDK.WinForm
             // 
             // BoxPositionList
             // 
-            this.BoxPositionList.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.BoxPositionList.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.BoxPositionList.FormattingEnabled = true;
             this.BoxPositionList.Items.AddRange(new object[] {
             "Center",
             "Device"});
-            this.BoxPositionList.Location = new System.Drawing.Point(344, 59);
+            this.BoxPositionList.Location = new System.Drawing.Point(401, 84);
+            this.BoxPositionList.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.BoxPositionList.Name = "BoxPositionList";
-            this.BoxPositionList.Size = new System.Drawing.Size(65, 24);
+            this.BoxPositionList.Size = new System.Drawing.Size(75, 24);
             this.BoxPositionList.TabIndex = 8;
             this.BoxPositionList.Text = "Center";
             // 
             // playBackLayoutPanel
             // 
-            this.playBackLayoutPanel.Location = new System.Drawing.Point(12, 103);
+            this.playBackLayoutPanel.Location = new System.Drawing.Point(14, 146);
+            this.playBackLayoutPanel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.playBackLayoutPanel.Name = "playBackLayoutPanel";
-            this.playBackLayoutPanel.Size = new System.Drawing.Size(590, 419);
+            this.playBackLayoutPanel.Size = new System.Drawing.Size(688, 594);
             this.playBackLayoutPanel.TabIndex = 7;
             // 
             // groupBox3
@@ -1578,19 +1640,22 @@ namespace YuShiNetDevSDK.WinForm
             this.groupBox3.Controls.Add(this.PBDownLoadStopBtn);
             this.groupBox3.Controls.Add(this.PBDownLoadInfoBtn);
             this.groupBox3.Controls.Add(this.PBDownLoadStartBtn);
-            this.groupBox3.Location = new System.Drawing.Point(624, 524);
+            this.groupBox3.Location = new System.Drawing.Point(728, 742);
+            this.groupBox3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(240, 80);
+            this.groupBox3.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox3.Size = new System.Drawing.Size(280, 113);
             this.groupBox3.TabIndex = 6;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "DownLoad";
             // 
             // PBDownLoadStopBtn
             // 
-            this.PBDownLoadStopBtn.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.PBDownLoadStopBtn.Location = new System.Drawing.Point(128, 18);
+            this.PBDownLoadStopBtn.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.PBDownLoadStopBtn.Location = new System.Drawing.Point(149, 26);
+            this.PBDownLoadStopBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.PBDownLoadStopBtn.Name = "PBDownLoadStopBtn";
-            this.PBDownLoadStopBtn.Size = new System.Drawing.Size(75, 23);
+            this.PBDownLoadStopBtn.Size = new System.Drawing.Size(88, 33);
             this.PBDownLoadStopBtn.TabIndex = 0;
             this.PBDownLoadStopBtn.Text = "Stop";
             this.PBDownLoadStopBtn.UseVisualStyleBackColor = true;
@@ -1598,10 +1663,11 @@ namespace YuShiNetDevSDK.WinForm
             // 
             // PBDownLoadInfoBtn
             // 
-            this.PBDownLoadInfoBtn.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.PBDownLoadInfoBtn.Location = new System.Drawing.Point(38, 47);
+            this.PBDownLoadInfoBtn.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.PBDownLoadInfoBtn.Location = new System.Drawing.Point(44, 67);
+            this.PBDownLoadInfoBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.PBDownLoadInfoBtn.Name = "PBDownLoadInfoBtn";
-            this.PBDownLoadInfoBtn.Size = new System.Drawing.Size(165, 23);
+            this.PBDownLoadInfoBtn.Size = new System.Drawing.Size(192, 33);
             this.PBDownLoadInfoBtn.TabIndex = 0;
             this.PBDownLoadInfoBtn.Text = "DownLoad Info";
             this.PBDownLoadInfoBtn.UseVisualStyleBackColor = true;
@@ -1609,10 +1675,11 @@ namespace YuShiNetDevSDK.WinForm
             // 
             // PBDownLoadStartBtn
             // 
-            this.PBDownLoadStartBtn.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.PBDownLoadStartBtn.Location = new System.Drawing.Point(38, 18);
+            this.PBDownLoadStartBtn.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.PBDownLoadStartBtn.Location = new System.Drawing.Point(44, 26);
+            this.PBDownLoadStartBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.PBDownLoadStartBtn.Name = "PBDownLoadStartBtn";
-            this.PBDownLoadStartBtn.Size = new System.Drawing.Size(75, 23);
+            this.PBDownLoadStartBtn.Size = new System.Drawing.Size(88, 33);
             this.PBDownLoadStartBtn.TabIndex = 0;
             this.PBDownLoadStartBtn.Text = "Start";
             this.PBDownLoadStartBtn.UseVisualStyleBackColor = true;
@@ -1626,9 +1693,10 @@ namespace YuShiNetDevSDK.WinForm
             this.PBVideoTimeListView.FullRowSelect = true;
             this.PBVideoTimeListView.GridLines = true;
             this.PBVideoTimeListView.HideSelection = false;
-            this.PBVideoTimeListView.Location = new System.Drawing.Point(613, 103);
+            this.PBVideoTimeListView.Location = new System.Drawing.Point(715, 146);
+            this.PBVideoTimeListView.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.PBVideoTimeListView.Name = "PBVideoTimeListView";
-            this.PBVideoTimeListView.Size = new System.Drawing.Size(273, 415);
+            this.PBVideoTimeListView.Size = new System.Drawing.Size(318, 586);
             this.PBVideoTimeListView.TabIndex = 5;
             this.PBVideoTimeListView.UseCompatibleStateImageBehavior = false;
             this.PBVideoTimeListView.View = System.Windows.Forms.View.Details;
@@ -1646,10 +1714,11 @@ namespace YuShiNetDevSDK.WinForm
             // 
             // PBQueryBtn
             // 
-            this.PBQueryBtn.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.PBQueryBtn.Location = new System.Drawing.Point(435, 59);
+            this.PBQueryBtn.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.PBQueryBtn.Location = new System.Drawing.Point(507, 84);
+            this.PBQueryBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.PBQueryBtn.Name = "PBQueryBtn";
-            this.PBQueryBtn.Size = new System.Drawing.Size(75, 23);
+            this.PBQueryBtn.Size = new System.Drawing.Size(88, 33);
             this.PBQueryBtn.TabIndex = 0;
             this.PBQueryBtn.Text = "Query";
             this.PBQueryBtn.UseVisualStyleBackColor = true;
@@ -1658,11 +1727,11 @@ namespace YuShiNetDevSDK.WinForm
             // PBVideoTrackBar
             // 
             this.PBVideoTrackBar.AutoSize = false;
-            this.PBVideoTrackBar.Cursor = System.Windows.Forms.Cursors.Default;
             this.PBVideoTrackBar.Enabled = false;
-            this.PBVideoTrackBar.Location = new System.Drawing.Point(8, 548);
+            this.PBVideoTrackBar.Location = new System.Drawing.Point(9, 776);
+            this.PBVideoTrackBar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.PBVideoTrackBar.Name = "PBVideoTrackBar";
-            this.PBVideoTrackBar.Size = new System.Drawing.Size(594, 17);
+            this.PBVideoTrackBar.Size = new System.Drawing.Size(693, 24);
             this.PBVideoTrackBar.TabIndex = 4;
             this.PBVideoTrackBar.TickStyle = System.Windows.Forms.TickStyle.None;
             this.PBVideoTrackBar.Scroll += new System.EventHandler(this.PBVideoTrackBar_Scroll);
@@ -1670,78 +1739,84 @@ namespace YuShiNetDevSDK.WinForm
             // PBVolTrackBar
             // 
             this.PBVolTrackBar.AutoSize = false;
-            this.PBVolTrackBar.Cursor = System.Windows.Forms.Cursors.Default;
-            this.PBVolTrackBar.Location = new System.Drawing.Point(498, 572);
+            this.PBVolTrackBar.Location = new System.Drawing.Point(581, 810);
+            this.PBVolTrackBar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.PBVolTrackBar.Maximum = 255;
             this.PBVolTrackBar.Name = "PBVolTrackBar";
-            this.PBVolTrackBar.Size = new System.Drawing.Size(104, 24);
+            this.PBVolTrackBar.Size = new System.Drawing.Size(121, 34);
             this.PBVolTrackBar.TabIndex = 4;
             this.PBVolTrackBar.TickStyle = System.Windows.Forms.TickStyle.None;
             this.PBVolTrackBar.Scroll += new System.EventHandler(this.PBVolTrackBar_Scroll);
             // 
             // PBEventType
             // 
-            this.PBEventType.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.PBEventType.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.PBEventType.FormattingEnabled = true;
             this.PBEventType.Items.AddRange(new object[] {
             "Normal",
             "Motion Detection",
             "Digital Input",
             "Video Loss"});
-            this.PBEventType.Location = new System.Drawing.Point(83, 59);
+            this.PBEventType.Location = new System.Drawing.Point(97, 84);
+            this.PBEventType.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.PBEventType.Name = "PBEventType";
-            this.PBEventType.Size = new System.Drawing.Size(212, 24);
+            this.PBEventType.Size = new System.Drawing.Size(247, 24);
             this.PBEventType.TabIndex = 3;
             this.PBEventType.Text = "Normal";
             // 
             // PBEndTime
             // 
             this.PBEndTime.CustomFormat = "HH:mm:ss";
-            this.PBEndTime.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.PBEndTime.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.PBEndTime.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.PBEndTime.Location = new System.Drawing.Point(526, 24);
+            this.PBEndTime.Location = new System.Drawing.Point(614, 34);
+            this.PBEndTime.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.PBEndTime.Name = "PBEndTime";
             this.PBEndTime.ShowUpDown = true;
-            this.PBEndTime.Size = new System.Drawing.Size(88, 22);
+            this.PBEndTime.Size = new System.Drawing.Size(102, 22);
             this.PBEndTime.TabIndex = 2;
             this.PBEndTime.Value = new System.DateTime(2017, 9, 4, 23, 59, 59, 0);
             // 
             // PBEndDate
             // 
             this.PBEndDate.CustomFormat = "yyyy/MM/dd";
-            this.PBEndDate.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.PBEndDate.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.PBEndDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.PBEndDate.Location = new System.Drawing.Point(402, 24);
+            this.PBEndDate.Location = new System.Drawing.Point(469, 34);
+            this.PBEndDate.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.PBEndDate.Name = "PBEndDate";
-            this.PBEndDate.Size = new System.Drawing.Size(108, 22);
+            this.PBEndDate.Size = new System.Drawing.Size(125, 22);
             this.PBEndDate.TabIndex = 2;
             // 
             // PBBeginTime
             // 
             this.PBBeginTime.CustomFormat = "HH:mm:ss";
-            this.PBBeginTime.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.PBBeginTime.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.PBBeginTime.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.PBBeginTime.Location = new System.Drawing.Point(207, 25);
+            this.PBBeginTime.Location = new System.Drawing.Point(241, 35);
+            this.PBBeginTime.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.PBBeginTime.Name = "PBBeginTime";
             this.PBBeginTime.ShowUpDown = true;
-            this.PBBeginTime.Size = new System.Drawing.Size(88, 22);
+            this.PBBeginTime.Size = new System.Drawing.Size(102, 22);
             this.PBBeginTime.TabIndex = 2;
             this.PBBeginTime.Value = new System.DateTime(2017, 9, 4, 0, 0, 0, 0);
             // 
             // PBBeginDate
             // 
             this.PBBeginDate.CustomFormat = "yyyy/MM/dd";
-            this.PBBeginDate.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.PBBeginDate.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.PBBeginDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.PBBeginDate.Location = new System.Drawing.Point(83, 25);
+            this.PBBeginDate.Location = new System.Drawing.Point(97, 35);
+            this.PBBeginDate.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.PBBeginDate.Name = "PBBeginDate";
-            this.PBBeginDate.Size = new System.Drawing.Size(108, 22);
+            this.PBBeginDate.Size = new System.Drawing.Size(125, 22);
             this.PBBeginDate.TabIndex = 2;
             // 
             // PBShowFBSpeedLabel
             // 
             this.PBShowFBSpeedLabel.AutoSize = true;
-            this.PBShowFBSpeedLabel.Location = new System.Drawing.Point(218, 577);
+            this.PBShowFBSpeedLabel.Location = new System.Drawing.Point(254, 817);
+            this.PBShowFBSpeedLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.PBShowFBSpeedLabel.Name = "PBShowFBSpeedLabel";
             this.PBShowFBSpeedLabel.Size = new System.Drawing.Size(21, 17);
             this.PBShowFBSpeedLabel.TabIndex = 1;
@@ -1750,7 +1825,8 @@ namespace YuShiNetDevSDK.WinForm
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(509, 526);
+            this.label12.Location = new System.Drawing.Point(594, 745);
+            this.label12.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(13, 17);
             this.label12.TabIndex = 1;
@@ -1759,50 +1835,55 @@ namespace YuShiNetDevSDK.WinForm
             // PBRemainingTimeLabel
             // 
             this.PBRemainingTimeLabel.AutoSize = true;
-            this.PBRemainingTimeLabel.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.PBRemainingTimeLabel.Location = new System.Drawing.Point(531, 525);
+            this.PBRemainingTimeLabel.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.PBRemainingTimeLabel.Location = new System.Drawing.Point(620, 744);
+            this.PBRemainingTimeLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.PBRemainingTimeLabel.Name = "PBRemainingTimeLabel";
-            this.PBRemainingTimeLabel.Size = new System.Drawing.Size(50, 16);
+            this.PBRemainingTimeLabel.Size = new System.Drawing.Size(49, 16);
             this.PBRemainingTimeLabel.TabIndex = 1;
             this.PBRemainingTimeLabel.Text = "00:00:00";
             // 
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label13.Location = new System.Drawing.Point(341, 29);
+            this.label13.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label13.Location = new System.Drawing.Point(398, 41);
+            this.label13.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(56, 16);
+            this.label13.Size = new System.Drawing.Size(55, 16);
             this.label13.TabIndex = 1;
             this.label13.Text = "End Time";
             // 
             // PBVideoDateTimeLabel
             // 
             this.PBVideoDateTimeLabel.AutoSize = true;
-            this.PBVideoDateTimeLabel.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.PBVideoDateTimeLabel.Location = new System.Drawing.Point(377, 527);
+            this.PBVideoDateTimeLabel.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.PBVideoDateTimeLabel.Location = new System.Drawing.Point(440, 747);
+            this.PBVideoDateTimeLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.PBVideoDateTimeLabel.Name = "PBVideoDateTimeLabel";
-            this.PBVideoDateTimeLabel.Size = new System.Drawing.Size(111, 16);
+            this.PBVideoDateTimeLabel.Size = new System.Drawing.Size(110, 16);
             this.PBVideoDateTimeLabel.TabIndex = 1;
             this.PBVideoDateTimeLabel.Text = "0000/00/00 00:00:00";
             // 
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label14.Location = new System.Drawing.Point(10, 62);
+            this.label14.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label14.Location = new System.Drawing.Point(12, 88);
+            this.label14.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(65, 16);
+            this.label14.Size = new System.Drawing.Size(64, 16);
             this.label14.TabIndex = 1;
             this.label14.Text = "Event Type";
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label7.Location = new System.Drawing.Point(10, 30);
+            this.label7.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label7.Location = new System.Drawing.Point(12, 42);
+            this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(66, 16);
+            this.label7.Size = new System.Drawing.Size(65, 16);
             this.label7.TabIndex = 1;
             this.label7.Text = "Begin Time";
             // 
@@ -1810,9 +1891,10 @@ namespace YuShiNetDevSDK.WinForm
             // 
             this.PBVolBtn.BackgroundImage = global::YuShiNetDevSDK.WinForm.Properties.Resources.ico00009;
             this.PBVolBtn.Enabled = false;
-            this.PBVolBtn.Location = new System.Drawing.Point(461, 568);
+            this.PBVolBtn.Location = new System.Drawing.Point(538, 805);
+            this.PBVolBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.PBVolBtn.Name = "PBVolBtn";
-            this.PBVolBtn.Size = new System.Drawing.Size(35, 28);
+            this.PBVolBtn.Size = new System.Drawing.Size(41, 40);
             this.PBVolBtn.TabIndex = 0;
             this.PBVolBtn.UseVisualStyleBackColor = true;
             this.PBVolBtn.Click += new System.EventHandler(this.PBVolBtn_Click);
@@ -1821,9 +1903,10 @@ namespace YuShiNetDevSDK.WinForm
             // 
             this.PBFrameBtn.BackgroundImage = global::YuShiNetDevSDK.WinForm.Properties.Resources.icon2;
             this.PBFrameBtn.Enabled = false;
-            this.PBFrameBtn.Location = new System.Drawing.Point(411, 568);
+            this.PBFrameBtn.Location = new System.Drawing.Point(479, 805);
+            this.PBFrameBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.PBFrameBtn.Name = "PBFrameBtn";
-            this.PBFrameBtn.Size = new System.Drawing.Size(35, 28);
+            this.PBFrameBtn.Size = new System.Drawing.Size(41, 40);
             this.PBFrameBtn.TabIndex = 0;
             this.PBFrameBtn.UseVisualStyleBackColor = true;
             this.PBFrameBtn.Click += new System.EventHandler(this.PBFrameBtn_Click);
@@ -1832,9 +1915,10 @@ namespace YuShiNetDevSDK.WinForm
             // 
             this.PBRestartBtn.BackgroundImage = global::YuShiNetDevSDK.WinForm.Properties.Resources.ico00006;
             this.PBRestartBtn.Enabled = false;
-            this.PBRestartBtn.Location = new System.Drawing.Point(360, 568);
+            this.PBRestartBtn.Location = new System.Drawing.Point(420, 805);
+            this.PBRestartBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.PBRestartBtn.Name = "PBRestartBtn";
-            this.PBRestartBtn.Size = new System.Drawing.Size(35, 28);
+            this.PBRestartBtn.Size = new System.Drawing.Size(41, 40);
             this.PBRestartBtn.TabIndex = 0;
             this.PBRestartBtn.UseVisualStyleBackColor = true;
             this.PBRestartBtn.Click += new System.EventHandler(this.PBRestartBtn_Click);
@@ -1843,9 +1927,10 @@ namespace YuShiNetDevSDK.WinForm
             // 
             this.PBCaptureBtn.BackgroundImage = global::YuShiNetDevSDK.WinForm.Properties.Resources.camera;
             this.PBCaptureBtn.Enabled = false;
-            this.PBCaptureBtn.Location = new System.Drawing.Point(307, 568);
+            this.PBCaptureBtn.Location = new System.Drawing.Point(358, 805);
+            this.PBCaptureBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.PBCaptureBtn.Name = "PBCaptureBtn";
-            this.PBCaptureBtn.Size = new System.Drawing.Size(35, 28);
+            this.PBCaptureBtn.Size = new System.Drawing.Size(41, 40);
             this.PBCaptureBtn.TabIndex = 0;
             this.PBCaptureBtn.UseVisualStyleBackColor = true;
             this.PBCaptureBtn.Click += new System.EventHandler(this.PBCaptureBtn_Click);
@@ -1854,9 +1939,10 @@ namespace YuShiNetDevSDK.WinForm
             // 
             this.PBFastForwardBtn.BackgroundImage = global::YuShiNetDevSDK.WinForm.Properties.Resources.ico00001;
             this.PBFastForwardBtn.Enabled = false;
-            this.PBFastForwardBtn.Location = new System.Drawing.Point(177, 568);
+            this.PBFastForwardBtn.Location = new System.Drawing.Point(206, 805);
+            this.PBFastForwardBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.PBFastForwardBtn.Name = "PBFastForwardBtn";
-            this.PBFastForwardBtn.Size = new System.Drawing.Size(35, 28);
+            this.PBFastForwardBtn.Size = new System.Drawing.Size(41, 40);
             this.PBFastForwardBtn.TabIndex = 0;
             this.PBFastForwardBtn.UseVisualStyleBackColor = true;
             this.PBFastForwardBtn.Click += new System.EventHandler(this.PBFastForwardBtn_Click);
@@ -1865,9 +1951,10 @@ namespace YuShiNetDevSDK.WinForm
             // 
             this.PBFastBackwardBtn.BackgroundImage = global::YuShiNetDevSDK.WinForm.Properties.Resources.icon8;
             this.PBFastBackwardBtn.Enabled = false;
-            this.PBFastBackwardBtn.Location = new System.Drawing.Point(136, 568);
+            this.PBFastBackwardBtn.Location = new System.Drawing.Point(159, 805);
+            this.PBFastBackwardBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.PBFastBackwardBtn.Name = "PBFastBackwardBtn";
-            this.PBFastBackwardBtn.Size = new System.Drawing.Size(35, 28);
+            this.PBFastBackwardBtn.Size = new System.Drawing.Size(41, 40);
             this.PBFastBackwardBtn.TabIndex = 0;
             this.PBFastBackwardBtn.UseVisualStyleBackColor = true;
             this.PBFastBackwardBtn.Click += new System.EventHandler(this.PBFastBackwardBtn_Click);
@@ -1876,9 +1963,10 @@ namespace YuShiNetDevSDK.WinForm
             // 
             this.PBStopBtn.BackgroundImage = global::YuShiNetDevSDK.WinForm.Properties.Resources.STOP;
             this.PBStopBtn.Enabled = false;
-            this.PBStopBtn.Location = new System.Drawing.Point(95, 568);
+            this.PBStopBtn.Location = new System.Drawing.Point(111, 805);
+            this.PBStopBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.PBStopBtn.Name = "PBStopBtn";
-            this.PBStopBtn.Size = new System.Drawing.Size(35, 28);
+            this.PBStopBtn.Size = new System.Drawing.Size(41, 40);
             this.PBStopBtn.TabIndex = 0;
             this.PBStopBtn.UseVisualStyleBackColor = true;
             this.PBStopBtn.Click += new System.EventHandler(this.PBStopBtn_Click);
@@ -1887,9 +1975,10 @@ namespace YuShiNetDevSDK.WinForm
             // 
             this.PBPauseBtn.BackgroundImage = global::YuShiNetDevSDK.WinForm.Properties.Resources.PAUSE_ENABLE;
             this.PBPauseBtn.Enabled = false;
-            this.PBPauseBtn.Location = new System.Drawing.Point(54, 568);
+            this.PBPauseBtn.Location = new System.Drawing.Point(63, 805);
+            this.PBPauseBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.PBPauseBtn.Name = "PBPauseBtn";
-            this.PBPauseBtn.Size = new System.Drawing.Size(35, 28);
+            this.PBPauseBtn.Size = new System.Drawing.Size(41, 40);
             this.PBPauseBtn.TabIndex = 0;
             this.PBPauseBtn.UseVisualStyleBackColor = true;
             this.PBPauseBtn.Click += new System.EventHandler(this.PBPauseBtn_Click);
@@ -1898,9 +1987,10 @@ namespace YuShiNetDevSDK.WinForm
             // 
             this.PBStartBtn.BackgroundImage = global::YuShiNetDevSDK.WinForm.Properties.Resources.PLAY_ENABLE;
             this.PBStartBtn.Enabled = false;
-            this.PBStartBtn.Location = new System.Drawing.Point(12, 568);
+            this.PBStartBtn.Location = new System.Drawing.Point(14, 805);
+            this.PBStartBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.PBStartBtn.Name = "PBStartBtn";
-            this.PBStartBtn.Size = new System.Drawing.Size(35, 28);
+            this.PBStartBtn.Size = new System.Drawing.Size(41, 40);
             this.PBStartBtn.TabIndex = 0;
             this.PBStartBtn.UseVisualStyleBackColor = true;
             this.PBStartBtn.Click += new System.EventHandler(this.PBStartBtn_Click);
@@ -1910,9 +2000,10 @@ namespace YuShiNetDevSDK.WinForm
             this.Configure.BackColor = System.Drawing.Color.WhiteSmoke;
             this.Configure.Controls.Add(this.cfgTabControl);
             this.Configure.Location = new System.Drawing.Point(4, 26);
+            this.Configure.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Configure.Name = "Configure";
-            this.Configure.Padding = new System.Windows.Forms.Padding(3);
-            this.Configure.Size = new System.Drawing.Size(899, 606);
+            this.Configure.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Configure.Size = new System.Drawing.Size(1050, 871);
             this.Configure.TabIndex = 2;
             this.Configure.Text = "Configure";
             this.Configure.UseVisualStyleBackColor = true;
@@ -1928,10 +2019,11 @@ namespace YuShiNetDevSDK.WinForm
             this.cfgTabControl.Controls.Add(this.ConfigPrivacyMask);
             this.cfgTabControl.Controls.Add(this.ConfigMotion);
             this.cfgTabControl.Controls.Add(this.ConfigTemper);
-            this.cfgTabControl.Location = new System.Drawing.Point(-4, 0);
+            this.cfgTabControl.Location = new System.Drawing.Point(-5, 0);
+            this.cfgTabControl.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.cfgTabControl.Name = "cfgTabControl";
             this.cfgTabControl.SelectedIndex = 0;
-            this.cfgTabControl.Size = new System.Drawing.Size(907, 606);
+            this.cfgTabControl.Size = new System.Drawing.Size(1058, 858);
             this.cfgTabControl.TabIndex = 0;
             this.cfgTabControl.SelectedIndexChanged += new System.EventHandler(this.cfgTabControl_SelectedIndexChanged);
             // 
@@ -1944,17 +2036,19 @@ namespace YuShiNetDevSDK.WinForm
             this.ConfigBasic.Controls.Add(this.groupBox7);
             this.ConfigBasic.Controls.Add(this.groupBox6);
             this.ConfigBasic.Location = new System.Drawing.Point(4, 26);
+            this.ConfigBasic.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.ConfigBasic.Name = "ConfigBasic";
-            this.ConfigBasic.Padding = new System.Windows.Forms.Padding(3);
-            this.ConfigBasic.Size = new System.Drawing.Size(899, 576);
+            this.ConfigBasic.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.ConfigBasic.Size = new System.Drawing.Size(1050, 828);
             this.ConfigBasic.TabIndex = 0;
             this.ConfigBasic.Text = "Basic";
             // 
             // GetHDDSmartInfo
             // 
-            this.GetHDDSmartInfo.Location = new System.Drawing.Point(26, 456);
+            this.GetHDDSmartInfo.Location = new System.Drawing.Point(30, 646);
+            this.GetHDDSmartInfo.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.GetHDDSmartInfo.Name = "GetHDDSmartInfo";
-            this.GetHDDSmartInfo.Size = new System.Drawing.Size(126, 35);
+            this.GetHDDSmartInfo.Size = new System.Drawing.Size(147, 50);
             this.GetHDDSmartInfo.TabIndex = 8;
             this.GetHDDSmartInfo.Text = "GetHDDSmartInfo";
             this.GetHDDSmartInfo.UseVisualStyleBackColor = true;
@@ -1962,9 +2056,10 @@ namespace YuShiNetDevSDK.WinForm
             // 
             // BaiscRefreshBtn
             // 
-            this.BaiscRefreshBtn.Location = new System.Drawing.Point(619, 468);
+            this.BaiscRefreshBtn.Location = new System.Drawing.Point(722, 663);
+            this.BaiscRefreshBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.BaiscRefreshBtn.Name = "BaiscRefreshBtn";
-            this.BaiscRefreshBtn.Size = new System.Drawing.Size(75, 23);
+            this.BaiscRefreshBtn.Size = new System.Drawing.Size(88, 33);
             this.BaiscRefreshBtn.TabIndex = 7;
             this.BaiscRefreshBtn.Text = "Refresh";
             this.BaiscRefreshBtn.UseVisualStyleBackColor = true;
@@ -1973,9 +2068,11 @@ namespace YuShiNetDevSDK.WinForm
             // groupBox8
             // 
             this.groupBox8.Controls.Add(this.BasicHDInfoListView);
-            this.groupBox8.Location = new System.Drawing.Point(6, 193);
+            this.groupBox8.Location = new System.Drawing.Point(7, 273);
+            this.groupBox8.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.groupBox8.Name = "groupBox8";
-            this.groupBox8.Size = new System.Drawing.Size(761, 231);
+            this.groupBox8.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox8.Size = new System.Drawing.Size(888, 327);
             this.groupBox8.TabIndex = 0;
             this.groupBox8.TabStop = false;
             this.groupBox8.Text = "Hard Disk";
@@ -1989,9 +2086,11 @@ namespace YuShiNetDevSDK.WinForm
             this.HardDiskStatus,
             this.HardDiskManufacturer});
             this.BasicHDInfoListView.GridLines = true;
-            this.BasicHDInfoListView.Location = new System.Drawing.Point(18, 32);
+            this.BasicHDInfoListView.HideSelection = false;
+            this.BasicHDInfoListView.Location = new System.Drawing.Point(21, 45);
+            this.BasicHDInfoListView.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.BasicHDInfoListView.Name = "BasicHDInfoListView";
-            this.BasicHDInfoListView.Size = new System.Drawing.Size(725, 179);
+            this.BasicHDInfoListView.Size = new System.Drawing.Size(845, 252);
             this.BasicHDInfoListView.TabIndex = 0;
             this.BasicHDInfoListView.UseCompatibleStateImageBehavior = false;
             this.BasicHDInfoListView.View = System.Windows.Forms.View.Details;
@@ -2025,25 +2124,29 @@ namespace YuShiNetDevSDK.WinForm
             // 
             this.groupBox7.Controls.Add(this.BasicDeviceNameText);
             this.groupBox7.Controls.Add(this.BasicDeviceNameSaveBtn);
-            this.groupBox7.Location = new System.Drawing.Point(6, 97);
+            this.groupBox7.Location = new System.Drawing.Point(7, 137);
+            this.groupBox7.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(761, 71);
+            this.groupBox7.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox7.Size = new System.Drawing.Size(888, 101);
             this.groupBox7.TabIndex = 0;
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "Device Name";
             // 
             // BasicDeviceNameText
             // 
-            this.BasicDeviceNameText.Location = new System.Drawing.Point(18, 29);
+            this.BasicDeviceNameText.Location = new System.Drawing.Point(21, 41);
+            this.BasicDeviceNameText.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.BasicDeviceNameText.Name = "BasicDeviceNameText";
-            this.BasicDeviceNameText.Size = new System.Drawing.Size(291, 23);
+            this.BasicDeviceNameText.Size = new System.Drawing.Size(339, 23);
             this.BasicDeviceNameText.TabIndex = 8;
             // 
             // BasicDeviceNameSaveBtn
             // 
-            this.BasicDeviceNameSaveBtn.Location = new System.Drawing.Point(615, 29);
+            this.BasicDeviceNameSaveBtn.Location = new System.Drawing.Point(718, 41);
+            this.BasicDeviceNameSaveBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.BasicDeviceNameSaveBtn.Name = "BasicDeviceNameSaveBtn";
-            this.BasicDeviceNameSaveBtn.Size = new System.Drawing.Size(75, 23);
+            this.BasicDeviceNameSaveBtn.Size = new System.Drawing.Size(88, 33);
             this.BasicDeviceNameSaveBtn.TabIndex = 7;
             this.BasicDeviceNameSaveBtn.Text = "Save";
             this.BasicDeviceNameSaveBtn.UseVisualStyleBackColor = true;
@@ -2055,18 +2158,21 @@ namespace YuShiNetDevSDK.WinForm
             this.groupBox6.Controls.Add(this.BasicTime);
             this.groupBox6.Controls.Add(this.BasicDate);
             this.groupBox6.Controls.Add(this.BasicGMTCobBox);
-            this.groupBox6.Location = new System.Drawing.Point(6, 6);
+            this.groupBox6.Location = new System.Drawing.Point(7, 8);
+            this.groupBox6.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(761, 71);
+            this.groupBox6.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox6.Size = new System.Drawing.Size(888, 101);
             this.groupBox6.TabIndex = 0;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "System Time";
             // 
             // BasicSysTimeSaveBtn
             // 
-            this.BasicSysTimeSaveBtn.Location = new System.Drawing.Point(615, 29);
+            this.BasicSysTimeSaveBtn.Location = new System.Drawing.Point(718, 41);
+            this.BasicSysTimeSaveBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.BasicSysTimeSaveBtn.Name = "BasicSysTimeSaveBtn";
-            this.BasicSysTimeSaveBtn.Size = new System.Drawing.Size(75, 23);
+            this.BasicSysTimeSaveBtn.Size = new System.Drawing.Size(88, 33);
             this.BasicSysTimeSaveBtn.TabIndex = 7;
             this.BasicSysTimeSaveBtn.Text = "Save";
             this.BasicSysTimeSaveBtn.UseVisualStyleBackColor = true;
@@ -2076,19 +2182,21 @@ namespace YuShiNetDevSDK.WinForm
             // 
             this.BasicTime.CustomFormat = "HH:mm:ss ";
             this.BasicTime.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.BasicTime.Location = new System.Drawing.Point(459, 31);
+            this.BasicTime.Location = new System.Drawing.Point(536, 44);
+            this.BasicTime.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.BasicTime.Name = "BasicTime";
             this.BasicTime.ShowUpDown = true;
-            this.BasicTime.Size = new System.Drawing.Size(88, 23);
+            this.BasicTime.Size = new System.Drawing.Size(102, 23);
             this.BasicTime.TabIndex = 6;
             // 
             // BasicDate
             // 
             this.BasicDate.CustomFormat = "yyyy/MM/dd";
             this.BasicDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.BasicDate.Location = new System.Drawing.Point(317, 31);
+            this.BasicDate.Location = new System.Drawing.Point(370, 44);
+            this.BasicDate.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.BasicDate.Name = "BasicDate";
-            this.BasicDate.Size = new System.Drawing.Size(121, 23);
+            this.BasicDate.Size = new System.Drawing.Size(140, 23);
             this.BasicDate.TabIndex = 5;
             // 
             // BasicGMTCobBox
@@ -2129,9 +2237,10 @@ namespace YuShiNetDevSDK.WinForm
             "GMT+11:00 Magadan, Solomon Islands",
             "GMT+12:00 Auckland, Wellington",
             "GMT+13:00 Nuku\'alofa"});
-            this.BasicGMTCobBox.Location = new System.Drawing.Point(18, 31);
+            this.BasicGMTCobBox.Location = new System.Drawing.Point(21, 44);
+            this.BasicGMTCobBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.BasicGMTCobBox.Name = "BasicGMTCobBox";
-            this.BasicGMTCobBox.Size = new System.Drawing.Size(277, 25);
+            this.BasicGMTCobBox.Size = new System.Drawing.Size(322, 25);
             this.BasicGMTCobBox.TabIndex = 0;
             this.BasicGMTCobBox.Text = "GMT-12:00 International Date Line West";
             // 
@@ -2154,17 +2263,19 @@ namespace YuShiNetDevSDK.WinForm
             this.ConfigNetwork.Controls.Add(this.label20);
             this.ConfigNetwork.Controls.Add(this.label19);
             this.ConfigNetwork.Location = new System.Drawing.Point(4, 26);
+            this.ConfigNetwork.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.ConfigNetwork.Name = "ConfigNetwork";
-            this.ConfigNetwork.Padding = new System.Windows.Forms.Padding(3);
-            this.ConfigNetwork.Size = new System.Drawing.Size(899, 576);
+            this.ConfigNetwork.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.ConfigNetwork.Size = new System.Drawing.Size(1050, 828);
             this.ConfigNetwork.TabIndex = 1;
             this.ConfigNetwork.Text = "Network";
             // 
             // NetworkRefreshBtn
             // 
-            this.NetworkRefreshBtn.Location = new System.Drawing.Point(460, 448);
+            this.NetworkRefreshBtn.Location = new System.Drawing.Point(537, 635);
+            this.NetworkRefreshBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.NetworkRefreshBtn.Name = "NetworkRefreshBtn";
-            this.NetworkRefreshBtn.Size = new System.Drawing.Size(75, 23);
+            this.NetworkRefreshBtn.Size = new System.Drawing.Size(88, 33);
             this.NetworkRefreshBtn.TabIndex = 6;
             this.NetworkRefreshBtn.Text = "Refresh";
             this.NetworkRefreshBtn.UseVisualStyleBackColor = true;
@@ -2172,9 +2283,10 @@ namespace YuShiNetDevSDK.WinForm
             // 
             // NetSaveBtn
             // 
-            this.NetSaveBtn.Location = new System.Drawing.Point(460, 152);
+            this.NetSaveBtn.Location = new System.Drawing.Point(537, 215);
+            this.NetSaveBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.NetSaveBtn.Name = "NetSaveBtn";
-            this.NetSaveBtn.Size = new System.Drawing.Size(75, 23);
+            this.NetSaveBtn.Size = new System.Drawing.Size(88, 33);
             this.NetSaveBtn.TabIndex = 6;
             this.NetSaveBtn.Text = "Save";
             this.NetSaveBtn.UseVisualStyleBackColor = true;
@@ -2189,18 +2301,21 @@ namespace YuShiNetDevSDK.WinForm
             this.groupBox10.Controls.Add(this.NetNTPServerIPText);
             this.groupBox10.Controls.Add(this.NetNTPDHCPCkBox);
             this.groupBox10.Controls.Add(this.NetNTPIPTypeCobBox);
-            this.groupBox10.Location = new System.Drawing.Point(14, 306);
+            this.groupBox10.Location = new System.Drawing.Point(16, 434);
+            this.groupBox10.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.groupBox10.Name = "groupBox10";
-            this.groupBox10.Size = new System.Drawing.Size(753, 108);
+            this.groupBox10.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox10.Size = new System.Drawing.Size(878, 153);
             this.groupBox10.TabIndex = 5;
             this.groupBox10.TabStop = false;
             this.groupBox10.Text = "NTP";
             // 
             // NetNTPSaveBtn
             // 
-            this.NetNTPSaveBtn.Location = new System.Drawing.Point(446, 71);
+            this.NetNTPSaveBtn.Location = new System.Drawing.Point(520, 101);
+            this.NetNTPSaveBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.NetNTPSaveBtn.Name = "NetNTPSaveBtn";
-            this.NetNTPSaveBtn.Size = new System.Drawing.Size(75, 23);
+            this.NetNTPSaveBtn.Size = new System.Drawing.Size(88, 33);
             this.NetNTPSaveBtn.TabIndex = 6;
             this.NetNTPSaveBtn.Text = "Save";
             this.NetNTPSaveBtn.UseVisualStyleBackColor = true;
@@ -2209,7 +2324,8 @@ namespace YuShiNetDevSDK.WinForm
             // label27
             // 
             this.label27.AutoSize = true;
-            this.label27.Location = new System.Drawing.Point(24, 51);
+            this.label27.Location = new System.Drawing.Point(28, 72);
+            this.label27.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label27.Name = "label27";
             this.label27.Size = new System.Drawing.Size(51, 17);
             this.label27.TabIndex = 0;
@@ -2218,7 +2334,8 @@ namespace YuShiNetDevSDK.WinForm
             // label28
             // 
             this.label28.AutoSize = true;
-            this.label28.Location = new System.Drawing.Point(24, 21);
+            this.label28.Location = new System.Drawing.Point(28, 30);
+            this.label28.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label28.Name = "label28";
             this.label28.Size = new System.Drawing.Size(41, 17);
             this.label28.TabIndex = 0;
@@ -2227,7 +2344,8 @@ namespace YuShiNetDevSDK.WinForm
             // label29
             // 
             this.label29.AutoSize = true;
-            this.label29.Location = new System.Drawing.Point(24, 82);
+            this.label29.Location = new System.Drawing.Point(28, 116);
+            this.label29.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label29.Name = "label29";
             this.label29.Size = new System.Drawing.Size(60, 17);
             this.label29.TabIndex = 0;
@@ -2235,15 +2353,17 @@ namespace YuShiNetDevSDK.WinForm
             // 
             // NetNTPServerIPText
             // 
-            this.NetNTPServerIPText.Location = new System.Drawing.Point(111, 78);
+            this.NetNTPServerIPText.Location = new System.Drawing.Point(130, 110);
+            this.NetNTPServerIPText.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.NetNTPServerIPText.Name = "NetNTPServerIPText";
-            this.NetNTPServerIPText.Size = new System.Drawing.Size(139, 23);
+            this.NetNTPServerIPText.Size = new System.Drawing.Size(162, 23);
             this.NetNTPServerIPText.TabIndex = 3;
             // 
             // NetNTPDHCPCkBox
             // 
             this.NetNTPDHCPCkBox.AutoSize = true;
-            this.NetNTPDHCPCkBox.Location = new System.Drawing.Point(111, 18);
+            this.NetNTPDHCPCkBox.Location = new System.Drawing.Point(130, 26);
+            this.NetNTPDHCPCkBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.NetNTPDHCPCkBox.Name = "NetNTPDHCPCkBox";
             this.NetNTPDHCPCkBox.Size = new System.Drawing.Size(66, 21);
             this.NetNTPDHCPCkBox.TabIndex = 1;
@@ -2258,9 +2378,10 @@ namespace YuShiNetDevSDK.WinForm
             "IPV4",
             "IPV6",
             "DNS"});
-            this.NetNTPIPTypeCobBox.Location = new System.Drawing.Point(111, 45);
+            this.NetNTPIPTypeCobBox.Location = new System.Drawing.Point(130, 64);
+            this.NetNTPIPTypeCobBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.NetNTPIPTypeCobBox.Name = "NetNTPIPTypeCobBox";
-            this.NetNTPIPTypeCobBox.Size = new System.Drawing.Size(139, 25);
+            this.NetNTPIPTypeCobBox.Size = new System.Drawing.Size(162, 25);
             this.NetNTPIPTypeCobBox.TabIndex = 4;
             this.NetNTPIPTypeCobBox.Text = "IPV4";
             // 
@@ -2276,18 +2397,21 @@ namespace YuShiNetDevSDK.WinForm
             this.groupBox9.Controls.Add(this.NetPortRTSPCobBox);
             this.groupBox9.Controls.Add(this.NetPortHTTPSCobBox);
             this.groupBox9.Controls.Add(this.NetPortHTTPCobBox);
-            this.groupBox9.Location = new System.Drawing.Point(14, 192);
+            this.groupBox9.Location = new System.Drawing.Point(16, 272);
+            this.groupBox9.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.groupBox9.Name = "groupBox9";
-            this.groupBox9.Size = new System.Drawing.Size(753, 106);
+            this.groupBox9.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox9.Size = new System.Drawing.Size(878, 150);
             this.groupBox9.TabIndex = 5;
             this.groupBox9.TabStop = false;
             this.groupBox9.Text = "Port";
             // 
             // NetPortSaveBtn
             // 
-            this.NetPortSaveBtn.Location = new System.Drawing.Point(446, 71);
+            this.NetPortSaveBtn.Location = new System.Drawing.Point(520, 101);
+            this.NetPortSaveBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.NetPortSaveBtn.Name = "NetPortSaveBtn";
-            this.NetPortSaveBtn.Size = new System.Drawing.Size(75, 23);
+            this.NetPortSaveBtn.Size = new System.Drawing.Size(88, 33);
             this.NetPortSaveBtn.TabIndex = 6;
             this.NetPortSaveBtn.Text = "Save";
             this.NetPortSaveBtn.UseVisualStyleBackColor = true;
@@ -2296,7 +2420,8 @@ namespace YuShiNetDevSDK.WinForm
             // label25
             // 
             this.label25.AutoSize = true;
-            this.label25.Location = new System.Drawing.Point(24, 52);
+            this.label25.Location = new System.Drawing.Point(28, 74);
+            this.label25.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label25.Name = "label25";
             this.label25.Size = new System.Drawing.Size(45, 17);
             this.label25.TabIndex = 0;
@@ -2305,7 +2430,8 @@ namespace YuShiNetDevSDK.WinForm
             // label24
             // 
             this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(24, 22);
+            this.label24.Location = new System.Drawing.Point(28, 31);
+            this.label24.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label24.Name = "label24";
             this.label24.Size = new System.Drawing.Size(38, 17);
             this.label24.TabIndex = 0;
@@ -2314,7 +2440,8 @@ namespace YuShiNetDevSDK.WinForm
             // label26
             // 
             this.label26.AutoSize = true;
-            this.label26.Location = new System.Drawing.Point(24, 83);
+            this.label26.Location = new System.Drawing.Point(28, 118);
+            this.label26.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label26.Name = "label26";
             this.label26.Size = new System.Drawing.Size(37, 17);
             this.label26.TabIndex = 0;
@@ -2322,25 +2449,28 @@ namespace YuShiNetDevSDK.WinForm
             // 
             // NetPortRTSPText
             // 
-            this.NetPortRTSPText.Location = new System.Drawing.Point(111, 74);
+            this.NetPortRTSPText.Location = new System.Drawing.Point(130, 105);
+            this.NetPortRTSPText.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.NetPortRTSPText.Name = "NetPortRTSPText";
-            this.NetPortRTSPText.Size = new System.Drawing.Size(60, 23);
+            this.NetPortRTSPText.Size = new System.Drawing.Size(69, 23);
             this.NetPortRTSPText.TabIndex = 3;
             this.NetPortRTSPText.Text = "0";
             // 
             // NetPortHTTPSText
             // 
-            this.NetPortHTTPSText.Location = new System.Drawing.Point(111, 48);
+            this.NetPortHTTPSText.Location = new System.Drawing.Point(130, 68);
+            this.NetPortHTTPSText.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.NetPortHTTPSText.Name = "NetPortHTTPSText";
-            this.NetPortHTTPSText.Size = new System.Drawing.Size(60, 23);
+            this.NetPortHTTPSText.Size = new System.Drawing.Size(69, 23);
             this.NetPortHTTPSText.TabIndex = 3;
             this.NetPortHTTPSText.Text = "0";
             // 
             // NetPortHTTPText
             // 
-            this.NetPortHTTPText.Location = new System.Drawing.Point(111, 22);
+            this.NetPortHTTPText.Location = new System.Drawing.Point(130, 31);
+            this.NetPortHTTPText.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.NetPortHTTPText.Name = "NetPortHTTPText";
-            this.NetPortHTTPText.Size = new System.Drawing.Size(60, 23);
+            this.NetPortHTTPText.Size = new System.Drawing.Size(69, 23);
             this.NetPortHTTPText.TabIndex = 3;
             this.NetPortHTTPText.Text = "0";
             // 
@@ -2351,9 +2481,10 @@ namespace YuShiNetDevSDK.WinForm
             this.NetPortRTSPCobBox.Items.AddRange(new object[] {
             "Disable",
             "Enable"});
-            this.NetPortRTSPCobBox.Location = new System.Drawing.Point(177, 74);
+            this.NetPortRTSPCobBox.Location = new System.Drawing.Point(206, 105);
+            this.NetPortRTSPCobBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.NetPortRTSPCobBox.Name = "NetPortRTSPCobBox";
-            this.NetPortRTSPCobBox.Size = new System.Drawing.Size(73, 25);
+            this.NetPortRTSPCobBox.Size = new System.Drawing.Size(84, 25);
             this.NetPortRTSPCobBox.TabIndex = 4;
             this.NetPortRTSPCobBox.Text = "Disable";
             // 
@@ -2363,9 +2494,10 @@ namespace YuShiNetDevSDK.WinForm
             this.NetPortHTTPSCobBox.Items.AddRange(new object[] {
             "Disable",
             "Enable"});
-            this.NetPortHTTPSCobBox.Location = new System.Drawing.Point(177, 48);
+            this.NetPortHTTPSCobBox.Location = new System.Drawing.Point(206, 68);
+            this.NetPortHTTPSCobBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.NetPortHTTPSCobBox.Name = "NetPortHTTPSCobBox";
-            this.NetPortHTTPSCobBox.Size = new System.Drawing.Size(73, 25);
+            this.NetPortHTTPSCobBox.Size = new System.Drawing.Size(84, 25);
             this.NetPortHTTPSCobBox.TabIndex = 4;
             this.NetPortHTTPSCobBox.Text = "Disable";
             // 
@@ -2376,45 +2508,51 @@ namespace YuShiNetDevSDK.WinForm
             this.NetPortHTTPCobBox.Items.AddRange(new object[] {
             "Disable",
             "Enable"});
-            this.NetPortHTTPCobBox.Location = new System.Drawing.Point(177, 22);
+            this.NetPortHTTPCobBox.Location = new System.Drawing.Point(206, 31);
+            this.NetPortHTTPCobBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.NetPortHTTPCobBox.Name = "NetPortHTTPCobBox";
-            this.NetPortHTTPCobBox.Size = new System.Drawing.Size(73, 25);
+            this.NetPortHTTPCobBox.Size = new System.Drawing.Size(84, 25);
             this.NetPortHTTPCobBox.TabIndex = 4;
             this.NetPortHTTPCobBox.Text = "Disable";
             // 
             // NetMTUText
             // 
-            this.NetMTUText.Location = new System.Drawing.Point(125, 154);
+            this.NetMTUText.Location = new System.Drawing.Point(146, 218);
+            this.NetMTUText.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.NetMTUText.Name = "NetMTUText";
-            this.NetMTUText.Size = new System.Drawing.Size(139, 23);
+            this.NetMTUText.Size = new System.Drawing.Size(162, 23);
             this.NetMTUText.TabIndex = 3;
             this.NetMTUText.Text = "0";
             // 
             // NetGatwayText
             // 
-            this.NetGatwayText.Location = new System.Drawing.Point(125, 121);
+            this.NetGatwayText.Location = new System.Drawing.Point(146, 171);
+            this.NetGatwayText.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.NetGatwayText.Name = "NetGatwayText";
-            this.NetGatwayText.Size = new System.Drawing.Size(139, 23);
+            this.NetGatwayText.Size = new System.Drawing.Size(162, 23);
             this.NetGatwayText.TabIndex = 3;
             // 
             // NetSubMaskText
             // 
-            this.NetSubMaskText.Location = new System.Drawing.Point(125, 85);
+            this.NetSubMaskText.Location = new System.Drawing.Point(146, 120);
+            this.NetSubMaskText.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.NetSubMaskText.Name = "NetSubMaskText";
-            this.NetSubMaskText.Size = new System.Drawing.Size(139, 23);
+            this.NetSubMaskText.Size = new System.Drawing.Size(162, 23);
             this.NetSubMaskText.TabIndex = 3;
             // 
             // NetIPAddText
             // 
-            this.NetIPAddText.Location = new System.Drawing.Point(125, 51);
+            this.NetIPAddText.Location = new System.Drawing.Point(146, 72);
+            this.NetIPAddText.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.NetIPAddText.Name = "NetIPAddText";
-            this.NetIPAddText.Size = new System.Drawing.Size(139, 23);
+            this.NetIPAddText.Size = new System.Drawing.Size(162, 23);
             this.NetIPAddText.TabIndex = 3;
             // 
             // NetDHCPCkBox
             // 
             this.NetDHCPCkBox.AutoSize = true;
-            this.NetDHCPCkBox.Location = new System.Drawing.Point(125, 27);
+            this.NetDHCPCkBox.Location = new System.Drawing.Point(146, 38);
+            this.NetDHCPCkBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.NetDHCPCkBox.Name = "NetDHCPCkBox";
             this.NetDHCPCkBox.Size = new System.Drawing.Size(66, 21);
             this.NetDHCPCkBox.TabIndex = 1;
@@ -2425,7 +2563,8 @@ namespace YuShiNetDevSDK.WinForm
             // label30
             // 
             this.label30.AutoSize = true;
-            this.label30.Location = new System.Drawing.Point(274, 159);
+            this.label30.Location = new System.Drawing.Point(320, 225);
+            this.label30.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label30.Name = "label30";
             this.label30.Size = new System.Drawing.Size(186, 17);
             this.label30.TabIndex = 0;
@@ -2434,7 +2573,8 @@ namespace YuShiNetDevSDK.WinForm
             // label23
             // 
             this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(38, 161);
+            this.label23.Location = new System.Drawing.Point(44, 228);
+            this.label23.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label23.Name = "label23";
             this.label23.Size = new System.Drawing.Size(36, 17);
             this.label23.TabIndex = 0;
@@ -2443,7 +2583,8 @@ namespace YuShiNetDevSDK.WinForm
             // label22
             // 
             this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(38, 126);
+            this.label22.Location = new System.Drawing.Point(44, 178);
+            this.label22.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label22.Name = "label22";
             this.label22.Size = new System.Drawing.Size(57, 17);
             this.label22.TabIndex = 0;
@@ -2452,7 +2593,8 @@ namespace YuShiNetDevSDK.WinForm
             // label21
             // 
             this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(38, 91);
+            this.label21.Location = new System.Drawing.Point(44, 129);
+            this.label21.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(84, 17);
             this.label21.TabIndex = 0;
@@ -2461,7 +2603,8 @@ namespace YuShiNetDevSDK.WinForm
             // label20
             // 
             this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(38, 57);
+            this.label20.Location = new System.Drawing.Point(44, 81);
+            this.label20.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label20.Name = "label20";
             this.label20.Size = new System.Drawing.Size(71, 17);
             this.label20.TabIndex = 0;
@@ -2470,7 +2613,8 @@ namespace YuShiNetDevSDK.WinForm
             // label19
             // 
             this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(38, 28);
+            this.label19.Location = new System.Drawing.Point(44, 40);
+            this.label19.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(41, 17);
             this.label19.TabIndex = 0;
@@ -2482,16 +2626,18 @@ namespace YuShiNetDevSDK.WinForm
             this.ConfigVideo.Controls.Add(this.VideoRefreshBtn);
             this.ConfigVideo.Controls.Add(this.groupBox11);
             this.ConfigVideo.Location = new System.Drawing.Point(4, 26);
+            this.ConfigVideo.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.ConfigVideo.Name = "ConfigVideo";
-            this.ConfigVideo.Size = new System.Drawing.Size(899, 576);
+            this.ConfigVideo.Size = new System.Drawing.Size(1050, 828);
             this.ConfigVideo.TabIndex = 2;
             this.ConfigVideo.Text = "Video";
             // 
             // VideoRefreshBtn
             // 
-            this.VideoRefreshBtn.Location = new System.Drawing.Point(611, 394);
+            this.VideoRefreshBtn.Location = new System.Drawing.Point(713, 558);
+            this.VideoRefreshBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.VideoRefreshBtn.Name = "VideoRefreshBtn";
-            this.VideoRefreshBtn.Size = new System.Drawing.Size(75, 23);
+            this.VideoRefreshBtn.Size = new System.Drawing.Size(88, 33);
             this.VideoRefreshBtn.TabIndex = 7;
             this.VideoRefreshBtn.Text = "Refresh";
             this.VideoRefreshBtn.UseVisualStyleBackColor = true;
@@ -2520,18 +2666,21 @@ namespace YuShiNetDevSDK.WinForm
             this.groupBox11.Controls.Add(this.label33);
             this.groupBox11.Controls.Add(this.label32);
             this.groupBox11.Controls.Add(this.label31);
-            this.groupBox11.Location = new System.Drawing.Point(14, 18);
+            this.groupBox11.Location = new System.Drawing.Point(16, 26);
+            this.groupBox11.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.groupBox11.Name = "groupBox11";
-            this.groupBox11.Size = new System.Drawing.Size(753, 276);
+            this.groupBox11.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox11.Size = new System.Drawing.Size(878, 391);
             this.groupBox11.TabIndex = 0;
             this.groupBox11.TabStop = false;
             this.groupBox11.Text = "Stream Info";
             // 
             // VideoSaveBtn
             // 
-            this.VideoSaveBtn.Location = new System.Drawing.Point(403, 194);
+            this.VideoSaveBtn.Location = new System.Drawing.Point(470, 275);
+            this.VideoSaveBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.VideoSaveBtn.Name = "VideoSaveBtn";
-            this.VideoSaveBtn.Size = new System.Drawing.Size(75, 23);
+            this.VideoSaveBtn.Size = new System.Drawing.Size(88, 33);
             this.VideoSaveBtn.TabIndex = 3;
             this.VideoSaveBtn.Text = "Save";
             this.VideoSaveBtn.UseVisualStyleBackColor = true;
@@ -2539,48 +2688,54 @@ namespace YuShiNetDevSDK.WinForm
             // 
             // VideoResolutionHText
             // 
-            this.VideoResolutionHText.Location = new System.Drawing.Point(222, 89);
+            this.VideoResolutionHText.Location = new System.Drawing.Point(259, 126);
+            this.VideoResolutionHText.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.VideoResolutionHText.Name = "VideoResolutionHText";
-            this.VideoResolutionHText.Size = new System.Drawing.Size(62, 23);
+            this.VideoResolutionHText.Size = new System.Drawing.Size(72, 23);
             this.VideoResolutionHText.TabIndex = 2;
             this.VideoResolutionHText.Text = "0";
             // 
             // VideoGopText
             // 
-            this.VideoGopText.Location = new System.Drawing.Point(117, 225);
+            this.VideoGopText.Location = new System.Drawing.Point(136, 319);
+            this.VideoGopText.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.VideoGopText.Name = "VideoGopText";
-            this.VideoGopText.Size = new System.Drawing.Size(167, 23);
+            this.VideoGopText.Size = new System.Drawing.Size(194, 23);
             this.VideoGopText.TabIndex = 2;
             this.VideoGopText.Text = "0";
             // 
             // VideoFrameRateText
             // 
-            this.VideoFrameRateText.Location = new System.Drawing.Point(117, 190);
+            this.VideoFrameRateText.Location = new System.Drawing.Point(136, 269);
+            this.VideoFrameRateText.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.VideoFrameRateText.Name = "VideoFrameRateText";
-            this.VideoFrameRateText.Size = new System.Drawing.Size(167, 23);
+            this.VideoFrameRateText.Size = new System.Drawing.Size(194, 23);
             this.VideoFrameRateText.TabIndex = 2;
             this.VideoFrameRateText.Text = "0";
             // 
             // VideoBitRateText
             // 
-            this.VideoBitRateText.Location = new System.Drawing.Point(117, 123);
+            this.VideoBitRateText.Location = new System.Drawing.Point(136, 174);
+            this.VideoBitRateText.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.VideoBitRateText.Name = "VideoBitRateText";
-            this.VideoBitRateText.Size = new System.Drawing.Size(167, 23);
+            this.VideoBitRateText.Size = new System.Drawing.Size(194, 23);
             this.VideoBitRateText.TabIndex = 2;
             this.VideoBitRateText.Text = "0";
             // 
             // VideoResolutionWText
             // 
-            this.VideoResolutionWText.Location = new System.Drawing.Point(117, 89);
+            this.VideoResolutionWText.Location = new System.Drawing.Point(136, 126);
+            this.VideoResolutionWText.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.VideoResolutionWText.Name = "VideoResolutionWText";
-            this.VideoResolutionWText.Size = new System.Drawing.Size(62, 23);
+            this.VideoResolutionWText.Size = new System.Drawing.Size(72, 23);
             this.VideoResolutionWText.TabIndex = 2;
             this.VideoResolutionWText.Text = "0";
             // 
             // label42
             // 
             this.label42.AutoSize = true;
-            this.label42.Location = new System.Drawing.Point(169, 228);
+            this.label42.Location = new System.Drawing.Point(197, 323);
+            this.label42.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label42.Name = "label42";
             this.label42.Size = new System.Drawing.Size(16, 17);
             this.label42.TabIndex = 0;
@@ -2601,15 +2756,17 @@ namespace YuShiNetDevSDK.WinForm
             "8",
             "9",
             "10"});
-            this.VideoQualityCobBox.Location = new System.Drawing.Point(117, 158);
+            this.VideoQualityCobBox.Location = new System.Drawing.Point(136, 224);
+            this.VideoQualityCobBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.VideoQualityCobBox.Name = "VideoQualityCobBox";
-            this.VideoQualityCobBox.Size = new System.Drawing.Size(167, 25);
+            this.VideoQualityCobBox.Size = new System.Drawing.Size(194, 25);
             this.VideoQualityCobBox.TabIndex = 1;
             // 
             // label40
             // 
             this.label40.AutoSize = true;
-            this.label40.Location = new System.Drawing.Point(169, 193);
+            this.label40.Location = new System.Drawing.Point(197, 273);
+            this.label40.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label40.Name = "label40";
             this.label40.Size = new System.Drawing.Size(16, 17);
             this.label40.TabIndex = 0;
@@ -2622,16 +2779,18 @@ namespace YuShiNetDevSDK.WinForm
             "MJPEG",
             "H.264",
             "H.265"});
-            this.VideoEncodeFormatCobBox.Location = new System.Drawing.Point(117, 55);
+            this.VideoEncodeFormatCobBox.Location = new System.Drawing.Point(136, 78);
+            this.VideoEncodeFormatCobBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.VideoEncodeFormatCobBox.Name = "VideoEncodeFormatCobBox";
-            this.VideoEncodeFormatCobBox.Size = new System.Drawing.Size(167, 25);
+            this.VideoEncodeFormatCobBox.Size = new System.Drawing.Size(194, 25);
             this.VideoEncodeFormatCobBox.TabIndex = 1;
             this.VideoEncodeFormatCobBox.Text = "MJPEG";
             // 
             // label37
             // 
             this.label37.AutoSize = true;
-            this.label37.Location = new System.Drawing.Point(169, 126);
+            this.label37.Location = new System.Drawing.Point(197, 178);
+            this.label37.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label37.Name = "label37";
             this.label37.Size = new System.Drawing.Size(16, 17);
             this.label37.TabIndex = 0;
@@ -2640,7 +2799,8 @@ namespace YuShiNetDevSDK.WinForm
             // label41
             // 
             this.label41.AutoSize = true;
-            this.label41.Location = new System.Drawing.Point(17, 231);
+            this.label41.Location = new System.Drawing.Point(20, 327);
+            this.label41.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label41.Name = "label41";
             this.label41.Size = new System.Drawing.Size(99, 17);
             this.label41.TabIndex = 0;
@@ -2653,9 +2813,10 @@ namespace YuShiNetDevSDK.WinForm
             "Main Stream",
             "Sub Stream",
             "Third Stream"});
-            this.VideoStreamIndexCobBox.Location = new System.Drawing.Point(117, 20);
+            this.VideoStreamIndexCobBox.Location = new System.Drawing.Point(136, 28);
+            this.VideoStreamIndexCobBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.VideoStreamIndexCobBox.Name = "VideoStreamIndexCobBox";
-            this.VideoStreamIndexCobBox.Size = new System.Drawing.Size(167, 25);
+            this.VideoStreamIndexCobBox.Size = new System.Drawing.Size(194, 25);
             this.VideoStreamIndexCobBox.TabIndex = 1;
             this.VideoStreamIndexCobBox.Text = "Main Stream";
             this.VideoStreamIndexCobBox.SelectedIndexChanged += new System.EventHandler(this.VideoStreamIndexCobBox_SelectedIndexChanged);
@@ -2663,7 +2824,8 @@ namespace YuShiNetDevSDK.WinForm
             // label39
             // 
             this.label39.AutoSize = true;
-            this.label39.Location = new System.Drawing.Point(17, 196);
+            this.label39.Location = new System.Drawing.Point(20, 278);
+            this.label39.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label39.Name = "label39";
             this.label39.Size = new System.Drawing.Size(100, 17);
             this.label39.TabIndex = 0;
@@ -2672,7 +2834,8 @@ namespace YuShiNetDevSDK.WinForm
             // label34
             // 
             this.label34.AutoSize = true;
-            this.label34.Location = new System.Drawing.Point(169, 92);
+            this.label34.Location = new System.Drawing.Point(197, 130);
+            this.label34.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label34.Name = "label34";
             this.label34.Size = new System.Drawing.Size(16, 17);
             this.label34.TabIndex = 0;
@@ -2681,7 +2844,8 @@ namespace YuShiNetDevSDK.WinForm
             // label36
             // 
             this.label36.AutoSize = true;
-            this.label36.Location = new System.Drawing.Point(17, 129);
+            this.label36.Location = new System.Drawing.Point(20, 183);
+            this.label36.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label36.Name = "label36";
             this.label36.Size = new System.Drawing.Size(90, 17);
             this.label36.TabIndex = 0;
@@ -2690,7 +2854,8 @@ namespace YuShiNetDevSDK.WinForm
             // label35
             // 
             this.label35.AutoSize = true;
-            this.label35.Location = new System.Drawing.Point(194, 94);
+            this.label35.Location = new System.Drawing.Point(226, 133);
+            this.label35.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label35.Name = "label35";
             this.label35.Size = new System.Drawing.Size(16, 17);
             this.label35.TabIndex = 0;
@@ -2699,7 +2864,8 @@ namespace YuShiNetDevSDK.WinForm
             // label38
             // 
             this.label38.AutoSize = true;
-            this.label38.Location = new System.Drawing.Point(17, 166);
+            this.label38.Location = new System.Drawing.Point(20, 235);
+            this.label38.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label38.Name = "label38";
             this.label38.Size = new System.Drawing.Size(48, 17);
             this.label38.TabIndex = 0;
@@ -2708,7 +2874,8 @@ namespace YuShiNetDevSDK.WinForm
             // label33
             // 
             this.label33.AutoSize = true;
-            this.label33.Location = new System.Drawing.Point(17, 95);
+            this.label33.Location = new System.Drawing.Point(20, 135);
+            this.label33.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label33.Name = "label33";
             this.label33.Size = new System.Drawing.Size(69, 17);
             this.label33.TabIndex = 0;
@@ -2717,7 +2884,8 @@ namespace YuShiNetDevSDK.WinForm
             // label32
             // 
             this.label32.AutoSize = true;
-            this.label32.Location = new System.Drawing.Point(17, 63);
+            this.label32.Location = new System.Drawing.Point(20, 89);
+            this.label32.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label32.Name = "label32";
             this.label32.Size = new System.Drawing.Size(96, 17);
             this.label32.TabIndex = 0;
@@ -2726,7 +2894,8 @@ namespace YuShiNetDevSDK.WinForm
             // label31
             // 
             this.label31.AutoSize = true;
-            this.label31.Location = new System.Drawing.Point(17, 27);
+            this.label31.Location = new System.Drawing.Point(20, 38);
+            this.label31.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label31.Name = "label31";
             this.label31.Size = new System.Drawing.Size(85, 17);
             this.label31.TabIndex = 0;
@@ -2738,16 +2907,18 @@ namespace YuShiNetDevSDK.WinForm
             this.ConfigImage.Controls.Add(this.ImageRefreshBtn);
             this.ConfigImage.Controls.Add(this.groupBox12);
             this.ConfigImage.Location = new System.Drawing.Point(4, 26);
+            this.ConfigImage.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.ConfigImage.Name = "ConfigImage";
-            this.ConfigImage.Size = new System.Drawing.Size(899, 576);
+            this.ConfigImage.Size = new System.Drawing.Size(1050, 828);
             this.ConfigImage.TabIndex = 3;
             this.ConfigImage.Text = "Image";
             // 
             // ImageRefreshBtn
             // 
-            this.ImageRefreshBtn.Location = new System.Drawing.Point(612, 397);
+            this.ImageRefreshBtn.Location = new System.Drawing.Point(714, 562);
+            this.ImageRefreshBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.ImageRefreshBtn.Name = "ImageRefreshBtn";
-            this.ImageRefreshBtn.Size = new System.Drawing.Size(75, 23);
+            this.ImageRefreshBtn.Size = new System.Drawing.Size(88, 33);
             this.ImageRefreshBtn.TabIndex = 8;
             this.ImageRefreshBtn.Text = "Refresh";
             this.ImageRefreshBtn.UseVisualStyleBackColor = true;
@@ -2772,18 +2943,21 @@ namespace YuShiNetDevSDK.WinForm
             this.groupBox12.Controls.Add(this.ContrastTrackBar);
             this.groupBox12.Controls.Add(this.SaturationTrackBar);
             this.groupBox12.Controls.Add(this.BrightnessTrackBar);
-            this.groupBox12.Location = new System.Drawing.Point(17, 17);
+            this.groupBox12.Location = new System.Drawing.Point(20, 24);
+            this.groupBox12.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.groupBox12.Name = "groupBox12";
-            this.groupBox12.Size = new System.Drawing.Size(734, 167);
+            this.groupBox12.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox12.Size = new System.Drawing.Size(856, 237);
             this.groupBox12.TabIndex = 0;
             this.groupBox12.TabStop = false;
             this.groupBox12.Text = "Image Info";
             // 
             // ImageSaveBtn
             // 
-            this.ImageSaveBtn.Location = new System.Drawing.Point(595, 125);
+            this.ImageSaveBtn.Location = new System.Drawing.Point(694, 177);
+            this.ImageSaveBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.ImageSaveBtn.Name = "ImageSaveBtn";
-            this.ImageSaveBtn.Size = new System.Drawing.Size(75, 23);
+            this.ImageSaveBtn.Size = new System.Drawing.Size(88, 33);
             this.ImageSaveBtn.TabIndex = 9;
             this.ImageSaveBtn.Text = "Save";
             this.ImageSaveBtn.UseVisualStyleBackColor = true;
@@ -2792,7 +2966,8 @@ namespace YuShiNetDevSDK.WinForm
             // label50
             // 
             this.label50.AutoSize = true;
-            this.label50.Location = new System.Drawing.Point(17, 130);
+            this.label50.Location = new System.Drawing.Point(20, 184);
+            this.label50.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label50.Name = "label50";
             this.label50.Size = new System.Drawing.Size(68, 17);
             this.label50.TabIndex = 8;
@@ -2801,7 +2976,8 @@ namespace YuShiNetDevSDK.WinForm
             // label48
             // 
             this.label48.AutoSize = true;
-            this.label48.Location = new System.Drawing.Point(17, 100);
+            this.label48.Location = new System.Drawing.Point(20, 142);
+            this.label48.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label48.Name = "label48";
             this.label48.Size = new System.Drawing.Size(57, 17);
             this.label48.TabIndex = 8;
@@ -2810,7 +2986,8 @@ namespace YuShiNetDevSDK.WinForm
             // label46
             // 
             this.label46.AutoSize = true;
-            this.label46.Location = new System.Drawing.Point(17, 70);
+            this.label46.Location = new System.Drawing.Point(20, 99);
+            this.label46.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label46.Name = "label46";
             this.label46.Size = new System.Drawing.Size(67, 17);
             this.label46.TabIndex = 8;
@@ -2819,7 +2996,8 @@ namespace YuShiNetDevSDK.WinForm
             // label44
             // 
             this.label44.AutoSize = true;
-            this.label44.Location = new System.Drawing.Point(17, 40);
+            this.label44.Location = new System.Drawing.Point(20, 57);
+            this.label44.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label44.Name = "label44";
             this.label44.Size = new System.Drawing.Size(69, 17);
             this.label44.TabIndex = 8;
@@ -2827,36 +3005,40 @@ namespace YuShiNetDevSDK.WinForm
             // 
             // SharpnessText
             // 
-            this.SharpnessText.Location = new System.Drawing.Point(334, 127);
+            this.SharpnessText.Location = new System.Drawing.Point(390, 180);
+            this.SharpnessText.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.SharpnessText.Name = "SharpnessText";
-            this.SharpnessText.Size = new System.Drawing.Size(58, 23);
+            this.SharpnessText.Size = new System.Drawing.Size(67, 23);
             this.SharpnessText.TabIndex = 7;
             this.SharpnessText.Text = "128";
             this.SharpnessText.TextChanged += new System.EventHandler(this.SharpnessText_TextChanged);
             // 
             // ContrastText
             // 
-            this.ContrastText.Location = new System.Drawing.Point(334, 97);
+            this.ContrastText.Location = new System.Drawing.Point(390, 137);
+            this.ContrastText.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.ContrastText.Name = "ContrastText";
-            this.ContrastText.Size = new System.Drawing.Size(58, 23);
+            this.ContrastText.Size = new System.Drawing.Size(67, 23);
             this.ContrastText.TabIndex = 7;
             this.ContrastText.Text = "128";
             this.ContrastText.TextChanged += new System.EventHandler(this.ContrastText_TextChanged);
             // 
             // SaturationText
             // 
-            this.SaturationText.Location = new System.Drawing.Point(334, 67);
+            this.SaturationText.Location = new System.Drawing.Point(390, 95);
+            this.SaturationText.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.SaturationText.Name = "SaturationText";
-            this.SaturationText.Size = new System.Drawing.Size(58, 23);
+            this.SaturationText.Size = new System.Drawing.Size(67, 23);
             this.SaturationText.TabIndex = 7;
             this.SaturationText.Text = "128";
             this.SaturationText.TextChanged += new System.EventHandler(this.SaturationText_TextChanged);
             // 
             // BrightnessText
             // 
-            this.BrightnessText.Location = new System.Drawing.Point(334, 37);
+            this.BrightnessText.Location = new System.Drawing.Point(390, 52);
+            this.BrightnessText.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.BrightnessText.Name = "BrightnessText";
-            this.BrightnessText.Size = new System.Drawing.Size(58, 23);
+            this.BrightnessText.Size = new System.Drawing.Size(67, 23);
             this.BrightnessText.TabIndex = 7;
             this.BrightnessText.Text = "128";
             this.BrightnessText.TextChanged += new System.EventHandler(this.BrightnessText_TextChanged);
@@ -2864,7 +3046,8 @@ namespace YuShiNetDevSDK.WinForm
             // label49
             // 
             this.label49.AutoSize = true;
-            this.label49.Location = new System.Drawing.Point(402, 132);
+            this.label49.Location = new System.Drawing.Point(469, 187);
+            this.label49.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label49.Name = "label49";
             this.label49.Size = new System.Drawing.Size(69, 17);
             this.label49.TabIndex = 6;
@@ -2873,7 +3056,8 @@ namespace YuShiNetDevSDK.WinForm
             // label47
             // 
             this.label47.AutoSize = true;
-            this.label47.Location = new System.Drawing.Point(402, 102);
+            this.label47.Location = new System.Drawing.Point(469, 144);
+            this.label47.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label47.Name = "label47";
             this.label47.Size = new System.Drawing.Size(69, 17);
             this.label47.TabIndex = 6;
@@ -2882,7 +3066,8 @@ namespace YuShiNetDevSDK.WinForm
             // label45
             // 
             this.label45.AutoSize = true;
-            this.label45.Location = new System.Drawing.Point(402, 72);
+            this.label45.Location = new System.Drawing.Point(469, 102);
+            this.label45.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label45.Name = "label45";
             this.label45.Size = new System.Drawing.Size(69, 17);
             this.label45.TabIndex = 6;
@@ -2891,7 +3076,8 @@ namespace YuShiNetDevSDK.WinForm
             // label43
             // 
             this.label43.AutoSize = true;
-            this.label43.Location = new System.Drawing.Point(402, 42);
+            this.label43.Location = new System.Drawing.Point(469, 60);
+            this.label43.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label43.Name = "label43";
             this.label43.Size = new System.Drawing.Size(69, 17);
             this.label43.TabIndex = 6;
@@ -2900,11 +3086,11 @@ namespace YuShiNetDevSDK.WinForm
             // SharpnessTrackBar
             // 
             this.SharpnessTrackBar.AutoSize = false;
-            this.SharpnessTrackBar.Cursor = System.Windows.Forms.Cursors.Default;
-            this.SharpnessTrackBar.Location = new System.Drawing.Point(100, 127);
+            this.SharpnessTrackBar.Location = new System.Drawing.Point(117, 180);
+            this.SharpnessTrackBar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.SharpnessTrackBar.Maximum = 255;
             this.SharpnessTrackBar.Name = "SharpnessTrackBar";
-            this.SharpnessTrackBar.Size = new System.Drawing.Size(214, 24);
+            this.SharpnessTrackBar.Size = new System.Drawing.Size(250, 34);
             this.SharpnessTrackBar.TabIndex = 5;
             this.SharpnessTrackBar.TickStyle = System.Windows.Forms.TickStyle.None;
             this.SharpnessTrackBar.Value = 128;
@@ -2913,11 +3099,11 @@ namespace YuShiNetDevSDK.WinForm
             // ContrastTrackBar
             // 
             this.ContrastTrackBar.AutoSize = false;
-            this.ContrastTrackBar.Cursor = System.Windows.Forms.Cursors.Default;
-            this.ContrastTrackBar.Location = new System.Drawing.Point(100, 97);
+            this.ContrastTrackBar.Location = new System.Drawing.Point(117, 137);
+            this.ContrastTrackBar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.ContrastTrackBar.Maximum = 255;
             this.ContrastTrackBar.Name = "ContrastTrackBar";
-            this.ContrastTrackBar.Size = new System.Drawing.Size(214, 24);
+            this.ContrastTrackBar.Size = new System.Drawing.Size(250, 34);
             this.ContrastTrackBar.TabIndex = 5;
             this.ContrastTrackBar.TickStyle = System.Windows.Forms.TickStyle.None;
             this.ContrastTrackBar.Value = 128;
@@ -2926,11 +3112,11 @@ namespace YuShiNetDevSDK.WinForm
             // SaturationTrackBar
             // 
             this.SaturationTrackBar.AutoSize = false;
-            this.SaturationTrackBar.Cursor = System.Windows.Forms.Cursors.Default;
-            this.SaturationTrackBar.Location = new System.Drawing.Point(100, 67);
+            this.SaturationTrackBar.Location = new System.Drawing.Point(117, 95);
+            this.SaturationTrackBar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.SaturationTrackBar.Maximum = 255;
             this.SaturationTrackBar.Name = "SaturationTrackBar";
-            this.SaturationTrackBar.Size = new System.Drawing.Size(214, 24);
+            this.SaturationTrackBar.Size = new System.Drawing.Size(250, 34);
             this.SaturationTrackBar.TabIndex = 5;
             this.SaturationTrackBar.TickStyle = System.Windows.Forms.TickStyle.None;
             this.SaturationTrackBar.Value = 128;
@@ -2939,11 +3125,11 @@ namespace YuShiNetDevSDK.WinForm
             // BrightnessTrackBar
             // 
             this.BrightnessTrackBar.AutoSize = false;
-            this.BrightnessTrackBar.Cursor = System.Windows.Forms.Cursors.Default;
-            this.BrightnessTrackBar.Location = new System.Drawing.Point(100, 37);
+            this.BrightnessTrackBar.Location = new System.Drawing.Point(117, 52);
+            this.BrightnessTrackBar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.BrightnessTrackBar.Maximum = 255;
             this.BrightnessTrackBar.Name = "BrightnessTrackBar";
-            this.BrightnessTrackBar.Size = new System.Drawing.Size(214, 24);
+            this.BrightnessTrackBar.Size = new System.Drawing.Size(250, 34);
             this.BrightnessTrackBar.TabIndex = 5;
             this.BrightnessTrackBar.TickStyle = System.Windows.Forms.TickStyle.None;
             this.BrightnessTrackBar.Value = 128;
@@ -2955,16 +3141,18 @@ namespace YuShiNetDevSDK.WinForm
             this.ConfigOSD.Controls.Add(this.OSDRefreshBtn);
             this.ConfigOSD.Controls.Add(this.groupBox13);
             this.ConfigOSD.Location = new System.Drawing.Point(4, 26);
+            this.ConfigOSD.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.ConfigOSD.Name = "ConfigOSD";
-            this.ConfigOSD.Size = new System.Drawing.Size(899, 576);
+            this.ConfigOSD.Size = new System.Drawing.Size(1050, 828);
             this.ConfigOSD.TabIndex = 4;
             this.ConfigOSD.Text = "OSD";
             // 
             // OSDRefreshBtn
             // 
-            this.OSDRefreshBtn.Location = new System.Drawing.Point(592, 452);
+            this.OSDRefreshBtn.Location = new System.Drawing.Point(691, 640);
+            this.OSDRefreshBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.OSDRefreshBtn.Name = "OSDRefreshBtn";
-            this.OSDRefreshBtn.Size = new System.Drawing.Size(75, 23);
+            this.OSDRefreshBtn.Size = new System.Drawing.Size(88, 33);
             this.OSDRefreshBtn.TabIndex = 9;
             this.OSDRefreshBtn.Text = "Refresh";
             this.OSDRefreshBtn.UseVisualStyleBackColor = true;
@@ -3030,9 +3218,11 @@ namespace YuShiNetDevSDK.WinForm
             this.groupBox13.Controls.Add(this.label51);
             this.groupBox13.Controls.Add(this.OSDDateCobBox);
             this.groupBox13.Controls.Add(this.OSDTimeCobBox);
-            this.groupBox13.Location = new System.Drawing.Point(23, 25);
+            this.groupBox13.Location = new System.Drawing.Point(27, 35);
+            this.groupBox13.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.groupBox13.Name = "groupBox13";
-            this.groupBox13.Size = new System.Drawing.Size(700, 382);
+            this.groupBox13.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox13.Size = new System.Drawing.Size(817, 541);
             this.groupBox13.TabIndex = 3;
             this.groupBox13.TabStop = false;
             this.groupBox13.Text = "OSD";
@@ -3040,7 +3230,8 @@ namespace YuShiNetDevSDK.WinForm
             // OSDText6CheckBox
             // 
             this.OSDText6CheckBox.AutoSize = true;
-            this.OSDText6CheckBox.Location = new System.Drawing.Point(21, 300);
+            this.OSDText6CheckBox.Location = new System.Drawing.Point(24, 425);
+            this.OSDText6CheckBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.OSDText6CheckBox.Name = "OSDText6CheckBox";
             this.OSDText6CheckBox.Size = new System.Drawing.Size(66, 21);
             this.OSDText6CheckBox.TabIndex = 11;
@@ -3051,7 +3242,8 @@ namespace YuShiNetDevSDK.WinForm
             // OSDText5CheckBox
             // 
             this.OSDText5CheckBox.AutoSize = true;
-            this.OSDText5CheckBox.Location = new System.Drawing.Point(21, 262);
+            this.OSDText5CheckBox.Location = new System.Drawing.Point(24, 371);
+            this.OSDText5CheckBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.OSDText5CheckBox.Name = "OSDText5CheckBox";
             this.OSDText5CheckBox.Size = new System.Drawing.Size(66, 21);
             this.OSDText5CheckBox.TabIndex = 11;
@@ -3062,7 +3254,8 @@ namespace YuShiNetDevSDK.WinForm
             // OSDText4CheckBox
             // 
             this.OSDText4CheckBox.AutoSize = true;
-            this.OSDText4CheckBox.Location = new System.Drawing.Point(21, 218);
+            this.OSDText4CheckBox.Location = new System.Drawing.Point(24, 309);
+            this.OSDText4CheckBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.OSDText4CheckBox.Name = "OSDText4CheckBox";
             this.OSDText4CheckBox.Size = new System.Drawing.Size(66, 21);
             this.OSDText4CheckBox.TabIndex = 11;
@@ -3073,7 +3266,8 @@ namespace YuShiNetDevSDK.WinForm
             // OSDText3CheckBox
             // 
             this.OSDText3CheckBox.AutoSize = true;
-            this.OSDText3CheckBox.Location = new System.Drawing.Point(21, 180);
+            this.OSDText3CheckBox.Location = new System.Drawing.Point(24, 255);
+            this.OSDText3CheckBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.OSDText3CheckBox.Name = "OSDText3CheckBox";
             this.OSDText3CheckBox.Size = new System.Drawing.Size(66, 21);
             this.OSDText3CheckBox.TabIndex = 11;
@@ -3084,7 +3278,8 @@ namespace YuShiNetDevSDK.WinForm
             // OSDText2CheckBox
             // 
             this.OSDText2CheckBox.AutoSize = true;
-            this.OSDText2CheckBox.Location = new System.Drawing.Point(21, 138);
+            this.OSDText2CheckBox.Location = new System.Drawing.Point(24, 196);
+            this.OSDText2CheckBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.OSDText2CheckBox.Name = "OSDText2CheckBox";
             this.OSDText2CheckBox.Size = new System.Drawing.Size(66, 21);
             this.OSDText2CheckBox.TabIndex = 11;
@@ -3095,7 +3290,8 @@ namespace YuShiNetDevSDK.WinForm
             // OSDText1CheckBox
             // 
             this.OSDText1CheckBox.AutoSize = true;
-            this.OSDText1CheckBox.Location = new System.Drawing.Point(21, 98);
+            this.OSDText1CheckBox.Location = new System.Drawing.Point(24, 139);
+            this.OSDText1CheckBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.OSDText1CheckBox.Name = "OSDText1CheckBox";
             this.OSDText1CheckBox.Size = new System.Drawing.Size(66, 21);
             this.OSDText1CheckBox.TabIndex = 11;
@@ -3106,7 +3302,8 @@ namespace YuShiNetDevSDK.WinForm
             // OSDNameCheckBox
             // 
             this.OSDNameCheckBox.AutoSize = true;
-            this.OSDNameCheckBox.Location = new System.Drawing.Point(21, 62);
+            this.OSDNameCheckBox.Location = new System.Drawing.Point(24, 88);
+            this.OSDNameCheckBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.OSDNameCheckBox.Name = "OSDNameCheckBox";
             this.OSDNameCheckBox.Size = new System.Drawing.Size(66, 21);
             this.OSDNameCheckBox.TabIndex = 11;
@@ -3117,7 +3314,8 @@ namespace YuShiNetDevSDK.WinForm
             // OSDTimeCheckBox
             // 
             this.OSDTimeCheckBox.AutoSize = true;
-            this.OSDTimeCheckBox.Location = new System.Drawing.Point(21, 24);
+            this.OSDTimeCheckBox.Location = new System.Drawing.Point(24, 34);
+            this.OSDTimeCheckBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.OSDTimeCheckBox.Name = "OSDTimeCheckBox";
             this.OSDTimeCheckBox.Size = new System.Drawing.Size(66, 21);
             this.OSDTimeCheckBox.TabIndex = 11;
@@ -3127,9 +3325,10 @@ namespace YuShiNetDevSDK.WinForm
             // 
             // OSDSaveBtn
             // 
-            this.OSDSaveBtn.Location = new System.Drawing.Point(569, 340);
+            this.OSDSaveBtn.Location = new System.Drawing.Point(664, 482);
+            this.OSDSaveBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.OSDSaveBtn.Name = "OSDSaveBtn";
-            this.OSDSaveBtn.Size = new System.Drawing.Size(75, 23);
+            this.OSDSaveBtn.Size = new System.Drawing.Size(88, 33);
             this.OSDSaveBtn.TabIndex = 9;
             this.OSDSaveBtn.Text = "Save";
             this.OSDSaveBtn.UseVisualStyleBackColor = true;
@@ -3137,72 +3336,81 @@ namespace YuShiNetDevSDK.WinForm
             // 
             // OSDText6PointY
             // 
-            this.OSDText6PointY.Location = new System.Drawing.Point(540, 301);
+            this.OSDText6PointY.Location = new System.Drawing.Point(630, 426);
+            this.OSDText6PointY.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.OSDText6PointY.Name = "OSDText6PointY";
-            this.OSDText6PointY.Size = new System.Drawing.Size(58, 23);
+            this.OSDText6PointY.Size = new System.Drawing.Size(67, 23);
             this.OSDText6PointY.TabIndex = 10;
             this.OSDText6PointY.Text = "0";
             // 
             // OSDText5PointY
             // 
-            this.OSDText5PointY.Location = new System.Drawing.Point(540, 263);
+            this.OSDText5PointY.Location = new System.Drawing.Point(630, 373);
+            this.OSDText5PointY.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.OSDText5PointY.Name = "OSDText5PointY";
-            this.OSDText5PointY.Size = new System.Drawing.Size(58, 23);
+            this.OSDText5PointY.Size = new System.Drawing.Size(67, 23);
             this.OSDText5PointY.TabIndex = 10;
             this.OSDText5PointY.Text = "0";
             // 
             // OSDText4PointY
             // 
-            this.OSDText4PointY.Location = new System.Drawing.Point(540, 219);
+            this.OSDText4PointY.Location = new System.Drawing.Point(630, 310);
+            this.OSDText4PointY.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.OSDText4PointY.Name = "OSDText4PointY";
-            this.OSDText4PointY.Size = new System.Drawing.Size(58, 23);
+            this.OSDText4PointY.Size = new System.Drawing.Size(67, 23);
             this.OSDText4PointY.TabIndex = 10;
             this.OSDText4PointY.Text = "0";
             // 
             // OSDText3PointY
             // 
-            this.OSDText3PointY.Location = new System.Drawing.Point(540, 181);
+            this.OSDText3PointY.Location = new System.Drawing.Point(630, 256);
+            this.OSDText3PointY.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.OSDText3PointY.Name = "OSDText3PointY";
-            this.OSDText3PointY.Size = new System.Drawing.Size(58, 23);
+            this.OSDText3PointY.Size = new System.Drawing.Size(67, 23);
             this.OSDText3PointY.TabIndex = 10;
             this.OSDText3PointY.Text = "0";
             // 
             // OSDText2PointY
             // 
-            this.OSDText2PointY.Location = new System.Drawing.Point(540, 138);
+            this.OSDText2PointY.Location = new System.Drawing.Point(630, 196);
+            this.OSDText2PointY.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.OSDText2PointY.Name = "OSDText2PointY";
-            this.OSDText2PointY.Size = new System.Drawing.Size(58, 23);
+            this.OSDText2PointY.Size = new System.Drawing.Size(67, 23);
             this.OSDText2PointY.TabIndex = 10;
             this.OSDText2PointY.Text = "0";
             // 
             // OSDText1PointY
             // 
-            this.OSDText1PointY.Location = new System.Drawing.Point(540, 98);
+            this.OSDText1PointY.Location = new System.Drawing.Point(630, 139);
+            this.OSDText1PointY.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.OSDText1PointY.Name = "OSDText1PointY";
-            this.OSDText1PointY.Size = new System.Drawing.Size(58, 23);
+            this.OSDText1PointY.Size = new System.Drawing.Size(67, 23);
             this.OSDText1PointY.TabIndex = 10;
             this.OSDText1PointY.Text = "0";
             // 
             // OSDNamePointYText
             // 
-            this.OSDNamePointYText.Location = new System.Drawing.Point(540, 59);
+            this.OSDNamePointYText.Location = new System.Drawing.Point(630, 84);
+            this.OSDNamePointYText.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.OSDNamePointYText.Name = "OSDNamePointYText";
-            this.OSDNamePointYText.Size = new System.Drawing.Size(58, 23);
+            this.OSDNamePointYText.Size = new System.Drawing.Size(67, 23);
             this.OSDNamePointYText.TabIndex = 10;
             this.OSDNamePointYText.Text = "0";
             // 
             // OSDTimePointYText
             // 
-            this.OSDTimePointYText.Location = new System.Drawing.Point(540, 22);
+            this.OSDTimePointYText.Location = new System.Drawing.Point(630, 31);
+            this.OSDTimePointYText.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.OSDTimePointYText.Name = "OSDTimePointYText";
-            this.OSDTimePointYText.Size = new System.Drawing.Size(58, 23);
+            this.OSDTimePointYText.Size = new System.Drawing.Size(67, 23);
             this.OSDTimePointYText.TabIndex = 10;
             this.OSDTimePointYText.Text = "0";
             // 
             // label74
             // 
             this.label74.AutoSize = true;
-            this.label74.Location = new System.Drawing.Point(523, 305);
+            this.label74.Location = new System.Drawing.Point(610, 432);
+            this.label74.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label74.Name = "label74";
             this.label74.Size = new System.Drawing.Size(15, 17);
             this.label74.TabIndex = 9;
@@ -3211,7 +3419,8 @@ namespace YuShiNetDevSDK.WinForm
             // label71
             // 
             this.label71.AutoSize = true;
-            this.label71.Location = new System.Drawing.Point(523, 267);
+            this.label71.Location = new System.Drawing.Point(610, 378);
+            this.label71.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label71.Name = "label71";
             this.label71.Size = new System.Drawing.Size(15, 17);
             this.label71.TabIndex = 9;
@@ -3220,7 +3429,8 @@ namespace YuShiNetDevSDK.WinForm
             // label68
             // 
             this.label68.AutoSize = true;
-            this.label68.Location = new System.Drawing.Point(523, 223);
+            this.label68.Location = new System.Drawing.Point(610, 316);
+            this.label68.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label68.Name = "label68";
             this.label68.Size = new System.Drawing.Size(15, 17);
             this.label68.TabIndex = 9;
@@ -3229,7 +3439,8 @@ namespace YuShiNetDevSDK.WinForm
             // label65
             // 
             this.label65.AutoSize = true;
-            this.label65.Location = new System.Drawing.Point(523, 185);
+            this.label65.Location = new System.Drawing.Point(610, 262);
+            this.label65.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label65.Name = "label65";
             this.label65.Size = new System.Drawing.Size(15, 17);
             this.label65.TabIndex = 9;
@@ -3238,7 +3449,8 @@ namespace YuShiNetDevSDK.WinForm
             // label62
             // 
             this.label62.AutoSize = true;
-            this.label62.Location = new System.Drawing.Point(523, 142);
+            this.label62.Location = new System.Drawing.Point(610, 201);
+            this.label62.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label62.Name = "label62";
             this.label62.Size = new System.Drawing.Size(15, 17);
             this.label62.TabIndex = 9;
@@ -3247,7 +3459,8 @@ namespace YuShiNetDevSDK.WinForm
             // label59
             // 
             this.label59.AutoSize = true;
-            this.label59.Location = new System.Drawing.Point(523, 102);
+            this.label59.Location = new System.Drawing.Point(610, 144);
+            this.label59.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label59.Name = "label59";
             this.label59.Size = new System.Drawing.Size(15, 17);
             this.label59.TabIndex = 9;
@@ -3256,7 +3469,8 @@ namespace YuShiNetDevSDK.WinForm
             // label56
             // 
             this.label56.AutoSize = true;
-            this.label56.Location = new System.Drawing.Point(523, 63);
+            this.label56.Location = new System.Drawing.Point(610, 89);
+            this.label56.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label56.Name = "label56";
             this.label56.Size = new System.Drawing.Size(15, 17);
             this.label56.TabIndex = 9;
@@ -3265,7 +3479,8 @@ namespace YuShiNetDevSDK.WinForm
             // label53
             // 
             this.label53.AutoSize = true;
-            this.label53.Location = new System.Drawing.Point(523, 26);
+            this.label53.Location = new System.Drawing.Point(610, 37);
+            this.label53.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label53.Name = "label53";
             this.label53.Size = new System.Drawing.Size(15, 17);
             this.label53.TabIndex = 9;
@@ -3273,68 +3488,77 @@ namespace YuShiNetDevSDK.WinForm
             // 
             // OSDText6
             // 
-            this.OSDText6.Location = new System.Drawing.Point(166, 301);
+            this.OSDText6.Location = new System.Drawing.Point(194, 426);
+            this.OSDText6.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.OSDText6.Name = "OSDText6";
-            this.OSDText6.Size = new System.Drawing.Size(242, 23);
+            this.OSDText6.Size = new System.Drawing.Size(282, 23);
             this.OSDText6.TabIndex = 10;
             // 
             // OSDText6PointX
             // 
-            this.OSDText6PointX.Location = new System.Drawing.Point(446, 301);
+            this.OSDText6PointX.Location = new System.Drawing.Point(520, 426);
+            this.OSDText6PointX.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.OSDText6PointX.Name = "OSDText6PointX";
-            this.OSDText6PointX.Size = new System.Drawing.Size(58, 23);
+            this.OSDText6PointX.Size = new System.Drawing.Size(67, 23);
             this.OSDText6PointX.TabIndex = 10;
             this.OSDText6PointX.Text = "0";
             // 
             // OSDText5
             // 
-            this.OSDText5.Location = new System.Drawing.Point(166, 263);
+            this.OSDText5.Location = new System.Drawing.Point(194, 373);
+            this.OSDText5.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.OSDText5.Name = "OSDText5";
-            this.OSDText5.Size = new System.Drawing.Size(242, 23);
+            this.OSDText5.Size = new System.Drawing.Size(282, 23);
             this.OSDText5.TabIndex = 10;
             // 
             // OSDText5PointX
             // 
-            this.OSDText5PointX.Location = new System.Drawing.Point(446, 263);
+            this.OSDText5PointX.Location = new System.Drawing.Point(520, 373);
+            this.OSDText5PointX.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.OSDText5PointX.Name = "OSDText5PointX";
-            this.OSDText5PointX.Size = new System.Drawing.Size(58, 23);
+            this.OSDText5PointX.Size = new System.Drawing.Size(67, 23);
             this.OSDText5PointX.TabIndex = 10;
             this.OSDText5PointX.Text = "0";
             // 
             // OSDText4
             // 
-            this.OSDText4.Location = new System.Drawing.Point(166, 219);
+            this.OSDText4.Location = new System.Drawing.Point(194, 310);
+            this.OSDText4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.OSDText4.Name = "OSDText4";
-            this.OSDText4.Size = new System.Drawing.Size(242, 23);
+            this.OSDText4.Size = new System.Drawing.Size(282, 23);
             this.OSDText4.TabIndex = 10;
             // 
             // OSDText4PointX
             // 
-            this.OSDText4PointX.Location = new System.Drawing.Point(446, 219);
+            this.OSDText4PointX.Location = new System.Drawing.Point(520, 310);
+            this.OSDText4PointX.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.OSDText4PointX.Name = "OSDText4PointX";
-            this.OSDText4PointX.Size = new System.Drawing.Size(58, 23);
+            this.OSDText4PointX.Size = new System.Drawing.Size(67, 23);
             this.OSDText4PointX.TabIndex = 10;
             this.OSDText4PointX.Text = "0";
             // 
             // OSDText3
             // 
-            this.OSDText3.Location = new System.Drawing.Point(166, 181);
+            this.OSDText3.Location = new System.Drawing.Point(194, 256);
+            this.OSDText3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.OSDText3.Name = "OSDText3";
-            this.OSDText3.Size = new System.Drawing.Size(242, 23);
+            this.OSDText3.Size = new System.Drawing.Size(282, 23);
             this.OSDText3.TabIndex = 10;
             // 
             // OSDText3PointX
             // 
-            this.OSDText3PointX.Location = new System.Drawing.Point(446, 181);
+            this.OSDText3PointX.Location = new System.Drawing.Point(520, 256);
+            this.OSDText3PointX.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.OSDText3PointX.Name = "OSDText3PointX";
-            this.OSDText3PointX.Size = new System.Drawing.Size(58, 23);
+            this.OSDText3PointX.Size = new System.Drawing.Size(67, 23);
             this.OSDText3PointX.TabIndex = 10;
             this.OSDText3PointX.Text = "0";
             // 
             // label73
             // 
             this.label73.AutoSize = true;
-            this.label73.Location = new System.Drawing.Point(429, 305);
+            this.label73.Location = new System.Drawing.Point(500, 432);
+            this.label73.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label73.Name = "label73";
             this.label73.Size = new System.Drawing.Size(16, 17);
             this.label73.TabIndex = 9;
@@ -3342,15 +3566,17 @@ namespace YuShiNetDevSDK.WinForm
             // 
             // OSDText2
             // 
-            this.OSDText2.Location = new System.Drawing.Point(166, 138);
+            this.OSDText2.Location = new System.Drawing.Point(194, 196);
+            this.OSDText2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.OSDText2.Name = "OSDText2";
-            this.OSDText2.Size = new System.Drawing.Size(242, 23);
+            this.OSDText2.Size = new System.Drawing.Size(282, 23);
             this.OSDText2.TabIndex = 10;
             // 
             // label70
             // 
             this.label70.AutoSize = true;
-            this.label70.Location = new System.Drawing.Point(429, 267);
+            this.label70.Location = new System.Drawing.Point(500, 378);
+            this.label70.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label70.Name = "label70";
             this.label70.Size = new System.Drawing.Size(16, 17);
             this.label70.TabIndex = 9;
@@ -3358,16 +3584,18 @@ namespace YuShiNetDevSDK.WinForm
             // 
             // OSDText2PointX
             // 
-            this.OSDText2PointX.Location = new System.Drawing.Point(446, 138);
+            this.OSDText2PointX.Location = new System.Drawing.Point(520, 196);
+            this.OSDText2PointX.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.OSDText2PointX.Name = "OSDText2PointX";
-            this.OSDText2PointX.Size = new System.Drawing.Size(58, 23);
+            this.OSDText2PointX.Size = new System.Drawing.Size(67, 23);
             this.OSDText2PointX.TabIndex = 10;
             this.OSDText2PointX.Text = "0";
             // 
             // label67
             // 
             this.label67.AutoSize = true;
-            this.label67.Location = new System.Drawing.Point(429, 223);
+            this.label67.Location = new System.Drawing.Point(500, 316);
+            this.label67.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label67.Name = "label67";
             this.label67.Size = new System.Drawing.Size(16, 17);
             this.label67.TabIndex = 9;
@@ -3375,15 +3603,17 @@ namespace YuShiNetDevSDK.WinForm
             // 
             // OSDText1
             // 
-            this.OSDText1.Location = new System.Drawing.Point(166, 98);
+            this.OSDText1.Location = new System.Drawing.Point(194, 139);
+            this.OSDText1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.OSDText1.Name = "OSDText1";
-            this.OSDText1.Size = new System.Drawing.Size(242, 23);
+            this.OSDText1.Size = new System.Drawing.Size(282, 23);
             this.OSDText1.TabIndex = 10;
             // 
             // label64
             // 
             this.label64.AutoSize = true;
-            this.label64.Location = new System.Drawing.Point(429, 185);
+            this.label64.Location = new System.Drawing.Point(500, 262);
+            this.label64.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label64.Name = "label64";
             this.label64.Size = new System.Drawing.Size(16, 17);
             this.label64.TabIndex = 9;
@@ -3391,16 +3621,18 @@ namespace YuShiNetDevSDK.WinForm
             // 
             // OSDText1PointX
             // 
-            this.OSDText1PointX.Location = new System.Drawing.Point(446, 98);
+            this.OSDText1PointX.Location = new System.Drawing.Point(520, 139);
+            this.OSDText1PointX.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.OSDText1PointX.Name = "OSDText1PointX";
-            this.OSDText1PointX.Size = new System.Drawing.Size(58, 23);
+            this.OSDText1PointX.Size = new System.Drawing.Size(67, 23);
             this.OSDText1PointX.TabIndex = 10;
             this.OSDText1PointX.Text = "0";
             // 
             // label61
             // 
             this.label61.AutoSize = true;
-            this.label61.Location = new System.Drawing.Point(429, 142);
+            this.label61.Location = new System.Drawing.Point(500, 201);
+            this.label61.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label61.Name = "label61";
             this.label61.Size = new System.Drawing.Size(16, 17);
             this.label61.TabIndex = 9;
@@ -3409,7 +3641,8 @@ namespace YuShiNetDevSDK.WinForm
             // label72
             // 
             this.label72.AutoSize = true;
-            this.label72.Location = new System.Drawing.Point(116, 304);
+            this.label72.Location = new System.Drawing.Point(135, 431);
+            this.label72.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label72.Name = "label72";
             this.label72.Size = new System.Drawing.Size(43, 17);
             this.label72.TabIndex = 9;
@@ -3417,15 +3650,17 @@ namespace YuShiNetDevSDK.WinForm
             // 
             // OSDNameText
             // 
-            this.OSDNameText.Location = new System.Drawing.Point(166, 59);
+            this.OSDNameText.Location = new System.Drawing.Point(194, 84);
+            this.OSDNameText.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.OSDNameText.Name = "OSDNameText";
-            this.OSDNameText.Size = new System.Drawing.Size(242, 23);
+            this.OSDNameText.Size = new System.Drawing.Size(282, 23);
             this.OSDNameText.TabIndex = 10;
             // 
             // label69
             // 
             this.label69.AutoSize = true;
-            this.label69.Location = new System.Drawing.Point(116, 266);
+            this.label69.Location = new System.Drawing.Point(135, 377);
+            this.label69.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label69.Name = "label69";
             this.label69.Size = new System.Drawing.Size(43, 17);
             this.label69.TabIndex = 9;
@@ -3434,7 +3669,8 @@ namespace YuShiNetDevSDK.WinForm
             // label58
             // 
             this.label58.AutoSize = true;
-            this.label58.Location = new System.Drawing.Point(429, 102);
+            this.label58.Location = new System.Drawing.Point(500, 144);
+            this.label58.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label58.Name = "label58";
             this.label58.Size = new System.Drawing.Size(16, 17);
             this.label58.TabIndex = 9;
@@ -3443,7 +3679,8 @@ namespace YuShiNetDevSDK.WinForm
             // label66
             // 
             this.label66.AutoSize = true;
-            this.label66.Location = new System.Drawing.Point(116, 222);
+            this.label66.Location = new System.Drawing.Point(135, 314);
+            this.label66.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label66.Name = "label66";
             this.label66.Size = new System.Drawing.Size(43, 17);
             this.label66.TabIndex = 9;
@@ -3451,16 +3688,18 @@ namespace YuShiNetDevSDK.WinForm
             // 
             // OSDNamePointXText
             // 
-            this.OSDNamePointXText.Location = new System.Drawing.Point(446, 59);
+            this.OSDNamePointXText.Location = new System.Drawing.Point(520, 84);
+            this.OSDNamePointXText.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.OSDNamePointXText.Name = "OSDNamePointXText";
-            this.OSDNamePointXText.Size = new System.Drawing.Size(58, 23);
+            this.OSDNamePointXText.Size = new System.Drawing.Size(67, 23);
             this.OSDNamePointXText.TabIndex = 10;
             this.OSDNamePointXText.Text = "0";
             // 
             // label63
             // 
             this.label63.AutoSize = true;
-            this.label63.Location = new System.Drawing.Point(116, 184);
+            this.label63.Location = new System.Drawing.Point(135, 261);
+            this.label63.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label63.Name = "label63";
             this.label63.Size = new System.Drawing.Size(43, 17);
             this.label63.TabIndex = 9;
@@ -3469,7 +3708,8 @@ namespace YuShiNetDevSDK.WinForm
             // label55
             // 
             this.label55.AutoSize = true;
-            this.label55.Location = new System.Drawing.Point(429, 63);
+            this.label55.Location = new System.Drawing.Point(500, 89);
+            this.label55.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label55.Name = "label55";
             this.label55.Size = new System.Drawing.Size(16, 17);
             this.label55.TabIndex = 9;
@@ -3478,7 +3718,8 @@ namespace YuShiNetDevSDK.WinForm
             // label60
             // 
             this.label60.AutoSize = true;
-            this.label60.Location = new System.Drawing.Point(116, 141);
+            this.label60.Location = new System.Drawing.Point(135, 200);
+            this.label60.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label60.Name = "label60";
             this.label60.Size = new System.Drawing.Size(43, 17);
             this.label60.TabIndex = 9;
@@ -3486,16 +3727,18 @@ namespace YuShiNetDevSDK.WinForm
             // 
             // OSDTimePointXText
             // 
-            this.OSDTimePointXText.Location = new System.Drawing.Point(446, 22);
+            this.OSDTimePointXText.Location = new System.Drawing.Point(520, 31);
+            this.OSDTimePointXText.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.OSDTimePointXText.Name = "OSDTimePointXText";
-            this.OSDTimePointXText.Size = new System.Drawing.Size(58, 23);
+            this.OSDTimePointXText.Size = new System.Drawing.Size(67, 23);
             this.OSDTimePointXText.TabIndex = 10;
             this.OSDTimePointXText.Text = "0";
             // 
             // label57
             // 
             this.label57.AutoSize = true;
-            this.label57.Location = new System.Drawing.Point(116, 101);
+            this.label57.Location = new System.Drawing.Point(135, 143);
+            this.label57.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label57.Name = "label57";
             this.label57.Size = new System.Drawing.Size(43, 17);
             this.label57.TabIndex = 9;
@@ -3504,7 +3747,8 @@ namespace YuShiNetDevSDK.WinForm
             // label52
             // 
             this.label52.AutoSize = true;
-            this.label52.Location = new System.Drawing.Point(429, 26);
+            this.label52.Location = new System.Drawing.Point(500, 37);
+            this.label52.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label52.Name = "label52";
             this.label52.Size = new System.Drawing.Size(16, 17);
             this.label52.TabIndex = 9;
@@ -3513,7 +3757,8 @@ namespace YuShiNetDevSDK.WinForm
             // label54
             // 
             this.label54.AutoSize = true;
-            this.label54.Location = new System.Drawing.Point(116, 62);
+            this.label54.Location = new System.Drawing.Point(135, 88);
+            this.label54.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label54.Name = "label54";
             this.label54.Size = new System.Drawing.Size(43, 17);
             this.label54.TabIndex = 9;
@@ -3522,7 +3767,8 @@ namespace YuShiNetDevSDK.WinForm
             // label51
             // 
             this.label51.AutoSize = true;
-            this.label51.Location = new System.Drawing.Point(116, 26);
+            this.label51.Location = new System.Drawing.Point(135, 37);
+            this.label51.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label51.Name = "label51";
             this.label51.Size = new System.Drawing.Size(36, 17);
             this.label51.TabIndex = 9;
@@ -3541,9 +3787,10 @@ namespace YuShiNetDevSDK.WinForm
             "dddd, MMMM dd, yyyy",
             "MMMM dd, yyyy",
             "dd MMMM, yyyy"});
-            this.OSDDateCobBox.Location = new System.Drawing.Point(166, 23);
+            this.OSDDateCobBox.Location = new System.Drawing.Point(194, 33);
+            this.OSDDateCobBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.OSDDateCobBox.Name = "OSDDateCobBox";
-            this.OSDDateCobBox.Size = new System.Drawing.Size(122, 25);
+            this.OSDDateCobBox.Size = new System.Drawing.Size(142, 25);
             this.OSDDateCobBox.TabIndex = 2;
             // 
             // OSDTimeCobBox
@@ -3553,9 +3800,10 @@ namespace YuShiNetDevSDK.WinForm
             this.OSDTimeCobBox.Items.AddRange(new object[] {
             "HH:mm:ss",
             "hh:mm:ss tt"});
-            this.OSDTimeCobBox.Location = new System.Drawing.Point(296, 23);
+            this.OSDTimeCobBox.Location = new System.Drawing.Point(345, 33);
+            this.OSDTimeCobBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.OSDTimeCobBox.Name = "OSDTimeCobBox";
-            this.OSDTimeCobBox.Size = new System.Drawing.Size(112, 25);
+            this.OSDTimeCobBox.Size = new System.Drawing.Size(130, 25);
             this.OSDTimeCobBox.TabIndex = 2;
             // 
             // ConfigIO
@@ -3565,16 +3813,18 @@ namespace YuShiNetDevSDK.WinForm
             this.ConfigIO.Controls.Add(this.groupBox15);
             this.ConfigIO.Controls.Add(this.groupBox14);
             this.ConfigIO.Location = new System.Drawing.Point(4, 26);
+            this.ConfigIO.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.ConfigIO.Name = "ConfigIO";
-            this.ConfigIO.Size = new System.Drawing.Size(899, 576);
+            this.ConfigIO.Size = new System.Drawing.Size(1050, 828);
             this.ConfigIO.TabIndex = 5;
             this.ConfigIO.Text = "I/O";
             // 
             // IORefreshBtn
             // 
-            this.IORefreshBtn.Location = new System.Drawing.Point(633, 482);
+            this.IORefreshBtn.Location = new System.Drawing.Point(738, 683);
+            this.IORefreshBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.IORefreshBtn.Name = "IORefreshBtn";
-            this.IORefreshBtn.Size = new System.Drawing.Size(75, 23);
+            this.IORefreshBtn.Size = new System.Drawing.Size(88, 33);
             this.IORefreshBtn.TabIndex = 10;
             this.IORefreshBtn.Text = "Refresh";
             this.IORefreshBtn.UseVisualStyleBackColor = true;
@@ -3594,18 +3844,21 @@ namespace YuShiNetDevSDK.WinForm
             this.groupBox15.Controls.Add(this.label79);
             this.groupBox15.Controls.Add(this.label76);
             this.groupBox15.Controls.Add(this.label75);
-            this.groupBox15.Location = new System.Drawing.Point(16, 232);
+            this.groupBox15.Location = new System.Drawing.Point(19, 329);
+            this.groupBox15.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.groupBox15.Name = "groupBox15";
-            this.groupBox15.Size = new System.Drawing.Size(738, 214);
+            this.groupBox15.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox15.Size = new System.Drawing.Size(861, 303);
             this.groupBox15.TabIndex = 0;
             this.groupBox15.TabStop = false;
             this.groupBox15.Text = "Alarm Output";
             // 
             // IOAlarmOutputSaveBtn
             // 
-            this.IOAlarmOutputSaveBtn.Location = new System.Drawing.Point(617, 172);
+            this.IOAlarmOutputSaveBtn.Location = new System.Drawing.Point(720, 244);
+            this.IOAlarmOutputSaveBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.IOAlarmOutputSaveBtn.Name = "IOAlarmOutputSaveBtn";
-            this.IOAlarmOutputSaveBtn.Size = new System.Drawing.Size(75, 23);
+            this.IOAlarmOutputSaveBtn.Size = new System.Drawing.Size(88, 33);
             this.IOAlarmOutputSaveBtn.TabIndex = 10;
             this.IOAlarmOutputSaveBtn.Text = "Save";
             this.IOAlarmOutputSaveBtn.UseVisualStyleBackColor = true;
@@ -3613,9 +3866,10 @@ namespace YuShiNetDevSDK.WinForm
             // 
             // IOAlarmOutputTriggerBtn
             // 
-            this.IOAlarmOutputTriggerBtn.Location = new System.Drawing.Point(517, 172);
+            this.IOAlarmOutputTriggerBtn.Location = new System.Drawing.Point(603, 244);
+            this.IOAlarmOutputTriggerBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.IOAlarmOutputTriggerBtn.Name = "IOAlarmOutputTriggerBtn";
-            this.IOAlarmOutputTriggerBtn.Size = new System.Drawing.Size(75, 23);
+            this.IOAlarmOutputTriggerBtn.Size = new System.Drawing.Size(88, 33);
             this.IOAlarmOutputTriggerBtn.TabIndex = 10;
             this.IOAlarmOutputTriggerBtn.Text = "Trigger";
             this.IOAlarmOutputTriggerBtn.UseVisualStyleBackColor = true;
@@ -3623,24 +3877,27 @@ namespace YuShiNetDevSDK.WinForm
             // 
             // IOAlarmOutputDelayText
             // 
-            this.IOAlarmOutputDelayText.Location = new System.Drawing.Point(108, 172);
+            this.IOAlarmOutputDelayText.Location = new System.Drawing.Point(126, 244);
+            this.IOAlarmOutputDelayText.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.IOAlarmOutputDelayText.Name = "IOAlarmOutputDelayText";
-            this.IOAlarmOutputDelayText.Size = new System.Drawing.Size(166, 23);
+            this.IOAlarmOutputDelayText.Size = new System.Drawing.Size(193, 23);
             this.IOAlarmOutputDelayText.TabIndex = 2;
             this.IOAlarmOutputDelayText.Text = "0";
             // 
             // IOAlarmOutputChannelID
             // 
-            this.IOAlarmOutputChannelID.Location = new System.Drawing.Point(108, 136);
+            this.IOAlarmOutputChannelID.Location = new System.Drawing.Point(126, 193);
+            this.IOAlarmOutputChannelID.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.IOAlarmOutputChannelID.Name = "IOAlarmOutputChannelID";
-            this.IOAlarmOutputChannelID.Size = new System.Drawing.Size(166, 23);
+            this.IOAlarmOutputChannelID.Size = new System.Drawing.Size(193, 23);
             this.IOAlarmOutputChannelID.TabIndex = 2;
             this.IOAlarmOutputChannelID.Text = "0";
             // 
             // label78
             // 
             this.label78.AutoSize = true;
-            this.label78.Location = new System.Drawing.Point(31, 175);
+            this.label78.Location = new System.Drawing.Point(36, 248);
+            this.label78.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label78.Name = "label78";
             this.label78.Size = new System.Drawing.Size(53, 17);
             this.label78.TabIndex = 0;
@@ -3649,15 +3906,17 @@ namespace YuShiNetDevSDK.WinForm
             // IOAlarmOutputNameText
             // 
             this.IOAlarmOutputNameText.Enabled = false;
-            this.IOAlarmOutputNameText.Location = new System.Drawing.Point(108, 67);
+            this.IOAlarmOutputNameText.Location = new System.Drawing.Point(126, 95);
+            this.IOAlarmOutputNameText.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.IOAlarmOutputNameText.Name = "IOAlarmOutputNameText";
-            this.IOAlarmOutputNameText.Size = new System.Drawing.Size(166, 23);
+            this.IOAlarmOutputNameText.Size = new System.Drawing.Size(193, 23);
             this.IOAlarmOutputNameText.TabIndex = 2;
             // 
             // label77
             // 
             this.label77.AutoSize = true;
-            this.label77.Location = new System.Drawing.Point(31, 139);
+            this.label77.Location = new System.Drawing.Point(36, 197);
+            this.label77.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label77.Name = "label77";
             this.label77.Size = new System.Drawing.Size(71, 17);
             this.label77.TabIndex = 0;
@@ -3670,25 +3929,28 @@ namespace YuShiNetDevSDK.WinForm
             this.IOAlarmOutputStatusCobBox.Items.AddRange(new object[] {
             "Normally Open",
             "Normally Closed"});
-            this.IOAlarmOutputStatusCobBox.Location = new System.Drawing.Point(108, 103);
+            this.IOAlarmOutputStatusCobBox.Location = new System.Drawing.Point(126, 146);
+            this.IOAlarmOutputStatusCobBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.IOAlarmOutputStatusCobBox.Name = "IOAlarmOutputStatusCobBox";
-            this.IOAlarmOutputStatusCobBox.Size = new System.Drawing.Size(166, 25);
+            this.IOAlarmOutputStatusCobBox.Size = new System.Drawing.Size(193, 25);
             this.IOAlarmOutputStatusCobBox.TabIndex = 1;
             // 
             // IOAlarmOutputIndexCobBox
             // 
             this.IOAlarmOutputIndexCobBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.IOAlarmOutputIndexCobBox.FormattingEnabled = true;
-            this.IOAlarmOutputIndexCobBox.Location = new System.Drawing.Point(108, 32);
+            this.IOAlarmOutputIndexCobBox.Location = new System.Drawing.Point(126, 45);
+            this.IOAlarmOutputIndexCobBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.IOAlarmOutputIndexCobBox.Name = "IOAlarmOutputIndexCobBox";
-            this.IOAlarmOutputIndexCobBox.Size = new System.Drawing.Size(166, 25);
+            this.IOAlarmOutputIndexCobBox.Size = new System.Drawing.Size(193, 25);
             this.IOAlarmOutputIndexCobBox.TabIndex = 1;
             this.IOAlarmOutputIndexCobBox.SelectedIndexChanged += new System.EventHandler(this.IOAlarmOutputIndexCobBox_SelectedIndexChanged);
             // 
             // label79
             // 
             this.label79.AutoSize = true;
-            this.label79.Location = new System.Drawing.Point(31, 106);
+            this.label79.Location = new System.Drawing.Point(36, 150);
+            this.label79.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label79.Name = "label79";
             this.label79.Size = new System.Drawing.Size(43, 17);
             this.label79.TabIndex = 0;
@@ -3697,7 +3959,8 @@ namespace YuShiNetDevSDK.WinForm
             // label76
             // 
             this.label76.AutoSize = true;
-            this.label76.Location = new System.Drawing.Point(31, 70);
+            this.label76.Location = new System.Drawing.Point(36, 99);
+            this.label76.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label76.Name = "label76";
             this.label76.Size = new System.Drawing.Size(43, 17);
             this.label76.TabIndex = 0;
@@ -3706,7 +3969,8 @@ namespace YuShiNetDevSDK.WinForm
             // label75
             // 
             this.label75.AutoSize = true;
-            this.label75.Location = new System.Drawing.Point(31, 35);
+            this.label75.Location = new System.Drawing.Point(36, 50);
+            this.label75.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label75.Name = "label75";
             this.label75.Size = new System.Drawing.Size(40, 17);
             this.label75.TabIndex = 0;
@@ -3715,9 +3979,11 @@ namespace YuShiNetDevSDK.WinForm
             // groupBox14
             // 
             this.groupBox14.Controls.Add(this.IOAlarmInputListView);
-            this.groupBox14.Location = new System.Drawing.Point(16, 19);
+            this.groupBox14.Location = new System.Drawing.Point(19, 27);
+            this.groupBox14.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.groupBox14.Name = "groupBox14";
-            this.groupBox14.Size = new System.Drawing.Size(738, 196);
+            this.groupBox14.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox14.Size = new System.Drawing.Size(861, 278);
             this.groupBox14.TabIndex = 0;
             this.groupBox14.TabStop = false;
             this.groupBox14.Text = "Alarm Input";
@@ -3727,9 +3993,11 @@ namespace YuShiNetDevSDK.WinForm
             this.IOAlarmInputListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.AlarmName});
             this.IOAlarmInputListView.GridLines = true;
-            this.IOAlarmInputListView.Location = new System.Drawing.Point(19, 20);
+            this.IOAlarmInputListView.HideSelection = false;
+            this.IOAlarmInputListView.Location = new System.Drawing.Point(22, 28);
+            this.IOAlarmInputListView.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.IOAlarmInputListView.Name = "IOAlarmInputListView";
-            this.IOAlarmInputListView.Size = new System.Drawing.Size(700, 170);
+            this.IOAlarmInputListView.Size = new System.Drawing.Size(816, 239);
             this.IOAlarmInputListView.TabIndex = 0;
             this.IOAlarmInputListView.UseCompatibleStateImageBehavior = false;
             this.IOAlarmInputListView.View = System.Windows.Forms.View.Details;
@@ -3745,16 +4013,18 @@ namespace YuShiNetDevSDK.WinForm
             this.ConfigPrivacyMask.Controls.Add(this.PrivacyMaskRefreshBtn);
             this.ConfigPrivacyMask.Controls.Add(this.groupBox16);
             this.ConfigPrivacyMask.Location = new System.Drawing.Point(4, 26);
+            this.ConfigPrivacyMask.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.ConfigPrivacyMask.Name = "ConfigPrivacyMask";
-            this.ConfigPrivacyMask.Size = new System.Drawing.Size(899, 576);
+            this.ConfigPrivacyMask.Size = new System.Drawing.Size(1050, 828);
             this.ConfigPrivacyMask.TabIndex = 6;
             this.ConfigPrivacyMask.Text = "Privacy Mask";
             // 
             // PrivacyMaskRefreshBtn
             // 
-            this.PrivacyMaskRefreshBtn.Location = new System.Drawing.Point(643, 454);
+            this.PrivacyMaskRefreshBtn.Location = new System.Drawing.Point(750, 643);
+            this.PrivacyMaskRefreshBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.PrivacyMaskRefreshBtn.Name = "PrivacyMaskRefreshBtn";
-            this.PrivacyMaskRefreshBtn.Size = new System.Drawing.Size(75, 23);
+            this.PrivacyMaskRefreshBtn.Size = new System.Drawing.Size(88, 33);
             this.PrivacyMaskRefreshBtn.TabIndex = 10;
             this.PrivacyMaskRefreshBtn.Text = "Refresh";
             this.PrivacyMaskRefreshBtn.UseVisualStyleBackColor = true;
@@ -3768,9 +4038,11 @@ namespace YuShiNetDevSDK.WinForm
             this.groupBox16.Controls.Add(this.PrivacyMaskDelBtn);
             this.groupBox16.Controls.Add(this.PrivacyMaskAddBtn);
             this.groupBox16.Controls.Add(this.privacyMaskInfoListView);
-            this.groupBox16.Location = new System.Drawing.Point(19, 22);
+            this.groupBox16.Location = new System.Drawing.Point(22, 31);
+            this.groupBox16.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.groupBox16.Name = "groupBox16";
-            this.groupBox16.Size = new System.Drawing.Size(756, 257);
+            this.groupBox16.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox16.Size = new System.Drawing.Size(882, 364);
             this.groupBox16.TabIndex = 0;
             this.groupBox16.TabStop = false;
             this.groupBox16.Text = "Privacy mask";
@@ -3778,17 +4050,19 @@ namespace YuShiNetDevSDK.WinForm
             // privacyMaskSubItemText
             // 
             this.privacyMaskSubItemText.Enabled = false;
-            this.privacyMaskSubItemText.Location = new System.Drawing.Point(6, 214);
+            this.privacyMaskSubItemText.Location = new System.Drawing.Point(7, 303);
+            this.privacyMaskSubItemText.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.privacyMaskSubItemText.Name = "privacyMaskSubItemText";
-            this.privacyMaskSubItemText.Size = new System.Drawing.Size(134, 23);
+            this.privacyMaskSubItemText.Size = new System.Drawing.Size(156, 23);
             this.privacyMaskSubItemText.TabIndex = 12;
             // 
             // privacyMaskModifyBtn
             // 
             this.privacyMaskModifyBtn.Enabled = false;
-            this.privacyMaskModifyBtn.Location = new System.Drawing.Point(159, 214);
+            this.privacyMaskModifyBtn.Location = new System.Drawing.Point(186, 303);
+            this.privacyMaskModifyBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.privacyMaskModifyBtn.Name = "privacyMaskModifyBtn";
-            this.privacyMaskModifyBtn.Size = new System.Drawing.Size(75, 23);
+            this.privacyMaskModifyBtn.Size = new System.Drawing.Size(88, 33);
             this.privacyMaskModifyBtn.TabIndex = 11;
             this.privacyMaskModifyBtn.Text = "Modify";
             this.privacyMaskModifyBtn.UseVisualStyleBackColor = true;
@@ -3796,9 +4070,10 @@ namespace YuShiNetDevSDK.WinForm
             // 
             // PrivacyMaskSaveBtn
             // 
-            this.PrivacyMaskSaveBtn.Location = new System.Drawing.Point(657, 214);
+            this.PrivacyMaskSaveBtn.Location = new System.Drawing.Point(766, 303);
+            this.PrivacyMaskSaveBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.PrivacyMaskSaveBtn.Name = "PrivacyMaskSaveBtn";
-            this.PrivacyMaskSaveBtn.Size = new System.Drawing.Size(75, 23);
+            this.PrivacyMaskSaveBtn.Size = new System.Drawing.Size(88, 33);
             this.PrivacyMaskSaveBtn.TabIndex = 10;
             this.PrivacyMaskSaveBtn.Text = "Save";
             this.PrivacyMaskSaveBtn.UseVisualStyleBackColor = true;
@@ -3806,9 +4081,10 @@ namespace YuShiNetDevSDK.WinForm
             // 
             // PrivacyMaskDelBtn
             // 
-            this.PrivacyMaskDelBtn.Location = new System.Drawing.Point(566, 214);
+            this.PrivacyMaskDelBtn.Location = new System.Drawing.Point(660, 303);
+            this.PrivacyMaskDelBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.PrivacyMaskDelBtn.Name = "PrivacyMaskDelBtn";
-            this.PrivacyMaskDelBtn.Size = new System.Drawing.Size(75, 23);
+            this.PrivacyMaskDelBtn.Size = new System.Drawing.Size(88, 33);
             this.PrivacyMaskDelBtn.TabIndex = 10;
             this.PrivacyMaskDelBtn.Text = "Delete";
             this.PrivacyMaskDelBtn.UseVisualStyleBackColor = true;
@@ -3816,9 +4092,10 @@ namespace YuShiNetDevSDK.WinForm
             // 
             // PrivacyMaskAddBtn
             // 
-            this.PrivacyMaskAddBtn.Location = new System.Drawing.Point(472, 214);
+            this.PrivacyMaskAddBtn.Location = new System.Drawing.Point(551, 303);
+            this.PrivacyMaskAddBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.PrivacyMaskAddBtn.Name = "PrivacyMaskAddBtn";
-            this.PrivacyMaskAddBtn.Size = new System.Drawing.Size(75, 23);
+            this.PrivacyMaskAddBtn.Size = new System.Drawing.Size(88, 33);
             this.PrivacyMaskAddBtn.TabIndex = 10;
             this.PrivacyMaskAddBtn.Text = "Add";
             this.PrivacyMaskAddBtn.UseVisualStyleBackColor = true;
@@ -3835,9 +4112,10 @@ namespace YuShiNetDevSDK.WinForm
             this.privacyMaskInfoListView.FullRowSelect = true;
             this.privacyMaskInfoListView.GridLines = true;
             this.privacyMaskInfoListView.HideSelection = false;
-            this.privacyMaskInfoListView.Location = new System.Drawing.Point(6, 20);
+            this.privacyMaskInfoListView.Location = new System.Drawing.Point(7, 28);
+            this.privacyMaskInfoListView.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.privacyMaskInfoListView.Name = "privacyMaskInfoListView";
-            this.privacyMaskInfoListView.Size = new System.Drawing.Size(742, 174);
+            this.privacyMaskInfoListView.Size = new System.Drawing.Size(865, 245);
             this.privacyMaskInfoListView.TabIndex = 0;
             this.privacyMaskInfoListView.UseCompatibleStateImageBehavior = false;
             this.privacyMaskInfoListView.View = System.Windows.Forms.View.Details;
@@ -3873,16 +4151,18 @@ namespace YuShiNetDevSDK.WinForm
             this.ConfigMotion.Controls.Add(this.MotionRefreshBtn);
             this.ConfigMotion.Controls.Add(this.groupBox17);
             this.ConfigMotion.Location = new System.Drawing.Point(4, 26);
+            this.ConfigMotion.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.ConfigMotion.Name = "ConfigMotion";
-            this.ConfigMotion.Size = new System.Drawing.Size(899, 576);
+            this.ConfigMotion.Size = new System.Drawing.Size(1050, 828);
             this.ConfigMotion.TabIndex = 7;
             this.ConfigMotion.Text = "Motion";
             // 
             // MotionRefreshBtn
             // 
-            this.MotionRefreshBtn.Location = new System.Drawing.Point(585, 437);
+            this.MotionRefreshBtn.Location = new System.Drawing.Point(682, 619);
+            this.MotionRefreshBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.MotionRefreshBtn.Name = "MotionRefreshBtn";
-            this.MotionRefreshBtn.Size = new System.Drawing.Size(75, 23);
+            this.MotionRefreshBtn.Size = new System.Drawing.Size(88, 33);
             this.MotionRefreshBtn.TabIndex = 11;
             this.MotionRefreshBtn.Text = "Refresh";
             this.MotionRefreshBtn.UseVisualStyleBackColor = true;
@@ -3903,18 +4183,21 @@ namespace YuShiNetDevSDK.WinForm
             this.groupBox17.Controls.Add(this.MotionHistoryTrackBar);
             this.groupBox17.Controls.Add(this.MotionObjectSizeTrackBar);
             this.groupBox17.Controls.Add(this.MotionSensitivityTrackBar);
-            this.groupBox17.Location = new System.Drawing.Point(18, 15);
+            this.groupBox17.Location = new System.Drawing.Point(21, 21);
+            this.groupBox17.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.groupBox17.Name = "groupBox17";
-            this.groupBox17.Size = new System.Drawing.Size(734, 134);
+            this.groupBox17.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox17.Size = new System.Drawing.Size(856, 190);
             this.groupBox17.TabIndex = 1;
             this.groupBox17.TabStop = false;
             this.groupBox17.Text = "Motion";
             // 
             // MotionSaveBtn
             // 
-            this.MotionSaveBtn.Location = new System.Drawing.Point(567, 97);
+            this.MotionSaveBtn.Location = new System.Drawing.Point(662, 137);
+            this.MotionSaveBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.MotionSaveBtn.Name = "MotionSaveBtn";
-            this.MotionSaveBtn.Size = new System.Drawing.Size(75, 23);
+            this.MotionSaveBtn.Size = new System.Drawing.Size(88, 33);
             this.MotionSaveBtn.TabIndex = 9;
             this.MotionSaveBtn.Text = "Save";
             this.MotionSaveBtn.UseVisualStyleBackColor = true;
@@ -3923,7 +4206,8 @@ namespace YuShiNetDevSDK.WinForm
             // label81
             // 
             this.label81.AutoSize = true;
-            this.label81.Location = new System.Drawing.Point(17, 100);
+            this.label81.Location = new System.Drawing.Point(20, 142);
+            this.label81.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label81.Name = "label81";
             this.label81.Size = new System.Drawing.Size(49, 17);
             this.label81.TabIndex = 8;
@@ -3932,7 +4216,8 @@ namespace YuShiNetDevSDK.WinForm
             // label82
             // 
             this.label82.AutoSize = true;
-            this.label82.Location = new System.Drawing.Point(17, 70);
+            this.label82.Location = new System.Drawing.Point(20, 99);
+            this.label82.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label82.Name = "label82";
             this.label82.Size = new System.Drawing.Size(73, 17);
             this.label82.TabIndex = 8;
@@ -3941,7 +4226,8 @@ namespace YuShiNetDevSDK.WinForm
             // label83
             // 
             this.label83.AutoSize = true;
-            this.label83.Location = new System.Drawing.Point(17, 40);
+            this.label83.Location = new System.Drawing.Point(20, 57);
+            this.label83.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label83.Name = "label83";
             this.label83.Size = new System.Drawing.Size(64, 17);
             this.label83.TabIndex = 8;
@@ -3949,27 +4235,30 @@ namespace YuShiNetDevSDK.WinForm
             // 
             // MotionHistoryText
             // 
-            this.MotionHistoryText.Location = new System.Drawing.Point(334, 97);
+            this.MotionHistoryText.Location = new System.Drawing.Point(390, 137);
+            this.MotionHistoryText.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.MotionHistoryText.Name = "MotionHistoryText";
-            this.MotionHistoryText.Size = new System.Drawing.Size(58, 23);
+            this.MotionHistoryText.Size = new System.Drawing.Size(67, 23);
             this.MotionHistoryText.TabIndex = 7;
             this.MotionHistoryText.Text = "50";
             this.MotionHistoryText.TextChanged += new System.EventHandler(this.MotionHistoryText_TextChanged);
             // 
             // MotionObjectSizeText
             // 
-            this.MotionObjectSizeText.Location = new System.Drawing.Point(334, 67);
+            this.MotionObjectSizeText.Location = new System.Drawing.Point(390, 95);
+            this.MotionObjectSizeText.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.MotionObjectSizeText.Name = "MotionObjectSizeText";
-            this.MotionObjectSizeText.Size = new System.Drawing.Size(58, 23);
+            this.MotionObjectSizeText.Size = new System.Drawing.Size(67, 23);
             this.MotionObjectSizeText.TabIndex = 7;
             this.MotionObjectSizeText.Text = "50";
             this.MotionObjectSizeText.TextChanged += new System.EventHandler(this.MotionObjectSizeText_TextChanged);
             // 
             // MotionSensitivityText
             // 
-            this.MotionSensitivityText.Location = new System.Drawing.Point(334, 37);
+            this.MotionSensitivityText.Location = new System.Drawing.Point(390, 52);
+            this.MotionSensitivityText.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.MotionSensitivityText.Name = "MotionSensitivityText";
-            this.MotionSensitivityText.Size = new System.Drawing.Size(58, 23);
+            this.MotionSensitivityText.Size = new System.Drawing.Size(67, 23);
             this.MotionSensitivityText.TabIndex = 7;
             this.MotionSensitivityText.Text = "50";
             this.MotionSensitivityText.TextChanged += new System.EventHandler(this.MotionSensitivityText_TextChanged);
@@ -3977,7 +4266,8 @@ namespace YuShiNetDevSDK.WinForm
             // label85
             // 
             this.label85.AutoSize = true;
-            this.label85.Location = new System.Drawing.Point(402, 102);
+            this.label85.Location = new System.Drawing.Point(469, 144);
+            this.label85.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label85.Name = "label85";
             this.label85.Size = new System.Drawing.Size(69, 17);
             this.label85.TabIndex = 6;
@@ -3986,7 +4276,8 @@ namespace YuShiNetDevSDK.WinForm
             // label86
             // 
             this.label86.AutoSize = true;
-            this.label86.Location = new System.Drawing.Point(402, 72);
+            this.label86.Location = new System.Drawing.Point(469, 102);
+            this.label86.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label86.Name = "label86";
             this.label86.Size = new System.Drawing.Size(69, 17);
             this.label86.TabIndex = 6;
@@ -3995,7 +4286,8 @@ namespace YuShiNetDevSDK.WinForm
             // label87
             // 
             this.label87.AutoSize = true;
-            this.label87.Location = new System.Drawing.Point(402, 42);
+            this.label87.Location = new System.Drawing.Point(469, 60);
+            this.label87.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label87.Name = "label87";
             this.label87.Size = new System.Drawing.Size(69, 17);
             this.label87.TabIndex = 6;
@@ -4004,12 +4296,12 @@ namespace YuShiNetDevSDK.WinForm
             // MotionHistoryTrackBar
             // 
             this.MotionHistoryTrackBar.AutoSize = false;
-            this.MotionHistoryTrackBar.Cursor = System.Windows.Forms.Cursors.Default;
-            this.MotionHistoryTrackBar.Location = new System.Drawing.Point(100, 97);
+            this.MotionHistoryTrackBar.Location = new System.Drawing.Point(117, 137);
+            this.MotionHistoryTrackBar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.MotionHistoryTrackBar.Maximum = 100;
             this.MotionHistoryTrackBar.Minimum = 1;
             this.MotionHistoryTrackBar.Name = "MotionHistoryTrackBar";
-            this.MotionHistoryTrackBar.Size = new System.Drawing.Size(214, 24);
+            this.MotionHistoryTrackBar.Size = new System.Drawing.Size(250, 34);
             this.MotionHistoryTrackBar.TabIndex = 5;
             this.MotionHistoryTrackBar.TickStyle = System.Windows.Forms.TickStyle.None;
             this.MotionHistoryTrackBar.Value = 50;
@@ -4018,12 +4310,12 @@ namespace YuShiNetDevSDK.WinForm
             // MotionObjectSizeTrackBar
             // 
             this.MotionObjectSizeTrackBar.AutoSize = false;
-            this.MotionObjectSizeTrackBar.Cursor = System.Windows.Forms.Cursors.Default;
-            this.MotionObjectSizeTrackBar.Location = new System.Drawing.Point(100, 67);
+            this.MotionObjectSizeTrackBar.Location = new System.Drawing.Point(117, 95);
+            this.MotionObjectSizeTrackBar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.MotionObjectSizeTrackBar.Maximum = 100;
             this.MotionObjectSizeTrackBar.Minimum = 1;
             this.MotionObjectSizeTrackBar.Name = "MotionObjectSizeTrackBar";
-            this.MotionObjectSizeTrackBar.Size = new System.Drawing.Size(214, 24);
+            this.MotionObjectSizeTrackBar.Size = new System.Drawing.Size(250, 34);
             this.MotionObjectSizeTrackBar.TabIndex = 5;
             this.MotionObjectSizeTrackBar.TickStyle = System.Windows.Forms.TickStyle.None;
             this.MotionObjectSizeTrackBar.Value = 50;
@@ -4032,12 +4324,12 @@ namespace YuShiNetDevSDK.WinForm
             // MotionSensitivityTrackBar
             // 
             this.MotionSensitivityTrackBar.AutoSize = false;
-            this.MotionSensitivityTrackBar.Cursor = System.Windows.Forms.Cursors.Default;
-            this.MotionSensitivityTrackBar.Location = new System.Drawing.Point(100, 37);
+            this.MotionSensitivityTrackBar.Location = new System.Drawing.Point(117, 52);
+            this.MotionSensitivityTrackBar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.MotionSensitivityTrackBar.Maximum = 100;
             this.MotionSensitivityTrackBar.Minimum = 1;
             this.MotionSensitivityTrackBar.Name = "MotionSensitivityTrackBar";
-            this.MotionSensitivityTrackBar.Size = new System.Drawing.Size(214, 24);
+            this.MotionSensitivityTrackBar.Size = new System.Drawing.Size(250, 34);
             this.MotionSensitivityTrackBar.TabIndex = 5;
             this.MotionSensitivityTrackBar.TickStyle = System.Windows.Forms.TickStyle.None;
             this.MotionSensitivityTrackBar.Value = 50;
@@ -4049,16 +4341,18 @@ namespace YuShiNetDevSDK.WinForm
             this.ConfigTemper.Controls.Add(this.TemperRefreshBtn);
             this.ConfigTemper.Controls.Add(this.groupBox18);
             this.ConfigTemper.Location = new System.Drawing.Point(4, 26);
+            this.ConfigTemper.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.ConfigTemper.Name = "ConfigTemper";
-            this.ConfigTemper.Size = new System.Drawing.Size(899, 576);
+            this.ConfigTemper.Size = new System.Drawing.Size(1050, 828);
             this.ConfigTemper.TabIndex = 8;
             this.ConfigTemper.Text = "Temper";
             // 
             // TemperRefreshBtn
             // 
-            this.TemperRefreshBtn.Location = new System.Drawing.Point(584, 441);
+            this.TemperRefreshBtn.Location = new System.Drawing.Point(681, 625);
+            this.TemperRefreshBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.TemperRefreshBtn.Name = "TemperRefreshBtn";
-            this.TemperRefreshBtn.Size = new System.Drawing.Size(75, 23);
+            this.TemperRefreshBtn.Size = new System.Drawing.Size(88, 33);
             this.TemperRefreshBtn.TabIndex = 12;
             this.TemperRefreshBtn.Text = "Refresh";
             this.TemperRefreshBtn.UseVisualStyleBackColor = true;
@@ -4071,18 +4365,21 @@ namespace YuShiNetDevSDK.WinForm
             this.groupBox18.Controls.Add(this.TemperSensitivityText);
             this.groupBox18.Controls.Add(this.label89);
             this.groupBox18.Controls.Add(this.TemperSensitivityTrackBar);
-            this.groupBox18.Location = new System.Drawing.Point(17, 16);
+            this.groupBox18.Location = new System.Drawing.Point(20, 23);
+            this.groupBox18.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.groupBox18.Name = "groupBox18";
-            this.groupBox18.Size = new System.Drawing.Size(734, 69);
+            this.groupBox18.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox18.Size = new System.Drawing.Size(856, 98);
             this.groupBox18.TabIndex = 2;
             this.groupBox18.TabStop = false;
             this.groupBox18.Text = "Temper";
             // 
             // TemperSaveBtn
             // 
-            this.TemperSaveBtn.Location = new System.Drawing.Point(567, 25);
+            this.TemperSaveBtn.Location = new System.Drawing.Point(662, 35);
+            this.TemperSaveBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.TemperSaveBtn.Name = "TemperSaveBtn";
-            this.TemperSaveBtn.Size = new System.Drawing.Size(75, 23);
+            this.TemperSaveBtn.Size = new System.Drawing.Size(88, 33);
             this.TemperSaveBtn.TabIndex = 9;
             this.TemperSaveBtn.Text = "Save";
             this.TemperSaveBtn.UseVisualStyleBackColor = true;
@@ -4091,7 +4388,8 @@ namespace YuShiNetDevSDK.WinForm
             // label80
             // 
             this.label80.AutoSize = true;
-            this.label80.Location = new System.Drawing.Point(17, 28);
+            this.label80.Location = new System.Drawing.Point(20, 40);
+            this.label80.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label80.Name = "label80";
             this.label80.Size = new System.Drawing.Size(64, 17);
             this.label80.TabIndex = 8;
@@ -4099,9 +4397,10 @@ namespace YuShiNetDevSDK.WinForm
             // 
             // TemperSensitivityText
             // 
-            this.TemperSensitivityText.Location = new System.Drawing.Point(334, 25);
+            this.TemperSensitivityText.Location = new System.Drawing.Point(390, 35);
+            this.TemperSensitivityText.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.TemperSensitivityText.Name = "TemperSensitivityText";
-            this.TemperSensitivityText.Size = new System.Drawing.Size(58, 23);
+            this.TemperSensitivityText.Size = new System.Drawing.Size(67, 23);
             this.TemperSensitivityText.TabIndex = 7;
             this.TemperSensitivityText.Text = "50";
             this.TemperSensitivityText.TextChanged += new System.EventHandler(this.TemperSensitivityText_TextChanged);
@@ -4109,7 +4408,8 @@ namespace YuShiNetDevSDK.WinForm
             // label89
             // 
             this.label89.AutoSize = true;
-            this.label89.Location = new System.Drawing.Point(402, 30);
+            this.label89.Location = new System.Drawing.Point(469, 42);
+            this.label89.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label89.Name = "label89";
             this.label89.Size = new System.Drawing.Size(69, 17);
             this.label89.TabIndex = 6;
@@ -4118,11 +4418,11 @@ namespace YuShiNetDevSDK.WinForm
             // TemperSensitivityTrackBar
             // 
             this.TemperSensitivityTrackBar.AutoSize = false;
-            this.TemperSensitivityTrackBar.Cursor = System.Windows.Forms.Cursors.Default;
-            this.TemperSensitivityTrackBar.Location = new System.Drawing.Point(100, 25);
+            this.TemperSensitivityTrackBar.Location = new System.Drawing.Point(117, 35);
+            this.TemperSensitivityTrackBar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.TemperSensitivityTrackBar.Maximum = 100;
             this.TemperSensitivityTrackBar.Name = "TemperSensitivityTrackBar";
-            this.TemperSensitivityTrackBar.Size = new System.Drawing.Size(214, 24);
+            this.TemperSensitivityTrackBar.Size = new System.Drawing.Size(250, 34);
             this.TemperSensitivityTrackBar.TabIndex = 5;
             this.TemperSensitivityTrackBar.TickStyle = System.Windows.Forms.TickStyle.None;
             this.TemperSensitivityTrackBar.Value = 50;
@@ -4133,9 +4433,10 @@ namespace YuShiNetDevSDK.WinForm
             this.AlarmRecords.BackColor = System.Drawing.Color.WhiteSmoke;
             this.AlarmRecords.Controls.Add(this.groupBox5);
             this.AlarmRecords.Location = new System.Drawing.Point(4, 26);
+            this.AlarmRecords.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.AlarmRecords.Name = "AlarmRecords";
-            this.AlarmRecords.Padding = new System.Windows.Forms.Padding(3);
-            this.AlarmRecords.Size = new System.Drawing.Size(899, 606);
+            this.AlarmRecords.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.AlarmRecords.Size = new System.Drawing.Size(1050, 871);
             this.AlarmRecords.TabIndex = 3;
             this.AlarmRecords.Text = "Alarm Records";
             this.AlarmRecords.UseVisualStyleBackColor = true;
@@ -4144,9 +4445,11 @@ namespace YuShiNetDevSDK.WinForm
             // 
             this.groupBox5.Controls.Add(this.AlarmRecordsListView);
             this.groupBox5.Controls.Add(this.AlarmRecordsClearBtn);
-            this.groupBox5.Location = new System.Drawing.Point(3, 0);
+            this.groupBox5.Location = new System.Drawing.Point(4, 0);
+            this.groupBox5.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(888, 604);
+            this.groupBox5.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox5.Size = new System.Drawing.Size(1036, 856);
             this.groupBox5.TabIndex = 0;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Real-Time Alarm";
@@ -4161,9 +4464,10 @@ namespace YuShiNetDevSDK.WinForm
             this.AlarmRecordsListView.FullRowSelect = true;
             this.AlarmRecordsListView.GridLines = true;
             this.AlarmRecordsListView.HideSelection = false;
-            this.AlarmRecordsListView.Location = new System.Drawing.Point(17, 67);
+            this.AlarmRecordsListView.Location = new System.Drawing.Point(20, 95);
+            this.AlarmRecordsListView.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.AlarmRecordsListView.Name = "AlarmRecordsListView";
-            this.AlarmRecordsListView.Size = new System.Drawing.Size(801, 513);
+            this.AlarmRecordsListView.Size = new System.Drawing.Size(934, 725);
             this.AlarmRecordsListView.TabIndex = 1;
             this.AlarmRecordsListView.UseCompatibleStateImageBehavior = false;
             this.AlarmRecordsListView.View = System.Windows.Forms.View.Details;
@@ -4190,9 +4494,10 @@ namespace YuShiNetDevSDK.WinForm
             // 
             // AlarmRecordsClearBtn
             // 
-            this.AlarmRecordsClearBtn.Location = new System.Drawing.Point(709, 32);
+            this.AlarmRecordsClearBtn.Location = new System.Drawing.Point(827, 45);
+            this.AlarmRecordsClearBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.AlarmRecordsClearBtn.Name = "AlarmRecordsClearBtn";
-            this.AlarmRecordsClearBtn.Size = new System.Drawing.Size(75, 23);
+            this.AlarmRecordsClearBtn.Size = new System.Drawing.Size(88, 33);
             this.AlarmRecordsClearBtn.TabIndex = 0;
             this.AlarmRecordsClearBtn.Text = "Clear";
             this.AlarmRecordsClearBtn.UseVisualStyleBackColor = true;
@@ -4203,9 +4508,10 @@ namespace YuShiNetDevSDK.WinForm
             this.VCA.BackColor = System.Drawing.Color.WhiteSmoke;
             this.VCA.Controls.Add(this.VCATabCtrl);
             this.VCA.Location = new System.Drawing.Point(4, 26);
+            this.VCA.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.VCA.Name = "VCA";
-            this.VCA.Padding = new System.Windows.Forms.Padding(3);
-            this.VCA.Size = new System.Drawing.Size(899, 606);
+            this.VCA.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.VCA.Size = new System.Drawing.Size(1050, 871);
             this.VCA.TabIndex = 4;
             this.VCA.Text = " VCA";
             this.VCA.UseVisualStyleBackColor = true;
@@ -4217,9 +4523,10 @@ namespace YuShiNetDevSDK.WinForm
             this.VCATabCtrl.Controls.Add(this.FaceTabPage);
             this.VCATabCtrl.Controls.Add(this.LicensePlateRecognitionTabPage);
             this.VCATabCtrl.Location = new System.Drawing.Point(0, 0);
+            this.VCATabCtrl.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.VCATabCtrl.Name = "VCATabCtrl";
             this.VCATabCtrl.SelectedIndex = 0;
-            this.VCATabCtrl.Size = new System.Drawing.Size(903, 600);
+            this.VCATabCtrl.Size = new System.Drawing.Size(1054, 850);
             this.VCATabCtrl.TabIndex = 0;
             // 
             // PeopleCountingforReport
@@ -4232,9 +4539,10 @@ namespace YuShiNetDevSDK.WinForm
             this.PeopleCountingforReport.Controls.Add(this.VCACloseCallBackBtn);
             this.PeopleCountingforReport.Controls.Add(this.VCARegCallBackBtn);
             this.PeopleCountingforReport.Location = new System.Drawing.Point(4, 26);
+            this.PeopleCountingforReport.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.PeopleCountingforReport.Name = "PeopleCountingforReport";
-            this.PeopleCountingforReport.Padding = new System.Windows.Forms.Padding(3);
-            this.PeopleCountingforReport.Size = new System.Drawing.Size(895, 570);
+            this.PeopleCountingforReport.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.PeopleCountingforReport.Size = new System.Drawing.Size(1046, 820);
             this.PeopleCountingforReport.TabIndex = 0;
             this.PeopleCountingforReport.Text = "People Counting for Report";
             // 
@@ -4249,11 +4557,13 @@ namespace YuShiNetDevSDK.WinForm
             this.ExitNumber,
             this.TotalEnterNumber,
             this.TotalExitNumber});
-            this.VCAReportDataListView.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.VCAReportDataListView.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.VCAReportDataListView.GridLines = true;
-            this.VCAReportDataListView.Location = new System.Drawing.Point(11, 58);
+            this.VCAReportDataListView.HideSelection = false;
+            this.VCAReportDataListView.Location = new System.Drawing.Point(13, 82);
+            this.VCAReportDataListView.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.VCAReportDataListView.Name = "VCAReportDataListView";
-            this.VCAReportDataListView.Size = new System.Drawing.Size(756, 423);
+            this.VCAReportDataListView.Size = new System.Drawing.Size(881, 598);
             this.VCAReportDataListView.TabIndex = 2;
             this.VCAReportDataListView.UseCompatibleStateImageBehavior = false;
             this.VCAReportDataListView.View = System.Windows.Forms.View.Details;
@@ -4301,7 +4611,8 @@ namespace YuShiNetDevSDK.WinForm
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(9, 491);
+            this.label15.Location = new System.Drawing.Point(10, 696);
+            this.label15.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(260, 17);
             this.label15.TabIndex = 1;
@@ -4310,19 +4621,21 @@ namespace YuShiNetDevSDK.WinForm
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label10.Location = new System.Drawing.Point(9, 24);
+            this.label10.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label10.Location = new System.Drawing.Point(10, 34);
+            this.label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(100, 16);
+            this.label10.Size = new System.Drawing.Size(99, 16);
             this.label10.TabIndex = 1;
             this.label10.Text = "Register Call Back";
             // 
             // VCAClearDataBtn
             // 
-            this.VCAClearDataBtn.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.VCAClearDataBtn.Location = new System.Drawing.Point(692, 19);
+            this.VCAClearDataBtn.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.VCAClearDataBtn.Location = new System.Drawing.Point(807, 27);
+            this.VCAClearDataBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.VCAClearDataBtn.Name = "VCAClearDataBtn";
-            this.VCAClearDataBtn.Size = new System.Drawing.Size(75, 23);
+            this.VCAClearDataBtn.Size = new System.Drawing.Size(88, 33);
             this.VCAClearDataBtn.TabIndex = 0;
             this.VCAClearDataBtn.Text = "Clear";
             this.VCAClearDataBtn.UseVisualStyleBackColor = true;
@@ -4330,10 +4643,11 @@ namespace YuShiNetDevSDK.WinForm
             // 
             // VCACloseCallBackBtn
             // 
-            this.VCACloseCallBackBtn.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.VCACloseCallBackBtn.Location = new System.Drawing.Point(249, 19);
+            this.VCACloseCallBackBtn.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.VCACloseCallBackBtn.Location = new System.Drawing.Point(290, 27);
+            this.VCACloseCallBackBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.VCACloseCallBackBtn.Name = "VCACloseCallBackBtn";
-            this.VCACloseCallBackBtn.Size = new System.Drawing.Size(75, 23);
+            this.VCACloseCallBackBtn.Size = new System.Drawing.Size(88, 33);
             this.VCACloseCallBackBtn.TabIndex = 0;
             this.VCACloseCallBackBtn.Text = "Close";
             this.VCACloseCallBackBtn.UseVisualStyleBackColor = true;
@@ -4341,10 +4655,11 @@ namespace YuShiNetDevSDK.WinForm
             // 
             // VCARegCallBackBtn
             // 
-            this.VCARegCallBackBtn.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.VCARegCallBackBtn.Location = new System.Drawing.Point(153, 19);
+            this.VCARegCallBackBtn.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.VCARegCallBackBtn.Location = new System.Drawing.Point(178, 27);
+            this.VCARegCallBackBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.VCARegCallBackBtn.Name = "VCARegCallBackBtn";
-            this.VCARegCallBackBtn.Size = new System.Drawing.Size(75, 23);
+            this.VCARegCallBackBtn.Size = new System.Drawing.Size(88, 33);
             this.VCARegCallBackBtn.TabIndex = 0;
             this.VCARegCallBackBtn.Text = "Register";
             this.VCARegCallBackBtn.UseVisualStyleBackColor = true;
@@ -4363,9 +4678,10 @@ namespace YuShiNetDevSDK.WinForm
             this.PeopleCountingforStatistics.Controls.Add(this.label16);
             this.PeopleCountingforStatistics.Controls.Add(this.VCACountBtn);
             this.PeopleCountingforStatistics.Location = new System.Drawing.Point(4, 26);
+            this.PeopleCountingforStatistics.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.PeopleCountingforStatistics.Name = "PeopleCountingforStatistics";
-            this.PeopleCountingforStatistics.Padding = new System.Windows.Forms.Padding(3);
-            this.PeopleCountingforStatistics.Size = new System.Drawing.Size(895, 570);
+            this.PeopleCountingforStatistics.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.PeopleCountingforStatistics.Size = new System.Drawing.Size(1046, 820);
             this.PeopleCountingforStatistics.TabIndex = 1;
             this.PeopleCountingforStatistics.Text = "People Counting for Statistics";
             // 
@@ -4373,9 +4689,10 @@ namespace YuShiNetDevSDK.WinForm
             // 
             this.VCAStatisticalTime.CustomFormat = "yyyy/MM/dd";
             this.VCAStatisticalTime.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.VCAStatisticalTime.Location = new System.Drawing.Point(134, 95);
+            this.VCAStatisticalTime.Location = new System.Drawing.Point(156, 135);
+            this.VCAStatisticalTime.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.VCAStatisticalTime.Name = "VCAStatisticalTime";
-            this.VCAStatisticalTime.Size = new System.Drawing.Size(121, 23);
+            this.VCAStatisticalTime.Size = new System.Drawing.Size(140, 23);
             this.VCAStatisticalTime.TabIndex = 4;
             // 
             // VCACountingType
@@ -4385,16 +4702,18 @@ namespace YuShiNetDevSDK.WinForm
             "People Entered",
             "People Left",
             "Total"});
-            this.VCACountingType.Location = new System.Drawing.Point(134, 60);
+            this.VCACountingType.Location = new System.Drawing.Point(156, 85);
+            this.VCACountingType.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.VCACountingType.Name = "VCACountingType";
-            this.VCACountingType.Size = new System.Drawing.Size(121, 25);
+            this.VCACountingType.Size = new System.Drawing.Size(140, 25);
             this.VCACountingType.TabIndex = 3;
             this.VCACountingType.Text = "People Entered";
             // 
             // label18
             // 
             this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(12, 434);
+            this.label18.Location = new System.Drawing.Point(14, 615);
+            this.label18.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(267, 17);
             this.label18.TabIndex = 1;
@@ -4403,7 +4722,8 @@ namespace YuShiNetDevSDK.WinForm
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(12, 99);
+            this.label11.Location = new System.Drawing.Point(14, 140);
+            this.label11.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(94, 17);
             this.label11.TabIndex = 1;
@@ -4417,16 +4737,18 @@ namespace YuShiNetDevSDK.WinForm
             "Weekly",
             "Monthly",
             "Yearly"});
-            this.VCAReportType.Location = new System.Drawing.Point(134, 24);
+            this.VCAReportType.Location = new System.Drawing.Point(156, 34);
+            this.VCAReportType.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.VCAReportType.Name = "VCAReportType";
-            this.VCAReportType.Size = new System.Drawing.Size(121, 25);
+            this.VCAReportType.Size = new System.Drawing.Size(140, 25);
             this.VCAReportType.TabIndex = 3;
             this.VCAReportType.Text = "Daily";
             // 
             // label17
             // 
             this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(12, 63);
+            this.label17.Location = new System.Drawing.Point(14, 89);
+            this.label17.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(92, 17);
             this.label17.TabIndex = 1;
@@ -4439,9 +4761,11 @@ namespace YuShiNetDevSDK.WinForm
             this.PeopleEntered,
             this.PeopleLeft});
             this.VCAStatisticDataListView.GridLines = true;
-            this.VCAStatisticDataListView.Location = new System.Drawing.Point(14, 134);
+            this.VCAStatisticDataListView.HideSelection = false;
+            this.VCAStatisticDataListView.Location = new System.Drawing.Point(16, 190);
+            this.VCAStatisticDataListView.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.VCAStatisticDataListView.Name = "VCAStatisticDataListView";
-            this.VCAStatisticDataListView.Size = new System.Drawing.Size(594, 285);
+            this.VCAStatisticDataListView.Size = new System.Drawing.Size(692, 402);
             this.VCAStatisticDataListView.TabIndex = 2;
             this.VCAStatisticDataListView.UseCompatibleStateImageBehavior = false;
             this.VCAStatisticDataListView.View = System.Windows.Forms.View.Details;
@@ -4464,7 +4788,8 @@ namespace YuShiNetDevSDK.WinForm
             // label16
             // 
             this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(12, 27);
+            this.label16.Location = new System.Drawing.Point(14, 38);
+            this.label16.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(80, 17);
             this.label16.TabIndex = 1;
@@ -4472,9 +4797,10 @@ namespace YuShiNetDevSDK.WinForm
             // 
             // VCACountBtn
             // 
-            this.VCACountBtn.Location = new System.Drawing.Point(286, 21);
+            this.VCACountBtn.Location = new System.Drawing.Point(334, 30);
+            this.VCACountBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.VCACountBtn.Name = "VCACountBtn";
-            this.VCACountBtn.Size = new System.Drawing.Size(75, 23);
+            this.VCACountBtn.Size = new System.Drawing.Size(88, 33);
             this.VCACountBtn.TabIndex = 0;
             this.VCACountBtn.Text = "Count";
             this.VCACountBtn.UseVisualStyleBackColor = true;
@@ -4485,9 +4811,10 @@ namespace YuShiNetDevSDK.WinForm
             this.FaceTabPage.BackColor = System.Drawing.Color.WhiteSmoke;
             this.FaceTabPage.Controls.Add(this.tabControl1);
             this.FaceTabPage.Location = new System.Drawing.Point(4, 26);
+            this.FaceTabPage.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.FaceTabPage.Name = "FaceTabPage";
-            this.FaceTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.FaceTabPage.Size = new System.Drawing.Size(895, 570);
+            this.FaceTabPage.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.FaceTabPage.Size = new System.Drawing.Size(1046, 820);
             this.FaceTabPage.TabIndex = 2;
             this.FaceTabPage.Text = "Face Recognition";
             // 
@@ -4498,10 +4825,11 @@ namespace YuShiNetDevSDK.WinForm
             this.tabControl1.Controls.Add(this.FaceMonitoringTaskTabPage);
             this.tabControl1.Controls.Add(this.FaceAlarmRecordTabPage);
             this.tabControl1.Controls.Add(this.FacePassThruRecordTabPage);
-            this.tabControl1.Location = new System.Drawing.Point(7, 4);
+            this.tabControl1.Location = new System.Drawing.Point(8, 6);
+            this.tabControl1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(846, 552);
+            this.tabControl1.Size = new System.Drawing.Size(987, 782);
             this.tabControl1.TabIndex = 2;
             // 
             // FaceRealtimeMonitoringTabPage
@@ -4514,8 +4842,9 @@ namespace YuShiNetDevSDK.WinForm
             this.FaceRealtimeMonitoringTabPage.Controls.Add(this.groupBox22);
             this.FaceRealtimeMonitoringTabPage.Controls.Add(this.faceRecogRealPlayFLayoutPanel);
             this.FaceRealtimeMonitoringTabPage.Location = new System.Drawing.Point(4, 26);
+            this.FaceRealtimeMonitoringTabPage.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.FaceRealtimeMonitoringTabPage.Name = "FaceRealtimeMonitoringTabPage";
-            this.FaceRealtimeMonitoringTabPage.Size = new System.Drawing.Size(838, 522);
+            this.FaceRealtimeMonitoringTabPage.Size = new System.Drawing.Size(979, 752);
             this.FaceRealtimeMonitoringTabPage.TabIndex = 2;
             this.FaceRealtimeMonitoringTabPage.Text = "Realtime Monitoring";
             this.FaceRealtimeMonitoringTabPage.UseVisualStyleBackColor = true;
@@ -4524,20 +4853,21 @@ namespace YuShiNetDevSDK.WinForm
             // 
             this.groupBox27.Controls.Add(this.faceSnapshotSubBtn);
             this.groupBox27.Controls.Add(this.faceSnapshotUnSubBtn);
-            this.groupBox27.Location = new System.Drawing.Point(472, 1);
+            this.groupBox27.Location = new System.Drawing.Point(551, 1);
             this.groupBox27.Margin = new System.Windows.Forms.Padding(0);
             this.groupBox27.Name = "groupBox27";
             this.groupBox27.Padding = new System.Windows.Forms.Padding(0);
-            this.groupBox27.Size = new System.Drawing.Size(200, 42);
+            this.groupBox27.Size = new System.Drawing.Size(233, 60);
             this.groupBox27.TabIndex = 7;
             this.groupBox27.TabStop = false;
             this.groupBox27.Text = "Snapshot";
             // 
             // faceSnapshotSubBtn
             // 
-            this.faceSnapshotSubBtn.Location = new System.Drawing.Point(11, 15);
+            this.faceSnapshotSubBtn.Location = new System.Drawing.Point(13, 21);
+            this.faceSnapshotSubBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.faceSnapshotSubBtn.Name = "faceSnapshotSubBtn";
-            this.faceSnapshotSubBtn.Size = new System.Drawing.Size(75, 23);
+            this.faceSnapshotSubBtn.Size = new System.Drawing.Size(88, 33);
             this.faceSnapshotSubBtn.TabIndex = 6;
             this.faceSnapshotSubBtn.Text = "Subscribe";
             this.faceSnapshotSubBtn.UseVisualStyleBackColor = true;
@@ -4545,9 +4875,10 @@ namespace YuShiNetDevSDK.WinForm
             // 
             // faceSnapshotUnSubBtn
             // 
-            this.faceSnapshotUnSubBtn.Location = new System.Drawing.Point(92, 15);
+            this.faceSnapshotUnSubBtn.Location = new System.Drawing.Point(107, 21);
+            this.faceSnapshotUnSubBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.faceSnapshotUnSubBtn.Name = "faceSnapshotUnSubBtn";
-            this.faceSnapshotUnSubBtn.Size = new System.Drawing.Size(90, 23);
+            this.faceSnapshotUnSubBtn.Size = new System.Drawing.Size(105, 33);
             this.faceSnapshotUnSubBtn.TabIndex = 6;
             this.faceSnapshotUnSubBtn.Text = "UnSubscribe";
             this.faceSnapshotUnSubBtn.UseVisualStyleBackColor = true;
@@ -4557,20 +4888,21 @@ namespace YuShiNetDevSDK.WinForm
             // 
             this.groupBox26.Controls.Add(this.faceRecogSubBtn);
             this.groupBox26.Controls.Add(this.faceRecogUnSubBtn);
-            this.groupBox26.Location = new System.Drawing.Point(239, 1);
+            this.groupBox26.Location = new System.Drawing.Point(279, 1);
             this.groupBox26.Margin = new System.Windows.Forms.Padding(0);
             this.groupBox26.Name = "groupBox26";
             this.groupBox26.Padding = new System.Windows.Forms.Padding(0);
-            this.groupBox26.Size = new System.Drawing.Size(200, 42);
+            this.groupBox26.Size = new System.Drawing.Size(233, 60);
             this.groupBox26.TabIndex = 7;
             this.groupBox26.TabStop = false;
             this.groupBox26.Text = "Recognition";
             // 
             // faceRecogSubBtn
             // 
-            this.faceRecogSubBtn.Location = new System.Drawing.Point(11, 15);
+            this.faceRecogSubBtn.Location = new System.Drawing.Point(13, 21);
+            this.faceRecogSubBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.faceRecogSubBtn.Name = "faceRecogSubBtn";
-            this.faceRecogSubBtn.Size = new System.Drawing.Size(75, 23);
+            this.faceRecogSubBtn.Size = new System.Drawing.Size(88, 33);
             this.faceRecogSubBtn.TabIndex = 6;
             this.faceRecogSubBtn.Text = "Subscribe";
             this.faceRecogSubBtn.UseVisualStyleBackColor = true;
@@ -4578,9 +4910,10 @@ namespace YuShiNetDevSDK.WinForm
             // 
             // faceRecogUnSubBtn
             // 
-            this.faceRecogUnSubBtn.Location = new System.Drawing.Point(92, 15);
+            this.faceRecogUnSubBtn.Location = new System.Drawing.Point(107, 21);
+            this.faceRecogUnSubBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.faceRecogUnSubBtn.Name = "faceRecogUnSubBtn";
-            this.faceRecogUnSubBtn.Size = new System.Drawing.Size(91, 23);
+            this.faceRecogUnSubBtn.Size = new System.Drawing.Size(106, 33);
             this.faceRecogUnSubBtn.TabIndex = 6;
             this.faceRecogUnSubBtn.Text = "UnSubscribe";
             this.faceRecogUnSubBtn.UseVisualStyleBackColor = true;
@@ -4590,20 +4923,21 @@ namespace YuShiNetDevSDK.WinForm
             // 
             this.groupBox24.Controls.Add(this.faceRecogRealPlayStartBtn);
             this.groupBox24.Controls.Add(this.faceRecogRealPlayStopBtn);
-            this.groupBox24.Location = new System.Drawing.Point(20, 1);
+            this.groupBox24.Location = new System.Drawing.Point(23, 1);
             this.groupBox24.Margin = new System.Windows.Forms.Padding(0);
             this.groupBox24.Name = "groupBox24";
             this.groupBox24.Padding = new System.Windows.Forms.Padding(0);
-            this.groupBox24.Size = new System.Drawing.Size(200, 42);
+            this.groupBox24.Size = new System.Drawing.Size(233, 60);
             this.groupBox24.TabIndex = 7;
             this.groupBox24.TabStop = false;
             this.groupBox24.Text = "RealPlay";
             // 
             // faceRecogRealPlayStartBtn
             // 
-            this.faceRecogRealPlayStartBtn.Location = new System.Drawing.Point(11, 15);
+            this.faceRecogRealPlayStartBtn.Location = new System.Drawing.Point(13, 21);
+            this.faceRecogRealPlayStartBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.faceRecogRealPlayStartBtn.Name = "faceRecogRealPlayStartBtn";
-            this.faceRecogRealPlayStartBtn.Size = new System.Drawing.Size(75, 23);
+            this.faceRecogRealPlayStartBtn.Size = new System.Drawing.Size(88, 33);
             this.faceRecogRealPlayStartBtn.TabIndex = 6;
             this.faceRecogRealPlayStartBtn.Text = "start";
             this.faceRecogRealPlayStartBtn.UseVisualStyleBackColor = true;
@@ -4611,9 +4945,10 @@ namespace YuShiNetDevSDK.WinForm
             // 
             // faceRecogRealPlayStopBtn
             // 
-            this.faceRecogRealPlayStopBtn.Location = new System.Drawing.Point(92, 15);
+            this.faceRecogRealPlayStopBtn.Location = new System.Drawing.Point(107, 21);
+            this.faceRecogRealPlayStopBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.faceRecogRealPlayStopBtn.Name = "faceRecogRealPlayStopBtn";
-            this.faceRecogRealPlayStopBtn.Size = new System.Drawing.Size(75, 23);
+            this.faceRecogRealPlayStopBtn.Size = new System.Drawing.Size(88, 33);
             this.faceRecogRealPlayStopBtn.TabIndex = 6;
             this.faceRecogRealPlayStopBtn.Text = "Stop";
             this.faceRecogRealPlayStopBtn.UseVisualStyleBackColor = true;
@@ -4625,9 +4960,11 @@ namespace YuShiNetDevSDK.WinForm
             this.groupBox23.Controls.Add(this.faceRecogAlarmRecordsListView);
             this.groupBox23.Controls.Add(this.personLibPictureBox);
             this.groupBox23.Controls.Add(this.snapshotPictureBox);
-            this.groupBox23.Location = new System.Drawing.Point(3, 360);
+            this.groupBox23.Location = new System.Drawing.Point(4, 510);
+            this.groupBox23.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.groupBox23.Name = "groupBox23";
-            this.groupBox23.Size = new System.Drawing.Size(823, 159);
+            this.groupBox23.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox23.Size = new System.Drawing.Size(960, 225);
             this.groupBox23.TabIndex = 5;
             this.groupBox23.TabStop = false;
             this.groupBox23.Text = "Alarm Records";
@@ -4635,9 +4972,10 @@ namespace YuShiNetDevSDK.WinForm
             // similarityLab
             // 
             this.similarityLab.BackColor = System.Drawing.Color.LightGray;
-            this.similarityLab.Location = new System.Drawing.Point(6, 132);
+            this.similarityLab.Location = new System.Drawing.Point(7, 187);
+            this.similarityLab.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.similarityLab.Name = "similarityLab";
-            this.similarityLab.Size = new System.Drawing.Size(197, 20);
+            this.similarityLab.Size = new System.Drawing.Size(230, 28);
             this.similarityLab.TabIndex = 4;
             this.similarityLab.Text = "0%";
             this.similarityLab.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -4652,9 +4990,11 @@ namespace YuShiNetDevSDK.WinForm
             this.FaceRecogMatchRecordMatchCHeader,
             this.FaceRecogMatchRecordAlarmSourceCHeader});
             this.faceRecogAlarmRecordsListView.GridLines = true;
-            this.faceRecogAlarmRecordsListView.Location = new System.Drawing.Point(211, 22);
+            this.faceRecogAlarmRecordsListView.HideSelection = false;
+            this.faceRecogAlarmRecordsListView.Location = new System.Drawing.Point(246, 31);
+            this.faceRecogAlarmRecordsListView.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.faceRecogAlarmRecordsListView.Name = "faceRecogAlarmRecordsListView";
-            this.faceRecogAlarmRecordsListView.Size = new System.Drawing.Size(606, 131);
+            this.faceRecogAlarmRecordsListView.Size = new System.Drawing.Size(706, 184);
             this.faceRecogAlarmRecordsListView.TabIndex = 1;
             this.faceRecogAlarmRecordsListView.UseCompatibleStateImageBehavior = false;
             this.faceRecogAlarmRecordsListView.View = System.Windows.Forms.View.Details;
@@ -4687,9 +5027,10 @@ namespace YuShiNetDevSDK.WinForm
             // personLibPictureBox
             // 
             this.personLibPictureBox.BackColor = System.Drawing.Color.LightGray;
-            this.personLibPictureBox.Location = new System.Drawing.Point(105, 20);
+            this.personLibPictureBox.Location = new System.Drawing.Point(122, 28);
+            this.personLibPictureBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.personLibPictureBox.Name = "personLibPictureBox";
-            this.personLibPictureBox.Size = new System.Drawing.Size(98, 111);
+            this.personLibPictureBox.Size = new System.Drawing.Size(114, 157);
             this.personLibPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.personLibPictureBox.TabIndex = 3;
             this.personLibPictureBox.TabStop = false;
@@ -4697,9 +5038,10 @@ namespace YuShiNetDevSDK.WinForm
             // snapshotPictureBox
             // 
             this.snapshotPictureBox.BackColor = System.Drawing.Color.LightGray;
-            this.snapshotPictureBox.Location = new System.Drawing.Point(6, 20);
+            this.snapshotPictureBox.Location = new System.Drawing.Point(7, 28);
+            this.snapshotPictureBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.snapshotPictureBox.Name = "snapshotPictureBox";
-            this.snapshotPictureBox.Size = new System.Drawing.Size(98, 111);
+            this.snapshotPictureBox.Size = new System.Drawing.Size(114, 157);
             this.snapshotPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.snapshotPictureBox.TabIndex = 2;
             this.snapshotPictureBox.TabStop = false;
@@ -4710,9 +5052,11 @@ namespace YuShiNetDevSDK.WinForm
             this.groupBox22.Controls.Add(this.faceSnapshotPicTimeLab);
             this.groupBox22.Controls.Add(this.faceSnapshotSmallPictureBox);
             this.groupBox22.Controls.Add(this.faceSnapshotLargePictureBox);
-            this.groupBox22.Location = new System.Drawing.Point(583, 39);
+            this.groupBox22.Location = new System.Drawing.Point(680, 55);
+            this.groupBox22.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.groupBox22.Name = "groupBox22";
-            this.groupBox22.Size = new System.Drawing.Size(243, 319);
+            this.groupBox22.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox22.Size = new System.Drawing.Size(284, 452);
             this.groupBox22.TabIndex = 4;
             this.groupBox22.TabStop = false;
             this.groupBox22.Text = "snapshots";
@@ -4720,9 +5064,10 @@ namespace YuShiNetDevSDK.WinForm
             // faceSnapshotPicTimeLab
             // 
             this.faceSnapshotPicTimeLab.BackColor = System.Drawing.Color.LightGray;
-            this.faceSnapshotPicTimeLab.Location = new System.Drawing.Point(12, 289);
+            this.faceSnapshotPicTimeLab.Location = new System.Drawing.Point(14, 409);
+            this.faceSnapshotPicTimeLab.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.faceSnapshotPicTimeLab.Name = "faceSnapshotPicTimeLab";
-            this.faceSnapshotPicTimeLab.Size = new System.Drawing.Size(225, 25);
+            this.faceSnapshotPicTimeLab.Size = new System.Drawing.Size(262, 35);
             this.faceSnapshotPicTimeLab.TabIndex = 2;
             this.faceSnapshotPicTimeLab.Text = "Time";
             this.faceSnapshotPicTimeLab.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -4730,9 +5075,10 @@ namespace YuShiNetDevSDK.WinForm
             // faceSnapshotSmallPictureBox
             // 
             this.faceSnapshotSmallPictureBox.BackColor = System.Drawing.Color.LightGray;
-            this.faceSnapshotSmallPictureBox.Location = new System.Drawing.Point(68, 161);
+            this.faceSnapshotSmallPictureBox.Location = new System.Drawing.Point(79, 228);
+            this.faceSnapshotSmallPictureBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.faceSnapshotSmallPictureBox.Name = "faceSnapshotSmallPictureBox";
-            this.faceSnapshotSmallPictureBox.Size = new System.Drawing.Size(115, 125);
+            this.faceSnapshotSmallPictureBox.Size = new System.Drawing.Size(134, 177);
             this.faceSnapshotSmallPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.faceSnapshotSmallPictureBox.TabIndex = 1;
             this.faceSnapshotSmallPictureBox.TabStop = false;
@@ -4740,18 +5086,20 @@ namespace YuShiNetDevSDK.WinForm
             // faceSnapshotLargePictureBox
             // 
             this.faceSnapshotLargePictureBox.BackColor = System.Drawing.Color.LightGray;
-            this.faceSnapshotLargePictureBox.Location = new System.Drawing.Point(15, 22);
+            this.faceSnapshotLargePictureBox.Location = new System.Drawing.Point(18, 31);
+            this.faceSnapshotLargePictureBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.faceSnapshotLargePictureBox.Name = "faceSnapshotLargePictureBox";
-            this.faceSnapshotLargePictureBox.Size = new System.Drawing.Size(222, 137);
+            this.faceSnapshotLargePictureBox.Size = new System.Drawing.Size(259, 194);
             this.faceSnapshotLargePictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.faceSnapshotLargePictureBox.TabIndex = 0;
             this.faceSnapshotLargePictureBox.TabStop = false;
             // 
             // faceRecogRealPlayFLayoutPanel
             // 
-            this.faceRecogRealPlayFLayoutPanel.Location = new System.Drawing.Point(3, 45);
+            this.faceRecogRealPlayFLayoutPanel.Location = new System.Drawing.Point(4, 64);
+            this.faceRecogRealPlayFLayoutPanel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.faceRecogRealPlayFLayoutPanel.Name = "faceRecogRealPlayFLayoutPanel";
-            this.faceRecogRealPlayFLayoutPanel.Size = new System.Drawing.Size(574, 313);
+            this.faceRecogRealPlayFLayoutPanel.Size = new System.Drawing.Size(670, 443);
             this.faceRecogRealPlayFLayoutPanel.TabIndex = 0;
             // 
             // FaceLibraryManagenentTabPage
@@ -4760,9 +5108,10 @@ namespace YuShiNetDevSDK.WinForm
             this.FaceLibraryManagenentTabPage.Controls.Add(this.groupBox20);
             this.FaceLibraryManagenentTabPage.Controls.Add(this.groupBox19);
             this.FaceLibraryManagenentTabPage.Location = new System.Drawing.Point(4, 26);
+            this.FaceLibraryManagenentTabPage.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.FaceLibraryManagenentTabPage.Name = "FaceLibraryManagenentTabPage";
-            this.FaceLibraryManagenentTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.FaceLibraryManagenentTabPage.Size = new System.Drawing.Size(838, 522);
+            this.FaceLibraryManagenentTabPage.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.FaceLibraryManagenentTabPage.Size = new System.Drawing.Size(979, 752);
             this.FaceLibraryManagenentTabPage.TabIndex = 0;
             this.FaceLibraryManagenentTabPage.Text = "Face Library Managenent";
             this.FaceLibraryManagenentTabPage.UseVisualStyleBackColor = true;
@@ -4777,18 +5126,21 @@ namespace YuShiNetDevSDK.WinForm
             this.groupBox20.Controls.Add(this.findPersonInfoBtn);
             this.groupBox20.Controls.Add(this.groupBox21);
             this.groupBox20.Controls.Add(this.personInfoListView);
-            this.groupBox20.Location = new System.Drawing.Point(6, 73);
+            this.groupBox20.Location = new System.Drawing.Point(7, 103);
+            this.groupBox20.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.groupBox20.Name = "groupBox20";
-            this.groupBox20.Size = new System.Drawing.Size(826, 443);
+            this.groupBox20.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox20.Size = new System.Drawing.Size(964, 628);
             this.groupBox20.TabIndex = 2;
             this.groupBox20.TabStop = false;
             this.groupBox20.Text = "Person Info";
             // 
             // nextPersonInfoBtn
             // 
-            this.nextPersonInfoBtn.Location = new System.Drawing.Point(478, 225);
+            this.nextPersonInfoBtn.Location = new System.Drawing.Point(558, 319);
+            this.nextPersonInfoBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.nextPersonInfoBtn.Name = "nextPersonInfoBtn";
-            this.nextPersonInfoBtn.Size = new System.Drawing.Size(75, 23);
+            this.nextPersonInfoBtn.Size = new System.Drawing.Size(88, 33);
             this.nextPersonInfoBtn.TabIndex = 23;
             this.nextPersonInfoBtn.Text = "Next";
             this.nextPersonInfoBtn.UseVisualStyleBackColor = true;
@@ -4796,9 +5148,10 @@ namespace YuShiNetDevSDK.WinForm
             // 
             // previousPersonInfoBtn
             // 
-            this.previousPersonInfoBtn.Location = new System.Drawing.Point(385, 225);
+            this.previousPersonInfoBtn.Location = new System.Drawing.Point(449, 319);
+            this.previousPersonInfoBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.previousPersonInfoBtn.Name = "previousPersonInfoBtn";
-            this.previousPersonInfoBtn.Size = new System.Drawing.Size(75, 23);
+            this.previousPersonInfoBtn.Size = new System.Drawing.Size(88, 33);
             this.previousPersonInfoBtn.TabIndex = 22;
             this.previousPersonInfoBtn.Text = "Previous";
             this.previousPersonInfoBtn.UseVisualStyleBackColor = true;
@@ -4806,9 +5159,10 @@ namespace YuShiNetDevSDK.WinForm
             // 
             // delPersonInfoBtn
             // 
-            this.delPersonInfoBtn.Location = new System.Drawing.Point(293, 225);
+            this.delPersonInfoBtn.Location = new System.Drawing.Point(342, 319);
+            this.delPersonInfoBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.delPersonInfoBtn.Name = "delPersonInfoBtn";
-            this.delPersonInfoBtn.Size = new System.Drawing.Size(75, 23);
+            this.delPersonInfoBtn.Size = new System.Drawing.Size(88, 33);
             this.delPersonInfoBtn.TabIndex = 21;
             this.delPersonInfoBtn.Text = "Delete";
             this.delPersonInfoBtn.UseVisualStyleBackColor = true;
@@ -4816,9 +5170,10 @@ namespace YuShiNetDevSDK.WinForm
             // 
             // modifyPersonInfoBtn
             // 
-            this.modifyPersonInfoBtn.Location = new System.Drawing.Point(197, 225);
+            this.modifyPersonInfoBtn.Location = new System.Drawing.Point(230, 319);
+            this.modifyPersonInfoBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.modifyPersonInfoBtn.Name = "modifyPersonInfoBtn";
-            this.modifyPersonInfoBtn.Size = new System.Drawing.Size(75, 23);
+            this.modifyPersonInfoBtn.Size = new System.Drawing.Size(88, 33);
             this.modifyPersonInfoBtn.TabIndex = 20;
             this.modifyPersonInfoBtn.Text = "Modify";
             this.modifyPersonInfoBtn.UseVisualStyleBackColor = true;
@@ -4826,9 +5181,10 @@ namespace YuShiNetDevSDK.WinForm
             // 
             // addPersonInfoBtn
             // 
-            this.addPersonInfoBtn.Location = new System.Drawing.Point(104, 225);
+            this.addPersonInfoBtn.Location = new System.Drawing.Point(121, 319);
+            this.addPersonInfoBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.addPersonInfoBtn.Name = "addPersonInfoBtn";
-            this.addPersonInfoBtn.Size = new System.Drawing.Size(75, 23);
+            this.addPersonInfoBtn.Size = new System.Drawing.Size(88, 33);
             this.addPersonInfoBtn.TabIndex = 19;
             this.addPersonInfoBtn.Text = "Add";
             this.addPersonInfoBtn.UseVisualStyleBackColor = true;
@@ -4836,9 +5192,10 @@ namespace YuShiNetDevSDK.WinForm
             // 
             // findPersonInfoBtn
             // 
-            this.findPersonInfoBtn.Location = new System.Drawing.Point(8, 225);
+            this.findPersonInfoBtn.Location = new System.Drawing.Point(9, 319);
+            this.findPersonInfoBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.findPersonInfoBtn.Name = "findPersonInfoBtn";
-            this.findPersonInfoBtn.Size = new System.Drawing.Size(75, 23);
+            this.findPersonInfoBtn.Size = new System.Drawing.Size(88, 33);
             this.findPersonInfoBtn.TabIndex = 18;
             this.findPersonInfoBtn.Text = "Find";
             this.findPersonInfoBtn.UseVisualStyleBackColor = true;
@@ -4863,26 +5220,30 @@ namespace YuShiNetDevSDK.WinForm
             this.groupBox21.Controls.Add(this.personInfoNameText);
             this.groupBox21.Controls.Add(this.personInfoBirthdayLab);
             this.groupBox21.Controls.Add(this.personInfoNameLab);
-            this.groupBox21.Location = new System.Drawing.Point(7, 21);
+            this.groupBox21.Location = new System.Drawing.Point(8, 30);
+            this.groupBox21.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.groupBox21.Name = "groupBox21";
-            this.groupBox21.Size = new System.Drawing.Size(813, 193);
+            this.groupBox21.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox21.Size = new System.Drawing.Size(948, 273);
             this.groupBox21.TabIndex = 17;
             this.groupBox21.TabStop = false;
             this.groupBox21.Text = "Person Info";
             // 
             // personInfoBirthText
             // 
-            this.personInfoBirthText.Location = new System.Drawing.Point(537, 20);
+            this.personInfoBirthText.Location = new System.Drawing.Point(626, 28);
+            this.personInfoBirthText.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.personInfoBirthText.Name = "personInfoBirthText";
-            this.personInfoBirthText.Size = new System.Drawing.Size(227, 23);
+            this.personInfoBirthText.Size = new System.Drawing.Size(264, 23);
             this.personInfoBirthText.TabIndex = 38;
             // 
             // personInfoImagePictureBox
             // 
             this.personInfoImagePictureBox.BackColor = System.Drawing.Color.LightGray;
-            this.personInfoImagePictureBox.Location = new System.Drawing.Point(17, 21);
+            this.personInfoImagePictureBox.Location = new System.Drawing.Point(20, 30);
+            this.personInfoImagePictureBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.personInfoImagePictureBox.Name = "personInfoImagePictureBox";
-            this.personInfoImagePictureBox.Size = new System.Drawing.Size(121, 149);
+            this.personInfoImagePictureBox.Size = new System.Drawing.Size(141, 211);
             this.personInfoImagePictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.personInfoImagePictureBox.TabIndex = 37;
             this.personInfoImagePictureBox.TabStop = false;
@@ -4895,30 +5256,34 @@ namespace YuShiNetDevSDK.WinForm
             "Unidentified",
             "Male",
             "Female"});
-            this.personInfoGenderCmb.Location = new System.Drawing.Point(215, 57);
+            this.personInfoGenderCmb.Location = new System.Drawing.Point(251, 81);
+            this.personInfoGenderCmb.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.personInfoGenderCmb.Name = "personInfoGenderCmb";
-            this.personInfoGenderCmb.Size = new System.Drawing.Size(221, 25);
+            this.personInfoGenderCmb.Size = new System.Drawing.Size(257, 25);
             this.personInfoGenderCmb.TabIndex = 36;
             this.personInfoGenderCmb.Text = "Unidentified";
             // 
             // personInfoCityText
             // 
-            this.personInfoCityText.Location = new System.Drawing.Point(537, 129);
+            this.personInfoCityText.Location = new System.Drawing.Point(626, 183);
+            this.personInfoCityText.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.personInfoCityText.Name = "personInfoCityText";
-            this.personInfoCityText.Size = new System.Drawing.Size(227, 23);
+            this.personInfoCityText.Size = new System.Drawing.Size(264, 23);
             this.personInfoCityText.TabIndex = 29;
             // 
             // personInfoIDNoText
             // 
-            this.personInfoIDNoText.Location = new System.Drawing.Point(214, 129);
+            this.personInfoIDNoText.Location = new System.Drawing.Point(250, 183);
+            this.personInfoIDNoText.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.personInfoIDNoText.Name = "personInfoIDNoText";
-            this.personInfoIDNoText.Size = new System.Drawing.Size(222, 23);
+            this.personInfoIDNoText.Size = new System.Drawing.Size(258, 23);
             this.personInfoIDNoText.TabIndex = 28;
             // 
             // personInfoCityLab
             // 
             this.personInfoCityLab.AutoSize = true;
-            this.personInfoCityLab.Location = new System.Drawing.Point(449, 132);
+            this.personInfoCityLab.Location = new System.Drawing.Point(524, 187);
+            this.personInfoCityLab.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.personInfoCityLab.Name = "personInfoCityLab";
             this.personInfoCityLab.Size = new System.Drawing.Size(29, 17);
             this.personInfoCityLab.TabIndex = 27;
@@ -4927,7 +5292,8 @@ namespace YuShiNetDevSDK.WinForm
             // personInfoIDNoLab
             // 
             this.personInfoIDNoLab.AutoSize = true;
-            this.personInfoIDNoLab.Location = new System.Drawing.Point(151, 132);
+            this.personInfoIDNoLab.Location = new System.Drawing.Point(176, 187);
+            this.personInfoIDNoLab.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.personInfoIDNoLab.Name = "personInfoIDNoLab";
             this.personInfoIDNoLab.Size = new System.Drawing.Size(55, 17);
             this.personInfoIDNoLab.TabIndex = 26;
@@ -4942,30 +5308,34 @@ namespace YuShiNetDevSDK.WinForm
             "Passport",
             "Driver\'s License",
             "Other"});
-            this.personInfoIDTypeCmb.Location = new System.Drawing.Point(215, 92);
+            this.personInfoIDTypeCmb.Location = new System.Drawing.Point(251, 130);
+            this.personInfoIDTypeCmb.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.personInfoIDTypeCmb.Name = "personInfoIDTypeCmb";
-            this.personInfoIDTypeCmb.Size = new System.Drawing.Size(221, 25);
+            this.personInfoIDTypeCmb.Size = new System.Drawing.Size(257, 25);
             this.personInfoIDTypeCmb.TabIndex = 25;
             this.personInfoIDTypeCmb.Text = "ID Card";
             // 
             // personInfoNationalityText
             // 
-            this.personInfoNationalityText.Location = new System.Drawing.Point(537, 62);
+            this.personInfoNationalityText.Location = new System.Drawing.Point(626, 88);
+            this.personInfoNationalityText.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.personInfoNationalityText.Name = "personInfoNationalityText";
-            this.personInfoNationalityText.Size = new System.Drawing.Size(227, 23);
+            this.personInfoNationalityText.Size = new System.Drawing.Size(264, 23);
             this.personInfoNationalityText.TabIndex = 24;
             // 
             // personInfoProvinceText
             // 
-            this.personInfoProvinceText.Location = new System.Drawing.Point(537, 95);
+            this.personInfoProvinceText.Location = new System.Drawing.Point(626, 135);
+            this.personInfoProvinceText.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.personInfoProvinceText.Name = "personInfoProvinceText";
-            this.personInfoProvinceText.Size = new System.Drawing.Size(227, 23);
+            this.personInfoProvinceText.Size = new System.Drawing.Size(264, 23);
             this.personInfoProvinceText.TabIndex = 23;
             // 
             // personInfoProvinceLab
             // 
             this.personInfoProvinceLab.AutoSize = true;
-            this.personInfoProvinceLab.Location = new System.Drawing.Point(449, 98);
+            this.personInfoProvinceLab.Location = new System.Drawing.Point(524, 139);
+            this.personInfoProvinceLab.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.personInfoProvinceLab.Name = "personInfoProvinceLab";
             this.personInfoProvinceLab.Size = new System.Drawing.Size(57, 17);
             this.personInfoProvinceLab.TabIndex = 22;
@@ -4974,7 +5344,8 @@ namespace YuShiNetDevSDK.WinForm
             // personInfoNationalityLab
             // 
             this.personInfoNationalityLab.AutoSize = true;
-            this.personInfoNationalityLab.Location = new System.Drawing.Point(451, 65);
+            this.personInfoNationalityLab.Location = new System.Drawing.Point(526, 92);
+            this.personInfoNationalityLab.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.personInfoNationalityLab.Name = "personInfoNationalityLab";
             this.personInfoNationalityLab.Size = new System.Drawing.Size(70, 17);
             this.personInfoNationalityLab.TabIndex = 21;
@@ -4983,7 +5354,8 @@ namespace YuShiNetDevSDK.WinForm
             // personInfoIDTypeLab
             // 
             this.personInfoIDTypeLab.AutoSize = true;
-            this.personInfoIDTypeLab.Location = new System.Drawing.Point(151, 98);
+            this.personInfoIDTypeLab.Location = new System.Drawing.Point(176, 139);
+            this.personInfoIDTypeLab.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.personInfoIDTypeLab.Name = "personInfoIDTypeLab";
             this.personInfoIDTypeLab.Size = new System.Drawing.Size(62, 17);
             this.personInfoIDTypeLab.TabIndex = 20;
@@ -4992,7 +5364,8 @@ namespace YuShiNetDevSDK.WinForm
             // personInfoGenderLab
             // 
             this.personInfoGenderLab.AutoSize = true;
-            this.personInfoGenderLab.Location = new System.Drawing.Point(151, 66);
+            this.personInfoGenderLab.Location = new System.Drawing.Point(176, 94);
+            this.personInfoGenderLab.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.personInfoGenderLab.Name = "personInfoGenderLab";
             this.personInfoGenderLab.Size = new System.Drawing.Size(51, 17);
             this.personInfoGenderLab.TabIndex = 19;
@@ -5000,15 +5373,17 @@ namespace YuShiNetDevSDK.WinForm
             // 
             // personInfoNameText
             // 
-            this.personInfoNameText.Location = new System.Drawing.Point(215, 20);
+            this.personInfoNameText.Location = new System.Drawing.Point(251, 28);
+            this.personInfoNameText.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.personInfoNameText.Name = "personInfoNameText";
-            this.personInfoNameText.Size = new System.Drawing.Size(221, 23);
+            this.personInfoNameText.Size = new System.Drawing.Size(257, 23);
             this.personInfoNameText.TabIndex = 17;
             // 
             // personInfoBirthdayLab
             // 
             this.personInfoBirthdayLab.AutoSize = true;
-            this.personInfoBirthdayLab.Location = new System.Drawing.Point(449, 21);
+            this.personInfoBirthdayLab.Location = new System.Drawing.Point(524, 30);
+            this.personInfoBirthdayLab.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.personInfoBirthdayLab.Name = "personInfoBirthdayLab";
             this.personInfoBirthdayLab.Size = new System.Drawing.Size(82, 17);
             this.personInfoBirthdayLab.TabIndex = 16;
@@ -5017,7 +5392,8 @@ namespace YuShiNetDevSDK.WinForm
             // personInfoNameLab
             // 
             this.personInfoNameLab.AutoSize = true;
-            this.personInfoNameLab.Location = new System.Drawing.Point(151, 21);
+            this.personInfoNameLab.Location = new System.Drawing.Point(176, 30);
+            this.personInfoNameLab.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.personInfoNameLab.Name = "personInfoNameLab";
             this.personInfoNameLab.Size = new System.Drawing.Size(52, 17);
             this.personInfoNameLab.TabIndex = 15;
@@ -5037,10 +5413,12 @@ namespace YuShiNetDevSDK.WinForm
             this.PersonIDNo});
             this.personInfoListView.FullRowSelect = true;
             this.personInfoListView.GridLines = true;
-            this.personInfoListView.Location = new System.Drawing.Point(7, 261);
+            this.personInfoListView.HideSelection = false;
+            this.personInfoListView.Location = new System.Drawing.Point(8, 370);
+            this.personInfoListView.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.personInfoListView.MultiSelect = false;
             this.personInfoListView.Name = "personInfoListView";
-            this.personInfoListView.Size = new System.Drawing.Size(813, 176);
+            this.personInfoListView.Size = new System.Drawing.Size(948, 248);
             this.personInfoListView.TabIndex = 16;
             this.personInfoListView.UseCompatibleStateImageBehavior = false;
             this.personInfoListView.View = System.Windows.Forms.View.Details;
@@ -5098,34 +5476,39 @@ namespace YuShiNetDevSDK.WinForm
             this.groupBox19.Controls.Add(this.modifyPersonLibBtn);
             this.groupBox19.Controls.Add(this.addPersonLibBtn);
             this.groupBox19.Controls.Add(this.findPersonLibBtn);
-            this.groupBox19.Location = new System.Drawing.Point(5, 7);
+            this.groupBox19.Location = new System.Drawing.Point(6, 10);
+            this.groupBox19.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.groupBox19.Name = "groupBox19";
-            this.groupBox19.Size = new System.Drawing.Size(826, 63);
+            this.groupBox19.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox19.Size = new System.Drawing.Size(964, 89);
             this.groupBox19.TabIndex = 1;
             this.groupBox19.TabStop = false;
             this.groupBox19.Text = "Person Lib";
             // 
             // PersonLibNameText
             // 
-            this.PersonLibNameText.Location = new System.Drawing.Point(152, 23);
+            this.PersonLibNameText.Location = new System.Drawing.Point(177, 33);
+            this.PersonLibNameText.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.PersonLibNameText.Name = "PersonLibNameText";
-            this.PersonLibNameText.Size = new System.Drawing.Size(132, 23);
+            this.PersonLibNameText.Size = new System.Drawing.Size(153, 23);
             this.PersonLibNameText.TabIndex = 5;
             // 
             // personLibCmb
             // 
             this.personLibCmb.FormattingEnabled = true;
-            this.personLibCmb.Location = new System.Drawing.Point(25, 23);
+            this.personLibCmb.Location = new System.Drawing.Point(29, 33);
+            this.personLibCmb.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.personLibCmb.Name = "personLibCmb";
-            this.personLibCmb.Size = new System.Drawing.Size(121, 25);
+            this.personLibCmb.Size = new System.Drawing.Size(140, 25);
             this.personLibCmb.TabIndex = 4;
             this.personLibCmb.SelectedIndexChanged += new System.EventHandler(this.personLibCmb_SelectedIndexChanged);
             // 
             // delPersonLibBtn
             // 
-            this.delPersonLibBtn.Location = new System.Drawing.Point(575, 22);
+            this.delPersonLibBtn.Location = new System.Drawing.Point(671, 31);
+            this.delPersonLibBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.delPersonLibBtn.Name = "delPersonLibBtn";
-            this.delPersonLibBtn.Size = new System.Drawing.Size(75, 23);
+            this.delPersonLibBtn.Size = new System.Drawing.Size(88, 33);
             this.delPersonLibBtn.TabIndex = 3;
             this.delPersonLibBtn.Text = "Delete";
             this.delPersonLibBtn.UseVisualStyleBackColor = true;
@@ -5133,9 +5516,10 @@ namespace YuShiNetDevSDK.WinForm
             // 
             // modifyPersonLibBtn
             // 
-            this.modifyPersonLibBtn.Location = new System.Drawing.Point(479, 22);
+            this.modifyPersonLibBtn.Location = new System.Drawing.Point(559, 31);
+            this.modifyPersonLibBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.modifyPersonLibBtn.Name = "modifyPersonLibBtn";
-            this.modifyPersonLibBtn.Size = new System.Drawing.Size(75, 23);
+            this.modifyPersonLibBtn.Size = new System.Drawing.Size(88, 33);
             this.modifyPersonLibBtn.TabIndex = 2;
             this.modifyPersonLibBtn.Text = "Modify";
             this.modifyPersonLibBtn.UseVisualStyleBackColor = true;
@@ -5143,9 +5527,10 @@ namespace YuShiNetDevSDK.WinForm
             // 
             // addPersonLibBtn
             // 
-            this.addPersonLibBtn.Location = new System.Drawing.Point(386, 22);
+            this.addPersonLibBtn.Location = new System.Drawing.Point(450, 31);
+            this.addPersonLibBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.addPersonLibBtn.Name = "addPersonLibBtn";
-            this.addPersonLibBtn.Size = new System.Drawing.Size(75, 23);
+            this.addPersonLibBtn.Size = new System.Drawing.Size(88, 33);
             this.addPersonLibBtn.TabIndex = 1;
             this.addPersonLibBtn.Text = "Add";
             this.addPersonLibBtn.UseVisualStyleBackColor = true;
@@ -5153,9 +5538,10 @@ namespace YuShiNetDevSDK.WinForm
             // 
             // findPersonLibBtn
             // 
-            this.findPersonLibBtn.Location = new System.Drawing.Point(290, 22);
+            this.findPersonLibBtn.Location = new System.Drawing.Point(338, 31);
+            this.findPersonLibBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.findPersonLibBtn.Name = "findPersonLibBtn";
-            this.findPersonLibBtn.Size = new System.Drawing.Size(75, 23);
+            this.findPersonLibBtn.Size = new System.Drawing.Size(88, 33);
             this.findPersonLibBtn.TabIndex = 0;
             this.findPersonLibBtn.Text = "Find";
             this.findPersonLibBtn.UseVisualStyleBackColor = true;
@@ -5183,26 +5569,29 @@ namespace YuShiNetDevSDK.WinForm
             this.FaceMonitoringTaskTabPage.Controls.Add(this.faceMonitorTaskTypeLab);
             this.FaceMonitoringTaskTabPage.Controls.Add(this.faceMonitorTaskNameLab);
             this.FaceMonitoringTaskTabPage.Location = new System.Drawing.Point(4, 26);
+            this.FaceMonitoringTaskTabPage.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.FaceMonitoringTaskTabPage.Name = "FaceMonitoringTaskTabPage";
-            this.FaceMonitoringTaskTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.FaceMonitoringTaskTabPage.Size = new System.Drawing.Size(838, 522);
+            this.FaceMonitoringTaskTabPage.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.FaceMonitoringTaskTabPage.Size = new System.Drawing.Size(979, 752);
             this.FaceMonitoringTaskTabPage.TabIndex = 1;
             this.FaceMonitoringTaskTabPage.Text = "Monitoring Task";
             this.FaceMonitoringTaskTabPage.UseVisualStyleBackColor = true;
             // 
             // faceMonitorTaskLibNameText
             // 
-            this.faceMonitorTaskLibNameText.Location = new System.Drawing.Point(222, 77);
+            this.faceMonitorTaskLibNameText.Location = new System.Drawing.Point(259, 109);
+            this.faceMonitorTaskLibNameText.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.faceMonitorTaskLibNameText.Name = "faceMonitorTaskLibNameText";
             this.faceMonitorTaskLibNameText.ReadOnly = true;
-            this.faceMonitorTaskLibNameText.Size = new System.Drawing.Size(147, 23);
+            this.faceMonitorTaskLibNameText.Size = new System.Drawing.Size(171, 23);
             this.faceMonitorTaskLibNameText.TabIndex = 16;
             // 
             // disableFaceMonitorBtn
             // 
-            this.disableFaceMonitorBtn.Location = new System.Drawing.Point(507, 117);
+            this.disableFaceMonitorBtn.Location = new System.Drawing.Point(592, 166);
+            this.disableFaceMonitorBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.disableFaceMonitorBtn.Name = "disableFaceMonitorBtn";
-            this.disableFaceMonitorBtn.Size = new System.Drawing.Size(75, 23);
+            this.disableFaceMonitorBtn.Size = new System.Drawing.Size(88, 33);
             this.disableFaceMonitorBtn.TabIndex = 15;
             this.disableFaceMonitorBtn.Text = "Disable";
             this.disableFaceMonitorBtn.UseVisualStyleBackColor = true;
@@ -5210,9 +5599,10 @@ namespace YuShiNetDevSDK.WinForm
             // 
             // enableFaceMonitorBtn
             // 
-            this.enableFaceMonitorBtn.Location = new System.Drawing.Point(409, 117);
+            this.enableFaceMonitorBtn.Location = new System.Drawing.Point(477, 166);
+            this.enableFaceMonitorBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.enableFaceMonitorBtn.Name = "enableFaceMonitorBtn";
-            this.enableFaceMonitorBtn.Size = new System.Drawing.Size(75, 23);
+            this.enableFaceMonitorBtn.Size = new System.Drawing.Size(88, 33);
             this.enableFaceMonitorBtn.TabIndex = 15;
             this.enableFaceMonitorBtn.Text = "Enable";
             this.enableFaceMonitorBtn.UseVisualStyleBackColor = true;
@@ -5220,9 +5610,10 @@ namespace YuShiNetDevSDK.WinForm
             // 
             // delFaceMonitorBtn
             // 
-            this.delFaceMonitorBtn.Location = new System.Drawing.Point(317, 117);
+            this.delFaceMonitorBtn.Location = new System.Drawing.Point(370, 166);
+            this.delFaceMonitorBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.delFaceMonitorBtn.Name = "delFaceMonitorBtn";
-            this.delFaceMonitorBtn.Size = new System.Drawing.Size(75, 23);
+            this.delFaceMonitorBtn.Size = new System.Drawing.Size(88, 33);
             this.delFaceMonitorBtn.TabIndex = 14;
             this.delFaceMonitorBtn.Text = "Delete";
             this.delFaceMonitorBtn.UseVisualStyleBackColor = true;
@@ -5230,9 +5621,10 @@ namespace YuShiNetDevSDK.WinForm
             // 
             // modifyFaceMonitorBtn
             // 
-            this.modifyFaceMonitorBtn.Location = new System.Drawing.Point(222, 117);
+            this.modifyFaceMonitorBtn.Location = new System.Drawing.Point(259, 166);
+            this.modifyFaceMonitorBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.modifyFaceMonitorBtn.Name = "modifyFaceMonitorBtn";
-            this.modifyFaceMonitorBtn.Size = new System.Drawing.Size(75, 23);
+            this.modifyFaceMonitorBtn.Size = new System.Drawing.Size(88, 33);
             this.modifyFaceMonitorBtn.TabIndex = 13;
             this.modifyFaceMonitorBtn.Text = "Modify";
             this.modifyFaceMonitorBtn.UseVisualStyleBackColor = true;
@@ -5240,9 +5632,10 @@ namespace YuShiNetDevSDK.WinForm
             // 
             // FindFaceMonitorBtn
             // 
-            this.FindFaceMonitorBtn.Location = new System.Drawing.Point(21, 117);
+            this.FindFaceMonitorBtn.Location = new System.Drawing.Point(24, 166);
+            this.FindFaceMonitorBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.FindFaceMonitorBtn.Name = "FindFaceMonitorBtn";
-            this.FindFaceMonitorBtn.Size = new System.Drawing.Size(75, 23);
+            this.FindFaceMonitorBtn.Size = new System.Drawing.Size(88, 33);
             this.FindFaceMonitorBtn.TabIndex = 12;
             this.FindFaceMonitorBtn.Text = "Find";
             this.FindFaceMonitorBtn.UseVisualStyleBackColor = true;
@@ -5259,10 +5652,12 @@ namespace YuShiNetDevSDK.WinForm
             this.LPRmonitorStatusColHeader});
             this.faceMonitorInfoListView.FullRowSelect = true;
             this.faceMonitorInfoListView.GridLines = true;
-            this.faceMonitorInfoListView.Location = new System.Drawing.Point(21, 150);
+            this.faceMonitorInfoListView.HideSelection = false;
+            this.faceMonitorInfoListView.Location = new System.Drawing.Point(24, 212);
+            this.faceMonitorInfoListView.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.faceMonitorInfoListView.MultiSelect = false;
             this.faceMonitorInfoListView.Name = "faceMonitorInfoListView";
-            this.faceMonitorInfoListView.Size = new System.Drawing.Size(800, 133);
+            this.faceMonitorInfoListView.Size = new System.Drawing.Size(933, 187);
             this.faceMonitorInfoListView.TabIndex = 11;
             this.faceMonitorInfoListView.UseCompatibleStateImageBehavior = false;
             this.faceMonitorInfoListView.View = System.Windows.Forms.View.Details;
@@ -5299,9 +5694,10 @@ namespace YuShiNetDevSDK.WinForm
             // 
             // addFaceMonitorBtn
             // 
-            this.addFaceMonitorBtn.Location = new System.Drawing.Point(122, 117);
+            this.addFaceMonitorBtn.Location = new System.Drawing.Point(142, 166);
+            this.addFaceMonitorBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.addFaceMonitorBtn.Name = "addFaceMonitorBtn";
-            this.addFaceMonitorBtn.Size = new System.Drawing.Size(75, 23);
+            this.addFaceMonitorBtn.Size = new System.Drawing.Size(88, 33);
             this.addFaceMonitorBtn.TabIndex = 10;
             this.addFaceMonitorBtn.Text = "Add";
             this.addFaceMonitorBtn.UseVisualStyleBackColor = true;
@@ -5309,16 +5705,18 @@ namespace YuShiNetDevSDK.WinForm
             // 
             // faceMonitorThresholdTextBox
             // 
-            this.faceMonitorThresholdTextBox.Location = new System.Drawing.Point(532, 12);
+            this.faceMonitorThresholdTextBox.Location = new System.Drawing.Point(621, 17);
+            this.faceMonitorThresholdTextBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.faceMonitorThresholdTextBox.Name = "faceMonitorThresholdTextBox";
-            this.faceMonitorThresholdTextBox.Size = new System.Drawing.Size(215, 23);
+            this.faceMonitorThresholdTextBox.Size = new System.Drawing.Size(250, 23);
             this.faceMonitorThresholdTextBox.TabIndex = 9;
             this.faceMonitorThresholdTextBox.Text = "80";
             // 
             // label84
             // 
             this.label84.AutoSize = true;
-            this.label84.Location = new System.Drawing.Point(396, 12);
+            this.label84.Location = new System.Drawing.Point(462, 17);
+            this.label84.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label84.Name = "label84";
             this.label84.Size = new System.Drawing.Size(104, 17);
             this.label84.TabIndex = 8;
@@ -5327,9 +5725,10 @@ namespace YuShiNetDevSDK.WinForm
             // faceMonitorObjectCmbBox
             // 
             this.faceMonitorObjectCmbBox.FormattingEnabled = true;
-            this.faceMonitorObjectCmbBox.Location = new System.Drawing.Point(154, 77);
+            this.faceMonitorObjectCmbBox.Location = new System.Drawing.Point(180, 109);
+            this.faceMonitorObjectCmbBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.faceMonitorObjectCmbBox.Name = "faceMonitorObjectCmbBox";
-            this.faceMonitorObjectCmbBox.Size = new System.Drawing.Size(60, 25);
+            this.faceMonitorObjectCmbBox.Size = new System.Drawing.Size(69, 25);
             this.faceMonitorObjectCmbBox.TabIndex = 7;
             this.faceMonitorObjectCmbBox.SelectedIndexChanged += new System.EventHandler(this.faceMonitorObjectCmbBox_SelectedIndexChanged);
             // 
@@ -5340,30 +5739,34 @@ namespace YuShiNetDevSDK.WinForm
             "Match Alarm",
             "Not Match  Alarm",
             "All"});
-            this.faceMonitorTypeCmbBox.Location = new System.Drawing.Point(154, 42);
+            this.faceMonitorTypeCmbBox.Location = new System.Drawing.Point(180, 60);
+            this.faceMonitorTypeCmbBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.faceMonitorTypeCmbBox.Name = "faceMonitorTypeCmbBox";
-            this.faceMonitorTypeCmbBox.Size = new System.Drawing.Size(215, 25);
+            this.faceMonitorTypeCmbBox.Size = new System.Drawing.Size(250, 25);
             this.faceMonitorTypeCmbBox.TabIndex = 6;
             this.faceMonitorTypeCmbBox.Text = "Match Alarm";
             // 
             // faceMonitorRemarksTextBox
             // 
-            this.faceMonitorRemarksTextBox.Location = new System.Drawing.Point(532, 42);
+            this.faceMonitorRemarksTextBox.Location = new System.Drawing.Point(621, 60);
+            this.faceMonitorRemarksTextBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.faceMonitorRemarksTextBox.Name = "faceMonitorRemarksTextBox";
-            this.faceMonitorRemarksTextBox.Size = new System.Drawing.Size(215, 23);
+            this.faceMonitorRemarksTextBox.Size = new System.Drawing.Size(250, 23);
             this.faceMonitorRemarksTextBox.TabIndex = 5;
             // 
             // faceMonitorTaskNameTextBox
             // 
-            this.faceMonitorTaskNameTextBox.Location = new System.Drawing.Point(154, 9);
+            this.faceMonitorTaskNameTextBox.Location = new System.Drawing.Point(180, 13);
+            this.faceMonitorTaskNameTextBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.faceMonitorTaskNameTextBox.Name = "faceMonitorTaskNameTextBox";
-            this.faceMonitorTaskNameTextBox.Size = new System.Drawing.Size(215, 23);
+            this.faceMonitorTaskNameTextBox.Size = new System.Drawing.Size(250, 23);
             this.faceMonitorTaskNameTextBox.TabIndex = 4;
             // 
             // faceMonitorTaskObjectLab
             // 
             this.faceMonitorTaskObjectLab.AutoSize = true;
-            this.faceMonitorTaskObjectLab.Location = new System.Drawing.Point(18, 85);
+            this.faceMonitorTaskObjectLab.Location = new System.Drawing.Point(21, 120);
+            this.faceMonitorTaskObjectLab.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.faceMonitorTaskObjectLab.Name = "faceMonitorTaskObjectLab";
             this.faceMonitorTaskObjectLab.Size = new System.Drawing.Size(124, 17);
             this.faceMonitorTaskObjectLab.TabIndex = 3;
@@ -5372,7 +5775,8 @@ namespace YuShiNetDevSDK.WinForm
             // faceMonitorTaskRemarksLab
             // 
             this.faceMonitorTaskRemarksLab.AutoSize = true;
-            this.faceMonitorTaskRemarksLab.Location = new System.Drawing.Point(396, 48);
+            this.faceMonitorTaskRemarksLab.Location = new System.Drawing.Point(462, 68);
+            this.faceMonitorTaskRemarksLab.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.faceMonitorTaskRemarksLab.Name = "faceMonitorTaskRemarksLab";
             this.faceMonitorTaskRemarksLab.Size = new System.Drawing.Size(59, 17);
             this.faceMonitorTaskRemarksLab.TabIndex = 2;
@@ -5381,7 +5785,8 @@ namespace YuShiNetDevSDK.WinForm
             // faceMonitorTaskTypeLab
             // 
             this.faceMonitorTaskTypeLab.AutoSize = true;
-            this.faceMonitorTaskTypeLab.Location = new System.Drawing.Point(18, 50);
+            this.faceMonitorTaskTypeLab.Location = new System.Drawing.Point(21, 71);
+            this.faceMonitorTaskTypeLab.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.faceMonitorTaskTypeLab.Name = "faceMonitorTaskTypeLab";
             this.faceMonitorTaskTypeLab.Size = new System.Drawing.Size(114, 17);
             this.faceMonitorTaskTypeLab.TabIndex = 1;
@@ -5390,7 +5795,8 @@ namespace YuShiNetDevSDK.WinForm
             // faceMonitorTaskNameLab
             // 
             this.faceMonitorTaskNameLab.AutoSize = true;
-            this.faceMonitorTaskNameLab.Location = new System.Drawing.Point(18, 12);
+            this.faceMonitorTaskNameLab.Location = new System.Drawing.Point(21, 17);
+            this.faceMonitorTaskNameLab.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.faceMonitorTaskNameLab.Name = "faceMonitorTaskNameLab";
             this.faceMonitorTaskNameLab.Size = new System.Drawing.Size(83, 17);
             this.faceMonitorTaskNameLab.TabIndex = 0;
@@ -5410,17 +5816,19 @@ namespace YuShiNetDevSDK.WinForm
             this.FaceAlarmRecordTabPage.Controls.Add(this.label96);
             this.FaceAlarmRecordTabPage.Controls.Add(this.faceAlarmRecordDataGridView);
             this.FaceAlarmRecordTabPage.Location = new System.Drawing.Point(4, 26);
+            this.FaceAlarmRecordTabPage.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.FaceAlarmRecordTabPage.Name = "FaceAlarmRecordTabPage";
-            this.FaceAlarmRecordTabPage.Size = new System.Drawing.Size(838, 522);
+            this.FaceAlarmRecordTabPage.Size = new System.Drawing.Size(979, 752);
             this.FaceAlarmRecordTabPage.TabIndex = 3;
             this.FaceAlarmRecordTabPage.Text = "Alarm Records";
             this.FaceAlarmRecordTabPage.UseVisualStyleBackColor = true;
             // 
             // faceAlarmRecordNextBtn
             // 
-            this.faceAlarmRecordNextBtn.Location = new System.Drawing.Point(789, 16);
+            this.faceAlarmRecordNextBtn.Location = new System.Drawing.Point(920, 23);
+            this.faceAlarmRecordNextBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.faceAlarmRecordNextBtn.Name = "faceAlarmRecordNextBtn";
-            this.faceAlarmRecordNextBtn.Size = new System.Drawing.Size(46, 23);
+            this.faceAlarmRecordNextBtn.Size = new System.Drawing.Size(54, 33);
             this.faceAlarmRecordNextBtn.TabIndex = 9;
             this.faceAlarmRecordNextBtn.Text = "Next";
             this.faceAlarmRecordNextBtn.UseVisualStyleBackColor = true;
@@ -5428,9 +5836,10 @@ namespace YuShiNetDevSDK.WinForm
             // 
             // faceAlarmRecordPreviousBtn
             // 
-            this.faceAlarmRecordPreviousBtn.Location = new System.Drawing.Point(713, 16);
+            this.faceAlarmRecordPreviousBtn.Location = new System.Drawing.Point(832, 23);
+            this.faceAlarmRecordPreviousBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.faceAlarmRecordPreviousBtn.Name = "faceAlarmRecordPreviousBtn";
-            this.faceAlarmRecordPreviousBtn.Size = new System.Drawing.Size(75, 23);
+            this.faceAlarmRecordPreviousBtn.Size = new System.Drawing.Size(88, 33);
             this.faceAlarmRecordPreviousBtn.TabIndex = 8;
             this.faceAlarmRecordPreviousBtn.Text = "Previous";
             this.faceAlarmRecordPreviousBtn.UseVisualStyleBackColor = true;
@@ -5438,9 +5847,10 @@ namespace YuShiNetDevSDK.WinForm
             // 
             // faceAlarmRecordSearchBtn
             // 
-            this.faceAlarmRecordSearchBtn.Location = new System.Drawing.Point(651, 16);
+            this.faceAlarmRecordSearchBtn.Location = new System.Drawing.Point(760, 23);
+            this.faceAlarmRecordSearchBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.faceAlarmRecordSearchBtn.Name = "faceAlarmRecordSearchBtn";
-            this.faceAlarmRecordSearchBtn.Size = new System.Drawing.Size(59, 23);
+            this.faceAlarmRecordSearchBtn.Size = new System.Drawing.Size(69, 33);
             this.faceAlarmRecordSearchBtn.TabIndex = 7;
             this.faceAlarmRecordSearchBtn.Text = "Search";
             this.faceAlarmRecordSearchBtn.UseVisualStyleBackColor = true;
@@ -5452,16 +5862,18 @@ namespace YuShiNetDevSDK.WinForm
             this.faceAlarmRecordMonitorTypeCmbBox.Items.AddRange(new object[] {
             "Match Alarm",
             "Not Match Alarm"});
-            this.faceAlarmRecordMonitorTypeCmbBox.Location = new System.Drawing.Point(118, 16);
+            this.faceAlarmRecordMonitorTypeCmbBox.Location = new System.Drawing.Point(138, 23);
+            this.faceAlarmRecordMonitorTypeCmbBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.faceAlarmRecordMonitorTypeCmbBox.Name = "faceAlarmRecordMonitorTypeCmbBox";
-            this.faceAlarmRecordMonitorTypeCmbBox.Size = new System.Drawing.Size(121, 25);
+            this.faceAlarmRecordMonitorTypeCmbBox.Size = new System.Drawing.Size(140, 25);
             this.faceAlarmRecordMonitorTypeCmbBox.TabIndex = 6;
             this.faceAlarmRecordMonitorTypeCmbBox.Text = "Match Alarm";
             // 
             // label100
             // 
             this.label100.AutoSize = true;
-            this.label100.Location = new System.Drawing.Point(473, 19);
+            this.label100.Location = new System.Drawing.Point(552, 27);
+            this.label100.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label100.Name = "label100";
             this.label100.Size = new System.Drawing.Size(17, 17);
             this.label100.TabIndex = 5;
@@ -5471,24 +5883,27 @@ namespace YuShiNetDevSDK.WinForm
             // 
             this.faceAlarmRecordEndTimeDT.CustomFormat = "yyyy/MM/dd HH:mm:ss";
             this.faceAlarmRecordEndTimeDT.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.faceAlarmRecordEndTimeDT.Location = new System.Drawing.Point(493, 17);
+            this.faceAlarmRecordEndTimeDT.Location = new System.Drawing.Point(575, 24);
+            this.faceAlarmRecordEndTimeDT.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.faceAlarmRecordEndTimeDT.Name = "faceAlarmRecordEndTimeDT";
-            this.faceAlarmRecordEndTimeDT.Size = new System.Drawing.Size(156, 23);
+            this.faceAlarmRecordEndTimeDT.Size = new System.Drawing.Size(181, 23);
             this.faceAlarmRecordEndTimeDT.TabIndex = 4;
             // 
             // faceAlarmRecordBeginTimeDT
             // 
             this.faceAlarmRecordBeginTimeDT.CustomFormat = "yyyy/MM/dd HH:mm:ss";
             this.faceAlarmRecordBeginTimeDT.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.faceAlarmRecordBeginTimeDT.Location = new System.Drawing.Point(314, 16);
+            this.faceAlarmRecordBeginTimeDT.Location = new System.Drawing.Point(366, 23);
+            this.faceAlarmRecordBeginTimeDT.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.faceAlarmRecordBeginTimeDT.Name = "faceAlarmRecordBeginTimeDT";
-            this.faceAlarmRecordBeginTimeDT.Size = new System.Drawing.Size(159, 23);
+            this.faceAlarmRecordBeginTimeDT.Size = new System.Drawing.Size(185, 23);
             this.faceAlarmRecordBeginTimeDT.TabIndex = 3;
             // 
             // label99
             // 
             this.label99.AutoSize = true;
-            this.label99.Location = new System.Drawing.Point(244, 19);
+            this.label99.Location = new System.Drawing.Point(285, 27);
+            this.label99.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label99.Name = "label99";
             this.label99.Size = new System.Drawing.Size(74, 17);
             this.label99.TabIndex = 2;
@@ -5497,7 +5912,8 @@ namespace YuShiNetDevSDK.WinForm
             // label96
             // 
             this.label96.AutoSize = true;
-            this.label96.Location = new System.Drawing.Point(8, 19);
+            this.label96.Location = new System.Drawing.Point(9, 27);
+            this.label96.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label96.Name = "label96";
             this.label96.Size = new System.Drawing.Size(105, 17);
             this.label96.TabIndex = 1;
@@ -5517,7 +5933,8 @@ namespace YuShiNetDevSDK.WinForm
             this.faceAlarmRecordNameDataGVTextCol,
             this.faceAlarmRecordIDNoDataGVTextCol,
             this.faceAlarmRecordMatchDataGVTextCol});
-            this.faceAlarmRecordDataGridView.Location = new System.Drawing.Point(3, 50);
+            this.faceAlarmRecordDataGridView.Location = new System.Drawing.Point(4, 71);
+            this.faceAlarmRecordDataGridView.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.faceAlarmRecordDataGridView.MultiSelect = false;
             this.faceAlarmRecordDataGridView.Name = "faceAlarmRecordDataGridView";
             this.faceAlarmRecordDataGridView.RowHeadersVisible = false;
@@ -5525,7 +5942,7 @@ namespace YuShiNetDevSDK.WinForm
             this.faceAlarmRecordDataGridView.RowTemplate.ReadOnly = true;
             this.faceAlarmRecordDataGridView.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.faceAlarmRecordDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.faceAlarmRecordDataGridView.Size = new System.Drawing.Size(832, 469);
+            this.faceAlarmRecordDataGridView.Size = new System.Drawing.Size(971, 664);
             this.faceAlarmRecordDataGridView.TabIndex = 0;
             // 
             // faceAlarmRecordSnapImageDataGVImgCol
@@ -5589,22 +6006,25 @@ namespace YuShiNetDevSDK.WinForm
             this.FacePassThruRecordTabPage.Controls.Add(this.label102);
             this.FacePassThruRecordTabPage.Controls.Add(this.facePassThruRecordDataGridView);
             this.FacePassThruRecordTabPage.Location = new System.Drawing.Point(4, 26);
+            this.FacePassThruRecordTabPage.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.FacePassThruRecordTabPage.Name = "FacePassThruRecordTabPage";
-            this.FacePassThruRecordTabPage.Size = new System.Drawing.Size(838, 522);
+            this.FacePassThruRecordTabPage.Size = new System.Drawing.Size(979, 752);
             this.FacePassThruRecordTabPage.TabIndex = 4;
             this.FacePassThruRecordTabPage.Text = "Pass-Thru Records";
             // 
             // facePassThruRecordAlarmSourceText
             // 
-            this.facePassThruRecordAlarmSourceText.Location = new System.Drawing.Point(510, 11);
+            this.facePassThruRecordAlarmSourceText.Location = new System.Drawing.Point(595, 16);
+            this.facePassThruRecordAlarmSourceText.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.facePassThruRecordAlarmSourceText.Name = "facePassThruRecordAlarmSourceText";
-            this.facePassThruRecordAlarmSourceText.Size = new System.Drawing.Size(125, 23);
+            this.facePassThruRecordAlarmSourceText.Size = new System.Drawing.Size(145, 23);
             this.facePassThruRecordAlarmSourceText.TabIndex = 19;
             // 
             // label103
             // 
             this.label103.AutoSize = true;
-            this.label103.Location = new System.Drawing.Point(423, 13);
+            this.label103.Location = new System.Drawing.Point(493, 18);
+            this.label103.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label103.Name = "label103";
             this.label103.Size = new System.Drawing.Size(86, 17);
             this.label103.TabIndex = 18;
@@ -5612,9 +6032,10 @@ namespace YuShiNetDevSDK.WinForm
             // 
             // facePassThruRecordNextBtn
             // 
-            this.facePassThruRecordNextBtn.Location = new System.Drawing.Point(789, 10);
+            this.facePassThruRecordNextBtn.Location = new System.Drawing.Point(920, 14);
+            this.facePassThruRecordNextBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.facePassThruRecordNextBtn.Name = "facePassThruRecordNextBtn";
-            this.facePassThruRecordNextBtn.Size = new System.Drawing.Size(46, 23);
+            this.facePassThruRecordNextBtn.Size = new System.Drawing.Size(54, 33);
             this.facePassThruRecordNextBtn.TabIndex = 17;
             this.facePassThruRecordNextBtn.Text = "Next";
             this.facePassThruRecordNextBtn.UseVisualStyleBackColor = true;
@@ -5622,9 +6043,10 @@ namespace YuShiNetDevSDK.WinForm
             // 
             // facePassThruRecordPreviousBtn
             // 
-            this.facePassThruRecordPreviousBtn.Location = new System.Drawing.Point(713, 10);
+            this.facePassThruRecordPreviousBtn.Location = new System.Drawing.Point(832, 14);
+            this.facePassThruRecordPreviousBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.facePassThruRecordPreviousBtn.Name = "facePassThruRecordPreviousBtn";
-            this.facePassThruRecordPreviousBtn.Size = new System.Drawing.Size(75, 23);
+            this.facePassThruRecordPreviousBtn.Size = new System.Drawing.Size(88, 33);
             this.facePassThruRecordPreviousBtn.TabIndex = 16;
             this.facePassThruRecordPreviousBtn.Text = "Previous";
             this.facePassThruRecordPreviousBtn.UseVisualStyleBackColor = true;
@@ -5632,9 +6054,10 @@ namespace YuShiNetDevSDK.WinForm
             // 
             // facePassThruRecordSearchBtn
             // 
-            this.facePassThruRecordSearchBtn.Location = new System.Drawing.Point(651, 10);
+            this.facePassThruRecordSearchBtn.Location = new System.Drawing.Point(760, 14);
+            this.facePassThruRecordSearchBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.facePassThruRecordSearchBtn.Name = "facePassThruRecordSearchBtn";
-            this.facePassThruRecordSearchBtn.Size = new System.Drawing.Size(59, 23);
+            this.facePassThruRecordSearchBtn.Size = new System.Drawing.Size(69, 33);
             this.facePassThruRecordSearchBtn.TabIndex = 15;
             this.facePassThruRecordSearchBtn.Text = "Search";
             this.facePassThruRecordSearchBtn.UseVisualStyleBackColor = true;
@@ -5643,7 +6066,8 @@ namespace YuShiNetDevSDK.WinForm
             // label101
             // 
             this.label101.AutoSize = true;
-            this.label101.Location = new System.Drawing.Point(241, 13);
+            this.label101.Location = new System.Drawing.Point(281, 18);
+            this.label101.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label101.Name = "label101";
             this.label101.Size = new System.Drawing.Size(17, 17);
             this.label101.TabIndex = 14;
@@ -5653,24 +6077,27 @@ namespace YuShiNetDevSDK.WinForm
             // 
             this.facePassThruRecordEndTimeDT.CustomFormat = "yyyy/MM/dd HH:mm:ss";
             this.facePassThruRecordEndTimeDT.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.facePassThruRecordEndTimeDT.Location = new System.Drawing.Point(261, 11);
+            this.facePassThruRecordEndTimeDT.Location = new System.Drawing.Point(304, 16);
+            this.facePassThruRecordEndTimeDT.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.facePassThruRecordEndTimeDT.Name = "facePassThruRecordEndTimeDT";
-            this.facePassThruRecordEndTimeDT.Size = new System.Drawing.Size(156, 23);
+            this.facePassThruRecordEndTimeDT.Size = new System.Drawing.Size(181, 23);
             this.facePassThruRecordEndTimeDT.TabIndex = 13;
             // 
             // facePassThruRecordBeginTimeDT
             // 
             this.facePassThruRecordBeginTimeDT.CustomFormat = "yyyy/MM/dd HH:mm:ss";
             this.facePassThruRecordBeginTimeDT.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.facePassThruRecordBeginTimeDT.Location = new System.Drawing.Point(82, 10);
+            this.facePassThruRecordBeginTimeDT.Location = new System.Drawing.Point(96, 14);
+            this.facePassThruRecordBeginTimeDT.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.facePassThruRecordBeginTimeDT.Name = "facePassThruRecordBeginTimeDT";
-            this.facePassThruRecordBeginTimeDT.Size = new System.Drawing.Size(159, 23);
+            this.facePassThruRecordBeginTimeDT.Size = new System.Drawing.Size(185, 23);
             this.facePassThruRecordBeginTimeDT.TabIndex = 12;
             // 
             // label102
             // 
             this.label102.AutoSize = true;
-            this.label102.Location = new System.Drawing.Point(10, 13);
+            this.label102.Location = new System.Drawing.Point(12, 18);
+            this.label102.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label102.Name = "label102";
             this.label102.Size = new System.Drawing.Size(74, 17);
             this.label102.TabIndex = 11;
@@ -5687,7 +6114,8 @@ namespace YuShiNetDevSDK.WinForm
             this.facePassThruRecordFaceImageDataGVImgCol,
             this.facePassThruRecordTimeDataGVTextCol,
             this.facePassThruRecordAlarmSourceDataGVTextCol});
-            this.facePassThruRecordDataGridView.Location = new System.Drawing.Point(3, 44);
+            this.facePassThruRecordDataGridView.Location = new System.Drawing.Point(4, 62);
+            this.facePassThruRecordDataGridView.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.facePassThruRecordDataGridView.MultiSelect = false;
             this.facePassThruRecordDataGridView.Name = "facePassThruRecordDataGridView";
             this.facePassThruRecordDataGridView.RowHeadersVisible = false;
@@ -5695,7 +6123,7 @@ namespace YuShiNetDevSDK.WinForm
             this.facePassThruRecordDataGridView.RowTemplate.ReadOnly = true;
             this.facePassThruRecordDataGridView.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.facePassThruRecordDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.facePassThruRecordDataGridView.Size = new System.Drawing.Size(832, 469);
+            this.facePassThruRecordDataGridView.Size = new System.Drawing.Size(971, 664);
             this.facePassThruRecordDataGridView.TabIndex = 10;
             // 
             // facePassThruRecordPanoImageDataGVImgCol
@@ -5733,8 +6161,9 @@ namespace YuShiNetDevSDK.WinForm
             this.LicensePlateRecognitionTabPage.BackColor = System.Drawing.Color.WhiteSmoke;
             this.LicensePlateRecognitionTabPage.Controls.Add(this.tabControl2);
             this.LicensePlateRecognitionTabPage.Location = new System.Drawing.Point(4, 26);
+            this.LicensePlateRecognitionTabPage.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.LicensePlateRecognitionTabPage.Name = "LicensePlateRecognitionTabPage";
-            this.LicensePlateRecognitionTabPage.Size = new System.Drawing.Size(895, 570);
+            this.LicensePlateRecognitionTabPage.Size = new System.Drawing.Size(1046, 820);
             this.LicensePlateRecognitionTabPage.TabIndex = 3;
             this.LicensePlateRecognitionTabPage.Text = " LPR";
             // 
@@ -5744,10 +6173,11 @@ namespace YuShiNetDevSDK.WinForm
             this.tabControl2.Controls.Add(this.LPRVehicleLibraryManagemnetTabPage);
             this.tabControl2.Controls.Add(this.LPRMonitoringTaskTabPage);
             this.tabControl2.Controls.Add(this.LPRAlarmAndPassThruRecordTabPage);
-            this.tabControl2.Location = new System.Drawing.Point(3, 3);
+            this.tabControl2.Location = new System.Drawing.Point(4, 4);
+            this.tabControl2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tabControl2.Name = "tabControl2";
             this.tabControl2.SelectedIndex = 0;
-            this.tabControl2.Size = new System.Drawing.Size(853, 553);
+            this.tabControl2.Size = new System.Drawing.Size(995, 783);
             this.tabControl2.TabIndex = 0;
             // 
             // LPRRealtimeMonitoringTabPage
@@ -5760,8 +6190,9 @@ namespace YuShiNetDevSDK.WinForm
             this.LPRRealtimeMonitoringTabPage.Controls.Add(this.groupBox36);
             this.LPRRealtimeMonitoringTabPage.Controls.Add(this.LPRRealPlayFLayoutPanel);
             this.LPRRealtimeMonitoringTabPage.Location = new System.Drawing.Point(4, 26);
+            this.LPRRealtimeMonitoringTabPage.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.LPRRealtimeMonitoringTabPage.Name = "LPRRealtimeMonitoringTabPage";
-            this.LPRRealtimeMonitoringTabPage.Size = new System.Drawing.Size(845, 523);
+            this.LPRRealtimeMonitoringTabPage.Size = new System.Drawing.Size(987, 753);
             this.LPRRealtimeMonitoringTabPage.TabIndex = 2;
             this.LPRRealtimeMonitoringTabPage.Text = "Realtime Monitoring";
             this.LPRRealtimeMonitoringTabPage.UseVisualStyleBackColor = true;
@@ -5770,20 +6201,21 @@ namespace YuShiNetDevSDK.WinForm
             // 
             this.groupBox31.Controls.Add(this.LPRSnapshotSubBtn);
             this.groupBox31.Controls.Add(this.LPRSnapshotUnSubBtn);
-            this.groupBox31.Location = new System.Drawing.Point(480, 2);
+            this.groupBox31.Location = new System.Drawing.Point(560, 3);
             this.groupBox31.Margin = new System.Windows.Forms.Padding(0);
             this.groupBox31.Name = "groupBox31";
             this.groupBox31.Padding = new System.Windows.Forms.Padding(0);
-            this.groupBox31.Size = new System.Drawing.Size(200, 42);
+            this.groupBox31.Size = new System.Drawing.Size(233, 60);
             this.groupBox31.TabIndex = 11;
             this.groupBox31.TabStop = false;
             this.groupBox31.Text = "Snapshot";
             // 
             // LPRSnapshotSubBtn
             // 
-            this.LPRSnapshotSubBtn.Location = new System.Drawing.Point(11, 15);
+            this.LPRSnapshotSubBtn.Location = new System.Drawing.Point(13, 21);
+            this.LPRSnapshotSubBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.LPRSnapshotSubBtn.Name = "LPRSnapshotSubBtn";
-            this.LPRSnapshotSubBtn.Size = new System.Drawing.Size(75, 23);
+            this.LPRSnapshotSubBtn.Size = new System.Drawing.Size(88, 33);
             this.LPRSnapshotSubBtn.TabIndex = 6;
             this.LPRSnapshotSubBtn.Text = "Subscribe";
             this.LPRSnapshotSubBtn.UseVisualStyleBackColor = true;
@@ -5791,9 +6223,10 @@ namespace YuShiNetDevSDK.WinForm
             // 
             // LPRSnapshotUnSubBtn
             // 
-            this.LPRSnapshotUnSubBtn.Location = new System.Drawing.Point(92, 15);
+            this.LPRSnapshotUnSubBtn.Location = new System.Drawing.Point(107, 21);
+            this.LPRSnapshotUnSubBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.LPRSnapshotUnSubBtn.Name = "LPRSnapshotUnSubBtn";
-            this.LPRSnapshotUnSubBtn.Size = new System.Drawing.Size(90, 23);
+            this.LPRSnapshotUnSubBtn.Size = new System.Drawing.Size(105, 33);
             this.LPRSnapshotUnSubBtn.TabIndex = 6;
             this.LPRSnapshotUnSubBtn.Text = "UnSubscribe";
             this.LPRSnapshotUnSubBtn.UseVisualStyleBackColor = true;
@@ -5803,20 +6236,21 @@ namespace YuShiNetDevSDK.WinForm
             // 
             this.groupBox32.Controls.Add(this.LPRRecogSubBtn);
             this.groupBox32.Controls.Add(this.LPRRecogUnSubBtn);
-            this.groupBox32.Location = new System.Drawing.Point(247, 2);
+            this.groupBox32.Location = new System.Drawing.Point(288, 3);
             this.groupBox32.Margin = new System.Windows.Forms.Padding(0);
             this.groupBox32.Name = "groupBox32";
             this.groupBox32.Padding = new System.Windows.Forms.Padding(0);
-            this.groupBox32.Size = new System.Drawing.Size(200, 42);
+            this.groupBox32.Size = new System.Drawing.Size(233, 60);
             this.groupBox32.TabIndex = 12;
             this.groupBox32.TabStop = false;
             this.groupBox32.Text = "Recognition";
             // 
             // LPRRecogSubBtn
             // 
-            this.LPRRecogSubBtn.Location = new System.Drawing.Point(11, 15);
+            this.LPRRecogSubBtn.Location = new System.Drawing.Point(13, 21);
+            this.LPRRecogSubBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.LPRRecogSubBtn.Name = "LPRRecogSubBtn";
-            this.LPRRecogSubBtn.Size = new System.Drawing.Size(75, 23);
+            this.LPRRecogSubBtn.Size = new System.Drawing.Size(88, 33);
             this.LPRRecogSubBtn.TabIndex = 6;
             this.LPRRecogSubBtn.Text = "Subscribe";
             this.LPRRecogSubBtn.UseVisualStyleBackColor = true;
@@ -5824,9 +6258,10 @@ namespace YuShiNetDevSDK.WinForm
             // 
             // LPRRecogUnSubBtn
             // 
-            this.LPRRecogUnSubBtn.Location = new System.Drawing.Point(92, 15);
+            this.LPRRecogUnSubBtn.Location = new System.Drawing.Point(107, 21);
+            this.LPRRecogUnSubBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.LPRRecogUnSubBtn.Name = "LPRRecogUnSubBtn";
-            this.LPRRecogUnSubBtn.Size = new System.Drawing.Size(91, 23);
+            this.LPRRecogUnSubBtn.Size = new System.Drawing.Size(106, 33);
             this.LPRRecogUnSubBtn.TabIndex = 6;
             this.LPRRecogUnSubBtn.Text = "UnSubscribe";
             this.LPRRecogUnSubBtn.UseVisualStyleBackColor = true;
@@ -5836,20 +6271,21 @@ namespace YuShiNetDevSDK.WinForm
             // 
             this.groupBox34.Controls.Add(this.LPRRealPlayStartBtn);
             this.groupBox34.Controls.Add(this.LPRRealPlayStopBtn);
-            this.groupBox34.Location = new System.Drawing.Point(28, 2);
+            this.groupBox34.Location = new System.Drawing.Point(33, 3);
             this.groupBox34.Margin = new System.Windows.Forms.Padding(0);
             this.groupBox34.Name = "groupBox34";
             this.groupBox34.Padding = new System.Windows.Forms.Padding(0);
-            this.groupBox34.Size = new System.Drawing.Size(200, 42);
+            this.groupBox34.Size = new System.Drawing.Size(233, 60);
             this.groupBox34.TabIndex = 14;
             this.groupBox34.TabStop = false;
             this.groupBox34.Text = "RealPlay";
             // 
             // LPRRealPlayStartBtn
             // 
-            this.LPRRealPlayStartBtn.Location = new System.Drawing.Point(11, 15);
+            this.LPRRealPlayStartBtn.Location = new System.Drawing.Point(13, 21);
+            this.LPRRealPlayStartBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.LPRRealPlayStartBtn.Name = "LPRRealPlayStartBtn";
-            this.LPRRealPlayStartBtn.Size = new System.Drawing.Size(75, 23);
+            this.LPRRealPlayStartBtn.Size = new System.Drawing.Size(88, 33);
             this.LPRRealPlayStartBtn.TabIndex = 6;
             this.LPRRealPlayStartBtn.Text = "start";
             this.LPRRealPlayStartBtn.UseVisualStyleBackColor = true;
@@ -5857,9 +6293,10 @@ namespace YuShiNetDevSDK.WinForm
             // 
             // LPRRealPlayStopBtn
             // 
-            this.LPRRealPlayStopBtn.Location = new System.Drawing.Point(92, 15);
+            this.LPRRealPlayStopBtn.Location = new System.Drawing.Point(107, 21);
+            this.LPRRealPlayStopBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.LPRRealPlayStopBtn.Name = "LPRRealPlayStopBtn";
-            this.LPRRealPlayStopBtn.Size = new System.Drawing.Size(75, 23);
+            this.LPRRealPlayStopBtn.Size = new System.Drawing.Size(88, 33);
             this.LPRRealPlayStopBtn.TabIndex = 6;
             this.LPRRealPlayStopBtn.Text = "Stop";
             this.LPRRealPlayStopBtn.UseVisualStyleBackColor = true;
@@ -5871,9 +6308,11 @@ namespace YuShiNetDevSDK.WinForm
             this.groupBox35.Controls.Add(this.plateNoRecogLab);
             this.groupBox35.Controls.Add(this.plateRecogPicBox);
             this.groupBox35.Controls.Add(this.LPRAlarmRecordsListView);
-            this.groupBox35.Location = new System.Drawing.Point(11, 361);
+            this.groupBox35.Location = new System.Drawing.Point(13, 511);
+            this.groupBox35.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.groupBox35.Name = "groupBox35";
-            this.groupBox35.Size = new System.Drawing.Size(823, 159);
+            this.groupBox35.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox35.Size = new System.Drawing.Size(960, 225);
             this.groupBox35.TabIndex = 10;
             this.groupBox35.TabStop = false;
             this.groupBox35.Text = "Alarm Records";
@@ -5881,9 +6320,10 @@ namespace YuShiNetDevSDK.WinForm
             // vehiclePanoRecogPicBox
             // 
             this.vehiclePanoRecogPicBox.BackColor = System.Drawing.Color.LightGray;
-            this.vehiclePanoRecogPicBox.Location = new System.Drawing.Point(3, 24);
+            this.vehiclePanoRecogPicBox.Location = new System.Drawing.Point(4, 34);
+            this.vehiclePanoRecogPicBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.vehiclePanoRecogPicBox.Name = "vehiclePanoRecogPicBox";
-            this.vehiclePanoRecogPicBox.Size = new System.Drawing.Size(105, 60);
+            this.vehiclePanoRecogPicBox.Size = new System.Drawing.Size(122, 85);
             this.vehiclePanoRecogPicBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.vehiclePanoRecogPicBox.TabIndex = 4;
             this.vehiclePanoRecogPicBox.TabStop = false;
@@ -5891,9 +6331,10 @@ namespace YuShiNetDevSDK.WinForm
             // plateNoRecogLab
             // 
             this.plateNoRecogLab.BackColor = System.Drawing.Color.LightGray;
-            this.plateNoRecogLab.Location = new System.Drawing.Point(2, 126);
+            this.plateNoRecogLab.Location = new System.Drawing.Point(2, 178);
+            this.plateNoRecogLab.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.plateNoRecogLab.Name = "plateNoRecogLab";
-            this.plateNoRecogLab.Size = new System.Drawing.Size(106, 25);
+            this.plateNoRecogLab.Size = new System.Drawing.Size(124, 35);
             this.plateNoRecogLab.TabIndex = 3;
             this.plateNoRecogLab.Text = "Plate No.";
             this.plateNoRecogLab.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -5901,9 +6342,10 @@ namespace YuShiNetDevSDK.WinForm
             // plateRecogPicBox
             // 
             this.plateRecogPicBox.BackColor = System.Drawing.Color.LightGray;
-            this.plateRecogPicBox.Location = new System.Drawing.Point(2, 86);
+            this.plateRecogPicBox.Location = new System.Drawing.Point(2, 122);
+            this.plateRecogPicBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.plateRecogPicBox.Name = "plateRecogPicBox";
-            this.plateRecogPicBox.Size = new System.Drawing.Size(106, 38);
+            this.plateRecogPicBox.Size = new System.Drawing.Size(124, 54);
             this.plateRecogPicBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.plateRecogPicBox.TabIndex = 2;
             this.plateRecogPicBox.TabStop = false;
@@ -5921,9 +6363,11 @@ namespace YuShiNetDevSDK.WinForm
             this.LPRCameraNameAlarmRecordColHeader,
             this.LPRCauseAlarmRecordColHeader});
             this.LPRAlarmRecordsListView.GridLines = true;
-            this.LPRAlarmRecordsListView.Location = new System.Drawing.Point(109, 22);
+            this.LPRAlarmRecordsListView.HideSelection = false;
+            this.LPRAlarmRecordsListView.Location = new System.Drawing.Point(127, 31);
+            this.LPRAlarmRecordsListView.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.LPRAlarmRecordsListView.Name = "LPRAlarmRecordsListView";
-            this.LPRAlarmRecordsListView.Size = new System.Drawing.Size(709, 131);
+            this.LPRAlarmRecordsListView.Size = new System.Drawing.Size(826, 184);
             this.LPRAlarmRecordsListView.TabIndex = 1;
             this.LPRAlarmRecordsListView.UseCompatibleStateImageBehavior = false;
             this.LPRAlarmRecordsListView.View = System.Windows.Forms.View.Details;
@@ -5974,9 +6418,11 @@ namespace YuShiNetDevSDK.WinForm
             this.groupBox36.Controls.Add(this.vehicleSnapshotPicTimeLab);
             this.groupBox36.Controls.Add(this.plateSnapshotSmallPictureBox);
             this.groupBox36.Controls.Add(this.vehicleSnapshotLargePictureBox);
-            this.groupBox36.Location = new System.Drawing.Point(591, 40);
+            this.groupBox36.Location = new System.Drawing.Point(690, 57);
+            this.groupBox36.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.groupBox36.Name = "groupBox36";
-            this.groupBox36.Size = new System.Drawing.Size(243, 319);
+            this.groupBox36.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox36.Size = new System.Drawing.Size(284, 452);
             this.groupBox36.TabIndex = 9;
             this.groupBox36.TabStop = false;
             this.groupBox36.Text = "snapshots";
@@ -5984,9 +6430,10 @@ namespace YuShiNetDevSDK.WinForm
             // vehicleSnapshotPicTimeLab
             // 
             this.vehicleSnapshotPicTimeLab.BackColor = System.Drawing.Color.LightGray;
-            this.vehicleSnapshotPicTimeLab.Location = new System.Drawing.Point(6, 227);
+            this.vehicleSnapshotPicTimeLab.Location = new System.Drawing.Point(7, 322);
+            this.vehicleSnapshotPicTimeLab.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.vehicleSnapshotPicTimeLab.Name = "vehicleSnapshotPicTimeLab";
-            this.vehicleSnapshotPicTimeLab.Size = new System.Drawing.Size(231, 34);
+            this.vehicleSnapshotPicTimeLab.Size = new System.Drawing.Size(270, 48);
             this.vehicleSnapshotPicTimeLab.TabIndex = 3;
             this.vehicleSnapshotPicTimeLab.Text = "Time";
             this.vehicleSnapshotPicTimeLab.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -5994,9 +6441,10 @@ namespace YuShiNetDevSDK.WinForm
             // plateSnapshotSmallPictureBox
             // 
             this.plateSnapshotSmallPictureBox.BackColor = System.Drawing.Color.LightGray;
-            this.plateSnapshotSmallPictureBox.Location = new System.Drawing.Point(6, 167);
+            this.plateSnapshotSmallPictureBox.Location = new System.Drawing.Point(7, 237);
+            this.plateSnapshotSmallPictureBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.plateSnapshotSmallPictureBox.Name = "plateSnapshotSmallPictureBox";
-            this.plateSnapshotSmallPictureBox.Size = new System.Drawing.Size(231, 59);
+            this.plateSnapshotSmallPictureBox.Size = new System.Drawing.Size(270, 84);
             this.plateSnapshotSmallPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.plateSnapshotSmallPictureBox.TabIndex = 2;
             this.plateSnapshotSmallPictureBox.TabStop = false;
@@ -6004,18 +6452,20 @@ namespace YuShiNetDevSDK.WinForm
             // vehicleSnapshotLargePictureBox
             // 
             this.vehicleSnapshotLargePictureBox.BackColor = System.Drawing.Color.LightGray;
-            this.vehicleSnapshotLargePictureBox.Location = new System.Drawing.Point(6, 22);
+            this.vehicleSnapshotLargePictureBox.Location = new System.Drawing.Point(7, 31);
+            this.vehicleSnapshotLargePictureBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.vehicleSnapshotLargePictureBox.Name = "vehicleSnapshotLargePictureBox";
-            this.vehicleSnapshotLargePictureBox.Size = new System.Drawing.Size(231, 143);
+            this.vehicleSnapshotLargePictureBox.Size = new System.Drawing.Size(270, 203);
             this.vehicleSnapshotLargePictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.vehicleSnapshotLargePictureBox.TabIndex = 0;
             this.vehicleSnapshotLargePictureBox.TabStop = false;
             // 
             // LPRRealPlayFLayoutPanel
             // 
-            this.LPRRealPlayFLayoutPanel.Location = new System.Drawing.Point(11, 46);
+            this.LPRRealPlayFLayoutPanel.Location = new System.Drawing.Point(13, 65);
+            this.LPRRealPlayFLayoutPanel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.LPRRealPlayFLayoutPanel.Name = "LPRRealPlayFLayoutPanel";
-            this.LPRRealPlayFLayoutPanel.Size = new System.Drawing.Size(574, 313);
+            this.LPRRealPlayFLayoutPanel.Size = new System.Drawing.Size(670, 443);
             this.LPRRealPlayFLayoutPanel.TabIndex = 8;
             // 
             // LPRVehicleLibraryManagemnetTabPage
@@ -6024,9 +6474,10 @@ namespace YuShiNetDevSDK.WinForm
             this.LPRVehicleLibraryManagemnetTabPage.Controls.Add(this.groupBox28);
             this.LPRVehicleLibraryManagemnetTabPage.Controls.Add(this.groupBox30);
             this.LPRVehicleLibraryManagemnetTabPage.Location = new System.Drawing.Point(4, 26);
+            this.LPRVehicleLibraryManagemnetTabPage.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.LPRVehicleLibraryManagemnetTabPage.Name = "LPRVehicleLibraryManagemnetTabPage";
-            this.LPRVehicleLibraryManagemnetTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.LPRVehicleLibraryManagemnetTabPage.Size = new System.Drawing.Size(845, 523);
+            this.LPRVehicleLibraryManagemnetTabPage.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.LPRVehicleLibraryManagemnetTabPage.Size = new System.Drawing.Size(987, 753);
             this.LPRVehicleLibraryManagemnetTabPage.TabIndex = 0;
             this.LPRVehicleLibraryManagemnetTabPage.Text = "Vehicle Library Managemnet";
             this.LPRVehicleLibraryManagemnetTabPage.UseVisualStyleBackColor = true;
@@ -6039,18 +6490,21 @@ namespace YuShiNetDevSDK.WinForm
             this.groupBox28.Controls.Add(this.FindVehicleInfoBtn);
             this.groupBox28.Controls.Add(this.groupBox29);
             this.groupBox28.Controls.Add(this.vehicleInfoListView);
-            this.groupBox28.Location = new System.Drawing.Point(10, 73);
+            this.groupBox28.Location = new System.Drawing.Point(12, 103);
+            this.groupBox28.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.groupBox28.Name = "groupBox28";
-            this.groupBox28.Size = new System.Drawing.Size(826, 443);
+            this.groupBox28.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox28.Size = new System.Drawing.Size(964, 628);
             this.groupBox28.TabIndex = 4;
             this.groupBox28.TabStop = false;
             this.groupBox28.Text = "Plate Info";
             // 
             // delVehicleInfoBtn
             // 
-            this.delVehicleInfoBtn.Location = new System.Drawing.Point(293, 130);
+            this.delVehicleInfoBtn.Location = new System.Drawing.Point(342, 184);
+            this.delVehicleInfoBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.delVehicleInfoBtn.Name = "delVehicleInfoBtn";
-            this.delVehicleInfoBtn.Size = new System.Drawing.Size(75, 23);
+            this.delVehicleInfoBtn.Size = new System.Drawing.Size(88, 33);
             this.delVehicleInfoBtn.TabIndex = 21;
             this.delVehicleInfoBtn.Text = "Delete";
             this.delVehicleInfoBtn.UseVisualStyleBackColor = true;
@@ -6058,9 +6512,10 @@ namespace YuShiNetDevSDK.WinForm
             // 
             // modifyVehicleInfoBtn
             // 
-            this.modifyVehicleInfoBtn.Location = new System.Drawing.Point(197, 130);
+            this.modifyVehicleInfoBtn.Location = new System.Drawing.Point(230, 184);
+            this.modifyVehicleInfoBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.modifyVehicleInfoBtn.Name = "modifyVehicleInfoBtn";
-            this.modifyVehicleInfoBtn.Size = new System.Drawing.Size(75, 23);
+            this.modifyVehicleInfoBtn.Size = new System.Drawing.Size(88, 33);
             this.modifyVehicleInfoBtn.TabIndex = 20;
             this.modifyVehicleInfoBtn.Text = "Modify";
             this.modifyVehicleInfoBtn.UseVisualStyleBackColor = true;
@@ -6068,9 +6523,10 @@ namespace YuShiNetDevSDK.WinForm
             // 
             // addVehicleInfoBtn
             // 
-            this.addVehicleInfoBtn.Location = new System.Drawing.Point(104, 130);
+            this.addVehicleInfoBtn.Location = new System.Drawing.Point(121, 184);
+            this.addVehicleInfoBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.addVehicleInfoBtn.Name = "addVehicleInfoBtn";
-            this.addVehicleInfoBtn.Size = new System.Drawing.Size(75, 23);
+            this.addVehicleInfoBtn.Size = new System.Drawing.Size(88, 33);
             this.addVehicleInfoBtn.TabIndex = 19;
             this.addVehicleInfoBtn.Text = "Add";
             this.addVehicleInfoBtn.UseVisualStyleBackColor = true;
@@ -6078,9 +6534,10 @@ namespace YuShiNetDevSDK.WinForm
             // 
             // FindVehicleInfoBtn
             // 
-            this.FindVehicleInfoBtn.Location = new System.Drawing.Point(8, 130);
+            this.FindVehicleInfoBtn.Location = new System.Drawing.Point(9, 184);
+            this.FindVehicleInfoBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.FindVehicleInfoBtn.Name = "FindVehicleInfoBtn";
-            this.FindVehicleInfoBtn.Size = new System.Drawing.Size(75, 23);
+            this.FindVehicleInfoBtn.Size = new System.Drawing.Size(88, 33);
             this.FindVehicleInfoBtn.TabIndex = 18;
             this.FindVehicleInfoBtn.Text = "Find";
             this.FindVehicleInfoBtn.UseVisualStyleBackColor = true;
@@ -6097,9 +6554,11 @@ namespace YuShiNetDevSDK.WinForm
             this.groupBox29.Controls.Add(this.label95);
             this.groupBox29.Controls.Add(this.plateNoText);
             this.groupBox29.Controls.Add(this.label97);
-            this.groupBox29.Location = new System.Drawing.Point(7, 21);
+            this.groupBox29.Location = new System.Drawing.Point(8, 30);
+            this.groupBox29.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.groupBox29.Name = "groupBox29";
-            this.groupBox29.Size = new System.Drawing.Size(813, 97);
+            this.groupBox29.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox29.Size = new System.Drawing.Size(948, 137);
             this.groupBox29.TabIndex = 17;
             this.groupBox29.TabStop = false;
             this.groupBox29.Text = "Plate Info";
@@ -6138,9 +6597,10 @@ namespace YuShiNetDevSDK.WinForm
             "藏",
             "川",
             "琼"});
-            this.plateAreaCmb.Location = new System.Drawing.Point(82, 25);
+            this.plateAreaCmb.Location = new System.Drawing.Point(96, 35);
+            this.plateAreaCmb.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.plateAreaCmb.Name = "plateAreaCmb";
-            this.plateAreaCmb.Size = new System.Drawing.Size(61, 25);
+            this.plateAreaCmb.Size = new System.Drawing.Size(70, 25);
             this.plateAreaCmb.TabIndex = 37;
             this.plateAreaCmb.Text = "京";
             // 
@@ -6175,9 +6635,10 @@ namespace YuShiNetDevSDK.WinForm
             "Armed Police Plate",
             "Military Plate",
             "Other"});
-            this.PlateTypeCmb.Location = new System.Drawing.Point(470, 22);
+            this.PlateTypeCmb.Location = new System.Drawing.Point(548, 31);
+            this.PlateTypeCmb.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.PlateTypeCmb.Name = "PlateTypeCmb";
-            this.PlateTypeCmb.Size = new System.Drawing.Size(221, 25);
+            this.PlateTypeCmb.Size = new System.Drawing.Size(257, 25);
             this.PlateTypeCmb.TabIndex = 36;
             this.PlateTypeCmb.Text = "Other";
             // 
@@ -6205,9 +6666,10 @@ namespace YuShiNetDevSDK.WinForm
             "Yellow&Green",
             "Gradated Green",
             "Other"});
-            this.plateColorCmb.Location = new System.Drawing.Point(82, 57);
+            this.plateColorCmb.Location = new System.Drawing.Point(96, 81);
+            this.plateColorCmb.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.plateColorCmb.Name = "plateColorCmb";
-            this.plateColorCmb.Size = new System.Drawing.Size(284, 25);
+            this.plateColorCmb.Size = new System.Drawing.Size(331, 25);
             this.plateColorCmb.TabIndex = 25;
             this.plateColorCmb.Text = "Other";
             // 
@@ -6235,16 +6697,18 @@ namespace YuShiNetDevSDK.WinForm
             "Yellow&Green",
             "Gradated Green",
             "Other"});
-            this.vehicleColorCmb.Location = new System.Drawing.Point(470, 57);
+            this.vehicleColorCmb.Location = new System.Drawing.Point(548, 81);
+            this.vehicleColorCmb.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.vehicleColorCmb.Name = "vehicleColorCmb";
-            this.vehicleColorCmb.Size = new System.Drawing.Size(221, 25);
+            this.vehicleColorCmb.Size = new System.Drawing.Size(257, 25);
             this.vehicleColorCmb.TabIndex = 25;
             this.vehicleColorCmb.Text = "Other";
             // 
             // label98
             // 
             this.label98.AutoSize = true;
-            this.label98.Location = new System.Drawing.Point(7, 62);
+            this.label98.Location = new System.Drawing.Point(8, 88);
+            this.label98.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label98.Name = "label98";
             this.label98.Size = new System.Drawing.Size(72, 17);
             this.label98.TabIndex = 20;
@@ -6253,7 +6717,8 @@ namespace YuShiNetDevSDK.WinForm
             // label94
             // 
             this.label94.AutoSize = true;
-            this.label94.Location = new System.Drawing.Point(380, 60);
+            this.label94.Location = new System.Drawing.Point(443, 85);
+            this.label94.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label94.Name = "label94";
             this.label94.Size = new System.Drawing.Size(85, 17);
             this.label94.TabIndex = 20;
@@ -6262,7 +6727,8 @@ namespace YuShiNetDevSDK.WinForm
             // label95
             // 
             this.label95.AutoSize = true;
-            this.label95.Location = new System.Drawing.Point(380, 26);
+            this.label95.Location = new System.Drawing.Point(443, 37);
+            this.label95.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label95.Name = "label95";
             this.label95.Size = new System.Drawing.Size(68, 17);
             this.label95.TabIndex = 19;
@@ -6270,15 +6736,17 @@ namespace YuShiNetDevSDK.WinForm
             // 
             // plateNoText
             // 
-            this.plateNoText.Location = new System.Drawing.Point(145, 25);
+            this.plateNoText.Location = new System.Drawing.Point(169, 35);
+            this.plateNoText.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.plateNoText.Name = "plateNoText";
-            this.plateNoText.Size = new System.Drawing.Size(221, 23);
+            this.plateNoText.Size = new System.Drawing.Size(257, 23);
             this.plateNoText.TabIndex = 17;
             // 
             // label97
             // 
             this.label97.AutoSize = true;
-            this.label97.Location = new System.Drawing.Point(6, 29);
+            this.label97.Location = new System.Drawing.Point(7, 41);
+            this.label97.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label97.Name = "label97";
             this.label97.Size = new System.Drawing.Size(70, 17);
             this.label97.TabIndex = 15;
@@ -6295,10 +6763,12 @@ namespace YuShiNetDevSDK.WinForm
             this.LPRVehicleInfoStatusColHeader});
             this.vehicleInfoListView.FullRowSelect = true;
             this.vehicleInfoListView.GridLines = true;
-            this.vehicleInfoListView.Location = new System.Drawing.Point(7, 165);
+            this.vehicleInfoListView.HideSelection = false;
+            this.vehicleInfoListView.Location = new System.Drawing.Point(8, 234);
+            this.vehicleInfoListView.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.vehicleInfoListView.MultiSelect = false;
             this.vehicleInfoListView.Name = "vehicleInfoListView";
-            this.vehicleInfoListView.Size = new System.Drawing.Size(813, 176);
+            this.vehicleInfoListView.Size = new System.Drawing.Size(948, 248);
             this.vehicleInfoListView.TabIndex = 16;
             this.vehicleInfoListView.UseCompatibleStateImageBehavior = false;
             this.vehicleInfoListView.View = System.Windows.Forms.View.Details;
@@ -6341,34 +6811,39 @@ namespace YuShiNetDevSDK.WinForm
             this.groupBox30.Controls.Add(this.modifyVehicleLibBtn);
             this.groupBox30.Controls.Add(this.addVehicleLibBtn);
             this.groupBox30.Controls.Add(this.FindVehicleLibBtn);
-            this.groupBox30.Location = new System.Drawing.Point(9, 7);
+            this.groupBox30.Location = new System.Drawing.Point(10, 10);
+            this.groupBox30.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.groupBox30.Name = "groupBox30";
-            this.groupBox30.Size = new System.Drawing.Size(826, 63);
+            this.groupBox30.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox30.Size = new System.Drawing.Size(964, 89);
             this.groupBox30.TabIndex = 3;
             this.groupBox30.TabStop = false;
             this.groupBox30.Text = "Vehicle Library";
             // 
             // vehicleLibNameText
             // 
-            this.vehicleLibNameText.Location = new System.Drawing.Point(152, 23);
+            this.vehicleLibNameText.Location = new System.Drawing.Point(177, 33);
+            this.vehicleLibNameText.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.vehicleLibNameText.Name = "vehicleLibNameText";
-            this.vehicleLibNameText.Size = new System.Drawing.Size(132, 23);
+            this.vehicleLibNameText.Size = new System.Drawing.Size(153, 23);
             this.vehicleLibNameText.TabIndex = 5;
             // 
             // vehicleLibCmb
             // 
             this.vehicleLibCmb.FormattingEnabled = true;
-            this.vehicleLibCmb.Location = new System.Drawing.Point(25, 23);
+            this.vehicleLibCmb.Location = new System.Drawing.Point(29, 33);
+            this.vehicleLibCmb.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.vehicleLibCmb.Name = "vehicleLibCmb";
-            this.vehicleLibCmb.Size = new System.Drawing.Size(121, 25);
+            this.vehicleLibCmb.Size = new System.Drawing.Size(140, 25);
             this.vehicleLibCmb.TabIndex = 4;
             this.vehicleLibCmb.SelectedIndexChanged += new System.EventHandler(this.vehicleLibCmb_SelectedIndexChanged);
             // 
             // delVehicleLibBtn
             // 
-            this.delVehicleLibBtn.Location = new System.Drawing.Point(575, 22);
+            this.delVehicleLibBtn.Location = new System.Drawing.Point(671, 31);
+            this.delVehicleLibBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.delVehicleLibBtn.Name = "delVehicleLibBtn";
-            this.delVehicleLibBtn.Size = new System.Drawing.Size(75, 23);
+            this.delVehicleLibBtn.Size = new System.Drawing.Size(88, 33);
             this.delVehicleLibBtn.TabIndex = 3;
             this.delVehicleLibBtn.Text = "Delete";
             this.delVehicleLibBtn.UseVisualStyleBackColor = true;
@@ -6376,9 +6851,10 @@ namespace YuShiNetDevSDK.WinForm
             // 
             // modifyVehicleLibBtn
             // 
-            this.modifyVehicleLibBtn.Location = new System.Drawing.Point(479, 22);
+            this.modifyVehicleLibBtn.Location = new System.Drawing.Point(559, 31);
+            this.modifyVehicleLibBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.modifyVehicleLibBtn.Name = "modifyVehicleLibBtn";
-            this.modifyVehicleLibBtn.Size = new System.Drawing.Size(75, 23);
+            this.modifyVehicleLibBtn.Size = new System.Drawing.Size(88, 33);
             this.modifyVehicleLibBtn.TabIndex = 2;
             this.modifyVehicleLibBtn.Text = "Modify";
             this.modifyVehicleLibBtn.UseVisualStyleBackColor = true;
@@ -6386,9 +6862,10 @@ namespace YuShiNetDevSDK.WinForm
             // 
             // addVehicleLibBtn
             // 
-            this.addVehicleLibBtn.Location = new System.Drawing.Point(386, 22);
+            this.addVehicleLibBtn.Location = new System.Drawing.Point(450, 31);
+            this.addVehicleLibBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.addVehicleLibBtn.Name = "addVehicleLibBtn";
-            this.addVehicleLibBtn.Size = new System.Drawing.Size(75, 23);
+            this.addVehicleLibBtn.Size = new System.Drawing.Size(88, 33);
             this.addVehicleLibBtn.TabIndex = 1;
             this.addVehicleLibBtn.Text = "Add";
             this.addVehicleLibBtn.UseVisualStyleBackColor = true;
@@ -6396,9 +6873,10 @@ namespace YuShiNetDevSDK.WinForm
             // 
             // FindVehicleLibBtn
             // 
-            this.FindVehicleLibBtn.Location = new System.Drawing.Point(290, 22);
+            this.FindVehicleLibBtn.Location = new System.Drawing.Point(338, 31);
+            this.FindVehicleLibBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.FindVehicleLibBtn.Name = "FindVehicleLibBtn";
-            this.FindVehicleLibBtn.Size = new System.Drawing.Size(75, 23);
+            this.FindVehicleLibBtn.Size = new System.Drawing.Size(88, 33);
             this.FindVehicleLibBtn.TabIndex = 0;
             this.FindVehicleLibBtn.Text = "Find";
             this.FindVehicleLibBtn.UseVisualStyleBackColor = true;
@@ -6426,26 +6904,29 @@ namespace YuShiNetDevSDK.WinForm
             this.LPRMonitoringTaskTabPage.Controls.Add(this.label92);
             this.LPRMonitoringTaskTabPage.Controls.Add(this.label93);
             this.LPRMonitoringTaskTabPage.Location = new System.Drawing.Point(4, 26);
+            this.LPRMonitoringTaskTabPage.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.LPRMonitoringTaskTabPage.Name = "LPRMonitoringTaskTabPage";
-            this.LPRMonitoringTaskTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.LPRMonitoringTaskTabPage.Size = new System.Drawing.Size(845, 523);
+            this.LPRMonitoringTaskTabPage.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.LPRMonitoringTaskTabPage.Size = new System.Drawing.Size(987, 753);
             this.LPRMonitoringTaskTabPage.TabIndex = 1;
             this.LPRMonitoringTaskTabPage.Text = "Monitoring Task";
             this.LPRMonitoringTaskTabPage.UseVisualStyleBackColor = true;
             // 
             // vehicleMonitorTaskLibNameText
             // 
-            this.vehicleMonitorTaskLibNameText.Location = new System.Drawing.Point(225, 51);
+            this.vehicleMonitorTaskLibNameText.Location = new System.Drawing.Point(262, 72);
+            this.vehicleMonitorTaskLibNameText.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.vehicleMonitorTaskLibNameText.Name = "vehicleMonitorTaskLibNameText";
             this.vehicleMonitorTaskLibNameText.ReadOnly = true;
-            this.vehicleMonitorTaskLibNameText.Size = new System.Drawing.Size(139, 23);
+            this.vehicleMonitorTaskLibNameText.Size = new System.Drawing.Size(162, 23);
             this.vehicleMonitorTaskLibNameText.TabIndex = 33;
             // 
             // disableVehicleMonitorBtn
             // 
-            this.disableVehicleMonitorBtn.Location = new System.Drawing.Point(502, 124);
+            this.disableVehicleMonitorBtn.Location = new System.Drawing.Point(586, 176);
+            this.disableVehicleMonitorBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.disableVehicleMonitorBtn.Name = "disableVehicleMonitorBtn";
-            this.disableVehicleMonitorBtn.Size = new System.Drawing.Size(75, 23);
+            this.disableVehicleMonitorBtn.Size = new System.Drawing.Size(88, 33);
             this.disableVehicleMonitorBtn.TabIndex = 32;
             this.disableVehicleMonitorBtn.Text = "Disable";
             this.disableVehicleMonitorBtn.UseVisualStyleBackColor = true;
@@ -6453,9 +6934,10 @@ namespace YuShiNetDevSDK.WinForm
             // 
             // enableVehicleMonitorBtn
             // 
-            this.enableVehicleMonitorBtn.Location = new System.Drawing.Point(404, 124);
+            this.enableVehicleMonitorBtn.Location = new System.Drawing.Point(471, 176);
+            this.enableVehicleMonitorBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.enableVehicleMonitorBtn.Name = "enableVehicleMonitorBtn";
-            this.enableVehicleMonitorBtn.Size = new System.Drawing.Size(75, 23);
+            this.enableVehicleMonitorBtn.Size = new System.Drawing.Size(88, 33);
             this.enableVehicleMonitorBtn.TabIndex = 31;
             this.enableVehicleMonitorBtn.Text = "Enable";
             this.enableVehicleMonitorBtn.UseVisualStyleBackColor = true;
@@ -6463,9 +6945,10 @@ namespace YuShiNetDevSDK.WinForm
             // 
             // DelVehicleMonitorBtn
             // 
-            this.DelVehicleMonitorBtn.Location = new System.Drawing.Point(312, 124);
+            this.DelVehicleMonitorBtn.Location = new System.Drawing.Point(364, 176);
+            this.DelVehicleMonitorBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.DelVehicleMonitorBtn.Name = "DelVehicleMonitorBtn";
-            this.DelVehicleMonitorBtn.Size = new System.Drawing.Size(75, 23);
+            this.DelVehicleMonitorBtn.Size = new System.Drawing.Size(88, 33);
             this.DelVehicleMonitorBtn.TabIndex = 30;
             this.DelVehicleMonitorBtn.Text = "Delete";
             this.DelVehicleMonitorBtn.UseVisualStyleBackColor = true;
@@ -6473,9 +6956,10 @@ namespace YuShiNetDevSDK.WinForm
             // 
             // modifyVehicleMonitorBtn
             // 
-            this.modifyVehicleMonitorBtn.Location = new System.Drawing.Point(217, 124);
+            this.modifyVehicleMonitorBtn.Location = new System.Drawing.Point(253, 176);
+            this.modifyVehicleMonitorBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.modifyVehicleMonitorBtn.Name = "modifyVehicleMonitorBtn";
-            this.modifyVehicleMonitorBtn.Size = new System.Drawing.Size(75, 23);
+            this.modifyVehicleMonitorBtn.Size = new System.Drawing.Size(88, 33);
             this.modifyVehicleMonitorBtn.TabIndex = 29;
             this.modifyVehicleMonitorBtn.Text = "Modify";
             this.modifyVehicleMonitorBtn.UseVisualStyleBackColor = true;
@@ -6483,9 +6967,10 @@ namespace YuShiNetDevSDK.WinForm
             // 
             // FindVehicleMonitorBtn
             // 
-            this.FindVehicleMonitorBtn.Location = new System.Drawing.Point(16, 124);
+            this.FindVehicleMonitorBtn.Location = new System.Drawing.Point(19, 176);
+            this.FindVehicleMonitorBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.FindVehicleMonitorBtn.Name = "FindVehicleMonitorBtn";
-            this.FindVehicleMonitorBtn.Size = new System.Drawing.Size(75, 23);
+            this.FindVehicleMonitorBtn.Size = new System.Drawing.Size(88, 33);
             this.FindVehicleMonitorBtn.TabIndex = 28;
             this.FindVehicleMonitorBtn.Text = "Find";
             this.FindVehicleMonitorBtn.UseVisualStyleBackColor = true;
@@ -6501,10 +6986,12 @@ namespace YuShiNetDevSDK.WinForm
             this.vehicleMonitorStatusColHeader});
             this.vehicleMonitorInfoListView.FullRowSelect = true;
             this.vehicleMonitorInfoListView.GridLines = true;
-            this.vehicleMonitorInfoListView.Location = new System.Drawing.Point(16, 157);
+            this.vehicleMonitorInfoListView.HideSelection = false;
+            this.vehicleMonitorInfoListView.Location = new System.Drawing.Point(19, 222);
+            this.vehicleMonitorInfoListView.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.vehicleMonitorInfoListView.MultiSelect = false;
             this.vehicleMonitorInfoListView.Name = "vehicleMonitorInfoListView";
-            this.vehicleMonitorInfoListView.Size = new System.Drawing.Size(800, 133);
+            this.vehicleMonitorInfoListView.Size = new System.Drawing.Size(933, 187);
             this.vehicleMonitorInfoListView.TabIndex = 27;
             this.vehicleMonitorInfoListView.UseCompatibleStateImageBehavior = false;
             this.vehicleMonitorInfoListView.View = System.Windows.Forms.View.Details;
@@ -6536,9 +7023,10 @@ namespace YuShiNetDevSDK.WinForm
             // 
             // addVehicleMonitorBtn
             // 
-            this.addVehicleMonitorBtn.Location = new System.Drawing.Point(117, 124);
+            this.addVehicleMonitorBtn.Location = new System.Drawing.Point(136, 176);
+            this.addVehicleMonitorBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.addVehicleMonitorBtn.Name = "addVehicleMonitorBtn";
-            this.addVehicleMonitorBtn.Size = new System.Drawing.Size(75, 23);
+            this.addVehicleMonitorBtn.Size = new System.Drawing.Size(88, 33);
             this.addVehicleMonitorBtn.TabIndex = 26;
             this.addVehicleMonitorBtn.Text = "Add";
             this.addVehicleMonitorBtn.UseVisualStyleBackColor = true;
@@ -6547,9 +7035,10 @@ namespace YuShiNetDevSDK.WinForm
             // vehicleMonitorObjectCmbBox
             // 
             this.vehicleMonitorObjectCmbBox.FormattingEnabled = true;
-            this.vehicleMonitorObjectCmbBox.Location = new System.Drawing.Point(149, 51);
+            this.vehicleMonitorObjectCmbBox.Location = new System.Drawing.Point(174, 72);
+            this.vehicleMonitorObjectCmbBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.vehicleMonitorObjectCmbBox.Name = "vehicleMonitorObjectCmbBox";
-            this.vehicleMonitorObjectCmbBox.Size = new System.Drawing.Size(70, 25);
+            this.vehicleMonitorObjectCmbBox.Size = new System.Drawing.Size(81, 25);
             this.vehicleMonitorObjectCmbBox.TabIndex = 23;
             this.vehicleMonitorObjectCmbBox.SelectedIndexChanged += new System.EventHandler(this.vehicleMonitorObjectCmbBox_SelectedIndexChanged);
             // 
@@ -6562,9 +7051,10 @@ namespace YuShiNetDevSDK.WinForm
             "Suspect Vehicle",
             "Traffic Violation",
             "Emergency Control"});
-            this.vehicleCauseCmbBox.Location = new System.Drawing.Point(527, 49);
+            this.vehicleCauseCmbBox.Location = new System.Drawing.Point(615, 69);
+            this.vehicleCauseCmbBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.vehicleCauseCmbBox.Name = "vehicleCauseCmbBox";
-            this.vehicleCauseCmbBox.Size = new System.Drawing.Size(215, 25);
+            this.vehicleCauseCmbBox.Size = new System.Drawing.Size(250, 25);
             this.vehicleCauseCmbBox.TabIndex = 22;
             this.vehicleCauseCmbBox.Text = "Robbed Vehicle";
             // 
@@ -6574,30 +7064,34 @@ namespace YuShiNetDevSDK.WinForm
             this.vehicleMonitorTypeCmbBox.Items.AddRange(new object[] {
             "Match Alarm",
             "Not Match Alarm"});
-            this.vehicleMonitorTypeCmbBox.Location = new System.Drawing.Point(527, 11);
+            this.vehicleMonitorTypeCmbBox.Location = new System.Drawing.Point(615, 16);
+            this.vehicleMonitorTypeCmbBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.vehicleMonitorTypeCmbBox.Name = "vehicleMonitorTypeCmbBox";
-            this.vehicleMonitorTypeCmbBox.Size = new System.Drawing.Size(215, 25);
+            this.vehicleMonitorTypeCmbBox.Size = new System.Drawing.Size(250, 25);
             this.vehicleMonitorTypeCmbBox.TabIndex = 22;
             this.vehicleMonitorTypeCmbBox.Text = "Match Alarm";
             // 
             // vehicleMonitorRemarksText
             // 
-            this.vehicleMonitorRemarksText.Location = new System.Drawing.Point(149, 86);
+            this.vehicleMonitorRemarksText.Location = new System.Drawing.Point(174, 122);
+            this.vehicleMonitorRemarksText.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.vehicleMonitorRemarksText.Name = "vehicleMonitorRemarksText";
-            this.vehicleMonitorRemarksText.Size = new System.Drawing.Size(215, 23);
+            this.vehicleMonitorRemarksText.Size = new System.Drawing.Size(250, 23);
             this.vehicleMonitorRemarksText.TabIndex = 21;
             // 
             // vehicleMonitorTaskNameText
             // 
-            this.vehicleMonitorTaskNameText.Location = new System.Drawing.Point(149, 16);
+            this.vehicleMonitorTaskNameText.Location = new System.Drawing.Point(174, 23);
+            this.vehicleMonitorTaskNameText.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.vehicleMonitorTaskNameText.Name = "vehicleMonitorTaskNameText";
-            this.vehicleMonitorTaskNameText.Size = new System.Drawing.Size(215, 23);
+            this.vehicleMonitorTaskNameText.Size = new System.Drawing.Size(250, 23);
             this.vehicleMonitorTaskNameText.TabIndex = 20;
             // 
             // label90
             // 
             this.label90.AutoSize = true;
-            this.label90.Location = new System.Drawing.Point(13, 57);
+            this.label90.Location = new System.Drawing.Point(15, 81);
+            this.label90.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label90.Name = "label90";
             this.label90.Size = new System.Drawing.Size(124, 17);
             this.label90.TabIndex = 19;
@@ -6606,7 +7100,8 @@ namespace YuShiNetDevSDK.WinForm
             // label88
             // 
             this.label88.AutoSize = true;
-            this.label88.Location = new System.Drawing.Point(392, 57);
+            this.label88.Location = new System.Drawing.Point(457, 81);
+            this.label88.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label88.Name = "label88";
             this.label88.Size = new System.Drawing.Size(43, 17);
             this.label88.TabIndex = 17;
@@ -6615,7 +7110,8 @@ namespace YuShiNetDevSDK.WinForm
             // label91
             // 
             this.label91.AutoSize = true;
-            this.label91.Location = new System.Drawing.Point(13, 92);
+            this.label91.Location = new System.Drawing.Point(15, 130);
+            this.label91.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label91.Name = "label91";
             this.label91.Size = new System.Drawing.Size(59, 17);
             this.label91.TabIndex = 18;
@@ -6624,7 +7120,8 @@ namespace YuShiNetDevSDK.WinForm
             // label92
             // 
             this.label92.AutoSize = true;
-            this.label92.Location = new System.Drawing.Point(391, 19);
+            this.label92.Location = new System.Drawing.Point(456, 27);
+            this.label92.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label92.Name = "label92";
             this.label92.Size = new System.Drawing.Size(114, 17);
             this.label92.TabIndex = 17;
@@ -6633,7 +7130,8 @@ namespace YuShiNetDevSDK.WinForm
             // label93
             // 
             this.label93.AutoSize = true;
-            this.label93.Location = new System.Drawing.Point(13, 19);
+            this.label93.Location = new System.Drawing.Point(15, 27);
+            this.label93.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label93.Name = "label93";
             this.label93.Size = new System.Drawing.Size(83, 17);
             this.label93.TabIndex = 16;
@@ -6665,8 +7163,9 @@ namespace YuShiNetDevSDK.WinForm
             this.LPRAlarmAndPassThruRecordTabPage.Controls.Add(this.label106);
             this.LPRAlarmAndPassThruRecordTabPage.Controls.Add(this.LPRAlarmRecordDataGridView);
             this.LPRAlarmAndPassThruRecordTabPage.Location = new System.Drawing.Point(4, 26);
+            this.LPRAlarmAndPassThruRecordTabPage.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.LPRAlarmAndPassThruRecordTabPage.Name = "LPRAlarmAndPassThruRecordTabPage";
-            this.LPRAlarmAndPassThruRecordTabPage.Size = new System.Drawing.Size(845, 523);
+            this.LPRAlarmAndPassThruRecordTabPage.Size = new System.Drawing.Size(987, 753);
             this.LPRAlarmAndPassThruRecordTabPage.TabIndex = 3;
             this.LPRAlarmAndPassThruRecordTabPage.Text = "Alarm Record & Pass-Thru Record";
             // 
@@ -6680,16 +7179,18 @@ namespace YuShiNetDevSDK.WinForm
             "Traffic Violation",
             "Emergency Control",
             "All"});
-            this.LPRAlarmRecordMonitoringCauseCmbBox.Location = new System.Drawing.Point(117, 73);
+            this.LPRAlarmRecordMonitoringCauseCmbBox.Location = new System.Drawing.Point(136, 103);
+            this.LPRAlarmRecordMonitoringCauseCmbBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.LPRAlarmRecordMonitoringCauseCmbBox.Name = "LPRAlarmRecordMonitoringCauseCmbBox";
-            this.LPRAlarmRecordMonitoringCauseCmbBox.Size = new System.Drawing.Size(152, 25);
+            this.LPRAlarmRecordMonitoringCauseCmbBox.Size = new System.Drawing.Size(177, 25);
             this.LPRAlarmRecordMonitoringCauseCmbBox.TabIndex = 40;
             this.LPRAlarmRecordMonitoringCauseCmbBox.Text = "All";
             // 
             // label112
             // 
             this.label112.AutoSize = true;
-            this.label112.Location = new System.Drawing.Point(6, 77);
+            this.label112.Location = new System.Drawing.Point(7, 109);
+            this.label112.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label112.Name = "label112";
             this.label112.Size = new System.Drawing.Size(43, 17);
             this.label112.TabIndex = 39;
@@ -6701,16 +7202,18 @@ namespace YuShiNetDevSDK.WinForm
             this.LPRAlarmRecordMonitoringTypeCmbBox.Items.AddRange(new object[] {
             "Match Alarm",
             "Not Match Alarm"});
-            this.LPRAlarmRecordMonitoringTypeCmbBox.Location = new System.Drawing.Point(117, 42);
+            this.LPRAlarmRecordMonitoringTypeCmbBox.Location = new System.Drawing.Point(136, 60);
+            this.LPRAlarmRecordMonitoringTypeCmbBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.LPRAlarmRecordMonitoringTypeCmbBox.Name = "LPRAlarmRecordMonitoringTypeCmbBox";
-            this.LPRAlarmRecordMonitoringTypeCmbBox.Size = new System.Drawing.Size(152, 25);
+            this.LPRAlarmRecordMonitoringTypeCmbBox.Size = new System.Drawing.Size(177, 25);
             this.LPRAlarmRecordMonitoringTypeCmbBox.TabIndex = 38;
             this.LPRAlarmRecordMonitoringTypeCmbBox.Text = "Match Alarm";
             // 
             // label111
             // 
             this.label111.AutoSize = true;
-            this.label111.Location = new System.Drawing.Point(6, 44);
+            this.label111.Location = new System.Drawing.Point(7, 62);
+            this.label111.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label111.Name = "label111";
             this.label111.Size = new System.Drawing.Size(105, 17);
             this.label111.TabIndex = 37;
@@ -6722,16 +7225,18 @@ namespace YuShiNetDevSDK.WinForm
             this.LPRAlarmRecordSearchTypeCmbBox.Items.AddRange(new object[] {
             "Alarm Record",
             "Pass-Thru Record"});
-            this.LPRAlarmRecordSearchTypeCmbBox.Location = new System.Drawing.Point(117, 9);
+            this.LPRAlarmRecordSearchTypeCmbBox.Location = new System.Drawing.Point(136, 13);
+            this.LPRAlarmRecordSearchTypeCmbBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.LPRAlarmRecordSearchTypeCmbBox.Name = "LPRAlarmRecordSearchTypeCmbBox";
-            this.LPRAlarmRecordSearchTypeCmbBox.Size = new System.Drawing.Size(152, 25);
+            this.LPRAlarmRecordSearchTypeCmbBox.Size = new System.Drawing.Size(177, 25);
             this.LPRAlarmRecordSearchTypeCmbBox.TabIndex = 36;
             this.LPRAlarmRecordSearchTypeCmbBox.Text = "Alarm Record";
             // 
             // label110
             // 
             this.label110.AutoSize = true;
-            this.label110.Location = new System.Drawing.Point(6, 14);
+            this.label110.Location = new System.Drawing.Point(7, 20);
+            this.label110.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label110.Name = "label110";
             this.label110.Size = new System.Drawing.Size(79, 17);
             this.label110.TabIndex = 35;
@@ -6762,16 +7267,18 @@ namespace YuShiNetDevSDK.WinForm
             "Gradated Green",
             "Other",
             "All"});
-            this.LPRAlarmRecordSearchVehicleColorCmbBox.Location = new System.Drawing.Point(372, 74);
+            this.LPRAlarmRecordSearchVehicleColorCmbBox.Location = new System.Drawing.Point(434, 105);
+            this.LPRAlarmRecordSearchVehicleColorCmbBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.LPRAlarmRecordSearchVehicleColorCmbBox.Name = "LPRAlarmRecordSearchVehicleColorCmbBox";
-            this.LPRAlarmRecordSearchVehicleColorCmbBox.Size = new System.Drawing.Size(113, 25);
+            this.LPRAlarmRecordSearchVehicleColorCmbBox.Size = new System.Drawing.Size(131, 25);
             this.LPRAlarmRecordSearchVehicleColorCmbBox.TabIndex = 34;
             this.LPRAlarmRecordSearchVehicleColorCmbBox.Text = "All";
             // 
             // label109
             // 
             this.label109.AutoSize = true;
-            this.label109.Location = new System.Drawing.Point(275, 78);
+            this.label109.Location = new System.Drawing.Point(321, 110);
+            this.label109.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label109.Name = "label109";
             this.label109.Size = new System.Drawing.Size(85, 17);
             this.label109.TabIndex = 33;
@@ -6802,16 +7309,18 @@ namespace YuShiNetDevSDK.WinForm
             "Gradated Green",
             "Other",
             "All"});
-            this.LPRAlarmRecordSearchPlateColorCmbBox.Location = new System.Drawing.Point(559, 75);
+            this.LPRAlarmRecordSearchPlateColorCmbBox.Location = new System.Drawing.Point(652, 106);
+            this.LPRAlarmRecordSearchPlateColorCmbBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.LPRAlarmRecordSearchPlateColorCmbBox.Name = "LPRAlarmRecordSearchPlateColorCmbBox";
-            this.LPRAlarmRecordSearchPlateColorCmbBox.Size = new System.Drawing.Size(89, 25);
+            this.LPRAlarmRecordSearchPlateColorCmbBox.Size = new System.Drawing.Size(103, 25);
             this.LPRAlarmRecordSearchPlateColorCmbBox.TabIndex = 32;
             this.LPRAlarmRecordSearchPlateColorCmbBox.Text = "All";
             // 
             // label108
             // 
             this.label108.AutoSize = true;
-            this.label108.Location = new System.Drawing.Point(484, 78);
+            this.label108.Location = new System.Drawing.Point(565, 110);
+            this.label108.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label108.Name = "label108";
             this.label108.Size = new System.Drawing.Size(72, 17);
             this.label108.TabIndex = 31;
@@ -6819,15 +7328,17 @@ namespace YuShiNetDevSDK.WinForm
             // 
             // LPRAlarmRecordSearchPlateNoText
             // 
-            this.LPRAlarmRecordSearchPlateNoText.Location = new System.Drawing.Point(564, 41);
+            this.LPRAlarmRecordSearchPlateNoText.Location = new System.Drawing.Point(658, 58);
+            this.LPRAlarmRecordSearchPlateNoText.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.LPRAlarmRecordSearchPlateNoText.Name = "LPRAlarmRecordSearchPlateNoText";
-            this.LPRAlarmRecordSearchPlateNoText.Size = new System.Drawing.Size(147, 23);
+            this.LPRAlarmRecordSearchPlateNoText.Size = new System.Drawing.Size(171, 23);
             this.LPRAlarmRecordSearchPlateNoText.TabIndex = 30;
             // 
             // label107
             // 
             this.label107.AutoSize = true;
-            this.label107.Location = new System.Drawing.Point(497, 44);
+            this.label107.Location = new System.Drawing.Point(580, 62);
+            this.label107.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label107.Name = "label107";
             this.label107.Size = new System.Drawing.Size(61, 17);
             this.label107.TabIndex = 29;
@@ -6835,15 +7346,17 @@ namespace YuShiNetDevSDK.WinForm
             // 
             // LPRAlarmRecordSearchCameraNameText
             // 
-            this.LPRAlarmRecordSearchCameraNameText.Location = new System.Drawing.Point(372, 41);
+            this.LPRAlarmRecordSearchCameraNameText.Location = new System.Drawing.Point(434, 58);
+            this.LPRAlarmRecordSearchCameraNameText.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.LPRAlarmRecordSearchCameraNameText.Name = "LPRAlarmRecordSearchCameraNameText";
-            this.LPRAlarmRecordSearchCameraNameText.Size = new System.Drawing.Size(113, 23);
+            this.LPRAlarmRecordSearchCameraNameText.Size = new System.Drawing.Size(131, 23);
             this.LPRAlarmRecordSearchCameraNameText.TabIndex = 28;
             // 
             // label104
             // 
             this.label104.AutoSize = true;
-            this.label104.Location = new System.Drawing.Point(274, 44);
+            this.label104.Location = new System.Drawing.Point(320, 62);
+            this.label104.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label104.Name = "label104";
             this.label104.Size = new System.Drawing.Size(92, 17);
             this.label104.TabIndex = 27;
@@ -6851,9 +7364,10 @@ namespace YuShiNetDevSDK.WinForm
             // 
             // LPRAlarmRecordNextBtn
             // 
-            this.LPRAlarmRecordNextBtn.Location = new System.Drawing.Point(791, 75);
+            this.LPRAlarmRecordNextBtn.Location = new System.Drawing.Point(923, 106);
+            this.LPRAlarmRecordNextBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.LPRAlarmRecordNextBtn.Name = "LPRAlarmRecordNextBtn";
-            this.LPRAlarmRecordNextBtn.Size = new System.Drawing.Size(46, 23);
+            this.LPRAlarmRecordNextBtn.Size = new System.Drawing.Size(54, 33);
             this.LPRAlarmRecordNextBtn.TabIndex = 26;
             this.LPRAlarmRecordNextBtn.Text = "Next";
             this.LPRAlarmRecordNextBtn.UseVisualStyleBackColor = true;
@@ -6861,9 +7375,10 @@ namespace YuShiNetDevSDK.WinForm
             // 
             // LPRAlarmRecordPreviousBtn
             // 
-            this.LPRAlarmRecordPreviousBtn.Location = new System.Drawing.Point(715, 75);
+            this.LPRAlarmRecordPreviousBtn.Location = new System.Drawing.Point(834, 106);
+            this.LPRAlarmRecordPreviousBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.LPRAlarmRecordPreviousBtn.Name = "LPRAlarmRecordPreviousBtn";
-            this.LPRAlarmRecordPreviousBtn.Size = new System.Drawing.Size(75, 23);
+            this.LPRAlarmRecordPreviousBtn.Size = new System.Drawing.Size(88, 33);
             this.LPRAlarmRecordPreviousBtn.TabIndex = 25;
             this.LPRAlarmRecordPreviousBtn.Text = "Previous";
             this.LPRAlarmRecordPreviousBtn.UseVisualStyleBackColor = true;
@@ -6871,9 +7386,10 @@ namespace YuShiNetDevSDK.WinForm
             // 
             // LPRAlarmRecordSearchBtn
             // 
-            this.LPRAlarmRecordSearchBtn.Location = new System.Drawing.Point(653, 75);
+            this.LPRAlarmRecordSearchBtn.Location = new System.Drawing.Point(762, 106);
+            this.LPRAlarmRecordSearchBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.LPRAlarmRecordSearchBtn.Name = "LPRAlarmRecordSearchBtn";
-            this.LPRAlarmRecordSearchBtn.Size = new System.Drawing.Size(59, 23);
+            this.LPRAlarmRecordSearchBtn.Size = new System.Drawing.Size(69, 33);
             this.LPRAlarmRecordSearchBtn.TabIndex = 24;
             this.LPRAlarmRecordSearchBtn.Text = "Search";
             this.LPRAlarmRecordSearchBtn.UseVisualStyleBackColor = true;
@@ -6882,7 +7398,8 @@ namespace YuShiNetDevSDK.WinForm
             // label105
             // 
             this.label105.AutoSize = true;
-            this.label105.Location = new System.Drawing.Point(498, 12);
+            this.label105.Location = new System.Drawing.Point(581, 17);
+            this.label105.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label105.Name = "label105";
             this.label105.Size = new System.Drawing.Size(17, 17);
             this.label105.TabIndex = 23;
@@ -6892,24 +7409,27 @@ namespace YuShiNetDevSDK.WinForm
             // 
             this.LPRAlarmRecordSearchEndTimeDT.CustomFormat = "yyyy/MM/dd HH:mm:ss";
             this.LPRAlarmRecordSearchEndTimeDT.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.LPRAlarmRecordSearchEndTimeDT.Location = new System.Drawing.Point(518, 8);
+            this.LPRAlarmRecordSearchEndTimeDT.Location = new System.Drawing.Point(604, 11);
+            this.LPRAlarmRecordSearchEndTimeDT.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.LPRAlarmRecordSearchEndTimeDT.Name = "LPRAlarmRecordSearchEndTimeDT";
-            this.LPRAlarmRecordSearchEndTimeDT.Size = new System.Drawing.Size(194, 23);
+            this.LPRAlarmRecordSearchEndTimeDT.Size = new System.Drawing.Size(226, 23);
             this.LPRAlarmRecordSearchEndTimeDT.TabIndex = 22;
             // 
             // LPRAlarmRecordSearchBeginTimeDT
             // 
             this.LPRAlarmRecordSearchBeginTimeDT.CustomFormat = "yyyy/MM/dd HH:mm:ss";
             this.LPRAlarmRecordSearchBeginTimeDT.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.LPRAlarmRecordSearchBeginTimeDT.Location = new System.Drawing.Point(313, 9);
+            this.LPRAlarmRecordSearchBeginTimeDT.Location = new System.Drawing.Point(365, 13);
+            this.LPRAlarmRecordSearchBeginTimeDT.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.LPRAlarmRecordSearchBeginTimeDT.Name = "LPRAlarmRecordSearchBeginTimeDT";
-            this.LPRAlarmRecordSearchBeginTimeDT.Size = new System.Drawing.Size(173, 23);
+            this.LPRAlarmRecordSearchBeginTimeDT.Size = new System.Drawing.Size(201, 23);
             this.LPRAlarmRecordSearchBeginTimeDT.TabIndex = 21;
             // 
             // label106
             // 
             this.label106.AutoSize = true;
-            this.label106.Location = new System.Drawing.Point(275, 12);
+            this.label106.Location = new System.Drawing.Point(321, 17);
+            this.label106.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label106.Name = "label106";
             this.label106.Size = new System.Drawing.Size(36, 17);
             this.label106.TabIndex = 20;
@@ -6929,7 +7449,8 @@ namespace YuShiNetDevSDK.WinForm
             this.LPRAlarmRecordVehicleColorDataGVTextCol,
             this.LPRAlarmRecordCameraNameDataGVTextCol,
             this.LPRAlarmRecordTimeDataGVTextCol});
-            this.LPRAlarmRecordDataGridView.Location = new System.Drawing.Point(6, 104);
+            this.LPRAlarmRecordDataGridView.Location = new System.Drawing.Point(7, 147);
+            this.LPRAlarmRecordDataGridView.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.LPRAlarmRecordDataGridView.MultiSelect = false;
             this.LPRAlarmRecordDataGridView.Name = "LPRAlarmRecordDataGridView";
             this.LPRAlarmRecordDataGridView.RowHeadersVisible = false;
@@ -6937,7 +7458,7 @@ namespace YuShiNetDevSDK.WinForm
             this.LPRAlarmRecordDataGridView.RowTemplate.ReadOnly = true;
             this.LPRAlarmRecordDataGridView.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.LPRAlarmRecordDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.LPRAlarmRecordDataGridView.Size = new System.Drawing.Size(832, 414);
+            this.LPRAlarmRecordDataGridView.Size = new System.Drawing.Size(971, 586);
             this.LPRAlarmRecordDataGridView.TabIndex = 11;
             // 
             // LPRAlarmRecordPlateImageDataGVImgCol
@@ -6997,9 +7518,10 @@ namespace YuShiNetDevSDK.WinForm
             this.Maintenance.BackColor = System.Drawing.Color.WhiteSmoke;
             this.Maintenance.Controls.Add(this.groupBox4);
             this.Maintenance.Location = new System.Drawing.Point(4, 26);
+            this.Maintenance.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Maintenance.Name = "Maintenance";
-            this.Maintenance.Padding = new System.Windows.Forms.Padding(3);
-            this.Maintenance.Size = new System.Drawing.Size(899, 606);
+            this.Maintenance.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Maintenance.Size = new System.Drawing.Size(1050, 871);
             this.Maintenance.TabIndex = 5;
             this.Maintenance.Text = "Maintenance";
             this.Maintenance.UseVisualStyleBackColor = true;
@@ -7010,20 +7532,23 @@ namespace YuShiNetDevSDK.WinForm
             this.groupBox4.Controls.Add(this.RebootBtn);
             this.groupBox4.Controls.Add(this.label9);
             this.groupBox4.Controls.Add(this.label8);
-            this.groupBox4.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.groupBox4.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.groupBox4.Location = new System.Drawing.Point(0, 0);
+            this.groupBox4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(896, 600);
+            this.groupBox4.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox4.Size = new System.Drawing.Size(1045, 850);
             this.groupBox4.TabIndex = 2;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Maintenance";
             // 
             // factoryDefaultBtn
             // 
-            this.factoryDefaultBtn.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.factoryDefaultBtn.Location = new System.Drawing.Point(41, 74);
+            this.factoryDefaultBtn.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.factoryDefaultBtn.Location = new System.Drawing.Point(48, 105);
+            this.factoryDefaultBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.factoryDefaultBtn.Name = "factoryDefaultBtn";
-            this.factoryDefaultBtn.Size = new System.Drawing.Size(111, 23);
+            this.factoryDefaultBtn.Size = new System.Drawing.Size(130, 33);
             this.factoryDefaultBtn.TabIndex = 0;
             this.factoryDefaultBtn.Text = "Factory Default";
             this.factoryDefaultBtn.UseVisualStyleBackColor = true;
@@ -7031,10 +7556,11 @@ namespace YuShiNetDevSDK.WinForm
             // 
             // RebootBtn
             // 
-            this.RebootBtn.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.RebootBtn.Location = new System.Drawing.Point(41, 35);
+            this.RebootBtn.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.RebootBtn.Location = new System.Drawing.Point(48, 50);
+            this.RebootBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.RebootBtn.Name = "RebootBtn";
-            this.RebootBtn.Size = new System.Drawing.Size(75, 23);
+            this.RebootBtn.Size = new System.Drawing.Size(88, 33);
             this.RebootBtn.TabIndex = 0;
             this.RebootBtn.Text = "Reboot";
             this.RebootBtn.UseVisualStyleBackColor = true;
@@ -7043,20 +7569,22 @@ namespace YuShiNetDevSDK.WinForm
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label9.Location = new System.Drawing.Point(163, 80);
+            this.label9.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label9.Location = new System.Drawing.Point(190, 113);
+            this.label9.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(186, 16);
+            this.label9.Size = new System.Drawing.Size(185, 16);
             this.label9.TabIndex = 1;
             this.label9.Text = "Restore all factory default settings";
             // 
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label8.Location = new System.Drawing.Point(163, 40);
+            this.label8.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label8.Location = new System.Drawing.Point(190, 57);
+            this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(81, 16);
+            this.label8.Size = new System.Drawing.Size(80, 16);
             this.label8.TabIndex = 1;
             this.label8.Text = "Restart device";
             // 
@@ -7087,16 +7615,18 @@ namespace YuShiNetDevSDK.WinForm
             this.tabPage1.Controls.Add(this.button2);
             this.tabPage1.Controls.Add(this.button1);
             this.tabPage1.Location = new System.Drawing.Point(4, 26);
+            this.tabPage1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(899, 606);
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage1.Size = new System.Drawing.Size(1050, 871);
             this.tabPage1.TabIndex = 6;
             this.tabPage1.Text = "UserCfg";
             // 
             // label120
             // 
             this.label120.AutoSize = true;
-            this.label120.Location = new System.Drawing.Point(15, 577);
+            this.label120.Location = new System.Drawing.Point(18, 817);
+            this.label120.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label120.Name = "label120";
             this.label120.Size = new System.Drawing.Size(268, 17);
             this.label120.TabIndex = 27;
@@ -7107,16 +7637,19 @@ namespace YuShiNetDevSDK.WinForm
             this.groupBox38.Controls.Add(this.label119);
             this.groupBox38.Controls.Add(this.textBox4);
             this.groupBox38.Controls.Add(this.ModifyCurPwd);
-            this.groupBox38.Location = new System.Drawing.Point(7, 378);
+            this.groupBox38.Location = new System.Drawing.Point(8, 536);
+            this.groupBox38.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.groupBox38.Name = "groupBox38";
-            this.groupBox38.Size = new System.Drawing.Size(868, 54);
+            this.groupBox38.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox38.Size = new System.Drawing.Size(1013, 76);
             this.groupBox38.TabIndex = 26;
             this.groupBox38.TabStop = false;
             // 
             // label119
             // 
             this.label119.AutoSize = true;
-            this.label119.Location = new System.Drawing.Point(8, 28);
+            this.label119.Location = new System.Drawing.Point(9, 40);
+            this.label119.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label119.Name = "label119";
             this.label119.Size = new System.Drawing.Size(58, 17);
             this.label119.TabIndex = 23;
@@ -7124,16 +7657,18 @@ namespace YuShiNetDevSDK.WinForm
             // 
             // textBox4
             // 
-            this.textBox4.Location = new System.Drawing.Point(111, 22);
+            this.textBox4.Location = new System.Drawing.Point(130, 31);
+            this.textBox4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(102, 23);
+            this.textBox4.Size = new System.Drawing.Size(118, 23);
             this.textBox4.TabIndex = 24;
             // 
             // ModifyCurPwd
             // 
-            this.ModifyCurPwd.Location = new System.Drawing.Point(764, 22);
+            this.ModifyCurPwd.Location = new System.Drawing.Point(891, 31);
+            this.ModifyCurPwd.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.ModifyCurPwd.Name = "ModifyCurPwd";
-            this.ModifyCurPwd.Size = new System.Drawing.Size(102, 23);
+            this.ModifyCurPwd.Size = new System.Drawing.Size(119, 33);
             this.ModifyCurPwd.TabIndex = 22;
             this.ModifyCurPwd.Text = "ModifyCurPwd";
             this.ModifyCurPwd.UseVisualStyleBackColor = true;
@@ -7141,9 +7676,10 @@ namespace YuShiNetDevSDK.WinForm
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(771, 571);
+            this.button4.Location = new System.Drawing.Point(899, 809);
+            this.button4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(105, 23);
+            this.button4.Size = new System.Drawing.Size(122, 33);
             this.button4.TabIndex = 25;
             this.button4.Text = "AddUserIno";
             this.button4.UseVisualStyleBackColor = true;
@@ -7152,32 +7688,36 @@ namespace YuShiNetDevSDK.WinForm
             // comboBox2
             // 
             this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(365, 488);
+            this.comboBox2.Location = new System.Drawing.Point(426, 691);
+            this.comboBox2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(100, 25);
+            this.comboBox2.Size = new System.Drawing.Size(116, 25);
             this.comboBox2.TabIndex = 21;
             // 
             // comboBox1
             // 
             this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(118, 488);
+            this.comboBox1.Location = new System.Drawing.Point(138, 691);
+            this.comboBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(100, 25);
+            this.comboBox1.Size = new System.Drawing.Size(116, 25);
             this.comboBox1.TabIndex = 20;
             // 
             // dateTimePicker2
             // 
             this.dateTimePicker2.CustomFormat = "yyyy/MM/dd";
             this.dateTimePicker2.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePicker2.Location = new System.Drawing.Point(278, 538);
+            this.dateTimePicker2.Location = new System.Drawing.Point(324, 762);
+            this.dateTimePicker2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.dateTimePicker2.Name = "dateTimePicker2";
-            this.dateTimePicker2.Size = new System.Drawing.Size(112, 23);
+            this.dateTimePicker2.Size = new System.Drawing.Size(130, 23);
             this.dateTimePicker2.TabIndex = 18;
             // 
             // label118
             // 
             this.label118.AutoSize = true;
-            this.label118.Location = new System.Drawing.Point(246, 543);
+            this.label118.Location = new System.Drawing.Point(287, 769);
+            this.label118.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label118.Name = "label118";
             this.label118.Size = new System.Drawing.Size(17, 17);
             this.label118.TabIndex = 17;
@@ -7187,15 +7727,17 @@ namespace YuShiNetDevSDK.WinForm
             // 
             this.dateTimePicker1.CustomFormat = "yyyy/MM/dd";
             this.dateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePicker1.Location = new System.Drawing.Point(116, 537);
+            this.dateTimePicker1.Location = new System.Drawing.Point(135, 761);
+            this.dateTimePicker1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(110, 23);
+            this.dateTimePicker1.Size = new System.Drawing.Size(128, 23);
             this.dateTimePicker1.TabIndex = 16;
             // 
             // label117
             // 
             this.label117.AutoSize = true;
-            this.label117.Location = new System.Drawing.Point(15, 538);
+            this.label117.Location = new System.Drawing.Point(18, 762);
+            this.label117.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label117.Name = "label117";
             this.label117.Size = new System.Drawing.Size(64, 17);
             this.label117.TabIndex = 15;
@@ -7204,7 +7746,8 @@ namespace YuShiNetDevSDK.WinForm
             // label116
             // 
             this.label116.AutoSize = true;
-            this.label116.Location = new System.Drawing.Point(246, 496);
+            this.label116.Location = new System.Drawing.Point(287, 703);
+            this.label116.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label116.Name = "label116";
             this.label116.Size = new System.Drawing.Size(103, 17);
             this.label116.TabIndex = 13;
@@ -7213,7 +7756,8 @@ namespace YuShiNetDevSDK.WinForm
             // label115
             // 
             this.label115.AutoSize = true;
-            this.label115.Location = new System.Drawing.Point(15, 496);
+            this.label115.Location = new System.Drawing.Point(18, 703);
+            this.label115.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label115.Name = "label115";
             this.label115.Size = new System.Drawing.Size(47, 17);
             this.label115.TabIndex = 11;
@@ -7221,15 +7765,17 @@ namespace YuShiNetDevSDK.WinForm
             // 
             // textBox3
             // 
-            this.textBox3.Location = new System.Drawing.Point(595, 448);
+            this.textBox3.Location = new System.Drawing.Point(694, 635);
+            this.textBox3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(100, 23);
+            this.textBox3.Size = new System.Drawing.Size(116, 23);
             this.textBox3.TabIndex = 10;
             // 
             // label114
             // 
             this.label114.AutoSize = true;
-            this.label114.Location = new System.Drawing.Point(510, 451);
+            this.label114.Location = new System.Drawing.Point(595, 639);
+            this.label114.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label114.Name = "label114";
             this.label114.Size = new System.Drawing.Size(64, 17);
             this.label114.TabIndex = 9;
@@ -7237,15 +7783,17 @@ namespace YuShiNetDevSDK.WinForm
             // 
             // textBox2
             // 
-            this.textBox2.Location = new System.Drawing.Point(365, 446);
+            this.textBox2.Location = new System.Drawing.Point(426, 632);
+            this.textBox2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(100, 23);
+            this.textBox2.Size = new System.Drawing.Size(116, 23);
             this.textBox2.TabIndex = 8;
             // 
             // label113
             // 
             this.label113.AutoSize = true;
-            this.label113.Location = new System.Drawing.Point(246, 451);
+            this.label113.Location = new System.Drawing.Point(287, 639);
+            this.label113.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label113.Name = "label113";
             this.label113.Size = new System.Drawing.Size(70, 17);
             this.label113.TabIndex = 7;
@@ -7253,15 +7801,17 @@ namespace YuShiNetDevSDK.WinForm
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(118, 446);
+            this.textBox1.Location = new System.Drawing.Point(138, 632);
+            this.textBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 23);
+            this.textBox1.Size = new System.Drawing.Size(116, 23);
             this.textBox1.TabIndex = 6;
             // 
             // UserID
             // 
             this.UserID.AutoSize = true;
-            this.UserID.Location = new System.Drawing.Point(14, 452);
+            this.UserID.Location = new System.Drawing.Point(16, 640);
+            this.UserID.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.UserID.Name = "UserID";
             this.UserID.Size = new System.Drawing.Size(48, 17);
             this.UserID.TabIndex = 5;
@@ -7270,9 +7820,11 @@ namespace YuShiNetDevSDK.WinForm
             // groupBox37
             // 
             this.groupBox37.Controls.Add(this.listView3);
-            this.groupBox37.Location = new System.Drawing.Point(7, 253);
+            this.groupBox37.Location = new System.Drawing.Point(8, 358);
+            this.groupBox37.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.groupBox37.Name = "groupBox37";
-            this.groupBox37.Size = new System.Drawing.Size(866, 122);
+            this.groupBox37.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox37.Size = new System.Drawing.Size(1010, 173);
             this.groupBox37.TabIndex = 2;
             this.groupBox37.TabStop = false;
             this.groupBox37.Text = "UserInfo";
@@ -7286,9 +7838,11 @@ namespace YuShiNetDevSDK.WinForm
             this.columnHeader12});
             this.listView3.FullRowSelect = true;
             this.listView3.GridLines = true;
-            this.listView3.Location = new System.Drawing.Point(6, 22);
+            this.listView3.HideSelection = false;
+            this.listView3.Location = new System.Drawing.Point(7, 31);
+            this.listView3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.listView3.Name = "listView3";
-            this.listView3.Size = new System.Drawing.Size(854, 97);
+            this.listView3.Size = new System.Drawing.Size(996, 136);
             this.listView3.TabIndex = 0;
             this.listView3.UseCompatibleStateImageBehavior = false;
             this.listView3.View = System.Windows.Forms.View.Details;
@@ -7317,9 +7871,11 @@ namespace YuShiNetDevSDK.WinForm
             // groupBox33
             // 
             this.groupBox33.Controls.Add(this.listView2);
-            this.groupBox33.Location = new System.Drawing.Point(7, 130);
+            this.groupBox33.Location = new System.Drawing.Point(8, 184);
+            this.groupBox33.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.groupBox33.Name = "groupBox33";
-            this.groupBox33.Size = new System.Drawing.Size(866, 122);
+            this.groupBox33.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox33.Size = new System.Drawing.Size(1010, 173);
             this.groupBox33.TabIndex = 1;
             this.groupBox33.TabStop = false;
             this.groupBox33.Text = "Time Template";
@@ -7332,9 +7888,11 @@ namespace YuShiNetDevSDK.WinForm
             this.columnHeader7,
             this.columnHeader8});
             this.listView2.GridLines = true;
-            this.listView2.Location = new System.Drawing.Point(6, 19);
+            this.listView2.HideSelection = false;
+            this.listView2.Location = new System.Drawing.Point(7, 27);
+            this.listView2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.listView2.Name = "listView2";
-            this.listView2.Size = new System.Drawing.Size(854, 97);
+            this.listView2.Size = new System.Drawing.Size(996, 136);
             this.listView2.TabIndex = 0;
             this.listView2.UseCompatibleStateImageBehavior = false;
             this.listView2.View = System.Windows.Forms.View.Details;
@@ -7362,9 +7920,11 @@ namespace YuShiNetDevSDK.WinForm
             // groupBox25
             // 
             this.groupBox25.Controls.Add(this.listView1);
-            this.groupBox25.Location = new System.Drawing.Point(7, 7);
+            this.groupBox25.Location = new System.Drawing.Point(8, 10);
+            this.groupBox25.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.groupBox25.Name = "groupBox25";
-            this.groupBox25.Size = new System.Drawing.Size(866, 122);
+            this.groupBox25.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox25.Size = new System.Drawing.Size(1010, 173);
             this.groupBox25.TabIndex = 0;
             this.groupBox25.TabStop = false;
             this.groupBox25.Text = "Role Info";
@@ -7377,9 +7937,11 @@ namespace YuShiNetDevSDK.WinForm
             this.columnHeader3,
             this.columnHeader4});
             this.listView1.GridLines = true;
-            this.listView1.Location = new System.Drawing.Point(7, 20);
+            this.listView1.HideSelection = false;
+            this.listView1.Location = new System.Drawing.Point(8, 28);
+            this.listView1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(853, 96);
+            this.listView1.Size = new System.Drawing.Size(994, 134);
             this.listView1.TabIndex = 0;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
@@ -7406,9 +7968,10 @@ namespace YuShiNetDevSDK.WinForm
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(771, 484);
+            this.button3.Location = new System.Drawing.Point(899, 686);
+            this.button3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(107, 23);
+            this.button3.Size = new System.Drawing.Size(125, 33);
             this.button3.TabIndex = 19;
             this.button3.Text = "ModifyUserInfo";
             this.button3.UseVisualStyleBackColor = true;
@@ -7416,9 +7979,10 @@ namespace YuShiNetDevSDK.WinForm
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(771, 446);
+            this.button2.Location = new System.Drawing.Point(899, 632);
+            this.button2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(109, 23);
+            this.button2.Size = new System.Drawing.Size(127, 33);
             this.button2.TabIndex = 4;
             this.button2.Text = "GetUserInfo";
             this.button2.UseVisualStyleBackColor = true;
@@ -7426,9 +7990,10 @@ namespace YuShiNetDevSDK.WinForm
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(771, 528);
+            this.button1.Location = new System.Drawing.Point(899, 748);
+            this.button1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(107, 23);
+            this.button1.Size = new System.Drawing.Size(125, 33);
             this.button1.TabIndex = 3;
             this.button1.Text = "DeleteUserInfo";
             this.button1.UseVisualStyleBackColor = true;
@@ -7437,9 +8002,11 @@ namespace YuShiNetDevSDK.WinForm
             // groupDiscovery
             // 
             this.groupDiscovery.Controls.Add(this.Discovery);
-            this.groupDiscovery.Location = new System.Drawing.Point(12, 2);
+            this.groupDiscovery.Location = new System.Drawing.Point(14, 3);
+            this.groupDiscovery.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.groupDiscovery.Name = "groupDiscovery";
-            this.groupDiscovery.Size = new System.Drawing.Size(189, 57);
+            this.groupDiscovery.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupDiscovery.Size = new System.Drawing.Size(220, 81);
             this.groupDiscovery.TabIndex = 0;
             this.groupDiscovery.TabStop = false;
             // 
@@ -7505,10 +8072,11 @@ namespace YuShiNetDevSDK.WinForm
             // 
             // cleanLogBtn
             // 
-            this.cleanLogBtn.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.cleanLogBtn.Location = new System.Drawing.Point(934, 654);
+            this.cleanLogBtn.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.cleanLogBtn.Location = new System.Drawing.Point(1090, 926);
+            this.cleanLogBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.cleanLogBtn.Name = "cleanLogBtn";
-            this.cleanLogBtn.Size = new System.Drawing.Size(81, 30);
+            this.cleanLogBtn.Size = new System.Drawing.Size(94, 42);
             this.cleanLogBtn.TabIndex = 3;
             this.cleanLogBtn.Text = "Clear";
             this.cleanLogBtn.UseVisualStyleBackColor = true;
@@ -7516,10 +8084,11 @@ namespace YuShiNetDevSDK.WinForm
             // 
             // settingLogBtn
             // 
-            this.settingLogBtn.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.settingLogBtn.Location = new System.Drawing.Point(936, 725);
+            this.settingLogBtn.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.settingLogBtn.Location = new System.Drawing.Point(1092, 1027);
+            this.settingLogBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.settingLogBtn.Name = "settingLogBtn";
-            this.settingLogBtn.Size = new System.Drawing.Size(78, 30);
+            this.settingLogBtn.Size = new System.Drawing.Size(91, 42);
             this.settingLogBtn.TabIndex = 5;
             this.settingLogBtn.Text = "Setting";
             this.settingLogBtn.UseVisualStyleBackColor = true;
@@ -7533,13 +8102,14 @@ namespace YuShiNetDevSDK.WinForm
             this.Operation,
             this.Status,
             this.ErrorCode});
-            this.logListView.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.logListView.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.logListView.FullRowSelect = true;
             this.logListView.GridLines = true;
             this.logListView.HideSelection = false;
-            this.logListView.Location = new System.Drawing.Point(207, 650);
+            this.logListView.Location = new System.Drawing.Point(241, 921);
+            this.logListView.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.logListView.Name = "logListView";
-            this.logListView.Size = new System.Drawing.Size(710, 115);
+            this.logListView.Size = new System.Drawing.Size(828, 161);
             this.logListView.TabIndex = 6;
             this.logListView.UseCompatibleStateImageBehavior = false;
             this.logListView.View = System.Windows.Forms.View.Details;
@@ -7572,7 +8142,7 @@ namespace YuShiNetDevSDK.WinForm
             // PannelContextMenuStrip
             // 
             this.PannelContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.Close,
+            this.CloseThis,
             this.CloseAll,
             this.toolStripSeparator1,
             this.ProcessingMode,
@@ -7586,27 +8156,27 @@ namespace YuShiNetDevSDK.WinForm
             this.toolStripSeparator3,
             this.CameraInfo});
             this.PannelContextMenuStrip.Name = "PannelContextMenuStrip";
-            this.PannelContextMenuStrip.Size = new System.Drawing.Size(179, 242);
+            this.PannelContextMenuStrip.Size = new System.Drawing.Size(181, 264);
             this.PannelContextMenuStrip.Opening += new System.ComponentModel.CancelEventHandler(this.PannelContextMenuStrip_Opening);
             // 
-            // Close
+            // CloseThis
             // 
-            this.Close.Name = "Close";
-            this.Close.Size = new System.Drawing.Size(178, 22);
-            this.Close.Text = "Close";
-            this.Close.Click += new System.EventHandler(this.Close_Click);
+            this.CloseThis.Name = "CloseThis";
+            this.CloseThis.Size = new System.Drawing.Size(180, 22);
+            this.CloseThis.Text = "Close";
+            this.CloseThis.Click += new System.EventHandler(this.Close_Click);
             // 
             // CloseAll
             // 
             this.CloseAll.Name = "CloseAll";
-            this.CloseAll.Size = new System.Drawing.Size(178, 22);
+            this.CloseAll.Size = new System.Drawing.Size(180, 22);
             this.CloseAll.Text = "Close All";
             this.CloseAll.Click += new System.EventHandler(this.CloseAll_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(175, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
             // 
             // ProcessingMode
             // 
@@ -7614,7 +8184,7 @@ namespace YuShiNetDevSDK.WinForm
             this.ShowDelay,
             this.Fluent});
             this.ProcessingMode.Name = "ProcessingMode";
-            this.ProcessingMode.Size = new System.Drawing.Size(178, 22);
+            this.ProcessingMode.Size = new System.Drawing.Size(180, 22);
             this.ProcessingMode.Text = "Processing Mode";
             // 
             // ShowDelay
@@ -7636,40 +8206,40 @@ namespace YuShiNetDevSDK.WinForm
             // MakeKeyFrame
             // 
             this.MakeKeyFrame.Name = "MakeKeyFrame";
-            this.MakeKeyFrame.Size = new System.Drawing.Size(178, 22);
+            this.MakeKeyFrame.Size = new System.Drawing.Size(180, 22);
             this.MakeKeyFrame.Text = "Make Key Frame";
             this.MakeKeyFrame.Click += new System.EventHandler(this.MakeKeyFrame_Click);
             // 
             // DigitalZoom
             // 
             this.DigitalZoom.Name = "DigitalZoom";
-            this.DigitalZoom.Size = new System.Drawing.Size(178, 22);
+            this.DigitalZoom.Size = new System.Drawing.Size(180, 22);
             this.DigitalZoom.Text = "Digital Zoom";
             this.DigitalZoom.Click += new System.EventHandler(this.DigitalZoom_Click);
             // 
             // ThreeDPosition
             // 
             this.ThreeDPosition.Name = "ThreeDPosition";
-            this.ThreeDPosition.Size = new System.Drawing.Size(178, 22);
+            this.ThreeDPosition.Size = new System.Drawing.Size(180, 22);
             this.ThreeDPosition.Text = "3D Position";
             this.ThreeDPosition.Click += new System.EventHandler(this.ThreeDPosition_Click);
             // 
             // TwoWayAudio
             // 
             this.TwoWayAudio.Name = "TwoWayAudio";
-            this.TwoWayAudio.Size = new System.Drawing.Size(178, 22);
+            this.TwoWayAudio.Size = new System.Drawing.Size(180, 22);
             this.TwoWayAudio.Text = "Two-way Audio";
             this.TwoWayAudio.Click += new System.EventHandler(this.TwoWayAudio_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(175, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(177, 6);
             // 
             // FullScreen
             // 
             this.FullScreen.Name = "FullScreen";
-            this.FullScreen.Size = new System.Drawing.Size(178, 22);
+            this.FullScreen.Size = new System.Drawing.Size(180, 22);
             this.FullScreen.Text = "Full Screen";
             this.FullScreen.Click += new System.EventHandler(this.FullScreen_Click);
             // 
@@ -7678,27 +8248,27 @@ namespace YuShiNetDevSDK.WinForm
             this.MultiScreen.Checked = true;
             this.MultiScreen.CheckState = System.Windows.Forms.CheckState.Checked;
             this.MultiScreen.Name = "MultiScreen";
-            this.MultiScreen.Size = new System.Drawing.Size(178, 22);
+            this.MultiScreen.Size = new System.Drawing.Size(180, 22);
             this.MultiScreen.Text = "Multi-Screen";
             this.MultiScreen.Click += new System.EventHandler(this.MultiScreen_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(175, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(177, 6);
             // 
             // CameraInfo
             // 
             this.CameraInfo.Name = "CameraInfo";
-            this.CameraInfo.Size = new System.Drawing.Size(178, 22);
+            this.CameraInfo.Size = new System.Drawing.Size(180, 22);
             this.CameraInfo.Text = "Camera Info";
             this.CameraInfo.Click += new System.EventHandler(this.CameraInfo_Click);
             // 
             // NetDemo
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1109, 767);
+            this.ClientSize = new System.Drawing.Size(1294, 1057);
             this.Controls.Add(this.logListView);
             this.Controls.Add(this.groupDiscovery);
             this.Controls.Add(this.mainTabCtrl);
@@ -7706,6 +8276,7 @@ namespace YuShiNetDevSDK.WinForm
             this.Controls.Add(this.cleanLogBtn);
             this.Controls.Add(this.settingLogBtn);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.MaximizeBox = false;
             this.Name = "NetDemo";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -8166,7 +8737,7 @@ namespace YuShiNetDevSDK.WinForm
         private Button TemperRefreshBtn;
         private ImageList imageList1;
         private ContextMenuStrip PannelContextMenuStrip;
-        private ToolStripMenuItem Close;
+        private ToolStripMenuItem CloseThis;
         private ToolStripMenuItem CloseAll;
         private ToolStripSeparator toolStripSeparator1;
         private ToolStripMenuItem ProcessingMode;

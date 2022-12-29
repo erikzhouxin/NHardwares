@@ -1,64 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
 <root>
-  <!-- 
-    Microsoft ResX Schema 
-    
-    Version 2.0
-    
-    The primary goals of this format is to allow a simple XML format 
-    that is mostly human readable. The generation and parsing of the 
-    various data types are done through the TypeConverter classes 
-    associated with the data types.
-    
-    Example:
-    
-    ... ado.net/XML headers & schema ...
-    <resheader name="resmimetype">text/microsoft-resx</resheader>
-    <resheader name="version">2.0</resheader>
-    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
-    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
-    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
-    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
-    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
-        <value>[base64 mime encoded serialized .NET Framework object]</value>
-    </data>
-    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
-        <comment>This is a comment</comment>
-    </data>
-                
-    There are any number of "resheader" rows that contain simple 
-    name/value pairs.
-    
-    Each data row contains a name, and value. The row also contains a 
-    type or mimetype. Type corresponds to a .NET class that support 
-    text/value conversion through the TypeConverter architecture. 
-    Classes that don't support this are serialized and stored with the 
-    mimetype set.
-    
-    The mimetype is used for serialized objects, and tells the 
-    ResXResourceReader how to depersist the object. This is currently not 
-    extensible. For a given mimetype the value must be set accordingly:
-    
-    Note - application/x-microsoft.net.object.binary.base64 is the format 
-    that the ResXResourceWriter will generate, however the reader can 
-    read any of the formats listed below.
-    
-    mimetype: application/x-microsoft.net.object.binary.base64
-    value   : The object must be serialized with 
-            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
-            : and then encoded with base64 encoding.
-    
-    mimetype: application/x-microsoft.net.object.soap.base64
-    value   : The object must be serialized with 
-            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
-            : and then encoded with base64 encoding.
-
-    mimetype: application/x-microsoft.net.object.bytearray.base64
-    value   : The object must be serialized into a byte array 
-            : using a System.ComponentModel.TypeConverter
-            : and then encoded with base64 encoding.
-    -->
   <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
     <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
@@ -117,139 +57,193 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <metadata name="imageList1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+  <metadata name="imageList1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>242, 17</value>
   </metadata>
   <data name="imageList1.ImageStream" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
-        AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj0yLjAuMC4w
-        LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
-        ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAADC
-        DQAAAk1TRnQBSQFMAgEBCAEAAXABAgFwAQIBEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
-        AwABQAMAATADAAEBAQABCAYAAQwYAAGAAgABgAMAAoABAAGAAwABgAEAAYABAAKAAgADwAEAAcAB3AHA
-        AQAB8AHKAaYBAAEzBQABMwEAATMBAAEzAQACMwIAAxYBAAMcAQADIgEAAykBAANVAQADTQEAA0IBAAM5
-        AQABgAF8Af8BAAJQAf8BAAGTAQAB1gEAAf8B7AHMAQABxgHWAe8BAAHWAucBAAGQAakBrQIAAf8BMwMA
-        AWYDAAGZAwABzAIAATMDAAIzAgABMwFmAgABMwGZAgABMwHMAgABMwH/AgABZgMAAWYBMwIAAmYCAAFm
-        AZkCAAFmAcwCAAFmAf8CAAGZAwABmQEzAgABmQFmAgACmQIAAZkBzAIAAZkB/wIAAcwDAAHMATMCAAHM
-        AWYCAAHMAZkCAALMAgABzAH/AgAB/wFmAgAB/wGZAgAB/wHMAQABMwH/AgAB/wEAATMBAAEzAQABZgEA
-        ATMBAAGZAQABMwEAAcwBAAEzAQAB/wEAAf8BMwIAAzMBAAIzAWYBAAIzAZkBAAIzAcwBAAIzAf8BAAEz
-        AWYCAAEzAWYBMwEAATMCZgEAATMBZgGZAQABMwFmAcwBAAEzAWYB/wEAATMBmQIAATMBmQEzAQABMwGZ
-        AWYBAAEzApkBAAEzAZkBzAEAATMBmQH/AQABMwHMAgABMwHMATMBAAEzAcwBZgEAATMBzAGZAQABMwLM
-        AQABMwHMAf8BAAEzAf8BMwEAATMB/wFmAQABMwH/AZkBAAEzAf8BzAEAATMC/wEAAWYDAAFmAQABMwEA
-        AWYBAAFmAQABZgEAAZkBAAFmAQABzAEAAWYBAAH/AQABZgEzAgABZgIzAQABZgEzAWYBAAFmATMBmQEA
-        AWYBMwHMAQABZgEzAf8BAAJmAgACZgEzAQADZgEAAmYBmQEAAmYBzAEAAWYBmQIAAWYBmQEzAQABZgGZ
-        AWYBAAFmApkBAAFmAZkBzAEAAWYBmQH/AQABZgHMAgABZgHMATMBAAFmAcwBmQEAAWYCzAEAAWYBzAH/
-        AQABZgH/AgABZgH/ATMBAAFmAf8BmQEAAWYB/wHMAQABzAEAAf8BAAH/AQABzAEAApkCAAGZATMBmQEA
-        AZkBAAGZAQABmQEAAcwBAAGZAwABmQIzAQABmQEAAWYBAAGZATMBzAEAAZkBAAH/AQABmQFmAgABmQFm
-        ATMBAAGZATMBZgEAAZkBZgGZAQABmQFmAcwBAAGZATMB/wEAApkBMwEAApkBZgEAA5kBAAKZAcwBAAKZ
-        Af8BAAGZAcwCAAGZAcwBMwEAAWYBzAFmAQABmQHMAZkBAAGZAswBAAGZAcwB/wEAAZkB/wIAAZkB/wEz
-        AQABmQHMAWYBAAGZAf8BmQEAAZkB/wHMAQABmQL/AQABzAMAAZkBAAEzAQABzAEAAWYBAAHMAQABmQEA
-        AcwBAAHMAQABmQEzAgABzAIzAQABzAEzAWYBAAHMATMBmQEAAcwBMwHMAQABzAEzAf8BAAHMAWYCAAHM
-        AWYBMwEAAZkCZgEAAcwBZgGZAQABzAFmAcwBAAGZAWYB/wEAAcwBmQIAAcwBmQEzAQABzAGZAWYBAAHM
-        ApkBAAHMAZkBzAEAAcwBmQH/AQACzAIAAswBMwEAAswBZgEAAswBmQEAA8wBAALMAf8BAAHMAf8CAAHM
-        Af8BMwEAAZkB/wFmAQABzAH/AZkBAAHMAf8BzAEAAcwC/wEAAcwBAAEzAQAB/wEAAWYBAAH/AQABmQEA
-        AcwBMwIAAf8CMwEAAf8BMwFmAQAB/wEzAZkBAAH/ATMBzAEAAf8BMwH/AQAB/wFmAgAB/wFmATMBAAHM
-        AmYBAAH/AWYBmQEAAf8BZgHMAQABzAFmAf8BAAH/AZkCAAH/AZkBMwEAAf8BmQFmAQAB/wKZAQAB/wGZ
-        AcwBAAH/AZkB/wEAAf8BzAIAAf8BzAEzAQAB/wHMAWYBAAH/AcwBmQEAAf8CzAEAAf8BzAH/AQAC/wEz
-        AQABzAH/AWYBAAL/AZkBAAL/AcwBAAJmAf8BAAFmAf8BZgEAAWYC/wEAAf8CZgEAAf8BZgH/AQAC/wFm
-        AQABIQEAAaUBAANfAQADdwEAA4YBAAOWAQADywEAA7IBAAPXAQAD3QEAA+MBAAPqAQAD8QEAA/gBAAHw
-        AfsB/wEAAaQCoAEAA4ADAAH/AgAB/wMAAv8BAAH/AwAB/wEAAf8BAAL/AgAD//8A/wD/AP8ABQAG/wHs
-        BAAB7BT/AfkO/wH5Ef8C+QH/AewBAAHsBP8B7AEAAvkS/wH5DP8B+RL/A/kBAAf/A/kT/wH5Cv8B+RT/
-        A/kF/wEHA/kBAAL/DGwBEgHvAbwB/wJsAfkIbAH5ARIB7wG8Af8B8AP3Af8BBwP3Af8B7wL3Ae8D/wHs
-        A/kC/wEHAf8D+QH/AQAB/wHsARABDwIOAg8BkQESAhMBBwEUAQ4BEQHrAewBEAEPAQ4B+QIPAZEBEgIT
-        AfkBFAEOAREB6wH/AbwD7QH/AQcD7QH/AfcC7QH3Av8B7AEAAewD+QH/AewD+QL/AQAB/wFsAu8BuwHv
-        ApgBbAEUARABBwEVAQcBDgENARUBbALvAbsB7wH5AZgBbAEUARAB+QEVAQcBDgENARUC/wP0Af8E9AH/
-        BPQB/wEHAQAB7AEAAewG+QL/AQABBwH/AUMFDQEQAQ0DQwEHARQBQwINAUMFDQH5AQ0BQwH5AUMBBwEU
-        AUMCDQP/AbwE/wG8A/8C8wL/AQAB7AEAAuwBAAT5AQcB/wHsA/8XbAL5B2wD/wH3BAcB7wMHAe8B8gL/
-        AQAB7AEAAewCAAT5AewCAAEHAv8BCQGLAZADiwGQB4sBkAGLAQkBiwGQA4sBkAL5BYsBkAGLA/8E8wHy
-        Ae8E8wP/AewEAAb5AgcBAAHsAv8Biw1sAZEB/wGLBGwB+QJsAfkFbAGRBv8E9Af/AwAD+QIHA/kCBwEA
-        A/8NbAP/A2wB+QRsAfkEbAb/AfQE9wG8B/8B7AP5BP8D+QH/AQAD/wGRC2wE/wGRAWwB+QZsAfkCbAf/
-        AfME9wEHB/8D+QEAAuwD/wP5AQAU/wH5CP8B+Qj/AfMB7QPsAbwG/wP5A/8B7AIAAQcB/wP5E/8B+Qr/
-        AfkT/wL5B/8DAAL5Ev8B+Qz/Afkx/wH5Dv8B+RT/AfIB9wGuAYYBpgGGAa4B7wH0E/8B+Q7/AfkG/wET
-        BAABEgf/AQgBUAFlAccDyAHHAWUBrgHwE/8B+Qz/AfkF/wFtAQ4B7AT/AewBDwFtBP8BvAFPATQBLgFm
-        AacBzgHIAacBSAGmAYYB8BP/AfkK/wH5Bf8B7AEAA/8B9ALzAv8BDwHtAv8B8wGXAlUBNAEuAWwCzgHI
-        AacBZQEhAeoB9AH/DGwBEgHvAbwB/wJsAfkIbAH5ARIB7wG8A/8BAAHzAf8B9AHzAfQB8gHxAfAB/wHx
-        AQAC/wEIAnwCVQEuAUkCzgGGAWwCAgEhAe8B7AEQAQ8CDgIPAZEBEgITAQcBFAEOAREB6wHsARABDwEO
-        AfkCDwGRARICEwH5ARQBDgERAesC/wHsAQAD/wHzAfcC8gLxAf8BFAH/AfQBmAHAAeQBWgE0AS4BBgHN
-        Aa0BKAIuAQIBJwHqAWwC7wG7Ae8CmAFsARQBEAEHARUBBwEOAQ0BFQFsAu8BuwHvAfkBmAFsARQBEAH5
-        ARUBBwEOAQ0BFQH/ARMBAAFtAQABFAL/AewB7wHyAfEB9AHzAQ4B/wH0AZ4BwQHAAVUBTgGyAtMBrQFP
-        AVUBTwEtAQICQwUNARABDQNDAQcBFAFDAg0BQwUNAfkBDQFDAfkBQwEHARQBQwINAbwBAAHrARAB6gIA
-        AfAB7QHvAfMC/wERAfcC/wG7Ap4BVQGyAdoB2QHTAZABlwF3AU8BLgECASIXbAL5B2wBFQGSAQ4C7AER
-        AQAB9wLsAfAB/wHsAfID/wEZAcEBwAG5BNoDkAF3AVUBLgFJAQkBiwGQA4sBkAeLAZABiwEJAYsBkAOL
-        AZAC+QWLAZABiwEVARMBDgFtAgABDwHyAZIB7AHtAUMBAAEHA/8B8AH0AeEBuQGQAtoBuQFxAYsBhgGR
-        AZcBLgHqAf8Biw1sAZEB/wGLBGwB+QJsAfkFbAGRARIBEQEAAUMBDwEAAfcB8gEHAe8BkgLvAQ8BFAL/
-        AfEB9AG7AU8BLgGzAdoBuQGWAU8BSQGtAXEBAgH3Av8NbAP/A2wB+QRsAfkEbAL/BAABvAH/AfAB8QIH
-        Ae8BvAHwAQAC/wH0AQgBlwFVAS4BTwGzAdoC2QGQAa0BzgGLAfMC/wGRC2wE/wGRAWwB+QZsAfkCbAT/
-        AesBDgEUAfAC/wH0AfIBvAEHAe8B/wEOA/8CCAHBAVUBLgFPAZABcQGyAdMBzQGtAbwU/wH5CP8B+Qf/
-        Ae8BFQESARMD/wHyAfMB/wEOBP8B8AEIAZ4B5AJVAi4BiwHVAbwU/wH5Cv8B+Qj/AfIB7AEQAQ4BvAL/
-        ARUB6wX/AfMBCAGYAcABfAFVAVYB7wH0FP8B+Qz/AfkK/wHzAQABQwEPAewI/wH0Af8C9Bb/AfkO/wH5
-        EP8BQgFNAT4HAAE+AwABKAMAAUADAAEwAwABAQEAAQEFAAGAAQEWAAP//wCCAAs=
+        AAEAAAD/////AQAAAAAAAAAMAgAAAEZTeXN0ZW0uV2luZG93cy5Gb3JtcywgQ3VsdHVyZT1uZXV0cmFs
+        LCBQdWJsaWNLZXlUb2tlbj1iNzdhNWM1NjE5MzRlMDg5BQEAAAAmU3lzdGVtLldpbmRvd3MuRm9ybXMu
+        SW1hZ2VMaXN0U3RyZWFtZXIBAAAABERhdGEHAgIAAAAJAwAAAA8DAAAAwg0AAAJNU0Z0AUkBTAIBAQgB
+        AAF4AQIBeAECARABAAEQAQAE/wEJAQAI/wFCAU0BNgEEBgABNgEEAgABKAMAAUADAAEwAwABAQEAAQgG
+        AAEMGAABgAIAAYADAAKAAQABgAMAAYABAAGAAQACgAIAA8ABAAHAAdwBwAEAAfABygGmAQABMwUAATMB
+        AAEzAQABMwEAAjMCAAMWAQADHAEAAyIBAAMpAQADVQEAA00BAANCAQADOQEAAYABfAH/AQACUAH/AQAB
+        kwEAAdYBAAH/AewBzAEAAcYB1gHvAQAB1gLnAQABkAGpAa0CAAH/ATMDAAFmAwABmQMAAcwCAAEzAwAC
+        MwIAATMBZgIAATMBmQIAATMBzAIAATMB/wIAAWYDAAFmATMCAAJmAgABZgGZAgABZgHMAgABZgH/AgAB
+        mQMAAZkBMwIAAZkBZgIAApkCAAGZAcwCAAGZAf8CAAHMAwABzAEzAgABzAFmAgABzAGZAgACzAIAAcwB
+        /wIAAf8BZgIAAf8BmQIAAf8BzAEAATMB/wIAAf8BAAEzAQABMwEAAWYBAAEzAQABmQEAATMBAAHMAQAB
+        MwEAAf8BAAH/ATMCAAMzAQACMwFmAQACMwGZAQACMwHMAQACMwH/AQABMwFmAgABMwFmATMBAAEzAmYB
+        AAEzAWYBmQEAATMBZgHMAQABMwFmAf8BAAEzAZkCAAEzAZkBMwEAATMBmQFmAQABMwKZAQABMwGZAcwB
+        AAEzAZkB/wEAATMBzAIAATMBzAEzAQABMwHMAWYBAAEzAcwBmQEAATMCzAEAATMBzAH/AQABMwH/ATMB
+        AAEzAf8BZgEAATMB/wGZAQABMwH/AcwBAAEzAv8BAAFmAwABZgEAATMBAAFmAQABZgEAAWYBAAGZAQAB
+        ZgEAAcwBAAFmAQAB/wEAAWYBMwIAAWYCMwEAAWYBMwFmAQABZgEzAZkBAAFmATMBzAEAAWYBMwH/AQAC
+        ZgIAAmYBMwEAA2YBAAJmAZkBAAJmAcwBAAFmAZkCAAFmAZkBMwEAAWYBmQFmAQABZgKZAQABZgGZAcwB
+        AAFmAZkB/wEAAWYBzAIAAWYBzAEzAQABZgHMAZkBAAFmAswBAAFmAcwB/wEAAWYB/wIAAWYB/wEzAQAB
+        ZgH/AZkBAAFmAf8BzAEAAcwBAAH/AQAB/wEAAcwBAAKZAgABmQEzAZkBAAGZAQABmQEAAZkBAAHMAQAB
+        mQMAAZkCMwEAAZkBAAFmAQABmQEzAcwBAAGZAQAB/wEAAZkBZgIAAZkBZgEzAQABmQEzAWYBAAGZAWYB
+        mQEAAZkBZgHMAQABmQEzAf8BAAKZATMBAAKZAWYBAAOZAQACmQHMAQACmQH/AQABmQHMAgABmQHMATMB
+        AAFmAcwBZgEAAZkBzAGZAQABmQLMAQABmQHMAf8BAAGZAf8CAAGZAf8BMwEAAZkBzAFmAQABmQH/AZkB
+        AAGZAf8BzAEAAZkC/wEAAcwDAAGZAQABMwEAAcwBAAFmAQABzAEAAZkBAAHMAQABzAEAAZkBMwIAAcwC
+        MwEAAcwBMwFmAQABzAEzAZkBAAHMATMBzAEAAcwBMwH/AQABzAFmAgABzAFmATMBAAGZAmYBAAHMAWYB
+        mQEAAcwBZgHMAQABmQFmAf8BAAHMAZkCAAHMAZkBMwEAAcwBmQFmAQABzAKZAQABzAGZAcwBAAHMAZkB
+        /wEAAswCAALMATMBAALMAWYBAALMAZkBAAPMAQACzAH/AQABzAH/AgABzAH/ATMBAAGZAf8BZgEAAcwB
+        /wGZAQABzAH/AcwBAAHMAv8BAAHMAQABMwEAAf8BAAFmAQAB/wEAAZkBAAHMATMCAAH/AjMBAAH/ATMB
+        ZgEAAf8BMwGZAQAB/wEzAcwBAAH/ATMB/wEAAf8BZgIAAf8BZgEzAQABzAJmAQAB/wFmAZkBAAH/AWYB
+        zAEAAcwBZgH/AQAB/wGZAgAB/wGZATMBAAH/AZkBZgEAAf8CmQEAAf8BmQHMAQAB/wGZAf8BAAH/AcwC
+        AAH/AcwBMwEAAf8BzAFmAQAB/wHMAZkBAAH/AswBAAH/AcwB/wEAAv8BMwEAAcwB/wFmAQAC/wGZAQAC
+        /wHMAQACZgH/AQABZgH/AWYBAAFmAv8BAAH/AmYBAAH/AWYB/wEAAv8BZgEAASEBAAGlAQADXwEAA3cB
+        AAOGAQADlgEAA8sBAAOyAQAD1wEAA90BAAPjAQAD6gEAA/EBAAP4AQAB8AH7Af8BAAGkAqABAAOAAwAB
+        /wIAAf8DAAL/AQAB/wMAAf8BAAH/AQAC/wIAA///AP8A/wD/AAUABv8B7AQAAewU/wH5Dv8B+RH/AvkB
+        /wHsAQAB7AT/AewBAAL5Ev8B+Qz/AfkS/wP5AQAH/wP5E/8B+Qr/AfkU/wP5Bf8BBwP5AQAC/wxsARIB
+        7wG8Af8CbAH5CGwB+QESAe8BvAH/AfAD9wH/AQcD9wH/Ae8C9wHvA/8B7AP5Av8BBwH/A/kB/wEAAf8B
+        7AEQAQ8CDgIPAZEBEgITAQcBFAEOAREB6wHsARABDwEOAfkCDwGRARICEwH5ARQBDgERAesB/wG8A+0B
+        /wEHA+0B/wH3Au0B9wL/AewBAAHsA/kB/wHsA/kC/wEAAf8BbALvAbsB7wKYAWwBFAEQAQcBFQEHAQ4B
+        DQEVAWwC7wG7Ae8B+QGYAWwBFAEQAfkBFQEHAQ4BDQEVAv8D9AH/BPQB/wT0Af8BBwEAAewBAAHsBvkC
+        /wEAAQcB/wFDBQ0BEAENA0MBBwEUAUMCDQFDBQ0B+QENAUMB+QFDAQcBFAFDAg0D/wG8BP8BvAP/AvMC
+        /wEAAewBAALsAQAE+QEHAf8B7AP/F2wC+QdsA/8B9wQHAe8DBwHvAfIC/wEAAewBAAHsAgAE+QHsAgAB
+        BwL/AQkBiwGQA4sBkAeLAZABiwEJAYsBkAOLAZAC+QWLAZABiwP/BPMB8gHvBPMD/wHsBAAG+QIHAQAB
+        7AL/AYsNbAGRAf8BiwRsAfkCbAH5BWwBkQb/BPQH/wMAA/kCBwP5AgcBAAP/DWwD/wNsAfkEbAH5BGwG
+        /wH0BPcBvAf/AewD+QT/A/kB/wEAA/8BkQtsBP8BkQFsAfkGbAH5AmwH/wHzBPcBBwf/A/kBAALsA/8D
+        +QEAFP8B+Qj/AfkI/wHzAe0D7AG8Bv8D+QP/AewCAAEHAf8D+RP/AfkK/wH5E/8C+Qf/AwAC+RL/AfkM
+        /wH5Mf8B+Q7/AfkU/wHyAfcBrgGGAaYBhgGuAe8B9BP/AfkO/wH5Bv8BEwQAARIH/wEIAVABZQHHA8gB
+        xwFlAa4B8BP/AfkM/wH5Bf8BbQEOAewE/wHsAQ8BbQT/AbwBTwE0AS4BZgGnAc4ByAGnAUgBpgGGAfAT
+        /wH5Cv8B+QX/AewBAAP/AfQC8wL/AQ8B7QL/AfMBlwJVATQBLgFsAs4ByAGnAWUBIQHqAfQB/wxsARIB
+        7wG8Af8CbAH5CGwB+QESAe8BvAP/AQAB8wH/AfQB8wH0AfIB8QHwAf8B8QEAAv8BCAJ8AlUBLgFJAs4B
+        hgFsAgIBIQHvAewBEAEPAg4CDwGRARICEwEHARQBDgERAesB7AEQAQ8BDgH5Ag8BkQESAhMB+QEUAQ4B
+        EQHrAv8B7AEAA/8B8wH3AvIC8QH/ARQB/wH0AZgBwAHkAVoBNAEuAQYBzQGtASgCLgECAScB6gFsAu8B
+        uwHvApgBbAEUARABBwEVAQcBDgENARUBbALvAbsB7wH5AZgBbAEUARAB+QEVAQcBDgENARUB/wETAQAB
+        bQEAARQC/wHsAe8B8gHxAfQB8wEOAf8B9AGeAcEBwAFVAU4BsgLTAa0BTwFVAU8BLQECAkMFDQEQAQ0D
+        QwEHARQBQwINAUMFDQH5AQ0BQwH5AUMBBwEUAUMCDQG8AQAB6wEQAeoCAAHwAe0B7wHzAv8BEQH3Av8B
+        uwKeAVUBsgHaAdkB0wGQAZcBdwFPAS4BAgEiF2wC+QdsARUBkgEOAuwBEQEAAfcC7AHwAf8B7AHyA/8B
+        GQHBAcABuQTaA5ABdwFVAS4BSQEJAYsBkAOLAZAHiwGQAYsBCQGLAZADiwGQAvkFiwGQAYsBFQETAQ4B
+        bQIAAQ8B8gGSAewB7QFDAQABBwP/AfAB9AHhAbkBkALaAbkBcQGLAYYBkQGXAS4B6gH/AYsNbAGRAf8B
+        iwRsAfkCbAH5BWwBkQESAREBAAFDAQ8BAAH3AfIBBwHvAZIC7wEPARQC/wHxAfQBuwFPAS4BswHaAbkB
+        lgFPAUkBrQFxAQIB9wL/DWwD/wNsAfkEbAH5BGwC/wQAAbwB/wHwAfECBwHvAbwB8AEAAv8B9AEIAZcB
+        VQEuAU8BswHaAtkBkAGtAc4BiwHzAv8BkQtsBP8BkQFsAfkGbAH5AmwE/wHrAQ4BFAHwAv8B9AHyAbwB
+        BwHvAf8BDgP/AggBwQFVAS4BTwGQAXEBsgHTAc0BrQG8FP8B+Qj/AfkH/wHvARUBEgETA/8B8gHzAf8B
+        DgT/AfABCAGeAeQCVQIuAYsB1QG8FP8B+Qr/AfkI/wHyAewBEAEOAbwC/wEVAesF/wHzAQgBmAHAAXwB
+        VQFWAe8B9BT/AfkM/wH5Cv8B8wEAAUMBDwHsCP8B9AH/AvQW/wH5Dv8B+RD/AUIBTQE+BwABPgMAASgD
+        AAFAAwABMAMAAQEBAAEBBQABgAEBFgAD//8AggAL
 </value>
   </data>
-  <metadata name="faceAlarmRecordSnapImageDataGVImgCol.UserAddedColumn" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <metadata name="faceAlarmRecordSnapImageDataGVImgCol.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <metadata name="faceAlarmRecordLibImageDataGVImgCol.UserAddedColumn" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <metadata name="faceAlarmRecordLibImageDataGVImgCol.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <metadata name="faceAlarmRecordTimeDataGVTextCol.UserAddedColumn" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <metadata name="faceAlarmRecordTimeDataGVTextCol.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <metadata name="faceAlarmRecordSourceDataGVTextCol.UserAddedColumn" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <metadata name="faceAlarmRecordSourceDataGVTextCol.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <metadata name="faceAlarmRecordNameDataGVTextCol.UserAddedColumn" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <metadata name="faceAlarmRecordNameDataGVTextCol.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <metadata name="faceAlarmRecordIDNoDataGVTextCol.UserAddedColumn" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <metadata name="faceAlarmRecordIDNoDataGVTextCol.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <metadata name="faceAlarmRecordMatchDataGVTextCol.UserAddedColumn" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <metadata name="faceAlarmRecordMatchDataGVTextCol.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <metadata name="facePassThruRecordPanoImageDataGVImgCol.UserAddedColumn" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <metadata name="faceAlarmRecordSnapImageDataGVImgCol.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <metadata name="facePassThruRecordFaceImageDataGVImgCol.UserAddedColumn" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <metadata name="faceAlarmRecordLibImageDataGVImgCol.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <metadata name="facePassThruRecordTimeDataGVTextCol.UserAddedColumn" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <metadata name="faceAlarmRecordTimeDataGVTextCol.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <metadata name="facePassThruRecordAlarmSourceDataGVTextCol.UserAddedColumn" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <metadata name="faceAlarmRecordSourceDataGVTextCol.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <metadata name="LPRAlarmRecordPlateImageDataGVImgCol.UserAddedColumn" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <metadata name="faceAlarmRecordNameDataGVTextCol.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <metadata name="LPRAlarmRecordPlateNoDataGVTextCol.UserAddedColumn" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <metadata name="faceAlarmRecordIDNoDataGVTextCol.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <metadata name="LPRAlarmRecordPlateColorDataGVTextCol.UserAddedColumn" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <metadata name="faceAlarmRecordMatchDataGVTextCol.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <metadata name="LPRAlarmRecordPlateTypeDataGVTextCol.UserAddedColumn" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <metadata name="facePassThruRecordPanoImageDataGVImgCol.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <metadata name="LPRAlarmRecordVehicleColorDataGVTextCol.UserAddedColumn" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <metadata name="facePassThruRecordFaceImageDataGVImgCol.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <metadata name="LPRAlarmRecordCameraNameDataGVTextCol.UserAddedColumn" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <metadata name="facePassThruRecordTimeDataGVTextCol.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <metadata name="LPRAlarmRecordTimeDataGVTextCol.UserAddedColumn" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <metadata name="facePassThruRecordAlarmSourceDataGVTextCol.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <metadata name="deviceOper.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+  <metadata name="facePassThruRecordPanoImageDataGVImgCol.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="facePassThruRecordFaceImageDataGVImgCol.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="facePassThruRecordTimeDataGVTextCol.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="facePassThruRecordAlarmSourceDataGVTextCol.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="LPRAlarmRecordPlateImageDataGVImgCol.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="LPRAlarmRecordPlateNoDataGVTextCol.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="LPRAlarmRecordPlateColorDataGVTextCol.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="LPRAlarmRecordPlateTypeDataGVTextCol.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="LPRAlarmRecordVehicleColorDataGVTextCol.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="LPRAlarmRecordCameraNameDataGVTextCol.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="LPRAlarmRecordTimeDataGVTextCol.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="LPRAlarmRecordPlateImageDataGVImgCol.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="LPRAlarmRecordPlateNoDataGVTextCol.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="LPRAlarmRecordPlateColorDataGVTextCol.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="LPRAlarmRecordPlateTypeDataGVTextCol.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="LPRAlarmRecordVehicleColorDataGVTextCol.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="LPRAlarmRecordCameraNameDataGVTextCol.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="LPRAlarmRecordTimeDataGVTextCol.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="deviceOper.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>123, 17</value>
   </metadata>
-  <metadata name="rootOper.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+  <metadata name="rootOper.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
-  <metadata name="PannelContextMenuStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+  <metadata name="PannelContextMenuStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>357, 17</value>
   </metadata>
-  <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>25</value>
+  <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>70</value>
   </metadata>
 </root>

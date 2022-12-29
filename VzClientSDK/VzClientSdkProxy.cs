@@ -5,7 +5,7 @@ using System.Text;
 using System.Runtime.InteropServices;
 using System.IO;
 using System.Security.Cryptography;
-using System.Data.HardwareInterfaces;
+using System.Data.NHInterfaces;
 
 namespace System.Data.VzClientSDK
 {

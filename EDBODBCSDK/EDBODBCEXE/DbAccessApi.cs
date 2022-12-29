@@ -44,24 +44,6 @@ namespace System.Data.EDBODBCSDK
                         receive.R = res.Data;
                         break;
                     }
-                case nameof(DbAccessProxy.UpdateRows):
-                    {
-                        var args = receive.P.GetJsonObject<RequestDatabaseRowsModel>();
-                        var res = new DbAccessProxy().UpdateRows(args);
-                        receive.C = res.IsSuccess ? PiperSwapModel.ResponseCmd : PiperSwapModel.ErrorCmd;
-                        receive.M = res.Message;
-                        receive.R = res.Data;
-                        break;
-                    }
-                case nameof(DbAccessProxy.UpdateRow):
-                    {
-                        var args = receive.P.GetJsonObject<RequestDatabaseRegularModel>();
-                        var res = new DbAccessProxy().UpdateRow(args);
-                        receive.C = res.IsSuccess ? PiperSwapModel.ResponseCmd : PiperSwapModel.ErrorCmd;
-                        receive.M = res.Message;
-                        receive.R = res.Data;
-                        break;
-                    }
                 case nameof(DbAccessProxy.Execute):
                     {
                         var args = receive.P.GetJsonObject<RequestDatabaseRegularModel>();

@@ -268,7 +268,7 @@ namespace VzClientSDK.WinForm
                     }
                     catch (System.IO.FileNotFoundException exp)
                     {
-
+                        Console.WriteLine(exp);
                     }
                     
                 }

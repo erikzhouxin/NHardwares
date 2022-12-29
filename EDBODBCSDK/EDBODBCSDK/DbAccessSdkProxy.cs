@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Cobber;
 using System.Data.Dabber;
-using System.Data.HardwareInterfaces;
+using System.Data.NHInterfaces;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Pipes;
@@ -19,7 +19,6 @@ namespace System.Data.EDBODBCSDK
         /// <summary>
         /// 获取单个模型
         /// </summary>
-        /// <typeparam name="T"></typeparam>
         /// <param name="args"></param>
         /// <returns></returns>
         IAlertJson GetModel(RequestDatabaseRegularModel args);
@@ -43,18 +42,6 @@ namespace System.Data.EDBODBCSDK
         /// <param name="args"></param>
         /// <returns></returns>
         IAlertMsgs<T> GetModels<T>(RequestDatabaseRegularModel args);
-        /// <summary>
-        /// 更新模型行
-        /// </summary>
-        /// <param name="args"></param>
-        /// <returns></returns>
-        IAlertJson UpdateRow(RequestDatabaseRegularModel args);
-        /// <summary>
-        /// 更新模型行列表
-        /// </summary>
-        /// <param name="args"></param>
-        /// <returns></returns>
-        IAlertJson UpdateRows(RequestDatabaseRowsModel args);
         /// <summary>
         /// 执行脚本内容
         /// </summary>
@@ -220,7 +207,13 @@ namespace System.Data.EDBODBCSDK
 
         public IAlertMsgs<T> GetModels<T>(RequestDatabaseRegularModel args)
         {
-            throw new NotImplementedException();
+            var getModel = GetModels(args);
+            if (getModel.IsSuccess)
+            {
+                return new AlertMsgs<T>(true, "操作成功") { Data = getModel.Data.GetJsonObject<List<T>>() };
+            }
+            Console.WriteLine(getModel);
+            return new AlertMsgs<T>(false, getModel.Message);
         }
 
         public IAlertJson Execute(RequestDatabaseRegularModel args)

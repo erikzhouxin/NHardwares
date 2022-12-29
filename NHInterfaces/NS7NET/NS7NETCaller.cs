@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace System.Data.SerialPort
+namespace System.Data.NS7NET
 {
-    internal class SerialPortTalkModel
+    internal class NS7NETCaller
     {
     }
 }

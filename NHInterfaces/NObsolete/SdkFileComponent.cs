@@ -9,7 +9,9 @@ namespace System.Data.HardwareInterfaces
 {
     /// <summary>
     /// SDK文件组件
+    /// <see cref="System.Data.NHInterfaces.SdkFileComponent"/>
     /// </summary>
+    [Obsolete("替代方案:NHInterfaces.SdkFileComponent,2023.x.x之后的版本将不再提供")]
     public static class SdkFileComponent
     {
         /// <summary>

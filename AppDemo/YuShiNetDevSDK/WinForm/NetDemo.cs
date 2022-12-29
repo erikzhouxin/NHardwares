@@ -693,7 +693,7 @@ namespace YuShiNetDevSDK.WinForm
 
             if (m_curRealPanel.m_recordStatus == false)
             {
-                String temp = string.Copy(LocalSetting.m_strLocalRecordPath);
+                String temp = LocalSetting.m_strLocalRecordPath;
                 DateTime date = DateTime.Now;
                 String curTime = date.ToString("yyMMddHHmmss", DateTimeFormatInfo.InvariantInfo);
                 LocalSetting.m_strLocalRecordPath += "\\";
@@ -2265,7 +2265,7 @@ namespace YuShiNetDevSDK.WinForm
                     return;
                 }
 
-                String strNoPreviewTemp = string.Copy(LocalSetting.m_strPicSavePath);
+                String strNoPreviewTemp = LocalSetting.m_strPicSavePath;
                 DateTime oNoPreviewDate = DateTime.Now;
                 String strNoPreviewCurTime = oNoPreviewDate.ToString("yyMMddHHmmss", DateTimeFormatInfo.InvariantInfo);
                 LocalSetting.m_strPicSavePath += "\\";
@@ -2290,7 +2290,7 @@ namespace YuShiNetDevSDK.WinForm
                 return;
             }
 
-            String strTemp = string.Copy(LocalSetting.m_strPicSavePath);
+            String strTemp = LocalSetting.m_strPicSavePath;
             DateTime oDate = DateTime.Now;
             String strCurTime = oDate.ToString("yyMMddHHmmss", DateTimeFormatInfo.InvariantInfo);
             LocalSetting.m_strPicSavePath += "\\";
@@ -2652,7 +2652,7 @@ namespace YuShiNetDevSDK.WinForm
         {
             foreach (NETDEV_FINDDATA_S findData in m_playBackInfo.m_findPlayBackDataList)
             {
-                DateTime startDateTime = TimeZone.CurrentTimeZone.ToLocalTime(new System.DateTime(1970, 1, 1)); // 
+                DateTime startDateTime = new System.DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Local); // 
                 DateTime beginDateTime = startDateTime.AddSeconds(findData.tBeginTime);
                 DateTime endDateTime = startDateTime.AddSeconds(findData.tEndTime);
 
@@ -2982,7 +2982,7 @@ namespace YuShiNetDevSDK.WinForm
                 return;
             }
 
-            String temp = string.Copy(LocalSetting.m_strPicSavePath);
+            String temp = LocalSetting.m_strPicSavePath;
             DateTime date = DateTime.Now;
             String curTime = date.ToString("yyMMddHHmmss", DateTimeFormatInfo.InvariantInfo);
             LocalSetting.m_strPicSavePath += "\\";
@@ -3358,7 +3358,7 @@ namespace YuShiNetDevSDK.WinForm
                 return;
             }
 
-            String temp = string.Copy(LocalSetting.m_strLocalRecordPath);
+            String temp = LocalSetting.m_strLocalRecordPath;
             DateTime date = DateTime.Now;
             String curTime = date.ToString("yyyyMMddHHmmss", DateTimeFormatInfo.InvariantInfo);
             LocalSetting.m_strLocalRecordPath += "\\";
@@ -6595,13 +6595,13 @@ namespace YuShiNetDevSDK.WinForm
         private long getLongTime(String strTime)
         {
             DateTime dateTime = Convert.ToDateTime(strTime);
-            System.DateTime startTime = TimeZone.CurrentTimeZone.ToLocalTime(new System.DateTime(1970, 1, 1)); // 
+            System.DateTime startTime = new System.DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Local); // 
             return (long)(dateTime - startTime).TotalSeconds; // 
         }
 
         private string getStrTime(long time)
         {
-            DateTime startDateTime = TimeZone.CurrentTimeZone.ToLocalTime(new System.DateTime(1970, 1, 1)); // 
+            DateTime startDateTime = new System.DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Local); // 
             return startDateTime.AddSeconds(time).ToString("yyyy/MM/dd HH:mm:ss");
 
         }
@@ -10424,7 +10424,7 @@ namespace YuShiNetDevSDK.WinForm
             m_deviceInfoList[m_CurSelectTreeNodeInfo.dwDeviceIndex].addRealPlayInfo(objRealPlayInfo);
 
             {
-                String temp = string.Copy(LocalSetting.m_strLocalRecordPath);
+                String temp = LocalSetting.m_strLocalRecordPath;
                 DateTime date = DateTime.Now;
                 String curTime = date.ToString("yyMMddHHmmss", DateTimeFormatInfo.InvariantInfo);
                 LocalSetting.m_strLocalRecordPath += "\\";
