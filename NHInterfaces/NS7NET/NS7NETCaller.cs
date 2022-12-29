@@ -5,7 +5,11 @@ using System.Text;
 
 namespace System.Data.NS7NET
 {
-    internal class NS7NETCaller
+    /// <summary>
+    /// NS7NET调用
+    /// </summary>
+    public static class NS7NETCaller
     {
+
     }
 }
