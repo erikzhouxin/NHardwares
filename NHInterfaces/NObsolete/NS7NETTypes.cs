@@ -7,68 +7,68 @@ using System.Text;
 namespace System.Data.NS7NET
 {
     /// <summary>
-    /// 布尔值(位) <see cref="VarTypeCaller"/>
+    /// 布尔值(位) <see cref="S7NetCaller"/>
     /// </summary>
-    [Obsolete("替代方案:VarTypeCaller.Boolean*")]
+    [Obsolete("替代方案:S7NetCaller.Boolean*")]
     public static class Boolean
     {
         /// <summary>
-        /// 获取值 <see cref="VarTypeCaller.BooleanGetValue"/>
+        /// 获取值 <see cref="S7NetCaller.BooleanGetValue"/>
         /// </summary>
         /// <param name="value"></param>
         /// <param name="bit"></param>
         /// <returns></returns>
-        [Obsolete("替代方案:VarTypeCaller.BooleanGetValue")]
+        [Obsolete("替代方案:S7NetCaller.BooleanGetValue")]
         public static bool GetValue(byte value, int bit)
         {
             return ((int)value & (int)Math.Pow(2.0, (double)bit)) != 0;
         }
         /// <summary>
-        /// 设置位 <see cref="VarTypeCaller.BooleanSetBit"/>
+        /// 设置位 <see cref="S7NetCaller.BooleanSetBit"/>
         /// </summary>
         /// <param name="value"></param>
         /// <param name="bit"></param>
         /// <returns></returns>
-        [Obsolete("替代方案:VarTypeCaller.BooleanSetBit")]
+        [Obsolete("替代方案:S7NetCaller.BooleanSetBit")]
         public static byte SetBit(byte value, int bit)
         {
             return (byte)(value | (byte)Math.Pow(2.0, (double)bit));
         }
         /// <summary>
-        /// 清除位 <see cref="VarTypeCaller.BooleanClearBit"/>
+        /// 清除位 <see cref="S7NetCaller.BooleanClearBit"/>
         /// </summary>
         /// <param name="value"></param>
         /// <param name="bit"></param>
         /// <returns></returns>
-        [Obsolete("替代方案:VarTypeCaller.BooleanClearBit")]
+        [Obsolete("替代方案:S7NetCaller.BooleanClearBit")]
         public static byte ClearBit(byte value, int bit)
         {
             return (byte)(value & ~(byte)Math.Pow(2.0, (double)bit));
         }
     }
     /// <summary>
-    /// 字节 <see cref="VarTypeCaller"/>
+    /// 字节 <see cref="S7NetCaller"/>
     /// </summary>
     [Obsolete("替代方案:VarTypeCaller")]
     public static class Byte
     {
         /// <summary>
-        /// 转换成数组 <see cref="VarTypeCaller.ByteToByteArray"/>
+        /// 转换成数组 <see cref="S7NetCaller.ByteToByteArray"/>
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        [Obsolete("替代方案:VarTypeCaller.ByteToByteArray")]
+        [Obsolete("替代方案:S7NetCaller.ByteToByteArray")]
         public static byte[] ToByteArray(byte value)
         {
             return new byte[] { value };
         }
         /// <summary>
-        /// 取得只有一个元素的内容 <see cref="VarTypeCaller.ByteFromByteArray"/>
+        /// 取得只有一个元素的内容 <see cref="S7NetCaller.ByteFromByteArray"/>
         /// </summary>
         /// <param name="bytes"></param>
         /// <returns></returns>
         /// <exception cref="ArgumentException"></exception>
-        [Obsolete("替代方案:VarTypeCaller.ByteFromByteArray")]
+        [Obsolete("替代方案:S7NetCaller.ByteFromByteArray")]
         public static byte FromByteArray(byte[] bytes)
         {
             if (bytes?.Length == 1) { return bytes[0]; }
@@ -76,17 +76,17 @@ namespace System.Data.NS7NET
         }
     }
     /// <summary>
-    /// 类内容 <see cref="VarTypeCaller"/>
+    /// 类内容 <see cref="S7NetCaller"/>
     /// </summary>
-    [Obsolete("替代方案:VarTypeCaller.Class*")]
+    [Obsolete("替代方案:S7NetCaller.Class*")]
     public static class Class
     {
         /// <summary>
-        /// 获取类长度 <see cref="VarTypeCaller.ClassGetSize"/>
+        /// 获取类长度 <see cref="S7NetCaller.ClassGetSize"/>
         /// </summary>
         /// <param name="classType"></param>
         /// <returns></returns>
-        [Obsolete("替代方案:VarTypeCaller.ClassGetSize")]
+        [Obsolete("替代方案:S7NetCaller.ClassGetSize")]
         public static int GetClassSize(Type classType)
         {
             double num = 0.0;
@@ -96,7 +96,7 @@ namespace System.Data.NS7NET
             {
                 PropertyInfo propertyInfo = properties[i];
                 string name = propertyInfo.PropertyType.Name;
-                uint num2 = VarTypeCaller.ComputeStringHash(name);
+                uint num2 = S7NetCaller.ComputeStringHash(name);
                 if (num2 <= 2386971688U)
                 {
                     if (num2 <= 1283547685U)
@@ -206,12 +206,12 @@ namespace System.Data.NS7NET
             return (int)num;
         }
         /// <summary>
-        /// 从字节中赋值 <see cref="VarTypeCaller.ClassFromBytes"/>
+        /// 从字节中赋值 <see cref="S7NetCaller.ClassFromBytes"/>
         /// </summary>
         /// <param name="sourceClass"></param>
         /// <param name="classType"></param>
         /// <param name="bytes"></param>
-        [Obsolete("替代方案:VarTypeCaller.ClassFromBytes")]
+        [Obsolete("替代方案:S7NetCaller.ClassFromBytes")]
         public static void FromBytes(object sourceClass, Type classType, byte[] bytes)
         {
             if (bytes == null) { return; }
@@ -223,7 +223,7 @@ namespace System.Data.NS7NET
             {
                 PropertyInfo propertyInfo = properties[i];
                 string name = propertyInfo.PropertyType.Name;
-                uint num2 = VarTypeCaller.ComputeStringHash(name);
+                uint num2 = S7NetCaller.ComputeStringHash(name);
                 if (num2 <= 2386971688U)
                 {
                     if (num2 != 765439473U)
@@ -369,11 +369,11 @@ namespace System.Data.NS7NET
             }
         }
         /// <summary>
-        /// 类转换成字节 <see cref="VarTypeCaller.ClassToBytes"/>
+        /// 类转换成字节 <see cref="S7NetCaller.ClassToBytes"/>
         /// </summary>
         /// <param name="sourceClass"></param>
         /// <returns></returns>
-        [Obsolete("替代方案:VarTypeCaller.ClassToBytes")]
+        [Obsolete("替代方案:S7NetCaller.ClassToBytes")]
         public static byte[] ToBytes(object sourceClass)
         {
             byte[] array = new byte[Class.GetClassSize(sourceClass.GetType())];
@@ -382,7 +382,7 @@ namespace System.Data.NS7NET
             {
                 byte[] array2 = null;
                 string name = propertyInfo.PropertyType.Name;
-                uint num2 = VarTypeCaller.ComputeStringHash(name);
+                uint num2 = S7NetCaller.ComputeStringHash(name);
                 if (num2 <= 2386971688U)
                 {
                     if (num2 != 765439473U)
@@ -474,18 +474,18 @@ namespace System.Data.NS7NET
         }
     }
     /// <summary>
-    /// 计数器 <see cref="VarTypeCaller"/>
+    /// 计数器 <see cref="S7NetCaller"/>
     /// </summary>
-    [Obsolete("替代方案:VarTypeCaller.Counter*")]
+    [Obsolete("替代方案:S7NetCaller.Counter*")]
     public static class Counter
     {
         /// <summary>
-        /// 从字节数组创建 <see cref="VarTypeCaller.CounterFromByteArray"/>
+        /// 从字节数组创建 <see cref="S7NetCaller.CounterFromByteArray"/>
         /// </summary>
         /// <param name="bytes"></param>
         /// <returns></returns>
         /// <exception cref="ArgumentException"></exception>
-        [Obsolete("替代方案:VarTypeCaller.CounterFromByteArray")]
+        [Obsolete("替代方案:S7NetCaller.CounterFromByteArray")]
         public static ushort FromByteArray(byte[] bytes)
         {
             if (bytes.Length != 2)
@@ -496,21 +496,21 @@ namespace System.Data.NS7NET
         }
 
         /// <summary>
-        /// 从高位/低位创建 <see cref="VarTypeCaller.CounterFromBytes"/>
+        /// 从高位/低位创建 <see cref="S7NetCaller.CounterFromBytes"/>
         /// </summary>
         /// <returns></returns>
         /// <exception cref="ArgumentException"></exception>
-        [Obsolete("替代方案:VarTypeCaller.CounterFromBytes")]
+        [Obsolete("替代方案:S7NetCaller.CounterFromBytes")]
         public static ushort FromBytes(byte LoVal, byte HiVal)
         {
             return (ushort)((int)HiVal * 256 + (int)LoVal);
         }
         /// <summary>
-        /// 转换成字节数组 <see cref="VarTypeCaller.CounterToByteArray(ushort)"/>
+        /// 转换成字节数组 <see cref="S7NetCaller.CounterToByteArray(ushort)"/>
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        [Obsolete("替代方案:VarTypeCaller.CounterToByteArray")]
+        [Obsolete("替代方案:S7NetCaller.CounterToByteArray")]
         public static byte[] ToByteArray(ushort value)
         {
             byte[] array = new byte[2];
@@ -526,11 +526,11 @@ namespace System.Data.NS7NET
             return array;
         }
         /// <summary>
-        /// 转换成字节数组 <see cref="VarTypeCaller.CounterToByteArray(ushort[])"/>
+        /// 转换成字节数组 <see cref="S7NetCaller.CounterToByteArray(ushort[])"/>
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        [Obsolete("替代方案:VarTypeCaller.CounterToByteArray")]
+        [Obsolete("替代方案:S7NetCaller.CounterToByteArray")]
         public static byte[] ToByteArray(ushort[] value)
         {
             ByteArray byteArray = new ByteArray();
@@ -541,11 +541,11 @@ namespace System.Data.NS7NET
             return byteArray.Array;
         }
         /// <summary>
-        /// 转换成计数数组 <see cref="VarTypeCaller.CounterToArray"/>
+        /// 转换成计数数组 <see cref="S7NetCaller.CounterToArray"/>
         /// </summary>
         /// <param name="bytes"></param>
         /// <returns></returns>
-        [Obsolete("替代方案:VarTypeCaller.CounterToArray")]
+        [Obsolete("替代方案:S7NetCaller.CounterToArray")]
         public static ushort[] ToArray(byte[] bytes)
         {
             ushort[] array = new ushort[bytes.Length / 2];
@@ -562,18 +562,18 @@ namespace System.Data.NS7NET
         }
     }
     /// <summary>
-    /// 整型 <see cref="VarTypeCaller"/>
+    /// 整型 <see cref="S7NetCaller"/>
     /// </summary>
-    [Obsolete("替代方案:VarTypeCaller.DInt*")]
+    [Obsolete("替代方案:S7NetCaller.DInt*")]
     public static class DInt
     {
         /// <summary>
-        /// 从字节转换 <see cref="VarTypeCaller.DIntFromByteArray"/>
+        /// 从字节转换 <see cref="S7NetCaller.DIntFromByteArray"/>
         /// </summary>
         /// <param name="bytes"></param>
         /// <returns></returns>
         /// <exception cref="ArgumentException"></exception>
-        [Obsolete("替代方案:VarTypeCaller.DIntFromByteArray")]
+        [Obsolete("替代方案:S7NetCaller.DIntFromByteArray")]
         public static int FromByteArray(byte[] bytes)
         {
             if (bytes.Length != 4)
@@ -583,24 +583,24 @@ namespace System.Data.NS7NET
             return DInt.FromBytes(bytes[3], bytes[2], bytes[1], bytes[0]);
         }
         /// <summary>
-        /// 从字节转换 <see cref="VarTypeCaller.DIntFromBytes"/>
+        /// 从字节转换 <see cref="S7NetCaller.DIntFromBytes"/>
         /// </summary>
         /// <param name="v1"></param>
         /// <param name="v2"></param>
         /// <param name="v3"></param>
         /// <param name="v4"></param>
         /// <returns></returns>
-        [Obsolete("替代方案:VarTypeCaller.DIntFromBytes")]
+        [Obsolete("替代方案:S7NetCaller.DIntFromBytes")]
         public static int FromBytes(byte v1, byte v2, byte v3, byte v4)
         {
             return (int)((double)v1 + (double)v2 * Math.Pow(2.0, 8.0) + (double)v3 * Math.Pow(2.0, 16.0) + (double)v4 * Math.Pow(2.0, 24.0));
         }
         /// <summary>
-        /// 转换成字节数组 <see cref="VarTypeCaller.DIntToByteArray(int)"/>
+        /// 转换成字节数组 <see cref="S7NetCaller.DIntToByteArray(int)"/>
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        [Obsolete("替代方案:VarTypeCaller.DIntToByteArray")]
+        [Obsolete("替代方案:S7NetCaller.DIntToByteArray")]
         public static byte[] ToByteArray(int value)
         {
             byte[] array = new byte[4];
@@ -616,11 +616,11 @@ namespace System.Data.NS7NET
             return array;
         }
         /// <summary>
-        /// 转换成字节数组 <see cref="VarTypeCaller.DIntToByteArray(int[])"/>
+        /// 转换成字节数组 <see cref="S7NetCaller.DIntToByteArray(int[])"/>
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        [Obsolete("替代方案:VarTypeCaller.DIntToByteArray")]
+        [Obsolete("替代方案:S7NetCaller.DIntToByteArray")]
         public static byte[] ToByteArray(int[] value)
         {
             ByteArray byteArray = new ByteArray();
@@ -631,11 +631,11 @@ namespace System.Data.NS7NET
             return byteArray.Array;
         }
         /// <summary>
-        /// 转换成整型数组 <see cref="VarTypeCaller.DIntToArray"/>
+        /// 转换成整型数组 <see cref="S7NetCaller.DIntToArray"/>
         /// </summary>
         /// <param name="bytes"></param>
         /// <returns></returns>
-        [Obsolete("替代方案:VarTypeCaller.DIntToArray")]
+        [Obsolete("替代方案:S7NetCaller.DIntToArray")]
         public static int[] ToArray(byte[] bytes)
         {
             int[] array = new int[bytes.Length / 4];
@@ -653,11 +653,11 @@ namespace System.Data.NS7NET
             return array;
         }
         /// <summary>
-        /// 长整型转换 <see cref="VarTypeCaller.DIntCDWord"/>
+        /// 长整型转换 <see cref="S7NetCaller.DIntCDWord"/>
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        [Obsolete("替代方案:VarTypeCaller.DIntCDWord")]
+        [Obsolete("替代方案:S7NetCaller.DIntCDWord")]
         public static int CDWord(long value)
         {
             if (value > 2147483647L)
@@ -671,18 +671,18 @@ namespace System.Data.NS7NET
         }
     }
     /// <summary>
-    /// 浮点数 <see cref="VarTypeCaller"/>
+    /// 浮点数 <see cref="S7NetCaller"/>
     /// </summary>
-    [Obsolete("替代方案:VarTypeCaller.Double*")]
+    [Obsolete("替代方案:S7NetCaller.Double*")]
     public static class Double
     {
         /// <summary>
-        /// 从字节转换 <see cref="VarTypeCaller.DoubleFromByteArray"/>
+        /// 从字节转换 <see cref="S7NetCaller.DoubleFromByteArray"/>
         /// </summary>
         /// <param name="bytes"></param>
         /// <returns></returns>
         /// <exception cref="ArgumentException"></exception>
-        [Obsolete("替代方案:VarTypeCaller.DoubleFromByteArray")]
+        [Obsolete("替代方案:S7NetCaller.DoubleFromByteArray")]
         public static double FromByteArray(byte[] bytes)
         {
             if (bytes.Length != 4)
@@ -714,31 +714,31 @@ namespace System.Data.NS7NET
             return Math.Pow(-1.0, (double)num) * Math.Pow(2.0, (double)(num2 - 127)) * num3;
         }
         /// <summary>
-        /// 从整型转换 <see cref="VarTypeCaller.DoubleFromDWord(int)"/>
+        /// 从整型转换 <see cref="S7NetCaller.DoubleFromDWord(int)"/>
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        [Obsolete("替代方案:VarTypeCaller.DoubleFromDWord")]
+        [Obsolete("替代方案:S7NetCaller.DoubleFromDWord")]
         public static double FromDWord(int value)
         {
             return Double.FromByteArray(DInt.ToByteArray(value));
         }
         /// <summary>
-        /// 从无符号整型转换 <see cref="VarTypeCaller.DoubleFromDWord(uint)"/>
+        /// 从无符号整型转换 <see cref="S7NetCaller.DoubleFromDWord(uint)"/>
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        [Obsolete("替代方案:VarTypeCaller.DoubleFromDWord")]
+        [Obsolete("替代方案:S7NetCaller.DoubleFromDWord")]
         public static double FromDWord(uint value)
         {
             return Double.FromByteArray(DWord.ToByteArray(value));
         }
         /// <summary>
-        /// 转换成字节数组 <see cref="VarTypeCaller.DoubleToByteArray(double)"/>
+        /// 转换成字节数组 <see cref="S7NetCaller.DoubleToByteArray(double)"/>
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        [Obsolete("替代方案:VarTypeCaller.DoubleToByteArray")]
+        [Obsolete("替代方案:S7NetCaller.DoubleToByteArray")]
         public static byte[] ToByteArray(double value)
         {
             double num = value;
@@ -785,11 +785,11 @@ namespace System.Data.NS7NET
             return array;
         }
         /// <summary>
-        /// 转换成字节数组 <see cref="VarTypeCaller.DoubleToByteArray(double[])"/>
+        /// 转换成字节数组 <see cref="S7NetCaller.DoubleToByteArray(double[])"/>
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        [Obsolete("替代方案:VarTypeCaller.DoubleToByteArray")]
+        [Obsolete("替代方案:S7NetCaller.DoubleToByteArray")]
         public static byte[] ToByteArray(double[] value)
         {
             ByteArray byteArray = new ByteArray();
@@ -800,11 +800,11 @@ namespace System.Data.NS7NET
             return byteArray.Array;
         }
         /// <summary>
-        /// 转换成浮点数组 <see cref="VarTypeCaller.DoubleToArray"/>
+        /// 转换成浮点数组 <see cref="S7NetCaller.DoubleToArray"/>
         /// </summary>
         /// <param name="bytes"></param>
         /// <returns></returns>
-        [Obsolete("替代方案:VarTypeCaller.DoubleToArray")]
+        [Obsolete("替代方案:S7NetCaller.DoubleToArray")]
         public static double[] ToArray(byte[] bytes)
         {
             double[] array = new double[bytes.Length / 4];
@@ -822,11 +822,11 @@ namespace System.Data.NS7NET
             return array;
         }
         /// <summary>
-        /// 转换成位字符串 <see cref="VarTypeCaller.DoubleValToBinString"/>
+        /// 转换成位字符串 <see cref="S7NetCaller.DoubleValToBinString"/>
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        [Obsolete("替代方案:VarTypeCaller.DoubleValToBinString")]
+        [Obsolete("替代方案:S7NetCaller.DoubleValToBinString")]
         private static string ValToBinString(byte value)
         {
             string text = "";
@@ -844,11 +844,11 @@ namespace System.Data.NS7NET
             return text;
         }
         /// <summary>
-        /// 转换成字节 <see cref="VarTypeCaller.DoubleBinStringToByte"/>
+        /// 转换成字节 <see cref="S7NetCaller.DoubleBinStringToByte"/>
         /// </summary>
         /// <param name="txt"></param>
         /// <returns></returns>
-        [Obsolete("替代方案:VarTypeCaller.DoubleBinStringToByte")]
+        [Obsolete("替代方案:S7NetCaller.DoubleBinStringToByte")]
         private static byte? BinStringToByte(string txt)
         {
             int num = 0;
@@ -867,9 +867,9 @@ namespace System.Data.NS7NET
         }
     }
     /// <summary>
-    /// 无符号整型 <see cref="VarTypeCaller"/>
+    /// 无符号整型 <see cref="S7NetCaller"/>
     /// </summary>
-    [Obsolete("替代方案:VarTypeCaller.DWord*")]
+    [Obsolete("替代方案:S7NetCaller.DWord*")]
     public static class DWord
     {
         /// <summary>
@@ -877,7 +877,7 @@ namespace System.Data.NS7NET
         /// </summary>
         /// <param name="bytes"></param>
         /// <returns></returns>
-        [Obsolete("替代方案:VarTypeCaller.DWordFromByteArray")]
+        [Obsolete("替代方案:S7NetCaller.DWordFromByteArray")]
         public static uint FromByteArray(byte[] bytes)
         {
             return DWord.FromBytes(bytes[3], bytes[2], bytes[1], bytes[0]);
@@ -890,7 +890,7 @@ namespace System.Data.NS7NET
         /// <param name="v3"></param>
         /// <param name="v4"></param>
         /// <returns></returns>
-        [Obsolete("替代方案:VarTypeCaller.DWordFromBytes")]
+        [Obsolete("替代方案:S7NetCaller.DWordFromBytes")]
         public static uint FromBytes(byte v1, byte v2, byte v3, byte v4)
         {
             return (uint)((double)v1 + (double)v2 * Math.Pow(2.0, 8.0) + (double)v3 * Math.Pow(2.0, 16.0) + (double)v4 * Math.Pow(2.0, 24.0));
@@ -900,7 +900,7 @@ namespace System.Data.NS7NET
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        [Obsolete("替代方案:VarTypeCaller.DWordToByteArray")]
+        [Obsolete("替代方案:S7NetCaller.DWordToByteArray")]
         public static byte[] ToByteArray(uint value)
         {
             byte[] array = new byte[4];
@@ -920,7 +920,7 @@ namespace System.Data.NS7NET
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        [Obsolete("替代方案:VarTypeCaller.DWordToByteArray")]
+        [Obsolete("替代方案:S7NetCaller.DWordToByteArray")]
         public static byte[] ToByteArray(uint[] value)
         {
             ByteArray byteArray = new ByteArray();
@@ -935,7 +935,7 @@ namespace System.Data.NS7NET
         /// </summary>
         /// <param name="bytes"></param>
         /// <returns></returns>
-        [Obsolete("替代方案:VarTypeCaller.DWordToArray")]
+        [Obsolete("替代方案:S7NetCaller.DWordToArray")]
         public static uint[] ToArray(byte[] bytes)
         {
             uint[] array = new uint[bytes.Length / 4];
@@ -954,18 +954,18 @@ namespace System.Data.NS7NET
         }
     }
     /// <summary>
-    /// 短整型 <see cref="VarTypeCaller"/>
+    /// 短整型 <see cref="S7NetCaller"/>
     /// </summary>
-    [Obsolete("替代方案:VarTypeCaller.Int*")]
+    [Obsolete("替代方案:S7NetCaller.Int*")]
     public static class Int
     {
         /// <summary>
-        /// 从字节数组 <see cref="VarTypeCaller.IntFromByteArray"/>
+        /// 从字节数组 <see cref="S7NetCaller.IntFromByteArray"/>
         /// </summary>
         /// <param name="bytes"></param>
         /// <returns></returns>
         /// <exception cref="ArgumentException"></exception>
-        [Obsolete("替代方案:VarTypeCaller.IntFromByteArray")]
+        [Obsolete("替代方案:S7NetCaller.IntFromByteArray")]
         public static short FromByteArray(byte[] bytes)
         {
             if (bytes.Length != 2)
@@ -975,22 +975,22 @@ namespace System.Data.NS7NET
             return Int.FromBytes(bytes[1], bytes[0]);
         }
         /// <summary>
-        /// 从字节 <see cref="VarTypeCaller.IntFromBytes"/>
+        /// 从字节 <see cref="S7NetCaller.IntFromBytes"/>
         /// </summary>
         /// <param name="LoVal"></param>
         /// <param name="HiVal"></param>
         /// <returns></returns>
-        [Obsolete("替代方案:VarTypeCaller.IntFromBytes")]
+        [Obsolete("替代方案:S7NetCaller.IntFromBytes")]
         public static short FromBytes(byte LoVal, byte HiVal)
         {
             return (short)((int)HiVal * 256 + (int)LoVal);
         }
         /// <summary>
-        /// 转换成字节数组 <see cref="VarTypeCaller.IntToByteArray(short)"/>
+        /// 转换成字节数组 <see cref="S7NetCaller.IntToByteArray(short)"/>
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        [Obsolete("替代方案:VarTypeCaller.IntToByteArray")]
+        [Obsolete("替代方案:S7NetCaller.IntToByteArray")]
         public static byte[] ToByteArray(short value)
         {
             byte[] array = new byte[2];
@@ -1006,11 +1006,11 @@ namespace System.Data.NS7NET
             return array;
         }
         /// <summary>
-        /// 转换成字节数组 <see cref="VarTypeCaller.IntToByteArray(short[])"/>
+        /// 转换成字节数组 <see cref="S7NetCaller.IntToByteArray(short[])"/>
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        [Obsolete("替代方案:VarTypeCaller.IntToByteArray")]
+        [Obsolete("替代方案:S7NetCaller.IntToByteArray")]
         public static byte[] ToByteArray(short[] value)
         {
             ByteArray byteArray = new ByteArray();
@@ -1021,11 +1021,11 @@ namespace System.Data.NS7NET
             return byteArray.Array;
         }
         /// <summary>
-        /// 转换成数组 <see cref="VarTypeCaller.IntToArray"/>
+        /// 转换成数组 <see cref="S7NetCaller.IntToArray"/>
         /// </summary>
         /// <param name="bytes"></param>
         /// <returns></returns>
-        [Obsolete("替代方案:VarTypeCaller.IntToArray")]
+        [Obsolete("替代方案:S7NetCaller.IntToArray")]
         public static short[] ToArray(byte[] bytes)
         {
             short[] array = new short[bytes.Length / 2];
@@ -1041,11 +1041,11 @@ namespace System.Data.NS7NET
             return array;
         }
         /// <summary>
-        /// 转换成值 <see cref="VarTypeCaller.IntCWord"/>
+        /// 转换成值 <see cref="S7NetCaller.IntCWord"/>
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        [Obsolete("替代方案:VarTypeCaller.IntCWord")]
+        [Obsolete("替代方案:S7NetCaller.IntCWord")]
         public static short CWord(int value)
         {
             if (value > 32767)
@@ -1058,17 +1058,17 @@ namespace System.Data.NS7NET
         }
     }
     /// <summary>
-    /// 字符串 <see cref="VarTypeCaller"/>
+    /// 字符串 <see cref="S7NetCaller"/>
     /// </summary>
-    [Obsolete("替代方案:VarTypeCaller.String*")]
+    [Obsolete("替代方案:S7NetCaller.String*")]
     public static class String
     {
         /// <summary>
-        /// 字符串转换成字节数组 <see cref="VarTypeCaller.StringToByteArray"/>
+        /// 字符串转换成字节数组 <see cref="S7NetCaller.StringToByteArray"/>
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        [Obsolete("替代方案:VarTypeCaller.StringToByteArray")]
+        [Obsolete("替代方案:S7NetCaller.StringToByteArray")]
         public static byte[] ToByteArray(string value)
         {
             char[] array = value.ToCharArray();
@@ -1080,16 +1080,16 @@ namespace System.Data.NS7NET
             return array2;
         }
         /// <summary>
-        /// 从字节数组转换 <see cref="VarTypeCaller.StringFromByteArray"/>
+        /// 从字节数组转换 <see cref="S7NetCaller.StringFromByteArray"/>
         /// </summary>
         /// <param name="bytes"></param>
         /// <returns></returns>
-        [Obsolete("替代方案:VarTypeCaller.StringFromByteArray")]
+        [Obsolete("替代方案:S7NetCaller.StringFromByteArray")]
         public static string FromByteArray(byte[] bytes)
         {
             return Encoding.ASCII.GetString(bytes);
         }
-        [Obsolete("替代方案:VarTypeCaller.StringAsc")]
+        [Obsolete("替代方案:S7NetCaller.StringAsc")]
         private static int Asc(string s)
         {
             byte[] bytes = Encoding.ASCII.GetBytes(s);
@@ -1101,17 +1101,17 @@ namespace System.Data.NS7NET
         }
     }
     /// <summary>
-    /// 结构体 <see cref="VarTypeCaller"/>
+    /// 结构体 <see cref="S7NetCaller"/>
     /// </summary>
-    [Obsolete("替代方案:VarTypeCaller.Struct*")]
+    [Obsolete("替代方案:S7NetCaller.Struct*")]
     public static class Struct
     {
         /// <summary>
-        /// 获取结构体长度 <see cref="VarTypeCaller.StructGetSize"/>
+        /// 获取结构体长度 <see cref="S7NetCaller.StructGetSize"/>
         /// </summary>
         /// <param name="structType"></param>
         /// <returns></returns>
-        [Obsolete("替代方案:VarTypeCaller.StructGetSize")]
+        [Obsolete("替代方案:S7NetCaller.StructGetSize")]
         public static int GetStructSize(Type structType)
         {
             double num = 0.0;
@@ -1121,7 +1121,7 @@ namespace System.Data.NS7NET
             {
                 FieldInfo fieldInfo = fields[i];
                 string name = fieldInfo.FieldType.Name;
-                uint num2 = VarTypeCaller.ComputeStringHash(name);
+                uint num2 = S7NetCaller.ComputeStringHash(name);
                 if (num2 <= 2386971688U)
                 {
                     if (num2 <= 1283547685U)
@@ -1231,12 +1231,12 @@ namespace System.Data.NS7NET
             return (int)num;
         }
         /// <summary>
-        /// 从字节转换 <see cref="VarTypeCaller.StructFromBytes"/>
+        /// 从字节转换 <see cref="S7NetCaller.StructFromBytes"/>
         /// </summary>
         /// <param name="structType"></param>
         /// <param name="bytes"></param>
         /// <returns></returns>
-        [Obsolete("替代方案:VarTypeCaller.StructFromBytes")]
+        [Obsolete("替代方案:S7NetCaller.StructFromBytes")]
         public static object FromBytes(Type structType, byte[] bytes)
         {
             if (bytes == null)
@@ -1255,7 +1255,7 @@ namespace System.Data.NS7NET
             {
                 FieldInfo fieldInfo = fields[i];
                 string name = fieldInfo.FieldType.Name;
-                uint num2 = VarTypeCaller.ComputeStringHash(name);
+                uint num2 = S7NetCaller.ComputeStringHash(name);
                 if (num2 <= 2386971688U)
                 {
                     if (num2 != 765439473U)
@@ -1400,11 +1400,11 @@ namespace System.Data.NS7NET
             return obj;
         }
         /// <summary>
-        /// 转换成字节 <see cref="VarTypeCaller.StructToBytes"/>
+        /// 转换成字节 <see cref="S7NetCaller.StructToBytes"/>
         /// </summary>
         /// <param name="structValue"></param>
         /// <returns></returns>
-        [Obsolete("替代方案:VarTypeCaller.StructToBytes")]
+        [Obsolete("替代方案:S7NetCaller.StructToBytes")]
         public static byte[] ToBytes(object structValue)
         {
             Type type = structValue.GetType();
@@ -1414,7 +1414,7 @@ namespace System.Data.NS7NET
             {
                 byte[] array2 = null;
                 string name = fieldInfo.FieldType.Name;
-                uint num2 = VarTypeCaller.ComputeStringHash(name);
+                uint num2 = S7NetCaller.ComputeStringHash(name);
                 if (num2 <= 2386971688U)
                 {
                     if (num2 != 765439473U)
@@ -1506,17 +1506,17 @@ namespace System.Data.NS7NET
         }
     }
     /// <summary>
-    /// 计时器 <see cref="VarTypeCaller"/>
+    /// 计时器 <see cref="S7NetCaller"/>
     /// </summary>
-    [Obsolete("替代方案:VarTypeCaller.Timer*")]
+    [Obsolete("替代方案:S7NetCaller.Timer*")]
     public static class Timer
     {
         /// <summary>
-        /// 从字节数组 <see cref="VarTypeCaller.TimerFromByteArray"/>
+        /// 从字节数组 <see cref="S7NetCaller.TimerFromByteArray"/>
         /// </summary>
         /// <param name="bytes"></param>
         /// <returns></returns>
-        [Obsolete("替代方案:VarTypeCaller.TimerFromByteArray")]
+        [Obsolete("替代方案:S7NetCaller.TimerFromByteArray")]
         public static double FromByteArray(byte[] bytes)
         {
             string text = ((short)Word.FromBytes(bytes[1], bytes[0])).ValToBinString();
@@ -1552,11 +1552,11 @@ namespace System.Data.NS7NET
             return num;
         }
         /// <summary>
-        /// 转换成字节数组 <see cref="VarTypeCaller.TimerToByteArray(ushort)"/>
+        /// 转换成字节数组 <see cref="S7NetCaller.TimerToByteArray(ushort)"/>
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        [Obsolete("替代方案:VarTypeCaller.TimerToByteArray")]
+        [Obsolete("替代方案:S7NetCaller.TimerToByteArray")]
         public static byte[] ToByteArray(ushort value)
         {
             byte[] array = new byte[2];
@@ -1572,11 +1572,11 @@ namespace System.Data.NS7NET
             return array;
         }
         /// <summary>
-        /// 转换成字节数组 <see cref="VarTypeCaller.TimerToByteArray(ushort[])"/>
+        /// 转换成字节数组 <see cref="S7NetCaller.TimerToByteArray(ushort[])"/>
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        [Obsolete("替代方案:VarTypeCaller.TimerToByteArray")]
+        [Obsolete("替代方案:S7NetCaller.TimerToByteArray")]
         public static byte[] ToByteArray(ushort[] value)
         {
             ByteArray byteArray = new ByteArray();
@@ -1587,11 +1587,11 @@ namespace System.Data.NS7NET
             return byteArray.Array;
         }
         /// <summary>
-        /// 转换成浮点数组 <see cref="VarTypeCaller.TimerToArray"/>
+        /// 转换成浮点数组 <see cref="S7NetCaller.TimerToArray"/>
         /// </summary>
         /// <param name="bytes"></param>
         /// <returns></returns>
-        [Obsolete("替代方案:VarTypeCaller.TimerToArray")]
+        [Obsolete("替代方案:S7NetCaller.TimerToArray")]
         public static double[] ToArray(byte[] bytes)
         {
             double[] array = new double[bytes.Length / 2];
@@ -1608,18 +1608,18 @@ namespace System.Data.NS7NET
         }
     }
     /// <summary>
-    /// 无符号短整型 <see cref="VarTypeCaller"/>
+    /// 无符号短整型 <see cref="S7NetCaller"/>
     /// </summary>
-    [Obsolete("替代方案:VarTypeCaller.Word*")]
+    [Obsolete("替代方案:S7NetCaller.Word*")]
     public static class Word
     {
         /// <summary>
-        /// 从字节数组转换 <see cref="VarTypeCaller.WordFromByteArray"/>
+        /// 从字节数组转换 <see cref="S7NetCaller.WordFromByteArray"/>
         /// </summary>
         /// <param name="bytes"></param>
         /// <returns></returns>
         /// <exception cref="ArgumentException"></exception>
-        [Obsolete("替代方案:VarTypeCaller.WordFromByteArray")]
+        [Obsolete("替代方案:S7NetCaller.WordFromByteArray")]
         public static ushort FromByteArray(byte[] bytes)
         {
             if (bytes.Length != 2)
@@ -1629,22 +1629,22 @@ namespace System.Data.NS7NET
             return Word.FromBytes(bytes[1], bytes[0]);
         }
         /// <summary>
-        /// 转换成无符号整型 <see cref="VarTypeCaller.WordFromBytes"/>
+        /// 转换成无符号整型 <see cref="S7NetCaller.WordFromBytes"/>
         /// </summary>
         /// <param name="LoVal"></param>
         /// <param name="HiVal"></param>
         /// <returns></returns>
-        [Obsolete("替代方案:VarTypeCaller.WordFromBytes")]
+        [Obsolete("替代方案:S7NetCaller.WordFromBytes")]
         public static ushort FromBytes(byte LoVal, byte HiVal)
         {
             return (ushort)((int)HiVal * 256 + (int)LoVal);
         }
         /// <summary>
-        /// 转换成字节数组 <see cref="VarTypeCaller.WordToByteArray(ushort)"/>
+        /// 转换成字节数组 <see cref="S7NetCaller.WordToByteArray(ushort)"/>
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        [Obsolete("替代方案:VarTypeCaller.WordToByteArray")]
+        [Obsolete("替代方案:S7NetCaller.WordToByteArray")]
         public static byte[] ToByteArray(ushort value)
         {
             byte[] array = new byte[2];
@@ -1660,11 +1660,11 @@ namespace System.Data.NS7NET
             return array;
         }
         /// <summary>
-        /// 转换成字节数组 <see cref="VarTypeCaller.WordToByteArray(ushort[])"/>
+        /// 转换成字节数组 <see cref="S7NetCaller.WordToByteArray(ushort[])"/>
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        [Obsolete("替代方案:VarTypeCaller.WordToByteArray")]
+        [Obsolete("替代方案:S7NetCaller.WordToByteArray")]
         public static byte[] ToByteArray(ushort[] value)
         {
             ByteArray byteArray = new ByteArray();
@@ -1675,11 +1675,11 @@ namespace System.Data.NS7NET
             return byteArray.Array;
         }
         /// <summary>
-        /// 转换成无符号短整型数组 <see cref="VarTypeCaller.WordToArray"/>
+        /// 转换成无符号短整型数组 <see cref="S7NetCaller.WordToArray"/>
         /// </summary>
         /// <param name="bytes"></param>
         /// <returns></returns>
-        [Obsolete("替代方案:VarTypeCaller.WordToArray")]
+        [Obsolete("替代方案:S7NetCaller.WordToArray")]
         public static ushort[] ToArray(byte[] bytes)
         {
             ushort[] array = new ushort[bytes.Length / 2];

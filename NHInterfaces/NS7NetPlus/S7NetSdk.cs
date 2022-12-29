@@ -8,7 +8,7 @@ namespace System.Data.NS7NET
     /// <summary>
     /// NS7NET调用
     /// </summary>
-    public static class NS7NETCaller
+    public static class S7NetSdk
     {
 
     }

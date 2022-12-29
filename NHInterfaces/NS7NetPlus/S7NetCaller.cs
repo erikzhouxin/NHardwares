@@ -10,7 +10,7 @@ namespace System.Data.NS7NET
     /// <summary>
     /// 变量类型调用
     /// </summary>
-    public static class VarTypeCaller
+    public static class S7NetCaller
     {
         #region // 内部调用
         /// <summary>
@@ -1127,10 +1127,11 @@ namespace System.Data.NS7NET
         /// 从字节数组
         /// </summary>
         /// <param name="bytes"></param>
-        /// <returns></returns>
+        /// <exception cref="ArgumentException"></exception>
         public static uint DWordFromByteArray(byte[] bytes)
         {
-            return DWordFromBytes(bytes[3], bytes[2], bytes[1], bytes[0]);
+            if (bytes?.Length == 4) { return DWordFromBytes(bytes[3], bytes[2], bytes[1], bytes[0]); }
+            throw new ArgumentException("字节数组必须是有且只有四个字节");
         }
         /// <summary>
         /// 从字节
@@ -1208,11 +1209,8 @@ namespace System.Data.NS7NET
         /// <exception cref="ArgumentException"></exception>
         public static short IntFromByteArray(byte[] bytes)
         {
-            if (bytes.Length != 2)
-            {
-                throw new ArgumentException("Wrong number of bytes. Bytes array must contain 2 bytes.");
-            }
-            return IntFromBytes(bytes[1], bytes[0]);
+            if (bytes?.Length == 2) { return IntFromBytes(bytes[1], bytes[0]); }
+            throw new ArgumentException("字节数组必须是有且只有二个字节");
         }
         /// <summary>
         /// 从字节
@@ -1342,7 +1340,7 @@ namespace System.Data.NS7NET
             {
                 FieldInfo fieldInfo = fields[i];
                 string name = fieldInfo.FieldType.Name;
-                uint num2 = VarTypeCaller.ComputeStringHash(name);
+                uint num2 = S7NetCaller.ComputeStringHash(name);
                 if (num2 <= 2386971688U)
                 {
                     if (num2 <= 1283547685U)
@@ -1481,7 +1479,7 @@ namespace System.Data.NS7NET
             {
                 FieldInfo fieldInfo = fields[i];
                 string name = fieldInfo.FieldType.Name;
-                uint num2 = VarTypeCaller.ComputeStringHash(name);
+                uint num2 = S7NetCaller.ComputeStringHash(name);
                 if (num2 <= 2386971688U)
                 {
                     if (num2 != 765439473U)
@@ -1639,7 +1637,7 @@ namespace System.Data.NS7NET
             {
                 byte[] array2 = null;
                 string name = fieldInfo.FieldType.Name;
-                uint num2 = VarTypeCaller.ComputeStringHash(name);
+                uint num2 = S7NetCaller.ComputeStringHash(name);
                 if (num2 <= 2386971688U)
                 {
                     if (num2 != 765439473U)
@@ -1832,11 +1830,8 @@ namespace System.Data.NS7NET
         /// <exception cref="ArgumentException"></exception>
         public static ushort WordFromByteArray(byte[] bytes)
         {
-            if (bytes.Length != 2)
-            {
-                throw new ArgumentException("Wrong number of bytes. Bytes array must contain 2 bytes.");
-            }
-            return WordFromBytes(bytes[1], bytes[0]);
+            if (bytes?.Length == 2) { return WordFromBytes(bytes[1], bytes[0]); }
+            throw new ArgumentException("字节数组必须是有且只有二个字节");
         }
         /// <summary>
         /// 转换成无符号整型
