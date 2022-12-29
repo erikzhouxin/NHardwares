@@ -5,7 +5,10 @@ using System.Text;
 
 namespace System.Data.NS7NetPlus
 {
-    internal class S7NetPlusCaller
+    /// <summary>
+    /// 变量类型调用
+    /// </summary>
+    public static class S7NetPlusCaller
     {
     }
 }

@@ -158,7 +158,7 @@ namespace System.Data.NS7NET
         public void ClearLastError();
     }
     /// <summary>
-    /// PLC类
+    /// PLC类 <see cref="S7NetSdk.Create"/>
     /// </summary>
     [Obsolete("替代方案:S7NetSdk.Create进行创建接口类,使用接口【IS7NetPlc】")]
     public class Plc : IS7NetPlc
@@ -196,6 +196,17 @@ namespace System.Data.NS7NET
         /// 最后一次错误码
         /// </summary>
         public ErrorCode LastErrorCode => _proxy.LastErrorCode;
+        /// <summary>
+        /// 构造
+        /// </summary>
+        /// <param name="cpu"></param>
+        /// <param name="ip"></param>
+        /// <param name="rack"></param>
+        /// <param name="slot"></param>
+        public Plc(CpuType cpu, string ip, short rack, short slot)
+        {
+            _proxy = new S7NetPlc(cpu, ip, rack, slot);
+        }
         /// <summary>
         /// 清理最后一次错误
         /// </summary>
