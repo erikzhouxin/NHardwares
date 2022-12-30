@@ -255,7 +255,7 @@ namespace System.Data.NS7NetPlus
         /// <summary>
         /// Contains the value of the memory area after the read has been executed
         /// </summary>
-        public object? Value { get; set; }
+        public object Value { get; set; }
 
         /// <summary>
         /// Create an instance of DataItem
@@ -300,7 +300,7 @@ namespace System.Data.NS7NetPlus
 
             if (typeof(T).IsArray)
             {
-                var array = ((Array?)dataItem.Value);
+                var array = ((Array)dataItem.Value);
                 if (array != null)
                 {
                     dataItem.Count = array.Length;
@@ -312,7 +312,7 @@ namespace System.Data.NS7NetPlus
 
         internal static DataItemAddress GetDataItemAddress(DataItem dataItem)
         {
-            return new DataItemAddress(dataItem.DataType, dataItem.DB, dataItem.StartByteAdr, Plc.VarTypeToByteLength(dataItem.VarType, dataItem.Count));
+            return new DataItemAddress(dataItem.DataType, dataItem.DB, dataItem.StartByteAdr, S7NetPlusPlc.VarTypeToByteLength(dataItem.VarType, dataItem.Count));
         }
     }
     /// <summary>
@@ -427,7 +427,9 @@ namespace System.Data.NS7NetPlus
             ErrorCode = (ErrorCode)info.GetInt32(nameof(ErrorCode));
         }
     }
-
+    /// <summary>
+    /// 字符串属性
+    /// </summary>
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property, AllowMultiple = false)]
     public sealed class S7StringAttribute : Attribute
     {
@@ -473,7 +475,6 @@ namespace System.Data.NS7NetPlus
         /// </value>
         public int ReservedLengthInBytes => type == S7StringType.S7String ? reservedLength + 2 : (reservedLength * 2) + 4;
     }
-
     /// <summary>
     /// String type.
     /// </summary>
@@ -489,7 +490,6 @@ namespace System.Data.NS7NetPlus
         /// </summary>
         S7WString = VarType.S7WString
     }
-
     /// <summary>
     /// Provides a representation of the Transport Service Access Point, or TSAP in short. TSAP's are used
     /// to specify a client and server address. For most PLC types a default TSAP is available that allows
@@ -518,7 +518,6 @@ namespace System.Data.NS7NetPlus
             SecondByte = secondByte;
         }
     }
-
     /// <summary>
     /// Implements a pair of TSAP addresses used to connect to a PLC.
     /// </summary>
@@ -720,6 +719,7 @@ namespace System.Data.NS7NetPlus
             /// See: https://tools.ietf.org/html/rfc905
             /// </summary>
             /// <param name="stream">The socket to read from</param>
+            /// <param name="cancellationToken"></param>
             /// <returns>COTP DPDU instance</returns>
             public static async Task<TPDU> ReadAsync(Stream stream, CancellationToken cancellationToken)
             {
@@ -1170,6 +1170,7 @@ namespace System.Data.NS7NetPlus
         /// Reads a TPKT from the socket Async
         /// </summary>
         /// <param name="stream">The stream to read from</param>
+        /// <param name="cancellationToken"></param>
         /// <returns>Task TPKT Instace</returns>
         public static async Task<TPKT> ReadAsync(Stream stream, CancellationToken cancellationToken)
         {

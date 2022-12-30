@@ -42,7 +42,7 @@ namespace System.Data.NS7NetPlus
             if (length > bytes.Length * 8) { throw new ArgumentException($"Not enough data in bytes to return {length} bits.", nameof(bytes)); }
             var bitArr = new BitArray(bytes);
             var bools = new bool[length];
-            for (var i = 0; i < length; i++) 
+            for (var i = 0; i < length; i++)
             { bools[i] = bitArr[i]; }
             return new BitArray(bools);
         }
@@ -50,11 +50,13 @@ namespace System.Data.NS7NetPlus
     /// <summary>
     /// Contains the methods to read, set and reset bits inside bytes
     /// </summary>
+    [Obsolete("替代方案:S7NetPlusCaller.Boolean*")]
     public static class Boolean
     {
         /// <summary>
         /// Returns the value of a bit in a bit, given the address of the bit
         /// </summary>
+        [Obsolete("替代方案:S7NetPlusCaller.BooleanGetValue")]
         public static bool GetValue(byte value, int bit)
         {
             return (((int)value & (1 << bit)) != 0);
@@ -67,6 +69,7 @@ namespace System.Data.NS7NetPlus
         /// <param name="value">The input value to modify.</param>
         /// <param name="bit">The index (zero based) of the bit to set.</param>
         /// <returns>The modified value with the bit at index set.</returns>
+        [Obsolete("替代方案:S7NetPlusCaller.BooleanSetBit")]
         public static byte SetBit(byte value, int bit)
         {
             SetBit(ref value, bit);
@@ -79,6 +82,7 @@ namespace System.Data.NS7NetPlus
         /// </summary>
         /// <param name="value">The value to modify.</param>
         /// <param name="bit">The index (zero based) of the bit to set.</param>
+        [Obsolete("替代方案:S7NetPlusCaller.BooleanSetBit")]
         public static void SetBit(ref byte value, int bit)
         {
             value = (byte)((value | (1 << bit)) & 0xFF);
@@ -91,6 +95,7 @@ namespace System.Data.NS7NetPlus
         /// <param name="value">The input value to modify.</param>
         /// <param name="bit">The index (zero based) of the bit to clear.</param>
         /// <returns>The modified value with the bit at index cleared.</returns>
+        [Obsolete("替代方案:S7NetPlusCaller.BooleanClearBit")]
         public static byte ClearBit(byte value, int bit)
         {
             ClearBit(ref value, bit);
@@ -103,6 +108,7 @@ namespace System.Data.NS7NetPlus
         /// </summary>
         /// <param name="value">The input value to modify.</param>
         /// <param name="bit">The index (zero based) of the bit to clear.</param>
+        [Obsolete("替代方案:S7NetPlusCaller.BooleanClearBit")]
         public static void ClearBit(ref byte value, int bit)
         {
             value = (byte)(value & ~(1 << bit) & 0xFF);
@@ -111,11 +117,13 @@ namespace System.Data.NS7NetPlus
     /// <summary>
     /// Contains the methods to convert from bytes to byte arrays
     /// </summary>
+    [Obsolete("替代方案:S7NetPlusCaller.Byte*")]
     public static class Byte
     {
         /// <summary>
         /// Converts a byte to byte array
         /// </summary>
+        [Obsolete("替代方案:S7NetPlusCaller.ByteToByteArray")]
         public static byte[] ToByteArray(byte value)
         {
             return new byte[] { value }; ;
@@ -126,6 +134,7 @@ namespace System.Data.NS7NetPlus
         /// </summary>
         /// <param name="bytes"></param>
         /// <returns></returns>
+        [Obsolete("替代方案:S7NetPlusCaller.ByteFromByteArray")]
         public static byte FromByteArray(byte[] bytes)
         {
             if (bytes.Length != 1)
@@ -139,6 +148,7 @@ namespace System.Data.NS7NetPlus
     /// <summary>
     /// Contains the methods to convert a C# class to S7 data types
     /// </summary>
+    [Obsolete("替代方案:S7NetPlusCaller.Class*")]
     public static class Class
     {
         private static IEnumerable<PropertyInfo> GetAccessableProperties(Type classType)
@@ -156,7 +166,7 @@ namespace System.Data.NS7NetPlus
 
         }
 
-        private static double GetIncreasedNumberOfBytes(double numBytes, Type type, PropertyInfo? propertyInfo)
+        private static double GetIncreasedNumberOfBytes(double numBytes, Type type, PropertyInfo propertyInfo)
         {
             switch (type.Name)
             {
@@ -186,7 +196,7 @@ namespace System.Data.NS7NetPlus
                     numBytes += 8;
                     break;
                 case "String":
-                    S7StringAttribute? attribute = propertyInfo?.GetCustomAttributes<S7StringAttribute>().SingleOrDefault();
+                    S7StringAttribute attribute = propertyInfo?.GetCustomAttributes<S7StringAttribute>().SingleOrDefault();
                     if (attribute == default(S7StringAttribute))
                         throw new ArgumentException("Please add S7StringAttribute to the string field");
 
@@ -206,7 +216,10 @@ namespace System.Data.NS7NetPlus
         /// Gets the size of the class in bytes.
         /// </summary>
         /// <param name="instance">An instance of the class</param>
+        /// <param name="numBytes"></param>
+        /// <param name="isInnerProperty"></param>
         /// <returns>the number of bytes</returns>
+        [Obsolete("替代方案:S7NetPlusCaller.ClassGetSize")]
         public static double GetClassSize(object instance, double numBytes = 0.0, bool isInnerProperty = false)
         {
             var properties = GetAccessableProperties(instance.GetType());
@@ -242,9 +255,9 @@ namespace System.Data.NS7NetPlus
             return numBytes;
         }
 
-        private static object? GetPropertyValue(Type propertyType, PropertyInfo? propertyInfo, byte[] bytes, ref double numBytes)
+        private static object GetPropertyValue(Type propertyType, PropertyInfo propertyInfo, byte[] bytes, ref double numBytes)
         {
-            object? value = null;
+            object value = null;
 
             switch (propertyType.Name)
             {
@@ -311,7 +324,7 @@ namespace System.Data.NS7NetPlus
                     numBytes += 8;
                     break;
                 case "String":
-                    S7StringAttribute? attribute = propertyInfo?.GetCustomAttributes<S7StringAttribute>().SingleOrDefault();
+                    S7StringAttribute attribute = propertyInfo?.GetCustomAttributes<S7StringAttribute>().SingleOrDefault();
                     if (attribute == default(S7StringAttribute))
                         throw new ArgumentException("Please add S7StringAttribute to the string field");
 
@@ -343,6 +356,9 @@ namespace System.Data.NS7NetPlus
         /// </summary>
         /// <param name="sourceClass">The object to fill in the given array of bytes</param>
         /// <param name="bytes">The array of bytes</param>
+        /// <param name="numBytes"></param>
+        /// <param name="isInnerClass"></param>
+        [Obsolete("替代方案:S7NetPlusCaller.ClassFromBytes")]
         public static double FromBytes(object sourceClass, byte[] bytes, double numBytes = 0, bool isInnerClass = false)
         {
             if (bytes == null)
@@ -375,11 +391,11 @@ namespace System.Data.NS7NetPlus
             return numBytes;
         }
 
-        private static double SetBytesFromProperty(object propertyValue, PropertyInfo? propertyInfo, byte[] bytes, double numBytes)
+        private static double SetBytesFromProperty(object propertyValue, PropertyInfo propertyInfo, byte[] bytes, double numBytes)
         {
             int bytePos = 0;
             int bitPos = 0;
-            byte[]? bytes2 = null;
+            byte[] bytes2 = null;
 
             switch (propertyValue.GetType().Name)
             {
@@ -418,7 +434,7 @@ namespace System.Data.NS7NetPlus
                     bytes2 = LReal.ToByteArray((double)propertyValue);
                     break;
                 case "String":
-                    S7StringAttribute? attribute = propertyInfo?.GetCustomAttributes<S7StringAttribute>().SingleOrDefault();
+                    S7StringAttribute attribute = propertyInfo?.GetCustomAttributes<S7StringAttribute>().SingleOrDefault();
                     if (attribute == default(S7StringAttribute))
                         throw new ArgumentException("Please add S7StringAttribute to the string field");
 
@@ -451,7 +467,10 @@ namespace System.Data.NS7NetPlus
         /// Creates a byte array depending on the struct type.
         /// </summary>
         /// <param name="sourceClass">The struct object</param>
+        /// <param name="bytes"></param>
+        /// <param name="numBytes"></param>
         /// <returns>A byte array or null if fails.</returns>
+        [Obsolete("替代方案:S7NetPlusCaller.ClassToBytes")]
         public static double ToBytes(object sourceClass, byte[] bytes, double numBytes = 0.0)
         {
             var properties = GetAccessableProperties(sourceClass.GetType());
@@ -484,11 +503,13 @@ namespace System.Data.NS7NetPlus
     /// <summary>
     /// Contains the conversion methods to convert Counter from S7 plc to C# ushort (UInt16).
     /// </summary>
+    [Obsolete("替代方案:S7NetPlusCaller.Counter*")]
     public static class Counter
     {
         /// <summary>
         /// Converts a Counter (2 bytes) to ushort (UInt16)
         /// </summary>
+        [Obsolete("替代方案:S7NetPlusCaller.CounterFromByteArray")]
         public static UInt16 FromByteArray(byte[] bytes)
         {
             if (bytes.Length != 2)
@@ -504,6 +525,7 @@ namespace System.Data.NS7NetPlus
         /// <summary>
         /// Converts a ushort (UInt16) to word (2 bytes)
         /// </summary>
+        [Obsolete("替代方案:S7NetPlusCaller.CounterToByteArray")]
         public static byte[] ToByteArray(UInt16 value)
         {
             byte[] bytes = new byte[2];
@@ -517,24 +539,26 @@ namespace System.Data.NS7NetPlus
         /// <summary>
         /// Converts an array of ushort (UInt16) to an array of bytes
         /// </summary>
+        [Obsolete("替代方案:S7NetPlusCaller.CounterToByteArray")]
         public static byte[] ToByteArray(UInt16[] value)
         {
             ByteArray arr = new ByteArray();
             foreach (UInt16 val in value)
-                arr.Add(ToByteArray(val));
+            { arr.Add(ToByteArray(val)); }
             return arr.Array;
         }
 
         /// <summary>
         /// Converts an array of bytes to an array of ushort
         /// </summary>
+        [Obsolete("替代方案:S7NetPlusCaller.CounterToArray")]
         public static UInt16[] ToArray(byte[] bytes)
         {
             UInt16[] values = new UInt16[bytes.Length / 2];
 
             int counter = 0;
             for (int cnt = 0; cnt < bytes.Length / 2; cnt++)
-                values[cnt] = FromByteArray(new byte[] { bytes[counter++], bytes[counter++] });
+            { values[cnt] = FromByteArray(new byte[] { bytes[counter++], bytes[counter++] }); }
 
             return values;
         }
@@ -542,16 +566,19 @@ namespace System.Data.NS7NetPlus
     /// <summary>
     /// Contains the methods to convert between <see cref="T:System.DateTime"/> and S7 representation of datetime values.
     /// </summary>
+    [Obsolete("替代方案:S7NetPlusCaller.DateTime*")]
     public static class DateTime
     {
         /// <summary>
         /// The minimum <see cref="T:System.DateTime"/> value supported by the specification.
         /// </summary>
+        [Obsolete("替代方案:S7NetPlusCaller.DateTimeSpecMinimum")]
         public static readonly System.DateTime SpecMinimumDateTime = new System.DateTime(1990, 1, 1);
 
         /// <summary>
         /// The maximum <see cref="T:System.DateTime"/> value supported by the specification.
         /// </summary>
+        [Obsolete("替代方案:S7NetPlusCaller.DateTimeSpecMaximum")]
         public static readonly System.DateTime SpecMaximumDateTime = new System.DateTime(2089, 12, 31, 23, 59, 59, 999);
 
         /// <summary>
@@ -562,6 +589,7 @@ namespace System.Data.NS7NetPlus
         /// <exception cref="ArgumentOutOfRangeException">Thrown when the length of
         ///   <paramref name="bytes"/> is not 8 or any value in <paramref name="bytes"/>
         ///   is outside the valid range of values.</exception>
+        [Obsolete("替代方案:S7NetPlusCaller.DateTimeFromByteArray")]
         public static System.DateTime FromByteArray(byte[] bytes)
         {
             return FromByteArrayImpl(bytes);
@@ -575,6 +603,7 @@ namespace System.Data.NS7NetPlus
         /// <exception cref="ArgumentOutOfRangeException">Thrown when the length of
         ///   <paramref name="bytes"/> is not a multiple of 8 or any value in
         ///   <paramref name="bytes"/> is outside the valid range of values.</exception>
+        [Obsolete("替代方案:S7NetPlusCaller.DateTimeToArray")]
         public static System.DateTime[] ToArray(byte[] bytes)
         {
             if (bytes.Length % 8 != 0)
@@ -647,6 +676,7 @@ namespace System.Data.NS7NetPlus
         /// <exception cref="ArgumentOutOfRangeException">Thrown when the value of
         ///   <paramref name="dateTime"/> is before <see cref="P:SpecMinimumDateTime"/>
         ///   or after <see cref="P:SpecMaximumDateTime"/>.</exception>
+        [Obsolete("替代方案:S7NetPlusCaller.DateTimeToByteArray")]
         public static byte[] ToByteArray(System.DateTime dateTime)
         {
             byte EncodeBcd(int value)
@@ -683,14 +713,16 @@ namespace System.Data.NS7NetPlus
         /// Converts an array of <see cref="T:System.DateTime"/> values to a byte array.
         /// </summary>
         /// <param name="dateTimes">The DateTime values to convert.</param>
-        /// <returns>A byte array containing the S7 date time representations of <paramref name="dateTime"/>.</returns>
+        /// <returns>A byte array containing the S7 date time representations of <paramref name="dateTimes"/>.</returns>
         /// <exception cref="ArgumentOutOfRangeException">Thrown when any value of
         ///   <paramref name="dateTimes"/> is before <see cref="P:SpecMinimumDateTime"/>
         ///   or after <see cref="P:SpecMaximumDateTime"/>.</exception>
+        [Obsolete("替代方案:S7NetPlusCaller.DateTimeToByteArray")]
         public static byte[] ToByteArray(System.DateTime[] dateTimes)
         {
             var bytes = new List<byte>(dateTimes.Length * 8);
-            foreach (var dateTime in dateTimes) bytes.AddRange(ToByteArray(dateTime));
+            foreach (var dateTime in dateTimes)
+            { bytes.AddRange(ToByteArray(dateTime)); }
 
             return bytes.ToArray();
         }
@@ -698,17 +730,24 @@ namespace System.Data.NS7NetPlus
     /// <summary>
     /// Contains the methods to convert between <see cref="T:System.DateTime" /> and S7 representation of DateTimeLong (DTL) values.
     /// </summary>
+    [Obsolete("替代方案:S7NetPlusCaller.DateTimeLong*")]
     public static class DateTimeLong
     {
+        /// <summary>
+        /// 类型的字节长度
+        /// </summary>
+        [Obsolete("替代方案:S7NetPlusCaller.DateTimeLongTypeLengthInBytes")]
         public const int TypeLengthInBytes = 12;
         /// <summary>
         /// The minimum <see cref="T:System.DateTime" /> value supported by the specification.
         /// </summary>
+        [Obsolete("替代方案:S7NetPlusCaller.DateTimeLongSpecMinimum")]
         public static readonly System.DateTime SpecMinimumDateTime = new System.DateTime(1970, 1, 1);
 
         /// <summary>
         /// The maximum <see cref="T:System.DateTime" /> value supported by the specification.
         /// </summary>
+        [Obsolete("替代方案:S7NetPlusCaller.DateTimeLongSpecMaximum")]
         public static readonly System.DateTime SpecMaximumDateTime = new System.DateTime(2262, 4, 11, 23, 47, 16, 854);
 
         /// <summary>
@@ -721,6 +760,7 @@ namespace System.Data.NS7NetPlus
         /// <paramref name="bytes" /> is not 12 or any value in <paramref name="bytes" />
         /// is outside the valid range of values.
         /// </exception>
+        [Obsolete("替代方案:S7NetPlusCaller.DateTimeLongFromByteArray")]
         public static System.DateTime FromByteArray(byte[] bytes)
         {
             return FromByteArrayImpl(bytes);
@@ -736,6 +776,7 @@ namespace System.Data.NS7NetPlus
         /// <paramref name="bytes" /> is not a multiple of 12 or any value in
         /// <paramref name="bytes" /> is outside the valid range of values.
         /// </exception>
+        [Obsolete("替代方案:S7NetPlusCaller.DateTimeLongToArray")]
         public static System.DateTime[] ToArray(byte[] bytes)
         {
             if (bytes.Length % TypeLengthInBytes != 0)
@@ -792,6 +833,7 @@ namespace System.Data.NS7NetPlus
         /// <paramref name="dateTime" /> is before <see cref="P:SpecMinimumDateTime" />
         /// or after <see cref="P:SpecMaximumDateTime" />.
         /// </exception>
+        [Obsolete("替代方案:S7NetPlusCaller.DateTimeLongToByteArray")]
         public static byte[] ToByteArray(System.DateTime dateTime)
         {
             if (dateTime < SpecMinimumDateTime)
@@ -845,6 +887,7 @@ namespace System.Data.NS7NetPlus
         /// <paramref name="dateTimes" /> is before <see cref="P:SpecMinimumDateTime" />
         /// or after <see cref="P:SpecMaximumDateTime" />.
         /// </exception>
+        [Obsolete("替代方案:S7NetPlusCaller.DateTimeLongToByteArray")]
         public static byte[] ToByteArray(System.DateTime[] dateTimes)
         {
             var bytes = new List<byte>(dateTimes.Length * TypeLengthInBytes);
@@ -876,11 +919,13 @@ namespace System.Data.NS7NetPlus
     /// <summary>
     /// Contains the conversion methods to convert DWord from S7 plc to C#.
     /// </summary>
+    [Obsolete("替代方案:S7NetPlusCaller.DWord*")]
     public static class DWord
     {
         /// <summary>
         /// Converts a S7 DWord (4 bytes) to uint (UInt32)
         /// </summary>
+        [Obsolete("替代方案:S7NetPlusCaller.DWordFromByteArray")]
         public static UInt32 FromByteArray(byte[] bytes)
         {
             return (UInt32)(bytes[0] << 24 | bytes[1] << 16 | bytes[2] << 8 | bytes[3]);
@@ -890,6 +935,7 @@ namespace System.Data.NS7NetPlus
         /// <summary>
         /// Converts 4 bytes to DWord (UInt32)
         /// </summary>
+        [Obsolete("替代方案:S7NetPlusCaller.DWordFromBytes")]
         public static UInt32 FromBytes(byte b1, byte b2, byte b3, byte b4)
         {
             return (UInt32)((b4 << 24) | (b3 << 16) | (b2 << 8) | b1);
@@ -899,6 +945,7 @@ namespace System.Data.NS7NetPlus
         /// <summary>
         /// Converts a uint (UInt32) to S7 DWord (4 bytes) 
         /// </summary>
+        [Obsolete("替代方案:S7NetPlusCaller.DWordToByteArray")]
         public static byte[] ToByteArray(UInt32 value)
         {
             byte[] bytes = new byte[4];
@@ -911,14 +958,10 @@ namespace System.Data.NS7NetPlus
             return bytes;
         }
 
-
-
-
-
-
         /// <summary>
         /// Converts an array of uint (UInt32) to an array of S7 DWord (4 bytes) 
         /// </summary>
+        [Obsolete("替代方案:S7NetPlusCaller.DWordToByteArray")]
         public static byte[] ToByteArray(UInt32[] value)
         {
             ByteArray arr = new ByteArray();
@@ -930,88 +973,28 @@ namespace System.Data.NS7NetPlus
         /// <summary>
         /// Converts an array of S7 DWord to an array of uint (UInt32)
         /// </summary>
+        [Obsolete("替代方案:S7NetPlusCaller.DWordToArray")]
         public static UInt32[] ToArray(byte[] bytes)
         {
             UInt32[] values = new UInt32[bytes.Length / 4];
 
             int counter = 0;
             for (int cnt = 0; cnt < bytes.Length / 4; cnt++)
-                values[cnt] = FromByteArray(new byte[] { bytes[counter++], bytes[counter++], bytes[counter++], bytes[counter++] });
+            { values[cnt] = FromByteArray(new byte[] { bytes[counter++], bytes[counter++], bytes[counter++], bytes[counter++] }); }
 
             return values;
         }
-    }
-    /// <summary>
-    /// Contains the conversion methods to convert Real from S7 plc to C# double.
-    /// </summary>
-    [Obsolete("Class Double is obsolete. Use Real instead for 32bit floating point, or LReal for 64bit floating point.")]
-    public static class Double
-    {
-        /// <summary>
-        /// Converts a S7 Real (4 bytes) to double
-        /// </summary>
-        public static double FromByteArray(byte[] bytes) => Real.FromByteArray(bytes);
-
-        /// <summary>
-        /// Converts a S7 DInt to double
-        /// </summary>
-        public static double FromDWord(Int32 value)
-        {
-            byte[] b = DInt.ToByteArray(value);
-            double d = FromByteArray(b);
-            return d;
-        }
-
-        /// <summary>
-        /// Converts a S7 DWord to double
-        /// </summary>
-        public static double FromDWord(UInt32 value)
-        {
-            byte[] b = DWord.ToByteArray(value);
-            double d = FromByteArray(b);
-            return d;
-        }
-
-
-        /// <summary>
-        /// Converts a double to S7 Real (4 bytes)
-        /// </summary>
-        public static byte[] ToByteArray(double value) => Real.ToByteArray((float)value);
-
-        /// <summary>
-        /// Converts an array of double to an array of bytes 
-        /// </summary>
-        public static byte[] ToByteArray(double[] value)
-        {
-            ByteArray arr = new ByteArray();
-            foreach (double val in value)
-                arr.Add(ToByteArray(val));
-            return arr.Array;
-        }
-
-        /// <summary>
-        /// Converts an array of S7 Real to an array of double
-        /// </summary>
-        public static double[] ToArray(byte[] bytes)
-        {
-            double[] values = new double[bytes.Length / 4];
-
-            int counter = 0;
-            for (int cnt = 0; cnt < bytes.Length / 4; cnt++)
-                values[cnt] = FromByteArray(new byte[] { bytes[counter++], bytes[counter++], bytes[counter++], bytes[counter++] });
-
-            return values;
-        }
-
     }
     /// <summary>
     /// Contains the conversion methods to convert DInt from S7 plc to C# int (Int32).
     /// </summary>
+    [Obsolete("替代方案:S7NetPlusCaller.DInt*")]
     public static class DInt
     {
         /// <summary>
         /// Converts a S7 DInt (4 bytes) to int (Int32)
         /// </summary>
+        [Obsolete("替代方案:S7NetPlusCaller.DIntFromByteArray")]
         public static Int32 FromByteArray(byte[] bytes)
         {
             if (bytes.Length != 4)
@@ -1021,10 +1004,10 @@ namespace System.Data.NS7NetPlus
             return bytes[0] << 24 | bytes[1] << 16 | bytes[2] << 8 | bytes[3];
         }
 
-
         /// <summary>
         /// Converts a int (Int32) to S7 DInt (4 bytes)
         /// </summary>
+        [Obsolete("替代方案:S7NetPlusCaller.DIntToByteArray")]
         public static byte[] ToByteArray(Int32 value)
         {
             byte[] bytes = new byte[4];
@@ -1040,6 +1023,7 @@ namespace System.Data.NS7NetPlus
         /// <summary>
         /// Converts an array of int (Int32) to an array of bytes
         /// </summary>
+        [Obsolete("替代方案:S7NetPlusCaller.DIntToByteArray")]
         public static byte[] ToByteArray(Int32[] value)
         {
             ByteArray arr = new ByteArray();
@@ -1051,13 +1035,14 @@ namespace System.Data.NS7NetPlus
         /// <summary>
         /// Converts an array of S7 DInt to an array of int (Int32)
         /// </summary>
+        [Obsolete("替代方案:S7NetPlusCaller.DIntToArray")]
         public static Int32[] ToArray(byte[] bytes)
         {
             Int32[] values = new Int32[bytes.Length / 4];
 
             int counter = 0;
             for (int cnt = 0; cnt < bytes.Length / 4; cnt++)
-                values[cnt] = FromByteArray(new byte[] { bytes[counter++], bytes[counter++], bytes[counter++], bytes[counter++] });
+            { values[cnt] = FromByteArray(new byte[] { bytes[counter++], bytes[counter++], bytes[counter++], bytes[counter++] }); }
 
             return values;
         }
@@ -1067,11 +1052,13 @@ namespace System.Data.NS7NetPlus
     /// <summary>
     /// Contains the conversion methods to convert Int from S7 plc to C#.
     /// </summary>
+    [Obsolete("替代方案:S7NetPlusCaller.Int*")]
     public static class Int
     {
         /// <summary>
         /// Converts a S7 Int (2 bytes) to short (Int16)
         /// </summary>
+        [Obsolete("替代方案:S7NetPlusCaller.IntFromByteArray")]
         public static short FromByteArray(byte[] bytes)
         {
             if (bytes.Length != 2)
@@ -1087,6 +1074,7 @@ namespace System.Data.NS7NetPlus
         /// <summary>
         /// Converts a short (Int16) to a S7 Int byte array (2 bytes)
         /// </summary>
+        [Obsolete("替代方案:S7NetPlusCaller.IntToByteArray")]
         public static byte[] ToByteArray(Int16 value)
         {
             byte[] bytes = new byte[2];
@@ -1100,6 +1088,7 @@ namespace System.Data.NS7NetPlus
         /// <summary>
         /// Converts an array of short (Int16) to a S7 Int byte array (2 bytes)
         /// </summary>
+        [Obsolete("替代方案:S7NetPlusCaller.IntToByteArray")]
         public static byte[] ToByteArray(Int16[] value)
         {
             byte[] bytes = new byte[value.Length * 2];
@@ -1116,6 +1105,7 @@ namespace System.Data.NS7NetPlus
         /// <summary>
         /// Converts an array of S7 Int to an array of short (Int16)
         /// </summary>
+        [Obsolete("替代方案:S7NetPlusCaller.IntToArray")]
         public static Int16[] ToArray(byte[] bytes)
         {
             int shortsCount = bytes.Length / 2;
@@ -1134,6 +1124,7 @@ namespace System.Data.NS7NetPlus
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
+        [Obsolete("替代方案:S7NetPlusCaller.IntCWord")]
         public static Int16 CWord(int value)
         {
             if (value > 32767)
@@ -1149,11 +1140,13 @@ namespace System.Data.NS7NetPlus
     /// <summary>
     /// Contains the conversion methods to convert Real from S7 plc to C# double.
     /// </summary>
+    [Obsolete("替代方案:S7NetPlusCaller.LReal*")]
     public static class LReal
     {
         /// <summary>
         /// Converts a S7 LReal (8 bytes) to double
         /// </summary>
+        [Obsolete("替代方案:S7NetPlusCaller.LRealFromByteArray")]
         public static double FromByteArray(byte[] bytes)
         {
             if (bytes.Length != 8)
@@ -1174,6 +1167,7 @@ namespace System.Data.NS7NetPlus
         /// <summary>
         /// Converts a double to S7 LReal (8 bytes)
         /// </summary>
+        [Obsolete("替代方案:S7NetPlusCaller.LRealToByteArray")]
         public static byte[] ToByteArray(double value)
         {
             var bytes = BitConverter.GetBytes(value);
@@ -1189,22 +1183,26 @@ namespace System.Data.NS7NetPlus
         /// <summary>
         /// Converts an array of double to an array of bytes 
         /// </summary>
+        [Obsolete("替代方案:S7NetPlusCaller.LRealToByteArray")]
         public static byte[] ToByteArray(double[] value) => S7NetPlusCaller.ToByteArray(value, ToByteArray);
 
         /// <summary>
         /// Converts an array of S7 LReal to an array of double
         /// </summary>
+        [Obsolete("替代方案:S7NetPlusCaller.LRealToArray")]
         public static double[] ToArray(byte[] bytes) => S7NetPlusCaller.ToArray(bytes, FromByteArray);
 
     }
     /// <summary>
     /// Contains the conversion methods to convert Real from S7 plc to C# double.
     /// </summary>
+    [Obsolete("替代方案:S7NetPlusCaller.Real*")]
     public static class Real
     {
         /// <summary>
         /// Converts a S7 Real (4 bytes) to float
         /// </summary>
+        [Obsolete("替代方案:S7NetPlusCaller.RealFromByteArray")]
         public static float FromByteArray(byte[] bytes)
         {
             if (bytes.Length != 4)
@@ -1225,12 +1223,13 @@ namespace System.Data.NS7NetPlus
         /// <summary>
         /// Converts a float to S7 Real (4 bytes)
         /// </summary>
+        [Obsolete("替代方案:S7NetPlusCaller.RealToByteArray")]
         public static byte[] ToByteArray(float value)
         {
             byte[] bytes = BitConverter.GetBytes(value);
 
             // sps uses bigending so we have to check if platform is same
-            if (!BitConverter.IsLittleEndian) return bytes;
+            if (!BitConverter.IsLittleEndian) { return bytes; }
 
             // create deep copy of the array and reverse
             return new byte[] { bytes[3], bytes[2], bytes[1], bytes[0] };
@@ -1239,6 +1238,7 @@ namespace System.Data.NS7NetPlus
         /// <summary>
         /// Converts an array of float to an array of bytes 
         /// </summary>
+        [Obsolete("替代方案:S7NetPlusCaller.RealToByteArray")]
         public static byte[] ToByteArray(float[] value)
         {
             var buffer = new byte[4 * value.Length];
@@ -1250,38 +1250,161 @@ namespace System.Data.NS7NetPlus
 
             return buffer;
         }
-
         /// <summary>
         /// Converts an array of S7 Real to an array of float
         /// </summary>
+        [Obsolete("替代方案:S7NetPlusCaller.RealToArray")]
         public static float[] ToArray(byte[] bytes)
         {
             var values = new float[bytes.Length / 4];
 
             int counter = 0;
             for (int cnt = 0; cnt < bytes.Length / 4; cnt++)
-                values[cnt] = FromByteArray(new byte[] { bytes[counter++], bytes[counter++], bytes[counter++], bytes[counter++] });
+            { values[cnt] = FromByteArray(new byte[] { bytes[counter++], bytes[counter++], bytes[counter++], bytes[counter++] }); }
 
             return values;
         }
+        /// <summary>
+        /// Converts a S7 DInt to float
+        /// </summary>
+        [Obsolete("替代方案:S7NetPlusCaller.RealFromDWord")]
+        public static float FromDWord(Int32 value)
+        {
+            byte[] b = DInt.ToByteArray(value);
+            float d = FromByteArray(b);
+            return d;
+        }
+        /// <summary>
+        /// Converts a S7 DWord to float
+        /// </summary>
+        [Obsolete("替代方案:S7NetPlusCaller.RealFromDWord")]
+        public static float FromDWord(UInt32 value)
+        {
+            byte[] b = DWord.ToByteArray(value);
+            float d = FromByteArray(b);
+            return d;
+        }
+    }
+    /// <summary>
+    /// Contains the conversion methods to convert Real from S7 plc to C# double.
+    /// </summary>
+    [Obsolete("替代方案:S7NetPlusCaller.Real*,Class Double is obsolete. Use Real instead for 32bit floating point, or LReal for 64bit floating point.")]
+    public static class Double
+    {
+        /// <summary>
+        /// Converts a S7 Real (4 bytes) to double
+        /// </summary>
+        [Obsolete("替代方案:S7NetPlusCaller.DoubleFromByteArray")]
+        public static double FromByteArray(byte[] bytes) => Real.FromByteArray(bytes);
 
+        /// <summary>
+        /// Converts a S7 DInt to double
+        /// </summary>
+        [Obsolete("替代方案:S7NetPlusCaller.DoubleFromDWord")]
+        public static double FromDWord(Int32 value) => Real.FromDWord(value);
+
+        /// <summary>
+        /// Converts a S7 DWord to double
+        /// </summary>
+        [Obsolete("替代方案:S7NetPlusCaller.DoubleFromDWord")]
+        public static double FromDWord(UInt32 value) => Real.FromDWord(value);
+
+        /// <summary>
+        /// Converts a double to S7 Real (4 bytes)
+        /// </summary>
+        [Obsolete("替代方案:S7NetPlusCaller.DoubleToByteArray")]
+        public static byte[] ToByteArray(double value) => Real.ToByteArray((float)value);
+
+        /// <summary>
+        /// Converts an array of double to an array of bytes 
+        /// </summary>
+        [Obsolete("替代方案:S7NetPlusCaller.DoubleToByteArray")]
+        public static byte[] ToByteArray(double[] value)
+        {
+            ByteArray arr = new ByteArray();
+            foreach (double val in value)
+            { arr.Add(ToByteArray(val)); }
+            return arr.Array;
+        }
+
+        /// <summary>
+        /// Converts an array of S7 Real to an array of double
+        /// </summary>
+        [Obsolete("替代方案:S7NetPlusCaller.DoubleToArray")]
+        public static double[] ToArray(byte[] bytes)
+        {
+            double[] values = new double[bytes.Length / 4];
+
+            int counter = 0;
+            for (int cnt = 0; cnt < bytes.Length / 4; cnt++)
+            { values[cnt] = FromByteArray(new byte[] { bytes[counter++], bytes[counter++], bytes[counter++], bytes[counter++] }); }
+
+            return values;
+        }
+    }
+    /// <summary>
+    /// Contains the conversion methods to convert Real from S7 plc to C# float.
+    /// </summary>
+    [Obsolete("替代方案:S7NetPlusCaller.Real*,Class Single is obsolete. Use Real instead.")]
+    public static class Single
+    {
+        /// <summary>
+        /// Converts a S7 Real (4 bytes) to float
+        /// </summary>
+        [Obsolete("替代方案:S7NetPlusCaller.SingleFromByteArray")]
+        public static float FromByteArray(byte[] bytes) => Real.FromByteArray(bytes);
+
+        /// <summary>
+        /// Converts a S7 DInt to float
+        /// </summary>
+        [Obsolete("替代方案:S7NetPlusCaller.SingleFromDWord")]
+        public static float FromDWord(Int32 value) => Real.FromDWord(value);
+
+        /// <summary>
+        /// Converts a S7 DWord to float
+        /// </summary>
+        [Obsolete("替代方案:S7NetPlusCaller.SingleFromDWord")]
+        public static float FromDWord(UInt32 value) => Real.FromDWord(value);
+        /// <summary>
+        /// Converts a double to S7 Real (4 bytes)
+        /// </summary>
+        [Obsolete("替代方案:S7NetPlusCaller.SingleToByteArray")]
+        public static byte[] ToByteArray(float value) => Real.ToByteArray(value);
+
+        /// <summary>
+        /// Converts an array of float to an array of bytes 
+        /// </summary>
+        [Obsolete("替代方案:S7NetPlusCaller.SingleToByteArray")]
+        public static byte[] ToByteArray(float[] value)
+        {
+            ByteArray arr = new ByteArray();
+            foreach (float val in value)
+            { arr.Add(ToByteArray(val)); }
+            return arr.Array;
+        }
+
+        /// <summary>
+        /// Converts an array of S7 Real to an array of float
+        /// </summary>
+        [Obsolete("替代方案:S7NetPlusCaller.SingleToArray")]
+        public static float[] ToArray(byte[] bytes) => Real.ToArray(bytes);
     }
     /// <summary>
     /// Contains the methods to convert from S7 strings to C# strings
     /// An S7 String has a preceeding 2 byte header containing its capacity and length
     /// </summary>
+    [Obsolete("替代方案:S7NetPlusCaller.S7String*")]
     public static class S7String
     {
-        private static Encoding stringEncoding = Encoding.ASCII;
-
         /// <summary>
         /// The Encoding used when serializing and deserializing S7String (Encoding.ASCII by default)
         /// </summary>
         /// <exception cref="ArgumentNullException">StringEncoding must not be null</exception>
+        [Obsolete("替代方案:S7NetPlusCaller.S7StringStringEncoding")]
         public static Encoding StringEncoding
         {
-            get => stringEncoding;
-            set => stringEncoding = value ?? throw new ArgumentNullException(nameof(StringEncoding));
+            get => S7NetPlusCaller.S7StringStringEncoding;
+            set => S7NetPlusCaller.S7StringStringEncoding = value ?? throw new ArgumentNullException(nameof(StringEncoding));
         }
 
         /// <summary>
@@ -1289,6 +1412,7 @@ namespace System.Data.NS7NetPlus
         /// </summary>
         /// <param name="bytes"></param>
         /// <returns></returns>
+        [Obsolete("替代方案:S7NetPlusCaller.S7StringFromByteArray")]
         public static string FromByteArray(byte[] bytes)
         {
             if (bytes.Length < 2)
@@ -1321,6 +1445,7 @@ namespace System.Data.NS7NetPlus
         /// <param name="value">The string to convert to byte array.</param>
         /// <param name="reservedLength">The length (in characters) allocated in PLC for the string.</param>
         /// <returns>A <see cref="T:byte[]" /> containing the string header and string value with a maximum length of <paramref name="reservedLength"/> + 2.</returns>
+        [Obsolete("替代方案:S7NetPlusCaller.S7StringToByteArray")]
         public static byte[] ToByteArray(string value, int reservedLength)
         {
             if (value is null)
@@ -1344,6 +1469,7 @@ namespace System.Data.NS7NetPlus
     /// Contains the methods to convert from S7 wstrings to C# strings
     /// An S7 WString has a preceding 4 byte header containing its capacity and length
     /// </summary>
+    [Obsolete("替代方案:S7NetPlusCaller.S7WString*")]
     public static class S7WString
     {
         /// <summary>
@@ -1351,6 +1477,7 @@ namespace System.Data.NS7NetPlus
         /// </summary>
         /// <param name="bytes"></param>
         /// <returns></returns>
+        [Obsolete("替代方案:S7NetPlusCaller.S7WStringFromByteArray")]
         public static string FromByteArray(byte[] bytes)
         {
             if (bytes.Length < 4)
@@ -1385,6 +1512,7 @@ namespace System.Data.NS7NetPlus
         /// <param name="value">The string to convert to byte array.</param>
         /// <param name="reservedLength">The length (in characters) allocated in PLC for the string.</param>
         /// <returns>A <see cref="T:byte[]" /> containing the string header and string value with a maximum length of <paramref name="reservedLength"/> + 4.</returns>
+        [Obsolete("替代方案:S7NetPlusCaller.S7WStringToByteArray")]
         public static byte[] ToByteArray(string value, int reservedLength)
         {
             if (value is null)
@@ -1407,78 +1535,17 @@ namespace System.Data.NS7NetPlus
         }
     }
     /// <summary>
-    /// Contains the conversion methods to convert Real from S7 plc to C# float.
-    /// </summary>
-    [Obsolete("Class Single is obsolete. Use Real instead.")]
-    public static class Single
-    {
-        /// <summary>
-        /// Converts a S7 Real (4 bytes) to float
-        /// </summary>
-        public static float FromByteArray(byte[] bytes) => Real.FromByteArray(bytes);
-
-        /// <summary>
-        /// Converts a S7 DInt to float
-        /// </summary>
-        public static float FromDWord(Int32 value)
-        {
-            byte[] b = DInt.ToByteArray(value);
-            float d = FromByteArray(b);
-            return d;
-        }
-
-        /// <summary>
-        /// Converts a S7 DWord to float
-        /// </summary>
-        public static float FromDWord(UInt32 value)
-        {
-            byte[] b = DWord.ToByteArray(value);
-            float d = FromByteArray(b);
-            return d;
-        }
-
-
-        /// <summary>
-        /// Converts a double to S7 Real (4 bytes)
-        /// </summary>
-        public static byte[] ToByteArray(float value) => Real.ToByteArray(value);
-
-        /// <summary>
-        /// Converts an array of float to an array of bytes 
-        /// </summary>
-        public static byte[] ToByteArray(float[] value)
-        {
-            ByteArray arr = new ByteArray();
-            foreach (float val in value)
-                arr.Add(ToByteArray(val));
-            return arr.Array;
-        }
-
-        /// <summary>
-        /// Converts an array of S7 Real to an array of float
-        /// </summary>
-        public static float[] ToArray(byte[] bytes)
-        {
-            float[] values = new float[bytes.Length / 4];
-
-            int counter = 0;
-            for (int cnt = 0; cnt < bytes.Length / 4; cnt++)
-                values[cnt] = FromByteArray(new byte[] { bytes[counter++], bytes[counter++], bytes[counter++], bytes[counter++] });
-
-            return values;
-        }
-
-    }
-    /// <summary>
     /// Contains the methods to convert from S7 Array of Chars (like a const char[N] C-String) to C# strings
     /// </summary>
-    public class String
+    [Obsolete("替代方案:S7NetPlusCaller.String*")]
+    public static class String
     {
         /// <summary>
         /// Converts a string to <paramref name="reservedLength"/> of bytes, padded with 0-bytes if required.
         /// </summary>
         /// <param name="value">The string to write to the PLC.</param>
         /// <param name="reservedLength">The amount of bytes reserved for the <paramref name="value"/> in the PLC.</param>
+        [Obsolete("替代方案:S7NetPlusCaller.StringToByteArray")]
         public static byte[] ToByteArray(string value, int reservedLength)
         {
             var length = value?.Length;
@@ -1497,6 +1564,7 @@ namespace System.Data.NS7NetPlus
         /// </summary>
         /// <param name="bytes"></param>
         /// <returns></returns>
+        [Obsolete("替代方案:S7NetPlusCaller.StringFromByteArray")]
         public static string FromByteArray(byte[] bytes)
         {
             return System.Text.Encoding.ASCII.GetString(bytes);
@@ -1504,18 +1572,21 @@ namespace System.Data.NS7NetPlus
 
     }
     /// <inheritdoc cref="S7String"/>
-    [Obsolete("Please use S7String class")]
+    [Obsolete("替代方案:S7NetPlusCaller.S7String*,Please use S7String class")]
     public static class StringEx
     {
         /// <inheritdoc cref="S7String.FromByteArray(byte[])"/>
+        [Obsolete("替代方案:S7NetPlusCaller.StringExFromByteArray")]
         public static string FromByteArray(byte[] bytes) => S7String.FromByteArray(bytes);
 
         /// <inheritdoc cref="S7String.ToByteArray(string, int)"/>
+        [Obsolete("替代方案:S7NetPlusCaller.StringExToByteArray")]
         public static byte[] ToByteArray(string value, int reservedLength) => S7String.ToByteArray(value, reservedLength);
     }
     /// <summary>
     /// Contains the method to convert a C# struct to S7 data types
     /// </summary>
+    [Obsolete("替代方案:S7NetPlusCaller.Struct*")]
     public static class Struct
     {
         /// <summary>
@@ -1523,6 +1594,7 @@ namespace System.Data.NS7NetPlus
         /// </summary>
         /// <param name="structType">the type of the struct</param>
         /// <returns>the number of bytes</returns>
+        [Obsolete("替代方案:S7NetPlusCaller.StructGetSize")]
         public static int GetStructSize(Type structType)
         {
             double numBytes = 0.0;
@@ -1572,7 +1644,7 @@ namespace System.Data.NS7NetPlus
                         numBytes += 8;
                         break;
                     case "String":
-                        S7StringAttribute? attribute = info.GetCustomAttributes<S7StringAttribute>().SingleOrDefault();
+                        S7StringAttribute attribute = info.GetCustomAttributes<S7StringAttribute>().SingleOrDefault();
                         if (attribute == default(S7StringAttribute))
                             throw new ArgumentException("Please add S7StringAttribute to the string field");
 
@@ -1595,7 +1667,8 @@ namespace System.Data.NS7NetPlus
         /// <param name="structType">The struct type</param>
         /// <param name="bytes">The array of bytes</param>
         /// <returns>The object depending on the struct type or null if fails(array-length != struct-length</returns>
-        public static object? FromBytes(Type structType, byte[] bytes)
+        [Obsolete("替代方案:S7NetPlusCaller.StructFromBytes")]
+        public static object FromBytes(Type structType, byte[] bytes)
         {
             if (bytes == null)
                 return null;
@@ -1699,7 +1772,7 @@ namespace System.Data.NS7NetPlus
                         numBytes += 8;
                         break;
                     case "String":
-                        S7StringAttribute? attribute = info.GetCustomAttributes<S7StringAttribute>().SingleOrDefault();
+                        S7StringAttribute attribute = info.GetCustomAttributes<S7StringAttribute>().SingleOrDefault();
                         if (attribute == default(S7StringAttribute))
                             throw new ArgumentException("Please add S7StringAttribute to the string field");
 
@@ -1742,13 +1815,14 @@ namespace System.Data.NS7NetPlus
         /// </summary>
         /// <param name="structValue">The struct object</param>
         /// <returns>A byte array or null if fails.</returns>
+        [Obsolete("替代方案:S7NetPlusCaller.StructToBytes")]
         public static byte[] ToBytes(object structValue)
         {
             Type type = structValue.GetType();
 
             int size = Struct.GetStructSize(type);
             byte[] bytes = new byte[size];
-            byte[]? bytes2 = null;
+            byte[] bytes2 = null;
 
             int bytePos = 0;
             int bitPos = 0;
@@ -1771,9 +1845,9 @@ namespace System.Data.NS7NetPlus
                         bytePos = (int)Math.Floor(numBytes);
                         bitPos = (int)((numBytes - (double)bytePos) / 0.125);
                         if ((bool)info.GetValue(structValue))
-                            bytes[bytePos] |= (byte)Math.Pow(2, bitPos);            // is true
+                        { bytes[bytePos] |= (byte)Math.Pow(2, bitPos); }         // is true
                         else
-                            bytes[bytePos] &= (byte)(~(byte)Math.Pow(2, bitPos));   // is false
+                        { bytes[bytePos] &= (byte)(~(byte)Math.Pow(2, bitPos)); } // is false
                         numBytes += 0.125;
                         break;
                     case "Byte":
@@ -1801,7 +1875,7 @@ namespace System.Data.NS7NetPlus
                         bytes2 = LReal.ToByteArray((double)info.GetValue(structValue));
                         break;
                     case "String":
-                        S7StringAttribute? attribute = info.GetCustomAttributes<S7StringAttribute>().SingleOrDefault();
+                        S7StringAttribute attribute = info.GetCustomAttributes<S7StringAttribute>().SingleOrDefault();
                         if (attribute == default(S7StringAttribute))
                             throw new ArgumentException("Please add S7StringAttribute to the string field");
 
@@ -1831,11 +1905,13 @@ namespace System.Data.NS7NetPlus
     /// <summary>
     /// Converts the Timer data type to C# data type
     /// </summary>
+    [Obsolete("替代方案:S7NetPlusCaller.Timer*")]
     public static class Timer
     {
         /// <summary>
         /// Converts the timer bytes to a double
         /// </summary>
+        [Obsolete("替代方案:S7NetPlusCaller.TimerFromByteArray")]
         public static double FromByteArray(byte[] bytes)
         {
             double wert = 0;
@@ -1869,6 +1945,7 @@ namespace System.Data.NS7NetPlus
         /// <summary>
         /// Converts a ushort (UInt16) to an array of bytes formatted as time
         /// </summary>
+        [Obsolete("替代方案:S7NetPlusCaller.TimerToByteArray")]
         public static byte[] ToByteArray(UInt16 value)
         {
             byte[] bytes = new byte[2];
@@ -1881,11 +1958,12 @@ namespace System.Data.NS7NetPlus
         /// <summary>
         /// Converts an array of ushorts (Uint16) to an array of bytes formatted as time
         /// </summary>
+        [Obsolete("替代方案:S7NetPlusCaller.TimerToByteArray")]
         public static byte[] ToByteArray(UInt16[] value)
         {
             ByteArray arr = new ByteArray();
             foreach (UInt16 val in value)
-                arr.Add(ToByteArray(val));
+            { arr.Add(ToByteArray(val)); }
             return arr.Array;
         }
 
@@ -1894,13 +1972,14 @@ namespace System.Data.NS7NetPlus
         /// </summary>
         /// <param name="bytes"></param>
         /// <returns></returns>
+        [Obsolete("替代方案:S7NetPlusCaller.TimerToArray")]
         public static double[] ToArray(byte[] bytes)
         {
             double[] values = new double[bytes.Length / 2];
 
             int counter = 0;
             for (int cnt = 0; cnt < bytes.Length / 2; cnt++)
-                values[cnt] = FromByteArray(new byte[] { bytes[counter++], bytes[counter++] });
+            { values[cnt] = FromByteArray(new byte[] { bytes[counter++], bytes[counter++] }); }
 
             return values;
         }
@@ -1908,11 +1987,13 @@ namespace System.Data.NS7NetPlus
     /// <summary>
     /// Contains the conversion methods to convert Words from S7 plc to C#.
     /// </summary>
+    [Obsolete("替代方案:S7NetPlusCaller.Word*")]
     public static class Word
     {
         /// <summary>
         /// Converts a word (2 bytes) to ushort (UInt16)
         /// </summary>
+        [Obsolete("替代方案:S7NetPlusCaller.WordFromByteArray")]
         public static UInt16 FromByteArray(byte[] bytes)
         {
             if (bytes.Length != 2)
@@ -1923,19 +2004,19 @@ namespace System.Data.NS7NetPlus
             return (UInt16)((bytes[0] << 8) | bytes[1]);
         }
 
-
         /// <summary>
         /// Converts 2 bytes to ushort (UInt16)
         /// </summary>
+        [Obsolete("替代方案:S7NetPlusCaller.WordFromBytes")]
         public static UInt16 FromBytes(byte b1, byte b2)
         {
             return (UInt16)((b2 << 8) | b1);
         }
 
-
         /// <summary>
         /// Converts a ushort (UInt16) to word (2 bytes)
         /// </summary>
+        [Obsolete("替代方案:S7NetPlusCaller.WordToByteArray")]
         public static byte[] ToByteArray(UInt16 value)
         {
             byte[] bytes = new byte[2];
@@ -1949,24 +2030,26 @@ namespace System.Data.NS7NetPlus
         /// <summary>
         /// Converts an array of ushort (UInt16) to an array of bytes
         /// </summary>
+        [Obsolete("替代方案:S7NetPlusCaller.WordToByteArray")]
         public static byte[] ToByteArray(UInt16[] value)
         {
             ByteArray arr = new ByteArray();
             foreach (UInt16 val in value)
-                arr.Add(ToByteArray(val));
+            { arr.Add(ToByteArray(val)); }
             return arr.Array;
         }
 
         /// <summary>
         /// Converts an array of bytes to an array of ushort
         /// </summary>
+        [Obsolete("替代方案:S7NetPlusCaller.WordToArray")]
         public static UInt16[] ToArray(byte[] bytes)
         {
             UInt16[] values = new UInt16[bytes.Length / 2];
 
             int counter = 0;
             for (int cnt = 0; cnt < bytes.Length / 2; cnt++)
-                values[cnt] = FromByteArray(new byte[] { bytes[counter++], bytes[counter++] });
+            { values[cnt] = FromByteArray(new byte[] { bytes[counter++], bytes[counter++] }); }
 
             return values;
         }

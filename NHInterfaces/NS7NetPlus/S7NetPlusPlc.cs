@@ -9,9 +9,442 @@ using System.Threading;
 namespace System.Data.NS7NetPlus
 {
     /// <summary>
-    /// Creates an instance of S7.Net driver
+    /// S7NetPlus接口类
     /// </summary>
-    public partial class Plc : IDisposable
+    public interface IS7NetPlusPlc : IDisposable
+    {
+        #region // RegularContent
+        /// <summary>
+        /// IP address of the PLC
+        /// </summary>
+        string IP { get; }
+
+        /// <summary>
+        /// PORT Number of the PLC, default is 102
+        /// </summary>
+        int Port { get; }
+
+        /// <summary>
+        /// The TSAP addresses used during the connection request.
+        /// </summary>
+        TsapPair TsapPair { get; set; }
+
+        /// <summary>
+        /// CPU type of the PLC
+        /// </summary>
+        CpuType CPU { get; }
+
+        /// <summary>
+        /// Rack of the PLC
+        /// </summary>
+        Int16 Rack { get; }
+
+        /// <summary>
+        /// Slot of the CPU of the PLC
+        /// </summary>
+        Int16 Slot { get; }
+
+        /// <summary>
+        /// Max PDU size this cpu supports
+        /// </summary>
+        int MaxPDUSize { get; }
+
+        /// <summary>Gets or sets the amount of time that a read operation blocks waiting for data from PLC.</summary>
+        /// <returns>A <see cref="T:System.Int32" /> that specifies the amount of time, in milliseconds, that will elapse before a read operation fails. The default value, <see cref="F:System.Threading.Timeout.Infinite" />, specifies that the read operation does not time out.</returns>
+        int ReadTimeout { get; set; }
+
+        /// <summary>Gets or sets the amount of time that a write operation blocks waiting for data to PLC. </summary>
+        /// <returns>A <see cref="T:System.Int32" /> that specifies the amount of time, in milliseconds, that will elapse before a write operation fails. The default value, <see cref="F:System.Threading.Timeout.Infinite" />, specifies that the write operation does not time out.</returns>
+        int WriteTimeout { get; set; }
+        /// <summary>
+        /// Gets a value indicating whether a connection to the PLC has been established.
+        /// </summary>
+        /// <remarks>
+        /// The <see cref="IsConnected"/> property gets the connection state of the Client socket as
+        /// of the last I/O operation. When it returns <c>false</c>, the Client socket was either
+        /// never  connected, or is no longer connected.
+        ///
+        /// <para>
+        /// Because the <see cref="IsConnected"/> property only reflects the state of the connection
+        /// as of the most recent operation, you should attempt to send or receive a message to
+        /// determine the current state. After the message send fails, this property no longer
+        /// returns <c>true</c>. Note that this behavior is by design. You cannot reliably test the
+        /// state of the connection because, in the time between the test and a send/receive, the
+        /// connection could have been lost. Your code should assume the socket is connected, and
+        /// gracefully handle failed transmissions.
+        /// </para>
+        /// </remarks>
+        bool IsConnected { get; }
+
+        /// <summary>
+        /// 最后一次错误
+        /// </summary>
+        string LastErrorString { get; }
+        /// <summary>
+        /// 最后一次错误码
+        /// </summary>
+        ErrorCode LastErrorCode { get; }
+
+        /// <summary>
+        /// Close connection to PLC
+        /// </summary>
+        void Close();
+        #endregion RegularContent
+        #region // PlcAsynchronous
+        /// <summary>
+        /// Connects to the PLC and performs a COTP ConnectionRequest and S7 CommunicationSetup.
+        /// </summary>
+        /// <param name="cancellationToken">The token to monitor for cancellation requests. The default value is None.
+        /// Please note that the cancellation will not affect opening the socket in any way and only affects data transfers for configuring the connection after the socket connection is successfully established.
+        /// Please note that cancellation is advisory/cooperative and will not lead to immediate cancellation in all cases.</param>
+        /// <returns>A task that represents the asynchronous open operation.</returns>
+        Task OpenAsync(CancellationToken cancellationToken = default);
+        /// <summary>
+        /// Reads a number of bytes from a DB starting from a specified index. This handles more than 200 bytes with multiple requests.
+        /// If the read was not successful, check LastErrorCode or LastErrorString.
+        /// </summary>
+        /// <param name="dataType">Data type of the memory area, can be DB, Timer, Counter, Merker(Memory), Input, Output.</param>
+        /// <param name="db">Address of the memory area (if you want to read DB1, this is set to 1). This must be set also for other memory area types: counters, timers,etc.</param>
+        /// <param name="startByteAdr">Start byte address. If you want to read DB1.DBW200, this is 200.</param>
+        /// <param name="count">Byte count, if you want to read 120 bytes, set this to 120.</param>
+        /// <param name="cancellationToken">The token to monitor for cancellation requests. The default value is None.
+        /// Please note that cancellation is advisory/cooperative and will not lead to immediate cancellation in all cases.</param>
+        /// <returns>Returns the bytes in an array</returns>
+        Task<byte[]> ReadBytesAsync(DataType dataType, int db, int startByteAdr, int count, CancellationToken cancellationToken = default);
+        /// <summary>
+        /// Read and decode a certain number of bytes of the "VarType" provided.
+        /// This can be used to read multiple consecutive variables of the same type (Word, DWord, Int, etc).
+        /// If the read was not successful, check LastErrorCode or LastErrorString.
+        /// </summary>
+        /// <param name="dataType">Data type of the memory area, can be DB, Timer, Counter, Merker(Memory), Input, Output.</param>
+        /// <param name="db">Address of the memory area (if you want to read DB1, this is set to 1). This must be set also for other memory area types: counters, timers,etc.</param>
+        /// <param name="startByteAdr">Start byte address. If you want to read DB1.DBW200, this is 200.</param>
+        /// <param name="varType">Type of the variable/s that you are reading</param>
+        /// <param name="bitAdr">Address of bit. If you want to read DB1.DBX200.6, set 6 to this parameter.</param>
+        /// <param name="varCount"></param>
+        /// <param name="cancellationToken">The token to monitor for cancellation requests. The default value is None.
+        /// Please note that cancellation is advisory/cooperative and will not lead to immediate cancellation in all cases.</param>
+        Task<object> ReadAsync(DataType dataType, int db, int startByteAdr, VarType varType, int varCount, byte bitAdr = 0, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Reads a single variable from the PLC, takes in input strings like "DB1.DBX0.0", "DB20.DBD200", "MB20", "T45", etc.
+        /// If the read was not successful, check LastErrorCode or LastErrorString.
+        /// </summary>
+        /// <param name="variable">Input strings like "DB1.DBX0.0", "DB20.DBD200", "MB20", "T45", etc.</param>
+        /// <param name="cancellationToken">The token to monitor for cancellation requests. The default value is None.
+        /// Please note that cancellation is advisory/cooperative and will not lead to immediate cancellation in all cases.</param>
+        /// <returns>Returns an object that contains the value. This object must be cast accordingly.</returns>
+        Task<object> ReadAsync(string variable, CancellationToken cancellationToken = default);
+        /// <summary>
+        /// Reads all the bytes needed to fill a struct in C#, starting from a certain address, and return an object that can be casted to the struct.
+        /// </summary>
+        /// <param name="structType">Type of the struct to be readed (es.: TypeOf(MyStruct)).</param>
+        /// <param name="db">Address of the DB.</param>
+        /// <param name="startByteAdr">Start byte address. If you want to read DB1.DBW200, this is 200.</param>
+        /// <param name="cancellationToken">The token to monitor for cancellation requests. The default value is None.
+        /// Please note that cancellation is advisory/cooperative and will not lead to immediate cancellation in all cases.</param>
+        /// <returns>Returns a struct that must be cast.</returns>
+        Task<object> ReadStructAsync(Type structType, int db, int startByteAdr = 0, CancellationToken cancellationToken = default);
+        /// <summary>
+        /// Reads all the bytes needed to fill a struct in C#, starting from a certain address, and returns the struct or null if nothing was read.
+        /// </summary>
+        /// <typeparam name="T">The struct type</typeparam>
+        /// <param name="db">Address of the DB.</param>
+        /// <param name="startByteAdr">Start byte address. If you want to read DB1.DBW200, this is 200.</param>
+        /// <param name="cancellationToken">The token to monitor for cancellation requests. The default value is None.
+        /// Please note that cancellation is advisory/cooperative and will not lead to immediate cancellation in all cases.</param>
+        /// <returns>Returns a nulable struct. If nothing was read null will be returned.</returns>
+        Task<T?> ReadStructAsync<T>(int db, int startByteAdr = 0, CancellationToken cancellationToken = default) where T : struct;
+        /// <summary>
+        /// Reads all the bytes needed to fill a class in C#, starting from a certain address, and set all the properties values to the value that are read from the PLC.
+        /// This reads only properties, it doesn't read private variable or public variable without {get;set;} specified.
+        /// </summary>
+        /// <param name="sourceClass">Instance of the class that will store the values</param>
+        /// <param name="db">Index of the DB; es.: 1 is for DB1</param>
+        /// <param name="startByteAdr">Start byte address. If you want to read DB1.DBW200, this is 200.</param>
+        /// <param name="cancellationToken">The token to monitor for cancellation requests. The default value is None.
+        /// Please note that cancellation is advisory/cooperative and will not lead to immediate cancellation in all cases.</param>
+        /// <returns>The number of read bytes</returns>
+        Task<Tuple<int, object>> ReadClassAsync(object sourceClass, int db, int startByteAdr = 0, CancellationToken cancellationToken = default);
+        /// <summary>
+        /// Reads all the bytes needed to fill a class in C#, starting from a certain address, and set all the properties values to the value that are read from the PLC.
+        /// This reads only properties, it doesn't read private variable or public variable without {get;set;} specified. To instantiate the class defined by the generic
+        /// type, the class needs a default constructor.
+        /// </summary>
+        /// <typeparam name="T">The class that will be instantiated. Requires a default constructor</typeparam>
+        /// <param name="db">Index of the DB; es.: 1 is for DB1</param>
+        /// <param name="startByteAdr">Start byte address. If you want to read DB1.DBW200, this is 200.</param>
+        /// <param name="cancellationToken">The token to monitor for cancellation requests. The default value is None.
+        /// Please note that cancellation is advisory/cooperative and will not lead to immediate cancellation in all cases.</param>
+        /// <returns>An instance of the class with the values read from the PLC. If no data has been read, null will be returned</returns>
+        Task<T> ReadClassAsync<T>(int db, int startByteAdr = 0, CancellationToken cancellationToken = default) where T : class;
+        /// <summary>
+        /// Reads all the bytes needed to fill a class in C#, starting from a certain address, and set all the properties values to the value that are read from the PLC.
+        /// This reads only properties, it doesn't read private variable or public variable without {get;set;} specified.
+        /// </summary>
+        /// <typeparam name="T">The class that will be instantiated</typeparam>
+        /// <param name="classFactory">Function to instantiate the class</param>
+        /// <param name="db">Index of the DB; es.: 1 is for DB1</param>
+        /// <param name="startByteAdr">Start byte address. If you want to read DB1.DBW200, this is 200.</param>
+        /// <param name="cancellationToken">The token to monitor for cancellation requests. The default value is None.
+        /// Please note that cancellation is advisory/cooperative and will not lead to immediate cancellation in all cases.</param>
+        /// <returns>An instance of the class with the values read from the PLC. If no data has been read, null will be returned</returns>
+        Task<T> ReadClassAsync<T>(Func<T> classFactory, int db, int startByteAdr = 0, CancellationToken cancellationToken = default) where T : class;
+        /// <summary>
+        /// Reads multiple vars in a single request.
+        /// You have to create and pass a list of DataItems and you obtain in response the same list with the values.
+        /// Values are stored in the property "Value" of the dataItem and are already converted.
+        /// If you don't want the conversion, just create a dataItem of bytes.
+        /// The number of DataItems as well as the total size of the requested data can not exceed a certain limit (protocol restriction).
+        /// </summary>
+        /// <param name="dataItems">List of dataitems that contains the list of variables that must be read.</param>
+        /// <param name="cancellationToken">The token to monitor for cancellation requests. The default value is None.
+        /// Please note that cancellation is advisory/cooperative and will not lead to immediate cancellation in all cases.</param>
+        Task<List<DataItem>> ReadMultipleVarsAsync(List<DataItem> dataItems, CancellationToken cancellationToken = default);
+        /// <summary>
+        /// Write a number of bytes from a DB starting from a specified index. This handles more than 200 bytes with multiple requests.
+        /// If the write was not successful, check LastErrorCode or LastErrorString.
+        /// </summary>
+        /// <param name="dataType">Data type of the memory area, can be DB, Timer, Counter, Merker(Memory), Input, Output.</param>
+        /// <param name="db">Address of the memory area (if you want to read DB1, this is set to 1). This must be set also for other memory area types: counters, timers,etc.</param>
+        /// <param name="startByteAdr">Start byte address. If you want to write DB1.DBW200, this is 200.</param>
+        /// <param name="value">Bytes to write. If more than 200, multiple requests will be made.</param>
+        /// <param name="cancellationToken">The token to monitor for cancellation requests. The default value is None.
+        /// Please note that cancellation is advisory/cooperative and will not lead to immediate cancellation in all cases.</param>
+        /// <returns>A task that represents the asynchronous write operation.</returns>
+        Task WriteBytesAsync(DataType dataType, int db, int startByteAdr, byte[] value, CancellationToken cancellationToken = default);
+        /// <summary>
+        /// Write a single bit from a DB with the specified index.
+        /// </summary>
+        /// <param name="dataType">Data type of the memory area, can be DB, Timer, Counter, Merker(Memory), Input, Output.</param>
+        /// <param name="db">Address of the memory area (if you want to read DB1, this is set to 1). This must be set also for other memory area types: counters, timers,etc.</param>
+        /// <param name="startByteAdr">Start byte address. If you want to write DB1.DBW200, this is 200.</param>
+        /// <param name="bitAdr">The address of the bit. (0-7)</param>
+        /// <param name="value">Bytes to write. If more than 200, multiple requests will be made.</param>
+        /// <param name="cancellationToken">The token to monitor for cancellation requests. The default value is None.
+        /// Please note that cancellation is advisory/cooperative and will not lead to immediate cancellation in all cases.</param>
+        /// <returns>A task that represents the asynchronous write operation.</returns>
+        Task WriteBitAsync(DataType dataType, int db, int startByteAdr, int bitAdr, bool value, CancellationToken cancellationToken = default);
+        /// <summary>
+        /// Write a single bit from a DB with the specified index.
+        /// </summary>
+        /// <param name="dataType">Data type of the memory area, can be DB, Timer, Counter, Merker(Memory), Input, Output.</param>
+        /// <param name="db">Address of the memory area (if you want to read DB1, this is set to 1). This must be set also for other memory area types: counters, timers,etc.</param>
+        /// <param name="startByteAdr">Start byte address. If you want to write DB1.DBW200, this is 200.</param>
+        /// <param name="bitAdr">The address of the bit. (0-7)</param>
+        /// <param name="value">Bytes to write. If more than 200, multiple requests will be made.</param>
+        /// <param name="cancellationToken">The token to monitor for cancellation requests. The default value is None.
+        /// Please note that cancellation is advisory/cooperative and will not lead to immediate cancellation in all cases.</param>
+        /// <returns>A task that represents the asynchronous write operation.</returns>
+        Task WriteBitAsync(DataType dataType, int db, int startByteAdr, int bitAdr, int value, CancellationToken cancellationToken = default);
+        /// <summary>
+        /// Takes in input an object and tries to parse it to an array of values. This can be used to write many data, all of the same type.
+        /// You must specify the memory area type, memory are address, byte start address and bytes count.
+        /// If the read was not successful, check LastErrorCode or LastErrorString.
+        /// </summary>
+        /// <param name="dataType">Data type of the memory area, can be DB, Timer, Counter, Merker(Memory), Input, Output.</param>
+        /// <param name="db">Address of the memory area (if you want to read DB1, this is set to 1). This must be set also for other memory area types: counters, timers,etc.</param>
+        /// <param name="startByteAdr">Start byte address. If you want to read DB1.DBW200, this is 200.</param>
+        /// <param name="value">Bytes to write. The lenght of this parameter can't be higher than 200. If you need more, use recursion.</param>
+        /// <param name="bitAdr">The address of the bit. (0-7)</param>
+        /// <param name="cancellationToken">The token to monitor for cancellation requests. The default value is None.
+        /// Please note that cancellation is advisory/cooperative and will not lead to immediate cancellation in all cases.</param>
+        /// <returns>A task that represents the asynchronous write operation.</returns>
+        Task WriteAsync(DataType dataType, int db, int startByteAdr, object value, int bitAdr = -1, CancellationToken cancellationToken = default);
+        /// <summary>
+        /// Writes a single variable from the PLC, takes in input strings like "DB1.DBX0.0", "DB20.DBD200", "MB20", "T45", etc.
+        /// If the write was not successful, check <see cref="LastErrorCode"/> or <see cref="LastErrorString"/>.
+        /// </summary>
+        /// <param name="variable">Input strings like "DB1.DBX0.0", "DB20.DBD200", "MB20", "T45", etc.</param>
+        /// <param name="value">Value to be written to the PLC</param>
+        /// <param name="cancellationToken">The token to monitor for cancellation requests. The default value is None.
+        /// Please note that cancellation is advisory/cooperative and will not lead to immediate cancellation in all cases.</param>
+        /// <returns>A task that represents the asynchronous write operation.</returns>
+        Task WriteAsync(string variable, object value, CancellationToken cancellationToken = default);
+        /// <summary>
+        /// Writes a C# struct to a DB in the PLC
+        /// </summary>
+        /// <param name="structValue">The struct to be written</param>
+        /// <param name="db">Db address</param>
+        /// <param name="startByteAdr">Start bytes on the PLC</param>
+        /// <param name="cancellationToken">The token to monitor for cancellation requests. The default value is None.
+        /// Please note that cancellation is advisory/cooperative and will not lead to immediate cancellation in all cases.</param>
+        /// <returns>A task that represents the asynchronous write operation.</returns>
+        Task WriteStructAsync(object structValue, int db, int startByteAdr = 0, CancellationToken cancellationToken = default);
+        /// <summary>
+        /// Writes a C# class to a DB in the PLC
+        /// </summary>
+        /// <param name="classValue">The class to be written</param>
+        /// <param name="db">Db address</param>
+        /// <param name="startByteAdr">Start bytes on the PLC</param>
+        /// <param name="cancellationToken">The token to monitor for cancellation requests. The default value is None.
+        /// Please note that cancellation is advisory/cooperative and will not lead to immediate cancellation in all cases.</param>
+        /// <returns>A task that represents the asynchronous write operation.</returns>
+        Task WriteClassAsync(object classValue, int db, int startByteAdr = 0, CancellationToken cancellationToken = default);
+        /// <summary>
+        /// Write DataItem(s) to the PLC. Throws an exception if the response is invalid
+        /// or when the PLC reports errors for item(s) written.
+        /// </summary>
+        /// <param name="dataItems">The DataItem(s) to write to the PLC.</param>
+        /// <returns>Task that completes when response from PLC is parsed.</returns>
+        Task WriteAsync(params DataItem[] dataItems);
+        #endregion PlcAsynchronous
+        #region // PlcSynchronous
+        /// <summary>
+        /// Connects to the PLC and performs a COTP ConnectionRequest and S7 CommunicationSetup.
+        /// </summary>
+        void Open();
+        /// <summary>
+        /// Reads a number of bytes from a DB starting from a specified index. This handles more than 200 bytes with multiple requests.
+        /// If the read was not successful, check LastErrorCode or LastErrorString.
+        /// </summary>
+        /// <param name="dataType">Data type of the memory area, can be DB, Timer, Counter, Merker(Memory), Input, Output.</param>
+        /// <param name="db">Address of the memory area (if you want to read DB1, this is set to 1). This must be set also for other memory area types: counters, timers,etc.</param>
+        /// <param name="startByteAdr">Start byte address. If you want to read DB1.DBW200, this is 200.</param>
+        /// <param name="count">Byte count, if you want to read 120 bytes, set this to 120.</param>
+        /// <returns>Returns the bytes in an array</returns>
+        byte[] ReadBytes(DataType dataType, int db, int startByteAdr, int count);
+        /// <summary>
+        /// Read and decode a certain number of bytes of the "VarType" provided.
+        /// This can be used to read multiple consecutive variables of the same type (Word, DWord, Int, etc).
+        /// If the read was not successful, check LastErrorCode or LastErrorString.
+        /// </summary>
+        /// <param name="dataType">Data type of the memory area, can be DB, Timer, Counter, Merker(Memory), Input, Output.</param>
+        /// <param name="db">Address of the memory area (if you want to read DB1, this is set to 1). This must be set also for other memory area types: counters, timers,etc.</param>
+        /// <param name="startByteAdr">Start byte address. If you want to read DB1.DBW200, this is 200.</param>
+        /// <param name="varType">Type of the variable/s that you are reading</param>
+        /// <param name="bitAdr">Address of bit. If you want to read DB1.DBX200.6, set 6 to this parameter.</param>
+        /// <param name="varCount"></param>
+        object Read(DataType dataType, int db, int startByteAdr, VarType varType, int varCount, byte bitAdr = 0);
+        /// <summary>
+        /// Reads a single variable from the PLC, takes in input strings like "DB1.DBX0.0", "DB20.DBD200", "MB20", "T45", etc.
+        /// If the read was not successful, check LastErrorCode or LastErrorString.
+        /// </summary>
+        /// <param name="variable">Input strings like "DB1.DBX0.0", "DB20.DBD200", "MB20", "T45", etc.</param>
+        /// <returns>Returns an object that contains the value. This object must be cast accordingly. If no data has been read, null will be returned</returns>
+        object Read(string variable);
+        /// <summary>
+        /// Reads all the bytes needed to fill a struct in C#, starting from a certain address, and return an object that can be casted to the struct.
+        /// </summary>
+        /// <param name="structType">Type of the struct to be readed (es.: TypeOf(MyStruct)).</param>
+        /// <param name="db">Address of the DB.</param>
+        /// <param name="startByteAdr">Start byte address. If you want to read DB1.DBW200, this is 200.</param>
+        /// <returns>Returns a struct that must be cast. If no data has been read, null will be returned</returns>
+        object ReadStruct(Type structType, int db, int startByteAdr = 0);
+        /// <summary>
+        /// Reads all the bytes needed to fill a struct in C#, starting from a certain address, and returns the struct or null if nothing was read.
+        /// </summary>
+        /// <typeparam name="T">The struct type</typeparam>
+        /// <param name="db">Address of the DB.</param>
+        /// <param name="startByteAdr">Start byte address. If you want to read DB1.DBW200, this is 200.</param>
+        /// <returns>Returns a nullable struct. If nothing was read null will be returned.</returns>
+        T? ReadStruct<T>(int db, int startByteAdr = 0) where T : struct;
+        /// <summary>
+        /// Reads all the bytes needed to fill a class in C#, starting from a certain address, and set all the properties values to the value that are read from the PLC.
+        /// This reads only properties, it doesn't read private variable or public variable without {get;set;} specified.
+        /// </summary>
+        /// <param name="sourceClass">Instance of the class that will store the values</param>
+        /// <param name="db">Index of the DB; es.: 1 is for DB1</param>
+        /// <param name="startByteAdr">Start byte address. If you want to read DB1.DBW200, this is 200.</param>
+        /// <returns>The number of read bytes</returns>
+        int ReadClass(object sourceClass, int db, int startByteAdr = 0);
+        /// <summary>
+        /// Reads all the bytes needed to fill a class in C#, starting from a certain address, and set all the properties values to the value that are read from the PLC.
+        /// This reads only properties, it doesn't read private variable or public variable without {get;set;} specified. To instantiate the class defined by the generic
+        /// type, the class needs a default constructor.
+        /// </summary>
+        /// <typeparam name="T">The class that will be instantiated. Requires a default constructor</typeparam>
+        /// <param name="db">Index of the DB; es.: 1 is for DB1</param>
+        /// <param name="startByteAdr">Start byte address. If you want to read DB1.DBW200, this is 200.</param>
+        /// <returns>An instance of the class with the values read from the PLC. If no data has been read, null will be returned</returns>
+        T ReadClass<T>(int db, int startByteAdr = 0) where T : class;
+        /// <summary>
+        /// Reads all the bytes needed to fill a class in C#, starting from a certain address, and set all the properties values to the value that are read from the PLC.
+        /// This reads only properties, it doesn't read private variable or public variable without {get;set;} specified.
+        /// </summary>
+        /// <typeparam name="T">The class that will be instantiated</typeparam>
+        /// <param name="classFactory">Function to instantiate the class</param>
+        /// <param name="db">Index of the DB; es.: 1 is for DB1</param>
+        /// <param name="startByteAdr">Start byte address. If you want to read DB1.DBW200, this is 200.</param>
+        /// <returns>An instance of the class with the values read from the PLC. If no data has been read, null will be returned</returns>
+        T ReadClass<T>(Func<T> classFactory, int db, int startByteAdr = 0) where T : class;
+        /// <summary>
+        /// Write a number of bytes from a DB starting from a specified index. This handles more than 200 bytes with multiple requests.
+        /// If the write was not successful, check LastErrorCode or LastErrorString.
+        /// </summary>
+        /// <param name="dataType">Data type of the memory area, can be DB, Timer, Counter, Merker(Memory), Input, Output.</param>
+        /// <param name="db">Address of the memory area (if you want to read DB1, this is set to 1). This must be set also for other memory area types: counters, timers,etc.</param>
+        /// <param name="startByteAdr">Start byte address. If you want to write DB1.DBW200, this is 200.</param>
+        /// <param name="value">Bytes to write. If more than 200, multiple requests will be made.</param>
+        void WriteBytes(DataType dataType, int db, int startByteAdr, byte[] value);
+        /// <summary>
+        /// Write a single bit from a DB with the specified index.
+        /// </summary>
+        /// <param name="dataType">Data type of the memory area, can be DB, Timer, Counter, Merker(Memory), Input, Output.</param>
+        /// <param name="db">Address of the memory area (if you want to read DB1, this is set to 1). This must be set also for other memory area types: counters, timers,etc.</param>
+        /// <param name="startByteAdr">Start byte address. If you want to write DB1.DBW200, this is 200.</param>
+        /// <param name="bitAdr">The address of the bit. (0-7)</param>
+        /// <param name="value">Bytes to write. If more than 200, multiple requests will be made.</param>
+        void WriteBit(DataType dataType, int db, int startByteAdr, int bitAdr, bool value);
+        /// <summary>
+        /// Write a single bit to a DB with the specified index.
+        /// </summary>
+        /// <param name="dataType">Data type of the memory area, can be DB, Timer, Counter, Merker(Memory), Input, Output.</param>
+        /// <param name="db">Address of the memory area (if you want to write DB1, this is set to 1). This must be set also for other memory area types: counters, timers,etc.</param>
+        /// <param name="startByteAdr">Start byte address. If you want to write DB1.DBW200, this is 200.</param>
+        /// <param name="bitAdr">The address of the bit. (0-7)</param>
+        /// <param name="value">Value to write (0 or 1).</param>
+        void WriteBit(DataType dataType, int db, int startByteAdr, int bitAdr, int value);
+        /// <summary>
+        /// Takes in input an object and tries to parse it to an array of values. This can be used to write many data, all of the same type.
+        /// You must specify the memory area type, memory are address, byte start address and bytes count.
+        /// If the read was not successful, check LastErrorCode or LastErrorString.
+        /// </summary>
+        /// <param name="dataType">Data type of the memory area, can be DB, Timer, Counter, Merker(Memory), Input, Output.</param>
+        /// <param name="db">Address of the memory area (if you want to read DB1, this is set to 1). This must be set also for other memory area types: counters, timers,etc.</param>
+        /// <param name="startByteAdr">Start byte address. If you want to read DB1.DBW200, this is 200.</param>
+        /// <param name="value">Bytes to write. The lenght of this parameter can't be higher than 200. If you need more, use recursion.</param>
+        /// <param name="bitAdr">The address of the bit. (0-7)</param>
+        void Write(DataType dataType, int db, int startByteAdr, object value, int bitAdr = -1);
+        /// <summary>
+        /// Writes a single variable from the PLC, takes in input strings like "DB1.DBX0.0", "DB20.DBD200", "MB20", "T45", etc.
+        /// If the write was not successful, check <see cref="LastErrorCode"/> or <see cref="LastErrorString"/>.
+        /// </summary>
+        /// <param name="variable">Input strings like "DB1.DBX0.0", "DB20.DBD200", "MB20", "T45", etc.</param>
+        /// <param name="value">Value to be written to the PLC</param>
+        void Write(string variable, object value);
+        /// <summary>
+        /// Writes a C# struct to a DB in the PLC
+        /// </summary>
+        /// <param name="structValue">The struct to be written</param>
+        /// <param name="db">Db address</param>
+        /// <param name="startByteAdr">Start bytes on the PLC</param>
+        void WriteStruct(object structValue, int db, int startByteAdr = 0);
+        /// <summary>
+        /// Writes a C# class to a DB in the PLC
+        /// </summary>
+        /// <param name="classValue">The class to be written</param>
+        /// <param name="db">Db address</param>
+        /// <param name="startByteAdr">Start bytes on the PLC</param>
+        void WriteClass(object classValue, int db, int startByteAdr = 0);
+        /// <summary>
+        /// Write DataItem(s) to the PLC. Throws an exception if the response is invalid
+        /// or when the PLC reports errors for item(s) written.
+        /// </summary>
+        /// <param name="dataItems">The DataItem(s) to write to the PLC.</param>
+        void Write(params DataItem[] dataItems);
+        /// <summary>
+        /// Reads multiple vars in a single request.
+        /// You have to create and pass a list of DataItems and you obtain in response the same list with the values.
+        /// Values are stored in the property "Value" of the dataItem and are already converted.
+        /// If you don't want the conversion, just create a dataItem of bytes.
+        /// The number of DataItems as well as the total size of the requested data can not exceed a certain limit (protocol restriction).
+        /// </summary>
+        /// <param name="dataItems">List of dataitems that contains the list of variables that must be read.</param>
+        void ReadMultipleVars(List<DataItem> dataItems);
+        #endregion PlcSynchronous
+    }
+    internal class S7NetPlusPlc : IS7NetPlusPlc
     {
         #region // RegularContent
         /// <summary>
@@ -27,8 +460,8 @@ namespace System.Data.NS7NetPlus
         private readonly TaskQueue queue = new TaskQueue();
 
         //TCP connection to device
-        private TcpClient? tcpClient;
-        private NetworkStream? _stream;
+        private TcpClient tcpClient;
+        private NetworkStream _stream;
 
         private int readTimeout = DefaultTimeout; // default no timeout
         private int writeTimeout = DefaultTimeout; // default no timeout
@@ -76,7 +509,8 @@ namespace System.Data.NS7NetPlus
             set
             {
                 readTimeout = value;
-                if (tcpClient != null) tcpClient.ReceiveTimeout = readTimeout;
+                if (tcpClient != null)
+                { tcpClient.ReceiveTimeout = readTimeout; }
             }
         }
 
@@ -88,7 +522,8 @@ namespace System.Data.NS7NetPlus
             set
             {
                 writeTimeout = value;
-                if (tcpClient != null) tcpClient.SendTimeout = writeTimeout;
+                if (tcpClient != null)
+                { tcpClient.SendTimeout = writeTimeout; }
             }
         }
 
@@ -113,6 +548,15 @@ namespace System.Data.NS7NetPlus
         public bool IsConnected => tcpClient?.Connected ?? false;
 
         /// <summary>
+        /// 最后一次错误
+        /// </summary>
+        public string LastErrorString { get; private set; }
+        /// <summary>
+        /// 最后一次错误码
+        /// </summary>
+        public ErrorCode LastErrorCode { get; private set; }
+
+        /// <summary>
         /// Creates a PLC object with all the parameters needed for connections.
         /// For S7-1200 and S7-1500, the default is rack = 0 and slot = 0.
         /// You need slot > 0 if you are connecting to external ethernet card (CP).
@@ -123,7 +567,7 @@ namespace System.Data.NS7NetPlus
         /// <param name="rack">rack of the PLC, usually it's 0, but check in the hardware configuration of Step7 or TIA portal</param>
         /// <param name="slot">slot of the CPU of the PLC, usually it's 2 for S7300-S7400, 0 for S7-1200 and S7-1500.
         ///  If you use an external ethernet card, this must be set accordingly.</param>
-        public Plc(CpuType cpu, string ip, Int16 rack, Int16 slot)
+        public S7NetPlusPlc(CpuType cpu, string ip, Int16 rack, Int16 slot)
             : this(cpu, ip, DefaultPort, rack, slot)
         {
         }
@@ -140,7 +584,7 @@ namespace System.Data.NS7NetPlus
         /// <param name="rack">rack of the PLC, usually it's 0, but check in the hardware configuration of Step7 or TIA portal</param>
         /// <param name="slot">slot of the CPU of the PLC, usually it's 2 for S7300-S7400, 0 for S7-1200 and S7-1500.
         ///  If you use an external ethernet card, this must be set accordingly.</param>
-        public Plc(CpuType cpu, string ip, int port, Int16 rack, Int16 slot)
+        public S7NetPlusPlc(CpuType cpu, string ip, int port, Int16 rack, Int16 slot)
             : this(ip, port, TsapPair.GetDefaultTsapPair(cpu, rack, slot))
         {
             if (!Enum.IsDefined(typeof(CpuType), cpu))
@@ -161,7 +605,7 @@ namespace System.Data.NS7NetPlus
         /// </summary>
         /// <param name="ip">Ip address of the PLC</param>
         /// <param name="tsapPair">The TSAP addresses used for the connection request.</param>
-        public Plc(string ip, TsapPair tsapPair) : this(ip, DefaultPort, tsapPair)
+        public S7NetPlusPlc(string ip, TsapPair tsapPair) : this(ip, DefaultPort, tsapPair)
         {
         }
 
@@ -172,7 +616,7 @@ namespace System.Data.NS7NetPlus
         /// <param name="ip">Ip address of the PLC</param>
         /// <param name="port">Port number used for the connection, default 102.</param>
         /// <param name="tsapPair">The TSAP addresses used for the connection request.</param>
-        public Plc(string ip, int port, TsapPair tsapPair)
+        public S7NetPlusPlc(string ip, int port, TsapPair tsapPair)
         {
             if (string.IsNullOrEmpty(ip))
                 throw new ArgumentException("IP address must valid.", nameof(ip));
@@ -444,7 +888,7 @@ namespace System.Data.NS7NetPlus
         /// <param name="varCount"></param>
         /// <param name="cancellationToken">The token to monitor for cancellation requests. The default value is None.
         /// Please note that cancellation is advisory/cooperative and will not lead to immediate cancellation in all cases.</param>
-        public async Task<object?> ReadAsync(DataType dataType, int db, int startByteAdr, VarType varType, int varCount, byte bitAdr = 0, CancellationToken cancellationToken = default)
+        public async Task<object> ReadAsync(DataType dataType, int db, int startByteAdr, VarType varType, int varCount, byte bitAdr = 0, CancellationToken cancellationToken = default)
         {
             int cntBytes = VarTypeToByteLength(varType, varCount);
             byte[] bytes = await ReadBytesAsync(dataType, db, startByteAdr, cntBytes, cancellationToken).ConfigureAwait(false);
@@ -459,7 +903,7 @@ namespace System.Data.NS7NetPlus
         /// <param name="cancellationToken">The token to monitor for cancellation requests. The default value is None.
         /// Please note that cancellation is advisory/cooperative and will not lead to immediate cancellation in all cases.</param>
         /// <returns>Returns an object that contains the value. This object must be cast accordingly.</returns>
-        public async Task<object?> ReadAsync(string variable, CancellationToken cancellationToken = default)
+        public async Task<object> ReadAsync(string variable, CancellationToken cancellationToken = default)
         {
             var adr = new PLCAddress(variable);
             return await ReadAsync(adr.DataType, adr.DbNumber, adr.StartByte, adr.VarType, 1, (byte)adr.BitNumber, cancellationToken).ConfigureAwait(false);
@@ -474,14 +918,14 @@ namespace System.Data.NS7NetPlus
         /// <param name="cancellationToken">The token to monitor for cancellation requests. The default value is None.
         /// Please note that cancellation is advisory/cooperative and will not lead to immediate cancellation in all cases.</param>
         /// <returns>Returns a struct that must be cast.</returns>
-        public async Task<object?> ReadStructAsync(Type structType, int db, int startByteAdr = 0, CancellationToken cancellationToken = default)
+        public async Task<object> ReadStructAsync(Type structType, int db, int startByteAdr = 0, CancellationToken cancellationToken = default)
         {
-            int numBytes = System.Data.NS7NetPlus.Struct.GetStructSize(structType);
+            int numBytes = S7NetPlusCaller.GetStructSize(structType);
             // now read the package
             var resultBytes = await ReadBytesAsync(DataType.DataBlock, db, startByteAdr, numBytes, cancellationToken).ConfigureAwait(false);
 
             // and decode it
-            return System.Data.NS7NetPlus.Struct.FromBytes(structType, resultBytes);
+            return S7NetPlusCaller.StructFromBytes(structType, resultBytes);
         }
 
         /// <summary>
@@ -510,7 +954,7 @@ namespace System.Data.NS7NetPlus
         /// <returns>The number of read bytes</returns>
         public async Task<Tuple<int, object>> ReadClassAsync(object sourceClass, int db, int startByteAdr = 0, CancellationToken cancellationToken = default)
         {
-            int numBytes = (int)Class.GetClassSize(sourceClass);
+            int numBytes = (int)S7NetPlusCaller.GetClassSize(sourceClass);
             if (numBytes <= 0)
             {
                 throw new Exception("The size of the class is less than 1 byte and therefore cannot be read");
@@ -519,7 +963,7 @@ namespace System.Data.NS7NetPlus
             // now read the package
             var resultBytes = await ReadBytesAsync(DataType.DataBlock, db, startByteAdr, numBytes, cancellationToken).ConfigureAwait(false);
             // and decode it
-            Class.FromBytes(sourceClass, resultBytes);
+            S7NetPlusCaller.ClassFromBytes(sourceClass, resultBytes);
 
             return new Tuple<int, object>(resultBytes.Length, sourceClass);
         }
@@ -535,7 +979,7 @@ namespace System.Data.NS7NetPlus
         /// <param name="cancellationToken">The token to monitor for cancellation requests. The default value is None.
         /// Please note that cancellation is advisory/cooperative and will not lead to immediate cancellation in all cases.</param>
         /// <returns>An instance of the class with the values read from the PLC. If no data has been read, null will be returned</returns>
-        public async Task<T?> ReadClassAsync<T>(int db, int startByteAdr = 0, CancellationToken cancellationToken = default) where T : class
+        public async Task<T> ReadClassAsync<T>(int db, int startByteAdr = 0, CancellationToken cancellationToken = default) where T : class
         {
             return await ReadClassAsync(() => Activator.CreateInstance<T>(), db, startByteAdr, cancellationToken).ConfigureAwait(false);
         }
@@ -551,7 +995,7 @@ namespace System.Data.NS7NetPlus
         /// <param name="cancellationToken">The token to monitor for cancellation requests. The default value is None.
         /// Please note that cancellation is advisory/cooperative and will not lead to immediate cancellation in all cases.</param>
         /// <returns>An instance of the class with the values read from the PLC. If no data has been read, null will be returned</returns>
-        public async Task<T?> ReadClassAsync<T>(Func<T> classFactory, int db, int startByteAdr = 0, CancellationToken cancellationToken = default) where T : class
+        public async Task<T> ReadClassAsync<T>(Func<T> classFactory, int db, int startByteAdr = 0, CancellationToken cancellationToken = default) where T : class
         {
             var instance = classFactory();
             var res = await ReadClassAsync(instance, db, startByteAdr, cancellationToken).ConfigureAwait(false);
@@ -730,7 +1174,7 @@ namespace System.Data.NS7NetPlus
         /// <returns>A task that represents the asynchronous write operation.</returns>
         public async Task WriteStructAsync(object structValue, int db, int startByteAdr = 0, CancellationToken cancellationToken = default)
         {
-            var bytes = Struct.ToBytes(structValue).ToList();
+            var bytes = S7NetPlusCaller.StructToBytes(structValue).ToList();
             await WriteBytesAsync(DataType.DataBlock, db, startByteAdr, bytes.ToArray(), cancellationToken).ConfigureAwait(false);
         }
 
@@ -745,8 +1189,8 @@ namespace System.Data.NS7NetPlus
         /// <returns>A task that represents the asynchronous write operation.</returns>
         public async Task WriteClassAsync(object classValue, int db, int startByteAdr = 0, CancellationToken cancellationToken = default)
         {
-            byte[] bytes = new byte[(int)Class.GetClassSize(classValue)];
-            System.Data.NS7NetPlus.Class.ToBytes(classValue, bytes);
+            byte[] bytes = new byte[(int)S7NetPlusCaller.GetClassSize(classValue)];
+            S7NetPlusCaller.ClassToBytes(classValue, bytes);
             await WriteBytesAsync(DataType.DataBlock, db, startByteAdr, bytes, cancellationToken).ConfigureAwait(false);
         }
 
@@ -785,6 +1229,9 @@ namespace System.Data.NS7NetPlus
         /// <param name="db">Address of the memory area (if you want to read DB1, this is set to 1). This must be set also for other memory area types: counters, timers,etc.</param>
         /// <param name="startByteAdr">Start byte address. If you want to read DB1.DBW200, this is 200.</param>
         /// <param name="value">Bytes to write. The lenght of this parameter can't be higher than 200. If you need more, use recursion.</param>
+        /// <param name="dataOffset"></param>
+        /// <param name="count"></param>
+        /// <param name="cancellationToken"></param>
         /// <returns>A task that represents the asynchronous write operation.</returns>
         private async Task WriteBytesWithASingleRequestAsync(DataType dataType, int db, int startByteAdr, byte[] value, int dataOffset, int count, CancellationToken cancellationToken)
         {
@@ -930,7 +1377,7 @@ namespace System.Data.NS7NetPlus
         /// <param name="varType">Type of the variable/s that you are reading</param>
         /// <param name="bitAdr">Address of bit. If you want to read DB1.DBX200.6, set 6 to this parameter.</param>
         /// <param name="varCount"></param>
-        public object? Read(DataType dataType, int db, int startByteAdr, VarType varType, int varCount, byte bitAdr = 0)
+        public object Read(DataType dataType, int db, int startByteAdr, VarType varType, int varCount, byte bitAdr = 0)
         {
             int cntBytes = VarTypeToByteLength(varType, varCount);
             byte[] bytes = ReadBytes(dataType, db, startByteAdr, cntBytes);
@@ -944,7 +1391,7 @@ namespace System.Data.NS7NetPlus
         /// </summary>
         /// <param name="variable">Input strings like "DB1.DBX0.0", "DB20.DBD200", "MB20", "T45", etc.</param>
         /// <returns>Returns an object that contains the value. This object must be cast accordingly. If no data has been read, null will be returned</returns>
-        public object? Read(string variable)
+        public object Read(string variable)
         {
             var adr = new PLCAddress(variable);
             return Read(adr.DataType, adr.DbNumber, adr.StartByte, adr.VarType, 1, (byte)adr.BitNumber);
@@ -957,14 +1404,14 @@ namespace System.Data.NS7NetPlus
         /// <param name="db">Address of the DB.</param>
         /// <param name="startByteAdr">Start byte address. If you want to read DB1.DBW200, this is 200.</param>
         /// <returns>Returns a struct that must be cast. If no data has been read, null will be returned</returns>
-        public object? ReadStruct(Type structType, int db, int startByteAdr = 0)
+        public object ReadStruct(Type structType, int db, int startByteAdr = 0)
         {
-            int numBytes = Struct.GetStructSize(structType);
+            int numBytes = S7NetPlusCaller.GetStructSize(structType);
             // now read the package
             var resultBytes = ReadBytes(DataType.DataBlock, db, startByteAdr, numBytes);
 
             // and decode it
-            return Struct.FromBytes(structType, resultBytes);
+            return S7NetPlusCaller.StructFromBytes(structType, resultBytes);
         }
 
         /// <summary>
@@ -990,7 +1437,7 @@ namespace System.Data.NS7NetPlus
         /// <returns>The number of read bytes</returns>
         public int ReadClass(object sourceClass, int db, int startByteAdr = 0)
         {
-            int numBytes = (int)Class.GetClassSize(sourceClass);
+            int numBytes = (int)S7NetPlusCaller.GetClassSize(sourceClass);
             if (numBytes <= 0)
             {
                 throw new Exception("The size of the class is less than 1 byte and therefore cannot be read");
@@ -999,7 +1446,7 @@ namespace System.Data.NS7NetPlus
             // now read the package
             var resultBytes = ReadBytes(DataType.DataBlock, db, startByteAdr, numBytes);
             // and decode it
-            Class.FromBytes(sourceClass, resultBytes);
+            S7NetPlusCaller.ClassFromBytes(sourceClass, resultBytes);
             return resultBytes.Length;
         }
 
@@ -1012,7 +1459,7 @@ namespace System.Data.NS7NetPlus
         /// <param name="db">Index of the DB; es.: 1 is for DB1</param>
         /// <param name="startByteAdr">Start byte address. If you want to read DB1.DBW200, this is 200.</param>
         /// <returns>An instance of the class with the values read from the PLC. If no data has been read, null will be returned</returns>
-        public T? ReadClass<T>(int db, int startByteAdr = 0) where T : class
+        public T ReadClass<T>(int db, int startByteAdr = 0) where T : class
         {
             return ReadClass(() => Activator.CreateInstance<T>(), db, startByteAdr);
         }
@@ -1026,7 +1473,7 @@ namespace System.Data.NS7NetPlus
         /// <param name="db">Index of the DB; es.: 1 is for DB1</param>
         /// <param name="startByteAdr">Start byte address. If you want to read DB1.DBW200, this is 200.</param>
         /// <returns>An instance of the class with the values read from the PLC. If no data has been read, null will be returned</returns>
-        public T? ReadClass<T>(Func<T> classFactory, int db, int startByteAdr = 0) where T : class
+        public T ReadClass<T>(Func<T> classFactory, int db, int startByteAdr = 0) where T : class
         {
             var instance = classFactory();
             int readBytes = ReadClass(instance, db, startByteAdr);
@@ -1227,20 +1674,20 @@ namespace System.Data.NS7NetPlus
             package.WriteByte(3);
             package.WriteByte(0);
             //complete package size
-            package.WriteByteArray(Int.ToByteArray((short)packageSize));
+            package.WriteByteArray(S7NetPlusCaller.IntToByteArray((short)packageSize));
             package.WriteByteArray(new byte[] { 2, 0xf0, 0x80, 0x32, 1, 0, 0 });
-            package.WriteByteArray(Word.ToByteArray((ushort)(varCount - 1)));
+            package.WriteByteArray(S7NetPlusCaller.WordToByteArray((ushort)(varCount - 1)));
             package.WriteByteArray(new byte[] { 0, 0x0e });
-            package.WriteByteArray(Word.ToByteArray((ushort)(varCount + 4)));
+            package.WriteByteArray(S7NetPlusCaller.WordToByteArray((ushort)(varCount + 4)));
             package.WriteByteArray(new byte[] { 0x05, 0x01, 0x12, 0x0a, 0x10, 0x02 });
-            package.WriteByteArray(Word.ToByteArray((ushort)varCount));
-            package.WriteByteArray(Word.ToByteArray((ushort)(db)));
+            package.WriteByteArray(S7NetPlusCaller.WordToByteArray((ushort)varCount));
+            package.WriteByteArray(S7NetPlusCaller.WordToByteArray((ushort)(db)));
             package.WriteByte((byte)dataType);
             var overflow = (int)(startByteAdr * 8 / 0xffffU); // handles words with address bigger than 8191
             package.WriteByte((byte)overflow);
-            package.WriteByteArray(Word.ToByteArray((ushort)(startByteAdr * 8)));
+            package.WriteByteArray(S7NetPlusCaller.WordToByteArray((ushort)(startByteAdr * 8)));
             package.WriteByteArray(new byte[] { 0, 4 });
-            package.WriteByteArray(Word.ToByteArray((ushort)(varCount * 8)));
+            package.WriteByteArray(S7NetPlusCaller.WordToByteArray((ushort)(varCount * 8)));
 
             // now join the header and the data
             package.Write(value, dataOffset, count);
@@ -1259,20 +1706,20 @@ namespace System.Data.NS7NetPlus
             package.WriteByte(3);
             package.WriteByte(0);
             //complete package size
-            package.WriteByteArray(Int.ToByteArray((short)packageSize));
+            package.WriteByteArray(S7NetPlusCaller.IntToByteArray((short)packageSize));
             package.WriteByteArray(new byte[] { 2, 0xf0, 0x80, 0x32, 1, 0, 0 });
-            package.WriteByteArray(Word.ToByteArray((ushort)(varCount - 1)));
+            package.WriteByteArray(S7NetPlusCaller.WordToByteArray((ushort)(varCount - 1)));
             package.WriteByteArray(new byte[] { 0, 0x0e });
-            package.WriteByteArray(Word.ToByteArray((ushort)(varCount + 4)));
+            package.WriteByteArray(S7NetPlusCaller.WordToByteArray((ushort)(varCount + 4)));
             package.WriteByteArray(new byte[] { 0x05, 0x01, 0x12, 0x0a, 0x10, 0x01 }); //ending 0x01 is used for writing a sinlge bit
-            package.WriteByteArray(Word.ToByteArray((ushort)varCount));
-            package.WriteByteArray(Word.ToByteArray((ushort)(db)));
+            package.WriteByteArray(S7NetPlusCaller.WordToByteArray((ushort)varCount));
+            package.WriteByteArray(S7NetPlusCaller.WordToByteArray((ushort)(db)));
             package.WriteByte((byte)dataType);
             var overflow = (int)(startByteAdr * 8 / 0xffffU); // handles words with address bigger than 8191
             package.WriteByte((byte)overflow);
-            package.WriteByteArray(Word.ToByteArray((ushort)(startByteAdr * 8 + bitAdr)));
+            package.WriteByteArray(S7NetPlusCaller.WordToByteArray((ushort)(startByteAdr * 8 + bitAdr)));
             package.WriteByteArray(new byte[] { 0, 0x03 }); //ending 0x03 is used for writing a sinlge bit
-            package.WriteByteArray(Word.ToByteArray((ushort)(varCount)));
+            package.WriteByteArray(S7NetPlusCaller.WordToByteArray((ushort)(varCount)));
 
             // now join the header and the data
             package.WriteByteArray(value);
@@ -1344,6 +1791,7 @@ namespace System.Data.NS7NetPlus
         /// <summary>
         /// Creates the header to read bytes from the PLC
         /// </summary>
+        /// <param name="stream"></param>
         /// <param name="amount"></param>
         /// <returns></returns>
         private static void BuildHeaderPackage(System.IO.MemoryStream stream, int amount = 1)
@@ -1351,10 +1799,10 @@ namespace System.Data.NS7NetPlus
             //header size = 19 bytes
             stream.WriteByteArray(new byte[] { 0x03, 0x00 });
             //complete package size
-            stream.WriteByteArray(System.Data.NS7NetPlus.Int.ToByteArray((short)(19 + (12 * amount))));
+            stream.WriteByteArray(S7NetPlusCaller.IntToByteArray((short)(19 + (12 * amount))));
             stream.WriteByteArray(new byte[] { 0x02, 0xf0, 0x80, 0x32, 0x01, 0x00, 0x00, 0x00, 0x00 });
             //data part size
-            stream.WriteByteArray(System.Data.NS7NetPlus.Word.ToByteArray((ushort)(2 + (amount * 12))));
+            stream.WriteByteArray(S7NetPlusCaller.WordToByteArray((ushort)(2 + (amount * 12))));
             stream.WriteByteArray(new byte[] { 0x00, 0x00, 0x04 });
             //amount of requests
             stream.WriteByte((byte)amount);
@@ -1364,6 +1812,7 @@ namespace System.Data.NS7NetPlus
         /// Create the bytes-package to request data from the PLC. You have to specify the memory type (dataType),
         /// the address of the memory, the address of the byte and the bytes count.
         /// </summary>
+        /// <param name="stream"></param>
         /// <param name="dataType">MemoryType (DB, Timer, Counter, etc.)</param>
         /// <param name="db">Address of the memory to be read</param>
         /// <param name="startByteAdr">Start address of the byte</param>
@@ -1384,8 +1833,8 @@ namespace System.Data.NS7NetPlus
                     break;
             }
 
-            stream.WriteByteArray(Word.ToByteArray((ushort)(count)));
-            stream.WriteByteArray(Word.ToByteArray((ushort)(db)));
+            stream.WriteByteArray(S7NetPlusCaller.WordToByteArray((ushort)(count)));
+            stream.WriteByteArray(S7NetPlusCaller.WordToByteArray((ushort)(db)));
             stream.WriteByte((byte)dataType);
             var overflow = (int)(startByteAdr * 8 / 0xffffU); // handles words with address bigger than 8191
             stream.WriteByte((byte)overflow);
@@ -1393,10 +1842,10 @@ namespace System.Data.NS7NetPlus
             {
                 case DataType.Timer:
                 case DataType.Counter:
-                    stream.WriteByteArray(System.Data.NS7NetPlus.Word.ToByteArray((ushort)(startByteAdr)));
+                    stream.WriteByteArray(S7NetPlusCaller.WordToByteArray((ushort)(startByteAdr)));
                     break;
                 default:
-                    stream.WriteByteArray(System.Data.NS7NetPlus.Word.ToByteArray((ushort)((startByteAdr) * 8)));
+                    stream.WriteByteArray(S7NetPlusCaller.WordToByteArray((ushort)((startByteAdr) * 8)));
                     break;
             }
         }
@@ -1409,98 +1858,29 @@ namespace System.Data.NS7NetPlus
         /// <param name="varCount"></param>
         /// <param name="bitAdr"></param>
         /// <returns></returns>
-        private object? ParseBytes(VarType varType, byte[] bytes, int varCount, byte bitAdr = 0)
+        private object ParseBytes(VarType varType, byte[] bytes, int varCount, byte bitAdr = 0)
         {
-            if (bytes == null || bytes.Length == 0)
-                return null;
-
+            if (bytes == null || bytes.Length == 0) { return null; }
             switch (varType)
             {
-                case VarType.Byte:
-                    if (varCount == 1)
-                        return bytes[0];
-                    else
-                        return bytes;
-                case VarType.Word:
-                    if (varCount == 1)
-                        return Word.FromByteArray(bytes);
-                    else
-                        return Word.ToArray(bytes);
-                case VarType.Int:
-                    if (varCount == 1)
-                        return Int.FromByteArray(bytes);
-                    else
-                        return Int.ToArray(bytes);
-                case VarType.DWord:
-                    if (varCount == 1)
-                        return DWord.FromByteArray(bytes);
-                    else
-                        return DWord.ToArray(bytes);
-                case VarType.DInt:
-                    if (varCount == 1)
-                        return DInt.FromByteArray(bytes);
-                    else
-                        return DInt.ToArray(bytes);
-                case VarType.Real:
-                    if (varCount == 1)
-                        return System.Data.NS7NetPlus.Real.FromByteArray(bytes);
-                    else
-                        return System.Data.NS7NetPlus.Real.ToArray(bytes);
-                case VarType.LReal:
-                    if (varCount == 1)
-                        return System.Data.NS7NetPlus.LReal.FromByteArray(bytes);
-                    else
-                        return System.Data.NS7NetPlus.LReal.ToArray(bytes);
+                case VarType.Byte: return varCount == 1 ? bytes[0] : bytes;
+                case VarType.Word: return varCount == 1 ? S7NetPlusCaller.WordFromByteArray(bytes) : S7NetPlusCaller.WordToArray(bytes);
+                case VarType.Int: return varCount == 1 ? S7NetPlusCaller.IntFromByteArray(bytes) : S7NetPlusCaller.IntToArray(bytes);
+                case VarType.DWord: return varCount == 1 ? S7NetPlusCaller.DWordFromByteArray(bytes) : S7NetPlusCaller.DWordToArray(bytes);
+                case VarType.DInt: return varCount == 1 ? S7NetPlusCaller.DIntFromByteArray(bytes) : S7NetPlusCaller.DIntToArray(bytes);
+                case VarType.Real: return varCount == 1 ? S7NetPlusCaller.RealFromByteArray(bytes) : S7NetPlusCaller.RealToArray(bytes);
+                case VarType.LReal: return varCount == 1 ? S7NetPlusCaller.LRealFromByteArray(bytes) : S7NetPlusCaller.LRealToArray(bytes);
 
-                case VarType.String:
-                    return System.Data.NS7NetPlus.String.FromByteArray(bytes);
-                case VarType.S7String:
-                    return S7String.FromByteArray(bytes);
-                case VarType.S7WString:
-                    return S7WString.FromByteArray(bytes);
+                case VarType.String: return S7NetPlusCaller.StringFromByteArray(bytes);
+                case VarType.S7String: return S7NetPlusCaller.S7StringFromByteArray(bytes);
+                case VarType.S7WString: return S7NetPlusCaller.S7WStringFromByteArray(bytes);
 
-                case VarType.Timer:
-                    if (varCount == 1)
-                        return Timer.FromByteArray(bytes);
-                    else
-                        return Timer.ToArray(bytes);
-                case VarType.Counter:
-                    if (varCount == 1)
-                        return Counter.FromByteArray(bytes);
-                    else
-                        return Counter.ToArray(bytes);
-                case VarType.Bit:
-                    if (varCount == 1)
-                    {
-                        if (bitAdr > 7)
-                            return null;
-                        else
-                            return Bit.FromByte(bytes[0], bitAdr);
-                    }
-                    else
-                    {
-                        return Bit.ToBitArray(bytes, varCount);
-                    }
-                case VarType.DateTime:
-                    if (varCount == 1)
-                    {
-                        return DateTime.FromByteArray(bytes);
-                    }
-                    else
-                    {
-                        return DateTime.ToArray(bytes);
-                    }
-                case VarType.DateTimeLong:
-                    if (varCount == 1)
-                    {
-                        return DateTimeLong.FromByteArray(bytes);
-                    }
-                    else
-                    {
-                        return DateTimeLong.ToArray(bytes);
-                    }
-                default:
-                    return null;
+                case VarType.Timer: return varCount == 1 ? S7NetPlusCaller.TimerFromByteArray(bytes) : S7NetPlusCaller.TimerToArray(bytes);
+                case VarType.Counter: return varCount == 1 ? S7NetPlusCaller.CounterFromByteArray(bytes) : S7NetPlusCaller.CounterToArray(bytes);
+                case VarType.Bit: return varCount == 1 ? (bitAdr > 7 ? null : S7NetPlusCaller.BitFromByte(bytes[0], bitAdr)) : S7NetPlusCaller.BitToBitArray(bytes, varCount);
+                case VarType.DateTime: return varCount == 1 ? S7NetPlusCaller.DateTimeFromByteArray(bytes) : S7NetPlusCaller.DateTimeToArray(bytes);
+                case VarType.DateTimeLong: return varCount == 1 ? S7NetPlusCaller.DateTimeLongFromByteArray(bytes) : S7NetPlusCaller.DateTimeLongToArray(bytes);
+                default: return null;
             }
         }
 
@@ -1545,9 +1925,8 @@ namespace System.Data.NS7NetPlus
 
         private byte[] GetS7ConnectionSetup()
         {
-            return new byte[] {  3, 0, 0, 25, 2, 240, 128, 50, 1, 0, 0, 255, 255, 0, 8, 0, 0, 240, 0, 0, 3, 0, 3,
-                    3, 192 // Use 960 PDU size
-            };
+            // Use 960 PDU size
+            return new byte[] { 3, 0, 0, 25, 2, 240, 128, 50, 1, 0, 0, 255, 255, 0, 8, 0, 0, 240, 0, 0, 3, 0, 3, 3, 192 };
         }
 
         private void ParseDataIntoDataItems(byte[] s7data, List<DataItem> dataItems)
@@ -1594,5 +1973,663 @@ namespace System.Data.NS7NetPlus
             return package.ToArray();
         }
         #endregion
+    }
+    /// <summary>
+    /// PLC类 <see cref="S7NetPlusSdk.Create(CpuType, string, int, short, short)"/>
+    /// </summary>
+    [Obsolete("替代方案:S7NetPlusSdk.Create进行创建接口类,使用接口【IS7NetPlusPlc】")]
+    public partial class Plc : IS7NetPlusPlc
+    {
+        private readonly IS7NetPlusPlc _proxy;
+        /// <summary>
+        /// Creates a PLC object with all the parameters needed for connections.
+        /// For S7-1200 and S7-1500, the default is rack = 0 and slot = 0.
+        /// You need slot > 0 if you are connecting to external ethernet card (CP).
+        /// For S7-300 and S7-400 the default is rack = 0 and slot = 2.
+        /// </summary>
+        /// <param name="cpu">CpuType of the PLC (select from the enum)</param>
+        /// <param name="ip">Ip address of the PLC</param>
+        /// <param name="rack">rack of the PLC, usually it's 0, but check in the hardware configuration of Step7 or TIA portal</param>
+        /// <param name="slot">slot of the CPU of the PLC, usually it's 2 for S7300-S7400, 0 for S7-1200 and S7-1500.
+        ///  If you use an external ethernet card, this must be set accordingly.</param>
+        public Plc(CpuType cpu, string ip, short rack, short slot)
+        {
+            _proxy = new S7NetPlusPlc(cpu, ip, rack, slot);
+        }
+
+        /// <summary>
+        /// Creates a PLC object with all the parameters needed for connections.
+        /// For S7-1200 and S7-1500, the default is rack = 0 and slot = 0.
+        /// You need slot > 0 if you are connecting to external ethernet card (CP).
+        /// For S7-300 and S7-400 the default is rack = 0 and slot = 2.
+        /// </summary>
+        /// <param name="cpu">CpuType of the PLC (select from the enum)</param>
+        /// <param name="ip">Ip address of the PLC</param>
+        /// <param name="port">Port number used for the connection, default 102.</param>
+        /// <param name="rack">rack of the PLC, usually it's 0, but check in the hardware configuration of Step7 or TIA portal</param>
+        /// <param name="slot">slot of the CPU of the PLC, usually it's 2 for S7300-S7400, 0 for S7-1200 and S7-1500.
+        ///  If you use an external ethernet card, this must be set accordingly.</param>
+        public Plc(CpuType cpu, string ip, int port, Int16 rack, Int16 slot)
+        {
+            _proxy = new S7NetPlusPlc(cpu, ip, port, rack, slot);
+        }
+
+        /// <summary>
+        /// Creates a PLC object with all the parameters needed for connections.
+        /// For S7-1200 and S7-1500, the default is rack = 0 and slot = 0.
+        /// You need slot > 0 if you are connecting to external ethernet card (CP).
+        /// For S7-300 and S7-400 the default is rack = 0 and slot = 2.
+        /// </summary>
+        /// <param name="ip">Ip address of the PLC</param>
+        /// <param name="tsapPair">The TSAP addresses used for the connection request.</param>
+        public Plc(string ip, TsapPair tsapPair)
+        {
+            _proxy = new S7NetPlusPlc(ip, tsapPair);
+        }
+        /// <summary>
+        /// Creates a PLC object with all the parameters needed for connections. Use this constructor
+        /// if you want to manually override the TSAP addresses used during the connection request.
+        /// </summary>
+        /// <param name="ip">Ip address of the PLC</param>
+        /// <param name="port">Port number used for the connection, default 102.</param>
+        /// <param name="tsapPair">The TSAP addresses used for the connection request.</param>
+        public Plc(string ip, int port, TsapPair tsapPair)
+        {
+            _proxy = new S7NetPlusPlc(ip, port, tsapPair);
+        }
+        #region // RegularContent
+        /// <summary>
+        /// IP address of the PLC
+        /// </summary>
+        public string IP => _proxy.IP;
+
+        /// <summary>
+        /// PORT Number of the PLC, default is 102
+        /// </summary>
+        public int Port => _proxy.Port;
+
+        /// <summary>
+        /// The TSAP addresses used during the connection request.
+        /// </summary>
+        public TsapPair TsapPair { get => _proxy.TsapPair; set => _proxy.TsapPair = value; }
+
+        /// <summary>
+        /// CPU type of the PLC
+        /// </summary>
+        public CpuType CPU => _proxy.CPU;
+
+        /// <summary>
+        /// Rack of the PLC
+        /// </summary>
+        public Int16 Rack => _proxy.Rack;
+
+        /// <summary>
+        /// Slot of the CPU of the PLC
+        /// </summary>
+        public Int16 Slot => _proxy.Slot;
+
+        /// <summary>
+        /// Max PDU size this cpu supports
+        /// </summary>
+        public int MaxPDUSize => _proxy.MaxPDUSize;
+
+        /// <summary>Gets or sets the amount of time that a read operation blocks waiting for data from PLC.</summary>
+        /// <returns>A <see cref="T:System.Int32" /> that specifies the amount of time, in milliseconds, that will elapse before a read operation fails. The default value, <see cref="F:System.Threading.Timeout.Infinite" />, specifies that the read operation does not time out.</returns>
+        public int ReadTimeout
+        {
+            get => _proxy.ReadTimeout;
+            set => _proxy.ReadTimeout = value;
+        }
+
+        /// <summary>Gets or sets the amount of time that a write operation blocks waiting for data to PLC. </summary>
+        /// <returns>A <see cref="T:System.Int32" /> that specifies the amount of time, in milliseconds, that will elapse before a write operation fails. The default value, <see cref="F:System.Threading.Timeout.Infinite" />, specifies that the write operation does not time out.</returns>
+        public int WriteTimeout
+        {
+            get => _proxy.WriteTimeout;
+            set => _proxy.WriteTimeout = value;
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether a connection to the PLC has been established.
+        /// </summary>
+        /// <remarks>
+        /// The <see cref="IsConnected"/> property gets the connection state of the Client socket as
+        /// of the last I/O operation. When it returns <c>false</c>, the Client socket was either
+        /// never  connected, or is no longer connected.
+        ///
+        /// <para>
+        /// Because the <see cref="IsConnected"/> property only reflects the state of the connection
+        /// as of the most recent operation, you should attempt to send or receive a message to
+        /// determine the current state. After the message send fails, this property no longer
+        /// returns <c>true</c>. Note that this behavior is by design. You cannot reliably test the
+        /// state of the connection because, in the time between the test and a send/receive, the
+        /// connection could have been lost. Your code should assume the socket is connected, and
+        /// gracefully handle failed transmissions.
+        /// </para>
+        /// </remarks>
+        public bool IsConnected => _proxy.IsConnected;
+
+        /// <summary>
+        /// 最后一次错误
+        /// </summary>
+        public string LastErrorString => _proxy.LastErrorString;
+        /// <summary>
+        /// 最后一次错误码
+        /// </summary>
+        public ErrorCode LastErrorCode => _proxy.LastErrorCode;
+
+        /// <summary>
+        /// Close connection to PLC
+        /// </summary>
+        public void Close()
+        {
+            _proxy.Close();
+        }
+
+        /// <summary>
+        /// This code added to correctly implement the disposable pattern.
+        /// </summary>
+        public void Dispose()
+        {
+            _proxy.Dispose();
+        }
+        #endregion RegularContent
+        #region // PlcAsynchronous
+        /// <summary>
+        /// Connects to the PLC and performs a COTP ConnectionRequest and S7 CommunicationSetup.
+        /// </summary>
+        /// <param name="cancellationToken">The token to monitor for cancellation requests. The default value is None.
+        /// Please note that the cancellation will not affect opening the socket in any way and only affects data transfers for configuring the connection after the socket connection is successfully established.
+        /// Please note that cancellation is advisory/cooperative and will not lead to immediate cancellation in all cases.</param>
+        /// <returns>A task that represents the asynchronous open operation.</returns>
+        public async Task OpenAsync(CancellationToken cancellationToken = default)
+        {
+            await _proxy.OpenAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Reads a number of bytes from a DB starting from a specified index. This handles more than 200 bytes with multiple requests.
+        /// If the read was not successful, check LastErrorCode or LastErrorString.
+        /// </summary>
+        /// <param name="dataType">Data type of the memory area, can be DB, Timer, Counter, Merker(Memory), Input, Output.</param>
+        /// <param name="db">Address of the memory area (if you want to read DB1, this is set to 1). This must be set also for other memory area types: counters, timers,etc.</param>
+        /// <param name="startByteAdr">Start byte address. If you want to read DB1.DBW200, this is 200.</param>
+        /// <param name="count">Byte count, if you want to read 120 bytes, set this to 120.</param>
+        /// <param name="cancellationToken">The token to monitor for cancellation requests. The default value is None.
+        /// Please note that cancellation is advisory/cooperative and will not lead to immediate cancellation in all cases.</param>
+        /// <returns>Returns the bytes in an array</returns>
+        public async Task<byte[]> ReadBytesAsync(DataType dataType, int db, int startByteAdr, int count, CancellationToken cancellationToken = default)
+        {
+            return await _proxy.ReadBytesAsync(dataType, db, startByteAdr, count, cancellationToken);
+        }
+
+        /// <summary>
+        /// Read and decode a certain number of bytes of the "VarType" provided.
+        /// This can be used to read multiple consecutive variables of the same type (Word, DWord, Int, etc).
+        /// If the read was not successful, check LastErrorCode or LastErrorString.
+        /// </summary>
+        /// <param name="dataType">Data type of the memory area, can be DB, Timer, Counter, Merker(Memory), Input, Output.</param>
+        /// <param name="db">Address of the memory area (if you want to read DB1, this is set to 1). This must be set also for other memory area types: counters, timers,etc.</param>
+        /// <param name="startByteAdr">Start byte address. If you want to read DB1.DBW200, this is 200.</param>
+        /// <param name="varType">Type of the variable/s that you are reading</param>
+        /// <param name="bitAdr">Address of bit. If you want to read DB1.DBX200.6, set 6 to this parameter.</param>
+        /// <param name="varCount"></param>
+        /// <param name="cancellationToken">The token to monitor for cancellation requests. The default value is None.
+        /// Please note that cancellation is advisory/cooperative and will not lead to immediate cancellation in all cases.</param>
+        public async Task<object> ReadAsync(DataType dataType, int db, int startByteAdr, VarType varType, int varCount, byte bitAdr = 0, CancellationToken cancellationToken = default)
+        {
+            return await _proxy.ReadAsync(dataType, db, startByteAdr, varType, varCount, bitAdr, cancellationToken);
+        }
+
+        /// <summary>
+        /// Reads a single variable from the PLC, takes in input strings like "DB1.DBX0.0", "DB20.DBD200", "MB20", "T45", etc.
+        /// If the read was not successful, check LastErrorCode or LastErrorString.
+        /// </summary>
+        /// <param name="variable">Input strings like "DB1.DBX0.0", "DB20.DBD200", "MB20", "T45", etc.</param>
+        /// <param name="cancellationToken">The token to monitor for cancellation requests. The default value is None.
+        /// Please note that cancellation is advisory/cooperative and will not lead to immediate cancellation in all cases.</param>
+        /// <returns>Returns an object that contains the value. This object must be cast accordingly.</returns>
+        public async Task<object> ReadAsync(string variable, CancellationToken cancellationToken = default)
+        {
+            return await _proxy.ReadAsync(variable, cancellationToken);
+        }
+
+        /// <summary>
+        /// Reads all the bytes needed to fill a struct in C#, starting from a certain address, and return an object that can be casted to the struct.
+        /// </summary>
+        /// <param name="structType">Type of the struct to be readed (es.: TypeOf(MyStruct)).</param>
+        /// <param name="db">Address of the DB.</param>
+        /// <param name="startByteAdr">Start byte address. If you want to read DB1.DBW200, this is 200.</param>
+        /// <param name="cancellationToken">The token to monitor for cancellation requests. The default value is None.
+        /// Please note that cancellation is advisory/cooperative and will not lead to immediate cancellation in all cases.</param>
+        /// <returns>Returns a struct that must be cast.</returns>
+        public async Task<object> ReadStructAsync(Type structType, int db, int startByteAdr = 0, CancellationToken cancellationToken = default)
+        {
+            return await _proxy.ReadStructAsync(structType, db, startByteAdr, cancellationToken);
+        }
+
+        /// <summary>
+        /// Reads all the bytes needed to fill a struct in C#, starting from a certain address, and returns the struct or null if nothing was read.
+        /// </summary>
+        /// <typeparam name="T">The struct type</typeparam>
+        /// <param name="db">Address of the DB.</param>
+        /// <param name="startByteAdr">Start byte address. If you want to read DB1.DBW200, this is 200.</param>
+        /// <param name="cancellationToken">The token to monitor for cancellation requests. The default value is None.
+        /// Please note that cancellation is advisory/cooperative and will not lead to immediate cancellation in all cases.</param>
+        /// <returns>Returns a nulable struct. If nothing was read null will be returned.</returns>
+        public async Task<T?> ReadStructAsync<T>(int db, int startByteAdr = 0, CancellationToken cancellationToken = default) where T : struct
+        {
+            return await _proxy.ReadStructAsync<T>(db, startByteAdr, cancellationToken);
+        }
+
+        /// <summary>
+        /// Reads all the bytes needed to fill a class in C#, starting from a certain address, and set all the properties values to the value that are read from the PLC.
+        /// This reads only properties, it doesn't read private variable or public variable without {get;set;} specified.
+        /// </summary>
+        /// <param name="sourceClass">Instance of the class that will store the values</param>
+        /// <param name="db">Index of the DB; es.: 1 is for DB1</param>
+        /// <param name="startByteAdr">Start byte address. If you want to read DB1.DBW200, this is 200.</param>
+        /// <param name="cancellationToken">The token to monitor for cancellation requests. The default value is None.
+        /// Please note that cancellation is advisory/cooperative and will not lead to immediate cancellation in all cases.</param>
+        /// <returns>The number of read bytes</returns>
+        public async Task<Tuple<int, object>> ReadClassAsync(object sourceClass, int db, int startByteAdr = 0, CancellationToken cancellationToken = default)
+        {
+            return await _proxy.ReadClassAsync(sourceClass, db, startByteAdr, cancellationToken);
+        }
+
+        /// <summary>
+        /// Reads all the bytes needed to fill a class in C#, starting from a certain address, and set all the properties values to the value that are read from the PLC.
+        /// This reads only properties, it doesn't read private variable or public variable without {get;set;} specified. To instantiate the class defined by the generic
+        /// type, the class needs a default constructor.
+        /// </summary>
+        /// <typeparam name="T">The class that will be instantiated. Requires a default constructor</typeparam>
+        /// <param name="db">Index of the DB; es.: 1 is for DB1</param>
+        /// <param name="startByteAdr">Start byte address. If you want to read DB1.DBW200, this is 200.</param>
+        /// <param name="cancellationToken">The token to monitor for cancellation requests. The default value is None.
+        /// Please note that cancellation is advisory/cooperative and will not lead to immediate cancellation in all cases.</param>
+        /// <returns>An instance of the class with the values read from the PLC. If no data has been read, null will be returned</returns>
+        public async Task<T> ReadClassAsync<T>(int db, int startByteAdr = 0, CancellationToken cancellationToken = default) where T : class
+        {
+            return await _proxy.ReadClassAsync<T>(db, startByteAdr, cancellationToken);
+        }
+
+        /// <summary>
+        /// Reads all the bytes needed to fill a class in C#, starting from a certain address, and set all the properties values to the value that are read from the PLC.
+        /// This reads only properties, it doesn't read private variable or public variable without {get;set;} specified.
+        /// </summary>
+        /// <typeparam name="T">The class that will be instantiated</typeparam>
+        /// <param name="classFactory">Function to instantiate the class</param>
+        /// <param name="db">Index of the DB; es.: 1 is for DB1</param>
+        /// <param name="startByteAdr">Start byte address. If you want to read DB1.DBW200, this is 200.</param>
+        /// <param name="cancellationToken">The token to monitor for cancellation requests. The default value is None.
+        /// Please note that cancellation is advisory/cooperative and will not lead to immediate cancellation in all cases.</param>
+        /// <returns>An instance of the class with the values read from the PLC. If no data has been read, null will be returned</returns>
+        public async Task<T> ReadClassAsync<T>(Func<T> classFactory, int db, int startByteAdr = 0, CancellationToken cancellationToken = default) where T : class
+        {
+            return await _proxy.ReadClassAsync<T>(classFactory, db, startByteAdr, cancellationToken);
+        }
+
+        /// <summary>
+        /// Reads multiple vars in a single request.
+        /// You have to create and pass a list of DataItems and you obtain in response the same list with the values.
+        /// Values are stored in the property "Value" of the dataItem and are already converted.
+        /// If you don't want the conversion, just create a dataItem of bytes.
+        /// The number of DataItems as well as the total size of the requested data can not exceed a certain limit (protocol restriction).
+        /// </summary>
+        /// <param name="dataItems">List of dataitems that contains the list of variables that must be read.</param>
+        /// <param name="cancellationToken">The token to monitor for cancellation requests. The default value is None.
+        /// Please note that cancellation is advisory/cooperative and will not lead to immediate cancellation in all cases.</param>
+        public async Task<List<DataItem>> ReadMultipleVarsAsync(List<DataItem> dataItems, CancellationToken cancellationToken = default)
+        {
+            return await _proxy.ReadMultipleVarsAsync(dataItems, cancellationToken);
+        }
+
+
+        /// <summary>
+        /// Write a number of bytes from a DB starting from a specified index. This handles more than 200 bytes with multiple requests.
+        /// If the write was not successful, check LastErrorCode or LastErrorString.
+        /// </summary>
+        /// <param name="dataType">Data type of the memory area, can be DB, Timer, Counter, Merker(Memory), Input, Output.</param>
+        /// <param name="db">Address of the memory area (if you want to read DB1, this is set to 1). This must be set also for other memory area types: counters, timers,etc.</param>
+        /// <param name="startByteAdr">Start byte address. If you want to write DB1.DBW200, this is 200.</param>
+        /// <param name="value">Bytes to write. If more than 200, multiple requests will be made.</param>
+        /// <param name="cancellationToken">The token to monitor for cancellation requests. The default value is None.
+        /// Please note that cancellation is advisory/cooperative and will not lead to immediate cancellation in all cases.</param>
+        /// <returns>A task that represents the asynchronous write operation.</returns>
+        public async Task WriteBytesAsync(DataType dataType, int db, int startByteAdr, byte[] value, CancellationToken cancellationToken = default)
+        {
+            await _proxy.WriteBytesAsync(dataType, db, startByteAdr, value, cancellationToken);
+        }
+
+        /// <summary>
+        /// Write a single bit from a DB with the specified index.
+        /// </summary>
+        /// <param name="dataType">Data type of the memory area, can be DB, Timer, Counter, Merker(Memory), Input, Output.</param>
+        /// <param name="db">Address of the memory area (if you want to read DB1, this is set to 1). This must be set also for other memory area types: counters, timers,etc.</param>
+        /// <param name="startByteAdr">Start byte address. If you want to write DB1.DBW200, this is 200.</param>
+        /// <param name="bitAdr">The address of the bit. (0-7)</param>
+        /// <param name="value">Bytes to write. If more than 200, multiple requests will be made.</param>
+        /// <param name="cancellationToken">The token to monitor for cancellation requests. The default value is None.
+        /// Please note that cancellation is advisory/cooperative and will not lead to immediate cancellation in all cases.</param>
+        /// <returns>A task that represents the asynchronous write operation.</returns>
+        public async Task WriteBitAsync(DataType dataType, int db, int startByteAdr, int bitAdr, bool value, CancellationToken cancellationToken = default)
+        {
+            await _proxy.WriteBitAsync(dataType, db, startByteAdr, bitAdr, value, cancellationToken);
+        }
+
+        /// <summary>
+        /// Write a single bit from a DB with the specified index.
+        /// </summary>
+        /// <param name="dataType">Data type of the memory area, can be DB, Timer, Counter, Merker(Memory), Input, Output.</param>
+        /// <param name="db">Address of the memory area (if you want to read DB1, this is set to 1). This must be set also for other memory area types: counters, timers,etc.</param>
+        /// <param name="startByteAdr">Start byte address. If you want to write DB1.DBW200, this is 200.</param>
+        /// <param name="bitAdr">The address of the bit. (0-7)</param>
+        /// <param name="value">Bytes to write. If more than 200, multiple requests will be made.</param>
+        /// <param name="cancellationToken">The token to monitor for cancellation requests. The default value is None.
+        /// Please note that cancellation is advisory/cooperative and will not lead to immediate cancellation in all cases.</param>
+        /// <returns>A task that represents the asynchronous write operation.</returns>
+        public async Task WriteBitAsync(DataType dataType, int db, int startByteAdr, int bitAdr, int value, CancellationToken cancellationToken = default)
+        {
+            await _proxy.WriteBitAsync(dataType, db, startByteAdr, bitAdr, value, cancellationToken);
+        }
+
+        /// <summary>
+        /// Takes in input an object and tries to parse it to an array of values. This can be used to write many data, all of the same type.
+        /// You must specify the memory area type, memory are address, byte start address and bytes count.
+        /// If the read was not successful, check LastErrorCode or LastErrorString.
+        /// </summary>
+        /// <param name="dataType">Data type of the memory area, can be DB, Timer, Counter, Merker(Memory), Input, Output.</param>
+        /// <param name="db">Address of the memory area (if you want to read DB1, this is set to 1). This must be set also for other memory area types: counters, timers,etc.</param>
+        /// <param name="startByteAdr">Start byte address. If you want to read DB1.DBW200, this is 200.</param>
+        /// <param name="value">Bytes to write. The lenght of this parameter can't be higher than 200. If you need more, use recursion.</param>
+        /// <param name="bitAdr">The address of the bit. (0-7)</param>
+        /// <param name="cancellationToken">The token to monitor for cancellation requests. The default value is None.
+        /// Please note that cancellation is advisory/cooperative and will not lead to immediate cancellation in all cases.</param>
+        /// <returns>A task that represents the asynchronous write operation.</returns>
+        public async Task WriteAsync(DataType dataType, int db, int startByteAdr, object value, int bitAdr = -1, CancellationToken cancellationToken = default)
+        {
+            await _proxy.WriteAsync(dataType, db, startByteAdr, value, bitAdr, cancellationToken);
+        }
+
+        /// <summary>
+        /// Writes a single variable from the PLC, takes in input strings like "DB1.DBX0.0", "DB20.DBD200", "MB20", "T45", etc.
+        /// If the write was not successful, check <see cref="LastErrorCode"/> or <see cref="LastErrorString"/>.
+        /// </summary>
+        /// <param name="variable">Input strings like "DB1.DBX0.0", "DB20.DBD200", "MB20", "T45", etc.</param>
+        /// <param name="value">Value to be written to the PLC</param>
+        /// <param name="cancellationToken">The token to monitor for cancellation requests. The default value is None.
+        /// Please note that cancellation is advisory/cooperative and will not lead to immediate cancellation in all cases.</param>
+        /// <returns>A task that represents the asynchronous write operation.</returns>
+        public async Task WriteAsync(string variable, object value, CancellationToken cancellationToken = default)
+        {
+            await _proxy.WriteAsync(variable, value, cancellationToken);
+        }
+
+        /// <summary>
+        /// Writes a C# struct to a DB in the PLC
+        /// </summary>
+        /// <param name="structValue">The struct to be written</param>
+        /// <param name="db">Db address</param>
+        /// <param name="startByteAdr">Start bytes on the PLC</param>
+        /// <param name="cancellationToken">The token to monitor for cancellation requests. The default value is None.
+        /// Please note that cancellation is advisory/cooperative and will not lead to immediate cancellation in all cases.</param>
+        /// <returns>A task that represents the asynchronous write operation.</returns>
+        public async Task WriteStructAsync(object structValue, int db, int startByteAdr = 0, CancellationToken cancellationToken = default)
+        {
+            await _proxy.WriteStructAsync(structValue, db, startByteAdr, cancellationToken);
+        }
+
+        /// <summary>
+        /// Writes a C# class to a DB in the PLC
+        /// </summary>
+        /// <param name="classValue">The class to be written</param>
+        /// <param name="db">Db address</param>
+        /// <param name="startByteAdr">Start bytes on the PLC</param>
+        /// <param name="cancellationToken">The token to monitor for cancellation requests. The default value is None.
+        /// Please note that cancellation is advisory/cooperative and will not lead to immediate cancellation in all cases.</param>
+        /// <returns>A task that represents the asynchronous write operation.</returns>
+        public async Task WriteClassAsync(object classValue, int db, int startByteAdr = 0, CancellationToken cancellationToken = default)
+        {
+            await _proxy.WriteClassAsync(classValue, db, startByteAdr, cancellationToken);
+        }
+
+        /// <summary>
+        /// Write DataItem(s) to the PLC. Throws an exception if the response is invalid
+        /// or when the PLC reports errors for item(s) written.
+        /// </summary>
+        /// <param name="dataItems">The DataItem(s) to write to the PLC.</param>
+        /// <returns>Task that completes when response from PLC is parsed.</returns>
+        public async Task WriteAsync(params DataItem[] dataItems)
+        {
+            await _proxy.WriteAsync(dataItems);
+        }
+        #endregion PlcAsynchronous
+        #region // PlcSynchronous
+        /// <summary>
+        /// Connects to the PLC and performs a COTP ConnectionRequest and S7 CommunicationSetup.
+        /// </summary>
+        public void Open()
+        {
+            _proxy.Open();
+        }
+
+
+        /// <summary>
+        /// Reads a number of bytes from a DB starting from a specified index. This handles more than 200 bytes with multiple requests.
+        /// If the read was not successful, check LastErrorCode or LastErrorString.
+        /// </summary>
+        /// <param name="dataType">Data type of the memory area, can be DB, Timer, Counter, Merker(Memory), Input, Output.</param>
+        /// <param name="db">Address of the memory area (if you want to read DB1, this is set to 1). This must be set also for other memory area types: counters, timers,etc.</param>
+        /// <param name="startByteAdr">Start byte address. If you want to read DB1.DBW200, this is 200.</param>
+        /// <param name="count">Byte count, if you want to read 120 bytes, set this to 120.</param>
+        /// <returns>Returns the bytes in an array</returns>
+        public byte[] ReadBytes(DataType dataType, int db, int startByteAdr, int count)
+        {
+            return _proxy.ReadBytes(dataType, db, startByteAdr, count);
+        }
+
+        /// <summary>
+        /// Read and decode a certain number of bytes of the "VarType" provided.
+        /// This can be used to read multiple consecutive variables of the same type (Word, DWord, Int, etc).
+        /// If the read was not successful, check LastErrorCode or LastErrorString.
+        /// </summary>
+        /// <param name="dataType">Data type of the memory area, can be DB, Timer, Counter, Merker(Memory), Input, Output.</param>
+        /// <param name="db">Address of the memory area (if you want to read DB1, this is set to 1). This must be set also for other memory area types: counters, timers,etc.</param>
+        /// <param name="startByteAdr">Start byte address. If you want to read DB1.DBW200, this is 200.</param>
+        /// <param name="varType">Type of the variable/s that you are reading</param>
+        /// <param name="bitAdr">Address of bit. If you want to read DB1.DBX200.6, set 6 to this parameter.</param>
+        /// <param name="varCount"></param>
+        public object Read(DataType dataType, int db, int startByteAdr, VarType varType, int varCount, byte bitAdr = 0)
+        {
+            return _proxy.Read(dataType, db, startByteAdr, varType, varCount, bitAdr);
+        }
+
+        /// <summary>
+        /// Reads a single variable from the PLC, takes in input strings like "DB1.DBX0.0", "DB20.DBD200", "MB20", "T45", etc.
+        /// If the read was not successful, check LastErrorCode or LastErrorString.
+        /// </summary>
+        /// <param name="variable">Input strings like "DB1.DBX0.0", "DB20.DBD200", "MB20", "T45", etc.</param>
+        /// <returns>Returns an object that contains the value. This object must be cast accordingly. If no data has been read, null will be returned</returns>
+        public object Read(string variable)
+        {
+            return _proxy.Read(variable);
+        }
+
+        /// <summary>
+        /// Reads all the bytes needed to fill a struct in C#, starting from a certain address, and return an object that can be casted to the struct.
+        /// </summary>
+        /// <param name="structType">Type of the struct to be readed (es.: TypeOf(MyStruct)).</param>
+        /// <param name="db">Address of the DB.</param>
+        /// <param name="startByteAdr">Start byte address. If you want to read DB1.DBW200, this is 200.</param>
+        /// <returns>Returns a struct that must be cast. If no data has been read, null will be returned</returns>
+        public object ReadStruct(Type structType, int db, int startByteAdr = 0)
+        {
+            return _proxy.ReadStruct(structType, db, startByteAdr);
+        }
+
+        /// <summary>
+        /// Reads all the bytes needed to fill a struct in C#, starting from a certain address, and returns the struct or null if nothing was read.
+        /// </summary>
+        /// <typeparam name="T">The struct type</typeparam>
+        /// <param name="db">Address of the DB.</param>
+        /// <param name="startByteAdr">Start byte address. If you want to read DB1.DBW200, this is 200.</param>
+        /// <returns>Returns a nullable struct. If nothing was read null will be returned.</returns>
+        public T? ReadStruct<T>(int db, int startByteAdr = 0) where T : struct
+        {
+            return _proxy.ReadStruct<T>(db, startByteAdr);
+        }
+
+
+        /// <summary>
+        /// Reads all the bytes needed to fill a class in C#, starting from a certain address, and set all the properties values to the value that are read from the PLC.
+        /// This reads only properties, it doesn't read private variable or public variable without {get;set;} specified.
+        /// </summary>
+        /// <param name="sourceClass">Instance of the class that will store the values</param>
+        /// <param name="db">Index of the DB; es.: 1 is for DB1</param>
+        /// <param name="startByteAdr">Start byte address. If you want to read DB1.DBW200, this is 200.</param>
+        /// <returns>The number of read bytes</returns>
+        public int ReadClass(object sourceClass, int db, int startByteAdr = 0)
+        {
+            return _proxy.ReadClass(sourceClass, db, startByteAdr);
+        }
+
+        /// <summary>
+        /// Reads all the bytes needed to fill a class in C#, starting from a certain address, and set all the properties values to the value that are read from the PLC.
+        /// This reads only properties, it doesn't read private variable or public variable without {get;set;} specified. To instantiate the class defined by the generic
+        /// type, the class needs a default constructor.
+        /// </summary>
+        /// <typeparam name="T">The class that will be instantiated. Requires a default constructor</typeparam>
+        /// <param name="db">Index of the DB; es.: 1 is for DB1</param>
+        /// <param name="startByteAdr">Start byte address. If you want to read DB1.DBW200, this is 200.</param>
+        /// <returns>An instance of the class with the values read from the PLC. If no data has been read, null will be returned</returns>
+        public T ReadClass<T>(int db, int startByteAdr = 0) where T : class
+        {
+            return _proxy.ReadClass<T>(db, startByteAdr);
+        }
+
+        /// <summary>
+        /// Reads all the bytes needed to fill a class in C#, starting from a certain address, and set all the properties values to the value that are read from the PLC.
+        /// This reads only properties, it doesn't read private variable or public variable without {get;set;} specified.
+        /// </summary>
+        /// <typeparam name="T">The class that will be instantiated</typeparam>
+        /// <param name="classFactory">Function to instantiate the class</param>
+        /// <param name="db">Index of the DB; es.: 1 is for DB1</param>
+        /// <param name="startByteAdr">Start byte address. If you want to read DB1.DBW200, this is 200.</param>
+        /// <returns>An instance of the class with the values read from the PLC. If no data has been read, null will be returned</returns>
+        public T ReadClass<T>(Func<T> classFactory, int db, int startByteAdr = 0) where T : class
+        {
+            return _proxy.ReadClass<T>(classFactory, db, startByteAdr);
+        }
+
+        /// <summary>
+        /// Write a number of bytes from a DB starting from a specified index. This handles more than 200 bytes with multiple requests.
+        /// If the write was not successful, check LastErrorCode or LastErrorString.
+        /// </summary>
+        /// <param name="dataType">Data type of the memory area, can be DB, Timer, Counter, Merker(Memory), Input, Output.</param>
+        /// <param name="db">Address of the memory area (if you want to read DB1, this is set to 1). This must be set also for other memory area types: counters, timers,etc.</param>
+        /// <param name="startByteAdr">Start byte address. If you want to write DB1.DBW200, this is 200.</param>
+        /// <param name="value">Bytes to write. If more than 200, multiple requests will be made.</param>
+        public void WriteBytes(DataType dataType, int db, int startByteAdr, byte[] value)
+        {
+            _proxy.WriteBytes(dataType, db, startByteAdr, value);
+        }
+
+        /// <summary>
+        /// Write a single bit from a DB with the specified index.
+        /// </summary>
+        /// <param name="dataType">Data type of the memory area, can be DB, Timer, Counter, Merker(Memory), Input, Output.</param>
+        /// <param name="db">Address of the memory area (if you want to read DB1, this is set to 1). This must be set also for other memory area types: counters, timers,etc.</param>
+        /// <param name="startByteAdr">Start byte address. If you want to write DB1.DBW200, this is 200.</param>
+        /// <param name="bitAdr">The address of the bit. (0-7)</param>
+        /// <param name="value">Bytes to write. If more than 200, multiple requests will be made.</param>
+        public void WriteBit(DataType dataType, int db, int startByteAdr, int bitAdr, bool value)
+        {
+            _proxy.WriteBit(dataType, db, startByteAdr, bitAdr, value);
+        }
+
+        /// <summary>
+        /// Write a single bit to a DB with the specified index.
+        /// </summary>
+        /// <param name="dataType">Data type of the memory area, can be DB, Timer, Counter, Merker(Memory), Input, Output.</param>
+        /// <param name="db">Address of the memory area (if you want to write DB1, this is set to 1). This must be set also for other memory area types: counters, timers,etc.</param>
+        /// <param name="startByteAdr">Start byte address. If you want to write DB1.DBW200, this is 200.</param>
+        /// <param name="bitAdr">The address of the bit. (0-7)</param>
+        /// <param name="value">Value to write (0 or 1).</param>
+        public void WriteBit(DataType dataType, int db, int startByteAdr, int bitAdr, int value)
+        {
+            _proxy.WriteBit(dataType, db, startByteAdr, bitAdr, value);
+        }
+
+        /// <summary>
+        /// Takes in input an object and tries to parse it to an array of values. This can be used to write many data, all of the same type.
+        /// You must specify the memory area type, memory are address, byte start address and bytes count.
+        /// If the read was not successful, check LastErrorCode or LastErrorString.
+        /// </summary>
+        /// <param name="dataType">Data type of the memory area, can be DB, Timer, Counter, Merker(Memory), Input, Output.</param>
+        /// <param name="db">Address of the memory area (if you want to read DB1, this is set to 1). This must be set also for other memory area types: counters, timers,etc.</param>
+        /// <param name="startByteAdr">Start byte address. If you want to read DB1.DBW200, this is 200.</param>
+        /// <param name="value">Bytes to write. The lenght of this parameter can't be higher than 200. If you need more, use recursion.</param>
+        /// <param name="bitAdr">The address of the bit. (0-7)</param>
+        public void Write(DataType dataType, int db, int startByteAdr, object value, int bitAdr = -1)
+        {
+            _proxy.Write(dataType, db, startByteAdr, value, bitAdr);
+        }
+
+        /// <summary>
+        /// Writes a single variable from the PLC, takes in input strings like "DB1.DBX0.0", "DB20.DBD200", "MB20", "T45", etc.
+        /// If the write was not successful, check <see cref="LastErrorCode"/> or <see cref="LastErrorString"/>.
+        /// </summary>
+        /// <param name="variable">Input strings like "DB1.DBX0.0", "DB20.DBD200", "MB20", "T45", etc.</param>
+        /// <param name="value">Value to be written to the PLC</param>
+        public void Write(string variable, object value)
+        {
+            _proxy.Write(variable, value);
+        }
+
+        /// <summary>
+        /// Writes a C# struct to a DB in the PLC
+        /// </summary>
+        /// <param name="structValue">The struct to be written</param>
+        /// <param name="db">Db address</param>
+        /// <param name="startByteAdr">Start bytes on the PLC</param>
+        public void WriteStruct(object structValue, int db, int startByteAdr = 0)
+        {
+            _proxy.WriteStruct(structValue, db, startByteAdr);
+        }
+
+        /// <summary>
+        /// Writes a C# class to a DB in the PLC
+        /// </summary>
+        /// <param name="classValue">The class to be written</param>
+        /// <param name="db">Db address</param>
+        /// <param name="startByteAdr">Start bytes on the PLC</param>
+        public void WriteClass(object classValue, int db, int startByteAdr = 0)
+        {
+            _proxy.WriteClass(classValue, db, startByteAdr);
+        }
+
+        /// <summary>
+        /// Write DataItem(s) to the PLC. Throws an exception if the response is invalid
+        /// or when the PLC reports errors for item(s) written.
+        /// </summary>
+        /// <param name="dataItems">The DataItem(s) to write to the PLC.</param>
+        public void Write(params DataItem[] dataItems)
+        {
+            _proxy.Write(dataItems);
+        }
+
+        /// <summary>
+        /// Reads multiple vars in a single request.
+        /// You have to create and pass a list of DataItems and you obtain in response the same list with the values.
+        /// Values are stored in the property "Value" of the dataItem and are already converted.
+        /// If you don't want the conversion, just create a dataItem of bytes.
+        /// The number of DataItems as well as the total size of the requested data can not exceed a certain limit (protocol restriction).
+        /// </summary>
+        /// <param name="dataItems">List of dataitems that contains the list of variables that must be read.</param>
+        public void ReadMultipleVars(List<DataItem> dataItems)
+        {
+            _proxy.ReadMultipleVars(dataItems);
+        }
+        #endregion PlcSynchronous
     }
 }

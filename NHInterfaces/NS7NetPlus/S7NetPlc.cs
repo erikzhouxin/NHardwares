@@ -157,218 +157,6 @@ namespace System.Data.NS7NET
         /// </summary>
         public void ClearLastError();
     }
-    /// <summary>
-    /// PLC类 <see cref="S7NetSdk.Create"/>
-    /// </summary>
-    [Obsolete("替代方案:S7NetSdk.Create进行创建接口类,使用接口【IS7NetPlc】")]
-    public class Plc : IS7NetPlc
-    {
-        private IS7NetPlc _proxy;
-        /// <summary>
-        /// IP地址
-        /// </summary>
-        public string IP => _proxy.IP;
-        /// <summary>
-        /// CPU类型
-        /// </summary>
-        public CpuType CPU => _proxy.CPU;
-        /// <summary>
-        /// 机架
-        /// </summary>
-        public short Rack => _proxy.Rack;
-        /// <summary>
-        /// 槽位
-        /// </summary>
-        public short Slot => _proxy.Slot;
-        /// <summary>
-        /// 是合法
-        /// </summary>
-        public bool IsAvailable => _proxy.IsAvailable;
-        /// <summary>
-        /// 是连接
-        /// </summary>
-        public bool IsConnected => _proxy.IsConnected;
-        /// <summary>
-        /// 最有一次错误信息
-        /// </summary>
-        public string LastErrorString => _proxy.LastErrorString;
-        /// <summary>
-        /// 最后一次错误码
-        /// </summary>
-        public ErrorCode LastErrorCode => _proxy.LastErrorCode;
-        /// <summary>
-        /// 构造
-        /// </summary>
-        /// <param name="cpu"></param>
-        /// <param name="ip"></param>
-        /// <param name="rack"></param>
-        /// <param name="slot"></param>
-        public Plc(CpuType cpu, string ip, short rack, short slot)
-        {
-            _proxy = new S7NetPlc(cpu, ip, rack, slot);
-        }
-        /// <summary>
-        /// 清理最后一次错误
-        /// </summary>
-        public void ClearLastError()
-        {
-            _proxy.ClearLastError();
-        }
-        /// <summary>
-        /// 关闭
-        /// </summary>
-        public void Close()
-        {
-            _proxy.Close();
-        }
-        /// <summary>
-        /// 释放
-        /// </summary>
-        public void Dispose()
-        {
-            _proxy.Dispose();
-        }
-        /// <summary>
-        /// 打开
-        /// </summary>
-        /// <returns></returns>
-        public ErrorCode Open()
-        {
-            return _proxy.Open();
-        }
-        /// <summary>
-        /// 读数据
-        /// </summary>
-        /// <param name="dataType"></param>
-        /// <param name="db"></param>
-        /// <param name="startByteAdr"></param>
-        /// <param name="varType"></param>
-        /// <param name="varCount"></param>
-        /// <returns></returns>
-        public object Read(DataType dataType, int db, int startByteAdr, VarType varType, int varCount)
-        {
-            return _proxy.Read(dataType, db, startByteAdr, varType, varCount);
-        }
-        /// <summary>
-        /// 读数据
-        /// </summary>
-        /// <param name="variable"></param>
-        /// <returns></returns>
-        public object Read(string variable)
-        {
-            return _proxy.Read(variable);
-        }
-        /// <summary>
-        /// 读字节数组
-        /// </summary>
-        /// <param name="dataType"></param>
-        /// <param name="db"></param>
-        /// <param name="startByteAdr"></param>
-        /// <param name="count"></param>
-        /// <returns></returns>
-        public byte[] ReadBytes(DataType dataType, int db, int startByteAdr, int count)
-        {
-            return _proxy.ReadBytes(dataType, db, startByteAdr, count);
-        }
-        /// <summary>
-        /// 读类型
-        /// </summary>
-        /// <param name="sourceClass"></param>
-        /// <param name="db"></param>
-        /// <param name="startByteAdr"></param>
-        public void ReadClass(object sourceClass, int db, int startByteAdr = 0)
-        {
-            _proxy.ReadClass(sourceClass, db, startByteAdr);
-        }
-        /// <summary>
-        /// 读多个变量
-        /// </summary>
-        /// <param name="dataItems"></param>
-        public void ReadMultipleVars(List<DataItem> dataItems)
-        {
-            _proxy.ReadMultipleVars(dataItems);
-        }
-        /// <summary>
-        /// 读结构体
-        /// </summary>
-        /// <param name="structType"></param>
-        /// <param name="db"></param>
-        /// <param name="startByteAdr"></param>
-        /// <returns></returns>
-        public object ReadStruct(Type structType, int db, int startByteAdr = 0)
-        {
-            return _proxy.ReadStruct(structType, db, startByteAdr);
-        }
-        /// <summary>
-        /// 写数据
-        /// </summary>
-        /// <param name="dataType"></param>
-        /// <param name="db"></param>
-        /// <param name="startByteAdr"></param>
-        /// <param name="value"></param>
-        /// <returns></returns>
-        public ErrorCode Write(DataType dataType, int db, int startByteAdr, object value)
-        {
-            return _proxy.Write(dataType, db, startByteAdr, value);
-        }
-        /// <summary>
-        /// 写对象
-        /// </summary>
-        /// <param name="variable"></param>
-        /// <param name="value"></param>
-        /// <returns></returns>
-        public ErrorCode Write(string variable, object value)
-        {
-            return _proxy.Write(variable, value);
-        }
-        /// <summary>
-        /// 写字节数组
-        /// </summary>
-        /// <param name="dataType"></param>
-        /// <param name="db"></param>
-        /// <param name="startByteAdr"></param>
-        /// <param name="value"></param>
-        /// <returns></returns>
-        public ErrorCode WriteBytes(DataType dataType, int db, int startByteAdr, byte[] value)
-        {
-            return _proxy.WriteBytes(dataType, db, startByteAdr, value);
-        }
-        /// <summary>
-        /// 写对象
-        /// </summary>
-        /// <param name="classValue"></param>
-        /// <param name="db"></param>
-        /// <param name="startByteAdr"></param>
-        /// <returns></returns>
-        public ErrorCode WriteClass(object classValue, int db, int startByteAdr = 0)
-        {
-            return _proxy.WriteClass(classValue, db, startByteAdr);
-        }
-        /// <summary>
-        /// 写字符串内容
-        /// </summary>
-        /// <param name="dataType">数据块类型</param>
-        /// <param name="db">DB块号码</param>
-        /// <param name="startByteAdr">起始地址</param>
-        /// <param name="stringWrite">写入字符串</param>
-        /// <param name="stringLength">字符总长度，只针对1200以上PLC，200不需要设置0</param>
-        /// <returns></returns>
-        public ErrorCode WriteString(DataType dataType, int db, int startByteAdr, string stringWrite, byte stringLength = 0)
-        {
-            return _proxy.WriteString(dataType, db, startByteAdr, stringWrite, stringLength);
-        }
-        /// <summary>
-        /// 写结构体
-        /// </summary>
-        /// <param name="structValue"></param>
-        /// <param name="db"></param>
-        /// <param name="startByteAdr"></param>
-        /// <returns></returns>
-        public ErrorCode WriteStruct(object structValue, int db, int startByteAdr = 0)
-        {
-            return _proxy.WriteStruct(structValue, db, startByteAdr);
-        }
-    }
     internal class S7NetPlc : IS7NetPlc
     {
         private Socket _mSocket;
@@ -1728,5 +1516,217 @@ namespace System.Data.NS7NET
             }
         }
         #endregion
+    }
+    /// <summary>
+    /// PLC类 <see cref="S7NetSdk.Create"/>
+    /// </summary>
+    [Obsolete("替代方案:S7NetSdk.Create进行创建接口类,使用接口【IS7NetPlc】")]
+    public class Plc : IS7NetPlc
+    {
+        private IS7NetPlc _proxy;
+        /// <summary>
+        /// IP地址
+        /// </summary>
+        public string IP => _proxy.IP;
+        /// <summary>
+        /// CPU类型
+        /// </summary>
+        public CpuType CPU => _proxy.CPU;
+        /// <summary>
+        /// 机架
+        /// </summary>
+        public short Rack => _proxy.Rack;
+        /// <summary>
+        /// 槽位
+        /// </summary>
+        public short Slot => _proxy.Slot;
+        /// <summary>
+        /// 是合法
+        /// </summary>
+        public bool IsAvailable => _proxy.IsAvailable;
+        /// <summary>
+        /// 是连接
+        /// </summary>
+        public bool IsConnected => _proxy.IsConnected;
+        /// <summary>
+        /// 最有一次错误信息
+        /// </summary>
+        public string LastErrorString => _proxy.LastErrorString;
+        /// <summary>
+        /// 最后一次错误码
+        /// </summary>
+        public ErrorCode LastErrorCode => _proxy.LastErrorCode;
+        /// <summary>
+        /// 构造
+        /// </summary>
+        /// <param name="cpu"></param>
+        /// <param name="ip"></param>
+        /// <param name="rack"></param>
+        /// <param name="slot"></param>
+        public Plc(CpuType cpu, string ip, short rack, short slot)
+        {
+            _proxy = new S7NetPlc(cpu, ip, rack, slot);
+        }
+        /// <summary>
+        /// 清理最后一次错误
+        /// </summary>
+        public void ClearLastError()
+        {
+            _proxy.ClearLastError();
+        }
+        /// <summary>
+        /// 关闭
+        /// </summary>
+        public void Close()
+        {
+            _proxy.Close();
+        }
+        /// <summary>
+        /// 释放
+        /// </summary>
+        public void Dispose()
+        {
+            _proxy.Dispose();
+        }
+        /// <summary>
+        /// 打开
+        /// </summary>
+        /// <returns></returns>
+        public ErrorCode Open()
+        {
+            return _proxy.Open();
+        }
+        /// <summary>
+        /// 读数据
+        /// </summary>
+        /// <param name="dataType"></param>
+        /// <param name="db"></param>
+        /// <param name="startByteAdr"></param>
+        /// <param name="varType"></param>
+        /// <param name="varCount"></param>
+        /// <returns></returns>
+        public object Read(DataType dataType, int db, int startByteAdr, VarType varType, int varCount)
+        {
+            return _proxy.Read(dataType, db, startByteAdr, varType, varCount);
+        }
+        /// <summary>
+        /// 读数据
+        /// </summary>
+        /// <param name="variable"></param>
+        /// <returns></returns>
+        public object Read(string variable)
+        {
+            return _proxy.Read(variable);
+        }
+        /// <summary>
+        /// 读字节数组
+        /// </summary>
+        /// <param name="dataType"></param>
+        /// <param name="db"></param>
+        /// <param name="startByteAdr"></param>
+        /// <param name="count"></param>
+        /// <returns></returns>
+        public byte[] ReadBytes(DataType dataType, int db, int startByteAdr, int count)
+        {
+            return _proxy.ReadBytes(dataType, db, startByteAdr, count);
+        }
+        /// <summary>
+        /// 读类型
+        /// </summary>
+        /// <param name="sourceClass"></param>
+        /// <param name="db"></param>
+        /// <param name="startByteAdr"></param>
+        public void ReadClass(object sourceClass, int db, int startByteAdr = 0)
+        {
+            _proxy.ReadClass(sourceClass, db, startByteAdr);
+        }
+        /// <summary>
+        /// 读多个变量
+        /// </summary>
+        /// <param name="dataItems"></param>
+        public void ReadMultipleVars(List<DataItem> dataItems)
+        {
+            _proxy.ReadMultipleVars(dataItems);
+        }
+        /// <summary>
+        /// 读结构体
+        /// </summary>
+        /// <param name="structType"></param>
+        /// <param name="db"></param>
+        /// <param name="startByteAdr"></param>
+        /// <returns></returns>
+        public object ReadStruct(Type structType, int db, int startByteAdr = 0)
+        {
+            return _proxy.ReadStruct(structType, db, startByteAdr);
+        }
+        /// <summary>
+        /// 写数据
+        /// </summary>
+        /// <param name="dataType"></param>
+        /// <param name="db"></param>
+        /// <param name="startByteAdr"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public ErrorCode Write(DataType dataType, int db, int startByteAdr, object value)
+        {
+            return _proxy.Write(dataType, db, startByteAdr, value);
+        }
+        /// <summary>
+        /// 写对象
+        /// </summary>
+        /// <param name="variable"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public ErrorCode Write(string variable, object value)
+        {
+            return _proxy.Write(variable, value);
+        }
+        /// <summary>
+        /// 写字节数组
+        /// </summary>
+        /// <param name="dataType"></param>
+        /// <param name="db"></param>
+        /// <param name="startByteAdr"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public ErrorCode WriteBytes(DataType dataType, int db, int startByteAdr, byte[] value)
+        {
+            return _proxy.WriteBytes(dataType, db, startByteAdr, value);
+        }
+        /// <summary>
+        /// 写对象
+        /// </summary>
+        /// <param name="classValue"></param>
+        /// <param name="db"></param>
+        /// <param name="startByteAdr"></param>
+        /// <returns></returns>
+        public ErrorCode WriteClass(object classValue, int db, int startByteAdr = 0)
+        {
+            return _proxy.WriteClass(classValue, db, startByteAdr);
+        }
+        /// <summary>
+        /// 写字符串内容
+        /// </summary>
+        /// <param name="dataType">数据块类型</param>
+        /// <param name="db">DB块号码</param>
+        /// <param name="startByteAdr">起始地址</param>
+        /// <param name="stringWrite">写入字符串</param>
+        /// <param name="stringLength">字符总长度，只针对1200以上PLC，200不需要设置0</param>
+        /// <returns></returns>
+        public ErrorCode WriteString(DataType dataType, int db, int startByteAdr, string stringWrite, byte stringLength = 0)
+        {
+            return _proxy.WriteString(dataType, db, startByteAdr, stringWrite, stringLength);
+        }
+        /// <summary>
+        /// 写结构体
+        /// </summary>
+        /// <param name="structValue"></param>
+        /// <param name="db"></param>
+        /// <param name="startByteAdr"></param>
+        /// <returns></returns>
+        public ErrorCode WriteStruct(object structValue, int db, int startByteAdr = 0)
+        {
+            return _proxy.WriteStruct(structValue, db, startByteAdr);
+        }
     }
 }
