@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<OutputType>Exe</OutputType>
 		<TargetFrameworks>net40;net45;netcoreapp3.1;net6.0</TargetFrameworks>
@@ -73,4 +73,7 @@
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
 		<PackageReference Include="NSystem.Data.Dabber" Version="2022.9.9" />
 	</ItemGroup>
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+		<Exec Command="XCOPY $(ProjectDir)bin\$(ConfigurationName)\net40\NSystem.Data.EDBODBCEXE.exe $(ProjectDir)..\beans\EDBODBCEXE.exe /Y" Condition="'$(TargetFramework)'=='net40'" />
+	</Target>
 </Project>
