@@ -10,9 +10,9 @@
 		<Company>EZhouXin</Company>
 		<Authors>ErikZhouXin</Authors>
 		<LangVersion>latest</LangVersion>
-		<Version>2022.9.9</Version>
-		<AssemblyVersion>2022.9.9.699</AssemblyVersion>
-		<FileVersion>2022.9.9.699</FileVersion>
+		<Version>2022.11.11</Version>
+		<AssemblyVersion>2022.11.11.711</AssemblyVersion>
+		<FileVersion>2022.11.11.711</FileVersion>
 		<Description>命名管道打通旧数据库的数据访问</Description>
 		<GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>

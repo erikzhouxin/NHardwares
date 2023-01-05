@@ -10,9 +10,9 @@
 		<Company>EZhouXin</Company>
 		<Authors>ErikZhouXin</Authors>
 		<LangVersion>latest</LangVersion>
-		<Version>2022.9.9</Version>
-		<AssemblyVersion>2022.9.9.699</AssemblyVersion>
-		<FileVersion>2022.9.9.699</FileVersion>
+		<Version>2022.11.11</Version>
+		<AssemblyVersion>2022.11.11.711</AssemblyVersion>
+		<FileVersion>2022.11.11.711</FileVersion>
 		<Description>华大HD100的HDSSSE32读写器命名管道实现64位使用32位SDK</Description>
 		<GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>

@@ -7,7 +7,7 @@ namespace ConsoleTester
         static void Main(string[] args)
         {
             Console.WriteLine("Hello World!");
-            TestEmitFunction.Test();
+            TestCheckModel.Test();
         }
     }
 }

@@ -26,7 +26,7 @@ namespace ShenBanReader.WinForm.Views
         private void BtnConnection_Click(object sender, EventArgs e)
         {
             MessageBox.Show("根据危险请求条例来说，暂时不允许此次操作！", "危险警告", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            return;
+            //return;
             var com = this.CbxSerialPort.Text;
             var rate = this.CbxPortRate.Text.ToPInt32();
             if (com.StartsWith("COM"))

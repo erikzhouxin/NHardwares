@@ -1,4 +1,4 @@
-﻿namespace YouRenIoTNetIO.WinForm
+﻿namespace RecBarCodeModule.WinForm
 {
     partial class MainForm
     {
