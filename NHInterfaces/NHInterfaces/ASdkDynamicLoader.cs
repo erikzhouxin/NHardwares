@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Cobber;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -160,6 +161,16 @@ namespace System.Data.NHInterfaces
         {
             IntPtr func = GetProcAddress(hModule, procName);
             return (T)Marshal.GetDelegateForFunctionPointer(func, typeof(T));
+        }
+        /// <summary>
+        /// 获取泛型委托(懒加载)
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="procName"></param>
+        /// <returns></returns>
+        public virtual LazyBone<T> GetLazyDelegate<T>(string procName) where T : Delegate
+        {
+            return new LazyBone<T>(() => GetDelegate<T>(procName), true);
         }
         /// <summary>
         /// 获取文件全路径

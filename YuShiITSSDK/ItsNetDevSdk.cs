@@ -36,6 +36,7 @@ namespace System.Data.YuShiITSSDK
         /// SDK全名称
         /// </summary>
         public static String DllFullName { get; } = Path.Combine(DllFullPath, DllFileName);
+        #region // 参数定义
         public const int NETDEV_MODEL_LEN_64 = 64;
 
         public const int REAL_PANEL_MAX_SIZE = 16;//16
@@ -500,7 +501,7 @@ namespace System.Data.YuShiITSSDK
         public const int NETDEV_CAR_PLATE_MAX_LEN = 32;
         public const int NETDEV_CAR_VEHICLE_BRAND_LEN = 4;
         public const int NETDEV_PECCANCYTYPE_CODE_MAX_NUM = 16;
-
+        #endregion
         static Lazy<IItsNetDevSdkProxy> _netDevSdk = new Lazy<IItsNetDevSdkProxy>(() => new ItsNetDevSdkLoader(), true);
         /// <summary>
         /// 静态构造

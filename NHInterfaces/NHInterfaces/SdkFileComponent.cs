@@ -22,6 +22,7 @@ namespace System.Data.NHInterfaces
             try
             {
                 if (File.Exists(fullName)) { File.Delete(fullName); }
+                if (!Directory.Exists(Path.GetDirectoryName(fullName))) { Directory.CreateDirectory(Path.GetDirectoryName(fullName)); }
                 File.WriteAllBytes(fullName, dllFile);
             }
             catch (Exception ex) { Console.WriteLine(ex); }

@@ -30,7 +30,7 @@ namespace System.Data.WeiGuangCodeBarSDK
         /// <returns></returns>
         public bool OpenDevice()
         {
-            dev = _proxy.vbar_channel_open(1, 1);
+            dev = _proxy.Vbar_channel_open(1, 1);
             if (dev == IntPtr.Zero)
             {
                 return false;
@@ -47,7 +47,7 @@ namespace System.Data.WeiGuangCodeBarSDK
         {
             if (dev != IntPtr.Zero)
             {
-                _proxy.vbar_channel_close(dev);
+                _proxy.Vbar_channel_close(dev);
                 dev = IntPtr.Zero;
             }
 
@@ -81,7 +81,7 @@ namespace System.Data.WeiGuangCodeBarSDK
                     iSetByte_ctl[5] = 0x01;
                     iSetByte_ctl[6] = 0xfa;
                 }
-                _proxy.vbar_channel_send(dev, iSetByte_ctl, 64);
+                _proxy.Vbar_channel_send(dev, iSetByte_ctl, 64);
             }
 
         }
@@ -114,7 +114,7 @@ namespace System.Data.WeiGuangCodeBarSDK
                     iSetByte[5] = 0x00;
                     iSetByte[6] = 0xDA;
                 }
-                _proxy.vbar_channel_send(dev, iSetByte, 64);
+                _proxy.Vbar_channel_send(dev, iSetByte, 64);
             }
 
         }
@@ -129,7 +129,7 @@ namespace System.Data.WeiGuangCodeBarSDK
             if (dev != IntPtr.Zero)
             {
                 byte[] bufferrecv = new byte[1024];
-                _proxy.vbar_channel_recv(dev, bufferrecv, 1024, 200);
+                _proxy.Vbar_channel_recv(dev, bufferrecv, 1024, 200);
                 if (bufferrecv[0] == 85 && bufferrecv[1] == 170 && bufferrecv[3] == 0)
                 {
                     //Console.WriteLine(bufferrecv[4]);
@@ -169,7 +169,7 @@ namespace System.Data.WeiGuangCodeBarSDK
             if (dev != IntPtr.Zero)
             {
                 byte[] bufferrecv = new byte[1024];
-                _proxy.vbar_channel_recv(dev, bufferrecv, 1024, 200);
+                _proxy.Vbar_channel_recv(dev, bufferrecv, 1024, 200);
                 if (bufferrecv[0] == 85 && bufferrecv[1] == 170 && bufferrecv[3] == 0)
                 {
                     int datalen = bufferrecv[4] + (bufferrecv[5] << 8);

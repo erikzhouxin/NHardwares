@@ -18,7 +18,7 @@ namespace System.Data.WeiGuangCodeBarSDK
         /// <param name="type"></param>
         /// <param name="parm"></param>
         /// <returns></returns>
-        IntPtr vbar_channel_open(int type, long parm);
+        IntPtr Vbar_channel_open(int type, long parm);
         /// <summary>
         /// 发送数据
         /// </summary>
@@ -26,7 +26,7 @@ namespace System.Data.WeiGuangCodeBarSDK
         /// <param name="data"></param>
         /// <param name="length"></param>
         /// <returns></returns>
-        int vbar_channel_send(IntPtr dev, byte[] data, int length);
+        int Vbar_channel_send(IntPtr dev, byte[] data, int length);
         /// <summary>
         /// 接收数据
         /// </summary>
@@ -35,12 +35,12 @@ namespace System.Data.WeiGuangCodeBarSDK
         /// <param name="size"></param>
         /// <param name="milliseconds"></param>
         /// <returns></returns>
-        int vbar_channel_recv(IntPtr dev, byte[] buffer, int size, int milliseconds);
+        int Vbar_channel_recv(IntPtr dev, byte[] buffer, int size, int milliseconds);
         /// <summary>
         /// 关闭信道
         /// </summary>
         /// <param name="dev"></param>
-        void vbar_channel_close(IntPtr dev);
+        void Vbar_channel_close(IntPtr dev);
     }
     internal class SimpleVBarSdkDller : ISimpleVBarSdkProxy
     {
@@ -71,10 +71,10 @@ namespace System.Data.WeiGuangCodeBarSDK
         [DllImport(DllFileName, EntryPoint = "vbar_channel_close", CallingConvention = CallingConvention.Cdecl)]
         public static extern void vbar_channel_close(IntPtr dev);
         #region // 显示实现
-        void ISimpleVBarSdkProxy.vbar_channel_close(IntPtr dev) => vbar_channel_close(dev);
-        IntPtr ISimpleVBarSdkProxy.vbar_channel_open(int type, long parm) => vbar_channel_open(type, parm);
-        int ISimpleVBarSdkProxy.vbar_channel_recv(IntPtr dev, byte[] buffer, int size, int milliseconds) => vbar_channel_recv(dev, buffer, size, milliseconds);
-        int ISimpleVBarSdkProxy.vbar_channel_send(IntPtr dev, byte[] data, int length) => vbar_channel_send(dev, data, length);
+        void ISimpleVBarSdkProxy.Vbar_channel_close(IntPtr dev) => vbar_channel_close(dev);
+        IntPtr ISimpleVBarSdkProxy.Vbar_channel_open(int type, long parm) => vbar_channel_open(type, parm);
+        int ISimpleVBarSdkProxy.Vbar_channel_recv(IntPtr dev, byte[] buffer, int size, int milliseconds) => vbar_channel_recv(dev, buffer, size, milliseconds);
+        int ISimpleVBarSdkProxy.Vbar_channel_send(IntPtr dev, byte[] data, int length) => vbar_channel_send(dev, data, length);
         #endregion
     }
     internal class SimpleVBarSdkLoader : ISimpleVBarSdkProxy
@@ -204,10 +204,10 @@ namespace System.Data.WeiGuangCodeBarSDK
         }
         #endregion
         #region // 显示实现
-        void ISimpleVBarSdkProxy.vbar_channel_close(IntPtr dev) => _vbar_channel_close.Invoke(dev);
-        IntPtr ISimpleVBarSdkProxy.vbar_channel_open(int type, long parm) => _vbar_channel_open.Invoke(type, parm);
-        int ISimpleVBarSdkProxy.vbar_channel_recv(IntPtr dev, byte[] buffer, int size, int milliseconds) => _vbar_channel_recv.Invoke(dev, buffer, size, milliseconds);
-        int ISimpleVBarSdkProxy.vbar_channel_send(IntPtr dev, byte[] data, int length) => _vbar_channel_send.Invoke(dev, data, length);
+        void ISimpleVBarSdkProxy.Vbar_channel_close(IntPtr dev) => _vbar_channel_close.Invoke(dev);
+        IntPtr ISimpleVBarSdkProxy.Vbar_channel_open(int type, long parm) => _vbar_channel_open.Invoke(type, parm);
+        int ISimpleVBarSdkProxy.Vbar_channel_recv(IntPtr dev, byte[] buffer, int size, int milliseconds) => _vbar_channel_recv.Invoke(dev, buffer, size, milliseconds);
+        int ISimpleVBarSdkProxy.Vbar_channel_send(IntPtr dev, byte[] data, int length) => _vbar_channel_send.Invoke(dev, data, length);
         #endregion
     }
 }
