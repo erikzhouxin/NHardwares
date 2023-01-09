@@ -16,7 +16,7 @@ namespace HikHCNetSDK.WinForm
         /// <summary>
         /// 测试扫描窗体
         /// </summary>
-        TestRecCodeR1 TestRecR1 { get; set; }
+        PreviewDemo1 PreDemo1 { get; set; }
         public MainForm()
         {
             InitializeComponent();
@@ -44,7 +44,7 @@ namespace HikHCNetSDK.WinForm
 
         private void TrmUSRIO808_Click(object sender, EventArgs e)
         {
-            var scanPanel = TestRecR1 ??= new TestRecCodeR1();
+            var scanPanel = PreDemo1 ??= new PreviewDemo1();
             if (!TryGetTabPageSelect(TacMainContent.TabPages.ToEnumerable<TabPage>(), scanPanel, out TabPage page))
             {
                 page = new TabPage();

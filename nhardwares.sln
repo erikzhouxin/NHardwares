@@ -89,7 +89,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RecBarCode", "RecBarCode", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecBarCodeModule", "RecBarCodeModule\RecBarCodeModule.csproj", "{66F2EC4A-3D8C-4C08-BCF2-7D844BD6A34F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecBarCodeModule.WinForm", "AppDemo\RecBarCodeModule\WinForm\RecBarCodeModule.WinForm.csproj", "{BD14CE7E-4FA2-428A-94B7-2E72E210DCE4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecBarCodeModule.WinForm", "AppDemo\RecBarCodeModule\WinForm\RecBarCodeModule.WinForm.csproj", "{BD14CE7E-4FA2-428A-94B7-2E72E210DCE4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
