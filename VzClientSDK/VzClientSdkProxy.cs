@@ -419,14 +419,13 @@ namespace System.Data.VzClientSDK
         *  @ingroup group_device
         */
         int VzLPRClient_CancelOfflineCheck(int handle);
-
-        /**
-        *  @brief 开始查找设备
-        *  @param  [IN] func 找到的设备通过该回调函数返回
-        *  @param  [IN] pUserData 回调函数中的上下文
-        *  @return 0表示成功，-1表示失败
-        *  @ingroup group_global
-        */
+        /// <summary>
+        /// 开始查找设备
+        /// @ingroup group_global
+        /// </summary>
+        /// <param name="func">找到的设备通过该回调函数返回</param>
+        /// <param name="pUserData">回调函数中的上下文</param>
+        /// <returns>0表示成功，-1表示失败</returns>
         int VZLPRClient_StartFindDeviceEx(VZLPRC_FIND_DEVICE_CALLBACK_EX func, IntPtr pUserData);
 
         /**
@@ -537,15 +536,13 @@ namespace System.Data.VzClientSDK
         *  @ingroup group_global
         */
         int VzLPRClient_ImageEncodeToJpeg(IntPtr pImgInfo, IntPtr pDstBuf, int uSizeBuf, int nQuality);
-
-        /**
-        *  @brief 设置IO输出，并自动复位
-        *  @param  [IN] handle 由VzLPRClient_Open函数获得的句柄
-        *  @param  [IN] uChnId IO输出的通道号，从0开始
-        *  @param  [IN] nDuration 延时时间，取值范围[500, 5000]毫秒
-        *  @return 0表示成功，-1表示失败
-        *  @ingroup group_device
-        */
+        /// <summary>
+        /// 设置IO输出，并自动复位
+        /// </summary>
+        /// <param name="handle">由VzLPRClient_Open函数获得的句柄</param>
+        /// <param name="uChnId">IO输出的通道号，从0开始</param>
+        /// <param name="nDuration">延时时间，取值范围[500, 5000]毫秒</param>
+        /// <returns>0表示成功，-1表示失败</returns>
         int VzLPRClient_SetIOOutputAuto(int handle, int uChnId, int nDuration);
 
         /**

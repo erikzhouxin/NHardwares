@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>netcoreapp3.1</TargetFramework>
+		<UseWindowsForms>true</UseWindowsForms>
+		<AssemblyName>TestHDemoB.WinForm</AssemblyName>
+		<RootNamespace>TestHardwareDemo.WinForm</RootNamespace>
+		<LangVersion>latest</LangVersion>
+		<NeutralLanguage>zh</NeutralLanguage>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<Compile Include="..\TestHDemoA.WinForm\Components\CompatComponent.cs" Link="Components\CompatComponent.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="NSystem.Data.HardwareInterfaces" Version="2022.9.9" />
+	</ItemGroup>
+
+</Project>

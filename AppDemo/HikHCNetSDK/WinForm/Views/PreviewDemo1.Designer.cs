@@ -249,8 +249,9 @@
             this.groupBox4.Controls.Add(this.panel2);
             this.groupBox4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox4.Location = new System.Drawing.Point(0, 51);
+            this.groupBox4.MinimumSize = new System.Drawing.Size(500, 110);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(535, 138);
+            this.groupBox4.Size = new System.Drawing.Size(535, 197);
             this.groupBox4.TabIndex = 70;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "详细信息";
@@ -272,7 +273,7 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(3, 19);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(529, 116);
+            this.panel2.Size = new System.Drawing.Size(529, 175);
             this.panel2.TabIndex = 68;
             // 
             // button2
@@ -417,9 +418,9 @@
             // 
             this.groupBox3.Controls.Add(this.panel1);
             this.groupBox3.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.groupBox3.Location = new System.Drawing.Point(0, 189);
+            this.groupBox3.Location = new System.Drawing.Point(0, 248);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(535, 144);
+            this.groupBox3.Size = new System.Drawing.Size(535, 85);
             this.groupBox3.TabIndex = 67;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "操作按钮";
@@ -436,7 +437,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(3, 19);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(529, 122);
+            this.panel1.Size = new System.Drawing.Size(529, 63);
             this.panel1.TabIndex = 65;
             // 
             // btnPreview

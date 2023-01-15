@@ -1184,7 +1184,7 @@ namespace System.Data.HikHCNetSDK
         /// <returns></returns>
         bool NET_VCA_RestartLib(int lUserID, int lChannel);
 
-        int PostMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
+        int PostMessage(IntPtr hWnd, int Msg, long wParam, long lParam);
     }
     internal class HikHCNetSdkDller : IHikHCNetSdkProxy
     {
@@ -2733,8 +2733,7 @@ namespace System.Data.HikHCNetSDK
         public static extern bool NET_VCA_RestartLib(int lUserID, int lChannel);
 
         [DllImport("User32.dll", EntryPoint = "PostMessage")]
-        public static extern int PostMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
-        // public static extern int PostMessage(IntPtr hWnd, int Msg, Int64 wParam, Int64 lParam);
+        public static extern int PostMessage(IntPtr hWnd, int Msg, Int64 wParam, Int64 lParam);
 
         #region // 显示实现方法
         bool IHikHCNetSdkProxy.NET_DVR_AddDVR(int lUserID)
@@ -3781,7 +3780,7 @@ namespace System.Data.HikHCNetSDK
         bool IHikHCNetSdkProxy.NET_VCA_RestartLib(int lUserID, int lChannel)
             => NET_VCA_RestartLib(lUserID, lChannel);
 
-        int IHikHCNetSdkProxy.PostMessage(IntPtr hWnd, int Msg, int wParam, int lParam)
+        int IHikHCNetSdkProxy.PostMessage(IntPtr hWnd, int Msg, long wParam, long lParam)
             => PostMessage(hWnd, Msg, wParam, lParam);
         #endregion 显示实现
     }
@@ -4495,7 +4494,7 @@ namespace System.Data.HikHCNetSDK
             return HikHCNetSdk.DllFullName;
         }
         [DllImport("User32.dll", EntryPoint = "PostMessage")]
-        public static extern int PostMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
+        public static extern int PostMessage(IntPtr hWnd, int Msg, long wParam, long lParam);
         #region // 显示实现方法
         bool IHikHCNetSdkProxy.NET_DVR_AddDVR(int lUserID)
             => _NET_DVR_AddDVR.Invoke(lUserID);
@@ -5541,7 +5540,7 @@ namespace System.Data.HikHCNetSDK
         bool IHikHCNetSdkProxy.NET_VCA_RestartLib(int lUserID, int lChannel)
             => _NET_VCA_RestartLib.Invoke(lUserID, lChannel);
 
-        int IHikHCNetSdkProxy.PostMessage(IntPtr hWnd, int Msg, int wParam, int lParam)
+        int IHikHCNetSdkProxy.PostMessage(IntPtr hWnd, int Msg, long wParam, long lParam)
             => PostMessage(hWnd, Msg, wParam, lParam);
         #endregion 显示实现
     }

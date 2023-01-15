@@ -1,4 +1,4 @@
-﻿namespace HikHCNetSDK.WinForm
+﻿namespace VzClientSDK.WinForm
 {
     partial class MainForm
     {

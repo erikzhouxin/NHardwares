@@ -156,7 +156,7 @@
             this.txtIP.Name = "txtIP";
             this.txtIP.Size = new System.Drawing.Size(116, 23);
             this.txtIP.TabIndex = 2;
-            this.txtIP.Text = "192.168.7.129";
+            this.txtIP.Text = "192.168.1.100";
             // 
             // txtPort
             // 
@@ -448,7 +448,7 @@
             // 
             // recordbtn
             // 
-            this.recordbtn.Location = new System.Drawing.Point(185, 95);
+            this.recordbtn.Location = new System.Drawing.Point(5, 95);
             this.recordbtn.Margin = new System.Windows.Forms.Padding(5);
             this.recordbtn.Name = "recordbtn";
             this.recordbtn.Size = new System.Drawing.Size(80, 35);
@@ -459,7 +459,7 @@
             // 
             // stoprecordbtn
             // 
-            this.stoprecordbtn.Location = new System.Drawing.Point(5, 95);
+            this.stoprecordbtn.Location = new System.Drawing.Point(95, 95);
             this.stoprecordbtn.Margin = new System.Windows.Forms.Padding(5);
             this.stoprecordbtn.Name = "stoprecordbtn";
             this.stoprecordbtn.Size = new System.Drawing.Size(80, 35);
@@ -654,7 +654,7 @@
             // 
             // m_btnBaseConfig
             // 
-            this.m_btnBaseConfig.Location = new System.Drawing.Point(95, 95);
+            this.m_btnBaseConfig.Location = new System.Drawing.Point(185, 95);
             this.m_btnBaseConfig.Margin = new System.Windows.Forms.Padding(5);
             this.m_btnBaseConfig.Name = "m_btnBaseConfig";
             this.m_btnBaseConfig.Size = new System.Drawing.Size(80, 35);
@@ -930,9 +930,9 @@
             this.flowLayoutPanel1.Controls.Add(this.querybtn);
             this.flowLayoutPanel1.Controls.Add(this.btnVideoCfg);
             this.flowLayoutPanel1.Controls.Add(this.osdbtn);
+            this.flowLayoutPanel1.Controls.Add(this.recordbtn);
             this.flowLayoutPanel1.Controls.Add(this.stoprecordbtn);
             this.flowLayoutPanel1.Controls.Add(this.m_btnBaseConfig);
-            this.flowLayoutPanel1.Controls.Add(this.recordbtn);
             this.flowLayoutPanel1.Controls.Add(this.InOutBtn);
             this.flowLayoutPanel1.Controls.Add(this.startoutputbtn);
             this.flowLayoutPanel1.Controls.Add(this.btnRuleCfg);

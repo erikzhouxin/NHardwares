@@ -60,15 +60,19 @@ namespace System.Data.VzClientSDK
     public delegate void VZLPRC_WLIST_QUERY_CALLBACK(VZLPRC_WLIST_CB_TYPE type, IntPtr pLP,
                                                      IntPtr pCustomer,
                                                      IntPtr pUserData);
-    /**
-    *  @brief 通过该回调函数获得找到的设备基本信息
-    *  @param  [IN] pStrDevName 设备名称
-    *  @param  [IN] pStrIPAddr	设备IP地址
-    *  @param  [IN] usPort1		设备端口号
-    *  @param  [IN] usPort2		预留
-    *  @param  [IN] pUserData	回调函数上下文
-    *  @ingroup group_callback
-    */
+
+    /// <summary>
+    /// 通过该回调函数获得找到的设备基本信息
+    /// </summary>
+    /// <param name="pStrDevName">设备名称</param>
+    /// <param name="pStrIPAddr">设备IP地址</param>
+    /// <param name="usPort1">设备端口号</param>
+    /// <param name="usPort2">预留</param>
+    /// <param name="SL"></param>
+    /// <param name="SH"></param>
+    /// <param name="netmask"></param>
+    /// <param name="gateway"></param>
+    /// <param name="pUserData">回调函数上下文</param>
     public delegate void VZLPRC_FIND_DEVICE_CALLBACK_EX(string pStrDevName, string pStrIPAddr, ushort usPort1, ushort usPort2, uint SL, uint SH, string netmask, string gateway, IntPtr pUserData);
     /// <summary>
     /// 视频帧回调
