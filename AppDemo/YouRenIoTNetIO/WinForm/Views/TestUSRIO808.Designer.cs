@@ -29,8 +29,6 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.TsrUSRIO808 = new System.Windows.Forms.ToolStrip();
-            this.TsbNetControl = new System.Windows.Forms.ToolStripButton();
             this.PnlContent = new System.Windows.Forms.Panel();
             this.SplContent = new System.Windows.Forms.SplitContainer();
             this.PnlNetControl = new System.Windows.Forms.Panel();
@@ -97,7 +95,6 @@
             this.TxtLogger = new System.Windows.Forms.RichTextBox();
             this.CmsrLogger = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.TsrmLoggerClear = new System.Windows.Forms.ToolStripMenuItem();
-            this.TsrUSRIO808.SuspendLayout();
             this.PnlContent.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.SplContent)).BeginInit();
             this.SplContent.Panel1.SuspendLayout();
@@ -135,37 +132,13 @@
             this.CmsrLogger.SuspendLayout();
             this.SuspendLayout();
             // 
-            // TsrUSRIO808
-            // 
-            this.TsrUSRIO808.AutoSize = false;
-            this.TsrUSRIO808.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.TsbNetControl});
-            this.TsrUSRIO808.Location = new System.Drawing.Point(0, 0);
-            this.TsrUSRIO808.Name = "TsrUSRIO808";
-            this.TsrUSRIO808.Size = new System.Drawing.Size(1080, 42);
-            this.TsrUSRIO808.Stretch = true;
-            this.TsrUSRIO808.TabIndex = 0;
-            this.TsrUSRIO808.Text = "USR-IO808设备内容";
-            // 
-            // TsbNetControl
-            // 
-            this.TsbNetControl.Image = global::YouRenIoTNetIO.WinForm.Properties.Resources.usr_io808_ewr;
-            this.TsbNetControl.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.TsbNetControl.Name = "TsbNetControl";
-            this.TsbNetControl.Size = new System.Drawing.Size(60, 39);
-            this.TsbNetControl.Text = "网络控制";
-            this.TsbNetControl.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.TsbNetControl.TextDirection = System.Windows.Forms.ToolStripTextDirection.Horizontal;
-            this.TsbNetControl.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.TsbNetControl.Click += new System.EventHandler(this.TsbNetControl_Click);
-            // 
             // PnlContent
             // 
             this.PnlContent.Controls.Add(this.SplContent);
             this.PnlContent.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.PnlContent.Location = new System.Drawing.Point(0, 42);
+            this.PnlContent.Location = new System.Drawing.Point(0, 0);
             this.PnlContent.Name = "PnlContent";
-            this.PnlContent.Size = new System.Drawing.Size(1080, 726);
+            this.PnlContent.Size = new System.Drawing.Size(1080, 768);
             this.PnlContent.TabIndex = 1;
             // 
             // SplContent
@@ -188,7 +161,7 @@
             this.SplContent.Panel2.Controls.Add(this.GrbTxtLogger);
             this.SplContent.Panel2.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.SplContent.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.SplContent.Size = new System.Drawing.Size(1080, 726);
+            this.SplContent.Size = new System.Drawing.Size(1080, 768);
             this.SplContent.SplitterDistance = 512;
             this.SplContent.TabIndex = 0;
             // 
@@ -198,7 +171,7 @@
             this.PnlNetControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PnlNetControl.Location = new System.Drawing.Point(0, 0);
             this.PnlNetControl.Name = "PnlNetControl";
-            this.PnlNetControl.Size = new System.Drawing.Size(510, 724);
+            this.PnlNetControl.Size = new System.Drawing.Size(510, 766);
             this.PnlNetControl.TabIndex = 0;
             // 
             // SplNetControl
@@ -219,7 +192,7 @@
             this.SplNetControl.Panel2.Controls.Add(this.GrbNetInfoContent);
             this.SplNetControl.Panel2.Controls.Add(this.GrbNetDIArea);
             this.SplNetControl.Panel2.Controls.Add(this.GrbNetDoArea);
-            this.SplNetControl.Size = new System.Drawing.Size(510, 724);
+            this.SplNetControl.Size = new System.Drawing.Size(510, 766);
             this.SplNetControl.SplitterDistance = 145;
             this.SplNetControl.TabIndex = 0;
             // 
@@ -367,7 +340,7 @@
             this.GrbNetInfoContent.Dock = System.Windows.Forms.DockStyle.Fill;
             this.GrbNetInfoContent.Location = new System.Drawing.Point(0, 209);
             this.GrbNetInfoContent.Name = "GrbNetInfoContent";
-            this.GrbNetInfoContent.Size = new System.Drawing.Size(510, 366);
+            this.GrbNetInfoContent.Size = new System.Drawing.Size(510, 408);
             this.GrbNetInfoContent.TabIndex = 4;
             this.GrbNetInfoContent.TabStop = false;
             this.GrbNetInfoContent.Text = "设备其他信息参数";
@@ -713,7 +686,7 @@
             this.PicNetDO7.TabIndex = 4;
             this.PicNetDO7.TabStop = false;
             this.PicNetDO7.Tag = "";
-            this.PicNetDO7.MouseClick += new System.Windows.Forms.MouseEventHandler(this.PicNetDO_Click);
+            this.PicNetDO7.Click += new System.EventHandler(this.PicNetDO_Click);
             // 
             // LblNetDO6
             // 
@@ -737,7 +710,7 @@
             this.PicNetDO1.TabIndex = 0;
             this.PicNetDO1.TabStop = false;
             this.PicNetDO1.Tag = "";
-            this.PicNetDO1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.PicNetDO_Click);
+            this.PicNetDO1.Click += new System.EventHandler(this.PicNetDO_Click);
             // 
             // LblNetDO5
             // 
@@ -761,7 +734,7 @@
             this.PicNetDO2.TabIndex = 1;
             this.PicNetDO2.TabStop = false;
             this.PicNetDO2.Tag = "";
-            this.PicNetDO2.MouseClick += new System.Windows.Forms.MouseEventHandler(this.PicNetDO_Click);
+            this.PicNetDO2.Click += new System.EventHandler(this.PicNetDO_Click);
             // 
             // LblNetDO4
             // 
@@ -785,7 +758,7 @@
             this.PicNetDO5.TabIndex = 2;
             this.PicNetDO5.TabStop = false;
             this.PicNetDO5.Tag = "";
-            this.PicNetDO5.MouseClick += new System.Windows.Forms.MouseEventHandler(this.PicNetDO_Click);
+            this.PicNetDO5.Click += new System.EventHandler(this.PicNetDO_Click);
             // 
             // LblNetDO3
             // 
@@ -809,7 +782,7 @@
             this.PicNetDO6.TabIndex = 3;
             this.PicNetDO6.TabStop = false;
             this.PicNetDO6.Tag = "";
-            this.PicNetDO6.MouseClick += new System.Windows.Forms.MouseEventHandler(this.PicNetDO_Click);
+            this.PicNetDO6.Click += new System.EventHandler(this.PicNetDO_Click);
             // 
             // LblNetDO2
             // 
@@ -833,7 +806,7 @@
             this.PicNetDO8.TabIndex = 5;
             this.PicNetDO8.TabStop = false;
             this.PicNetDO8.Tag = "";
-            this.PicNetDO8.MouseClick += new System.Windows.Forms.MouseEventHandler(this.PicNetDO_Click);
+            this.PicNetDO8.Click += new System.EventHandler(this.PicNetDO_Click);
             // 
             // LblNetDO1
             // 
@@ -857,7 +830,7 @@
             this.PicNetDO4.TabIndex = 6;
             this.PicNetDO4.TabStop = false;
             this.PicNetDO4.Tag = "";
-            this.PicNetDO4.MouseClick += new System.Windows.Forms.MouseEventHandler(this.PicNetDO_Click);
+            this.PicNetDO4.Click += new System.EventHandler(this.PicNetDO_Click);
             // 
             // LblNetDO8
             // 
@@ -881,7 +854,7 @@
             this.PicNetDO3.TabIndex = 7;
             this.PicNetDO3.TabStop = false;
             this.PicNetDO3.Tag = "";
-            this.PicNetDO3.MouseClick += new System.Windows.Forms.MouseEventHandler(this.PicNetDO_Click);
+            this.PicNetDO3.Click += new System.EventHandler(this.PicNetDO_Click);
             // 
             // GrbTxtLogger
             // 
@@ -889,7 +862,7 @@
             this.GrbTxtLogger.Dock = System.Windows.Forms.DockStyle.Fill;
             this.GrbTxtLogger.Location = new System.Drawing.Point(0, 0);
             this.GrbTxtLogger.Name = "GrbTxtLogger";
-            this.GrbTxtLogger.Size = new System.Drawing.Size(562, 724);
+            this.GrbTxtLogger.Size = new System.Drawing.Size(562, 766);
             this.GrbTxtLogger.TabIndex = 1;
             this.GrbTxtLogger.TabStop = false;
             this.GrbTxtLogger.Text = "信息日志";
@@ -901,7 +874,7 @@
             this.TxtLogger.Location = new System.Drawing.Point(3, 19);
             this.TxtLogger.Name = "TxtLogger";
             this.TxtLogger.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
-            this.TxtLogger.Size = new System.Drawing.Size(556, 702);
+            this.TxtLogger.Size = new System.Drawing.Size(556, 744);
             this.TxtLogger.TabIndex = 0;
             this.TxtLogger.Text = "";
             // 
@@ -924,12 +897,9 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.PnlContent);
-            this.Controls.Add(this.TsrUSRIO808);
             this.Name = "TestUSRIO808";
             this.Size = new System.Drawing.Size(1080, 768);
             this.Load += new System.EventHandler(this.TestScanner_Load);
-            this.TsrUSRIO808.ResumeLayout(false);
-            this.TsrUSRIO808.PerformLayout();
             this.PnlContent.ResumeLayout(false);
             this.SplContent.Panel1.ResumeLayout(false);
             this.SplContent.Panel2.ResumeLayout(false);
@@ -975,12 +945,9 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.ToolStrip TsrUSRIO808;
         private System.Windows.Forms.Panel PnlContent;
         private System.Windows.Forms.SplitContainer SplContent;
         private System.Windows.Forms.RichTextBox TxtLogger;
-        private System.Windows.Forms.ToolStripButton TsbNetControl;
         private System.Windows.Forms.Panel PnlNetControl;
         private System.Windows.Forms.SplitContainer SplNetControl;
         private System.Windows.Forms.GroupBox GrbNetConfigArea;

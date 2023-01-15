@@ -136,7 +136,7 @@ namespace TestHardwareDemo.WinForm.Components
             ThisTxtLogger.TextChanged += TxtLogger_TextChanged;
         }
 
-        protected void TsrmLoggerClear_Click(object sender, EventArgs e)
+        public void TsrmLoggerClear_Click(object sender, EventArgs e)
         {
             this.ThisTxtLogger.Clear();
         }

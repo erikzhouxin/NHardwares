@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Data;
 using System.Data.Cobber;
 using System.Data.Extter;
 using System.Data.NHInterfaces;
-using System.Data.Logger;
 using System.Data.YouRenIoTNetIO;
 using System.Drawing;
 using System.Linq;
@@ -17,26 +13,27 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using TestHardwareDemo.WinForm.Components;
 
-namespace YouRenIoTNetIO.WinForm.Views
+namespace TestHardwareDemo.WinForm.Views
 {
-    public partial class TestUSRIO808 : UserControl
+    /// <summary>
+    /// 测试有人IO控制器
+    /// </summary>
+    [EDisplay("测试有人USR-IO808-EWR")]
+    public partial class TestUSRIO808EWRv2211 : TextLoggerComponent
     {
         /// <summary>
-        /// 终端配置
+        /// 构造
         /// </summary>
-        static HashSet<USRIO808Model> _devices = new HashSet<USRIO808Model>();
-        static USRIO808Model _config = new USRIO808Model("192.168.1.110", 28899);
-        static string _configPath = System.IO.Path.GetFullPath("testusrio808config.json");
-        internal static TestUSRIO808 Instance { get; set; }
-        Thread _guardianService;
-        CancellationTokenSource _guardianCts;
-        bool _isInitialize;
-        public TestUSRIO808()
+        public TestUSRIO808EWRv2211()
         {
-            Instance = this;
             InitializeComponent();
         }
+        static HashSet<USRIO808Model> _devices = new HashSet<USRIO808Model>();
+        static USRIO808Model _config;
+        static string _configPath = System.IO.Path.GetFullPath("testusrio808config.json");
+        bool _isInitialize;
         private void TestScanner_Load(object sender, EventArgs e)
         {
             this.SplContent.SplitterDistance = 512;
@@ -44,13 +41,9 @@ namespace YouRenIoTNetIO.WinForm.Views
             if (!_isInitialize)
             {
                 _isInitialize = true;
-
+                _config = new USRIO808Model(this);
+                base.Initialize();
                 ReadDeviceAndSetFirstOne();
-
-                _guardianCts = new CancellationTokenSource();
-                _guardianService = new Thread(async () => await GuardianServiceAsync(_guardianCts.Token));
-                _guardianService.IsBackground = true;
-                _guardianService.Start();
             }
         }
 
@@ -77,7 +70,7 @@ namespace YouRenIoTNetIO.WinForm.Views
                 var key = $"{item.Item1}:{item.Item2}";
                 if (!_devices.Any(s => s.Key == key))
                 {
-                    _devices.Add(new USRIO808Model(item.Item1, item.Item2.ToPInt32()));
+                    _devices.Add(new USRIO808Model(this, item.Item1, item.Item2.ToPInt32()));
                 }
                 this.CbxNetConfigs.Items.Add(key);
             }
@@ -94,35 +87,6 @@ namespace YouRenIoTNetIO.WinForm.Views
             }
         }
         #region // 服务内容
-        async Task GuardianServiceAsync(CancellationToken stoppingToken)
-        {
-            while (!stoppingToken.IsCancellationRequested)
-            {
-                int seconds = 10;
-                try
-                {
-                    if (!this.ChkNetReadBackground.Checked)
-                    {
-                        await Task.Delay(seconds * 1000, stoppingToken);
-                        continue;
-                    }
-                    UpdateReadInfo();
-                    if (this.TxtNetSeconds.Text.TryToInt32(out int sec))
-                    {
-                        if (sec > 5 && sec < 99)
-                        {
-                            seconds = sec;
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Append(ex);
-                }
-                await Task.Delay(seconds * 1000, stoppingToken);
-            }
-        }
-
         private void UpdateReadInfo()
         {
             var item = _config;
@@ -172,71 +136,25 @@ namespace YouRenIoTNetIO.WinForm.Views
             this.PicNetDO8.Image = status[7] ? Properties.Resources.usr_io808_doopen : Properties.Resources.usr_io808_doclose;
         }
         #endregion
-        #region // 日志控件
-        public void AppendTextEx(string strText, Color clAppend)
+        #region // 基础内容
+        public override RichTextBox ThisTxtLogger => TxtLogger;
+        public override void GuardianTaskService()
         {
-            int nLen = this.TxtLogger.TextLength;
-
-            if (nLen != 0)
+            if (!this.ChkNetReadBackground.Checked)
             {
-                TxtLogger.AppendText(Environment.NewLine + System.DateTime.Now.ToString() + " " + strText);
+                GuardianInterval = 10 * 10;
+                return;
             }
-            else
+            UpdateReadInfo();
+            if (this.TxtNetSeconds.Text.TryToInt32(out int sec))
             {
-                TxtLogger.AppendText(System.DateTime.Now.ToString() + " " + strText);
+                if (sec > 5 && sec < 99)
+                {
+                    GuardianInterval = sec * 10;
+                }
             }
-
-            TxtLogger.Select(nLen, this.TxtLogger.TextLength - nLen);
-            this.TxtLogger.SelectionColor = clAppend;
         }
-        public TestUSRIO808 AppendError(string message)
-        {
-            this.Invoke((Action)(() =>
-            {
-                AppendTextEx(message, Color.Red);
-            }));
-            return this;
-        }
-        public TestUSRIO808 AppendSuccess(string message)
-        {
-            this.Invoke((Action)(() =>
-            {
-                AppendTextEx(message, Color.Green);
-            }));
-            return this;
-        }
-        public TestUSRIO808 AppendInfo(string message)
-        {
-            this.Invoke((Action)(() =>
-            {
-                AppendTextEx(message, Color.Blue);
-            }));
-            return this;
-        }
-        public TestUSRIO808 Append(IAlertMsg alert)
-        {
-            this.Invoke((Action)(() =>
-            {
-                AppendTextEx(alert.Message, alert.IsSuccess ? Color.Green : Color.Red);
-            }));
-            return this;
-        }
-        public TestUSRIO808 Append(Exception alert)
-        {
-            var sb = new StringBuilder().AppendLine(alert.Message).AppendLine(alert.StackTrace);
-            this.Invoke((Action)(() =>
-            {
-                AppendTextEx(sb.ToString(), Color.Red);
-            }));
-            return this;
-        }
-        private void TxtLogger_TextChanged(object sender, EventArgs e)
-        {
-            TxtLogger.Select(TxtLogger.TextLength, 0);
-            TxtLogger.ScrollToCaret();
-        }
-        #endregion
-
+        #endregion 基础内容
         private void BtnNetConfigConnect_Click(object sender, EventArgs e)
         {
             var iptext = (this.TxtNetConfigIp.Text ?? String.Empty).Trim();
@@ -255,7 +173,7 @@ namespace YouRenIoTNetIO.WinForm.Views
             var model = _devices.FirstOrDefault(s => s.Key == key);
             if (model == null)
             {
-                model = new USRIO808Model(iptext, porttext.ToPInt32());
+                model = new USRIO808Model(this, iptext, porttext.ToPInt32());
                 _devices.Add(model);
                 try
                 {
@@ -347,7 +265,7 @@ namespace YouRenIoTNetIO.WinForm.Views
 
         private void LblNetDO_Click(object sender, EventArgs e)
         {
-            var chk = sender as CheckBox;
+            var chk = sender as Label;
             switch (chk?.Name)
             {
                 case nameof(LblNetDO1): _config.UpdateDOStatus(0); break;
@@ -439,9 +357,18 @@ namespace YouRenIoTNetIO.WinForm.Views
             /// </summary>
             public virtual IUsrIOControlProxy Control { get; }
             /// <summary>
+            /// 日志组件
+            /// </summary>
+            public virtual TextLoggerComponent Logger { get; }
+            /// <summary>
             /// 构造
             /// </summary>
-            public USRIO808Model(string ipAddresss, int port)
+            /// <param name="logger"></param>
+            public USRIO808Model(TextLoggerComponent logger) : this(logger, "192.168.1.110", 28899) { }
+            /// <summary>
+            /// 构造
+            /// </summary>
+            public USRIO808Model(TextLoggerComponent logger, string ipAddresss, int port)
             {
                 Key = $"{ipAddresss}:{port}";
                 IPAddress = ipAddresss;
@@ -450,6 +377,7 @@ namespace YouRenIoTNetIO.WinForm.Views
                 DIStatus = new bool[8];
                 Control = NetIOControlSdk.CreateIOControl(IOControlType.USR_IO808_EWR);
                 Locker = new object();
+                Logger = logger;
             }
             /// <summary>
             /// 连接
@@ -478,7 +406,7 @@ namespace YouRenIoTNetIO.WinForm.Views
                     try
                     {
                         var res = Control.GetDOStatus(i);
-                        Instance.Append(res);
+                        Logger.Append(res);
                         if (res.IsSuccess)
                         {
                             DOStatus[i] = res.Data;
@@ -491,7 +419,7 @@ namespace YouRenIoTNetIO.WinForm.Views
                 }
                 else
                 {
-                    Instance.Append(new AlertMsg(false, "当前连接正在使用中……"));
+                    Logger.Append(new AlertMsg(false, "当前连接正在使用中……"));
                 }
             }
             public void UpdateDOStatus(int i, bool value)
@@ -501,7 +429,7 @@ namespace YouRenIoTNetIO.WinForm.Views
                     try
                     {
                         var res = Control.SetDOStatus(i, value);
-                        Instance.Append(res);
+                        Logger.Append(res);
                         if (res.IsSuccess)
                         {
                             DOStatus[i] = res.Data;
@@ -514,7 +442,7 @@ namespace YouRenIoTNetIO.WinForm.Views
                 }
                 else
                 {
-                    Instance.Append(new AlertMsg(false, "当前连接正在使用中……"));
+                    Logger.Append(new AlertMsg(false, "当前连接正在使用中……"));
                 }
             }
 
@@ -526,7 +454,7 @@ namespace YouRenIoTNetIO.WinForm.Views
                     {
                         Control.SetResetDOStatus(i, value);
                         var res = Control.GetDOStatus(i);
-                        Instance.Append(res);
+                        Logger.Append(res);
                         if (res.IsSuccess)
                         {
                             DOStatus[i] = res.Data;
@@ -539,7 +467,7 @@ namespace YouRenIoTNetIO.WinForm.Views
                 }
                 else
                 {
-                    Instance.Append(new AlertMsg(false, "当前连接正在使用中……"));
+                    Logger.Append(new AlertMsg(false, "当前连接正在使用中……"));
                 }
             }
 
@@ -550,7 +478,7 @@ namespace YouRenIoTNetIO.WinForm.Views
                     try
                     {
                         var res = Control.GetDOStatusHolding();
-                        Instance.Append(res);
+                        Logger.Append(res);
                         if (res.IsSuccess)
                         {
                             DOStatusHolding = res.Data == 1 ? true : (res.Data == 3 ? false : null);
@@ -563,7 +491,7 @@ namespace YouRenIoTNetIO.WinForm.Views
                 }
                 else
                 {
-                    Instance.Append(new AlertMsg(false, "当前连接正在使用中……"));
+                    Logger.Append(new AlertMsg(false, "当前连接正在使用中……"));
                 }
             }
 
@@ -574,7 +502,7 @@ namespace YouRenIoTNetIO.WinForm.Views
                     try
                     {
                         var res = Control.SetDOStatusHolding(value);
-                        Instance.Append(res);
+                        Logger.Append(res);
                         if (res.IsSuccess)
                         {
                             DOStatusHolding = res.Data;
@@ -587,7 +515,7 @@ namespace YouRenIoTNetIO.WinForm.Views
                 }
                 else
                 {
-                    Instance.Append(new AlertMsg(false, "当前连接正在使用中……"));
+                    Logger.Append(new AlertMsg(false, "当前连接正在使用中……"));
                 }
             }
 
@@ -598,7 +526,7 @@ namespace YouRenIoTNetIO.WinForm.Views
                     try
                     {
                         var res = Control.GetDIStatus(i);
-                        Instance.Append(res);
+                        Logger.Append(res);
                         if (res.IsSuccess)
                         {
                             DIStatus[i] = res.Data;
@@ -611,15 +539,10 @@ namespace YouRenIoTNetIO.WinForm.Views
                 }
                 else
                 {
-                    Instance.Append(new AlertMsg(false, "当前连接正在使用中……"));
+                    Logger.Append(new AlertMsg(false, "当前连接正在使用中……"));
                 }
             }
         }
         #endregion
-
-        private void TsrmLoggerClear_Click(object sender, EventArgs e)
-        {
-            this.TxtLogger.Clear();
-        }
     }
 }

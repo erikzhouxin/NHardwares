@@ -34,10 +34,7 @@ namespace TestHardwareDemo.WinForm
                         if (item.IsSubclassOf(typeof(UserControl)))
                         {
                             var attr = item.GetCustomAttribute<EDisplayAttribute>() ?? new EDisplayAttribute(item.Name);
-                            var menu = new ToolStripMenuItem()
-                            {
-                                Text = attr.Display,
-                            };
+                            var menu = new ToolStripMenuItem(attr.Display);
                             menu.Click += (s, e) =>
                             {
                                 var method = typeof(CompatWinFormComponent).GetMethod(nameof(CompatWinFormComponent.TrySelectTabPage), BindingFlags.Public | BindingFlags.Static | BindingFlags.IgnoreCase).MakeGenericMethod(item);
