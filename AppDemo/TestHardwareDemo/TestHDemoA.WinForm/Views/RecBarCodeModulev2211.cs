@@ -19,6 +19,7 @@ using System.Windows.Forms;
 using System.Data.NSerialPort;
 using System.Text.RegularExpressions;
 using System.Data.RecBarCodeModule;
+using TestHardwareDemo.WinForm.Components;
 
 namespace TestHardwareDemo.WinForm.Views
 {
@@ -26,13 +27,13 @@ namespace TestHardwareDemo.WinForm.Views
     /// 二维码识别模块
     /// </summary>
     [EDisplay("二维码识别模块示例1")]
-    public partial class RecBarCodeModulev2211 : UserControl
+    public partial class RecBarCodeModulev2211 : TextLoggerComponent
     {
         /// <summary>
         /// 终端配置
         /// </summary>
-        static Dictionary<string, SerialPortConfigModel> _devices = new Dictionary<string, SerialPortConfigModel>();
-        static IRecBarCodeProxy _config = new SerialPortConfigModel()
+        Dictionary<string, SerialPortConfigModel> _devices = new Dictionary<string, SerialPortConfigModel>();
+        IRecBarCodeProxy _config = new SerialPortConfigModel()
         {
             PortName = "COM1",
             PortRate = 9600,
@@ -43,13 +44,9 @@ namespace TestHardwareDemo.WinForm.Views
             ThresholdLen = 30,
         }.CreateRecBarCode();
         static string _configPath = System.IO.Path.GetFullPath("testreccoder1config.json");
-        internal static RecBarCodeModulev2211 Instance { get; set; }
-        Thread _guardianService;
-        CancellationTokenSource _guardianCts;
         bool _isInitialize;
         public RecBarCodeModulev2211()
         {
-            Instance = this;
             InitializeComponent();
         }
         private void TestScanner_Load(object sender, EventArgs e)
@@ -62,10 +59,7 @@ namespace TestHardwareDemo.WinForm.Views
 
                 ReadDeviceAndSetFirstOne();
 
-                _guardianCts = new CancellationTokenSource();
-                _guardianService = new Thread(async () => await GuardianServiceAsync(_guardianCts.Token));
-                _guardianService.IsBackground = true;
-                _guardianService.Start();
+                base.Initialize();
             }
         }
 
@@ -115,108 +109,30 @@ namespace TestHardwareDemo.WinForm.Views
                 }
             }
         }
-        #region // 服务内容
-        async Task GuardianServiceAsync(CancellationToken stoppingToken)
+        #region // 基础内容
+        public override void GuardianTaskService()
         {
-            while (!stoppingToken.IsCancellationRequested)
+            if (!this.ChkNetReadBackground.Checked)
             {
-                int seconds = 10;
-                try
-                {
-                    if (!this.ChkNetReadBackground.Checked)
-                    {
-                        await Task.Delay(seconds * 1000, stoppingToken);
-                        continue;
-                    }
-                    if (!_config.IsConnected)
-                    {
-                        if (!_config.Connect(out Exception ex))
-                        {
-                            Append(ex);
-                        }
-                    }
-                    if (this.TxtNetSeconds.Text.TryToInt32(out int sec))
-                    {
-                        if (sec > 5 && sec < 99)
-                        {
-                            seconds = sec;
-                        }
-                    }
-                }
-                catch (Exception ex)
+                GuardianInterval = 10;
+                return;
+            }
+            if (!_config.IsConnected)
+            {
+                if (!_config.Connect(out Exception ex))
                 {
                     Append(ex);
                 }
-                await Task.Delay(seconds * 1000, stoppingToken);
+            }
+            if (this.TxtNetSeconds.Text.TryToInt32(out int sec))
+            {
+                if (sec > 5 && sec < 99)
+                {
+                    GuardianInterval = sec;
+                }
             }
         }
-
-        #endregion
-        #region // 日志控件
-        public void AppendTextEx(string strText, Color clAppend)
-        {
-            int nLen = this.TxtLogger.TextLength;
-
-            if (nLen != 0)
-            {
-                TxtLogger.AppendText(Environment.NewLine + System.DateTime.Now.ToString() + " " + strText);
-            }
-            else
-            {
-                TxtLogger.AppendText(System.DateTime.Now.ToString() + " " + strText);
-            }
-
-            TxtLogger.Select(nLen, this.TxtLogger.TextLength - nLen);
-            this.TxtLogger.SelectionColor = clAppend;
-        }
-        public RecBarCodeModulev2211 AppendError(string message)
-        {
-            this.Invoke((Action)(() =>
-            {
-                AppendTextEx(message, Color.Red);
-            }));
-            return this;
-        }
-        public RecBarCodeModulev2211 AppendSuccess(string message)
-        {
-            this.Invoke((Action)(() =>
-            {
-                AppendTextEx(message, Color.Green);
-            }));
-            return this;
-        }
-        public RecBarCodeModulev2211 AppendInfo(string message)
-        {
-            this.Invoke((Action)(() =>
-            {
-                AppendTextEx(message, Color.Blue);
-            }));
-            return this;
-        }
-        public RecBarCodeModulev2211 Append(IAlertMsg alert)
-        {
-            this.Invoke((Action)(() =>
-            {
-                AppendTextEx(alert.Message, alert.IsSuccess ? Color.Green : Color.Red);
-            }));
-            return this;
-        }
-        public RecBarCodeModulev2211 Append(Exception alert)
-        {
-            var sb = new StringBuilder().AppendLine(alert.Message).AppendLine(alert.StackTrace);
-            this.Invoke((Action)(() =>
-            {
-                AppendTextEx(sb.ToString(), Color.Red);
-            }));
-            return this;
-        }
-        private void TxtLogger_TextChanged(object sender, EventArgs e)
-        {
-            TxtLogger.Select(TxtLogger.TextLength, 0);
-            TxtLogger.ScrollToCaret();
-        }
-        #endregion
-
+        #endregion 基础内容
         private void BtnNetConfigConnect_Click(object sender, EventArgs e)
         {
             var iptext = (this.TxtNetConfigIp.Text ?? String.Empty).Trim();
@@ -291,18 +207,13 @@ namespace TestHardwareDemo.WinForm.Views
             ReadDeviceAndSetFirstOne();
         }
 
-        private static void TrySaveConfig()
+        private void TrySaveConfig()
         {
             try
             {
                 System.IO.File.WriteAllText(_configPath, _devices.Select(s => new Tuble8String() { Item1 = s.Value.PortName, Item2 = s.Value.PortRate.ToString() }).GetJsonFormatString());
             }
             catch { }
-        }
-
-        private void TsrmLoggerClear_Click(object sender, EventArgs e)
-        {
-            this.TxtLogger.Clear();
         }
     }
 }

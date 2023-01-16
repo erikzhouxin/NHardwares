@@ -894,17 +894,16 @@ namespace System.Data.VzClientSDK
         */
         int VzLPRClient_SetFlip(int handle, int flip);
 
-        /**
-        *  @brief 修改网络参数
-        *  @param  [IN] SL        设备序列号低位字节
-        *  @param  [IN] SH		  设备序列号高位字节	
-        *  @param [IN] strNewIP   新IP     格式如"192.168.3.109"
-        *  @param [IN] strGateway 网关     格式如"192.168.3.1"
-        *  @param [IN] strNetmask 子网掩码 格式如"255.255.255.0"
-        *  @note 可以用来实现跨网段修改IP的功能
-        *  @ingroup group_global
-        */
-        int VzLPRClient_UpdateNetworkParam(uint SL, uint SH, string strNewIP, string strGateway, string strNetmask);
+        /// <summary>
+        /// 修改网络参数 原方法有误
+        /// </summary>
+        /// <param name="sh">设备序列号低位字节</param>
+        /// <param name="sl">设备序列号高位字节</param>
+        /// <param name="strNewIP">新IP     格式如"192.168.3.109"</param>
+        /// <param name="strGateway">网关     格式如"192.168.3.1"</param>
+        /// <param name="strNetmask">子网掩码 格式如"255.255.255.0"</param>
+        /// <returns></returns>
+        int VzLPRClient_UpdateNetworkParam(uint sh, uint sl, string strNewIP, string strGateway, string strNetmask);
 
         /**
         *  @brief 获取设备序列号；
@@ -2256,7 +2255,7 @@ namespace System.Data.VzClientSDK
         *  @ingroup group_global
         */
         [DllImport(VzClientSdk.DllFileName)]
-        public static extern int VzLPRClient_UpdateNetworkParam(uint SL, uint SH, string strNewIP, string strGateway, string strNetmask);
+        public static extern int VzLPRClient_UpdateNetworkParam(uint sh, uint sl, string strNewIP, string strGateway, string strNetmask);
 
         /**
         *  @brief 获取设备序列号；
@@ -2779,7 +2778,7 @@ namespace System.Data.VzClientSDK
         int IVzClientSdkProxy.VzLPRClient_StopRecordAudio(int handle) => VzLPRClient_StopRecordAudio(handle);
         int IVzClientSdkProxy.VzLPRClient_StopSaveRealData(int handle) => VzLPRClient_StopSaveRealData(handle);
         int IVzClientSdkProxy.VzLPRClient_StopTalk(int handle) => VzLPRClient_StopTalk(handle);
-        int IVzClientSdkProxy.VzLPRClient_UpdateNetworkParam(uint SL, uint SH, string strNewIP, string strGateway, string strNetmask) => VzLPRClient_UpdateNetworkParam(SL, SH, strNewIP, strGateway, strNetmask);
+        int IVzClientSdkProxy.VzLPRClient_UpdateNetworkParam(uint sh, uint sl, string strNewIP, string strGateway, string strNetmask) => VzLPRClient_UpdateNetworkParam(sh, sl, strNewIP, strGateway, strNetmask);
         int IVzClientSdkProxy.VzLPRClient_WhiteListClearCustomersAndVehicles(int handle) => VzLPRClient_WhiteListClearCustomersAndVehicles(handle);
         int IVzClientSdkProxy.VzLPRClient_WhiteListDeleteVehicle(int handle, string strPlateID) => VzLPRClient_WhiteListDeleteVehicle(handle, strPlateID);
         int IVzClientSdkProxy.VzLPRClient_WhiteListGetRowCount(int handle, ref int count, ref VZ_LPR_WLIST_SEARCH_WHERE pSearchWhere) => VzLPRClient_WhiteListGetRowCount(handle, ref count, ref pSearchWhere);
@@ -3216,7 +3215,7 @@ namespace System.Data.VzClientSDK
         int IVzClientSdkProxy.VzLPRClient_StopRecordAudio(int handle) => _VzLPRClient_StopRecordAudio.Invoke(handle);
         int IVzClientSdkProxy.VzLPRClient_StopSaveRealData(int handle) => _VzLPRClient_StopSaveRealData.Invoke(handle);
         int IVzClientSdkProxy.VzLPRClient_StopTalk(int handle) => _VzLPRClient_StopTalk.Invoke(handle);
-        int IVzClientSdkProxy.VzLPRClient_UpdateNetworkParam(uint SL, uint SH, string strNewIP, string strGateway, string strNetmask) => _VzLPRClient_UpdateNetworkParam.Invoke(SL, SH, strNewIP, strGateway, strNetmask);
+        int IVzClientSdkProxy.VzLPRClient_UpdateNetworkParam(uint sh, uint sl, string strNewIP, string strGateway, string strNetmask) => _VzLPRClient_UpdateNetworkParam.Invoke(sh, sl, strNewIP, strGateway, strNetmask);
         int IVzClientSdkProxy.VzLPRClient_WhiteListClearCustomersAndVehicles(int handle) => _VzLPRClient_WhiteListClearCustomersAndVehicles.Invoke(handle);
         int IVzClientSdkProxy.VzLPRClient_WhiteListDeleteVehicle(int handle, string strPlateID) => _VzLPRClient_WhiteListDeleteVehicle.Invoke(handle, strPlateID);
         int IVzClientSdkProxy.VzLPRClient_WhiteListGetRowCount(int handle, ref int count, ref VZ_LPR_WLIST_SEARCH_WHERE pSearchWhere) => _VzLPRClient_WhiteListGetRowCount.Invoke(handle, ref count, ref pSearchWhere);
