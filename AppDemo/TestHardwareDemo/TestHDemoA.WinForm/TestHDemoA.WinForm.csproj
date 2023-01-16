@@ -17,7 +17,7 @@
 			<AutoGen>True</AutoGen>
 		</Compile>
 		<Compile Update="Views\HikHCNetPreview1v2211.cs" />
-		<Compile Update="Views\ShenBanRFIDv2211.cs">
+		<Compile Update="Views\RecBarCodeModulev2211.cs">
 		  <SubType>UserControl</SubType>
 		</Compile>
 		<EmbeddedResource Update="Properties\Resources.resx">
@@ -29,6 +29,7 @@
 	<ItemGroup>
 		<ProjectReference Include="..\..\..\NHInterfaces\HardwareInterfaces.csproj" />
 		<ProjectReference Include="..\..\..\HikHCNetSDK\HikHCNetSDK.csproj" />
+		<ProjectReference Include="..\..\..\RecBarCodeModule\RecBarCodeModule.csproj" />
 		<ProjectReference Include="..\..\..\ShenBanReader\ShenBanReader.csproj" />
 		<ProjectReference Include="..\..\..\VzClientSDK\VzClientSDK.csproj" />
 		<ProjectReference Include="..\..\..\YouRenIoTNetIO\YouRenIoTNetIO.csproj" />

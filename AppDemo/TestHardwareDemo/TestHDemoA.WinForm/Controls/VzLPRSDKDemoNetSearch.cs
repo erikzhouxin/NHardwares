@@ -47,7 +47,7 @@ namespace TestHardwareDemo.WinForm.Controls
         /// </summary>
         public void SearchCallback(string info)
         {
-            TvwSearchRes.Nodes.Add(info);
+            this.Invoke(() => TvwSearchRes.Nodes.Add(info));
         }
         #region // 内部类
         internal class NetConfigModel
@@ -112,12 +112,17 @@ namespace TestHardwareDemo.WinForm.Controls
 
         private void TvwSearchRes_DoubleClick(object sender, EventArgs e)
         {
-            if (this.TvwSearchRes.SelectedNode == null)
+            var selectNode = this.TvwSearchRes.SelectedNode;
+            if (selectNode == null)
             {
                 LoggerCallback?.Invoke(new AlertMsg(false, $"请选择需要连接的IP地址......"));
                 return;
             }
-            WriteCallback?.Invoke(this.TvwSearchRes.SelectedNode.Text);
+            var spliter = selectNode.Text.Split("-");
+            this.TxtNetAddress.Text = spliter[0];
+            this.TxtNetGateway.Text = spliter[1];
+            this.TxtNetMask.Text = spliter[2];
+            WriteCallback?.Invoke(selectNode.Text);
         }
     }
 }

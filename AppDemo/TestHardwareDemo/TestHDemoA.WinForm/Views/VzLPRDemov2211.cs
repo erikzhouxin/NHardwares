@@ -6,7 +6,9 @@ using System.Data.Cobber;
 using System.Data.Extter;
 using System.Data.VzClientSDK;
 using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -183,9 +185,38 @@ namespace TestHardwareDemo.WinForm.Views
             // VzClientSDK.VzLPRClient_SetGPIORecvCallBack(_config.Handler, OnGpioResult, IntPtr.Zero);
         }
 
-        private int OnPlateResult(int handle, IntPtr pUserData, IntPtr pResult, uint uNumPlates, VZ_LPRC_RESULT_TYPE eResultType, IntPtr pImgFull, IntPtr pImgPlateClip)
+        public int OnPlateResult(int handle, IntPtr pUserData, IntPtr pResult, uint uNumPlates, VZ_LPRC_RESULT_TYPE eResultType, IntPtr pImgFull, IntPtr pImgPlateClip)
         {
-            throw new NotImplementedException();
+            AppendInfo($"{handle}-{pUserData}-{pResult}-{uNumPlates}-{eResultType}-{pImgFull}-{pImgPlateClip}");
+            string carno = string.Empty;
+            string fullPath = string.Empty;
+            string clipPath = string.Empty;
+            try
+            {
+                TH_PlateResult result = (TH_PlateResult)Marshal.PtrToStructure(pResult, typeof(TH_PlateResult));
+                carno = new string(result.license).Trim('\0');
+                string strFilePath = Path.GetFullPath("temp");
+                if (!Directory.Exists(strFilePath))
+                {
+                    Directory.CreateDirectory(strFilePath);
+                }
+                var fileName = $"{DateTime.Now:yyyyMMddHHmmssffff}";
+                fullPath = Path.Combine(strFilePath, $"{fileName}-1.jpg");
+                VzClientSDK.VzLPRClient_ImageSaveToJpeg(pImgFull, fullPath, 100);
+                clipPath = Path.Combine(strFilePath, $"{fileName}-2.jpg");
+                VzClientSDK.VzLPRClient_ImageSaveToJpeg(pImgPlateClip, clipPath, 100);
+            }
+            catch (Exception ex)
+            {
+                Append(ex);
+            }
+            AppendSuccess(new
+            {
+                车牌 = carno,
+                全景 = Path.GetFileName(fullPath),
+                半景 = Path.GetFileName(clipPath),
+            }.GetJsonFormatString());
+            return 1;
         }
 
         private void ChkNetPDNS_Click(object sender, EventArgs e)
@@ -302,7 +333,7 @@ namespace TestHardwareDemo.WinForm.Views
                 };
                 model.ChangeCallback = (o, n) =>
                 {
-                    int ret = VzClientSDK.VzLPRClient_UpdateNetworkParam(o.SerialLower, o.SerialHigher, n.Address, n.Gateway, n.Mask);
+                    int ret = VzClientSDK.VzLPRClient_UpdateNetworkParam(o.SerialHigher, o.SerialLower, n.Address, n.Gateway, n.Mask);
                     if (ret == 2)
                     {
                         AppendError("设备IP跟网关不在同一网段，请重新输入!");
@@ -313,7 +344,15 @@ namespace TestHardwareDemo.WinForm.Views
                         AppendError("修改网络参数失败，请重新输入!");
                         return;
                     }
-                    AppendInfo("修改网络参数成功");
+                    AppendSuccess("修改网络参数成功");
+                };
+                model.WriteCallback = (s) =>
+                {
+                    var spliter = s.Split("-");
+                    this.Invoke(() =>
+                    {
+                        this.TxtNetIp.Text = spliter[0];
+                    });
                 };
                 model.LoggerCallback = (a) => Append(a);
             }
