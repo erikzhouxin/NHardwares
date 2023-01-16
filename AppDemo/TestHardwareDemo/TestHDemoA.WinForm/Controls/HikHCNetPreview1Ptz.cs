@@ -6,13 +6,18 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 
-namespace TestHardwareDemo.WinForm.Views
+namespace TestHardwareDemo.WinForm.Controls
 {
-    public partial class HomeControl : UserControl
+    public partial class HikHCNetPreview1Ptz : UserControl
     {
-        public HomeControl()
+        public HikHCNetPreview1Ptz()
         {
             InitializeComponent();
+        }
+
+        private void LblPtzGetRange_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -20,24 +20,22 @@ namespace TestHardwareDemo.WinForm.Views
     /// <summary>
     /// 测试有人IO控制器
     /// </summary>
-    [EDisplay("测试有人USR-IO808-EWR")]
-    public partial class TestUSRIO808EWRv2211 : TextLoggerComponent
+    [EDisplay("测试有人USR-IO808-EWR-2301")]
+    public partial class USRIO808EWRv2301 : TextLoggerComponent
     {
+        static string _configPath = System.IO.Path.GetFullPath("testusrio808config.json");
+        HashSet<USRIO808Model> _devices = new HashSet<USRIO808Model>();
+        USRIO808Model _config;
+        bool _isInitialize;
         /// <summary>
         /// 构造
         /// </summary>
-        public TestUSRIO808EWRv2211()
+        public USRIO808EWRv2301()
         {
             InitializeComponent();
         }
-        static HashSet<USRIO808Model> _devices = new HashSet<USRIO808Model>();
-        static USRIO808Model _config;
-        static string _configPath = System.IO.Path.GetFullPath("testusrio808config.json");
-        bool _isInitialize;
-        private void TestScanner_Load(object sender, EventArgs e)
+        private void USRIO808EWRv2301_Load(object sender, EventArgs e)
         {
-            this.SplContent.SplitterDistance = 512;
-            this.SplContent.Update();
             if (!_isInitialize)
             {
                 _isInitialize = true;
@@ -45,6 +43,7 @@ namespace TestHardwareDemo.WinForm.Views
                 base.Initialize();
                 ReadDeviceAndSetFirstOne();
             }
+            GuardianServiceStart();
         }
 
         private void ReadDeviceAndSetFirstOne()
@@ -210,6 +209,13 @@ namespace TestHardwareDemo.WinForm.Views
         }
 
 
+        private void BtnNetDisconnect_Click(object sender, EventArgs e)
+        {
+            var item = _config;
+            var taskres = item.Disconnect();
+            Append(taskres);
+        }
+
         private void PicNetDO_Click(object sender, EventArgs e)
         {
             var pic = sender as PictureBox;
@@ -297,6 +303,7 @@ namespace TestHardwareDemo.WinForm.Views
                 default: return null;
             }
         }
+
         private CheckState GetCheckState(bool? state)
         {
             if (state.HasValue)
@@ -305,6 +312,7 @@ namespace TestHardwareDemo.WinForm.Views
             }
             return CheckState.Indeterminate;
         }
+
         private void BtnNetConfigRemove_Click(object sender, EventArgs e)
         {
             var key = $"{this.TxtNetConfigIp.Text?.Trim()}:{this.TxtNetConfigPort.Text?.Trim()}";
@@ -391,6 +399,26 @@ namespace TestHardwareDemo.WinForm.Views
                     try
                     {
                         return Control.Connect(ipAddress, Port);
+                    }
+                    finally
+                    {
+                        Monitor.Exit(Locker);
+                    }
+                }
+                return new AlertMsg(false, "当前连接正在使用中……");
+            }
+            /// <summary>
+            /// 连接
+            /// </summary>
+            /// <returns></returns>
+            public IAlertMsg Disconnect()
+            {
+                System.Net.IPAddress.TryParse(IPAddress, out var ipAddress);
+                if (Monitor.TryEnter(Locker, 1000))
+                {
+                    try
+                    {
+                        return Control.Disconnect();
                     }
                     finally
                     {
@@ -544,5 +572,9 @@ namespace TestHardwareDemo.WinForm.Views
             }
         }
         #endregion
+        protected override void OnHandleDestroyed(EventArgs e)
+        {
+            base.OnHandleDestroyed(e);
+        }
     }
 }

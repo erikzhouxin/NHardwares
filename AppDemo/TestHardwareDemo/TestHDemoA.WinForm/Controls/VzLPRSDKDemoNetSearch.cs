@@ -8,7 +8,7 @@ using System.Net;
 using System.Text;
 using System.Windows.Forms;
 
-namespace TestHardwareDemo.WinForm.Views.SubCtrl
+namespace TestHardwareDemo.WinForm.Controls
 {
     /// <summary>
     /// 车牌识别网络查询

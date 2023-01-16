@@ -1,6 +1,6 @@
 ﻿namespace TestHardwareDemo.WinForm.Views
 {
-    partial class VzLPRSDKDemov2211
+    partial class VzLPRDemov2211
     {
         /// <summary> 
         /// 必需的设计器变量。

@@ -65,13 +65,20 @@ namespace TestHardwareDemo.WinForm
             var thisIndex = this.TacMainContent.SelectedIndex;
             if (thisIndex <= 0) { thisIndex = 0; }
             this.TacMainContent.TabPages.Remove(thisTab);
+            thisTab.Dispose();
             if (thisIndex >= TacMainContent.TabPages.Count) { thisIndex = TacMainContent.TabPages.Count - 1; }
             this.TacMainContent.SelectedIndex = thisIndex;
         }
 
         private void TsmiCloseAll_Click(object sender, EventArgs e)
         {
-
+            this.TacMainContent.SelectedIndex = 0;
+            foreach (TabPage item in TacMainContent.TabPages)
+            {
+                if (item.Text == "首页") { continue; }
+                this.TacMainContent.TabPages.Remove(item);
+                item.Dispose();
+            }
         }
 
         private void TsmiCloseOther_Click(object sender, EventArgs e)

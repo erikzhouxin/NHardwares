@@ -11,25 +11,25 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TestHardwareDemo.WinForm.Components;
-using TestHardwareDemo.WinForm.Views.SubCtrl;
+using TestHardwareDemo.WinForm.Controls;
 
 namespace TestHardwareDemo.WinForm.Views
 {
     /// <summary>
     /// 西沃车牌识别示例
     /// </summary>
-    [EDisplay("西沃车牌识别示例")]
-    public partial class VzLPRSDKDemov2211 : TextLoggerComponent
+    [EDisplay("测试西沃车牌识别示例")]
+    public partial class VzLPRDemov2211 : TextLoggerComponent
     {
         private bool _isInitialed;
         private IVzClientSdkProxy VzClientSDK = VzClientSdk.Create();
         private List<ContentModel> _devices = new();
-        private string _configPath = System.IO.Path.GetFullPath($"{nameof(VzLPRSDKDemov2211)}.json");
+        private string _configPath = System.IO.Path.GetFullPath($"{nameof(VzLPRDemov2211)}.json");
         private ContentModel _config;
         /// <summary>
         /// 构造
         /// </summary>
-        public VzLPRSDKDemov2211()
+        public VzLPRDemov2211()
         {
             InitializeComponent();
         }
@@ -39,14 +39,31 @@ namespace TestHardwareDemo.WinForm.Views
             if (!_isInitialed)
             {
                 _isInitialed = true;
-                base.Initialize();
+
                 VzClientSDK.VzLPRClient_Setup();
+
+                base.Initialize();
+
                 ReadDeviceAndSetFirstOne();
             }
         }
         protected override void OnHandleDestroyed(EventArgs e)
         {
-
+            try
+            {
+                foreach (var item in _devices) // 释放所有已连接设备
+                {
+                    if (item.Handler > 0)
+                    {
+                        VzClientSDK.VzLPRClient_StopRealPlay(item.Handler);
+                        VzClientSDK.VzLPRClient_Close(item.Handler);
+                    }
+                }
+                //停止搜索设备
+                VzClientSDK.VZLPRClient_StopFindDevice();
+                VzClientSDK.VzLPRClient_Cleanup();
+            }
+            catch { }
             base.OnHandleDestroyed(e);
         }
         private void BtnNetLogin_Click(object sender, EventArgs e)
@@ -208,13 +225,12 @@ namespace TestHardwareDemo.WinForm.Views
         }
         private void PicScreenView_Close()
         {
-            Action Pic1CloseDelegate = delegate ()
+            PicScreenView.Invoke(() =>
             {
                 PicScreenView.Image = null;
                 PicScreenView.Refresh();
                 PicScreenView.Tag = 0;
-            };
-            PicScreenView.Invoke(Pic1CloseDelegate);
+            });
         }
         #region // 内部类
         internal class ConfigModel
@@ -256,13 +272,6 @@ namespace TestHardwareDemo.WinForm.Views
             {
                 Config = config;
             }
-        }
-        internal interface IVzLPRSDKDemoSubCtrl
-        {
-            /// <summary>
-            /// 清理返回False则不能被清理
-            /// </summary>
-            IAlertMsg Clear();
         }
         #endregion
         #region // 基础内容
@@ -308,23 +317,7 @@ namespace TestHardwareDemo.WinForm.Views
                 };
                 model.LoggerCallback = (a) => Append(a);
             }
-            TryAddConfigContent(model);
-        }
-
-        private void TryAddConfigContent<T>(T model) where T : UserControl
-        {
-            foreach (var item in this.PnlTabCnt3.Controls)
-            {
-                if (item is IVzLPRSDKDemoSubCtrl subCtrl)
-                {
-                    var clearInfo = subCtrl.Clear();
-                    Append(clearInfo);
-                    if (!clearInfo.IsSuccess) { return; }
-                }
-            }
-            this.PnlTabCnt3.Controls.Clear();
-            model.Dock = DockStyle.Fill;
-            this.PnlTabCnt3.Controls.Add(model);
+            TryAddConfigContent(this.PnlTabCnt3, model);
         }
 
         /// <summary>

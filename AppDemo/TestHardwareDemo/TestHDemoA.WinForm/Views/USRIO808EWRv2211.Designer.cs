@@ -1,6 +1,6 @@
 ﻿namespace TestHardwareDemo.WinForm.Views
 {
-    partial class TestUSRIO808EWRv2211
+    partial class USRIO808EWRv2211
     {
         /// <summary> 
         /// 必需的设计器变量。
@@ -147,7 +147,7 @@
             this.LblNetDI8.Name = "LblNetDI8";
             this.LblNetDI8.Size = new System.Drawing.Size(33, 17);
             this.LblNetDI8.TabIndex = 15;
-            this.LblNetDI8.Text = "DI-1";
+            this.LblNetDI8.Text = "DI-8";
             // 
             // PicNetDI8
             // 
@@ -169,7 +169,7 @@
             this.LblNetDI7.Name = "LblNetDI7";
             this.LblNetDI7.Size = new System.Drawing.Size(33, 17);
             this.LblNetDI7.TabIndex = 13;
-            this.LblNetDI7.Text = "DI-1";
+            this.LblNetDI7.Text = "DI-7";
             // 
             // PicNetDI7
             // 
@@ -191,7 +191,7 @@
             this.LblNetDI6.Name = "LblNetDI6";
             this.LblNetDI6.Size = new System.Drawing.Size(33, 17);
             this.LblNetDI6.TabIndex = 11;
-            this.LblNetDI6.Text = "DI-1";
+            this.LblNetDI6.Text = "DI-6";
             // 
             // PicNetDI6
             // 
@@ -213,7 +213,7 @@
             this.LblNetDI5.Name = "LblNetDI5";
             this.LblNetDI5.Size = new System.Drawing.Size(33, 17);
             this.LblNetDI5.TabIndex = 9;
-            this.LblNetDI5.Text = "DI-1";
+            this.LblNetDI5.Text = "DI-5";
             // 
             // TsrmPicNetDO8
             // 
@@ -254,7 +254,7 @@
             this.LblNetDI3.Name = "LblNetDI3";
             this.LblNetDI3.Size = new System.Drawing.Size(33, 17);
             this.LblNetDI3.TabIndex = 5;
-            this.LblNetDI3.Text = "DI-1";
+            this.LblNetDI3.Text = "DI-3";
             // 
             // PicNetDI3
             // 
@@ -304,7 +304,7 @@
             this.LblNetDI4.Name = "LblNetDI4";
             this.LblNetDI4.Size = new System.Drawing.Size(33, 17);
             this.LblNetDI4.TabIndex = 7;
-            this.LblNetDI4.Text = "DI-1";
+            this.LblNetDI4.Text = "DI-4";
             // 
             // TsrmPicNetDO2
             // 
@@ -549,7 +549,7 @@
             this.LblNetDI2.Name = "LblNetDI2";
             this.LblNetDI2.Size = new System.Drawing.Size(33, 17);
             this.LblNetDI2.TabIndex = 3;
-            this.LblNetDI2.Text = "DI-1";
+            this.LblNetDI2.Text = "DI-2";
             // 
             // PnlContent
             // 
@@ -884,14 +884,14 @@
             this.TsrmPicNetDO1.Text = "设置重置DO-1";
             this.TsrmPicNetDO1.Click += new System.EventHandler(this.PicNetDo_DoubleClick);
             // 
-            // TestUSRIO808EWRv2211
+            // USRIO808EWRv2211
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.PnlContent);
-            this.Name = "TestUSRIO808EWRv2211";
+            this.Name = "USRIO808EWRv2211";
             this.Size = new System.Drawing.Size(960, 770);
-            this.Load += new System.EventHandler(this.TestScanner_Load);
+            this.Load += new System.EventHandler(this.USRIO808EWRv2211_Load);
             ((System.ComponentModel.ISupportInitialize)(this.PicNetDI8)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PicNetDI7)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PicNetDI6)).EndInit();

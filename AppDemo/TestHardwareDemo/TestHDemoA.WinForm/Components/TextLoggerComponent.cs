@@ -38,13 +38,17 @@ namespace TestHardwareDemo.WinForm.Components
         public virtual int GuardianInterval { get; set; }
         async Task GuardianServiceAsync(CancellationToken stoppingToken)
         {
-            while (!stoppingToken.IsCancellationRequested)
+            try
             {
-                try { GuardianTaskService(); }
-                catch(NotImplementedException ex) { AppendError($"【{nameof(GuardianTaskService)}】方法未在子类中重写，方法未实现"); }
-                catch (Exception ex) { Append(ex); }
-                await Task.Delay(GuardianInterval * 100, stoppingToken);
+                while (!stoppingToken.IsCancellationRequested)
+                {
+                    try { GuardianTaskService(); }
+                    catch (NotImplementedException ex) { AppendError($"【{nameof(GuardianTaskService)}】方法未在子类中重写，方法未实现"); }
+                    catch (Exception ex) { Append(ex); }
+                    await Task.Delay(GuardianInterval * 100, stoppingToken);
+                }
             }
+            catch { }
         }
         /// <summary>
         /// 值守任务服务内容
@@ -145,6 +149,27 @@ namespace TestHardwareDemo.WinForm.Components
         {
             TxtLoggerInitialize();
             GuardianServiceInitialize();
+        }
+        protected override void OnHandleDestroyed(EventArgs e)
+        {
+            this._guardianService = null;
+            this._guardianCts.Cancel();
+            base.OnHandleDestroyed(e);
+        }
+        public virtual void TryAddConfigContent<T>(Panel parent, T model) where T : UserControl
+        {
+            foreach (var item in parent.Controls)
+            {
+                if (item is IConfigClearSubControl subCtrl)
+                {
+                    var clearInfo = subCtrl.Clear();
+                    Append(clearInfo);
+                    if (!clearInfo.IsSuccess) { return; }
+                }
+            }
+            parent.Controls.Clear();
+            model.Dock = DockStyle.Fill;
+            parent.Controls.Add(model);
         }
     }
 }

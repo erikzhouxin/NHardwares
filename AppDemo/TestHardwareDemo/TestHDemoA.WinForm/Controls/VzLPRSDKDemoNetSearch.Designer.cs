@@ -1,4 +1,4 @@
-﻿namespace TestHardwareDemo.WinForm.Views.SubCtrl
+﻿namespace TestHardwareDemo.WinForm.Controls
 {
     partial class VzLPRSDKDemoNetSearch
     {
