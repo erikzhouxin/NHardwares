@@ -8,6 +8,7 @@
 		<RootNamespace>TestHardwareDemo.WinForm</RootNamespace>
 		<LangVersion>latest</LangVersion>
 		<NeutralLanguage>zh</NeutralLanguage>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -23,6 +24,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\..\..\DeYaAlbCtrlSDK\DeYaAlbCtrlSDK.csproj" />
 		<ProjectReference Include="..\..\..\NHInterfaces\HardwareInterfaces.csproj" />
 		<ProjectReference Include="..\..\..\HikHCNetSDK\HikHCNetSDK.csproj" />
 		<ProjectReference Include="..\..\..\RecBarCodeModule\RecBarCodeModule.csproj" />

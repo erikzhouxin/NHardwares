@@ -12,10 +12,10 @@ using System.Data.DeYaAlbCtrlSDK;
 
 namespace ALBDLLTester
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
-        IAlbCtrlSdkProxy ALBDLL = AlbCtrlSdk.Create(true);
-        public Form1()
+        IAlbCtrlSdkProxy ALBDLL = AlbCtrlSdk.Create();
+        public MainForm()
         {
             InitializeComponent();
         }

@@ -281,10 +281,9 @@
             this.TabMainContent.Dock = System.Windows.Forms.DockStyle.Fill;
             this.TabMainContent.Location = new System.Drawing.Point(0, 0);
             this.TabMainContent.Name = "TabMainContent";
-            this.TabMainContent.RowCount = 3;
+            this.TabMainContent.RowCount = 2;
             this.TabMainContent.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.TabMainContent.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.TabMainContent.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.TabMainContent.Size = new System.Drawing.Size(942, 644);
             this.TabMainContent.TabIndex = 0;
             // 
@@ -294,7 +293,7 @@
             this.PnlTabCnt1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PnlTabCnt1.Location = new System.Drawing.Point(3, 3);
             this.PnlTabCnt1.Name = "PnlTabCnt1";
-            this.PnlTabCnt1.Size = new System.Drawing.Size(465, 306);
+            this.PnlTabCnt1.Size = new System.Drawing.Size(465, 316);
             this.PnlTabCnt1.TabIndex = 0;
             // 
             // GrbNetConfig
@@ -303,7 +302,7 @@
             this.GrbNetConfig.Dock = System.Windows.Forms.DockStyle.Fill;
             this.GrbNetConfig.Location = new System.Drawing.Point(0, 0);
             this.GrbNetConfig.Name = "GrbNetConfig";
-            this.GrbNetConfig.Size = new System.Drawing.Size(465, 306);
+            this.GrbNetConfig.Size = new System.Drawing.Size(465, 316);
             this.GrbNetConfig.TabIndex = 0;
             this.GrbNetConfig.TabStop = false;
             this.GrbNetConfig.Text = "配置信息";
@@ -315,7 +314,7 @@
             this.PnlNetConfig.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PnlNetConfig.Location = new System.Drawing.Point(3, 19);
             this.PnlNetConfig.Name = "PnlNetConfig";
-            this.PnlNetConfig.Size = new System.Drawing.Size(459, 284);
+            this.PnlNetConfig.Size = new System.Drawing.Size(459, 294);
             this.PnlNetConfig.TabIndex = 0;
             // 
             // GrbNetConfigDetail
@@ -324,7 +323,7 @@
             this.GrbNetConfigDetail.Dock = System.Windows.Forms.DockStyle.Fill;
             this.GrbNetConfigDetail.Location = new System.Drawing.Point(0, 39);
             this.GrbNetConfigDetail.Name = "GrbNetConfigDetail";
-            this.GrbNetConfigDetail.Size = new System.Drawing.Size(459, 245);
+            this.GrbNetConfigDetail.Size = new System.Drawing.Size(459, 255);
             this.GrbNetConfigDetail.TabIndex = 1;
             this.GrbNetConfigDetail.TabStop = false;
             this.GrbNetConfigDetail.Text = "配置详情";
@@ -347,7 +346,7 @@
             this.PnlNetConfigDetail.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PnlNetConfigDetail.Location = new System.Drawing.Point(3, 19);
             this.PnlNetConfigDetail.Name = "PnlNetConfigDetail";
-            this.PnlNetConfigDetail.Size = new System.Drawing.Size(453, 223);
+            this.PnlNetConfigDetail.Size = new System.Drawing.Size(453, 233);
             this.PnlNetConfigDetail.TabIndex = 10;
             // 
             // BtnNetSearch
@@ -488,7 +487,7 @@
             this.PnlTabCnt2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PnlTabCnt2.Location = new System.Drawing.Point(474, 3);
             this.PnlTabCnt2.Name = "PnlTabCnt2";
-            this.PnlTabCnt2.Size = new System.Drawing.Size(465, 306);
+            this.PnlTabCnt2.Size = new System.Drawing.Size(465, 316);
             this.PnlTabCnt2.TabIndex = 1;
             // 
             // GrbScreenView
@@ -497,7 +496,7 @@
             this.GrbScreenView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.GrbScreenView.Location = new System.Drawing.Point(0, 0);
             this.GrbScreenView.Name = "GrbScreenView";
-            this.GrbScreenView.Size = new System.Drawing.Size(465, 306);
+            this.GrbScreenView.Size = new System.Drawing.Size(465, 316);
             this.GrbScreenView.TabIndex = 0;
             this.GrbScreenView.TabStop = false;
             this.GrbScreenView.Text = "视频预览";
@@ -508,7 +507,7 @@
             this.PnlScreenView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PnlScreenView.Location = new System.Drawing.Point(3, 19);
             this.PnlScreenView.Name = "PnlScreenView";
-            this.PnlScreenView.Size = new System.Drawing.Size(459, 284);
+            this.PnlScreenView.Size = new System.Drawing.Size(459, 294);
             this.PnlScreenView.TabIndex = 0;
             // 
             // PicScreenView
@@ -518,7 +517,7 @@
             this.PicScreenView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PicScreenView.Location = new System.Drawing.Point(0, 0);
             this.PicScreenView.Name = "PicScreenView";
-            this.PicScreenView.Size = new System.Drawing.Size(459, 284);
+            this.PicScreenView.Size = new System.Drawing.Size(459, 294);
             this.PicScreenView.TabIndex = 0;
             this.PicScreenView.TabStop = false;
             // 
@@ -526,18 +525,18 @@
             // 
             this.PnlTabCnt3.AutoScroll = true;
             this.PnlTabCnt3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.PnlTabCnt3.Location = new System.Drawing.Point(3, 315);
+            this.PnlTabCnt3.Location = new System.Drawing.Point(3, 325);
             this.PnlTabCnt3.Name = "PnlTabCnt3";
-            this.PnlTabCnt3.Size = new System.Drawing.Size(465, 306);
+            this.PnlTabCnt3.Size = new System.Drawing.Size(465, 316);
             this.PnlTabCnt3.TabIndex = 2;
             // 
             // PnlTabCnt4
             // 
             this.PnlTabCnt4.Controls.Add(this.GrbTxtLogger);
             this.PnlTabCnt4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.PnlTabCnt4.Location = new System.Drawing.Point(474, 315);
+            this.PnlTabCnt4.Location = new System.Drawing.Point(474, 325);
             this.PnlTabCnt4.Name = "PnlTabCnt4";
-            this.PnlTabCnt4.Size = new System.Drawing.Size(465, 306);
+            this.PnlTabCnt4.Size = new System.Drawing.Size(465, 316);
             this.PnlTabCnt4.TabIndex = 3;
             // 
             // GrbTxtLogger
@@ -546,7 +545,7 @@
             this.GrbTxtLogger.Dock = System.Windows.Forms.DockStyle.Fill;
             this.GrbTxtLogger.Location = new System.Drawing.Point(0, 0);
             this.GrbTxtLogger.Name = "GrbTxtLogger";
-            this.GrbTxtLogger.Size = new System.Drawing.Size(465, 306);
+            this.GrbTxtLogger.Size = new System.Drawing.Size(465, 316);
             this.GrbTxtLogger.TabIndex = 0;
             this.GrbTxtLogger.TabStop = false;
             this.GrbTxtLogger.Text = "日志信息";
@@ -557,17 +556,17 @@
             this.TxtLogger.Dock = System.Windows.Forms.DockStyle.Fill;
             this.TxtLogger.Location = new System.Drawing.Point(3, 19);
             this.TxtLogger.Name = "TxtLogger";
-            this.TxtLogger.Size = new System.Drawing.Size(459, 284);
+            this.TxtLogger.Size = new System.Drawing.Size(459, 294);
             this.TxtLogger.TabIndex = 0;
             this.TxtLogger.Text = "";
             // 
-            // VzLPRSDKDemov2211
+            // VzLPRDemov2211
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ContextMenuStrip = this.CmsrNetConfigBtns;
             this.Controls.Add(this.PnlMainContent);
-            this.Name = "VzLPRSDKDemov2211";
+            this.Name = "VzLPRDemov2211";
             this.Size = new System.Drawing.Size(942, 644);
             this.Load += new System.EventHandler(this.VzLPRSDKDemov2211_Load);
             this.CmsrTxtLoggerCtx.ResumeLayout(false);
