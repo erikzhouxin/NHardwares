@@ -17,10 +17,10 @@ using System.Data.Cobber;
 
 namespace TestDll
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
         static IIceIpcSdkProxy _proxy = IceIpcSdk.Create();
-        public Form1()
+        public MainForm()
         {
             InitializeComponent();
         }

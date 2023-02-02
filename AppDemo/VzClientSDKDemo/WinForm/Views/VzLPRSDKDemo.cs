@@ -7,6 +7,7 @@ using System.Data.Extter;
 using System.Data.VzClientSDK;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -305,16 +306,16 @@ namespace VzClientSDK.WinForm.Views
 
         private int OnPlateResult(int handle, IntPtr pUserData,
                                                   IntPtr pResult, uint uNumPlates,
-                                                  VzClientSDK.VZ_LPRC_RESULT_TYPE eResultType,
+                                                  VZ_LPRC_RESULT_TYPE eResultType,
                                                   IntPtr pImgFull,
                                                   IntPtr pImgPlateClip)
         {
-            if (eResultType != VzClientSDK.VZ_LPRC_RESULT_TYPE.VZ_LPRC_RESULT_REALTIME)
+            if (eResultType != VZ_LPRC_RESULT_TYPE.VZ_LPRC_RESULT_REALTIME)
             {
-                VzClientSDK.TH_PlateResult result = (VzClientSDK.TH_PlateResult)Marshal.PtrToStructure(pResult, typeof(VzClientSDK.TH_PlateResult));
+                TH_PlateResult result = (TH_PlateResult)Marshal.PtrToStructure(pResult, typeof(TH_PlateResult));
                 string strLicense = new string(result.license);
 
-                VzClientSDK.VZ_LPR_MSG_PLATE_INFO plateInfo = new VzClientSDK.VZ_LPR_MSG_PLATE_INFO();
+                VZ_LPR_MSG_PLATE_INFO plateInfo = new VZ_LPR_MSG_PLATE_INFO();
                 plateInfo.plate = strLicense;
 
                 DateTime now = DateTime.Now;

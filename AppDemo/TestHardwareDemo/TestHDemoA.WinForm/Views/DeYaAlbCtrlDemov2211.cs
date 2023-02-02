@@ -278,11 +278,6 @@ namespace TestHardwareDemo.WinForm.Views
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void button_q_Click(object sender, EventArgs e)
         {
             if (handle != IntPtr.Zero)
