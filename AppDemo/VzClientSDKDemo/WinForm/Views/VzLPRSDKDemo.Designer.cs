@@ -35,6 +35,8 @@
             this.GrbNetConfig = new System.Windows.Forms.GroupBox();
             this.PnlNetConfig = new System.Windows.Forms.Panel();
             this.PnlNetConfigDetail = new System.Windows.Forms.Panel();
+            this.BtnNetExit = new System.Windows.Forms.Button();
+            this.BtnNetLogin = new System.Windows.Forms.Button();
             this.TxtNetSerialNum = new System.Windows.Forms.TextBox();
             this.ChkNetPDNS = new System.Windows.Forms.CheckBox();
             this.TxtNetPassword = new System.Windows.Forms.TextBox();
@@ -55,8 +57,6 @@
             this.TxtLogger = new System.Windows.Forms.RichTextBox();
             this.CmsrTxtLoggerCtx = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.TsrmLoggerClear = new System.Windows.Forms.ToolStripMenuItem();
-            this.BtnNetLogin = new System.Windows.Forms.Button();
-            this.BtnNetExit = new System.Windows.Forms.Button();
             this.CmsrNetConfigBtns = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.手动识别ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.抓图ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -171,6 +171,24 @@
             this.PnlNetConfigDetail.Name = "PnlNetConfigDetail";
             this.PnlNetConfigDetail.Size = new System.Drawing.Size(383, 180);
             this.PnlNetConfigDetail.TabIndex = 1;
+            // 
+            // BtnNetExit
+            // 
+            this.BtnNetExit.Location = new System.Drawing.Point(222, 130);
+            this.BtnNetExit.Name = "BtnNetExit";
+            this.BtnNetExit.Size = new System.Drawing.Size(64, 31);
+            this.BtnNetExit.TabIndex = 9;
+            this.BtnNetExit.Text = "退出";
+            this.BtnNetExit.UseVisualStyleBackColor = true;
+            // 
+            // BtnNetLogin
+            // 
+            this.BtnNetLogin.Location = new System.Drawing.Point(119, 130);
+            this.BtnNetLogin.Name = "BtnNetLogin";
+            this.BtnNetLogin.Size = new System.Drawing.Size(64, 31);
+            this.BtnNetLogin.TabIndex = 8;
+            this.BtnNetLogin.Text = "登录";
+            this.BtnNetLogin.UseVisualStyleBackColor = true;
             // 
             // TxtNetSerialNum
             // 
@@ -352,24 +370,6 @@
             this.TsrmLoggerClear.Text = "清空日志";
             this.TsrmLoggerClear.Click += new System.EventHandler(this.TsrmLoggerClear_Click);
             // 
-            // BtnNetLogin
-            // 
-            this.BtnNetLogin.Location = new System.Drawing.Point(119, 130);
-            this.BtnNetLogin.Name = "BtnNetLogin";
-            this.BtnNetLogin.Size = new System.Drawing.Size(64, 31);
-            this.BtnNetLogin.TabIndex = 8;
-            this.BtnNetLogin.Text = "登录";
-            this.BtnNetLogin.UseVisualStyleBackColor = true;
-            // 
-            // BtnNetExit
-            // 
-            this.BtnNetExit.Location = new System.Drawing.Point(222, 130);
-            this.BtnNetExit.Name = "BtnNetExit";
-            this.BtnNetExit.Size = new System.Drawing.Size(64, 31);
-            this.BtnNetExit.TabIndex = 9;
-            this.BtnNetExit.Text = "退出";
-            this.BtnNetExit.UseVisualStyleBackColor = true;
-            // 
             // CmsrNetConfigBtns
             // 
             this.CmsrNetConfigBtns.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -401,12 +401,14 @@
             this.手动识别ToolStripMenuItem.Name = "手动识别ToolStripMenuItem";
             this.手动识别ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.手动识别ToolStripMenuItem.Text = "手动识别";
+            this.手动识别ToolStripMenuItem.Click += new System.EventHandler(this.btnManual_Click);
             // 
             // 抓图ToolStripMenuItem
             // 
             this.抓图ToolStripMenuItem.Name = "抓图ToolStripMenuItem";
             this.抓图ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.抓图ToolStripMenuItem.Text = "抓图";
+            this.抓图ToolStripMenuItem.Click += new System.EventHandler(this.btnCap_Click);
             // 
             // gPIOToolStripMenuItem
             // 

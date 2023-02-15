@@ -19,6 +19,11 @@ namespace TestHardwareDemo.WinForm.Views
     public partial class DeYaAlbCtrlDemov2211 : TextLoggerComponent
     {
         IAlbCtrlSdkProxy ALBDLL = AlbCtrlSdk.Create();
+        IntPtr myPtr = new IntPtr(0);
+        public IntPtr handle = new IntPtr(0);
+        public const int USER = 0x400;
+        public const int MYMESSAGE = USER + 2;
+        public static int Sum = 0;
         public DeYaAlbCtrlDemov2211()
         {
             InitializeComponent();
@@ -29,51 +34,35 @@ namespace TestHardwareDemo.WinForm.Views
 
         }
 
-        IntPtr myPtr = new IntPtr(0);
-        public IntPtr handle = new IntPtr(0);
-        public const int USER = 0x400;
-        public const int MYMESSAGE = USER + 2;
-        public static int Sum = 0;
         private void Btn_open_Click(object sender, EventArgs e)
         {
             string ip = textBox1.Text.ToString();
-            if (ip == "")
-                return;
+            if (ip == "") { return; }
             handle = ALBDLL.DEV_Open(ip);
             if (handle == IntPtr.Zero)
             {
-                MessageBox.Show("设备打开失败！");
-                return;
+                AppendError("设备打开失败！");
             }
             else
             {
-                MessageBox.Show("设备打开成功！");
+                AppendSuccess("设备打开成功！");
             }
         }
 
         private void Btn_close_Click(object sender, EventArgs e)
         {
-            if (handle == IntPtr.Zero)
-                return;
+            if (handle == IntPtr.Zero) { return; }
             ALBDLL.DEV_Close(handle);
         }
-        private void eventcall(IntPtr h, int nEvent, int nParam)
+        private void Eventcall(IntPtr h, int nEvent, int nParam)
         {
-            myPtr = FindWindow(null, "ALBDLLTester");
-            if (myPtr == IntPtr.Zero)
-            {
-                throw new Exception("Could not find Main window!");
-            }
             //Console.WriteLine(" nEvent=" + nEvent + ",nParam=" + nParam+ ",myPtr=" + myPtr);
             int Lparam = ((nEvent & 0xff) << 8) | (nParam & 0xff);
-            long result = SendMessage(myPtr, MYMESSAGE, handle, Lparam);
+            long result = SendMessage(myPtr, MYMESSAGE, this.Handle, Lparam);
         }
-
-
         private void Btn_RegisEvent_Click(object sender, EventArgs e)
         {
-            DEVEventCallBack callback = new DEVEventCallBack(eventcall);
-            if (ALBDLL.DEV_SetEventHandle(handle, callback))
+            if (ALBDLL.DEV_SetEventHandle(handle, Eventcall))
             {
                 MessageBox.Show("注册回调成功！");
             }
@@ -97,7 +86,6 @@ namespace TestHardwareDemo.WinForm.Views
         /// <param name="m">The Windows <see cref="T:System.Windows.Forms.Message"/> to process.</param>
         protected override void DefWndProc(ref System.Windows.Forms.Message m)
         {
-
             if (m.Msg == MYMESSAGE)
             {
                 this.listView1.BeginUpdate(); //数据更新，UI暂时挂起，直到EndUpdate绘制控件，可以有效避免闪烁并大大提高加载速度          
@@ -222,71 +210,53 @@ namespace TestHardwareDemo.WinForm.Views
             }
         }
 
-        [DllImport("User32.dll", EntryPoint = "FindWindow")]
-        public extern static IntPtr FindWindow(string lpClassName, string lpWindowName);
-
         [DllImport("user32.dll", EntryPoint = "SendMessageA")]
         public static extern int SendMessage(IntPtr hwnd, Int32 wMsg, IntPtr wParam, int lParam);
 
         private void Btn_Getstate_Click(object sender, EventArgs e)
         {
-            int status = 0;
-            unsafe
+            if (handle == IntPtr.Zero)
             {
-                if (handle == IntPtr.Zero)
-                {
-                    AppendError("设备已离线");
-                    return;
-                }
-                uint dwx;
-                if (!ALBDLL.DEV_GetStatus(handle, out dwx))
-                {
-                    AppendError("获取状态失败");
-                    return;
-                }
-                if (((0x01 << 6) & dwx) > 0)
-                {
-                    AppendError("设备在线");
-                }
-                else
-                {
-                    AppendError("设备已离线");
-                }
+                AppendError("设备已离线");
+                return;
+            }
+            if (!ALBDLL.DEV_GetStatus(handle, out var dwx))
+            {
+                AppendError("获取状态失败");
+                return;
+            }
+            if (((0x01 << 6) & dwx) > 0)
+            {
+                AppendError($"设备在线[{dwx}]");
+            }
+            else
+            {
+                AppendError($"设备已离线[{dwx}]");
             }
         }
 
         private void Btn_ResgisMsg_Click(object sender, EventArgs e)
         {
-            myPtr = FindWindow(null, "ALBDLLTester");
-            if (myPtr == IntPtr.Zero)
-            {
-                throw new Exception("Could not find Main window!");
-            }
-            if (handle == IntPtr.Zero)
-            {
-                return;
-            }
+            if (handle == IntPtr.Zero) { return; }
             IntPtr wind = this.Handle;
-            Console.WriteLine("ptr：" + myPtr + "ptr" + wind);
+            AppendInfo("ptr：" + myPtr + "ptr" + wind);
             if (ALBDLL.DEV_EnableEventMessageEx(handle, wind, MYMESSAGE))
             {
-                MessageBox.Show("注册消息成功！");
+                AppendSuccess("注册消息成功！");
             }
             else
             {
-                MessageBox.Show("注册消息失败！");
+                AppendError("注册消息失败！");
             }
         }
 
-        private void button_q_Click(object sender, EventArgs e)
+        private void Button_q_Click(object sender, EventArgs e)
         {
-            if (handle != IntPtr.Zero)
-            {
-                ALBDLL.DEV_Queue(handle, true);
-                string text = this.button_q.Text;
-                ALBDLL.DEV_Queue(handle, text == "启动队列" ? true : false);
-                this.button_q.Text = text == "启动队列" ? "关闭队列" : "启动队列";
-            }
+            if (handle == IntPtr.Zero) { return; }
+            ALBDLL.DEV_Queue(handle, true);
+            bool isQueue = this.button_q.Text == "启动队列";
+            ALBDLL.DEV_Queue(handle, isQueue);
+            this.button_q.Text = isQueue ? "关闭队列" : "启动队列";
         }
         #region // 基础内容
         public override RichTextBox ThisTxtLogger => TxtLogger;
@@ -295,5 +265,12 @@ namespace TestHardwareDemo.WinForm.Views
 
         }
         #endregion 基础内容
+        /// <summary>
+        /// 清理所有正在使用的资源。
+        /// </summary>
+        protected override void OnHandleDestroyed(EventArgs e)
+        {
+            base.OnHandleDestroyed(e);
+        }
     }
 }

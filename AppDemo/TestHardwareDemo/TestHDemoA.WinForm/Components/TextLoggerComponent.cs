@@ -88,6 +88,10 @@ namespace TestHardwareDemo.WinForm.Components
         #endregion 值守任务
         #region // 日志控件
         /// <summary>
+        /// 正在释放
+        /// </summary>
+        protected bool _isDestroying;
+        /// <summary>
         /// 当前日志控件
         /// </summary>
         public virtual RichTextBox ThisTxtLogger { get => throw new NotImplementedException(); }
@@ -101,29 +105,34 @@ namespace TestHardwareDemo.WinForm.Components
         }
         public virtual TextLoggerComponent AppendError(string message)
         {
+            if (_isDestroying) { return this; }
             this.Invoke((Action)(() => AppendTextEx(message, Color.Red)));
             return this;
         }
         public virtual void AppendErrorVoid(string message) => AppendError(message);
         public virtual TextLoggerComponent AppendSuccess(string message)
         {
+            if (_isDestroying) { return this; }
             this.Invoke((Action)(() => AppendTextEx(message, Color.Green)));
             return this;
         }
         public virtual void AppendSuccessVoid(string message) => AppendSuccess(message);
         public virtual TextLoggerComponent AppendInfo(string message)
         {
+            if (_isDestroying) { return this; }
             this.Invoke((Action)(() => AppendTextEx(message, Color.Blue)));
             return this;
         }
         public virtual void AppendInfoVoid(string message) => AppendInfo(message);
         public virtual TextLoggerComponent Append(IAlertMsg alert)
         {
+            if (_isDestroying) { return this; }
             this.Invoke((Action)(() => AppendTextEx(alert.Message, alert.IsSuccess ? Color.Green : Color.Red)));
             return this;
         }
         public virtual TextLoggerComponent Append(Exception alert)
         {
+            if (_isDestroying) { return this; }
             var sb = new StringBuilder().AppendLine(alert.Message).AppendLine(alert.StackTrace);
             this.Invoke((Action)(() => AppendTextEx(sb.ToString(), Color.Red)));
             return this;
@@ -152,8 +161,13 @@ namespace TestHardwareDemo.WinForm.Components
         }
         protected override void OnHandleDestroyed(EventArgs e)
         {
-            this._guardianService = null;
-            this._guardianCts.Cancel();
+            this._isDestroying = true;
+            try
+            {
+                this._guardianCts.Cancel();
+                this._guardianService = null;
+            }
+            catch { }
             base.OnHandleDestroyed(e);
         }
         public virtual void TryAddConfigContent<T>(Panel parent, T model) where T : UserControl

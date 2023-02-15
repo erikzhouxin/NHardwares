@@ -38,6 +38,8 @@
             this.TrmMainTestDemo = new System.Windows.Forms.ToolStripMenuItem();
             this.TrmUSRIO808 = new System.Windows.Forms.ToolStripMenuItem();
             this.MsrMainForm = new System.Windows.Forms.MenuStrip();
+            this.BtnOpenOriginForm = new System.Windows.Forms.Button();
+            this.TabHome.SuspendLayout();
             this.TacMainContent.SuspendLayout();
             this.CmtMainPages.SuspendLayout();
             this.MsrMainForm.SuspendLayout();
@@ -45,6 +47,7 @@
             // 
             // TabHome
             // 
+            this.TabHome.Controls.Add(this.BtnOpenOriginForm);
             this.TabHome.Location = new System.Drawing.Point(4, 26);
             this.TabHome.Name = "TabHome";
             this.TabHome.Padding = new System.Windows.Forms.Padding(3);
@@ -104,7 +107,7 @@
             // TrmUSRIO808
             // 
             this.TrmUSRIO808.Name = "TrmUSRIO808";
-            this.TrmUSRIO808.Size = new System.Drawing.Size(180, 22);
+            this.TrmUSRIO808.Size = new System.Drawing.Size(131, 22);
             this.TrmUSRIO808.Text = "预览示例1";
             this.TrmUSRIO808.Click += new System.EventHandler(this.TrmUSRIO808_Click);
             // 
@@ -120,6 +123,16 @@
             this.MsrMainForm.TabIndex = 0;
             this.MsrMainForm.Text = "menuStrip1";
             // 
+            // BtnOpenOriginForm
+            // 
+            this.BtnOpenOriginForm.Location = new System.Drawing.Point(60, 50);
+            this.BtnOpenOriginForm.Name = "BtnOpenOriginForm";
+            this.BtnOpenOriginForm.Size = new System.Drawing.Size(75, 23);
+            this.BtnOpenOriginForm.TabIndex = 0;
+            this.BtnOpenOriginForm.Text = "打开原始程序";
+            this.BtnOpenOriginForm.UseVisualStyleBackColor = true;
+            this.BtnOpenOriginForm.Click += new System.EventHandler(this.BtnOpenOriginForm_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
@@ -133,6 +146,7 @@
             this.Name = "MainForm";
             this.Text = "MainForm";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.TabHome.ResumeLayout(false);
             this.TacMainContent.ResumeLayout(false);
             this.CmtMainPages.ResumeLayout(false);
             this.MsrMainForm.ResumeLayout(false);
@@ -152,5 +166,6 @@
         private System.Windows.Forms.ContextMenuStrip CmtMainPages;
         private System.Windows.Forms.ToolStripMenuItem TsmiRefreshThis;
         private System.Windows.Forms.ToolStripMenuItem TsmiCloseThis;
+        private System.Windows.Forms.Button BtnOpenOriginForm;
     }
 }

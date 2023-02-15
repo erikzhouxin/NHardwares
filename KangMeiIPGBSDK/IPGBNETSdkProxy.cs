@@ -232,6 +232,7 @@ namespace System.Data.KangMeiIPGBSDK
         /// </summary>
         public static IIPGBNETSdkProxy Instance { get; } = new IPGBNETSdkDller();
         private IPGBNETSdkDller() { }
+        #region // 函数导入
         /// <summary>
         /// 设置登录状态回调
         /// </summary>
@@ -504,6 +505,7 @@ namespace System.Data.KangMeiIPGBSDK
          **/
         [DllImport(IPGBNETSdk.DllFileName)]
         public static extern int IPGBNETSDK_GetUserFqInfo(uint UserId, out IPGBSDK_USERFQINFO pFqInfo);
+        #endregion 函数导入
         #region // 显示实现
         void IIPGBNETSdkProxy.IPGBNETSDK_Cleanup() => IPGBNETSDK_Cleanup();
         int IIPGBNETSdkProxy.IPGBNETSDK_CreateEncTerminalCbStream(uint UserId, IPGBSDK_GBENCTMCBINFO pGbinfo) => IPGBNETSDK_CreateEncTerminalCbStream(UserId, pGbinfo);

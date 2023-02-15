@@ -71,5 +71,10 @@ namespace VzClientSDK.WinForm
             if (thisIndex >= TacMainContent.TabPages.Count) { thisIndex = TacMainContent.TabPages.Count - 1; }
             this.TacMainContent.SelectedIndex = thisIndex;
         }
+
+        private void BtnOpenOriginForm_Click(object sender, EventArgs e)
+        {
+            new VzLPRSDKDemo_Form().ShowDialog();
+        }
     }
 }

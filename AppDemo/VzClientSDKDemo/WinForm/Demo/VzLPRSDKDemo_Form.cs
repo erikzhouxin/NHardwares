@@ -362,7 +362,7 @@ namespace VzClientSDK.WinForm
             GCHandle hObject = GCHandle.Alloc(test, GCHandleType.Pinned);
             IntPtr pObject = hObject.AddrOfPinnedObject();
 
-            int ret = VzClientSDK.VzLPRClient_GetGPIOValue(lprHandle, 0, pObject);
+            int ret = VzClientSDK.VzLPRClient_GetGPIOValue(lprHandle, outputbox.SelectedIndex, pObject);
             if(test[0] == 0)
             {
                 MessageBox.Show("IOInput is [短路]");

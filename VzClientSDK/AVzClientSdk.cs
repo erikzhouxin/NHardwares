@@ -6,6 +6,7 @@ using System.Runtime.InteropServices;
 using System.IO;
 using System.Security.Cryptography;
 using System.Data.NHInterfaces;
+using System.Data.Extter;
 
 namespace System.Data.VzClientSDK
 {
@@ -313,5 +314,47 @@ namespace System.Data.VzClientSDK
             { SdkFileComponent.TryCopyDirectory(DllFullPath, BaseDllFullPath); }
             return VzClientSdkDller.Instance;
         }
+        #region // 日期时间转换
+        /// <summary>
+        /// 转换成日期时间
+        /// </summary>
+        /// <returns></returns>
+        public static DateTime ToUtcDateTime(this VZ_TIMEVAL model)
+        {
+            return new DateTime(TimeSpan.TicksPerSecond * model.uTVSec + model.uTVUSec * 10 + ExtterCaller.TicksFrom1970, DateTimeKind.Utc);
+        }
+        /// <summary>
+        /// 转换成日期时间
+        /// </summary>
+        /// <returns></returns>
+        public static DateTime ToDateTime(this VZ_TIMEVAL model)
+        {
+            return new DateTime(TimeSpan.TicksPerSecond * model.uTVSec + model.uTVUSec * 10 + ExtterCaller.TicksFrom1970, DateTimeKind.Utc).ToLocalTime();
+        }
+        /// <summary>
+        /// 转换成本地日期时间
+        /// </summary>
+        /// <returns></returns>
+        public static DateTime ToLocalDateTime(this VZ_TIMEVAL model)
+        {
+            return new DateTime(TimeSpan.TicksPerSecond * model.uTVSec + model.uTVUSec * 10 + ExtterCaller.TicksFrom1970, DateTimeKind.Local);
+        }
+        /// <summary>
+        /// 转换成日期时间
+        /// </summary>
+        /// <returns></returns>
+        public static DateTime ToDateTime(this VzBDTime model)
+        {
+            return new DateTime(model.bdt_year, model.bdt_mon, model.bdt_mday, model.bdt_hour, model.bdt_min, model.bdt_sec);
+        }
+        /// <summary>
+        /// 转换成日期时间
+        /// </summary>
+        /// <returns></returns>
+        public static DateTime ToDateTime(this VZ_DATE_TIME_INFO model)
+        {
+            return new DateTime((int)model.uYear, (int)model.uMonth, (int)model.uMDay, (int)model.uHour, (int)model.uMin, (int)model.uSec);
+        }
+        #endregion 日期时间转换
     }
 }

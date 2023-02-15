@@ -26,13 +26,11 @@ namespace TestHardwareDemo.WinForm.Views
     [EDisplay("深坂RFID识别流程1")]
     public partial class ShenBanRFIDv2211 : TextLoggerComponent
     {
-        internal static ShenBanRFIDv2211 Instance { get; set; }
         /// <summary>
         /// 构造
         /// </summary>
         public ShenBanRFIDv2211()
         {
-            Instance = this;
             InitializeComponent();
         }
         Thread _downloadService;
@@ -41,7 +39,6 @@ namespace TestHardwareDemo.WinForm.Views
         CancellationTokenSource _uploadCts;
         bool _isInitialize;
         DataTable _tagTable;
-        HashSet<string> _cacheTags;
         private void ShenBanRFIDv2211_Load(object sender, EventArgs e)
         {
             if (!_isInitialize)
@@ -49,8 +46,6 @@ namespace TestHardwareDemo.WinForm.Views
                 _isInitialize = true;
 
                 base.TxtLoggerInitialize();
-
-                _cacheTags = new HashSet<string>();
 
                 _tagTable = new DataTable();
                 _tagTable.Columns.Add(new DataColumn("Info"));
@@ -85,17 +80,19 @@ namespace TestHardwareDemo.WinForm.Views
                 row[3] = record.Item4;
                 _tagTable.Rows.Add(row);
             }));
-            _cacheTags.Add(record.Item5);
         }
 
         private void BtnClearTags_Click(object sender, EventArgs e)
         {
             _tagTable.Clear();
-            _cacheTags.ToList().ForEach((s) =>
+            foreach (var item in CacheModel.Concurrent.GetKeys())
             {
-                CacheModel.Concurrent.Remove(s);
-            });
-            _cacheTags.Clear();
+                var model = CacheModel.Concurrent.Get<TLocalScanRecords>(item);
+                if(model != null)
+                {
+                    CacheModel.Concurrent.Remove(item);
+                }
+            }
             this.TxtLogger.Clear();
         }
         private void BtnConnAdd_Click(object sender, EventArgs e)
@@ -104,6 +101,7 @@ namespace TestHardwareDemo.WinForm.Views
             var address = this.CbxSerialPort.Text?.Trim() ?? string.Empty;
             var port = (this.CbxPortRate.Text?.Trim() ?? string.Empty).ToPInt32();
             var ant = (this.CbxRfidAnt.Text?.Trim() ?? string.Empty).ToPInt32();
+            var flag = this.ChkReadMode.Checked ? 1 : 0;
             var model = list.FirstOrDefault(s => s.Address == address && s.Port == port);
             if (model == null)
             {
@@ -125,7 +123,7 @@ namespace TestHardwareDemo.WinForm.Views
                     EditName = "周鑫",
                     Editor = 1,
                     EditTime = DateTime.Now,
-                    Flag = 0,
+                    Flag = flag,
                     FrontAccount = "",
                     FrontAddress = "",
                     FrontPassword = "",
@@ -145,6 +143,7 @@ namespace TestHardwareDemo.WinForm.Views
                 model.Address = address;
                 model.Port = port;
                 model.Ant = ant;
+                model.Flag = flag;
             }
             System.IO.File.WriteAllText(_rfidPath, list.GetJsonFormatString());
 
@@ -165,37 +164,39 @@ namespace TestHardwareDemo.WinForm.Views
             ReadDeviceAndSetFirstOne();
         }
         #region // 服务内容
-        static ICacheModel<TLocalRfids> _rfidModel = CacheModel<TLocalRfids>.Concurrent;
-        static string _rfidPath = System.IO.Path.GetFullPath("TLocalRfids.json");
-        static string _rfidSetting = System.IO.Path.GetFullPath("TLocalSettings.json");
-        static Dictionary<string, ShenBanReaderContent> RfidDic { get; } = new Dictionary<string, ShenBanReaderContent>();
-        static IEnumerable<ShenBanReaderContent> Rfids { get => RfidDic.Values.ToList(); }
-        static TLocalSettings Setting { get; } = GetRfidSetting();
+        ICacheModel<TLocalRfids> _rfidModel = CacheModel<TLocalRfids>.Concurrent;
+        string _rfidPath = System.IO.Path.GetFullPath("TLocalRfids.json");
+        string _rfidSetting = System.IO.Path.GetFullPath("TLocalSettings.json");
+        Dictionary<string, ShenBanReaderContent> RfidDic { get; } = new Dictionary<string, ShenBanReaderContent>();
+        TLocalSettings Setting { get => GetRfidSetting(); }
         async Task DownloadServiceAsync(CancellationToken stoppingToken)
         {
             try
             {
                 while (!stoppingToken.IsCancellationRequested)
                 {
-                    try
+                    if (Monitor.TryEnter(_rfidProcess, 1000))
                     {
-                        var tagKeys = _rfidModel.GetKeys() ?? new List<string>();
-                        if (!System.IO.File.Exists(_rfidPath))
-                        { System.IO.File.WriteAllText(_rfidPath, new List<TLocalRfids>() { GetDefaultRfid(false), GetDefaultRfid(true) }.GetJsonFormatString()); }
-                        var srcModels = System.IO.File.ReadAllText(_rfidPath).GetJsonObject<List<TLocalRfids>>();
-                        foreach (var item in srcModels)
+                        try
                         {
-                            _rfidModel.Set(item.Uuid, item);
+                            var tagKeys = _rfidModel.GetKeys() ?? new List<string>();
+                            if (!System.IO.File.Exists(_rfidPath))
+                            { System.IO.File.WriteAllText(_rfidPath, new List<TLocalRfids>() { GetDefaultRfid(false), GetDefaultRfid(true) }.GetJsonFormatString()); }
+                            var srcModels = System.IO.File.ReadAllText(_rfidPath).GetJsonObject<List<TLocalRfids>>();
+                            foreach (var item in srcModels)
+                            {
+                                _rfidModel.Set(item.Uuid, item);
+                            }
                         }
+                        catch (Exception ex) { Append(ex); }
+                        finally { Monitor.Exit(_rfidProcess); }
                     }
-                    catch (Exception ex)
-                    { Append(ex); }
                     await Task.Delay(Setting.DownloadInterval * 1000, stoppingToken);
                 }
             }
             catch { }
         }
-        private static TLocalRfids GetDefaultRfid(bool isCom)
+        private TLocalRfids GetDefaultRfid(bool isCom)
         {
             return new TLocalRfids
             {
@@ -227,12 +228,13 @@ namespace TestHardwareDemo.WinForm.Views
                 Version = isCom ? 0 : 1,
             };
         }
-        private static TLocalSettings GetRfidSetting()
+        private TLocalSettings GetRfidSetting()
         {
             if (!System.IO.File.Exists(_rfidSetting))
             { System.IO.File.WriteAllText(_rfidSetting, new TLocalSettings().GetJsonFormatString()); }
             return System.IO.File.ReadAllText(_rfidSetting).GetJsonObject<TLocalSettings>();
         }
+        private object _rfidProcess = new object();
         async Task GuardianServiceAsync(CancellationToken stoppingToken)
         {
             try
@@ -240,46 +242,62 @@ namespace TestHardwareDemo.WinForm.Views
                 await Task.Delay(1000); // 等下载一下
                 while (!stoppingToken.IsCancellationRequested)
                 {
-                    try
+                    if (Monitor.TryEnter(_rfidProcess, 1000))
                     {
-                        List<TLocalRfids> infos = GetRfidList();
-                        var list = infos.Select(s => s.Uuid).ToList();
-                        foreach (var item in RfidDic.Keys.ToList()) // 移除掉已经释放的
+                        try
                         {
-                            if (!list.Contains(item))
+                            List<TLocalRfids> infos = GetRfidList();
+                            var list = infos.Select(s => s.Uuid).ToList();
+                            foreach (var item in RfidDic.Keys.ToList()) // 移除掉已经释放的
                             {
-                                if (RfidDic.Remove(item, out var work))
+                                if (!list.Contains(item))
                                 {
-                                    work.Dispose();
+                                    if (RfidDic.Remove(item, out var work))
+                                    {
+                                        work.Dispose();
+                                    }
                                 }
                             }
-                        }
-                        foreach (var info in infos)
-                        {
-                            if (RfidDic.TryGetValue(info.Uuid, out ShenBanReaderContent work))
+                            foreach (var info in infos)
                             {
-                                work.Update(info); // 设置更新
-                                continue;
+                                if (RfidDic.TryGetValue(info.Uuid, out ShenBanReaderContent work))
+                                {
+                                    if (work.Instance == this)
+                                    {
+                                        work.Update(info); // 设置更新
+                                        continue;
+                                    }
+                                    else
+                                    {
+                                        work.Dispose();
+                                    }
+                                }
+                                RfidDic[info.Uuid] = new ShenBanReaderContent(info, this);
                             }
-                            RfidDic[info.Uuid] = new ShenBanReaderContent(info);
+                            foreach (var item in RfidDic.Values.ToList())
+                            {
+                                item.Instance = this;
+                                item.Starting();
+                                var model = item.Model;
+                                item.SetAuto(model.Flag == 1);
+                                AppendInfo($"{model.Address}:{model.Port} => 天线:{model.Ant},状态:{model.Remark}");
+                            }
                         }
-                        foreach (var item in RfidDic.Values.ToList())
+                        catch (Exception ex)
                         {
-                            item.Starting();
-                            var model = item.Model;
-                            AppendInfo($"{model.Address}:{model.Port} => 天线:{model.Ant},状态:{model.Remark}");
+                            Append(ex);
                         }
-                    }
-                    catch (Exception ex)
-                    {
-                        Append(ex);
+                        finally
+                        {
+                            Monitor.Exit(_rfidProcess);
+                        }
                     }
                     await Task.Delay(Setting.ChangeInterval * 100, stoppingToken);
                 }
             }
             catch { }
         }
-        private static List<TLocalRfids> GetRfidList()
+        private List<TLocalRfids> GetRfidList()
         {
             var infos = new List<TLocalRfids>();
             foreach (var item in _rfidModel.GetKeys())
@@ -298,46 +316,47 @@ namespace TestHardwareDemo.WinForm.Views
                 await Task.Delay(1000); // 等下载一下
                 while (!stoppingToken.IsCancellationRequested)
                 {
-                    try
+                    if (Monitor.TryEnter(_rfidProcess, 1000))
                     {
-                        var locker = CacheConcurrentLockModel<ShenBanRFIDv2211>.Get(nameof(UploadServiceAsync));
-                        if (Monitor.TryEnter(locker, TimeSpan.FromSeconds(1)))
+                        try
                         {
-                            try
+                            var locker = CacheConcurrentLockModel<ShenBanRFIDv2211>.Get(nameof(UploadServiceAsync));
+                            if (Monitor.TryEnter(locker, TimeSpan.FromSeconds(1)))
                             {
+                                try
+                                {
 
+                                }
+                                finally
+                                {
+                                    Monitor.Exit(locker);
+                                }
                             }
-                            finally
+                            var statusDic = new List<TDeviceRfids>();
+                            foreach (var item in RfidDic.Values.ToList())
                             {
-                                Monitor.Exit(locker);
+                                var status = item.Status;
+                                statusDic.Add(new TDeviceRfids
+                                {
+                                    Uuid = item.Model.Uuid,
+                                    Status = status.Item1,
+                                    Remark = status.Item2,
+                                    FrontRemark = status.Item3,
+                                    BehindRemark = status.Item4,
+                                });
+                            }
+                            if (statusDic.IsNotEmpty())
+                            {
+                                foreach (var item in statusDic)
+                                {
+                                    var model = _rfidModel.Get(item.Uuid);
+                                    if (model != null)
+                                    { AppendInfo($"{model.Address}:{model.Port}    {item.Remark}"); }
+                                }
                             }
                         }
-                        var statusDic = new List<TDeviceRfids>();
-                        foreach (var item in Rfids)
-                        {
-                            var status = item.Status;
-                            statusDic.Add(new TDeviceRfids
-                            {
-                                Uuid = item.Model.Uuid,
-                                Status = status.Item1,
-                                Remark = status.Item2,
-                                FrontRemark = status.Item3,
-                                BehindRemark = status.Item4,
-                            });
-                        }
-                        if (statusDic.IsNotEmpty())
-                        {
-                            foreach (var item in statusDic)
-                            {
-                                var model = _rfidModel.Get(item.Uuid);
-                                if (model != null)
-                                { AppendInfo($"{model.Address}:{model.Port}    {item.Remark}"); }
-                            }
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        Append(ex);
+                        catch (Exception ex) { Append(ex); }
+                        finally { Monitor.Exit(_rfidProcess); }
                     }
                     await Task.Delay(Setting.UploadInterval, stoppingToken);
                 }
@@ -358,7 +377,9 @@ namespace TestHardwareDemo.WinForm.Views
             private TLocalRfids _updated;
             private IR600Reader _reader;
             private Thread _workingThread;
+            CancellationTokenSource _workingCts;
             private Thread _captureThread;
+            CancellationTokenSource _captureCts;
             private HashSet<string> _tags = new HashSet<string>();
             private int _readId = 1;
             private Tuble<int, string, string, string> _status;
@@ -379,19 +400,42 @@ namespace TestHardwareDemo.WinForm.Views
                 });
                 _model = info;
                 _status = new Tuble<int, string, string, string>(info.Status, info.Remark, info.FrontRemark, info.BehindRemark);
-                _workingThread = new Thread(new ThreadStart(DoJumpWorking))
+                _workingCts = new CancellationTokenSource();
+                _workingThread = new Thread(() => DoJumpWorkingService(_workingCts.Token))
                 {
                     IsBackground = true
                 };
-                _captureThread = new Thread(DoCapture)
+                _captureCts = new CancellationTokenSource();
+                _captureThread = new Thread(() => DoCaptureService(_captureCts.Token))
                 {
                     IsBackground = true
                 };
             }
+
+            public ShenBanReaderContent(TLocalRfids info, ShenBanRFIDv2211 shenBanRFIDv2211) : this(info)
+            {
+                Instance = shenBanRFIDv2211;
+                Setting = shenBanRFIDv2211.Setting;
+            }
+
             public TDeviceRfids Model { get => _model; }
             public ITuble<int, string, string, string> Status { get => _status.Clone(); }
+            public ShenBanRFIDv2211 Instance { get; set; }
+
             public void Dispose()
             {
+                try
+                {
+                    _captureCts.Cancel();
+                    _captureThread = null;
+                }
+                catch { }
+                try
+                {
+                    _workingCts.Cancel();
+                    _workingThread = null;
+                }
+                catch { }
                 _reader.Dispose();
             }
             public bool Update(TLocalRfids info)
@@ -450,53 +494,63 @@ namespace TestHardwareDemo.WinForm.Views
                 _model.BehindRemark = (_status.Item4 = message);
                 _model.Status = (isSuccess ? (_status.Item1 &= ~8) : (_status.Item1 |= 8));
             }
+            public TLocalSettings Setting { get; set; }
             /// <summary>
             /// 跳转工作内容
             /// </summary>
-            private void DoJumpWorking()
+            void DoJumpWorkingService(CancellationToken token)
             {
-                while (true)
+                try
                 {
-                    // 准备设置值,防止中途变更
-                    var reconnInterval = Setting.ScanInterval * 100;
-                    var inInterval = Setting.ReadInterval * 100;
-                    var result = -1;
-                    var antRes = GetAntennaTypes(_model.Ant);
-                    try
+                    while (!token.IsCancellationRequested)
                     {
-                        // 盘点
-                        if (antRes.IsSuccess)
+                        if (_model.Flag == 1)
                         {
-                            result = _reader.FastSwitchInventory((byte)_readId, antRes.Data);
+                            Task.Delay(1000, token).Wait();
+                            continue;
                         }
-                        else
+                        // 准备设置值,防止中途变更
+                        var reconnInterval = Setting.ScanInterval * 100;
+                        var inInterval = Setting.ReadInterval * 100;
+                        var result = -1;
+                        var antRes = GetAntennaTypes(_model.Ant);
+                        try
                         {
-                            foreach (var item in antRes.Data)
+                            // 盘点
+                            if (antRes.IsSuccess)
                             {
-                                _reader.SetWorkAntenna((byte)_readId, (byte)item);
-                                Thread.Sleep(50);
-                                var curr = _reader.InventoryReal((byte)_readId, 1);
-                                if (curr >= 0) { result = 0; }
-                                Thread.Sleep(50);
+                                result = _reader.FastSwitchInventory((byte)_readId, antRes.Data);
+                            }
+                            else
+                            {
+                                foreach (var item in antRes.Data)
+                                {
+                                    _reader.SetWorkAntenna((byte)_readId, (byte)item);
+                                    Task.Delay(50, token).Wait();
+                                    var curr = _reader.InventoryReal((byte)_readId, 1);
+                                    if (curr >= 0) { result = 0; }
+                                    Task.Delay(50, token).Wait();
+                                }
                             }
                         }
+                        catch (Exception ex)
+                        {
+                            Instance.AppendError($"{nameof(ShenBanReaderContent)}:{nameof(DoJumpWorkingService)}:{nameof(IR600Reader.FastSwitchInventory)}");
+                            Instance.Append(ex);
+                            continue;
+                        }
+                        if (result < 0)
+                        {
+                            Starting();
+                            Task.Delay(reconnInterval * 2, token).Wait(); // 防止频繁操作,此时可当做重连了
+                            continue;
+                        }
+                        Task.Delay(inInterval * 2, token).Wait();// 稍作休整
                     }
-                    catch (Exception ex)
-                    {
-                        Instance.AppendError($"{nameof(ShenBanReaderContent)}:{nameof(DoJumpWorking)}:{nameof(IR600Reader.FastSwitchInventory)}");
-                        Instance.Append(ex);
-                        continue;
-                    }
-                    if (result < 0)
-                    {
-                        Starting();
-                        Thread.Sleep(reconnInterval * 2); // 防止频繁操作,此时可当做重连了
-                        continue;
-                    }
-                    Thread.Sleep(inInterval * 2);// 稍作休整
                 }
+                catch { }
             }
-            private static IAlertMsg<byte[]> GetAntennaTypes(int ant)
+            private IAlertMsg<byte[]> GetAntennaTypes(int ant)
             {
                 if (ant <= 0 || ant == 65536)
                 {
@@ -669,16 +723,13 @@ namespace TestHardwareDemo.WinForm.Views
                     Instance.AppendError(new { record, tag, ex }.GetJsonFormatString());
                 }
             }
-
             private string GetCacheKey(string key) => $"RFID:Record:{_model.Uuid}:{key}";
-
             private void InventoryRealEnd(IReadMessage msg, int arg2, int arg3)
             {
                 _readId = msg.ReadId;
                 TakeEndPicture(_tags.ToArray());
                 _tags.Clear();
             }
-
             private void AlertError(ReadAlertError alert)
             {
                 Instance.AppendError(alert.GetJsonFormatString());
@@ -735,45 +786,54 @@ namespace TestHardwareDemo.WinForm.Views
                     Thread.Sleep(1000);
                 }
             }
-            private void DoCapture()
+            void DoCaptureService(CancellationToken token)
             {
-                while (true)
+                try
                 {
-                    var secondInterval = Setting.CaptureSecondInterval * 100;
-                    var thirdInterval = Setting.CaptureThirdInterval * 100;
-                    var interval = Setting.CaptureInterval * 100;
-                    try
+                    while (!token.IsCancellationRequested)
                     {
-                        foreach (var item in KeyDic.Values.ToList())
+                        var secondInterval = Setting.CaptureSecondInterval * 100;
+                        var thirdInterval = Setting.CaptureThirdInterval * 100;
+                        var interval = Setting.CaptureInterval * 100;
+                        try
                         {
-                            var keyMain = $"RFID:Capture:{item.Key}:";
-                            var key2Lock = CacheConcurrentLockModel<ShenBanReaderContent>.Get(keyMain + "Second");
-                            if (Monitor.TryEnter(key2Lock)) // 第二张照片已经在处理就不需要别的在做了
+                            foreach (var item in KeyDic.Values.ToList())
                             {
-                                if (!item.HasSecond && (DateTime.Now - item.Time).TotalMilliseconds > secondInterval)
+                                var keyMain = $"RFID:Capture:{item.Key}:";
+                                var key2Lock = CacheConcurrentLockModel<ShenBanReaderContent>.Get(keyMain + "Second");
+                                if (Monitor.TryEnter(key2Lock)) // 第二张照片已经在处理就不需要别的在做了
                                 {
-                                    Instance.AppendInfo($"保存第二张截图并移除=>{item.GetJsonFormatString()}");
-                                    Thread.Sleep(1000);
-                                    item.HasSecond = true;
+                                    if (!item.HasSecond && (DateTime.Now - item.Time).TotalMilliseconds > secondInterval)
+                                    {
+                                        Instance.AppendInfo($"保存第二张截图并移除=>{item.GetJsonFormatString()}");
+                                        Task.Delay(1000, token).Wait();
+                                        item.HasSecond = true;
+                                    }
+                                    Monitor.Exit(key2Lock);
                                 }
-                                Monitor.Exit(key2Lock);
-                            }
-                            var key5Lock = CacheConcurrentLockModel<ShenBanReaderContent>.Get(keyMain + "Third");
-                            if (Monitor.TryEnter(key5Lock)) // 第三张照片已经在处理就不需要别的在做了,后摄像头拍第三张
-                            {
-                                if (!item.HasThird && (DateTime.Now - item.Time).TotalMilliseconds > thirdInterval)
+                                var key5Lock = CacheConcurrentLockModel<ShenBanReaderContent>.Get(keyMain + "Third");
+                                if (Monitor.TryEnter(key5Lock)) // 第三张照片已经在处理就不需要别的在做了,后摄像头拍第三张
                                 {
-                                    Instance.AppendInfo($"保存第三张截图并移除=>{item.GetJsonFormatString()}");
-                                    Thread.Sleep(1000);
-                                    item.HasThird = true;
+                                    if (!item.HasThird && (DateTime.Now - item.Time).TotalMilliseconds > thirdInterval)
+                                    {
+                                        Instance.AppendInfo($"保存第三张截图并移除=>{item.GetJsonFormatString()}");
+                                        Task.Delay(1000, token).Wait();
+                                        item.HasThird = true;
+                                    }
+                                    Monitor.Exit(key5Lock);
                                 }
-                                Monitor.Exit(key5Lock);
                             }
                         }
+                        catch { }
+                        Task.Delay(interval, token).Wait(); // 休息一会
                     }
-                    catch { }
-                    Thread.Sleep(interval); // 休息一会
                 }
+                catch { }
+            }
+
+            internal void SetAuto(bool v)
+            {
+                _reader.SetAutoRead(v);
             }
             #endregion
             #region // 内部类
@@ -1579,7 +1639,7 @@ namespace TestHardwareDemo.WinForm.Views
             this.CbxSerialPort.Text = item.Address;
             this.CbxPortRate.Text = item.Port.ToString();
             this.CbxRfidAnt.Text = item.Ant.ToString();
-            this.ChkReadMode.Checked = true;
+            this.ChkReadMode.Checked = item.Flag == 1;
         }
 
         private void BtnRefreshPort_Click(object sender, EventArgs e)
@@ -1597,6 +1657,48 @@ namespace TestHardwareDemo.WinForm.Views
                     this.CbxSerialPort.SelectedIndex = 0;
                 }
             }
+        }
+        /// <summary>
+        /// 清理所有正在使用的资源。
+        /// </summary>
+        protected override void OnHandleDestroyed(EventArgs e)
+        {
+            _isDestroying = true;
+            try
+            {
+                _guardianCts.Cancel();
+                _guardianService = null;
+            }
+            catch { }
+            try
+            {
+                _downloadCts.Cancel();
+                _downloadService = null;
+            }
+            catch { }
+            try
+            {
+                _uploadCts.Cancel();
+                _uploadService = null;
+            }
+            catch { }
+            Thread.Sleep(1000);
+            try
+            {
+
+                if (Monitor.TryEnter(_rfidProcess, 1000 * 1000))
+                {
+                    foreach (var item in RfidDic.Keys.ToList()) // 移除掉已经释放的
+                    {
+                        if (RfidDic.Remove(item, out var work))
+                        {
+                            work.Dispose();
+                        }
+                    }
+                }
+            }
+            catch { }
+            base.OnHandleDestroyed(e);
         }
     }
 }

@@ -168,7 +168,7 @@
             this.button_q.TabIndex = 20;
             this.button_q.Text = "启动队列";
             this.button_q.UseVisualStyleBackColor = true;
-            this.button_q.Click += new System.EventHandler(this.button_q_Click);
+            this.button_q.Click += new System.EventHandler(this.Button_q_Click);
             // 
             // Btn_ResgisMsg
             // 

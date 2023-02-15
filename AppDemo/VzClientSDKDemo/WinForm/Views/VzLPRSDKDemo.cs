@@ -6,6 +6,7 @@ using System.Data.Cobber;
 using System.Data.Extter;
 using System.Data.VzClientSDK;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -56,7 +57,7 @@ namespace VzClientSDK.WinForm.Views
                 m_bFirst = true;
                 m_bFindDev = false;
 
-                outputbox.SelectedIndex = 0;
+                //outputbox.SelectedIndex = 0;
 
                 m_gpio_recvCB = new VZLPRC_GPIO_RECV_CALLBACK(OnGPIORecv);
             }
@@ -244,45 +245,45 @@ namespace VzClientSDK.WinForm.Views
             hwndMain = this.Handle;
 
             m_sAppPath = System.IO.Directory.GetCurrentDirectory();
-            m_originalColor = pictureBox1.BackColor;
+            //m_originalColor = pictureBox1.BackColor;
             m_bFirst = true;
             m_bFindDev = false;
 
-            txtSerialNum.Enabled = false;
+            //txtSerialNum.Enabled = false;
 
-            outputbox.SelectedIndex = 0;
+            //outputbox.SelectedIndex = 0;
 
-            m_gpio_recvCB = new VzClientSDK.VZLPRC_GPIO_RECV_CALLBACK(OnGPIORecv);
+            m_gpio_recvCB = new VZLPRC_GPIO_RECV_CALLBACK(OnGPIORecv);
         }
 
         private void btnOpen_Click(object sender, EventArgs e)
         {
-            short nPort = Int16.Parse(txtPort.Text);
+            //short nPort = Int16.Parse(txtPort.Text);
 
-            int handle = 0;
+            //int handle = 0;
 
-            if (chkPDNS.Checked)
-            {
-                handle = VzClientSDK.VzLPRClient_OpenV2(txtIP.Text, (ushort)nPort, txtUserName.Text, txtPwd.Text, 8557, 1, txtSerialNum.Text);
-            }
-            else
-            {
-                handle = VzClientSDK.VzLPRClient_Open(txtIP.Text, (ushort)nPort, txtUserName.Text, txtPwd.Text);
-            }
+            //if (chkPDNS.Checked)
+            //{
+            //    handle = VzClientSDK.VzLPRClient_OpenV2(txtIP.Text, (ushort)nPort, txtUserName.Text, txtPwd.Text, 8557, 1, txtSerialNum.Text);
+            //}
+            //else
+            //{
+            //    handle = VzClientSDK.VzLPRClient_Open(txtIP.Text, (ushort)nPort, txtUserName.Text, txtPwd.Text);
+            //}
 
-            if (handle == 0)
-            {
-                MessageBox.Show("打开设备失败！");
-                return;
-            }
+            //if (handle == 0)
+            //{
+            //    MessageBox.Show("打开设备失败！");
+            //    return;
+            //}
 
-            VzClientSDK.VzLPRClient_SetIsShowPlateRect(handle, 0);
+            //VzClientSDK.VzLPRClient_SetIsShowPlateRect(handle, 0);
 
-            TreeNode node = new TreeNode(txtIP.Text);
-            node.Tag = handle;
-            treeDevice.Nodes.Add(node);
+            //TreeNode node = new TreeNode(txtIP.Text);
+            //node.Tag = handle;
+            //treeDevice.Nodes.Add(node);
 
-            treeDevice.SelectedNode = node;
+            //treeDevice.SelectedNode = node;
         }
 
         public void RecordReset(object source, System.Timers.ElapsedEventArgs e)
@@ -380,7 +381,7 @@ namespace VzClientSDK.WinForm.Views
             }
 
             VzClientSDK.VzLPRClient_Close(lprHandle);
-            treeDevice.Nodes.Remove(treeDevice.SelectedNode);
+            //treeDevice.Nodes.Remove(treeDevice.SelectedNode);
 
             //停止搜索设备
             if (m_bFindDev)
@@ -399,11 +400,11 @@ namespace VzClientSDK.WinForm.Views
         {
             Pic1CloseThread Pic1CloseDelegate = delegate ()
             {
-                pictureBox1.Image = null;
-                pictureBox1.Refresh();
-                pictureBox1.Tag = 0;
+                //pictureBox1.Image = null;
+                //pictureBox1.Refresh();
+                //pictureBox1.Tag = 0;
             };
-            pictureBox1.Invoke(Pic1CloseDelegate);
+            //pictureBox1.Invoke(Pic1CloseDelegate);
         }
 
         //关闭第二个窗口
@@ -412,10 +413,10 @@ namespace VzClientSDK.WinForm.Views
         {
             Pic2CloseThread Pic2CloseDelegate = delegate ()
             {
-                pictureBox2.Image = null;
-                pictureBox2.Refresh();
+                //pictureBox2.Image = null;
+                //pictureBox2.Refresh();
             };
-            pictureBox2.Invoke(Pic2CloseDelegate);
+            //pictureBox2.Invoke(Pic2CloseDelegate);
         }
 
         //关闭第三个窗口
@@ -424,11 +425,11 @@ namespace VzClientSDK.WinForm.Views
         {
             Pic2CloseThread Pic3CloseDelegate = delegate ()
             {
-                pictureBox3.Image = null;
-                pictureBox3.Refresh();
-                pictureBox3.Tag = 0;
+                //pictureBox3.Image = null;
+                //pictureBox3.Refresh();
+                //pictureBox3.Tag = 0;
             };
-            pictureBox3.Invoke(Pic3CloseDelegate);
+            //pictureBox3.Invoke(Pic3CloseDelegate);
         }
 
         //关闭第四个窗口
@@ -437,11 +438,11 @@ namespace VzClientSDK.WinForm.Views
         {
             Pic1CloseThread Pic4CloseDelegate = delegate ()
             {
-                pictureBox4.Image = null;
-                pictureBox4.Refresh();
+                //pictureBox4.Image = null;
+                //pictureBox4.Refresh();
             };
 
-            pictureBox4.Invoke(Pic4CloseDelegate);
+            //pictureBox4.Invoke(Pic4CloseDelegate);
         }
 
         private void btnClose_Click(object sender, EventArgs e)
@@ -477,7 +478,7 @@ namespace VzClientSDK.WinForm.Views
             }
 
             VzClientSDK.VzLPRClient_Close(lprHandle);
-            treeDevice.Nodes.Remove(treeDevice.SelectedNode);
+            //treeDevice.Nodes.Remove(treeDevice.SelectedNode);
         }
 
         // 手动触发识别
@@ -499,6 +500,13 @@ namespace VzClientSDK.WinForm.Views
         // 抓图功能
         private void btnCap_Click(object sender, EventArgs e)
         {
+            int lprHandle = GetSeleHandle();
+            if (lprHandle == 0)
+            {
+                MessageBox.Show("请选择一台列表中的设备");
+                return;
+            }
+
             DateTime now = DateTime.Now;
             string sTime = string.Format("{0:yyyyMMddHHmmssffff}", now);
 
@@ -509,6 +517,8 @@ namespace VzClientSDK.WinForm.Views
             }
 
             string path = strFilePath + sTime + ".jpg";
+
+            VzClientSDK.VzLPRClient_SaveSnapImageToJpeg(lprHandle, strFilePath + sTime + "-2.jpg");
 
             int ret = -1;
 
@@ -585,8 +595,8 @@ namespace VzClientSDK.WinForm.Views
         {
             TreeNode node = new TreeNode(pStrDev);
             node.Tag = serialNO;
-            dev_treeview.Nodes.Add(node);
-            dev_treeview.Sort();
+            //dev_treeview.Nodes.Add(node);
+            //dev_treeview.Sort();
         }
 
         private void FIND_DEVICE_CALLBACK_EX(string pStrDevName, string pStrIPAddr, ushort usPort1, ushort usPort2, uint SL, uint SH, string netmask, string gateway, IntPtr pUserData)
@@ -594,7 +604,7 @@ namespace VzClientSDK.WinForm.Views
             string pStrDev = pStrIPAddr.ToString() + ":" + usPort1.ToString();
             string serialNO = SL.ToString() + ":" + SH.ToString() + ":" + netmask + ":" + gateway;
 
-            VzClientSDK.VZ_LPR_DEVICE_INFO device_info = new VzClientSDK.VZ_LPR_DEVICE_INFO();
+            VZ_LPR_DEVICE_INFO device_info = new VZ_LPR_DEVICE_INFO();
             device_info.device_ip = pStrDev;
             device_info.serial_no = serialNO;
 
@@ -609,8 +619,8 @@ namespace VzClientSDK.WinForm.Views
         {
             VzClientSDK.VZLPRClient_StopFindDevice();
 
-            dev_treeview.Nodes.Clear();
-            find_DeviceCB = new VzClientSDK.VZLPRC_FIND_DEVICE_CALLBACK_EX(FIND_DEVICE_CALLBACK_EX);
+            //dev_treeview.Nodes.Clear();
+            find_DeviceCB = new VZLPRC_FIND_DEVICE_CALLBACK_EX(FIND_DEVICE_CALLBACK_EX);
             int ret = VzClientSDK.VZLPRClient_StartFindDeviceEx(find_DeviceCB, IntPtr.Zero);
             if (ret == 0)
             {
@@ -627,7 +637,7 @@ namespace VzClientSDK.WinForm.Views
                 return;
             }
 
-            VzClientSDK.VzLPRClient_SetLEDLightControlMode(lprHandle, VzClientSDK.VZ_LED_CTRL.VZ_LED_AUTO);
+            VzClientSDK.VzLPRClient_SetLEDLightControlMode(lprHandle, VZ_LED_CTRL.VZ_LED_AUTO);
         }
 
         private void radioButton2_CheckedChanged(object sender, EventArgs e)
@@ -639,7 +649,7 @@ namespace VzClientSDK.WinForm.Views
                 return;
             }
 
-            VzClientSDK.VzLPRClient_SetLEDLightControlMode(lprHandle, VzClientSDK.VZ_LED_CTRL.VZ_LED_MANUAL_ON);
+            VzClientSDK.VzLPRClient_SetLEDLightControlMode(lprHandle, VZ_LED_CTRL.VZ_LED_MANUAL_ON);
         }
 
         private void radioButton3_CheckedChanged(object sender, EventArgs e)
@@ -651,7 +661,7 @@ namespace VzClientSDK.WinForm.Views
                 return;
             }
 
-            VzClientSDK.VzLPRClient_SetLEDLightControlMode(lprHandle, VzClientSDK.VZ_LED_CTRL.VZ_LED_MANUAL_OFF);
+            VzClientSDK.VzLPRClient_SetLEDLightControlMode(lprHandle, VZ_LED_CTRL.VZ_LED_MANUAL_OFF);
         }
 
         private void trackBar1_Scroll(object sender, EventArgs e)
@@ -663,18 +673,18 @@ namespace VzClientSDK.WinForm.Views
                 return;
             }
 
-            int nValue = ledbar.Value - 1;
+            //int nValue = ledbar.Value - 1;
 
             int nLevelNow = 0;
             int nLevelMax = 0;
 
             VzClientSDK.VzLPRClient_GetLEDLightStatus(lprHandle, ref nLevelNow, ref nLevelMax);
             m_nLastLEDLevel = nLevelNow;
-            if (nValue != nLevelNow)
-            {
-                VzClientSDK.VzLPRClient_SetLEDLightLevel(lprHandle, nValue);
-                m_nLastLEDLevel = nValue;
-            }
+            //if (nValue != nLevelNow)
+            //{
+            //    VzClientSDK.VzLPRClient_SetLEDLightLevel(lprHandle, nValue);
+            //    m_nLastLEDLevel = nValue;
+            //}
         }
 
         private void recordbtn_Click(object sender, EventArgs e)
@@ -701,8 +711,8 @@ namespace VzClientSDK.WinForm.Views
                 DateTime.Now.Hour.ToString() + DateTime.Now.Minute.ToString() + DateTime.Now.Second.ToString() +
                 ".avi";
             VzClientSDK.VzLPRClient_SaveRealData(lprHandle, szPath);
-            recordbtn.Enabled = false;
-            stoprecordbtn.Enabled = true;
+            //recordbtn.Enabled = false;
+            //stoprecordbtn.Enabled = true;
         }
 
         private void stoprecordbtn_Click(object sender, EventArgs e)
@@ -716,8 +726,8 @@ namespace VzClientSDK.WinForm.Views
 
             VzClientSDK.VzLPRClient_StopSaveRealData(lprHandle);
             resetrecordtime.Close();
-            stoprecordbtn.Enabled = false;
-            recordbtn.Enabled = true;
+            //stoprecordbtn.Enabled = false;
+            //recordbtn.Enabled = true;
         }
 
         private void stoprealplaybtn_Click(object sender, EventArgs e)
@@ -767,14 +777,14 @@ namespace VzClientSDK.WinForm.Views
                 return;
             }
 
-            if (check_set_offline.Checked)
-            {
-                VzClientSDK.VzLPRClient_SetOfflineCheck(lprHandle);
-            }
-            else
-            {
-                VzClientSDK.VzLPRClient_CancelOfflineCheck(lprHandle);
-            }
+            //if (check_set_offline.Checked)
+            //{
+            //    VzClientSDK.VzLPRClient_SetOfflineCheck(lprHandle);
+            //}
+            //else
+            //{
+            //    VzClientSDK.VzLPRClient_CancelOfflineCheck(lprHandle);
+            //}
         }
 
         private void stopsearchdev_Click(object sender, EventArgs e)
@@ -818,7 +828,7 @@ namespace VzClientSDK.WinForm.Views
 
             if (m_bFirst)
             {
-                pictureBox1.Image = null;
+                //pictureBox1.Image = null;
                 if (m_nPlayHandle > 0)
                 {
                     VzClientSDK.VzLPRClient_StopRealPlay(m_nPlayHandle);
@@ -831,18 +841,18 @@ namespace VzClientSDK.WinForm.Views
                     VzClientSDK.VzLPRClient_SetPlateInfoCallBack(lprHandle1, null, IntPtr.Zero, 0);
                 }
 
-                m_nPlayHandle = VzClientSDK.VzLPRClient_StartRealPlay(lprHandle, pictureBox1.Handle);
-                pictureBox1.Tag = lprHandle;
+                //m_nPlayHandle = VzClientSDK.VzLPRClient_StartRealPlay(lprHandle, pictureBox1.Handle);
+                //pictureBox1.Tag = lprHandle;
 
                 // 设置车牌识别结果回调
-                m_PlateResultCB = new VzClientSDK.VZLPRC_PLATE_INFO_CALLBACK(OnPlateResult);
+                m_PlateResultCB = new VZLPRC_PLATE_INFO_CALLBACK(OnPlateResult);
                 VzClientSDK.VzLPRClient_SetPlateInfoCallBack(lprHandle, m_PlateResultCB, IntPtr.Zero, 1);
 
                 VzClientSDK.VzLPRClient_SetGPIORecvCallBack(lprHandle, m_gpio_recvCB, IntPtr.Zero);
             }
             else
             {
-                pictureBox3.Image = null;
+                //pictureBox3.Image = null;
                 if (m_nPlayHandle2 > 0)
                 {
                     VzClientSDK.VzLPRClient_StopRealPlay(m_nPlayHandle2);
@@ -855,11 +865,11 @@ namespace VzClientSDK.WinForm.Views
                     VzClientSDK.VzLPRClient_SetPlateInfoCallBack(lprHandle2, null, IntPtr.Zero, 0);
                 }
 
-                m_nPlayHandle2 = VzClientSDK.VzLPRClient_StartRealPlay(lprHandle, pictureBox3.Handle);
-                pictureBox3.Tag = lprHandle;
+                //m_nPlayHandle2 = VzClientSDK.VzLPRClient_StartRealPlay(lprHandle, pictureBox3.Handle);
+                //pictureBox3.Tag = lprHandle;
 
                 // 设置车牌识别结果回调
-                m_PlateResultCB2 = new VzClientSDK.VZLPRC_PLATE_INFO_CALLBACK(OnPlateResult);
+                m_PlateResultCB2 = new VZLPRC_PLATE_INFO_CALLBACK(OnPlateResult);
                 VzClientSDK.VzLPRClient_SetPlateInfoCallBack(lprHandle, m_PlateResultCB2, IntPtr.Zero, 1);
             }
 
@@ -906,7 +916,7 @@ namespace VzClientSDK.WinForm.Views
                 return;
             }
 
-            VzClientSDK.VzLPRClient_SetIOOutput(lprHandle, outputbox.SelectedIndex, outputcheck.Checked ? 1 : 0);
+            //VzClientSDK.VzLPRClient_SetIOOutput(lprHandle, outputbox.SelectedIndex, outputcheck.Checked ? 1 : 0);
         }
 
         private void outputbox_SelectedIndexChanged(object sender, EventArgs e)
@@ -919,23 +929,23 @@ namespace VzClientSDK.WinForm.Views
 
             int nOutRT = -1;
 
-            int rt = VzClientSDK.VzLPRClient_GetIOOutput(lprHandle, outputbox.SelectedIndex, ref nOutRT);
-            outputcheck.Checked = (nOutRT == 1) ? true : false;
+            //int rt = VzClientSDK.VzLPRClient_GetIOOutput(lprHandle, outputbox.SelectedIndex, ref nOutRT);
+            //outputcheck.Checked = (nOutRT == 1) ? true : false;
         }
 
         private void dev_treeview_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            string ipstr = dev_treeview.SelectedNode.Text;
-            int temp = ipstr.IndexOf(":");
-            txtIP.Text = ipstr.Substring(0, temp);
-            txtPort.Text = ipstr.Substring(temp + 1);
+            //string ipstr = dev_treeview.SelectedNode.Text;
+            //int temp = ipstr.IndexOf(":");
+            //txtIP.Text = ipstr.Substring(0, temp);
+            //txtPort.Text = ipstr.Substring(temp + 1);
         }
 
         protected override void DefWndProc(ref Message m)
         {
             IntPtr intptr;
-            VzClientSDK.VZ_LPR_MSG_PLATE_INFO plateInfo;
-            VzClientSDK.VZ_LPR_DEVICE_INFO deviceInfo;
+            VZ_LPR_MSG_PLATE_INFO plateInfo;
+            VZ_LPR_DEVICE_INFO deviceInfo;
 
             int handle = 0;
 
@@ -954,20 +964,20 @@ namespace VzClientSDK.WinForm.Views
                         string strIP = System.Text.Encoding.Default.GetString(strDecIP);
                         strIP = strIP.TrimEnd('\0');
 
-                        plateInfo = (VzClientSDK.VZ_LPR_MSG_PLATE_INFO)Marshal.PtrToStructure(intptr, typeof(VzClientSDK.VZ_LPR_MSG_PLATE_INFO));
+                        plateInfo = (VZ_LPR_MSG_PLATE_INFO)Marshal.PtrToStructure(intptr, typeof(VZ_LPR_MSG_PLATE_INFO));
 
                         if (handle == GetPicBox1Handle())
                         {
                             // 显示车牌号
                             if (plateInfo.plate != "")
                             {
-                                lblPlate.Text = plateInfo.plate;
+                                //lblPlate.Text = plateInfo.plate;
                             }
 
                             // 显示图片
                             if (plateInfo.img_path != "")
                             {
-                                pictureBox2.Image = Image.FromFile(plateInfo.img_path);
+                                //pictureBox2.Image = Image.FromFile(plateInfo.img_path);
                             }
                         }
                         else
@@ -975,13 +985,13 @@ namespace VzClientSDK.WinForm.Views
                             // 显示车牌号
                             if (plateInfo.plate != "")
                             {
-                                lblPlate2.Text = plateInfo.plate;
+                                //lblPlate2.Text = plateInfo.plate;
                             }
 
                             // 显示图片
                             if (plateInfo.img_path != "")
                             {
-                                pictureBox4.Image = Image.FromFile(plateInfo.img_path);
+                                //pictureBox4.Image = Image.FromFile(plateInfo.img_path);
                             }
                         }
 
@@ -995,7 +1005,7 @@ namespace VzClientSDK.WinForm.Views
                     intptr = (IntPtr)m.WParam.ToInt32();
                     if (intptr != null)
                     {
-                        deviceInfo = (VzClientSDK.VZ_LPR_DEVICE_INFO)Marshal.PtrToStructure(intptr, typeof(VzClientSDK.VZ_LPR_DEVICE_INFO));
+                        deviceInfo = (VZ_LPR_DEVICE_INFO)Marshal.PtrToStructure(intptr, typeof(VZ_LPR_DEVICE_INFO));
                         ShowDevice(deviceInfo.device_ip, deviceInfo.serial_no);
 
                         Marshal.FreeHGlobal(intptr);
@@ -1064,11 +1074,11 @@ namespace VzClientSDK.WinForm.Views
         {
             int handle = 0;
 
-            if (treeDevice.SelectedNode != null)
-            {
-                string sHandle = treeDevice.SelectedNode.Tag.ToString();
-                handle = Int32.Parse(sHandle);
-            }
+            //if (treeDevice.SelectedNode != null)
+            //{
+            //    string sHandle = treeDevice.SelectedNode.Tag.ToString();
+            //    handle = Int32.Parse(sHandle);
+            //}
 
             return handle;
         }
@@ -1076,18 +1086,18 @@ namespace VzClientSDK.WinForm.Views
         private void pictureBox1_Click(object sender, EventArgs e)
         {
             Color c = Color.FromArgb(255, 220, 220, 220);
-            pictureBox1.BackColor = c;
+            //pictureBox1.BackColor = c;
 
-            pictureBox3.BackColor = m_originalColor;
+            //pictureBox3.BackColor = m_originalColor;
             m_bFirst = true;
         }
 
         private void pictureBox3_Click(object sender, EventArgs e)
         {
-            pictureBox1.BackColor = m_originalColor;
+            //pictureBox1.BackColor = m_originalColor;
 
-            Color c = Color.FromArgb(255, 220, 220, 220);
-            pictureBox3.BackColor = c;
+            //Color c = Color.FromArgb(255, 220, 220, 220);
+            //pictureBox3.BackColor = c;
             m_bFirst = false;
         }
 
@@ -1095,11 +1105,11 @@ namespace VzClientSDK.WinForm.Views
         {
             int handle = 0;
 
-            if (pictureBox1.Tag != null)
-            {
-                string sHandle = pictureBox1.Tag.ToString();
-                handle = Int32.Parse(sHandle);
-            }
+            //if (pictureBox1.Tag != null)
+            //{
+            //    string sHandle = pictureBox1.Tag.ToString();
+            //    handle = Int32.Parse(sHandle);
+            //}
 
             return handle;
         }
@@ -1108,11 +1118,11 @@ namespace VzClientSDK.WinForm.Views
         {
             int handle = 0;
 
-            if (pictureBox3.Tag != null)
-            {
-                string sHandle = pictureBox3.Tag.ToString();
-                handle = Int32.Parse(sHandle);
-            }
+            //if (pictureBox3.Tag != null)
+            //{
+            //    string sHandle = pictureBox3.Tag.ToString();
+            //    handle = Int32.Parse(sHandle);
+            //}
 
             return handle;
         }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 
 namespace System.Data.VzClientSDK
@@ -295,6 +296,13 @@ namespace System.Data.VzClientSDK
         */
         public delegate int VzLPRClient_GetSnapShootToJpeg2(int nPlayHandle, string pFullPathName, int nQuality);
 
+        /// <summary>
+        /// 保存抓图数据到Jpeg文件
+        /// </summary>
+        /// <param name="handle">由VzLPRClient_Open函数获得的句柄</param>
+        /// <param name="pFullPathName">图片路径</param>
+        /// <returns>返回值为0表示成功，返回其他值表示失败</returns>
+        public delegate int VzLPRClient_SaveSnapImageToJpeg(int handle, string pFullPathName);
         /**
         *  @brief 开启透明通道
         *  @param  [IN] handle 由VzLPRClient_Open函数获得的句柄

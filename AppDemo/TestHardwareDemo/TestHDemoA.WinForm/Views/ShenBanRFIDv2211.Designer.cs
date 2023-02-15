@@ -209,7 +209,7 @@
             this.BtnConnAdd.Name = "BtnConnAdd";
             this.BtnConnAdd.Size = new System.Drawing.Size(60, 30);
             this.BtnConnAdd.TabIndex = 8;
-            this.BtnConnAdd.Text = "添加";
+            this.BtnConnAdd.Text = "连接";
             this.BtnConnAdd.UseVisualStyleBackColor = true;
             this.BtnConnAdd.Click += new System.EventHandler(this.BtnConnAdd_Click);
             // 

@@ -10,6 +10,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TestHardwareDemo.WinForm.Components;
@@ -196,15 +197,14 @@ namespace TestHardwareDemo.WinForm.Views
                 TH_PlateResult result = (TH_PlateResult)Marshal.PtrToStructure(pResult, typeof(TH_PlateResult));
                 carno = new string(result.license).Trim('\0');
                 string strFilePath = Path.GetFullPath("temp");
-                if (!Directory.Exists(strFilePath))
-                {
-                    Directory.CreateDirectory(strFilePath);
-                }
+                if (!Directory.Exists(strFilePath)) { Directory.CreateDirectory(strFilePath); }
                 var fileName = $"{DateTime.Now:yyyyMMddHHmmssffff}";
                 fullPath = Path.Combine(strFilePath, $"{fileName}-1.jpg");
-                VzClientSDK.VzLPRClient_ImageSaveToJpeg(pImgFull, fullPath, 100);
+                if (IntPtr.Zero == pImgFull || VzClientSDK.VzLPRClient_ImageSaveToJpeg(pImgFull, fullPath, 50) == -1)
+                { AppendError($"【{fileName}-1.jpg】全景图保存失败[{pImgFull}]"); }
                 clipPath = Path.Combine(strFilePath, $"{fileName}-2.jpg");
-                VzClientSDK.VzLPRClient_ImageSaveToJpeg(pImgPlateClip, clipPath, 100);
+                if (IntPtr.Zero == pImgPlateClip || VzClientSDK.VzLPRClient_ImageSaveToJpeg(pImgPlateClip, clipPath, 50) == -1)
+                { AppendError($"【{fileName}-2.jpg】细节图保存失败[{pImgPlateClip}]"); }
             }
             catch (Exception ex)
             {
@@ -314,6 +314,7 @@ namespace TestHardwareDemo.WinForm.Views
         #endregion
 
         private VzLPRSDKDemoNetSearch _subNetSearch;
+        private VzLPRSDKDemoNetIOValue _subNetIOValue;
         private void BtnNetSearch_Click(object sender, EventArgs e)
         {
             var model = _subNetSearch;
@@ -376,7 +377,6 @@ namespace TestHardwareDemo.WinForm.Views
             AppendInfo($"{pStrIPAddr}-{netmask}-{gateway}-{usPort1}-{usPort2}-{SL}-{SH}-{pUserData}-{pStrDevName}");
             _subNetSearch.SearchCallback($"{pStrIPAddr}-{netmask}-{gateway}-{usPort1}-{usPort2}-{SL}-{SH}-{pUserData}-{pStrDevName}");
         }
-
         private void TsmiForceTrigger_Click(object sender, EventArgs e)
         {
             var config = GetContentModel();
@@ -386,6 +386,78 @@ namespace TestHardwareDemo.WinForm.Views
                 return;
             }
             VzClientSDK.VzLPRClient_ForceTrigger(config.Handler);
+        }
+        private void TmsrRealCapture_Click(object sender, EventArgs e)
+        {
+            var config = GetContentModel();
+            if (config.Handle == IntPtr.Zero)
+            {
+                AppendError("请连接设备进行操作");
+                return;
+            }
+            var fullPath = Path.Combine(Path.GetFullPath("temp"), $"{DateTime.Now.Ticks}-11.jpg");
+            if (VzClientSDK.VzLPRClient_SaveSnapImageToJpeg(config.Handler, fullPath) == 0)
+            {
+                AppendSuccess($"截图成功[{fullPath}]");
+            }
+            else
+            {
+                AppendError($"截图成功[{fullPath}]");
+            }
+        }
+        private void TsmiGetSetIOValue_Click(object sender, EventArgs e)
+        {
+            var model = _subNetIOValue;
+            if (model == null)
+            {
+                model = _subNetIOValue = new VzLPRSDKDemoNetIOValue();
+                model.GetSetIOValue = (isSet, isNum2, isOpen) =>
+                {
+                    var config = GetContentModel();
+                    if (config.Handle == IntPtr.Zero)
+                    {
+                        AppendError("请连接设备进行操作");
+                        return false;
+                    }
+                    if (isSet)
+                    {
+                        var res = VzClientSDK.VzLPRClient_SetIOOutput(config.Handler, isNum2 ? 1 : 0, isOpen ? 1 : 0);
+                        if (res == 0)
+                        {
+                            AppendSuccess($"设置开关量输出{(isNum2 ? 2 : 1)}值为{(isOpen ? 1 : 0)}成功");
+                            return isOpen;
+                        }
+                        AppendError($"设置开关量输出{(isNum2 ? 2 : 1)}值为{(isOpen ? 1 : 0)}失败");
+                        return isOpen;
+                    }
+                    if (isOpen)
+                    {
+                        int[] test = new int[1];
+                        GCHandle hObject = GCHandle.Alloc(test, GCHandleType.Pinned);
+                        IntPtr pObject = hObject.AddrOfPinnedObject();
+                        int ret = VzClientSDK.VzLPRClient_GetGPIOValue(config.Handler, isNum2 ? 1 : 0, pObject);
+                        var outVal = test[0];
+                        if (hObject.IsAllocated) { hObject.Free(); }
+                        if (ret == 0)
+                        {
+                            AppendSuccess($"获取开关量输入{(isNum2 ? 2 : 1)}值为{outVal}成功");
+                            return outVal == 1;
+                        }
+                        AppendError($"获取开关量输入{(isNum2 ? 2 : 1)}值为{outVal}失败");
+                        return outVal == 1;
+                    }
+                    int resOut = 0;
+                    var resGet = VzClientSDK.VzLPRClient_GetIOOutput(config.Handler, isNum2 ? 1 : 0, ref resOut);
+                    if (resGet == 0)
+                    {
+                        AppendSuccess($"获取开关量输出{(isNum2 ? 2 : 1)}值为{resOut}成功");
+                        return resOut == 1;
+                    }
+                    AppendError($"获取开关量输出{(isNum2 ? 2 : 1)}值为{resOut}失败");
+                    return resOut == 1;
+                };
+            }
+            TryAddConfigContent(this.PnlTabCnt3, model);
         }
     }
 }

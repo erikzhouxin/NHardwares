@@ -93,6 +93,7 @@ namespace TestHardwareDemo.WinForm.Views
                         DataBits = DataBitsType.Len8,
                         Parity = DataParityType.Unknown,
                         StopBits = StopBitsType.One,
+                        ThresholdLen = 30,
                     });
                 }
                 this.CbxNetConfigs.Items.Add(key);
@@ -132,6 +133,7 @@ namespace TestHardwareDemo.WinForm.Views
                 }
             }
         }
+        public override RichTextBox ThisTxtLogger => this.TxtLogger;
         #endregion 基础内容
         private void BtnNetConfigConnect_Click(object sender, EventArgs e)
         {
@@ -179,7 +181,7 @@ namespace TestHardwareDemo.WinForm.Views
             _config = model.Value.CreateRecBarCode();
             _config.Errored = RecBarCodeErrored;
             _config.Received = RecBarCodeReceived;
-            this.TxtNetConfigIp.Text = model.Value.PortName;
+            this.TxtNetConfigIp.Text = model.Value.PortName ?? string.Empty;
             this.TxtNetConfigPort.Text = model.Value.PortRate.ToString();
             if (!_config.Connect(out Exception ex))
             {
@@ -214,6 +216,15 @@ namespace TestHardwareDemo.WinForm.Views
                 System.IO.File.WriteAllText(_configPath, _devices.Select(s => new Tuble8String() { Item1 = s.Value.PortName, Item2 = s.Value.PortRate.ToString() }).GetJsonFormatString());
             }
             catch { }
+        }
+
+        /// <summary>
+        /// 清理所有正在使用的资源。
+        /// </summary>
+        protected override void OnHandleDestroyed(EventArgs e)
+        {
+            _config.Dispose();
+            base.OnHandleDestroyed(e);
         }
     }
 }

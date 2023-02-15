@@ -21,313 +21,268 @@ namespace System.Data.VzClientSDK
         /// <param name="Source"></param>
         /// <param name="Length"></param>
         void CopyMemory(IntPtr Destination, IntPtr Source, int Length);
-
-        /**
-        *  @brief 全局初始化，在所有接口调用之前调用
-        *  @return 0表示成功，-1表示失败
-        */
+        /// <summary>
+        /// 全局初始化，在所有接口调用之前调用
+        /// </summary>
+        /// <returns>0表示成功，-1表示失败</returns>
         int VzLPRClient_Setup();
-
-        /**
-        *  @brief 全局释放
-        */
+        /// <summary>
+        /// 全局释放
+        /// </summary>
         void VzLPRClient_Cleanup();
-
-        /**
-        *  @brief 设置设备连接反馈结果相关的回调函数
-        *  @param  [IN] func 设备连接结果和状态，通过该回调函数返回
-        *  @param [IN] pUserData 回调函数中的上下文
-        *  @return 0表示成功，-1表示失败
-        */
+        /// <summary>
+        /// 设置设备连接反馈结果相关的回调函数
+        /// </summary>
+        /// <param name="func">设备连接结果和状态，通过该回调函数返回</param>
+        /// <param name="pUserData">回调函数中的上下文</param>
+        /// <returns>0表示成功，-1表示失败</returns>
         int VZLPRClient_SetCommonNotifyCallBack(VZLPRC_COMMON_NOTIFY_CALLBACK func, IntPtr pUserData);
-
-        /**
-        *  @brief 打开一个设备
-        *  @param  [IN] pStrIP 设备的IP地址
-        *  @param [IN] wPort 设备的端口号
-        *  @param  [IN] pStrUserName 访问设备所需用户名
-        *  @param [IN] pStrPassword 访问设备所需密码
-        *  @return 返回设备的操作句柄，当打开失败时，返回-1
-        */
+        /// <summary>
+        /// 打开一个设备
+        /// </summary>
+        /// <param name="pStrIP">设备的IP地址</param>
+        /// <param name="wPort">设备的端口号</param>
+        /// <param name="pStrUserName">访问设备所需用户名</param>
+        /// <param name="pStrPassword">访问设备所需密码</param>
+        /// <returns>返回设备的操作句柄，当打开失败时，返回-1</returns>
         int VzLPRClient_Open(string pStrIP, ushort wPort, string pStrUserName, string pStrPassword);
-
-        /**
-         *  @brief 打开一个设备
-         *  @param  [IN] pStrIP 设备的IP地址
-         *  @param  [IN] wPort 设备的端口号
-         *  @param  [IN] pStrUserName 访问设备所需用户名
-         *  @param  [IN] pStrPassword 访问设备所需密码
-         *  @param  [IN] wRtspPort 流媒体的端口号,默认为8557(如果为0表示使用默认端口）
-         *  @param  [IN] network_type 网络类型(0局域网,1外网-PDNS方式)
-         *  @param  [IN] sn 设备序列号
-         *  @return 返回设备的操作句柄，当打开失败时，返回-1
-         */
+        /// <summary>
+        /// 打开一个设备
+        /// </summary>
+        /// <param name="pStrIP">设备的IP地址</param>
+        /// <param name="wPort">设备的端口号</param>
+        /// <param name="pStrUserName">访问设备所需用户名</param>
+        /// <param name="pStrPassword">访问设备所需密码</param>
+        /// <param name="wRtspPort">流媒体的端口号,默认为8557(如果为0表示使用默认端口）</param>
+        /// <param name="network_type">网络类型(0局域网,1外网-PDNS方式)</param>
+        /// <param name="sn">设备序列号</param>
+        /// <returns>返回设备的操作句柄，当打开失败时，返回-1</returns>
         int VzLPRClient_OpenV2(string pStrIP, ushort wPort, string pStrUserName, string pStrPassword, ushort wRtspPort, int network_type, string sn);
-
-        /**
-        *  @brief 关闭一个设备
-        *  @param  [IN] handle 由VzLPRClient_Open函数获得的句柄
-        *  @return 0表示成功，-1表示失败
-        */
+        /// <summary>
+        /// 关闭一个设备
+        /// </summary>
+        /// <param name="handle">由VzLPRClient_Open函数获得的句柄</param>
+        /// <returns>0表示成功，-1表示失败</returns>
         int VzLPRClient_Close(int handle);
-
-        /**
-        *  @brief 通过IP地址关闭一个设备
-        *  @param  [IN] pStrIP 设备的IP地址
-        *  @return 0表示成功，-1表示失败
-        */
+        /// <summary>
+        /// 通过IP地址关闭一个设备
+        /// </summary>
+        /// <param name="pStrIP">设备的IP地址</param>
+        /// <returns>0表示成功，-1表示失败</returns>
         int VzLPRClient_CloseByIP(string pStrIP);
-
-        /**
-        *  @brief 获取连接状态
-        *  @param  [IN] handle 由VzLPRClient_Open函数获得的句柄
-        *  @param[IN/OUT] pStatus 输入获取状态的变量地址，输出内容为 1已连上，0未连上
-        *  @return 0表示成功，-1表示失败
-        */
+        /// <summary>
+        /// 获取连接状态
+        /// </summary>
+        /// <param name="handle">handle 由VzLPRClient_Open函数获得的句柄</param>
+        /// <param name="pStatus">输入获取状态的变量地址，输出内容为 1已连上，0未连上</param>
+        /// <returns>0表示成功，-1表示失败</returns>
         int VzLPRClient_IsConnected(int handle, ref byte pStatus);
-
-        /**
-        *  @brief 根据句柄获取设备的IP
-        *  @param [IN]  handle 由VzLPRClient_Open函数获得的句柄
-        *  @param [OUT] ip  相机IP
-        *  @param [IN] max_count IP传入长度
-        *  @return 返回值为0表示成功，返回其他值表示失败。
-        */
+        /// <summary>
+        /// 根据句柄获取设备的IP
+        /// </summary>
+        /// <param name="handle">由VzLPRClient_Open函数获得的句柄</param>
+        /// <param name="ip">相机IP</param>
+        /// <param name="max_count">IP传入长度</param>
+        /// <returns>返回值为0表示成功，返回其他值表示失败</returns>
         int VzLPRClient_GetDeviceIP(int handle, ref byte ip, int max_count);
-
-        /**
-        *  @brief 播放实时视频
-        *  @param  [IN] handle 由VzLPRClient_Open函数获得的句柄
-        *  @param  [IN] hWnd 窗口的句柄
-        *  @return 播放句柄，小于0表示失败
-        */
+        /// <summary>
+        /// 播放实时视频
+        /// </summary>
+        /// <param name="handle">由VzLPRClient_Open函数获得的句柄</param>
+        /// <param name="hWnd">窗口的句柄</param>
+        /// <returns>播放句柄，小于0表示失败</returns>
         int VzLPRClient_StartRealPlay(int handle, IntPtr hWnd);
-
-        /**
-        *  @brief 停止正在播放的窗口上的实时视频
-        *  @param  [IN] hWnd 窗口的句柄
-        *  @return 0表示成功，-1表示失败
-        */
+        /// <summary>
+        /// 停止正在播放的窗口上的实时视频
+        /// </summary>
+        /// <param name="hRealHandle">窗口的句柄</param>
+        /// <returns>0表示成功，-1表示失败</returns>
         int VzLPRClient_StopRealPlay(int hRealHandle);
-
-        /**
-        *  @brief 设置识别结果的回调函数
-        *  @param  [IN] handle 由VzLPRClient_Open函数获得的句柄
-        *  @param  [IN] func 识别结果回调函数
-        *  @param  [IN] pUserData 回调函数中的上下文
-        *  @param  [IN] bEnableImage 指定识别结果的回调是否需要包含截图信息：1为需要，0为不需要
-        *  @return 0表示成功，-1表示失败
-        */
+        /// <summary>
+        /// 设置识别结果的回调函数
+        /// </summary>
+        /// <param name="handle">由VzLPRClient_Open函数获得的句柄</param>
+        /// <param name="func">识别结果回调函数</param>
+        /// <param name="pUserData">回调函数中的上下文</param>
+        /// <param name="bEnableImage">指定识别结果的回调是否需要包含截图信息：1为需要，0为不需要</param>
+        /// <returns>0表示成功，-1表示失败</returns>
         int VzLPRClient_SetPlateInfoCallBack(int handle, VZLPRC_PLATE_INFO_CALLBACK func, IntPtr pUserData, int bEnableImage);
-
-        /**
-        *  @brief 设置实时图像数据的回调函数
-        *  @param  [IN] handle		由VzLPRClient_Open函数获得的句柄
-        *  @param  [IN] func		实时图像数据函数
-        *  @param  [IN] pUserData	回调函数中的上下文
-        *  @return 0表示成功，-1表示失败
-        *  @ingroup group_device
-        */
+        /// <summary>
+        /// 设置实时图像数据的回调函数
+        /// </summary>
+        /// <param name="handle">由VzLPRClient_Open函数获得的句柄</param>
+        /// <param name="pFunc">实时图像数据函数</param>
+        /// <param name="pUserData">回调函数中的上下文</param>
+        /// <returns>0表示成功，-1表示失败</returns>
         int VzLPRClient_SetVideoFrameCallBack(int handle, VZLPRC_VIDEO_FRAME_CALLBACK pFunc, IntPtr pUserData);
-
-        /**
-        *  @brief 发送软件触发信号，强制处理当前时刻的数据并输出结果
-        *  @param  [IN] handle 由VzLPRClient_Open函数获得的句柄
-        *  @return 0表示成功，-1表示失败
-        */
+        /// <summary>
+        /// 发送软件触发信号，强制处理当前时刻的数据并输出结果
+        /// </summary>
+        /// <param name="handle">由VzLPRClient_Open函数获得的句柄</param>
+        /// <returns>0表示成功，-1表示失败</returns>
         int VzLPRClient_ForceTrigger(int handle);
-
-        /**
-        *  @brief 设置虚拟线圈
-        *  @param  [IN] handle 由VzLPRClient_Open函数获得的句柄
-        *  @param  [IN] pVirtualLoops 虚拟线圈的结构体指针
-        *  @return 0表示成功，-1表示失败
-        */
+        /// <summary>
+        /// 设置虚拟线圈
+        /// </summary>
+        /// <param name="handle">由VzLPRClient_Open函数获得的句柄</param>
+        /// <param name="pVirtualLoops">虚拟线圈的结构体指针</param>
+        /// <returns>0表示成功，-1表示失败</returns>
         int VzLPRClient_SetVirtualLoop(int handle, ref VZ_LPRC_VIRTUAL_LOOPS pVirtualLoops);
-
-        /**
-        *  @brief 获取已设置的虚拟线圈
-        *  @param  [IN] handle 由VzLPRClient_Open函数获得的句柄
-        *  @param  [IN] pVirtualLoops 虚拟线圈的结构体指针
-        *  @return 0表示成功，-1表示失败
-        */
+        /// <summary>
+        /// 获取已设置的虚拟线圈
+        /// </summary>
+        /// <param name="handle">由VzLPRClient_Open函数获得的句柄</param>
+        /// <param name="pVirtualLoops">虚拟线圈的结构体指针</param>
+        /// <returns>0表示成功，-1表示失败</returns>
         int VzLPRClient_GetVirtualLoop(int handle, ref VZ_LPRC_VIRTUAL_LOOPS pVirtualLoops);
-
-        /**
-        *  @brief 获取已设置的识别区域
-        *  @param  [IN] handle 由VzLPRClient_Open函数获得的句柄
-        *  @param  [IN] pROI 识别区域的结构体指针
-        *  @return 0表示成功，-1表示失败
-        *  @ingroup group_device
-        */
+        /// <summary>
+        /// 获取已设置的识别区域
+        /// </summary>
+        /// <param name="handle">由VzLPRClient_Open函数获得的句柄</param>
+        /// <param name="pROI">识别区域的结构体指针</param>
+        /// <returns>0表示成功，-1表示失败</returns>
         int VzLPRClient_GetRegionOfInterestEx(int handle, ref VZ_LPRC_ROI_EX pROI);
-
-        /**
-        *  @brief 获取已设置的预设省份
-        *  @param  [IN] handle 由VzLPRClient_Open函数获得的句柄
-        *  @param  [IN] pProvInfo 预设省份信息指针
-        *  @return 0表示成功，-1表示失败
-        */
+        /// <summary>
+        /// 获取已设置的预设省份
+        /// </summary>
+        /// <param name="handle">由VzLPRClient_Open函数获得的句柄</param>
+        /// <param name="pProvInfo">预设省份信息指针</param>
+        /// <returns>0表示成功，-1表示失败</returns>
         int VzLPRClient_GetSupportedProvinces(int handle, ref VZ_LPRC_PROVINCE_INFO pProvInfo);
-
-        /**
-        *  @brief 设置预设省份
-        *  @param  [IN] handle 由VzLPRClient_Open函数获得的句柄
-        *  @param  [IN] nIndex 设置预设省份的序号，序号需要参考VZ_LPRC_PROVINCE_INFO::strProvinces中的顺序，从0开始，如果小于0，则表示不设置预设省份
-        *  @return 0表示成功，-1表示失败
-        */
+        /// <summary>
+        /// 设置预设省份
+        /// </summary>
+        /// <param name="handle">由VzLPRClient_Open函数获得的句柄</param>
+        /// <param name="nIndex">设置预设省份的序号，序号需要参考VZ_LPRC_PROVINCE_INFO::strProvinces中的顺序，从0开始，如果小于0，则表示不设置预设省份</param>
+        /// <returns>0表示成功，-1表示失败</returns>
         int VzLPRClient_PresetProvinceIndex(int handle, int nIndex);
-
-        /**
-        *  @brief 将图像保存为JPEG到指定路径
-        *  @param  [IN] pImgInfo 图像结构体，目前只支持默认的格式，即ImageFormatRGB
-        *  @param  [IN] pFullPathName 设带绝对路径和JPG后缀名的文件名字符串
-        *  @param  [IN] nQuality JPEG压缩的质量，取值范围1~100；
-        *  @return 0表示成功，-1表示失败
-        *  @note   给定的文件名中的路径需要存在
-        *  @ingroup group_global
-        */
+        /// <summary>
+        /// 将图像保存为JPEG到指定路径
+        /// </summary>
+        /// <param name="pImgInfo">图像结构体，目前只支持默认的格式，即ImageFormatRGB</param>
+        /// <param name="pFullPathName">设带绝对路径和JPG后缀名的文件名字符串,给定的文件名中的路径需要存在</param>
+        /// <param name="nQuality">JPEG压缩的质量，取值范围1~100；</param>
+        /// <returns>0表示成功，-1表示失败</returns>
         int VzLPRClient_ImageSaveToJpeg(IntPtr pImgInfo, string pFullPathName, int nQuality);
-
-        /**
-        *  @brief 读出设备序列号，可用于二次加密
-        *  @param [IN] handle 由VzLPRClient_Open函数获得的句柄
-        *  @param [IN/OUT] pSN 用于存放读到的设备序列号，详见定义 VZ_DEV_SERIAL_NUM
-        *  @return 返回值为0表示成功，返回-1表示失败
-        *  @ingroup group_device
-        */
+        /// <summary>
+        /// 读出设备序列号，可用于二次加密
+        /// @ingroup group_device
+        /// </summary>
+        /// <param name="handle">由VzLPRClient_Open函数获得的句柄</param>
+        /// <param name="pSN">用于存放读到的设备序列号，详见定义 VZ_DEV_SERIAL_NUM</param>
+        /// <returns>返回值为0表示成功，返回-1表示失败</returns>
         int VzLPRClient_GetSerialNumber(int handle, ref VZ_DEV_SERIAL_NUM pSN);
-
-        /**
-        *  @brief 保存正在播放的视频的当前帧的截图到指定路径
-        *  @param  [IN] nPlayHandle 播放的句柄
-        *  @param  [IN] pFullPathName 设带绝对路径和JPG后缀名的文件名字符串
-        *  @param  [IN] nQuality JPEG压缩的质量，取值范围1~100；
-        *  @return 0表示成功，-1表示失败
-        *  @note   使用的文件名中的路径需要存在
-        *  @ingroup group_device
-        */
+        /// <summary>
+        /// 保存正在播放的视频的当前帧的截图到指定路径
+        /// @ingroup group_device
+        /// </summary>
+        /// <param name="nPlayHandle">播放的句柄</param>
+        /// <param name="pFullPathName">设带绝对路径和JPG后缀名的文件名字符串,使用的文件名中的路径需要存在</param>
+        /// <param name="nQuality">JPEG压缩的质量，取值范围1~100；</param>
+        /// <returns>0表示成功，-1表示失败</returns>
         int VzLPRClient_GetSnapShootToJpeg2(int nPlayHandle, string pFullPathName, int nQuality);
-
-        /**
-        *  @brief 开启透明通道
-        *  @param  [IN] handle 由VzLPRClient_Open函数获得的句柄
-        *  @param  [IN] nSerialPort 指定使用设备的串口序号：0表示第一个串口，1表示第二个串口
-        *  @param  [IN] func 接收数据的回调函数
-        *  @param  [IN] pUserData 接收数据回调函数的上下文
-        *  @return 返回透明通道句柄，0表示失败
-        *  @ingroup group_device
-        */
+        /// <summary>
+        /// 保存抓图数据到Jpeg文件
+        /// </summary>
+        /// <param name="handle">由VzLPRClient_Open函数获得的句柄</param>
+        /// <param name="pFullPathName">图片路径</param>
+        /// <returns>返回值为0表示成功，返回其他值表示失败</returns>
+        int VzLPRClient_SaveSnapImageToJpeg(int handle, string pFullPathName);
+        /// <summary>
+        /// 开启透明通道
+        /// @ingroup group_device
+        /// </summary>
+        /// <param name="handle">由VzLPRClient_Open函数获得的句柄</param>
+        /// <param name="nSerialPort">指定使用设备的串口序号：0表示第一个串口，1表示第二个串口</param>
+        /// <param name="func">接收数据的回调函数</param>
+        /// <param name="pUserData">接收数据回调函数的上下文</param>
+        /// <returns>返回透明通道句柄，0表示失败</returns>
         int VzLPRClient_SerialStart(int handle, int nSerialPort, VZDEV_SERIAL_RECV_DATA_CALLBACK func, IntPtr pUserData);
-
-        /**
-        *  @brief 透明通道发送数据
-        *  @param [IN] nSerialHandle 由VzLPRClient_SerialStart函数获得的句柄
-        *  @param [IN] pData 将要传输的数据块的首地址
-        *  @param [IN] uSizeData 将要传输的数据块的字节数
-        *  @return 0表示成功，其他值表示失败
-        *  @ingroup group_device
-        */
+        /// <summary>
+        /// 透明通道发送数据
+        /// @ingroup group_device
+        /// </summary>
+        /// <param name="nSerialHandle">由VzLPRClient_SerialStart函数获得的句柄</param>
+        /// <param name="pData">将要传输的数据块的首地址</param>
+        /// <param name="uSizeData">将要传输的数据块的字节数</param>
+        /// <returns>0表示成功，其他值表示失败</returns>
         int VzLPRClient_SerialSend(int nSerialHandle, IntPtr pData, int uSizeData);
-
-        /**
-        *  @brief 透明通道停止发送数据
-        *  @param [IN] nSerialHandle 由VzLPRClient_SerialStart函数获得的句柄
-        *  @return 0表示成功，其他值表示失败
-        *  @ingroup group_device
-        */
+        /// <summary>
+        /// 透明通道停止发送数据
+        /// </summary>
+        /// <param name="nSerialHandle">由VzLPRClient_SerialStart函数获得的句柄</param>
+        /// <returns>0表示成功，其他值表示失败</returns>
         int VzLPRClient_SerialStop(int nSerialHandle);
-
-        /**
-        *  @brief 设置IO输出的状态
-        *  @param  [IN] handle 由VzLPRClient_Open函数获得的句柄
-        *  @param  [IN] uChnId IO输出的通道号，从0开始
-        *  @param  [OUT] nOutput 将要设置的IO输出的状态，0表示继电器开路，1表示继电器闭路
-        *  @return 0表示成功，-1表示失败
-        *  @ingroup group_device
-        */
+        /// <summary>
+        /// 设置IO输出的状态
+        /// </summary>
+        /// <param name="handle">由VzLPRClient_Open函数获得的句柄</param>
+        /// <param name="uChnId">IO输出的通道号，从0开始</param>
+        /// <param name="nOutput">将要设置的IO输出的状态，0表示继电器开路，1表示继电器闭路</param>
+        /// <returns>0表示成功，-1表示失败</returns>
         int VzLPRClient_SetIOOutput(int handle, int uChnId, int nOutput);
-
-        /**
-        *  @brief 获取IO输出的状态
-        *  @param  [IN] handle 由VzLPRClient_Open函数获得的句柄
-        *  @param  [IN] uChnId IO输出的通道号，从0开始
-        *  @param  [OUT] pOutput IO输出的状态，0表示继电器开路，1表示继电器闭路
-        *  @return 0表示成功，-1表示失败
-        *  @ingroup group_device
-        */
+        /// <summary>
+        /// 获取IO输出的状态
+        /// </summary>
+        /// <param name="handle">由VzLPRClient_Open函数获得的句柄</param>
+        /// <param name="uChnId">IO输出的通道号，从0开始</param>
+        /// <param name="pOutput">IO输出的状态，0表示继电器开路，1表示继电器闭路</param>
+        /// <returns>0表示成功，-1表示失败</returns>
         int VzLPRClient_GetIOOutput(int handle, int uChnId, ref int pOutput);
-
-        /**
-        *  @brief 获取GPIO的状态
-        *  @param  [IN] handle 由VzLPRClient_Open函数获得的句柄
-        *  @param  [IN] gpioIn 数据为0或1
-        *  @param  [OUT] value 0代表短路，1代表开路
-        *  @return 返回值为0表示成功，返回-1表示失败
-        *  @ingroup group_device
-        */
+        /// <summary>
+        /// 获取GPIO的状态
+        /// </summary>
+        /// <param name="handle">由VzLPRClient_Open函数获得的句柄</param>
+        /// <param name="gpioIn">数据为0或1</param>
+        /// <param name="value">0代表短路，1代表开路</param>
+        /// <returns>返回值为0表示成功，返回-1表示失败</returns>
         int VzLPRClient_GetGPIOValue(int handle, int gpioIn, IntPtr value);
-
-        /**
-        *  @brief 根据ID获取车牌图片
-        *  @param  [IN] handle 由VzLPRClient_Open函数获得的句柄
-        *  @param  [IN] id     车牌记录的ID
-        *  @param  [IN] pdata  存储图片的内存
-        *  @param  [IN][OUT] size 为传入传出值，传入为图片内存的大小，返回的是获取到jpg图片内存的大小
-        *  @return 返回值为0表示成功，返回-1表示失败
-        *  @ingroup group_device
-        */
+        /// <summary>
+        /// 根据ID获取车牌图片
+        /// </summary>
+        /// <param name="handle">由VzLPRClient_Open函数获得的句柄</param>
+        /// <param name="id">车牌记录的ID</param>
+        /// <param name="pdata">存储图片的内存</param>
+        /// <param name="size">为传入传出值，传入为图片内存的大小，返回的是获取到jpg图片内存的大小</param>
+        /// <returns>返回值为0表示成功，返回-1表示失败</returns>
         int VzLPRClient_LoadImageById(int handle, int id, IntPtr pdata, IntPtr size);
-
-        /**
-        *  @brief 向白名单表导入客户和车辆记录
-        *  @param  [IN] handle 由VzLPRClient_Open函数获得的句柄
-        *  @param  [IN] rowcount 记录的条数
-        *  @param  [IN] pRowDatas 记录的内容数组的地址
-        *  @param  [OUT] results 每条数据是否导入成功
-        *  @return 0表示成功，-1表示失败
-        *  @ingroup group_database
-        */
-        int VzLPRClient_WhiteListImportRows(int handle,
-                                                                 uint rowcount,
-                                                                 ref VZ_LPR_WLIST_ROW pRowDatas,
-                                                                 ref VZ_LPR_WLIST_IMPORT_RESULT pResults);
-
-        /**
-        *  @brief 从数据库删除车辆信息
-        *  @param  [IN] handle 由VzLPRClient_Open函数获得的句柄
-        *  @param  [IN] strPlateID 车牌号码
-        *  @return 0表示成功，-1表示失败
-        *  @ingroup group_database
-        */
+        /// <summary>
+        /// 向白名单表导入客户和车辆记录
+        /// </summary>
+        /// <param name="handle">由VzLPRClient_Open函数获得的句柄</param>
+        /// <param name="rowcount">记录的条数</param>
+        /// <param name="pRowDatas">记录的内容数组的地址</param>
+        /// <param name="pResults">每条数据是否导入成功</param>
+        /// <returns>0表示成功，-1表示失败</returns>
+        int VzLPRClient_WhiteListImportRows(int handle, uint rowcount, ref VZ_LPR_WLIST_ROW pRowDatas, ref VZ_LPR_WLIST_IMPORT_RESULT pResults);
+        /// <summary>
+        /// 从数据库删除车辆信息
+        /// </summary>
+        /// <param name="handle">由VzLPRClient_Open函数获得的句柄</param>
+        /// <param name="strPlateID">车牌号码</param>
+        /// <returns>0表示成功，-1表示失败</returns>
         int VzLPRClient_WhiteListDeleteVehicle(int handle, string strPlateID);
-
-        /**
-        *  @brief 清空数据库客户信息和车辆信息
-        *  @param  [IN] handle 由VzLPRClient_Open函数获得的句柄
-        *  @return 0表示成功，-1表示失败
-        *  @ingroup group_database
-        */
+        /// <summary>
+        /// 清空数据库客户信息和车辆信息
+        /// </summary>
+        /// <param name="handle">由VzLPRClient_Open函数获得的句柄</param>
+        /// <returns>0表示成功，-1表示失败</returns>
         int VzLPRClient_WhiteListClearCustomersAndVehicles(int handle);
-
-        /**
-        *  @brief 获取白名单表中所有车辆信息记录的条数
-        *  @param  [IN] handle 由VzLPRClient_Open函数获得的句柄
-        *  @return >=0表示所有车辆信息记录的总数，-1表示失败
-        *  @ingroup group_database
-        */
-        int VzLPRClient_WhiteListGetVehicleCount(int handle, ref uint pCount,
-                                                                ref VZ_LPR_WLIST_SEARCH_WHERE pSearchWhere);
-
-        /**
-        *  @brief 查询白名单表车辆记录数据
-        *  @param  [IN] handle 由VzLPRClient_Open函数获得的句柄
-        *  @param  [IN] pLoadCondition 查询条件
-        *  @return 0表示成功，-1表示失败
-        *  @ingroup group_database
-        */
-        int VzLPRClient_WhiteListLoadVehicle(int handle,
-                                                           ref VZ_LPR_WLIST_LOAD_CONDITIONS pLoadCondition);
+        /// <summary>
+        /// 获取白名单表中所有车辆信息记录的条数
+        /// </summary>
+        /// <param name="handle">由VzLPRClient_Open函数获得的句柄</param>
+        /// <param name="pCount"></param>
+        /// <param name="pSearchWhere"></param>
+        /// <returns>>=0表示所有车辆信息记录的总数，-1表示失败</returns>
+        int VzLPRClient_WhiteListGetVehicleCount(int handle, ref uint pCount, ref VZ_LPR_WLIST_SEARCH_WHERE pSearchWhere);
+        /// <summary>
+        /// 查询白名单表车辆记录数据
+        /// </summary>
+        /// <param name="handle">由VzLPRClient_Open函数获得的句柄</param>
+        /// <param name="pLoadCondition">查询条件</param>
+        /// <returns>0表示成功，-1表示失败</returns>
+        int VzLPRClient_WhiteListLoadVehicle(int handle, ref VZ_LPR_WLIST_LOAD_CONDITIONS pLoadCondition);
 
         /**
         *  @brief 设置白名单表和客户信息表的查询结果回调
@@ -525,16 +480,14 @@ namespace System.Data.VzClientSDK
         *  @ingroup group_device
         */
         int VzLPRClient_WriteUserData(int handle, IntPtr pUserData, uint uSizeData);
-
-        /**
-        *  @brief 将图像编码为JPEG，保存到指定内存
-        *  @param  [IN] pImgInfo 图像结构体，目前只支持默认的格式，即ImageFormatRGB
-        *  @param  [IN/OUT] pDstBuf JPEG数据的目的存储首地址
-        *  @param  [IN] uSizeBuf JPEG数据地址的内存的最大尺寸；
-        *  @param  [IN] nQuality JPEG压缩的质量，取值范围1~100；
-        *  @return >0表示成功，即编码后的尺寸，-1表示失败，-2表示给定的压缩数据的内存尺寸不够大
-        *  @ingroup group_global
-        */
+        /// <summary>
+        /// 将图像编码为JPEG，保存到指定内存
+        /// </summary>
+        /// <param name="pImgInfo">图像结构体，目前只支持默认的格式，即ImageFormatRGB</param>
+        /// <param name="pDstBuf">JPEG数据的目的存储首地址</param>
+        /// <param name="uSizeBuf">JPEG数据地址的内存的最大尺寸；</param>
+        /// <param name="nQuality">JPEG压缩的质量，取值范围1~100；</param>
+        /// <returns>0表示成功，即编码后的尺寸，-1表示失败，-2表示给定的压缩数据的内存尺寸不够大</returns>
         int VzLPRClient_ImageEncodeToJpeg(IntPtr pImgInfo, IntPtr pDstBuf, int uSizeBuf, int nQuality);
         /// <summary>
         /// 设置IO输出，并自动复位
@@ -698,18 +651,7 @@ namespace System.Data.VzClientSDK
         *  @return 0表示成功，-1表示失败
         *  @ingroup group_device
         */
-        int VzLPRClient_GetSerialParameter(int handle, int nSerialPort,
-                                                        ref VZ_SERIAL_PARAMETER pParameter);
-        //        /**
-        //        *  @brief 保存正在播放的视频的当前帧的截图到指定路径
-        //        *  @param  [IN] nPlayHandle 播放的句柄
-        //        *  @param  [IN] pFullPathName 设带绝对路径和JPG后缀名的文件名字符串
-        //        *  @param  [IN] nQuality JPEG压缩的质量，取值范围1~100；
-        //        *  @return 0表示成功，-1表示失败
-        //        *  @note   使用的文件名中的路径需要存在
-        //        *  @ingroup group_device
-        //*/
-        //        int VzLPRClient_GetSnapShootToJpeg2(int nPlayHandle, string pFullPathName, int nQuality);
+        int VzLPRClient_GetSerialParameter(int handle, int nSerialPort, ref VZ_SERIAL_PARAMETER pParameter);
         /**
         *  @brief 获取主码流分辨率；
         *  @param [IN] handle 由VzLPRClient_Open函数获得的句柄
@@ -995,7 +937,6 @@ namespace System.Data.VzClientSDK
         */
         int VzLPRClient_PlayVoice(int handle, string voice, int interval, int volume, int male);
 
-        //**************************************************************
         // 中心服务器配置
         /**
         *  @brief 设置中心服务器网络
@@ -1204,56 +1145,50 @@ namespace System.Data.VzClientSDK
         *  @return 返回值为0表示成功，返回其他值表示失败。
         */
         int VzLPRClient_SetRequestTalkCallBack(int handle, VZLPRC_REQUEST_TALK_CALLBACK func, IntPtr pUserData);
-
-        /**
-        *  @brief 停止喊话
-        *  @param [IN] handle 由VzLPRClient_Open函数获得的句柄
-        *  @parmm [IN] device_ip 设备IP
-        *  @return 返回值为0表示成功，返回其他值表示失败。
-        */
+        /// <summary>
+        /// 停止喊话
+        /// ?device_ip 设备IP
+        /// </summary>
+        /// <param name="handle">由VzLPRClient_Open函数获得的句柄</param>
+        /// <returns>返回值为0表示成功，返回其他值表示失败。</returns>
         int VzLPRClient_StopTalk(int handle);
-
-        /**
-        *  @brief 开始录音
-        *  @param [IN] handle 由VzLPRClient_Open函数获得的句柄
-        *  @parmm [IN] file_path 音频文件路径
-        *  @return 返回值为0表示成功，返回其他值表示失败。
-        */
+        /// <summary>
+        /// 开始录音
+        /// </summary>
+        /// <param name="handle">由VzLPRClient_Open函数获得的句柄</param>
+        /// <param name="file_path">音频文件路径</param>
+        /// <returns>返回值为0表示成功，返回其他值表示失败。</returns>
         int VzLPRClient_StartRecordAudio(int handle, string file_path);
-
-        /**
-        *  @brief 停止录音
-        *  @param [IN] handle 由VzLPRClient_Open函数获得的句柄
-        *  @return 返回值为0表示成功，返回其他值表示失败。
-        */
+        /// <summary>
+        /// 停止录音
+        /// </summary>
+        /// <param name="handle">由VzLPRClient_Open函数获得的句柄</param>
+        /// <returns>返回值为0表示成功，返回其他值表示失败。</returns>
         int VzLPRClient_StopRecordAudio(int handle);
-
-        /**
-        *  @brief 设置车牌图片里是否显示车牌框
-        *  @param [IN] handle 由VzLPRClient_Open函数获得的句柄
-        *  @param [IN] bShow 是否显示车牌框，输入值(0或1)，1代表显示，0代表不显示
-        *  @return 返回值为0表示成功，返回其他值表示失败。
-        */
+        /// <summary>
+        /// 设置车牌图片里是否显示车牌框
+        /// </summary>
+        /// <param name="handle">由VzLPRClient_Open函数获得的句柄</param>
+        /// <param name="bShow">是否显示车牌框，输入值(0或1)，1代表显示，0代表不显示</param>
+        /// <returns>返回值为0表示成功，返回其他值表示失败。</returns>
         int VzLPRClient_SetIsShowPlateRect(int handle, int bShow);
-
-        /**
-        *  @brief 设置GPIO输入回调函数
-        *  @param [IN] handle 由VzLPRClient_Open函数获得的句柄
-        *  @param [IN] func GPIO输入回调函数
-        *  @param [IN] pUserData 用户自定义数据
-        *  @return 返回值为0表示成功，返回其他值表示失败。
-        */
+        /// <summary>
+        /// 设置GPIO输入回调函数
+        /// </summary>
+        /// <param name="handle">由VzLPRClient_Open函数获得的句柄</param>
+        /// <param name="func"> GPIO输入回调函数</param>
+        /// <param name="pUserData">用户自定义数据</param>
+        /// <returns>返回值为0表示成功，返回其他值表示失败。</returns>
         int VzLPRClient_SetGPIORecvCallBack(int handle, VZLPRC_GPIO_RECV_CALLBACK func, IntPtr pUserData);
-
-        /**
-        *  @brief 获取相机参数
-        *  @param [IN] handle 由VzLPRClient_Open函数获得的句柄
-        *  @param [IN] command 命令类型
-        *  @param [IN] channel 通道号，默认为0
-        *  @param [OUT] pOutBuffer 返回的数据
-        *  @param [IN] dwOutBufferSize 数据的长度
-        *  @return 返回值为0表示成功，返回其他值表示失败。
-        */
+        /// <summary>
+        /// 获取相机参数
+        /// </summary>
+        /// <param name="handle">由VzLPRClient_Open函数获得的句柄</param>
+        /// <param name="command">命令类型</param>
+        /// <param name="channel">通道号，默认为0</param>
+        /// <param name="pOutBuffer">返回的数据</param>
+        /// <param name="dwOutBufferSize">数据的长度</param>
+        /// <returns>返回值为0表示成功，返回其他值表示失败。</returns>
         int VzLPRClient_GetCameraConfig(int handle, int command, short channel, IntPtr pOutBuffer, int dwOutBufferSize);
     }
     internal class VzClientSdkDller : IVzClientSdkProxy
@@ -1271,7 +1206,7 @@ namespace System.Data.VzClientSDK
         /// <param name="Length"></param>
         [DllImport("kernel32.dll")]
         public static extern void CopyMemory(IntPtr Destination, IntPtr Source, int Length);
-
+        #region // 函数导入
         /**
         *  @brief 全局初始化，在所有接口调用之前调用
         *  @return 0表示成功，-1表示失败
@@ -1392,12 +1327,11 @@ namespace System.Data.VzClientSDK
         */
         [DllImport(VzClientSdk.DllFileName, CallingConvention = CallingConvention.StdCall)]
         public static extern int VzLPRClient_SetVideoFrameCallBack(int handle, VZLPRC_VIDEO_FRAME_CALLBACK pFunc, IntPtr pUserData);
-
-        /**
-        *  @brief 发送软件触发信号，强制处理当前时刻的数据并输出结果
-        *  @param  [IN] handle 由VzLPRClient_Open函数获得的句柄
-        *  @return 0表示成功，-1表示失败
-        */
+        /// <summary>
+        /// 发送软件触发信号，强制处理当前时刻的数据并输出结果
+        /// </summary>
+        /// <param name="handle">由VzLPRClient_Open函数获得的句柄</param>
+        /// <returns>0表示成功，-1表示失败</returns>
         [DllImport(VzClientSdk.DllFileName)]
         public static extern int VzLPRClient_ForceTrigger(int handle);
 
@@ -1480,6 +1414,15 @@ namespace System.Data.VzClientSDK
         */
         [DllImport(VzClientSdk.DllFileName)]
         public static extern int VzLPRClient_GetSnapShootToJpeg2(int nPlayHandle, string pFullPathName, int nQuality);
+
+        /// <summary>
+        /// 保存抓图数据到Jpeg文件
+        /// </summary>
+        /// <param name="handle">由VzLPRClient_Open函数获得的句柄</param>
+        /// <param name="pFullPathName">图片路径</param>
+        /// <returns>返回值为0表示成功，返回其他值表示失败</returns>
+        [DllImport(VzClientSdk.DllFileName)]
+        public static extern int VzLPRClient_SaveSnapImageToJpeg(int handle, string pFullPathName);
 
         /**
         *  @brief 开启透明通道
@@ -2025,19 +1968,7 @@ namespace System.Data.VzClientSDK
         *  @ingroup group_device
         */
         [DllImport(VzClientSdk.DllFileName)]
-        public static extern int VzLPRClient_GetSerialParameter(int handle, int nSerialPort,
-                                                         ref VZ_SERIAL_PARAMETER pParameter);
-        //        /**
-        //        *  @brief 保存正在播放的视频的当前帧的截图到指定路径
-        //        *  @param  [IN] nPlayHandle 播放的句柄
-        //        *  @param  [IN] pFullPathName 设带绝对路径和JPG后缀名的文件名字符串
-        //        *  @param  [IN] nQuality JPEG压缩的质量，取值范围1~100；
-        //        *  @return 0表示成功，-1表示失败
-        //        *  @note   使用的文件名中的路径需要存在
-        //        *  @ingroup group_device
-        //*/
-        //        [DllImport(VzClientSdk.DllFileName)]
-        //        public static extern int VzLPRClient_GetSnapShootToJpeg2(int nPlayHandle, string pFullPathName, int nQuality);
+        public static extern int VzLPRClient_GetSerialParameter(int handle, int nSerialPort, ref VZ_SERIAL_PARAMETER pParameter);
         /**
         *  @brief 获取主码流分辨率；
         *  @param [IN] handle 由VzLPRClient_Open函数获得的句柄
@@ -2648,6 +2579,7 @@ namespace System.Data.VzClientSDK
         */
         [DllImport(VzClientSdk.DllFileName)]
         public static extern int VzLPRClient_GetCameraConfig(int handle, int command, short channel, IntPtr pOutBuffer, int dwOutBufferSize);
+        #endregion // 函数导入
         #region // 显示实现
         void IVzClientSdkProxy.CopyMemory(IntPtr Destination, IntPtr Source, int Length) => CopyMemory(Destination, Source, Length);
         int IVzClientSdkProxy.VzLPRClient_CancelOfflineCheck(int handle) => VzLPRClient_CancelOfflineCheck(handle);
@@ -2686,6 +2618,7 @@ namespace System.Data.VzClientSDK
         int IVzClientSdkProxy.VzLPRClient_GetSerialParameter(int handle, int nSerialPort, ref VZ_SERIAL_PARAMETER pParameter) => VzLPRClient_GetSerialParameter(handle, nSerialPort, ref pParameter);
         int IVzClientSdkProxy.VzLPRClient_GetShutter(int handle, ref int shutter) => VzLPRClient_GetShutter(handle, ref shutter);
         int IVzClientSdkProxy.VzLPRClient_GetSnapShootToJpeg2(int nPlayHandle, string pFullPathName, int nQuality) => VzLPRClient_GetSnapShootToJpeg2(nPlayHandle, pFullPathName, nQuality);
+        int IVzClientSdkProxy.VzLPRClient_SaveSnapImageToJpeg(int handle, string pFullPathName) => VzLPRClient_SaveSnapImageToJpeg(handle, pFullPathName);
         int IVzClientSdkProxy.VzLPRClient_GetSupportedProvinces(int handle, ref VZ_LPRC_PROVINCE_INFO pProvInfo) => VzLPRClient_GetSupportedProvinces(handle, ref pProvInfo);
         int IVzClientSdkProxy.VzLPRClient_GetTriggerDelay(int handle, ref int nDelay) => VzLPRClient_GetTriggerDelay(handle, ref nDelay);
         int IVzClientSdkProxy.VzLPRClient_GetVideoCBR(int handle, ref int rateval, ref int ratelist) => VzLPRClient_GetVideoCBR(handle, ref rateval, ref ratelist);
@@ -2829,6 +2762,7 @@ namespace System.Data.VzClientSDK
         private DCreater.VzLPRClient_GetSerialParameter _VzLPRClient_GetSerialParameter;
         private DCreater.VzLPRClient_GetShutter _VzLPRClient_GetShutter;
         private DCreater.VzLPRClient_GetSnapShootToJpeg2 _VzLPRClient_GetSnapShootToJpeg2;
+        private DCreater.VzLPRClient_SaveSnapImageToJpeg _VzLPRClient_SaveSnapImageToJpeg;
         private DCreater.VzLPRClient_GetSupportedProvinces _VzLPRClient_GetSupportedProvinces;
         private DCreater.VzLPRClient_GetTriggerDelay _VzLPRClient_GetTriggerDelay;
         private DCreater.VzLPRClient_GetVideoCBR _VzLPRClient_GetVideoCBR;
@@ -2970,6 +2904,7 @@ namespace System.Data.VzClientSDK
             _VzLPRClient_GetSerialParameter = GetDelegate<DCreater.VzLPRClient_GetSerialParameter>(nameof(DCreater.VzLPRClient_GetSerialParameter));
             _VzLPRClient_GetShutter = GetDelegate<DCreater.VzLPRClient_GetShutter>(nameof(DCreater.VzLPRClient_GetShutter));
             _VzLPRClient_GetSnapShootToJpeg2 = GetDelegate<DCreater.VzLPRClient_GetSnapShootToJpeg2>(nameof(DCreater.VzLPRClient_GetSnapShootToJpeg2));
+            _VzLPRClient_SaveSnapImageToJpeg = GetDelegate<DCreater.VzLPRClient_SaveSnapImageToJpeg>(nameof(DCreater.VzLPRClient_SaveSnapImageToJpeg));
             _VzLPRClient_GetSupportedProvinces = GetDelegate<DCreater.VzLPRClient_GetSupportedProvinces>(nameof(DCreater.VzLPRClient_GetSupportedProvinces));
             _VzLPRClient_GetTriggerDelay = GetDelegate<DCreater.VzLPRClient_GetTriggerDelay>(nameof(DCreater.VzLPRClient_GetTriggerDelay));
             _VzLPRClient_GetVideoCBR = GetDelegate<DCreater.VzLPRClient_GetVideoCBR>(nameof(DCreater.VzLPRClient_GetVideoCBR));
@@ -3123,6 +3058,7 @@ namespace System.Data.VzClientSDK
         int IVzClientSdkProxy.VzLPRClient_GetSerialParameter(int handle, int nSerialPort, ref VZ_SERIAL_PARAMETER pParameter) => _VzLPRClient_GetSerialParameter.Invoke(handle, nSerialPort, ref pParameter);
         int IVzClientSdkProxy.VzLPRClient_GetShutter(int handle, ref int shutter) => _VzLPRClient_GetShutter.Invoke(handle, ref shutter);
         int IVzClientSdkProxy.VzLPRClient_GetSnapShootToJpeg2(int nPlayHandle, string pFullPathName, int nQuality) => _VzLPRClient_GetSnapShootToJpeg2.Invoke(nPlayHandle, pFullPathName, nQuality);
+        int IVzClientSdkProxy.VzLPRClient_SaveSnapImageToJpeg(int handle, string pFullPathName) => _VzLPRClient_SaveSnapImageToJpeg.Invoke(handle, pFullPathName);
         int IVzClientSdkProxy.VzLPRClient_GetSupportedProvinces(int handle, ref VZ_LPRC_PROVINCE_INFO pProvInfo) => _VzLPRClient_GetSupportedProvinces.Invoke(handle, ref pProvInfo);
         int IVzClientSdkProxy.VzLPRClient_GetTriggerDelay(int handle, ref int nDelay) => _VzLPRClient_GetTriggerDelay.Invoke(handle, ref nDelay);
         int IVzClientSdkProxy.VzLPRClient_GetVideoCBR(int handle, ref int rateval, ref int ratelist) => _VzLPRClient_GetVideoCBR.Invoke(handle, ref rateval, ref ratelist);

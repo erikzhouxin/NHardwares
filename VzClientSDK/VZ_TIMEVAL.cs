@@ -1,4 +1,6 @@
-﻿using System.Runtime.InteropServices;
+﻿using System.Data.Extter;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 
 namespace System.Data.VzClientSDK
 {
@@ -13,7 +15,7 @@ namespace System.Data.VzClientSDK
         /// </summary>
         public uint uTVSec;
         /// <summary>
-        /// UTC秒数
+        /// 微秒
         /// </summary>
         public uint uTVUSec;
     }

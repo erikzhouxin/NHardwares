@@ -61,6 +61,9 @@
 		<None Remove="beans\**" />
 	</ItemGroup>
 	<ItemGroup>
+	  <Compile Include="..\NHInterfaces\NHInterfaces\IOControlNoType.cs" Link="IOControlNoType.cs" />
+	</ItemGroup>
+	<ItemGroup>
 		<Compile Update="Properties\Resources.Designer.cs">
 			<DesignTime>True</DesignTime>
 			<AutoGen>True</AutoGen>
