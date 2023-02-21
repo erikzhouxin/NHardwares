@@ -50,7 +50,6 @@ namespace TestHDemoC.MSTester
             //通讯方式  true=网口  false=串口
             public static Boolean check = true;
 
-            public delegate int MethodCaller(int name);//定义个代理 
             internal static void TestMain(string[] args)
             {
                 //初始化动态库
@@ -126,11 +125,11 @@ namespace TestHDemoC.MSTester
                     //Program_Send_Sensor 节目设置传感器区域调用示例代码
                     //Program_Send_Sensor.Send_program_sensor_6();
                     //Program_Send_txt文本调用示例代码
-                    //Program_Send_txt.Send_program_txt_6();
+                    Program_Send_txt.Send_program_txt_6();
                     //common_56.deleteprogram();
 
                     //Program_Send_png图片调用示例代码
-                    //Program_Send_png.Send_program_png_6();
+                    Program_Send_png.Send_program_png_6();
 
                     //Program_Send_time时间调用示例代码
                     //Program_Send_time.Send_program_time_6();
@@ -170,7 +169,7 @@ namespace TestHDemoC.MSTester
             /// <summary>
             /// 常规设置,非必要
             /// </summary>
-            public static void set()
+            public static void Set()
             {
                 //设置屏号，不做通讯
                 err = bxdualsdk.BxDual_set_screenNum_G56(1);
@@ -200,7 +199,7 @@ namespace TestHDemoC.MSTester
                 //网口搜索
                 err = bxdualsdk.BxDual_cmd_udpPing(ref data);
                 //全搜索，udp-tcp-com
-                if (false)
+                if (Program.check)
                 {
                     err = bxdualsdk.BxDual_cmd_searchController(ref data);
                 }
@@ -215,7 +214,7 @@ namespace TestHDemoC.MSTester
                 Console.WriteLine("\r\n");
             }
             //删除节目
-            public static void deleteprogram()
+            public static void Deleteprogram()
             {
                 //网口
                 if (Program.check)
@@ -333,7 +332,7 @@ namespace TestHDemoC.MSTester
                 Console.WriteLine("bxDual_cmd_sysReset:" + err);
             }
             //强制开关机
-            public static void coerceOnOff()
+            public static void CoerceOnOff()
             {
                 //网口
                 if (Program.check)
@@ -373,7 +372,7 @@ namespace TestHDemoC.MSTester
             /// <summary>
             /// 屏幕锁定
             /// </summary>
-            public static void screenLock()
+            public static void ScreenLock()
             {
                 //网口
                 if (Program.check)
@@ -383,12 +382,13 @@ namespace TestHDemoC.MSTester
                 }
                 //串口
                 else
-                {//Program.com, Program.baudRate
+                {
+                    //Program.com, Program.baudRate
                 }
                 Console.WriteLine("bxDual_cmd_screenLock:" + err);
             }
             //节目锁定
-            public static void programLock()
+            public static void ProgramLock()
             {
                 //节目名格式类型为P***，如P000，P001
                 byte[] name = Encoding.GetEncoding("GBK").GetBytes("P000");
@@ -396,12 +396,13 @@ namespace TestHDemoC.MSTester
                 if (Program.check)
                 {
                     err = bxdualsdk.BxDual_cmd_programLock(Program.ip, Program.port, 1, 1, name, 0xffffffff);//锁定
-                                                                                                             //err = bxdualsdk.BxDual_cmd_programLock(Program.ip, Program.port, 1, 0, name, 0xffffffff);//解锁
+                    err = bxdualsdk.BxDual_cmd_programLock(Program.ip, Program.port, 1, 0, name, 0xffffffff);//解锁
                 }
                 //串口
                 else
                 {
-                    err = bxdualsdk.BxDual_cmd_uart_programLock(Program.com, Program.baudRate, 1, 1, name, 0xffffffff);//锁定-串口}
+                    err = bxdualsdk.BxDual_cmd_uart_programLock(Program.com, Program.baudRate, 1, 1, name, 0xffffffff);//锁定-串口
+                    err = bxdualsdk.BxDual_cmd_uart_programLock(Program.com, Program.baudRate, 1, 0, name, 0xffffffff);//锁定-串口
                 }
                 Console.WriteLine("bxDual_cmd_programLock:" + err);
             }
@@ -421,7 +422,7 @@ namespace TestHDemoC.MSTester
                 }
             }
             //网络搜索
-            public static void search_Net(byte[] ipAdder)
+            public static void Search_Net(byte[] ipAdder)
             {
                 NetSearchCmdRet retData = new NetSearchCmdRet();
                 byte[] uartPort = new byte[] { 0 };
@@ -434,7 +435,7 @@ namespace TestHDemoC.MSTester
             /// 网络搜索-传感器,6代控制卡使用
             /// </summary>
             /// <param name="ipAdder"></param>
-            private static void btn_NetworkSearch_6_Click()
+            public static void Btn_NetworkSearch_6_Click()
             {
                 NetSearchCmdRet CmdRet = new NetSearchCmdRet();
                 err = bxdualsdk.BxDual_cmd_udpNetworkSearch_6G(ref CmdRet);
@@ -791,7 +792,7 @@ namespace TestHDemoC.MSTester
                 }
             }
             //IP设置
-            public static void udpSetIP()
+            public static void UdpSetIP()
             {
                 byte mode = 2;
                 byte[] ip1 = Encoding.GetEncoding("GBK").GetBytes("192.168.89.178");
@@ -830,7 +831,7 @@ namespace TestHDemoC.MSTester
             /// <summary>
             /// 网络搜索-网络参数，5代卡使用
             /// </summary>
-            private static void btn_NetworkSearch_5_Click()
+            public static void Btn_NetworkSearch_5_Click()
             {
                 var CmdRet = new HeartbeatData();
                 err = bxdualsdk.BxDual_cmd_udpNetworkSearch(ref CmdRet);
@@ -838,7 +839,7 @@ namespace TestHDemoC.MSTester
             /// <summary>
             /// 广播设置MAC地址
             /// </summary>
-            private static void udp_setMAC()
+            public static void Udp_setMAC()
             {
                 byte[] mac = Encoding.GetEncoding("GBK").GetBytes("aa-bb-cc-12-a8-8a");
                 err = bxdualsdk.BxDual_cmd_udpSetMac(mac);
@@ -846,7 +847,7 @@ namespace TestHDemoC.MSTester
             /// <summary>
             /// 校时，同步控制卡时间
             /// </summary>
-            private static void checktime()
+            public static void Checktime()
             {
                 //网口
                 if (Program.check)
@@ -862,7 +863,7 @@ namespace TestHDemoC.MSTester
             /// <summary>
             /// 读控制器ID
             /// </summary>
-            private static void readControllerID()
+            public static void ReadControllerID()
             {
                 byte[] ControllerID = new byte[8];
                 for (int i = 0; i < 8; i++) { ControllerID[i] = 0; }
@@ -879,7 +880,7 @@ namespace TestHDemoC.MSTester
             /// <summary>
             /// 读控制器状态
             /// </summary>
-            private static void controllerStatus()
+            public static void ControllerStatus()
             {
                 ControllerStatus_G56 Status = new ControllerStatus_G56();
                 //网口
@@ -895,7 +896,7 @@ namespace TestHDemoC.MSTester
             /// <summary>
             /// 设置控制器密码
             /// </summary>
-            private static void setPassword()
+            public static void SetPassword()
             {
                 byte[] oldpassword = Encoding.GetEncoding("GBK").GetBytes("123456");
                 byte[] newpassword = Encoding.GetEncoding("GBK").GetBytes("456789");
@@ -912,7 +913,7 @@ namespace TestHDemoC.MSTester
             /// <summary>
             /// 删除当前控制器密码
             /// </summary>
-            private static void deletePassword()
+            public static void DeletePassword()
             {
                 byte[] password = Encoding.GetEncoding("GBK").GetBytes("123456");
                 //网口
@@ -928,7 +929,7 @@ namespace TestHDemoC.MSTester
             /// <summary>
             /// 设置控制开机延时时间，单位秒
             /// </summary>
-            private static void setDelayTime()
+            public static void SetDelayTime()
             {
                 //网口
                 if (Program.check)
@@ -1147,7 +1148,7 @@ namespace TestHDemoC.MSTester
             /// <summary>
             /// 动态区更新文本，单条文本
             /// </summary>
-            public static void updata_dynamic_txt()
+            public static void Updata_dynamic_txt()
             {
                 byte uAreaId = 0;
                 byte RunMode = 0;
@@ -1208,7 +1209,7 @@ namespace TestHDemoC.MSTester
             /// <summary>
             /// 动态区更新图片，单张图片
             /// </summary>
-            public static void updata_dynamic_png()
+            public static void Updata_dynamic_png()
             {
                 byte uAreaId = 0;
                 byte RunMode = 0;
@@ -4167,41 +4168,45 @@ namespace TestHDemoC.MSTester
                 Console.WriteLine("bxDual_program_setScreenParams_G56:" + err);
 
                 //第二步，创建节目，设置节目属性
-                EQprogramHeader_G6 header;
-                header.FileType = 0x00;
-                header.ProgramID = 0;
-                header.ProgramStyle = 0x00;
-                header.ProgramPriority = 0x00;
-                header.ProgramPlayTimes = 1;
-                header.ProgramTimeSpan = 0;
-                header.SpecialFlag = 0;
-                header.CommExtendParaLen = 0x00;
-                header.ScheduNum = 0;
-                header.LoopValue = 0;
-                header.Intergrate = 0x00;
-                header.TimeAttributeNum = 0x00;
-                header.TimeAttribute0Offset = 0x0000;
-                header.ProgramWeek = 0xff;
-                header.ProgramLifeSpan_sy = 0xffff;
-                header.ProgramLifeSpan_sm = 0x03;
-                header.ProgramLifeSpan_sd = 0x14;
-                header.ProgramLifeSpan_ey = 0xffff;
-                header.ProgramLifeSpan_em = 0x03;
-                header.ProgramLifeSpan_ed = 0x14;
-                header.PlayPeriodGrpNum = 0;
+                EQprogramHeader_G6 header = new EQprogramHeader_G6
+                {
+                    FileType = 0x00,
+                    ProgramID = 0,
+                    ProgramStyle = 0x00,
+                    ProgramPriority = 0x00,
+                    ProgramPlayTimes = 1,
+                    ProgramTimeSpan = 0,
+                    SpecialFlag = 0,
+                    CommExtendParaLen = 0x00,
+                    ScheduNum = 0,
+                    LoopValue = 0,
+                    Intergrate = 0x00,
+                    TimeAttributeNum = 0x00,
+                    TimeAttribute0Offset = 0x0000,
+                    ProgramWeek = 0xff,
+                    ProgramLifeSpan_sy = 0xffff,
+                    ProgramLifeSpan_sm = 0x03,
+                    ProgramLifeSpan_sd = 0x14,
+                    ProgramLifeSpan_ey = 0xffff,
+                    ProgramLifeSpan_em = 0x03,
+                    ProgramLifeSpan_ed = 0x14,
+                    PlayPeriodGrpNum = 0
+                };
                 err = bxdualsdk.BxDual_program_addProgram_G6(ref header);
                 if (err != 0) { return; }
                 Console.WriteLine("bxDual_program_addProgram_G6:" + err);
                 //节目添加播放时段,目前仅支持一组时间，多组不支持
                 if (false)
                 {
-                    EQprogrampTime_G56 Time;
-                    Time.StartHour = 0x17;
-                    Time.StartMinute = 0x29;
-                    Time.StartSecond = 0x00;
-                    Time.EndHour = 0x17;
-                    Time.EndMinute = 0x30;
-                    Time.EndSecond = 0x00;
+                    EQprogrampTime_G56 Time = new EQprogrampTime_G56
+                    {
+                        StartHour = 0x17,
+                        StartMinute = 0x29,
+                        StartSecond = 0x00,
+                        EndHour = 0x17,
+                        EndMinute = 0x30,
+                        EndSecond = 0x00
+                    };
 
                     EQprogramppGrp_G56 headerGrp;
                     headerGrp.playTimeGrpNum = 1;
@@ -4231,27 +4236,32 @@ namespace TestHDemoC.MSTester
                 }
 
                 //第三步，创建显示分区，设置区域显示位置，示例创建一个区域编号为0，区域大小64*32的图文分区
-                EQareaHeader_G6 aheader;
-                aheader.AreaType = 0;
-                aheader.AreaX = 0;
-                aheader.AreaY = 0;
-                aheader.AreaWidth = data.ScreenWidth;
-                aheader.AreaHeight = data.ScreenHeight;
-                aheader.BackGroundFlag = 0x00;
-                aheader.Transparency = 101;
-                aheader.AreaEqual = 0x00;
-                EQSound_6G stSoundData = new EQSound_6G();//该语音属性在节目无效
-                stSoundData.SoundFlag = 0;
-                stSoundData.SoundVolum = 0;
-                stSoundData.SoundSpeed = 0;
-                stSoundData.SoundDataMode = 0;
-                stSoundData.SoundReplayTimes = 0;
-                stSoundData.SoundReplayDelay = 0;
-                stSoundData.SoundReservedParaLen = 0;
-                stSoundData.Soundnumdeal = 0;
-                stSoundData.Soundlanguages = 0;
-                stSoundData.Soundwordstyle = 0;
-                stSoundData.SoundDataLen = 0;
+                EQareaHeader_G6 aheader = new EQareaHeader_G6
+                {
+                    AreaType = 0,
+                    AreaX = 0,
+                    AreaY = 0,
+                    AreaWidth = data.ScreenWidth,
+                    AreaHeight = data.ScreenHeight,
+                    BackGroundFlag = 0x00,
+                    Transparency = 101,
+                    AreaEqual = 0x00
+                };
+                //该语音属性在节目无效
+                EQSound_6G stSoundData = new EQSound_6G
+                {
+                    SoundFlag = 0,
+                    SoundVolum = 0,
+                    SoundSpeed = 0,
+                    SoundDataMode = 0,
+                    SoundReplayTimes = 0,
+                    SoundReplayDelay = 0,
+                    SoundReservedParaLen = 0,
+                    Soundnumdeal = 0,
+                    Soundlanguages = 0,
+                    Soundwordstyle = 0,
+                    SoundDataLen = 0
+                };
                 byte[] t = new byte[1];
                 t[0] = 0;
                 stSoundData.SoundData = IntPtr.Zero;
@@ -4262,13 +4272,15 @@ namespace TestHDemoC.MSTester
                 //区域添加边框
                 if (false)
                 {
-                    EQscreenframeHeader_G6 sfheader;
-                    sfheader.FrameDispStype = 0x01;    //边框显示方式0x00 –闪烁 0x01 –顺时针转动 0x02 –逆时针转动 0x03 –闪烁加顺时针转动 0x04 –闪烁加逆时针转动 0x05 –红绿交替闪烁 0x06 –红绿交替转动 0x07 –静止打出
-                    sfheader.FrameDispSpeed = 0x10;    //边框显示速度
-                    sfheader.FrameMoveStep = 0x01;     //边框移动步长，单位为点，此参 数范围为 1~16 
-                    sfheader.FrameUnitLength = 2;   //边框组元长度
-                    sfheader.FrameUnitWidth = 2;    //边框组元宽度
-                    sfheader.FrameDirectDispBit = 0;//上下左右边框显示标志位，目前只支持6QX-M卡 
+                    EQscreenframeHeader_G6 sfheader = new EQscreenframeHeader_G6
+                    {
+                        FrameDispStype = 0x01,    //边框显示方式0x00 –闪烁 0x01 –顺时针转动 0x02 –逆时针转动 0x03 –闪烁加顺时针转动 0x04 –闪烁加逆时针转动 0x05 –红绿交替闪烁 0x06 –红绿交替转动 0x07 –静止打出
+                        FrameDispSpeed = 0x10,    //边框显示速度
+                        FrameMoveStep = 0x01,     //边框移动步长，单位为点，此参 数范围为 1~16 
+                        FrameUnitLength = 2,   //边框组元长度
+                        FrameUnitWidth = 2,    //边框组元宽度
+                        FrameDirectDispBit = 0//上下左右边框显示标志位，目前只支持6QX-M卡 
+                    };
                     byte[] img = Encoding.Default.GetBytes("E:\\黄10.png");
                     bxdualsdk.BxDual_program_picturesAreaAddFrame_G6(0, ref sfheader, img);
                 }
@@ -4694,27 +4706,12 @@ namespace TestHDemoC.MSTester
                 err = bxdualsdk.BxDual_program_freeBuffer_G6(ref program);
                 Console.WriteLine("bxDual_program_freeBuffer_G6:" + err);
             }
-        }
-        class send
-        {
+
             public static void test()
             {
                 Thread thread1 = new Thread(t => Program_Send_txt.Send_program_txt_6());
                 thread1.Start();
-                Thread thread2 = new Thread(t => dynamicArea_str_5());
-                thread2.Start();
 
-            }
-            /// <summary>
-            /// 同时更新多个动态区文本
-            /// </summary>
-            public static void dynamicArea_str_5()
-            {
-                for (int i = 0; i < 999; i++)
-                {
-                    Console.WriteLine("++++++++++++++++++++:" + i);
-                    Thread.Sleep(1000);
-                }
             }
         }
         class Server
@@ -4757,7 +4754,7 @@ namespace TestHDemoC.MSTester
                     //server_list.Add(price);
                 }
                 //启动线程，判断控制卡在线情况
-                Thread thread = new Thread(t => get());
+                Thread thread = new Thread(t => Get());
                 thread.Start();
                 bool pl = false;
                 while (pl)
@@ -4771,8 +4768,7 @@ namespace TestHDemoC.MSTester
                     {
                         for (int a = 0; a < server_list1.Count; a++)
                         {
-                            int b = a;
-                            int p = server_list1[b].Item2;
+                            int p = server_list1[a].Item2;
                             Thread thread1 = new Thread(t => SendTextMsg(p));
                             thread1.Start();
                         }
@@ -4790,7 +4786,7 @@ namespace TestHDemoC.MSTester
 
                 //bxduaisdkServer.bxDual_ReleaseSdk();
             }
-            public static void get()
+            public static void Get()
             {
                 while (true)
                 {
@@ -4841,7 +4837,6 @@ namespace TestHDemoC.MSTester
                 //{
                 try
                 {
-                    byte[] server_ip = Encoding.GetEncoding("GBK").GetBytes("192.168.89.100");
                     EQpageHeader_G6 pheader;
                     pheader.PageStyle = 0x00;
                     pheader.DisplayMode = 4;
@@ -4874,11 +4869,10 @@ namespace TestHDemoC.MSTester
                 }
                 catch (Exception ex)
                 {
-
+                    Console.WriteLine(ex);
                 }
-
+                //}
             }
-            //}
         }
     }
 }

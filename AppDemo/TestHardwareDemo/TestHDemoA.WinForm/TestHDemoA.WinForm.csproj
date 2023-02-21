@@ -17,6 +17,9 @@
 			<DesignTime>True</DesignTime>
 			<AutoGen>True</AutoGen>
 		</Compile>
+		<Compile Update="Views\OnbonLedBxDemov2211.cs">
+		  <SubType>UserControl</SubType>
+		</Compile>
 		<EmbeddedResource Update="Properties\Resources.resx">
 			<LastGenOutput>Resources.Designer.cs</LastGenOutput>
 			<Generator>ResXFileCodeGenerator</Generator>
@@ -27,6 +30,7 @@
 		<ProjectReference Include="..\..\..\DeYaAlbCtrlSDK\DeYaAlbCtrlSDK.csproj" />
 		<ProjectReference Include="..\..\..\NHInterfaces\HardwareInterfaces.csproj" />
 		<ProjectReference Include="..\..\..\HikHCNetSDK\HikHCNetSDK.csproj" />
+		<ProjectReference Include="..\..\..\OnbonLedBxSDK\OnbonLedBxSDK.csproj" />
 		<ProjectReference Include="..\..\..\RecBarCodeModule\RecBarCodeModule.csproj" />
 		<ProjectReference Include="..\..\..\ShenBanReader\ShenBanReader.csproj" />
 		<ProjectReference Include="..\..\..\VzClientSDK\VzClientSDK.csproj" />

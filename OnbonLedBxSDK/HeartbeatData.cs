@@ -2,15 +2,39 @@
 
 namespace System.Data.OnbonLedBxSDK
 {
+    /// <summary>
+    /// 心跳数据
+    /// </summary>
     [StructLayoutAttribute(LayoutKind.Sequential, CharSet = CharSet.Ansi, Pack = 1)]
     public struct HeartbeatData
     {
-        public string password;    //密码
-        public string ip;          //控制器IP地址
-        public string subNetMask;  // 子网掩码
-        public string gate;           // 网关
-        public short port;            // 端口
-        public string mac;           // MAC地址
-        public string netID;       // 控制器网络ID
+        /// <summary>
+        /// 密码
+        /// </summary>
+        public string password;
+        /// <summary>
+        /// 控制器IP地址
+        /// </summary>
+        public string ip;
+        /// <summary>
+        /// 子网掩码
+        /// </summary>
+        public string subNetMask;
+        /// <summary>
+        /// 网关
+        /// </summary>
+        public string gate;
+        /// <summary>
+        /// 端口
+        /// </summary>
+        public short port;
+        /// <summary>
+        /// MAC地址
+        /// </summary>
+        public string mac;
+        /// <summary>
+        /// 控制器网络ID
+        /// </summary>
+        public string netID;
     }
 }

@@ -59,7 +59,7 @@ namespace System.Data.OnbonLedBxSDK
         ***************************************************************************************************************************/
         /// <summary>
         ///  网络搜索命令，返回：温度传感器，空气，PM2.5等信息，详见 NetSearchCmdRet:参考结构体声明中的注释；
-        ///   针对 6代卡 的网络搜索命令
+        ///  针对 6代卡 的网络搜索命令
         /// </summary>
         /// <param name="retData">NetSearchCmdRet:参考结构体声明中的注释；</param>
         /// <param name="uartPort">串口号,如："COM3"</param>
@@ -362,29 +362,28 @@ namespace System.Data.OnbonLedBxSDK
         * 此命令调用后所有参数全部会丢失
         ******************************************************************/
         int BxDual_cmd_sysReset(byte[] ip, ushort port);
-        /*! ***************************************************************
-        * 函数名：       cmd_tcpPing（）
-        * 参数名：ip：控制器IP， port：控制器端口， retData：请参考结构体Ping_data
-        * 返回值：0 成功， 其他值为错误号
-        * 功 能：通过TCP方式获取到控制器相关属性和IP地址
-        * 注：
-        * 和UDP PING命令获取到的参数相同
-        ******************************************************************/
+        /// <summary>
+        /// 通过TCP方式获取到控制器相关属性和IP地址
+        /// 注:和UDP PING命令获取到的参数相同
+        /// </summary>
+        /// <param name="ip">控制器IP</param>
+        /// <param name="port">控制器端口</param>
+        /// <param name="retData">请参考结构体Ping_data <see cref="Ping_data"/></param>
+        /// <returns>0 成功， 其他值为错误号</returns>
         int BxDual_cmd_tcpPing(byte[] ip, ushort port, ref Ping_data retData);
-        /*! ***************************************************************
-        * 函数名：       cmd_check_time（）
-        * 参数名：ip：控制器IP， port：控制器端口
-        * 返回值：0 成功， 其他值为错误号
-        * 功 能：校时，让控制器和当前上位机所在系统时间一致
-        * 注：
-        *
-        ******************************************************************/
+        /// <summary>
+        /// 校时，让控制器和当前上位机所在系统时间一致
+        /// </summary>
+        /// <param name="ip">控制器IP</param>
+        /// <param name="port">控制器端口</param>
+        /// <returns>0 成功， 其他值为错误号</returns>
         int BxDual_cmd_check_time(byte[] ip, ushort port);
-        /*!
-         *  串口校时
-         *  sPortName : "\\\\.\\COM1";
-         *  nBaudRateIndex: 1(表示波特率9600); 2(代表57600);
-         */
+        /// <summary>
+        /// 串口校时
+        /// </summary>
+        /// <param name="uartPort">"\\\\.\\COM1";</param>
+        /// <param name="baudRate">1(表示波特率9600); 2(代表57600);</param>
+        /// <returns></returns>
         int BxDual_cmd_check_time_uart(byte[] uartPort, byte baudRate);
         /*! ********************************************************************************************************************
         * 函数名：cmd_tcpNetworkSearch_6G（）
@@ -853,13 +852,10 @@ namespace System.Data.OnbonLedBxSDK
         ***
         ***
         /*! ***************************************************************/
-        /*! ***************************************************************
-        * 函数名：       bxDual_program_deleteProgram（）
-        * 返回值：0 成功， 其他值为错误
-        * 功 能：删除节目
-        * 注：
-        *
-        ******************************************************************/
+        /// <summary>
+        /// 删除节目
+        /// </summary>
+        /// <returns>0 成功， 其他值为错误</returns>
         int BxDual_program_deleteProgram();
         /// <summary>
         /// 
@@ -867,23 +863,22 @@ namespace System.Data.OnbonLedBxSDK
         /// <param name="program"></param>
         /// <returns></returns>
         int BxDual_program_freeBuffer(ref EQprogram program);
-        /*! ***************************************************************
-        * 函数名：       bxDual_program_pictureArea（）
-        * 参数名：ip：控制器IP， port：控制器端口
-        *	programID：节目的ID号
-        * 返回值：0 成功， 其他值为错误号
-        * 功 能：只是用来测试图文区
-        * 注：
-        * 屏幕大小为1024X80 输出26个字母
-        ******************************************************************/
+        /// <summary>
+        /// 只是用来测试图文区
+        /// 注： 屏幕大小为1024X80 输出26个字母
+        /// </summary>
+        /// <param name="programID">节目的ID号</param>
+        /// <param name="ip">控制器IP</param>
+        /// <param name="port">控制器端口</param>
+        /// <returns>0 成功， 其他值为错误号</returns>
         int BxDual_program_pictureArea(int programID, byte[] ip, ushort port);
-        /*! ***************************************************************
-        * 函数名：       bxDual_program_setScreenParams_G56（）
-        * 返回值：0 成功， 其他值为错误号
-        * 功 能：设置屏相关属性
-        * 注：
-        * 三个参数请参考各自枚举值
-        ******************************************************************/
+        /// <summary>
+        /// 设置屏相关属性
+        /// </summary>
+        /// <param name="color">显示颜色</param>
+        /// <param name="ControllerType">其中低位字节表示设备系列，而高位字节表示设备编号，例如 BX - 6Q2 应表示为[0x66, 0x02]，其它型号依此类推。</param>
+        /// <param name="doubleColor"></param>
+        /// <returns>0 成功， 其他值为错误号</returns>
         int BxDual_program_setScreenParams_G56(E_ScreenColor_G56 color, ushort ControllerType, E_DoubleColorPixel_G56 doubleColor); //设置屏相关属性
         //int  BxDual_program_setScreenParams_G6(E_ScreenColor_G56 color, ushort ControllerType, E_DoubleColorPixel_G56 doubleColor);
         /*! ***************************************************************
