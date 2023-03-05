@@ -30,12 +30,12 @@ namespace System.Data.YouRenIoTNetIO
         /// </summary>
         /// <param name="noType"></param>
         /// <returns></returns>
-        public static Tuble<int[], int[]> GetNoType(this IOControlNoType noType) => GetNoType2((ulong)noType);
+        public static Tuble<int[], int[]> GetIOType(this IOControlNoType noType) => GetIOType((ulong)noType);
         /// <summary>
         /// 获取序号值 推荐使用
         /// </summary>
         /// <returns></returns>
-        public static Tuble<int[], int[]> GetNoType2(ulong typeVal)
+        public static Tuble<int[], int[]> GetIOType(ulong typeVal)
         {
             var outList = new List<int>(7);
             for (int i = 0; i < 32; i++)
@@ -46,43 +46,6 @@ namespace System.Data.YouRenIoTNetIO
             for (int i = 32; i < 64; i++)
             {
                 if (((typeVal >> i) & 1) == 1) { inList.Add(i - 32); }
-            }
-            return new Tuble<int[], int[]>(outList.ToArray(), inList.ToArray());
-        }
-        /// <summary>
-        /// 获取序号值
-        /// <see cref="GetNoType2(ulong)"/>
-        /// </summary>
-        /// <returns></returns>
-        public static Tuble<int[], int[]> GetNoType(ulong typeVal)
-        {
-            return new Tuble<int[], int[]>(InnerGetNoType((uint)typeVal), InnerGetNoType((uint)(typeVal >> 32)));
-            static int[] InnerGetNoType(uint outVal)
-            {
-                var outList = new List<int>(7);
-                for (int i = 0; i < 32; i++)
-                {
-                    if (((outVal >> i) & 1) == 1) { outList.Add(i); }
-                }
-                return outList.ToArray();
-            }
-        }
-        /// <summary>
-        /// 获取序号值 推荐使用
-        /// </summary>
-        /// <returns></returns>
-        public static Tuble<int[], int[]> GetNoType3(ulong typeVal)
-        {
-            var bitArray = new BitArray(typeVal.GetBytes());
-            var outList = new List<int>(7);
-            for (int i = 0; i < 32; i++)
-            {
-                if (bitArray[i]) { outList.Add(i); }
-            }
-            var inList = new List<int>(7);
-            for (int i = 32; i < 64; i++)
-            {
-                if (bitArray[i]) { inList.Add(i - 32); }
             }
             return new Tuble<int[], int[]>(outList.ToArray(), inList.ToArray());
         }

@@ -36,7 +36,7 @@ namespace TestHardwareDemo.WinForm.Views
         /// </summary>
         List<ContentModel> _devices = new List<ContentModel>();
         ContentModel _config;
-        static string _configPath = System.IO.Path.GetFullPath("testreccoder1config.json");
+        static string _configPath = System.IO.Path.GetFullPath($"{nameof(HikHCNetPreview1v2211)}.json");
         bool _isInitialize;
         IHikHCNetSdkProxy CHCNetSDK = HikHCNetSdk.Create();
 

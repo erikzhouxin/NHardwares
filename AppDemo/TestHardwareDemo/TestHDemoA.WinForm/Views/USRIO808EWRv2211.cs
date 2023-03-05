@@ -20,10 +20,10 @@ namespace TestHardwareDemo.WinForm.Views
     /// <summary>
     /// 测试有人IO控制器
     /// </summary>
-    [EDisplay("测试有人USR-IO808-EWR")]
+    [EDisplay("测试有人USR-IO808-EWR示例1")]
     public partial class USRIO808EWRv2211 : TextLoggerComponent
     {
-        static string _configPath = System.IO.Path.GetFullPath("testusrio808config.json");
+        static string _configPath = System.IO.Path.GetFullPath($"{nameof(USRIO808EWRv2211)}.json");
         HashSet<USRIO808Model> _devices = new HashSet<USRIO808Model>();
         USRIO808Model _config;
         bool _isInitialize;

@@ -21,6 +21,8 @@
         <RepositoryType>git</RepositoryType>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
         <NoWarn>1701;1702;IDE0057;IDE0066;IDE0079;IDE0063</NoWarn>
+        <IncludeSymbols>true</IncludeSymbols>
+        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)'=='Debug|net40'">
         <DefineConstants>TRACE;DEBUG;NETFrame;NET40</DefineConstants>

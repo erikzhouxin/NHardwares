@@ -6,8 +6,10 @@ namespace ConsoleTester
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
-            TestCheckModel.Test();
+            //Console.WriteLine("Hello World!");
+            //TestCheckModel.Test();
+            new TestJwtToken().TestCreateToken();
+            Console.ReadKey();
         }
     }
 }

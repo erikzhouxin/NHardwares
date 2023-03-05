@@ -21,7 +21,7 @@ namespace TestHardwareDemo.WinForm.Views
     /// <summary>
     /// 西沃车牌识别示例
     /// </summary>
-    [EDisplay("测试西沃车牌识别示例")]
+    [EDisplay("测试西沃车牌识别示例1")]
     public partial class VzLPRDemov2211 : TextLoggerComponent
     {
         private bool _isInitialed;

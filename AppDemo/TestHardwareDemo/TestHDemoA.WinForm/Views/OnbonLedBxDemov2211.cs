@@ -19,9 +19,9 @@ using TestHardwareDemo.WinForm.Controls;
 namespace TestHardwareDemo.WinForm.Views
 {
     /// <summary>
-    /// 西沃车牌识别示例
+    /// 仰邦科技LED显示测试
     /// </summary>
-    [EDisplay("测试西沃车牌识别示例")]
+    [EDisplay("测试仰邦科技LED显示示例1")]
     public partial class OnbonLedBxDemov2211 : TextLoggerComponent
     {
         private bool _isInitialed;
@@ -143,28 +143,28 @@ namespace TestHardwareDemo.WinForm.Views
             this.TxtNetAccount.Text = model.Config.Account;
             this.TxtNetPassword.Text = model.Config.Password;
 
-            Ping_data data = new Ping_data();
-            var err = bxdualsdk.BxDual_cmd_uart_searchController(ref data, config.Address.GetBytes());
+            //Ping_data data = new Ping_data();
+            //var err = bxdualsdk.BxDual_cmd_uart_searchController(ref data, config.Address.GetBytes());
 
-            AppendInfo("ControllerType:0x" + data.ControllerType.ToString("X2"));
-            AppendInfo("FirmwareVersion:V" + data.FirmwareVersion.GetString());
-            AppendInfo("ipAdder:" + data.ipAdder.GetString());
-            common_56.Net_Bright(2);
-            Ping_data data = new Ping_data();
-            err = bxdualsdk.BxDual_cmd_tcpPing(config.Address.GetBytes(), config.PortRate, ref data);
+            //AppendInfo("ControllerType:0x" + data.ControllerType.ToString("X2"));
+            //AppendInfo("FirmwareVersion:V" + data.FirmwareVersion.GetString());
+            //AppendInfo("ipAdder:" + data.ipAdder.GetString());
+            //common_56.Net_Bright(2);
+            //Ping_data data = new Ping_data();
+            //err = bxdualsdk.BxDual_cmd_tcpPing(config.Address.GetBytes(), config.PortRate, ref data);
 
-            Console.WriteLine("ControllerType:0x" + data.ControllerType.ToString("X2"));
-            Console.WriteLine("FirmwareVersion:V" + System.Text.Encoding.Default.GetString(data.FirmwareVersion));
-            Console.WriteLine("ipAdder:" + System.Text.Encoding.Default.GetString(data.ipAdder));
-            Console.WriteLine("ScreenWidth:" + data.ScreenWidth.ToString());
-            Console.WriteLine("ScreenHeight:" + data.ScreenHeight.ToString());
-            Console.WriteLine("cmb_ping_Color:" + data.Color.ToString());
-            Console.WriteLine("\r\n");
-            common_56.sendConfigFile();
-            Console.Write("请输入串口：");
-            com = Encoding.GetEncoding("GBK").GetBytes(Console.ReadLine());
-            err = bxdualsdk.BxDual_cmd_check_time(ip, port);
-            if (err == 0) { Console.WriteLine("校时成功"); } else { Console.WriteLine("校时失败"); }
+            //Console.WriteLine("ControllerType:0x" + data.ControllerType.ToString("X2"));
+            //Console.WriteLine("FirmwareVersion:V" + System.Text.Encoding.Default.GetString(data.FirmwareVersion));
+            //Console.WriteLine("ipAdder:" + System.Text.Encoding.Default.GetString(data.ipAdder));
+            //Console.WriteLine("ScreenWidth:" + data.ScreenWidth.ToString());
+            //Console.WriteLine("ScreenHeight:" + data.ScreenHeight.ToString());
+            //Console.WriteLine("cmb_ping_Color:" + data.Color.ToString());
+            //Console.WriteLine("\r\n");
+            //common_56.sendConfigFile();
+            //Console.Write("请输入串口：");
+            //com = Encoding.GetEncoding("GBK").GetBytes(Console.ReadLine());
+            //err = bxdualsdk.BxDual_cmd_check_time(ip, port);
+            //if (err == 0) { Console.WriteLine("校时成功"); } else { Console.WriteLine("校时失败"); }
         }
 
         private void ChkNetPDNS_Click(object sender, EventArgs e)

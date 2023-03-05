@@ -26,12 +26,9 @@ namespace TestHardwareDemo.WinForm.Views
     /// <summary>
     /// 二维码识别模块
     /// </summary>
-    [EDisplay("二维码识别模块示例1")]
+    [EDisplay("测试二维码识别模块示例1")]
     public partial class RecBarCodeModulev2211 : TextLoggerComponent
     {
-        /// <summary>
-        /// 终端配置
-        /// </summary>
         Dictionary<string, SerialPortConfigModel> _devices = new Dictionary<string, SerialPortConfigModel>();
         IRecBarCodeProxy _config = new SerialPortConfigModel()
         {
@@ -43,7 +40,7 @@ namespace TestHardwareDemo.WinForm.Views
             ReadTimeout = 500,
             ThresholdLen = 30,
         }.CreateRecBarCode();
-        static string _configPath = System.IO.Path.GetFullPath("testreccoder1config.json");
+        static string _configPath = System.IO.Path.GetFullPath($"{nameof(RecBarCodeModulev2211)}.json");
         bool _isInitialize;
         public RecBarCodeModulev2211()
         {

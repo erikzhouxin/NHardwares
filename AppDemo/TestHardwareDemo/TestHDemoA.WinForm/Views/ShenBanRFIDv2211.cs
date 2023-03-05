@@ -23,7 +23,7 @@ namespace TestHardwareDemo.WinForm.Views
     /// <summary>
     /// 深坂RFID识别流程1
     /// </summary>
-    [EDisplay("深坂RFID识别流程1")]
+    [EDisplay("测试深坂RFID识别流程1")]
     public partial class ShenBanRFIDv2211 : TextLoggerComponent
     {
         /// <summary>
@@ -145,7 +145,7 @@ namespace TestHardwareDemo.WinForm.Views
                 model.Ant = ant;
                 model.Flag = flag;
             }
-            System.IO.File.WriteAllText(_rfidPath, list.GetJsonFormatString());
+            System.IO.File.WriteAllText(_configPath, list.GetJsonFormatString());
 
             ReadDeviceAndSetFirstOne();
         }
@@ -159,14 +159,14 @@ namespace TestHardwareDemo.WinForm.Views
             {
                 list.Remove(model);
                 _rfidModel.Remove(model.Uuid);
-                System.IO.File.WriteAllText(_rfidPath, list.GetJsonFormatString());
+                System.IO.File.WriteAllText(_configPath, list.GetJsonFormatString());
             }
             ReadDeviceAndSetFirstOne();
         }
         #region // 服务内容
         ICacheModel<TLocalRfids> _rfidModel = CacheModel<TLocalRfids>.Concurrent;
-        string _rfidPath = System.IO.Path.GetFullPath("TLocalRfids.json");
-        string _rfidSetting = System.IO.Path.GetFullPath("TLocalSettings.json");
+        string _configPath = System.IO.Path.GetFullPath($"{nameof(ShenBanRFIDv2211)}.json");
+        string _configSetting = System.IO.Path.GetFullPath($"{nameof(ShenBanRFIDv2211)}-settings.json");
         Dictionary<string, ShenBanReaderContent> RfidDic { get; } = new Dictionary<string, ShenBanReaderContent>();
         TLocalSettings Setting { get => GetRfidSetting(); }
         async Task DownloadServiceAsync(CancellationToken stoppingToken)
@@ -180,9 +180,9 @@ namespace TestHardwareDemo.WinForm.Views
                         try
                         {
                             var tagKeys = _rfidModel.GetKeys() ?? new List<string>();
-                            if (!System.IO.File.Exists(_rfidPath))
-                            { System.IO.File.WriteAllText(_rfidPath, new List<TLocalRfids>() { GetDefaultRfid(false), GetDefaultRfid(true) }.GetJsonFormatString()); }
-                            var srcModels = System.IO.File.ReadAllText(_rfidPath).GetJsonObject<List<TLocalRfids>>();
+                            if (!System.IO.File.Exists(_configPath))
+                            { System.IO.File.WriteAllText(_configPath, new List<TLocalRfids>() { GetDefaultRfid(false), GetDefaultRfid(true) }.GetJsonFormatString()); }
+                            var srcModels = System.IO.File.ReadAllText(_configPath).GetJsonObject<List<TLocalRfids>>();
                             foreach (var item in srcModels)
                             {
                                 _rfidModel.Set(item.Uuid, item);
@@ -230,9 +230,9 @@ namespace TestHardwareDemo.WinForm.Views
         }
         private TLocalSettings GetRfidSetting()
         {
-            if (!System.IO.File.Exists(_rfidSetting))
-            { System.IO.File.WriteAllText(_rfidSetting, new TLocalSettings().GetJsonFormatString()); }
-            return System.IO.File.ReadAllText(_rfidSetting).GetJsonObject<TLocalSettings>();
+            if (!System.IO.File.Exists(_configSetting))
+            { System.IO.File.WriteAllText(_configSetting, new TLocalSettings().GetJsonFormatString()); }
+            return System.IO.File.ReadAllText(_configSetting).GetJsonObject<TLocalSettings>();
         }
         private object _rfidProcess = new object();
         async Task GuardianServiceAsync(CancellationToken stoppingToken)
@@ -1594,17 +1594,17 @@ namespace TestHardwareDemo.WinForm.Views
         {
             var configText = this.CbxNetConfigs.Text;
             List<TLocalRfids> list;
-            if (System.IO.File.Exists(_rfidPath))
+            if (System.IO.File.Exists(_configPath))
             {
                 try
                 {
-                    list = System.IO.File.ReadAllText(_rfidPath).GetJsonObject<List<TLocalRfids>>();
+                    list = System.IO.File.ReadAllText(_configPath).GetJsonObject<List<TLocalRfids>>();
                 }
                 catch { list = new List<TLocalRfids>(); }
             }
             else
             {
-                System.IO.File.WriteAllText(_rfidPath, "[]");
+                System.IO.File.WriteAllText(_configPath, "[]");
                 list = new List<TLocalRfids>();
             }
             this.CbxNetConfigs.Items.Clear();
