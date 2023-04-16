@@ -21,18 +21,18 @@ namespace TestHardwareDemo.WinForm.Views
     /// <summary>
     /// 仰邦科技LED显示测试
     /// </summary>
-    [EDisplay("测试仰邦科技LED显示示例1")]
-    public partial class OnbonLedBxDemov2211 : TextLoggerComponent
+    [EDisplay("测试仰邦科技LED六代6E示例1")]
+    public partial class OnbonLedBx6Ev2211 : TextLoggerComponent
     {
         private bool _isInitialed;
         static ILedBxDualSdkProxy bxdualsdk = LedBxDualSdk.Create();
         private List<ContentModel> _devices = new();
-        private string _configPath = System.IO.Path.GetFullPath($"{nameof(OnbonLedBxDemov2211)}.json");
+        private string _configPath = System.IO.Path.GetFullPath($"{nameof(OnbonLedBx6Ev2211)}.json");
         private ContentModel _config;
         /// <summary>
         /// 构造
         /// </summary>
-        public OnbonLedBxDemov2211()
+        public OnbonLedBx6Ev2211()
         {
             InitializeComponent();
         }

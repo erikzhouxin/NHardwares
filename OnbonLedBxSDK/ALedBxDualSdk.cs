@@ -338,6 +338,25 @@ namespace System.Data.OnbonLedBxSDK
             return value;
         }
         #endregion
+
+        #region // 获取内容
+        /// <summary>
+        /// 显示屏的屏基色
+        /// 通过PING_DATA中的Color获取显示颜色
+        /// </summary>
+        /// <param name="color"></param>
+        /// <returns></returns>
+        public static E_ScreenColor_G56 GetEScreenColor(byte color)
+        {
+            switch (color)
+            {
+                case 1: return E_ScreenColor_G56.eSCREEN_COLOR_SINGLE;
+                case 3: return E_ScreenColor_G56.eSCREEN_COLOR_DOUBLE;
+                case 7: return E_ScreenColor_G56.eSCREEN_COLOR_THREE;
+                default: return E_ScreenColor_G56.eSCREEN_COLOR_FULLCOLOR;
+            }
+        }
+        #endregion 获取内容
     }
 
 }

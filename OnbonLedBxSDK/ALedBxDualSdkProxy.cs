@@ -47,16 +47,6 @@ namespace System.Data.OnbonLedBxSDK
         /// <param name="uartPort">串口号</param>
         /// <returns></returns>
         int BxDual_cmd_uart_searchController(ref Ping_data retData, byte[] uartPort);
-        /*! ***********************************************************************************************************************
-        * 函数名：cmd_uart_search_Net_6G()
-        * 参数名：
-        *        uartPort 端口号,如："COM3"
-        *		 nBaudRateType 1：9600;   2：57600;
-        *		 命令结果放在了 retData 中；NetSearchCmdRet:参考结构体声明中的注释；
-        * 返回值：0 成功， 其他值为错误号
-        * 功  能： 网络搜索命令，返回：温度传感器，空气，PM2.5等信息，详见 NetSearchCmdRet:参考结构体声明中的注释；
-        * 注：   针对 6代卡 的网络搜索命令
-        ***************************************************************************************************************************/
         /// <summary>
         ///  网络搜索命令，返回：温度传感器，空气，PM2.5等信息，详见 NetSearchCmdRet:参考结构体声明中的注释；
         ///  针对 6代卡 的网络搜索命令
@@ -67,125 +57,118 @@ namespace System.Data.OnbonLedBxSDK
         /// <returns></returns>
         int BxDual_cmd_uart_search_Net_6G(ref NetSearchCmdRet retData, byte[] uartPort, ushort nBaudRateType);
         /// <summary>
-        /// 
+        /// 网络搜索命令，返回：温度传感器，空气，PM2.5等信息，详见 NetSearchCmdRet:参考结构体声明中的注释；
+        /// 针对 6代卡 的网络搜索命令
         /// </summary>
-        /// <param name="retData"></param>
-        /// <param name="uartPort"></param>
-        /// <param name="nBaudRateType"></param>
+        /// <param name="retData">NetSearchCmdRet:参考结构体声明中的注释</param>
+        /// <param name="uartPort">串口号,如："COM3"</param>
+        /// <param name="nBaudRateType">1：9600;   2：57600;</param>
         /// <returns></returns>
         int BxDual_cmd_uart_search_Net_6G_Web(ref NetSearchCmdRet_Web retData, byte[] uartPort, ushort nBaudRateType);
-        /*! ***************************************************************
-        * 函数名：       bxDual_cmd_uart_ofsFormat（）
-        * 参数名：uartPort：串口端口号， baudRate：波特率
-        * 返回值：0 成功， 其他值为错误号
-        * 功 能：文件系统格式化
-        ******************************************************************/
+        /// <summary>
+        /// 文件系统格式化
+        /// </summary>
+        /// <param name="uartPort">串口端口号</param>
+        /// <param name="baudRate">波特率 1：9600;   2：57600;</param>
+        /// <returns>0 成功， 其他值为错误号</returns>
         int BxDual_cmd_uart_ofsFormat(byte[] uartPort, byte baudRate);
-        /*! ***************************************************************
-        * 函数名：       bxDual_cmd_uart_ofsStartFileTransf（）
-        * 参数名：uartPort：串口端口号， baudRate：波特率
-        * 返回值：0 成功， 其他值为错误号
-        * 功 能：开始批量写文件
-        * 注：
-        * 发送节目前调用
-        ******************************************************************/
+        /// <summary>
+        /// 开始批量写文件
+        /// 发送节目前调用
+        /// </summary>
+        /// <param name="uartPort">串口端口号</param>
+        /// <param name="baudRate">波特率 1：9600;   2：57600;</param>
+        /// <returns>0 成功， 其他值为错误号</returns>
         int BxDual_cmd_uart_ofsStartFileTransf(byte[] uartPort, byte baudRate);
-        /*! ***************************************************************
-        * 函数名：       bxDual_cmd_uart_ofsEndFileTransf（）
-        * 参数名：uartPort：串口端口号， baudRate：波特率
-        * 返回值：0 成功， 其他值为错误号
-        * 功 能：写文件结束
-        * 注：
-        * 发送节目后调用
-        ******************************************************************/
+        /// <summary>
+        /// 写文件结束
+        /// 发送节目后调用
+        /// </summary>
+        /// <param name="uartPort">串口端口号</param>
+        /// <param name="baudRate">波特率 1：9600;   2：57600;</param>
+        /// <returns>0 成功， 其他值为错误号</returns>
         int BxDual_cmd_uart_ofsEndFileTransf(byte[] uartPort, byte baudRate);
-        /*! ***************************************************************
-        * 函数名：       bxDual_cmd_uart_ofsDeleteFormatFile（）
-        * 参数名：uartPort：串口端口号， baudRate：波特率
-        *	fileNub:要删除的文件个数
-        *	fileName：要删除的文件名
-        * 返回值：0 成功， 其他值为错误号
-        * 功 能：删除文件
-        * 注：
-        * fileName是4个字节 fileNub值为N就要把N个fileName拼接 fileName大小 = fileName（4byte）*N
-        ******************************************************************/
+        /// <summary>
+        /// 删除文件
+        /// fileName是4个字节 fileNub值为N就要把N个fileName拼接 fileName大小 = fileName（4byte）*N
+        /// </summary>
+        /// <param name="uartPort">串口端口号</param>
+        /// <param name="baudRate">波特率 1：9600;   2：57600;</param>
+        /// <param name="fileNub">要删除的文件个数</param>
+        /// <param name="fileName">要删除的文件名</param>
+        /// <returns>0 成功， 其他值为错误号</returns>
         int BxDual_cmd_uart_ofsDeleteFormatFile(byte[] uartPort, byte baudRate, short fileNub, byte[] fileName);
-        /*! ***************************************************************
-        * 函数名：       bxDual_cmd_uart_confDeleteFormatFile（）
-        * 参数名：uartPort：串口端口号， baudRate：波特率
-        *	fileNub:要删除的文件个数
-        *	fileName：要删除的文件名
-        * 返回值：0 成功， 其他值为错误号
-        * 功 能：删除文件
-        * 注：此函数用于对存储在固定位置的文件进行处理， 例
-        如： Firmware 文件、 控制器参数配置文件、 扫描配置文件等。
-        * fileName是4个字节 fileNub值为N就要把N个fileName拼接 fileName大小 = fileName（4byte）*N
-        ******************************************************************/
+        /// <summary>
+        /// 删除文件
+        /// 注：此函数用于对存储在固定位置的文件进行处理， 例如： Firmware 文件、 控制器参数配置文件、 扫描配置文件等。
+        /// fileName是4个字节 fileNub值为N就要把N个fileName拼接 fileName大小 = fileName（4byte）*N
+        /// </summary>
+        /// <param name="uartPort">串口端口号</param>
+        /// <param name="baudRate">波特率 1：9600;   2：57600;</param>
+        /// <param name="fileNub">要删除的文件个数</param>
+        /// <param name="fileName">要删除的文件名</param>
+        /// <returns>0 成功， 其他值为错误号</returns>
         int BxDual_cmd_uart_confDeleteFormatFile(byte[] uartPort, byte baudRate, short fileNub, byte[] fileName);
-        /*! ***************************************************************
-        * 函数名：       bxDual_cmd_uart_ofsGetMemoryVolume（）
-        * 参数名：uartPort：串口端口号， baudRate：波特率
-        *	totalMemVolume：全部空间大小
-        *	availableMemVolume：剩余空间大小
-        * 返回值：0 成功， 其他值为错误号
-        * 功 能：获取控制空间大小和剩余空间
-        * 注：
-        * 发节目前需要查询防止空间不够用
-        ******************************************************************/
+        /// <summary>
+        /// 获取控制空间大小和剩余空间
+        /// 发节目前需要查询防止空间不够用
+        /// </summary>
+        /// <param name="uartPort">串口端口号</param>
+        /// <param name="baudRate">波特率 1：9600;   2：57600;</param>
+        /// <param name="totalMemVolume">全部空间大小</param>
+        /// <param name="availableMemVolume">剩余空间大小</param>
+        /// <returns>0 成功， 其他值为错误号</returns>
         int BxDual_cmd_uart_ofsGetMemoryVolume(byte[] uartPort, byte baudRate, ref int totalMemVolume, ref int availableMemVolume);
-        /*! ***************************************************************
-        * 函数名：       bxDual_cmd_uart_ofsWriteFile（）
-        * 参数名：uartPort：串口端口号， baudRate：波特率
-        *	fileName：文件名
-        *	fileType：文件类型
-        *	fileLen：文件长度
-        *	fileAddre：文件所在的缓存地址
-        *	overwrite：是否覆盖控制上的文件 1覆盖 0不覆盖 建议发1
-        * 返回值：0 成功， 其他值为错误号
-        * 功 能：写文件到控制
-        * 注：用于对存储在 OFS 中的文件的处理， 例如： 节目文件， 字库文件、 播放列表文件等
-        * 内部包含多条命令注意返回状态方便查找问题
-        ******************************************************************/
+        /// <summary>
+        /// 写文件到控制
+        /// 注：用于对存储在 OFS 中的文件的处理， 例如： 节目文件， 字库文件、 播放列表文件等
+        /// 内部包含多条命令注意返回状态方便查找问题
+        /// </summary>
+        /// <param name="uartPort">串口端口号</param>
+        /// <param name="baudRate">波特率 1：9600;   2：57600;</param>
+        /// <param name="fileName">文件名</param>
+        /// <param name="fileType">文件类型</param>
+        /// <param name="fileLen">文件长度</param>
+        /// <param name="overwrite">是否覆盖控制上的文件 1覆盖 0不覆盖 建议发1</param>
+        /// <param name="fileAddre">文件所在的缓存地址</param>
+        /// <returns>0 成功， 其他值为错误号</returns>
         int BxDual_cmd_uart_ofsWriteFile(byte[] uartPort, byte baudRate, byte[] fileName, byte fileType, uint fileLen, byte overwrite, IntPtr fileAddre);
-        /*! ***************************************************************
-        * 函数名：       bxDual_cmd_uart_confWriteFile（）
-        * 参数名：uartPort：串口端口号， baudRate：波特率
-        *	fileName：文件名
-        *	fileType：文件类型
-        *	fileLen：文件长度
-        *	fileAddre：文件所在的缓存地址
-        *	overwrite：是否覆盖控制上的文件 1覆盖 0不覆盖 建议发1
-        * 返回值：0 成功， 其他值为错误号
-        * 功 能：写文件到控制
-        * 注：此函数用于对存储在固定位置的文件进行处理， 例
-        如： Firmware 文件、 控制器参数配置文件、 扫描配置文件等。
-        * 内部包含多条命令注意返回状态方便查找问题
-        ******************************************************************/
+        /// <summary>
+        /// 写文件到控制
+        /// 此函数用于对存储在固定位置的文件进行处理， 
+        /// 例如： Firmware 文件、 控制器参数配置文件、 扫描配置文件等。
+        /// 内部包含多条命令注意返回状态方便查找问题
+        /// </summary>
+        /// <param name="uartPort">串口端口号</param>
+        /// <param name="baudRate">波特率 1：9600;   2：57600;</param>
+        /// <param name="fileName">文件名</param>
+        /// <param name="fileType">文件类型</param>
+        /// <param name="fileLen">文件长度</param>
+        /// <param name="overwrite">是否覆盖控制上的文件 1覆盖 0不覆盖 建议发1</param>
+        /// <param name="fileAddre">文件所在的缓存地址</param>
+        /// <returns>0 成功， 其他值为错误号</returns>
         int BxDual_cmd_uart_confWriteFile(byte[] uartPort, byte baudRate, byte[] fileName, byte fileType, int fileLen, byte overwrite, byte[] fileAddre);
-        /*! ***************************************************************
-        * 函数名：       bxDual_cmd_ofsStartReedFile（）
-        * 参数名：ip：控制器IP， port：控制器端口
-        *	fileName：需要读取的文件名
-        *	fileSize：回读文件大小
-        *	fileCrc：回读的文件CRC
-        * 返回值：0 成功， 其他值为错误号
-        * 功 能：开始读文件
-        * 注：
-        *
-        ******************************************************************/
+        /// <summary>
+        /// 开始读文件
+        /// </summary>
+        /// <param name="uartPort">串口端口号</param>
+        /// <param name="baudRate">波特率 1：9600;   2：57600;</param>
+        /// <param name="fileName">需要读取的文件名</param>
+        /// <param name="fileSize">回读文件大小</param>
+        /// <param name="fileCrc">回读的文件CRC</param>
+        /// <returns>0 成功， 其他值为错误号</returns>
         int BxDual_cmd_uart_ofsStartReedFile(byte[] uartPort, byte baudRate, byte[] fileName, int[] fileSize, int[] fileCrc);
-        /*! ***************************************************************
-        * 函数名：       bxDual_cmd_uart_confStartReedFile（）
-        * 参数名：uartPort：串口端口号， baudRate：波特率
-        *	fileName：需要读取的文件名
-        *	fileSize：回读文件大小
-        *	fileCrc：回读的文件CRC
-        * 返回值：0 成功， 其他值为错误号
-        * 功 能：开始读文件
-        * 注：此函数用于对存储在固定位置的文件进行处理， 例
-        如： Firmware 文件、 控制器参数配置文件、 扫描配置文件等。
-        *
-        ******************************************************************/
+        /// <summary>
+        /// 开始读文件
+        ///  注：此函数用于对存储在固定位置的文件进行处理， 
+        ///  例如： Firmware 文件、 控制器参数配置文件、 扫描配置文件等。
+        /// </summary>
+        /// <param name="uartPort">串口端口号</param>
+        /// <param name="baudRate">波特率 1：9600;   2：57600;</param>
+        /// <param name="fileName">需要读取的文件名</param>
+        /// <param name="fileSize">回读文件大小</param>
+        /// <param name="fileCrc">回读的文件CRC</param>
+        /// <returns>0 成功， 其他值为错误号</returns>
         int BxDual_cmd_uart_confStartReedFile(byte[] uartPort, byte baudRate, byte[] fileName, int[] fileSize, int[] fileCrc);
         /*! ***************************************************************
         * 函数名：       bxDual_cmd_uart_ofsReedFileBlock（）
@@ -197,6 +180,14 @@ namespace System.Data.OnbonLedBxSDK
         * 注：用于对存储在 OFS 中的文件的处理， 例如： 节目文件， 字库文件、 播放列表文件等
         * fileAddre大小根据cmd_ofsStartReedFile函数回调值确定
         ******************************************************************/
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="uartPort">串口端口号</param>
+        /// <param name="baudRate">波特率 1：9600;   2：57600;</param>
+        /// <param name="fileName"></param>
+        /// <param name="fileAddre"></param>
+        /// <returns></returns>
         int BxDual_cmd_uart_ofsReedFileBlock(byte[] uartPort, byte baudRate, byte[] fileName, byte[] fileAddre);
         /*! ***************************************************************
         * 函数名：       bxDual_cmd_uart_confReedFileBlock(）
@@ -209,6 +200,14 @@ namespace System.Data.OnbonLedBxSDK
         如： Firmware 文件、 控制器参数配置文件、 扫描配置文件等。
         * fileAddre大小根据cmd_ofsStartReedFile函数回调值确定
         ******************************************************************/
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="uartPort">串口端口号</param>
+        /// <param name="baudRate">波特率 1：9600;   2：57600;</param>
+        /// <param name="fileName"></param>
+        /// <param name="fileAddre"></param>
+        /// <returns></returns>
         int BxDual_cmd_uart_confReedFileBlock(byte[] uartPort, byte baudRate, byte[] fileName, byte[] fileAddre);
         /*! ***************************************************************
         * 函数名：       bxDual_cmd_uart_ofsReedDirBlock（）
@@ -220,6 +219,13 @@ namespace System.Data.OnbonLedBxSDK
         * 注：
         * 下面两条命令用法比较复杂请配合协议使用不做嗷述
         ******************************************************************/
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="uartPort">串口端口号</param>
+        /// <param name="baudRate">波特率 1：9600;   2：57600;</param>
+        /// <param name="dirBlock"></param>
+        /// <returns></returns>
         int BxDual_cmd_uart_ofsReedDirBlock(byte[] uartPort, byte baudRate, ref GetDirBlock_G56 dirBlock);
         /*! ***************************************************************
         * 函数名：  bxDual_cmd_ofs_freeDirBlock（）
@@ -230,7 +236,22 @@ namespace System.Data.OnbonLedBxSDK
         * 注：
         * dirBlock 上述两条命令调用完成后dirBlock不再使用时用此函数释放文件列表
         ******************************************************************/
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="dirBlock"></param>
+        /// <returns></returns>
         int BxDual_cmd_uart_ofsFreeDirBlock(ref GetDirBlock_G56 dirBlock);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="uartPort">串口端口号</param>
+        /// <param name="baudRate">波特率 1：9600;   2：57600;</param>
+        /// <param name="r_w"></param>
+        /// <param name="fileName"></param>
+        /// <param name="fileCrc"></param>
+        /// <param name="fileOffset"></param>
+        /// <returns></returns>
         int BxDual_cmd_uart_ofsGetTransStatus(byte[] uartPort, byte baudRate, byte[] r_w, byte[] fileName, int[] fileCrc, int[] fileOffset);
         /*! ***************************************************************
         * 函数名：       bxDual_cmd_uart_sendConfigFile(）
@@ -241,6 +262,13 @@ namespace System.Data.OnbonLedBxSDK
         * 注：
         *
         ******************************************************************/
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="uartPort">串口端口号</param>
+        /// <param name="baudRate">波特率 1：9600;   2：57600;</param>
+        /// <param name="configData"></param>
+        /// <returns></returns>
         int BxDual_cmd_uart_sendConfigFile(byte[] uartPort, byte baudRate, ref ConfigFile configData);
         /*! ***************************************************************
         * 函数名：       bxDual_cmd_uart_programLock（）
@@ -255,6 +283,16 @@ namespace System.Data.OnbonLedBxSDK
         * 注：
         * 具体使用方法参考协议
         ******************************************************************/
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="uartPort">串口端口号</param>
+        /// <param name="baudRate">波特率 1：9600;   2：57600;</param>
+        /// <param name="nonvolatile"></param>
+        /// <param name="locked"></param>
+        /// <param name="name"></param>
+        /// <param name="lockDuration"></param>
+        /// <returns></returns>
         int BxDual_cmd_uart_programLock(byte[] uartPort, byte baudRate, byte nonvolatile, byte locked, byte[] name, uint lockDuration);
         int BxDual_cmd_uart_programLock_6G(byte[] uartPort, byte baudRate, byte nonvolatile, byte locked, byte[] name, int lockDuration);
         /*! ***************************************************************
@@ -626,23 +664,21 @@ namespace System.Data.OnbonLedBxSDK
         * 具体细节参考协议
         ******************************************************************/
         int BxDual_cmd_ofsFormat(byte[] ip, ushort port);
-        /*! ***************************************************************
-        * 函数名：       bxDual_cmd_ofsStartFileTransf（）
-        * 参数名：ip：控制器IP， port：控制器端口
-        * 返回值：0 成功， 其他值为错误号
-        * 功 能：开始批量写文件
-        * 注：
-        * 发送节目前调用
-        ******************************************************************/
+        /// <summary>
+        /// 开始批量写文件
+        /// 注：发送节目前调用
+        /// </summary>
+        /// <param name="ip">控制器IP</param>
+        /// <param name="port">控制器端口</param>
+        /// <returns>0 成功， 其他值为错误号</returns>
         int BxDual_cmd_ofsStartFileTransf(byte[] ip, ushort port);
-        /*! ***************************************************************
-        * 函数名：       bxDual_cmd_ofsEndFileTransf（）
-        * 参数名：ip：控制器IP， port：控制器端口
-        * 返回值：0 成功， 其他值为错误号
-        * 功 能：写文件结束
-        * 注：
-        * 发送节目后调用
-        ******************************************************************/
+        /// <summary>
+        /// 写文件结束
+        /// 注：发送节目后调用
+        /// </summary>
+        /// <param name="ip">控制器IP</param>
+        /// <param name="port">控制器端口</param>
+        /// <returns>0 成功， 其他值为错误号</returns>
         int BxDual_cmd_ofsEndFileTransf(byte[] ip, ushort port);
         /*! ***************************************************************
         * 函数名：       bxDual_cmd_ofsDeleteFormatFile（）
@@ -680,17 +716,30 @@ namespace System.Data.OnbonLedBxSDK
         int BxDual_cmd_ofsGetMemoryVolume(byte[] ip, ushort port, ref int totalMemVolume, ref int availableMemVolume);
         /*! ***************************************************************
         * 函数名：       bxDual_cmd_ofsWriteFile（）
-        * 参数名：ip：控制器IP， port：控制器端口
-        *	fileName：文件名
-        *	fileType：文件类型
-        *	fileLen：文件长度
-        *	fileAddre：文件所在的缓存地址
-        *	overwrite：是否覆盖控制上的文件 1覆盖 0不覆盖 建议发1
-        * 返回值：0 成功， 其他值为错误号
-        * 功 能：写文件到控制
-        * 注：用于对存储在 OFS 中的文件的处理， 例如： 节目文件， 字库文件、 播放列表文件等
-        * 内部包含多条命令注意返回状态方便查找问题
+        * 参数名：ip：， port：
+        *	fileName：
+        *	fileType：
+        *	fileLen：
+        *	fileAddre：
+        *	overwrite：
+        * 返回值：
+        * 功 能：
+        * 
+        * 
         ******************************************************************/
+        /// <summary>
+        /// 写文件到控制
+        /// 注：用于对存储在 OFS 中的文件的处理， 例如： 节目文件， 字库文件、 播放列表文件等
+        /// 内部包含多条命令注意返回状态方便查找问题
+        /// </summary>
+        /// <param name="ip">控制器IP</param>
+        /// <param name="port">控制器端口</param>
+        /// <param name="fileName">文件名</param>
+        /// <param name="fileType">文件类型</param>
+        /// <param name="fileLen">文件长度</param>
+        /// <param name="overwrite">是否覆盖控制上的文件 1覆盖 0不覆盖 建议发1</param>
+        /// <param name="fileAddre">文件所在的缓存地址</param>
+        /// <returns>0 成功， 其他值为错误号</returns>
         int BxDual_cmd_ofsWriteFile(byte[] ip, ushort port, byte[] fileName, byte fileType, uint fileLen, byte overwrite, IntPtr fileAddre);
         /*! ***************************************************************
         * 函数名：       bxDual_cmd_ofsWriteFile（）
@@ -1681,15 +1730,11 @@ namespace System.Data.OnbonLedBxSDK
         int BxDual_dynamicArea_DelAreaS_G5_Serial(byte[] pSerialName, byte nBaudRateIndex, byte uAreaCount, byte[] pAreaID);
         //5代控制卡动态区功能结束:===========================
         /*****************************以下为六代接口*******************************************/
-        /*! ***************************************************************
-        * 函数名：       bxDual_program_addProgram_G6(）
-        * 参数名：
-        *	EQprogramHeader_G6：参考结构体EQprogramHeader_G6
-        * 返回值：0 成功， 其他值为错误号
-        * 功 能：添加节目
-        * 注：
-        *
-        ******************************************************************/
+        /// <summary>
+        /// 添加节目
+        /// </summary>
+        /// <param name="programH">参考结构体<see cref="EQprogramHeader_G6"/></param>
+        /// <returns>0 成功， 其他值为错误号</returns>
         int BxDual_program_addProgram_G6(ref EQprogramHeader_G6 programH);
         /*! ***************************************************************
         * 函数名：       bxDual_program_addPlayPeriodGrp_G6（）
@@ -1699,25 +1744,16 @@ namespace System.Data.OnbonLedBxSDK
         *
         ******************************************************************/
         int BxDual_program_addPlayPeriodGrp_G6(ref EQprogramppGrp_G56 header);
-        /*! ***************************************************************
-        * 函数名：       bxDual_program_deleteProgram_G6(）
-        * 参数名：
-        *
-        * 返回值：0 成功， 其他值为错误号
-        * 功 能：删除节目
-        * 注：
-        *
-        ******************************************************************/
+        /// <summary>
+        /// 删除节目
+        /// </summary>
+        /// <returns>0 成功， 其他值为错误号</returns>
         int BxDual_program_deleteProgram_G6();
-        /*! ***************************************************************
-        * 函数名：       bxDual_program_freeBuffer_G6(）
-        * 参数名：
-        *
-        * 返回值：0 成功， 其他值为错误号
-        * 功 能：释放生成节目文件的缓冲区
-        * 注：
-        *
-        ******************************************************************/
+        /// <summary>
+        /// 释放生成节目文件的缓冲区
+        /// </summary>
+        /// <param name="program"></param>
+        /// <returns>0 成功， 其他值为错误号</returns>
         int BxDual_program_freeBuffer_G6(ref EQprogram_G6 program);
         /*! ***************************************************************
         * 函数名：       bxDual_program_changeProgramParams_G6（）
@@ -1728,15 +1764,13 @@ namespace System.Data.OnbonLedBxSDK
         * 一定要参考协议对每一个值都不能理解出错否则发下去的内容显示肯定不是自己想要的
         ******************************************************************/
         int BxDual_program_changeProgramParams_G6(ref EQprogramHeader_G6 programH);
-        /*! ***************************************************************
-        * 函数名：       bxDual_program_addFrame_G6（）
-        *	sfHeader：参考结构体EQscreenframeHeader_G6
-        *	picPath：添加的边框图片路径
-        * 返回值：0 成功， -1 不成功
-        * 功 能：节目添加边框
-        * 注：节目添加边框后，区域的坐标随即发生变化，添加区域的时候需注意
-        *
-        ******************************************************************/
+        /// <summary>
+        /// 节目添加边框
+        /// 注：节目添加边框后，区域的坐标随即发生变化，添加区域的时候需注意
+        /// </summary>
+        /// <param name="sfHeader">参考结构体<see cref="EQscreenframeHeader_G6"/></param>
+        /// <param name="picPath">添加的边框图片路径</param>
+        /// <returns>0 成功， -1 不成功</returns>
         int BxDual_program_addFrame_G6(ref EQscreenframeHeader_G6 sfHeader, byte[] picPath);
         /*! ***************************************************************
         * 函数名：       bxDual_program_changeFrame_G6（）
@@ -2031,15 +2065,12 @@ namespace System.Data.OnbonLedBxSDK
         *
         ******************************************************************/
         int BxDual_program_timeAreaRemoveDialPic_G6(ushort areaID);
-        /*! ***************************************************************
-        * 函数名：       bxDual_program_IntegrateProgramFile_G6（）
-        * 参数名：
-        *	program：参考结构体EQprogram_G6
-        * 返回值：0 成功， 其他值为错误号
-        * 功 能：合成节目文件返回节目文件属性及地址
-        * 注：
-        * EQprogram 结构体是用来回调发送文件所需要参数
-        ******************************************************************/
+        /// <summary>
+        /// 合成节目文件返回节目文件属性及地址
+        /// 注：EQprogram 结构体是用来回调发送文件所需要参数
+        /// </summary>
+        /// <param name="program">参考结构体EQprogram_G6</param>
+        /// <returns>0 成功， 其他值为错误号</returns>
         int BxDual_program_IntegrateProgramFile_G6(ref EQprogram_G6 program);
         /*!
         *  功能：配置传感器区域的参数

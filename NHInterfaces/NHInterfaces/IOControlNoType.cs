@@ -10,6 +10,7 @@ namespace System.Data.NHInterfaces
     /// IO控制器通路类型
     /// 32路/16路/8路/4路/2路/1路
     /// </summary>
+    [Flags]
     [EDisplay("IO控制器类型Max32")]
     public enum IOControlNoType : ulong
     {
@@ -518,7 +519,7 @@ namespace System.Data.NHInterfaces
     /// 32路/16路/8路/4路/2路/1路
     /// </summary>
     [EDisplay("IO控制器DI")]
-    public enum IOControlDIType : ulong
+    public enum IOControlDIType
     {
         /// <summary>
         /// 未知

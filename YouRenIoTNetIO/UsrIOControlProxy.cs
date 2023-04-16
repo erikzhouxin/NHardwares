@@ -171,6 +171,7 @@ namespace System.Data.YouRenIoTNetIO
     }
     internal class UsrIO808Device : IUsrIOControlProxy
     {
+        private object _locker = new object();
         private IModbusMaster _modbus;
         private Socket _socket;
         private IPAddress _address;
@@ -189,9 +190,15 @@ namespace System.Data.YouRenIoTNetIO
             Disconnect();
             try
             {
-                _socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-                _socket.Connect(new IPEndPoint(_address, _portRate));
-                _modbus = new ModbusFactory().CreateMaster(_socket);
+                var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                socket.Connect(new IPEndPoint(_address, _portRate));
+                socket.ReceiveTimeout = 1000;
+                socket.SendTimeout = 1000;
+                lock (_locker)
+                {
+                    _modbus = new ModbusFactory().CreateMaster(socket);
+                    _socket = socket;
+                }
                 return new AlertMsg(true, "连接成功");
             }
             catch (Exception ex)
@@ -204,10 +211,7 @@ namespace System.Data.YouRenIoTNetIO
             if (_address == address && port == _portRate)
             {
                 var status = GetConnectStatus();
-                if (status.IsSuccess)
-                {
-                    return status;
-                }
+                if (status.IsSuccess) { return status; }
             }
             _address = address;
             _portRate = port;
@@ -222,35 +226,49 @@ namespace System.Data.YouRenIoTNetIO
         }
         public IAlertMsg<bool> GetDOStatus(int num)
         {
-            if (_modbus == null) { return UnconnectedDevice<bool>(); }
-            var res = _modbus.ReadCoils(_slaveId, (ushort)num, 1);
-            if (res == null || res.Length != 1)
+            bool[] res;
+            lock (_locker)
             {
-                return new AlertMsg<bool>(false, $"未查询到主从机地址{_slaveId}的第{num + 1}路输出信号的状态");
+                var modbus = _modbus;
+                if (modbus == null) { return UnconnectedDevice<bool>(); }
+                res = modbus.ReadCoils(_slaveId, (ushort)num, 1);
             }
+            if (res == null || res.Length != 1)
+            { return new AlertMsg<bool>(false, $"未查询到主从机地址{_slaveId}的第{num + 1}路输出信号的状态"); }
             return new AlertMsg<bool>(true, $"查询到主从机地址{_slaveId}的第{num + 1}路输出信号的状态为【{(res[0] ? "开" : "关")}】") { Data = res[0] };
         }
 
         public IAlertMsg<bool> SetDOStatus(int num, bool value)
         {
-            if (_modbus == null) { return UnconnectedDevice<bool>(); }
-            _modbus.WriteSingleCoil(_slaveId, (ushort)num, value);
+            lock (_locker)
+            {
+                var modbus = _modbus;
+                if (modbus == null) { return UnconnectedDevice<bool>(); }
+                modbus.WriteSingleCoil(_slaveId, (ushort)num, value);
+            }
             return GetDOStatus(num);
         }
         public void SetResetDOStatus(int num, bool value)
         {
-            if (_modbus == null) { return; }
-            _modbus.WriteSingleCoil(_slaveId, (ushort)num, value);
-            _modbus.WriteSingleCoil(_slaveId, (ushort)num, !value);
+            lock (_locker)
+            {
+                var modbus = _modbus;
+                if (modbus == null) { return; }
+                modbus.WriteSingleCoil(_slaveId, (ushort)num, value);
+                modbus.WriteSingleCoil(_slaveId, (ushort)num, !value);
+            }
         }
         public IAlertMsg<int> GetDOStatusHolding()
         {
-            if (_modbus == null) { return UnconnectedDevice<int>(); }
-            var res = _modbus.ReadHoldingRegisters(_slaveId, 182, 1);
-            if (res == null || res.Length != 1)
+            ushort[] res;
+            lock (_locker)
             {
-                return new AlertMsg<int>(false, $"未查询到主从机地址{_slaveId}的输出信号的状态保持");
+                var modbus = _modbus;
+                if (modbus == null) { return UnconnectedDevice<int>(); }
+                res = modbus.ReadHoldingRegisters(_slaveId, 182, 1);
             }
+            if (res == null || res.Length != 1)
+            { return new AlertMsg<int>(false, $"未查询到主从机地址{_slaveId}的输出信号的状态保持"); }
             return new AlertMsg<int>(true, $"查询到主从机地址{_slaveId}的输出信号的状态保持为【{res[0]}】") { Data = (int)res[0] };
         }
         public IAlertMsg<bool?> SetDOStatusHolding(bool? value)
@@ -266,19 +284,27 @@ namespace System.Data.YouRenIoTNetIO
         }
         public IAlertMsg<int> SetDOStatusHolding(int value)
         {
-            if (_modbus == null) { return UnconnectedDevice<int>(); }
-            if (value < 0 || value > 3) { return new AlertMsg<int>(false, $"参数值只能是[1:一直保持,2:重启保持断电不保持,3:一直不保持]"); }
-            _modbus.WriteSingleRegister(_slaveId, (ushort)182, (ushort)value);
+            if (value < 0 || value > 3)
+            { return new AlertMsg<int>(false, $"参数值只能是[1:一直保持,2:重启保持断电不保持,3:一直不保持]"); }
+            lock (_locker)
+            {
+                var modbus = _modbus;
+                if (modbus == null) { return UnconnectedDevice<int>(); }
+                modbus.WriteSingleRegister(_slaveId, (ushort)182, (ushort)value);
+            }
             return GetDOStatusHolding();
         }
         public IAlertMsg<bool> GetDIStatus(int num)
         {
-            if (_modbus == null) { return UnconnectedDevice<bool>(); }
-            var res = _modbus.ReadInputs(_slaveId, (ushort)(num + 0x20), 1);
-            if (res == null || res.Length != 1)
+            bool[] res;
+            lock (_locker)
             {
-                return new AlertMsg<bool>(false, $"未查询到主从机地址{_slaveId}的第{num + 1}路输入信号的状态");
+                var modbus = _modbus;
+                if (modbus == null) { return UnconnectedDevice<bool>(); }
+                res = modbus.ReadInputs(_slaveId, (ushort)(num + 0x20), 1);
             }
+            if (res == null || res.Length != 1)
+            { return new AlertMsg<bool>(false, $"未查询到主从机地址{_slaveId}的第{num + 1}路输入信号的状态"); }
             return new AlertMsg<bool>(true, $"查询到主从机地址{_slaveId}的第{num + 1}路输入信号的状态为【{(res[0] ? "开" : "关")}】") { Data = res[0] };
         }
         public void SetSlaveId(int slaveId)
@@ -287,33 +313,24 @@ namespace System.Data.YouRenIoTNetIO
         }
         public IAlertMsg GetConnectStatus()
         {
-            if (_socket == null) { return new AlertMsg(false, $"已释放【{_address}:{_portRate}】的连接"); }
-            var isConnect = _socket.Connected && (_socket.Available != 0 || !_socket.Poll(1000, SelectMode.SelectRead));
-            return isConnect ? new AlertMsg(true, $"已打开【{_address}:{_portRate}】的连接") : (IAlertMsg)new AlertMsg(false, $"已关闭【{_address}:{_portRate}】的连接");
+            bool isConnect;
+            lock (_locker)
+            {
+                var socket = _socket;
+                if (socket == null) { return new AlertMsg(false, $"已释放【{_address}:{_portRate}】的连接"); }
+                isConnect = socket.Connected && (socket.Available != 0 || !socket.Poll(1000, SelectMode.SelectRead));
+            }
+            return new AlertMsg(isConnect, $"已{(isConnect ? "打开" : "关闭")}【{_address}:{_portRate}】的连接");
         }
-
         public IAlertMsg Disconnect()
         {
-            try
+            lock (_locker)
             {
-                _socket?.Disconnect(false);
-            }
-            catch { }
-            try
-            {
-                _socket?.Dispose();
-            }
-            finally
-            {
-                _socket = null;
-            }
-            try
-            {
-                _modbus?.Dispose();
-            }
-            finally
-            {
-                _modbus = null;
+                try { _modbus?.Dispose(); }
+                finally { _modbus = null; }
+                // try { _socket?.Disconnect(false); } catch { } // 释放时会断开连接
+                try { _socket?.Dispose(); }
+                finally { _socket = null; }
             }
             return new AlertMsg(true, $"已关闭【{_address}:{_portRate}】的连接");
         }
@@ -321,27 +338,5 @@ namespace System.Data.YouRenIoTNetIO
         {
             return new AlertMsg<T>(false, $"未连接到【{_address}:{_portRate}】");
         }
-    }
-    /// <summary>
-    /// 控制器寄存器类型
-    /// </summary>
-    public enum UsrIORegisterType
-    {
-        /// <summary>
-        /// 输出寄存器
-        /// </summary>
-        DOStatus,
-        /// <summary>
-        /// 输入寄存器
-        /// </summary>
-        DIStatus,
-        /// <summary>
-        /// 输出状态保持
-        /// </summary>
-        DOStatusHolding,
-        /// <summary>
-        /// 输入状态保持
-        /// </summary>
-        DIStatusHolding,
     }
 }
