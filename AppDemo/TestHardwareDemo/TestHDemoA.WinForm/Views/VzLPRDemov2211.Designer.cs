@@ -102,7 +102,7 @@
             // 单步开闸ToolStripMenuItem
             // 
             单步开闸ToolStripMenuItem.Name = "单步开闸ToolStripMenuItem";
-            单步开闸ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            单步开闸ToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             单步开闸ToolStripMenuItem.Text = "单步开闸";
             // 
             // CmsrTxtLoggerCtx
@@ -122,123 +122,123 @@
             // 
             CmsrNetConfigBtns.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { TsmiForceTrigger, TmsrRealCapture, gPIOToolStripMenuItem, 连接状态ToolStripMenuItem, 预览输出ToolStripMenuItem, 开始录像ToolStripMenuItem, 车牌查询ToolStripMenuItem, 白名单ToolStripMenuItem, 控制ToolStripMenuItem, TsmiGetSetIOValue, 视频未知ToolStripMenuItem, 线圈配置ToolStripMenuItem, 基本配置ToolStripMenuItem, oSD值ToolStripMenuItem, 加密配置ToolStripMenuItem, 播放语音ToolStripMenuItem, 定焦配置ToolStripMenuItem, 语音对讲ToolStripMenuItem, 单步开闸ToolStripMenuItem, lED补光ToolStripMenuItem });
             CmsrNetConfigBtns.Name = "CmsrNetConfigBtns";
-            CmsrNetConfigBtns.Size = new System.Drawing.Size(181, 466);
+            CmsrNetConfigBtns.Size = new System.Drawing.Size(127, 444);
             // 
             // TsmiForceTrigger
             // 
             TsmiForceTrigger.Name = "TsmiForceTrigger";
-            TsmiForceTrigger.Size = new System.Drawing.Size(180, 22);
+            TsmiForceTrigger.Size = new System.Drawing.Size(126, 22);
             TsmiForceTrigger.Text = "手动识别";
             TsmiForceTrigger.Click += TsmiForceTrigger_Click;
             // 
             // TmsrRealCapture
             // 
             TmsrRealCapture.Name = "TmsrRealCapture";
-            TmsrRealCapture.Size = new System.Drawing.Size(180, 22);
+            TmsrRealCapture.Size = new System.Drawing.Size(126, 22);
             TmsrRealCapture.Text = "抓图";
             TmsrRealCapture.Click += TmsrRealCapture_Click;
             // 
             // gPIOToolStripMenuItem
             // 
             gPIOToolStripMenuItem.Name = "gPIOToolStripMenuItem";
-            gPIOToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            gPIOToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             gPIOToolStripMenuItem.Text = "GPIO";
             // 
             // 连接状态ToolStripMenuItem
             // 
             连接状态ToolStripMenuItem.Name = "连接状态ToolStripMenuItem";
-            连接状态ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            连接状态ToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             连接状态ToolStripMenuItem.Text = "连接状态";
             // 
             // 预览输出ToolStripMenuItem
             // 
             预览输出ToolStripMenuItem.Name = "预览输出ToolStripMenuItem";
-            预览输出ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            预览输出ToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             预览输出ToolStripMenuItem.Text = "预览输出";
             // 
             // 开始录像ToolStripMenuItem
             // 
             开始录像ToolStripMenuItem.Name = "开始录像ToolStripMenuItem";
-            开始录像ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            开始录像ToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             开始录像ToolStripMenuItem.Text = "开始录像";
             // 
             // 车牌查询ToolStripMenuItem
             // 
             车牌查询ToolStripMenuItem.Name = "车牌查询ToolStripMenuItem";
-            车牌查询ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            车牌查询ToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             车牌查询ToolStripMenuItem.Text = "车牌查询";
             // 
             // 白名单ToolStripMenuItem
             // 
             白名单ToolStripMenuItem.Name = "白名单ToolStripMenuItem";
-            白名单ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            白名单ToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             白名单ToolStripMenuItem.Text = "白名单";
             // 
             // 控制ToolStripMenuItem
             // 
             控制ToolStripMenuItem.Name = "控制ToolStripMenuItem";
-            控制ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            控制ToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             控制ToolStripMenuItem.Text = "485控制";
             // 
             // TsmiGetSetIOValue
             // 
             TsmiGetSetIOValue.Name = "TsmiGetSetIOValue";
-            TsmiGetSetIOValue.Size = new System.Drawing.Size(180, 22);
+            TsmiGetSetIOValue.Size = new System.Drawing.Size(126, 22);
             TsmiGetSetIOValue.Text = "输入输出";
             TsmiGetSetIOValue.Click += TsmiGetSetIOValue_Click;
             // 
             // 视频未知ToolStripMenuItem
             // 
             视频未知ToolStripMenuItem.Name = "视频未知ToolStripMenuItem";
-            视频未知ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            视频未知ToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             视频未知ToolStripMenuItem.Text = "视频配置";
             // 
             // 线圈配置ToolStripMenuItem
             // 
             线圈配置ToolStripMenuItem.Name = "线圈配置ToolStripMenuItem";
-            线圈配置ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            线圈配置ToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             线圈配置ToolStripMenuItem.Text = "线圈配置";
             // 
             // 基本配置ToolStripMenuItem
             // 
             基本配置ToolStripMenuItem.Name = "基本配置ToolStripMenuItem";
-            基本配置ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            基本配置ToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             基本配置ToolStripMenuItem.Text = "基本配置";
             // 
             // oSD值ToolStripMenuItem
             // 
             oSD值ToolStripMenuItem.Name = "oSD值ToolStripMenuItem";
-            oSD值ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            oSD值ToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             oSD值ToolStripMenuItem.Text = "OSD配置";
             // 
             // 加密配置ToolStripMenuItem
             // 
             加密配置ToolStripMenuItem.Name = "加密配置ToolStripMenuItem";
-            加密配置ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            加密配置ToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             加密配置ToolStripMenuItem.Text = "加密配置";
             // 
             // 播放语音ToolStripMenuItem
             // 
             播放语音ToolStripMenuItem.Name = "播放语音ToolStripMenuItem";
-            播放语音ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            播放语音ToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             播放语音ToolStripMenuItem.Text = "播放语音";
             // 
             // 定焦配置ToolStripMenuItem
             // 
             定焦配置ToolStripMenuItem.Name = "定焦配置ToolStripMenuItem";
-            定焦配置ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            定焦配置ToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             定焦配置ToolStripMenuItem.Text = "定焦配置";
             // 
             // 语音对讲ToolStripMenuItem
             // 
             语音对讲ToolStripMenuItem.Name = "语音对讲ToolStripMenuItem";
-            语音对讲ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            语音对讲ToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             语音对讲ToolStripMenuItem.Text = "语音对讲";
             // 
             // lED补光ToolStripMenuItem
             // 
             lED补光ToolStripMenuItem.Name = "lED补光ToolStripMenuItem";
-            lED补光ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            lED补光ToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             lED补光ToolStripMenuItem.Text = "补光设置";
             // 
             // PnlMainContent

@@ -196,6 +196,10 @@ namespace TestHardwareDemo.WinForm.Views
                 return;
             }
             _config = model;
+            model.ReceiveTimeout = this.TxtNetReadTimeout.Text.ToPInt32();
+            model.SendTimeout = this.TxtNetWriteTimeout.Text.ToPInt32();
+            model.Retries = this.TxtNetRetries.Text.ToPInt32();
+            model.RetryWaitout = this.TxtNetRetryWaitout.Text.ToPInt32();
             Task.Factory.StartNew(() => Append(model.Connect()));
             this.TxtNetConfigIp.Text = model.IPAddress;
             this.TxtNetConfigPort.Text = model.Port.ToString();
@@ -355,6 +359,22 @@ namespace TestHardwareDemo.WinForm.Views
             /// </summary>
             public virtual bool[] DIStatus { get; set; }
             /// <summary>
+            /// 接收超时时间(毫秒)
+            /// </summary>
+            public virtual int ReceiveTimeout { get; set; }
+            /// <summary>
+            /// 发送超时时间(毫秒)
+            /// </summary>
+            public virtual int SendTimeout { get; set; }
+            /// <summary>
+            /// 重试次数
+            /// </summary>
+            public virtual int Retries { get; set; }
+            /// <summary>
+            /// 重试等待时间(毫秒)
+            /// </summary>
+            public virtual int RetryWaitout { get; set; }
+            /// <summary>
             /// 控制器
             /// </summary>
             public virtual IUsrIOControlProxy Control { get; }
@@ -392,6 +412,10 @@ namespace TestHardwareDemo.WinForm.Views
                 {
                     try
                     {
+                        Control.ReceiveTimeout = ReceiveTimeout;
+                        Control.SendTimeout = SendTimeout;
+                        Control.Retries = Retries;
+                        Control.RetryWaitout = RetryWaitout;
                         return Control.Connect(ipAddress, Port);
                     }
                     finally

@@ -56,7 +56,7 @@ namespace TestHardwareDemo.WinForm.Views
             {
                 foreach (var item in _devices) // 释放所有已连接设备
                 {
-                    if (item.Handler > 0)
+                    if (item.Handler != IntPtr.Zero)
                     {
                         VzClientSDK.VzLPRClient_StopRealPlay(item.Handler);
                         VzClientSDK.VzLPRClient_Close(item.Handler);
@@ -152,11 +152,11 @@ namespace TestHardwareDemo.WinForm.Views
             this.TxtNetSerialNum.Text = model.Config.SerialNum;
             this.TxtNetAccount.Text = model.Config.Account;
             this.TxtNetPassword.Text = model.Config.Password;
-            if (model.Handle != IntPtr.Zero)
+            if (model.Handler != IntPtr.Zero)
             {
                 BtnNetExit_Click(sender, e);
             }
-            int handle = 0;
+            IntPtr handle = IntPtr.Zero;
             if (model.Config.IsPDNS)
             {
                 handle = VzClientSDK.VzLPRClient_OpenV2(config.Address, (ushort)config.Port, config.Account, config.Password, 8557, 1, config.SerialNum);
@@ -165,18 +165,18 @@ namespace TestHardwareDemo.WinForm.Views
             {
                 handle = VzClientSDK.VzLPRClient_Open(config.Address, (ushort)config.Port, config.Account, config.Password);
             }
-            if (handle == 0)
+            if (handle == IntPtr.Zero)
             {
                 AppendError($"{text} => 打开设备失败！");
                 return;
             }
             PicScreenView.Image = null;
-            if (_config.Handle != IntPtr.Zero)
+            if (_config.Handler != IntPtr.Zero)
             {
-                VzClientSDK.VzLPRClient_StopRealPlay(_config.Handler);
-                VzClientSDK.VzLPRClient_SetPlateInfoCallBack((int)PicScreenView.Handle, null, IntPtr.Zero, 0);
+                VzClientSDK.VzLPRClient_StopRealPlay(PicScreenView.Handle);
+                VzClientSDK.VzLPRClient_SetPlateInfoCallBack(_config.Handler, null, IntPtr.Zero, 0);
             }
-            _config.Handle = (IntPtr)handle;
+            _config.Handler = (IntPtr)handle;
             VzClientSDK.VzLPRClient_SetIsShowPlateRect(handle, 0);
 
             VzClientSDK.VzLPRClient_StartRealPlay(_config.Handler, PicScreenView.Handle);
@@ -186,7 +186,7 @@ namespace TestHardwareDemo.WinForm.Views
             // VzClientSDK.VzLPRClient_SetGPIORecvCallBack(_config.Handler, OnGpioResult, IntPtr.Zero);
         }
 
-        public int OnPlateResult(int handle, IntPtr pUserData, IntPtr pResult, uint uNumPlates, VZ_LPRC_RESULT_TYPE eResultType, IntPtr pImgFull, IntPtr pImgPlateClip)
+        public int OnPlateResult(IntPtr handle, IntPtr pUserData, IntPtr pResult, uint uNumPlates, VZ_LPRC_RESULT_TYPE eResultType, IntPtr pImgFull, IntPtr pImgPlateClip)
         {
             AppendInfo($"{handle}-{pUserData}-{pResult}-{uNumPlates}-{eResultType}-{pImgFull}-{pImgPlateClip}");
             string carno = string.Empty;
@@ -227,15 +227,15 @@ namespace TestHardwareDemo.WinForm.Views
         private void BtnNetExit_Click(object sender, EventArgs e)
         {
             var config = GetContentModel();
-            if (config.Handle == IntPtr.Zero)
+            if (config.Handler == IntPtr.Zero)
             {
                 AppendInfo($"{config.Key} => 已经断开连接了");
                 return;
             }
-            VzClientSDK.VzLPRClient_StopRealPlay((int)config.Handle);
+            VzClientSDK.VzLPRClient_StopRealPlay(config.Handler);
             PicScreenView_Close();
-            VzClientSDK.VzLPRClient_Close((int)config.Handle);
-            config.Handle = IntPtr.Zero;
+            VzClientSDK.VzLPRClient_Close(config.Handler);
+            config.Handler = IntPtr.Zero;
         }
 
         private ContentModel GetContentModel()
@@ -293,8 +293,7 @@ namespace TestHardwareDemo.WinForm.Views
             /// <summary>
             /// 句柄
             /// </summary>
-            public IntPtr Handle { get; set; }
-            public int Handler { get => (int)Handle; set => Handle = (IntPtr)value; }
+            public IntPtr Handler { get; set; }
             /// <summary>
             /// 构造
             /// </summary>
@@ -380,7 +379,7 @@ namespace TestHardwareDemo.WinForm.Views
         private void TsmiForceTrigger_Click(object sender, EventArgs e)
         {
             var config = GetContentModel();
-            if (config.Handle == IntPtr.Zero)
+            if (config.Handler == IntPtr.Zero)
             {
                 AppendError("请连接设备进行操作");
                 return;
@@ -390,7 +389,7 @@ namespace TestHardwareDemo.WinForm.Views
         private void TmsrRealCapture_Click(object sender, EventArgs e)
         {
             var config = GetContentModel();
-            if (config.Handle == IntPtr.Zero)
+            if (config.Handler == IntPtr.Zero)
             {
                 AppendError("请连接设备进行操作");
                 return;
@@ -414,7 +413,7 @@ namespace TestHardwareDemo.WinForm.Views
                 model.GetSetIOValue = (isSet, isNum2, isOpen) =>
                 {
                     var config = GetContentModel();
-                    if (config.Handle == IntPtr.Zero)
+                    if (config.Handler == IntPtr.Zero)
                     {
                         AppendError("请连接设备进行操作");
                         return false;

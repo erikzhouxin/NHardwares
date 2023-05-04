@@ -28,912 +28,986 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.TsrmPicNetDO3 = new System.Windows.Forms.ToolStripMenuItem();
-            this.LblNetDI8 = new System.Windows.Forms.Label();
-            this.PicNetDI8 = new System.Windows.Forms.PictureBox();
-            this.LblNetDI7 = new System.Windows.Forms.Label();
-            this.PicNetDI7 = new System.Windows.Forms.PictureBox();
-            this.LblNetDI6 = new System.Windows.Forms.Label();
-            this.PicNetDI6 = new System.Windows.Forms.PictureBox();
-            this.LblNetDI5 = new System.Windows.Forms.Label();
-            this.TsrmPicNetDO8 = new System.Windows.Forms.ToolStripMenuItem();
-            this.PicNetDI5 = new System.Windows.Forms.PictureBox();
-            this.PicNetDI4 = new System.Windows.Forms.PictureBox();
-            this.LblNetDI3 = new System.Windows.Forms.Label();
-            this.PicNetDI3 = new System.Windows.Forms.PictureBox();
-            this.TsrmPicNetDO7 = new System.Windows.Forms.ToolStripMenuItem();
-            this.TsrmPicNetDO6 = new System.Windows.Forms.ToolStripMenuItem();
-            this.TsrmPicNetDO5 = new System.Windows.Forms.ToolStripMenuItem();
-            this.TsrmPicNetDO4 = new System.Windows.Forms.ToolStripMenuItem();
-            this.LblNetDI4 = new System.Windows.Forms.Label();
-            this.TsrmPicNetDO2 = new System.Windows.Forms.ToolStripMenuItem();
-            this.LblNetDO7 = new System.Windows.Forms.Label();
-            this.CmsrLogger = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.TsrmLoggerClear = new System.Windows.Forms.ToolStripMenuItem();
-            this.GrbTxtLogger = new System.Windows.Forms.GroupBox();
-            this.TxtLogger = new System.Windows.Forms.RichTextBox();
-            this.PicNetDO7 = new System.Windows.Forms.PictureBox();
-            this.LblNetDO6 = new System.Windows.Forms.Label();
-            this.PicNetDO1 = new System.Windows.Forms.PictureBox();
-            this.LblNetDO5 = new System.Windows.Forms.Label();
-            this.PicNetDO2 = new System.Windows.Forms.PictureBox();
-            this.LblNetDO4 = new System.Windows.Forms.Label();
-            this.PicNetDO5 = new System.Windows.Forms.PictureBox();
-            this.LblNetDO3 = new System.Windows.Forms.Label();
-            this.PicNetDO6 = new System.Windows.Forms.PictureBox();
-            this.LblNetDO2 = new System.Windows.Forms.Label();
-            this.PicNetDO8 = new System.Windows.Forms.PictureBox();
-            this.LblNetDO1 = new System.Windows.Forms.Label();
-            this.PicNetDO4 = new System.Windows.Forms.PictureBox();
-            this.LblNetDO8 = new System.Windows.Forms.Label();
-            this.PicNetDO3 = new System.Windows.Forms.PictureBox();
-            this.LblNetDI2 = new System.Windows.Forms.Label();
-            this.PnlContent = new System.Windows.Forms.Panel();
-            this.SplContent = new System.Windows.Forms.SplitContainer();
-            this.PnlNetControl = new System.Windows.Forms.Panel();
-            this.SplNetControl = new System.Windows.Forms.SplitContainer();
-            this.GrbNetConfigArea = new System.Windows.Forms.GroupBox();
-            this.PngNetConfig = new System.Windows.Forms.Panel();
-            this.BtnNetConfigRemove = new System.Windows.Forms.Button();
-            this.BtnNetConfigConnect = new System.Windows.Forms.Button();
-            this.LblNetConfigPort = new System.Windows.Forms.Label();
-            this.TxtNetConfigIp = new System.Windows.Forms.TextBox();
-            this.TxtNetConfigPort = new System.Windows.Forms.TextBox();
-            this.LblNetConfigIP = new System.Windows.Forms.Label();
-            this.PnlNetConfigs = new System.Windows.Forms.Panel();
-            this.LblNetReadSeconds = new System.Windows.Forms.Label();
-            this.TxtNetSeconds = new System.Windows.Forms.TextBox();
-            this.ChkNetReadBackground = new System.Windows.Forms.CheckBox();
-            this.CbxNetConfigs = new System.Windows.Forms.ComboBox();
-            this.GrbNetInfoContent = new System.Windows.Forms.GroupBox();
-            this.ChkNetDoHolding = new System.Windows.Forms.CheckBox();
-            this.GrbNetDIArea = new System.Windows.Forms.GroupBox();
-            this.PicNetDI2 = new System.Windows.Forms.PictureBox();
-            this.LblNetDI1 = new System.Windows.Forms.Label();
-            this.PicNetDI1 = new System.Windows.Forms.PictureBox();
-            this.GrbNetDoArea = new System.Windows.Forms.GroupBox();
-            this.CmsrNetDoStatus = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.TsrmPicNetDO1 = new System.Windows.Forms.ToolStripMenuItem();
-            ((System.ComponentModel.ISupportInitialize)(this.PicNetDI8)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PicNetDI7)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PicNetDI6)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PicNetDI5)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PicNetDI4)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PicNetDI3)).BeginInit();
-            this.CmsrLogger.SuspendLayout();
-            this.GrbTxtLogger.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.PicNetDO7)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PicNetDO1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PicNetDO2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PicNetDO5)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PicNetDO6)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PicNetDO8)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PicNetDO4)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PicNetDO3)).BeginInit();
-            this.PnlContent.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.SplContent)).BeginInit();
-            this.SplContent.Panel1.SuspendLayout();
-            this.SplContent.Panel2.SuspendLayout();
-            this.SplContent.SuspendLayout();
-            this.PnlNetControl.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.SplNetControl)).BeginInit();
-            this.SplNetControl.Panel1.SuspendLayout();
-            this.SplNetControl.Panel2.SuspendLayout();
-            this.SplNetControl.SuspendLayout();
-            this.GrbNetConfigArea.SuspendLayout();
-            this.PngNetConfig.SuspendLayout();
-            this.PnlNetConfigs.SuspendLayout();
-            this.GrbNetInfoContent.SuspendLayout();
-            this.GrbNetDIArea.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.PicNetDI2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PicNetDI1)).BeginInit();
-            this.GrbNetDoArea.SuspendLayout();
-            this.CmsrNetDoStatus.SuspendLayout();
-            this.SuspendLayout();
+            components = new System.ComponentModel.Container();
+            TsrmPicNetDO3 = new System.Windows.Forms.ToolStripMenuItem();
+            LblNetDI8 = new System.Windows.Forms.Label();
+            PicNetDI8 = new System.Windows.Forms.PictureBox();
+            LblNetDI7 = new System.Windows.Forms.Label();
+            PicNetDI7 = new System.Windows.Forms.PictureBox();
+            LblNetDI6 = new System.Windows.Forms.Label();
+            PicNetDI6 = new System.Windows.Forms.PictureBox();
+            LblNetDI5 = new System.Windows.Forms.Label();
+            TsrmPicNetDO8 = new System.Windows.Forms.ToolStripMenuItem();
+            PicNetDI5 = new System.Windows.Forms.PictureBox();
+            PicNetDI4 = new System.Windows.Forms.PictureBox();
+            LblNetDI3 = new System.Windows.Forms.Label();
+            PicNetDI3 = new System.Windows.Forms.PictureBox();
+            TsrmPicNetDO7 = new System.Windows.Forms.ToolStripMenuItem();
+            TsrmPicNetDO6 = new System.Windows.Forms.ToolStripMenuItem();
+            TsrmPicNetDO5 = new System.Windows.Forms.ToolStripMenuItem();
+            TsrmPicNetDO4 = new System.Windows.Forms.ToolStripMenuItem();
+            LblNetDI4 = new System.Windows.Forms.Label();
+            TsrmPicNetDO2 = new System.Windows.Forms.ToolStripMenuItem();
+            LblNetDO7 = new System.Windows.Forms.Label();
+            CmsrLogger = new System.Windows.Forms.ContextMenuStrip(components);
+            TsrmLoggerClear = new System.Windows.Forms.ToolStripMenuItem();
+            GrbTxtLogger = new System.Windows.Forms.GroupBox();
+            TxtLogger = new System.Windows.Forms.RichTextBox();
+            PicNetDO7 = new System.Windows.Forms.PictureBox();
+            LblNetDO6 = new System.Windows.Forms.Label();
+            PicNetDO1 = new System.Windows.Forms.PictureBox();
+            LblNetDO5 = new System.Windows.Forms.Label();
+            PicNetDO2 = new System.Windows.Forms.PictureBox();
+            LblNetDO4 = new System.Windows.Forms.Label();
+            PicNetDO5 = new System.Windows.Forms.PictureBox();
+            LblNetDO3 = new System.Windows.Forms.Label();
+            PicNetDO6 = new System.Windows.Forms.PictureBox();
+            LblNetDO2 = new System.Windows.Forms.Label();
+            PicNetDO8 = new System.Windows.Forms.PictureBox();
+            LblNetDO1 = new System.Windows.Forms.Label();
+            PicNetDO4 = new System.Windows.Forms.PictureBox();
+            LblNetDO8 = new System.Windows.Forms.Label();
+            PicNetDO3 = new System.Windows.Forms.PictureBox();
+            LblNetDI2 = new System.Windows.Forms.Label();
+            PnlContent = new System.Windows.Forms.Panel();
+            SplContent = new System.Windows.Forms.SplitContainer();
+            PnlNetControl = new System.Windows.Forms.Panel();
+            SplNetControl = new System.Windows.Forms.SplitContainer();
+            GrbNetConfigArea = new System.Windows.Forms.GroupBox();
+            PngNetConfig = new System.Windows.Forms.Panel();
+            BtnNetConfigRemove = new System.Windows.Forms.Button();
+            BtnNetConfigConnect = new System.Windows.Forms.Button();
+            LblNetConfigPort = new System.Windows.Forms.Label();
+            TxtNetConfigIp = new System.Windows.Forms.TextBox();
+            TxtNetConfigPort = new System.Windows.Forms.TextBox();
+            LblNetConfigIP = new System.Windows.Forms.Label();
+            PnlNetConfigs = new System.Windows.Forms.Panel();
+            LblNetReadSeconds = new System.Windows.Forms.Label();
+            TxtNetSeconds = new System.Windows.Forms.TextBox();
+            ChkNetReadBackground = new System.Windows.Forms.CheckBox();
+            CbxNetConfigs = new System.Windows.Forms.ComboBox();
+            GrbNetInfoContent = new System.Windows.Forms.GroupBox();
+            TxtNetWriteTimeout = new System.Windows.Forms.TextBox();
+            TxtNetRetries = new System.Windows.Forms.TextBox();
+            TxtNetRetryWaitout = new System.Windows.Forms.TextBox();
+            TxtNetReadTimeout = new System.Windows.Forms.TextBox();
+            label4 = new System.Windows.Forms.Label();
+            label2 = new System.Windows.Forms.Label();
+            label3 = new System.Windows.Forms.Label();
+            label1 = new System.Windows.Forms.Label();
+            ChkNetDoHolding = new System.Windows.Forms.CheckBox();
+            GrbNetDIArea = new System.Windows.Forms.GroupBox();
+            PicNetDI2 = new System.Windows.Forms.PictureBox();
+            LblNetDI1 = new System.Windows.Forms.Label();
+            PicNetDI1 = new System.Windows.Forms.PictureBox();
+            GrbNetDoArea = new System.Windows.Forms.GroupBox();
+            CmsrNetDoStatus = new System.Windows.Forms.ContextMenuStrip(components);
+            TsrmPicNetDO1 = new System.Windows.Forms.ToolStripMenuItem();
+            ((System.ComponentModel.ISupportInitialize)PicNetDI8).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)PicNetDI7).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)PicNetDI6).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)PicNetDI5).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)PicNetDI4).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)PicNetDI3).BeginInit();
+            CmsrLogger.SuspendLayout();
+            GrbTxtLogger.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)PicNetDO7).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)PicNetDO1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)PicNetDO2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)PicNetDO5).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)PicNetDO6).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)PicNetDO8).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)PicNetDO4).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)PicNetDO3).BeginInit();
+            PnlContent.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)SplContent).BeginInit();
+            SplContent.Panel1.SuspendLayout();
+            SplContent.Panel2.SuspendLayout();
+            SplContent.SuspendLayout();
+            PnlNetControl.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)SplNetControl).BeginInit();
+            SplNetControl.Panel1.SuspendLayout();
+            SplNetControl.Panel2.SuspendLayout();
+            SplNetControl.SuspendLayout();
+            GrbNetConfigArea.SuspendLayout();
+            PngNetConfig.SuspendLayout();
+            PnlNetConfigs.SuspendLayout();
+            GrbNetInfoContent.SuspendLayout();
+            GrbNetDIArea.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)PicNetDI2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)PicNetDI1).BeginInit();
+            GrbNetDoArea.SuspendLayout();
+            CmsrNetDoStatus.SuspendLayout();
+            SuspendLayout();
             // 
             // TsrmPicNetDO3
             // 
-            this.TsrmPicNetDO3.Name = "TsrmPicNetDO3";
-            this.TsrmPicNetDO3.Size = new System.Drawing.Size(155, 22);
-            this.TsrmPicNetDO3.Text = "设置重置DO-3";
-            this.TsrmPicNetDO3.Click += new System.EventHandler(this.PicNetDo_DoubleClick);
+            TsrmPicNetDO3.Name = "TsrmPicNetDO3";
+            TsrmPicNetDO3.Size = new System.Drawing.Size(155, 22);
+            TsrmPicNetDO3.Text = "设置重置DO-3";
+            TsrmPicNetDO3.Click += PicNetDo_DoubleClick;
             // 
             // LblNetDI8
             // 
-            this.LblNetDI8.AutoSize = true;
-            this.LblNetDI8.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.LblNetDI8.Location = new System.Drawing.Point(438, 64);
-            this.LblNetDI8.Name = "LblNetDI8";
-            this.LblNetDI8.Size = new System.Drawing.Size(33, 17);
-            this.LblNetDI8.TabIndex = 15;
-            this.LblNetDI8.Text = "DI-8";
+            LblNetDI8.AutoSize = true;
+            LblNetDI8.Cursor = System.Windows.Forms.Cursors.Hand;
+            LblNetDI8.Location = new System.Drawing.Point(438, 64);
+            LblNetDI8.Name = "LblNetDI8";
+            LblNetDI8.Size = new System.Drawing.Size(33, 17);
+            LblNetDI8.TabIndex = 15;
+            LblNetDI8.Text = "DI-8";
             // 
             // PicNetDI8
             // 
-            this.PicNetDI8.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.PicNetDI8.Image = global::TestHardwareDemo.WinForm.Properties.Resources.usr_io808_diclose;
-            this.PicNetDI8.Location = new System.Drawing.Point(442, 31);
-            this.PicNetDI8.Name = "PicNetDI8";
-            this.PicNetDI8.Size = new System.Drawing.Size(25, 25);
-            this.PicNetDI8.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.PicNetDI8.TabIndex = 14;
-            this.PicNetDI8.TabStop = false;
-            this.PicNetDI8.Click += new System.EventHandler(this.PicNetDI_Click);
+            PicNetDI8.Cursor = System.Windows.Forms.Cursors.Hand;
+            PicNetDI8.Image = Properties.Resources.usr_io808_diclose;
+            PicNetDI8.Location = new System.Drawing.Point(442, 31);
+            PicNetDI8.Name = "PicNetDI8";
+            PicNetDI8.Size = new System.Drawing.Size(25, 25);
+            PicNetDI8.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            PicNetDI8.TabIndex = 14;
+            PicNetDI8.TabStop = false;
+            PicNetDI8.Click += PicNetDI_Click;
             // 
             // LblNetDI7
             // 
-            this.LblNetDI7.AutoSize = true;
-            this.LblNetDI7.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.LblNetDI7.Location = new System.Drawing.Point(380, 64);
-            this.LblNetDI7.Name = "LblNetDI7";
-            this.LblNetDI7.Size = new System.Drawing.Size(33, 17);
-            this.LblNetDI7.TabIndex = 13;
-            this.LblNetDI7.Text = "DI-7";
+            LblNetDI7.AutoSize = true;
+            LblNetDI7.Cursor = System.Windows.Forms.Cursors.Hand;
+            LblNetDI7.Location = new System.Drawing.Point(380, 64);
+            LblNetDI7.Name = "LblNetDI7";
+            LblNetDI7.Size = new System.Drawing.Size(33, 17);
+            LblNetDI7.TabIndex = 13;
+            LblNetDI7.Text = "DI-7";
             // 
             // PicNetDI7
             // 
-            this.PicNetDI7.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.PicNetDI7.Image = global::TestHardwareDemo.WinForm.Properties.Resources.usr_io808_diclose;
-            this.PicNetDI7.Location = new System.Drawing.Point(384, 31);
-            this.PicNetDI7.Name = "PicNetDI7";
-            this.PicNetDI7.Size = new System.Drawing.Size(25, 25);
-            this.PicNetDI7.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.PicNetDI7.TabIndex = 12;
-            this.PicNetDI7.TabStop = false;
-            this.PicNetDI7.Click += new System.EventHandler(this.PicNetDI_Click);
+            PicNetDI7.Cursor = System.Windows.Forms.Cursors.Hand;
+            PicNetDI7.Image = Properties.Resources.usr_io808_diclose;
+            PicNetDI7.Location = new System.Drawing.Point(384, 31);
+            PicNetDI7.Name = "PicNetDI7";
+            PicNetDI7.Size = new System.Drawing.Size(25, 25);
+            PicNetDI7.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            PicNetDI7.TabIndex = 12;
+            PicNetDI7.TabStop = false;
+            PicNetDI7.Click += PicNetDI_Click;
             // 
             // LblNetDI6
             // 
-            this.LblNetDI6.AutoSize = true;
-            this.LblNetDI6.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.LblNetDI6.Location = new System.Drawing.Point(322, 64);
-            this.LblNetDI6.Name = "LblNetDI6";
-            this.LblNetDI6.Size = new System.Drawing.Size(33, 17);
-            this.LblNetDI6.TabIndex = 11;
-            this.LblNetDI6.Text = "DI-6";
+            LblNetDI6.AutoSize = true;
+            LblNetDI6.Cursor = System.Windows.Forms.Cursors.Hand;
+            LblNetDI6.Location = new System.Drawing.Point(322, 64);
+            LblNetDI6.Name = "LblNetDI6";
+            LblNetDI6.Size = new System.Drawing.Size(33, 17);
+            LblNetDI6.TabIndex = 11;
+            LblNetDI6.Text = "DI-6";
             // 
             // PicNetDI6
             // 
-            this.PicNetDI6.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.PicNetDI6.Image = global::TestHardwareDemo.WinForm.Properties.Resources.usr_io808_diclose;
-            this.PicNetDI6.Location = new System.Drawing.Point(326, 31);
-            this.PicNetDI6.Name = "PicNetDI6";
-            this.PicNetDI6.Size = new System.Drawing.Size(25, 25);
-            this.PicNetDI6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.PicNetDI6.TabIndex = 10;
-            this.PicNetDI6.TabStop = false;
-            this.PicNetDI6.Click += new System.EventHandler(this.PicNetDI_Click);
+            PicNetDI6.Cursor = System.Windows.Forms.Cursors.Hand;
+            PicNetDI6.Image = Properties.Resources.usr_io808_diclose;
+            PicNetDI6.Location = new System.Drawing.Point(326, 31);
+            PicNetDI6.Name = "PicNetDI6";
+            PicNetDI6.Size = new System.Drawing.Size(25, 25);
+            PicNetDI6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            PicNetDI6.TabIndex = 10;
+            PicNetDI6.TabStop = false;
+            PicNetDI6.Click += PicNetDI_Click;
             // 
             // LblNetDI5
             // 
-            this.LblNetDI5.AutoSize = true;
-            this.LblNetDI5.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.LblNetDI5.Location = new System.Drawing.Point(264, 64);
-            this.LblNetDI5.Name = "LblNetDI5";
-            this.LblNetDI5.Size = new System.Drawing.Size(33, 17);
-            this.LblNetDI5.TabIndex = 9;
-            this.LblNetDI5.Text = "DI-5";
+            LblNetDI5.AutoSize = true;
+            LblNetDI5.Cursor = System.Windows.Forms.Cursors.Hand;
+            LblNetDI5.Location = new System.Drawing.Point(264, 64);
+            LblNetDI5.Name = "LblNetDI5";
+            LblNetDI5.Size = new System.Drawing.Size(33, 17);
+            LblNetDI5.TabIndex = 9;
+            LblNetDI5.Text = "DI-5";
             // 
             // TsrmPicNetDO8
             // 
-            this.TsrmPicNetDO8.Name = "TsrmPicNetDO8";
-            this.TsrmPicNetDO8.Size = new System.Drawing.Size(155, 22);
-            this.TsrmPicNetDO8.Text = "设置重置DO-8";
-            this.TsrmPicNetDO8.Click += new System.EventHandler(this.PicNetDo_DoubleClick);
+            TsrmPicNetDO8.Name = "TsrmPicNetDO8";
+            TsrmPicNetDO8.Size = new System.Drawing.Size(155, 22);
+            TsrmPicNetDO8.Text = "设置重置DO-8";
+            TsrmPicNetDO8.Click += PicNetDo_DoubleClick;
             // 
             // PicNetDI5
             // 
-            this.PicNetDI5.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.PicNetDI5.Image = global::TestHardwareDemo.WinForm.Properties.Resources.usr_io808_diclose;
-            this.PicNetDI5.Location = new System.Drawing.Point(268, 31);
-            this.PicNetDI5.Name = "PicNetDI5";
-            this.PicNetDI5.Size = new System.Drawing.Size(25, 25);
-            this.PicNetDI5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.PicNetDI5.TabIndex = 8;
-            this.PicNetDI5.TabStop = false;
-            this.PicNetDI5.Click += new System.EventHandler(this.PicNetDI_Click);
+            PicNetDI5.Cursor = System.Windows.Forms.Cursors.Hand;
+            PicNetDI5.Image = Properties.Resources.usr_io808_diclose;
+            PicNetDI5.Location = new System.Drawing.Point(268, 31);
+            PicNetDI5.Name = "PicNetDI5";
+            PicNetDI5.Size = new System.Drawing.Size(25, 25);
+            PicNetDI5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            PicNetDI5.TabIndex = 8;
+            PicNetDI5.TabStop = false;
+            PicNetDI5.Click += PicNetDI_Click;
             // 
             // PicNetDI4
             // 
-            this.PicNetDI4.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.PicNetDI4.Image = global::TestHardwareDemo.WinForm.Properties.Resources.usr_io808_diclose;
-            this.PicNetDI4.Location = new System.Drawing.Point(210, 31);
-            this.PicNetDI4.Name = "PicNetDI4";
-            this.PicNetDI4.Size = new System.Drawing.Size(25, 25);
-            this.PicNetDI4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.PicNetDI4.TabIndex = 6;
-            this.PicNetDI4.TabStop = false;
-            this.PicNetDI4.Click += new System.EventHandler(this.PicNetDI_Click);
+            PicNetDI4.Cursor = System.Windows.Forms.Cursors.Hand;
+            PicNetDI4.Image = Properties.Resources.usr_io808_diclose;
+            PicNetDI4.Location = new System.Drawing.Point(210, 31);
+            PicNetDI4.Name = "PicNetDI4";
+            PicNetDI4.Size = new System.Drawing.Size(25, 25);
+            PicNetDI4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            PicNetDI4.TabIndex = 6;
+            PicNetDI4.TabStop = false;
+            PicNetDI4.Click += PicNetDI_Click;
             // 
             // LblNetDI3
             // 
-            this.LblNetDI3.AutoSize = true;
-            this.LblNetDI3.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.LblNetDI3.Location = new System.Drawing.Point(148, 64);
-            this.LblNetDI3.Name = "LblNetDI3";
-            this.LblNetDI3.Size = new System.Drawing.Size(33, 17);
-            this.LblNetDI3.TabIndex = 5;
-            this.LblNetDI3.Text = "DI-3";
+            LblNetDI3.AutoSize = true;
+            LblNetDI3.Cursor = System.Windows.Forms.Cursors.Hand;
+            LblNetDI3.Location = new System.Drawing.Point(148, 64);
+            LblNetDI3.Name = "LblNetDI3";
+            LblNetDI3.Size = new System.Drawing.Size(33, 17);
+            LblNetDI3.TabIndex = 5;
+            LblNetDI3.Text = "DI-3";
             // 
             // PicNetDI3
             // 
-            this.PicNetDI3.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.PicNetDI3.Image = global::TestHardwareDemo.WinForm.Properties.Resources.usr_io808_diclose;
-            this.PicNetDI3.Location = new System.Drawing.Point(152, 31);
-            this.PicNetDI3.Name = "PicNetDI3";
-            this.PicNetDI3.Size = new System.Drawing.Size(25, 25);
-            this.PicNetDI3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.PicNetDI3.TabIndex = 4;
-            this.PicNetDI3.TabStop = false;
-            this.PicNetDI3.Click += new System.EventHandler(this.PicNetDI_Click);
+            PicNetDI3.Cursor = System.Windows.Forms.Cursors.Hand;
+            PicNetDI3.Image = Properties.Resources.usr_io808_diclose;
+            PicNetDI3.Location = new System.Drawing.Point(152, 31);
+            PicNetDI3.Name = "PicNetDI3";
+            PicNetDI3.Size = new System.Drawing.Size(25, 25);
+            PicNetDI3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            PicNetDI3.TabIndex = 4;
+            PicNetDI3.TabStop = false;
+            PicNetDI3.Click += PicNetDI_Click;
             // 
             // TsrmPicNetDO7
             // 
-            this.TsrmPicNetDO7.Name = "TsrmPicNetDO7";
-            this.TsrmPicNetDO7.Size = new System.Drawing.Size(155, 22);
-            this.TsrmPicNetDO7.Text = "设置重置DO-7";
-            this.TsrmPicNetDO7.Click += new System.EventHandler(this.PicNetDo_DoubleClick);
+            TsrmPicNetDO7.Name = "TsrmPicNetDO7";
+            TsrmPicNetDO7.Size = new System.Drawing.Size(155, 22);
+            TsrmPicNetDO7.Text = "设置重置DO-7";
+            TsrmPicNetDO7.Click += PicNetDo_DoubleClick;
             // 
             // TsrmPicNetDO6
             // 
-            this.TsrmPicNetDO6.Name = "TsrmPicNetDO6";
-            this.TsrmPicNetDO6.Size = new System.Drawing.Size(155, 22);
-            this.TsrmPicNetDO6.Text = "设置重置DO-6";
-            this.TsrmPicNetDO6.Click += new System.EventHandler(this.PicNetDo_DoubleClick);
+            TsrmPicNetDO6.Name = "TsrmPicNetDO6";
+            TsrmPicNetDO6.Size = new System.Drawing.Size(155, 22);
+            TsrmPicNetDO6.Text = "设置重置DO-6";
+            TsrmPicNetDO6.Click += PicNetDo_DoubleClick;
             // 
             // TsrmPicNetDO5
             // 
-            this.TsrmPicNetDO5.Name = "TsrmPicNetDO5";
-            this.TsrmPicNetDO5.Size = new System.Drawing.Size(155, 22);
-            this.TsrmPicNetDO5.Text = "设置重置DO-5";
-            this.TsrmPicNetDO5.Click += new System.EventHandler(this.PicNetDo_DoubleClick);
+            TsrmPicNetDO5.Name = "TsrmPicNetDO5";
+            TsrmPicNetDO5.Size = new System.Drawing.Size(155, 22);
+            TsrmPicNetDO5.Text = "设置重置DO-5";
+            TsrmPicNetDO5.Click += PicNetDo_DoubleClick;
             // 
             // TsrmPicNetDO4
             // 
-            this.TsrmPicNetDO4.Name = "TsrmPicNetDO4";
-            this.TsrmPicNetDO4.Size = new System.Drawing.Size(155, 22);
-            this.TsrmPicNetDO4.Text = "设置重置DO-4";
-            this.TsrmPicNetDO4.Click += new System.EventHandler(this.PicNetDo_DoubleClick);
+            TsrmPicNetDO4.Name = "TsrmPicNetDO4";
+            TsrmPicNetDO4.Size = new System.Drawing.Size(155, 22);
+            TsrmPicNetDO4.Text = "设置重置DO-4";
+            TsrmPicNetDO4.Click += PicNetDo_DoubleClick;
             // 
             // LblNetDI4
             // 
-            this.LblNetDI4.AutoSize = true;
-            this.LblNetDI4.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.LblNetDI4.Location = new System.Drawing.Point(206, 64);
-            this.LblNetDI4.Name = "LblNetDI4";
-            this.LblNetDI4.Size = new System.Drawing.Size(33, 17);
-            this.LblNetDI4.TabIndex = 7;
-            this.LblNetDI4.Text = "DI-4";
+            LblNetDI4.AutoSize = true;
+            LblNetDI4.Cursor = System.Windows.Forms.Cursors.Hand;
+            LblNetDI4.Location = new System.Drawing.Point(206, 64);
+            LblNetDI4.Name = "LblNetDI4";
+            LblNetDI4.Size = new System.Drawing.Size(33, 17);
+            LblNetDI4.TabIndex = 7;
+            LblNetDI4.Text = "DI-4";
             // 
             // TsrmPicNetDO2
             // 
-            this.TsrmPicNetDO2.Name = "TsrmPicNetDO2";
-            this.TsrmPicNetDO2.Size = new System.Drawing.Size(155, 22);
-            this.TsrmPicNetDO2.Text = "设置重置DO-2";
-            this.TsrmPicNetDO2.Click += new System.EventHandler(this.PicNetDo_DoubleClick);
+            TsrmPicNetDO2.Name = "TsrmPicNetDO2";
+            TsrmPicNetDO2.Size = new System.Drawing.Size(155, 22);
+            TsrmPicNetDO2.Text = "设置重置DO-2";
+            TsrmPicNetDO2.Click += PicNetDo_DoubleClick;
             // 
             // LblNetDO7
             // 
-            this.LblNetDO7.AutoSize = true;
-            this.LblNetDO7.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.LblNetDO7.Location = new System.Drawing.Point(378, 86);
-            this.LblNetDO7.Name = "LblNetDO7";
-            this.LblNetDO7.Size = new System.Drawing.Size(39, 17);
-            this.LblNetDO7.TabIndex = 15;
-            this.LblNetDO7.Text = "DO-7";
-            this.LblNetDO7.Click += new System.EventHandler(this.LblNetDO_Click);
+            LblNetDO7.AutoSize = true;
+            LblNetDO7.Cursor = System.Windows.Forms.Cursors.Hand;
+            LblNetDO7.Location = new System.Drawing.Point(378, 86);
+            LblNetDO7.Name = "LblNetDO7";
+            LblNetDO7.Size = new System.Drawing.Size(39, 17);
+            LblNetDO7.TabIndex = 15;
+            LblNetDO7.Text = "DO-7";
+            LblNetDO7.Click += LblNetDO_Click;
             // 
             // CmsrLogger
             // 
-            this.CmsrLogger.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.TsrmLoggerClear});
-            this.CmsrLogger.Name = "contextMenuStrip1";
-            this.CmsrLogger.Size = new System.Drawing.Size(125, 26);
+            CmsrLogger.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { TsrmLoggerClear });
+            CmsrLogger.Name = "contextMenuStrip1";
+            CmsrLogger.Size = new System.Drawing.Size(125, 26);
             // 
             // TsrmLoggerClear
             // 
-            this.TsrmLoggerClear.Name = "TsrmLoggerClear";
-            this.TsrmLoggerClear.Size = new System.Drawing.Size(124, 22);
-            this.TsrmLoggerClear.Text = "清空日志";
-            this.TsrmLoggerClear.Click += new System.EventHandler(this.TsrmLoggerClear_Click);
+            TsrmLoggerClear.Name = "TsrmLoggerClear";
+            TsrmLoggerClear.Size = new System.Drawing.Size(124, 22);
+            TsrmLoggerClear.Text = "清空日志";
+            TsrmLoggerClear.Click += TsrmLoggerClear_Click;
             // 
             // GrbTxtLogger
             // 
-            this.GrbTxtLogger.Controls.Add(this.TxtLogger);
-            this.GrbTxtLogger.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.GrbTxtLogger.Location = new System.Drawing.Point(0, 0);
-            this.GrbTxtLogger.Name = "GrbTxtLogger";
-            this.GrbTxtLogger.Size = new System.Drawing.Size(442, 768);
-            this.GrbTxtLogger.TabIndex = 1;
-            this.GrbTxtLogger.TabStop = false;
-            this.GrbTxtLogger.Text = "信息日志";
+            GrbTxtLogger.Controls.Add(TxtLogger);
+            GrbTxtLogger.Dock = System.Windows.Forms.DockStyle.Fill;
+            GrbTxtLogger.Location = new System.Drawing.Point(0, 0);
+            GrbTxtLogger.Name = "GrbTxtLogger";
+            GrbTxtLogger.Size = new System.Drawing.Size(442, 768);
+            GrbTxtLogger.TabIndex = 1;
+            GrbTxtLogger.TabStop = false;
+            GrbTxtLogger.Text = "信息日志";
             // 
             // TxtLogger
             // 
-            this.TxtLogger.ContextMenuStrip = this.CmsrLogger;
-            this.TxtLogger.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.TxtLogger.Location = new System.Drawing.Point(3, 19);
-            this.TxtLogger.Name = "TxtLogger";
-            this.TxtLogger.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
-            this.TxtLogger.Size = new System.Drawing.Size(436, 746);
-            this.TxtLogger.TabIndex = 0;
-            this.TxtLogger.Text = "";
+            TxtLogger.ContextMenuStrip = CmsrLogger;
+            TxtLogger.Dock = System.Windows.Forms.DockStyle.Fill;
+            TxtLogger.Location = new System.Drawing.Point(3, 19);
+            TxtLogger.Name = "TxtLogger";
+            TxtLogger.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
+            TxtLogger.Size = new System.Drawing.Size(436, 746);
+            TxtLogger.TabIndex = 0;
+            TxtLogger.Text = "";
             // 
             // PicNetDO7
             // 
-            this.PicNetDO7.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.PicNetDO7.Image = global::TestHardwareDemo.WinForm.Properties.Resources.usr_io808_doclose;
-            this.PicNetDO7.Location = new System.Drawing.Point(384, 33);
-            this.PicNetDO7.Name = "PicNetDO7";
-            this.PicNetDO7.Size = new System.Drawing.Size(25, 50);
-            this.PicNetDO7.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.PicNetDO7.TabIndex = 4;
-            this.PicNetDO7.TabStop = false;
-            this.PicNetDO7.Tag = "";
-            this.PicNetDO7.Click += new System.EventHandler(this.PicNetDO_Click);
+            PicNetDO7.Cursor = System.Windows.Forms.Cursors.Hand;
+            PicNetDO7.Image = Properties.Resources.usr_io808_doclose;
+            PicNetDO7.Location = new System.Drawing.Point(384, 33);
+            PicNetDO7.Name = "PicNetDO7";
+            PicNetDO7.Size = new System.Drawing.Size(25, 50);
+            PicNetDO7.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            PicNetDO7.TabIndex = 4;
+            PicNetDO7.TabStop = false;
+            PicNetDO7.Tag = "";
+            PicNetDO7.Click += PicNetDO_Click;
             // 
             // LblNetDO6
             // 
-            this.LblNetDO6.AutoSize = true;
-            this.LblNetDO6.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.LblNetDO6.Location = new System.Drawing.Point(320, 86);
-            this.LblNetDO6.Name = "LblNetDO6";
-            this.LblNetDO6.Size = new System.Drawing.Size(39, 17);
-            this.LblNetDO6.TabIndex = 14;
-            this.LblNetDO6.Text = "DO-6";
-            this.LblNetDO6.Click += new System.EventHandler(this.LblNetDO_Click);
+            LblNetDO6.AutoSize = true;
+            LblNetDO6.Cursor = System.Windows.Forms.Cursors.Hand;
+            LblNetDO6.Location = new System.Drawing.Point(320, 86);
+            LblNetDO6.Name = "LblNetDO6";
+            LblNetDO6.Size = new System.Drawing.Size(39, 17);
+            LblNetDO6.TabIndex = 14;
+            LblNetDO6.Text = "DO-6";
+            LblNetDO6.Click += LblNetDO_Click;
             // 
             // PicNetDO1
             // 
-            this.PicNetDO1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.PicNetDO1.Image = global::TestHardwareDemo.WinForm.Properties.Resources.usr_io808_doclose;
-            this.PicNetDO1.Location = new System.Drawing.Point(36, 33);
-            this.PicNetDO1.Name = "PicNetDO1";
-            this.PicNetDO1.Size = new System.Drawing.Size(25, 50);
-            this.PicNetDO1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.PicNetDO1.TabIndex = 0;
-            this.PicNetDO1.TabStop = false;
-            this.PicNetDO1.Tag = "";
-            this.PicNetDO1.Click += new System.EventHandler(this.PicNetDO_Click);
+            PicNetDO1.Cursor = System.Windows.Forms.Cursors.Hand;
+            PicNetDO1.Image = Properties.Resources.usr_io808_doclose;
+            PicNetDO1.Location = new System.Drawing.Point(36, 33);
+            PicNetDO1.Name = "PicNetDO1";
+            PicNetDO1.Size = new System.Drawing.Size(25, 50);
+            PicNetDO1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            PicNetDO1.TabIndex = 0;
+            PicNetDO1.TabStop = false;
+            PicNetDO1.Tag = "";
+            PicNetDO1.Click += PicNetDO_Click;
             // 
             // LblNetDO5
             // 
-            this.LblNetDO5.AutoSize = true;
-            this.LblNetDO5.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.LblNetDO5.Location = new System.Drawing.Point(262, 86);
-            this.LblNetDO5.Name = "LblNetDO5";
-            this.LblNetDO5.Size = new System.Drawing.Size(39, 17);
-            this.LblNetDO5.TabIndex = 13;
-            this.LblNetDO5.Text = "DO-5";
-            this.LblNetDO5.Click += new System.EventHandler(this.LblNetDO_Click);
+            LblNetDO5.AutoSize = true;
+            LblNetDO5.Cursor = System.Windows.Forms.Cursors.Hand;
+            LblNetDO5.Location = new System.Drawing.Point(262, 86);
+            LblNetDO5.Name = "LblNetDO5";
+            LblNetDO5.Size = new System.Drawing.Size(39, 17);
+            LblNetDO5.TabIndex = 13;
+            LblNetDO5.Text = "DO-5";
+            LblNetDO5.Click += LblNetDO_Click;
             // 
             // PicNetDO2
             // 
-            this.PicNetDO2.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.PicNetDO2.Image = global::TestHardwareDemo.WinForm.Properties.Resources.usr_io808_doclose;
-            this.PicNetDO2.Location = new System.Drawing.Point(94, 33);
-            this.PicNetDO2.Name = "PicNetDO2";
-            this.PicNetDO2.Size = new System.Drawing.Size(25, 50);
-            this.PicNetDO2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.PicNetDO2.TabIndex = 1;
-            this.PicNetDO2.TabStop = false;
-            this.PicNetDO2.Tag = "";
-            this.PicNetDO2.Click += new System.EventHandler(this.PicNetDO_Click);
+            PicNetDO2.Cursor = System.Windows.Forms.Cursors.Hand;
+            PicNetDO2.Image = Properties.Resources.usr_io808_doclose;
+            PicNetDO2.Location = new System.Drawing.Point(94, 33);
+            PicNetDO2.Name = "PicNetDO2";
+            PicNetDO2.Size = new System.Drawing.Size(25, 50);
+            PicNetDO2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            PicNetDO2.TabIndex = 1;
+            PicNetDO2.TabStop = false;
+            PicNetDO2.Tag = "";
+            PicNetDO2.Click += PicNetDO_Click;
             // 
             // LblNetDO4
             // 
-            this.LblNetDO4.AutoSize = true;
-            this.LblNetDO4.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.LblNetDO4.Location = new System.Drawing.Point(204, 86);
-            this.LblNetDO4.Name = "LblNetDO4";
-            this.LblNetDO4.Size = new System.Drawing.Size(39, 17);
-            this.LblNetDO4.TabIndex = 12;
-            this.LblNetDO4.Text = "DO-4";
-            this.LblNetDO4.Click += new System.EventHandler(this.LblNetDO_Click);
+            LblNetDO4.AutoSize = true;
+            LblNetDO4.Cursor = System.Windows.Forms.Cursors.Hand;
+            LblNetDO4.Location = new System.Drawing.Point(204, 86);
+            LblNetDO4.Name = "LblNetDO4";
+            LblNetDO4.Size = new System.Drawing.Size(39, 17);
+            LblNetDO4.TabIndex = 12;
+            LblNetDO4.Text = "DO-4";
+            LblNetDO4.Click += LblNetDO_Click;
             // 
             // PicNetDO5
             // 
-            this.PicNetDO5.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.PicNetDO5.Image = global::TestHardwareDemo.WinForm.Properties.Resources.usr_io808_doclose;
-            this.PicNetDO5.Location = new System.Drawing.Point(268, 33);
-            this.PicNetDO5.Name = "PicNetDO5";
-            this.PicNetDO5.Size = new System.Drawing.Size(25, 50);
-            this.PicNetDO5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.PicNetDO5.TabIndex = 2;
-            this.PicNetDO5.TabStop = false;
-            this.PicNetDO5.Tag = "";
-            this.PicNetDO5.Click += new System.EventHandler(this.PicNetDO_Click);
+            PicNetDO5.Cursor = System.Windows.Forms.Cursors.Hand;
+            PicNetDO5.Image = Properties.Resources.usr_io808_doclose;
+            PicNetDO5.Location = new System.Drawing.Point(268, 33);
+            PicNetDO5.Name = "PicNetDO5";
+            PicNetDO5.Size = new System.Drawing.Size(25, 50);
+            PicNetDO5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            PicNetDO5.TabIndex = 2;
+            PicNetDO5.TabStop = false;
+            PicNetDO5.Tag = "";
+            PicNetDO5.Click += PicNetDO_Click;
             // 
             // LblNetDO3
             // 
-            this.LblNetDO3.AutoSize = true;
-            this.LblNetDO3.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.LblNetDO3.Location = new System.Drawing.Point(146, 86);
-            this.LblNetDO3.Name = "LblNetDO3";
-            this.LblNetDO3.Size = new System.Drawing.Size(39, 17);
-            this.LblNetDO3.TabIndex = 11;
-            this.LblNetDO3.Text = "DO-3";
-            this.LblNetDO3.Click += new System.EventHandler(this.LblNetDO_Click);
+            LblNetDO3.AutoSize = true;
+            LblNetDO3.Cursor = System.Windows.Forms.Cursors.Hand;
+            LblNetDO3.Location = new System.Drawing.Point(146, 86);
+            LblNetDO3.Name = "LblNetDO3";
+            LblNetDO3.Size = new System.Drawing.Size(39, 17);
+            LblNetDO3.TabIndex = 11;
+            LblNetDO3.Text = "DO-3";
+            LblNetDO3.Click += LblNetDO_Click;
             // 
             // PicNetDO6
             // 
-            this.PicNetDO6.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.PicNetDO6.Image = global::TestHardwareDemo.WinForm.Properties.Resources.usr_io808_doclose;
-            this.PicNetDO6.Location = new System.Drawing.Point(326, 33);
-            this.PicNetDO6.Name = "PicNetDO6";
-            this.PicNetDO6.Size = new System.Drawing.Size(25, 50);
-            this.PicNetDO6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.PicNetDO6.TabIndex = 3;
-            this.PicNetDO6.TabStop = false;
-            this.PicNetDO6.Tag = "";
-            this.PicNetDO6.Click += new System.EventHandler(this.PicNetDO_Click);
+            PicNetDO6.Cursor = System.Windows.Forms.Cursors.Hand;
+            PicNetDO6.Image = Properties.Resources.usr_io808_doclose;
+            PicNetDO6.Location = new System.Drawing.Point(326, 33);
+            PicNetDO6.Name = "PicNetDO6";
+            PicNetDO6.Size = new System.Drawing.Size(25, 50);
+            PicNetDO6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            PicNetDO6.TabIndex = 3;
+            PicNetDO6.TabStop = false;
+            PicNetDO6.Tag = "";
+            PicNetDO6.Click += PicNetDO_Click;
             // 
             // LblNetDO2
             // 
-            this.LblNetDO2.AutoSize = true;
-            this.LblNetDO2.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.LblNetDO2.Location = new System.Drawing.Point(88, 86);
-            this.LblNetDO2.Name = "LblNetDO2";
-            this.LblNetDO2.Size = new System.Drawing.Size(39, 17);
-            this.LblNetDO2.TabIndex = 10;
-            this.LblNetDO2.Text = "DO-2";
-            this.LblNetDO2.Click += new System.EventHandler(this.LblNetDO_Click);
+            LblNetDO2.AutoSize = true;
+            LblNetDO2.Cursor = System.Windows.Forms.Cursors.Hand;
+            LblNetDO2.Location = new System.Drawing.Point(88, 86);
+            LblNetDO2.Name = "LblNetDO2";
+            LblNetDO2.Size = new System.Drawing.Size(39, 17);
+            LblNetDO2.TabIndex = 10;
+            LblNetDO2.Text = "DO-2";
+            LblNetDO2.Click += LblNetDO_Click;
             // 
             // PicNetDO8
             // 
-            this.PicNetDO8.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.PicNetDO8.Image = global::TestHardwareDemo.WinForm.Properties.Resources.usr_io808_doclose;
-            this.PicNetDO8.Location = new System.Drawing.Point(442, 33);
-            this.PicNetDO8.Name = "PicNetDO8";
-            this.PicNetDO8.Size = new System.Drawing.Size(25, 50);
-            this.PicNetDO8.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.PicNetDO8.TabIndex = 5;
-            this.PicNetDO8.TabStop = false;
-            this.PicNetDO8.Tag = "";
-            this.PicNetDO8.Click += new System.EventHandler(this.PicNetDO_Click);
+            PicNetDO8.Cursor = System.Windows.Forms.Cursors.Hand;
+            PicNetDO8.Image = Properties.Resources.usr_io808_doclose;
+            PicNetDO8.Location = new System.Drawing.Point(442, 33);
+            PicNetDO8.Name = "PicNetDO8";
+            PicNetDO8.Size = new System.Drawing.Size(25, 50);
+            PicNetDO8.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            PicNetDO8.TabIndex = 5;
+            PicNetDO8.TabStop = false;
+            PicNetDO8.Tag = "";
+            PicNetDO8.Click += PicNetDO_Click;
             // 
             // LblNetDO1
             // 
-            this.LblNetDO1.AutoSize = true;
-            this.LblNetDO1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.LblNetDO1.Location = new System.Drawing.Point(30, 86);
-            this.LblNetDO1.Name = "LblNetDO1";
-            this.LblNetDO1.Size = new System.Drawing.Size(39, 17);
-            this.LblNetDO1.TabIndex = 9;
-            this.LblNetDO1.Text = "DO-1";
-            this.LblNetDO1.Click += new System.EventHandler(this.LblNetDO_Click);
+            LblNetDO1.AutoSize = true;
+            LblNetDO1.Cursor = System.Windows.Forms.Cursors.Hand;
+            LblNetDO1.Location = new System.Drawing.Point(30, 86);
+            LblNetDO1.Name = "LblNetDO1";
+            LblNetDO1.Size = new System.Drawing.Size(39, 17);
+            LblNetDO1.TabIndex = 9;
+            LblNetDO1.Text = "DO-1";
+            LblNetDO1.Click += LblNetDO_Click;
             // 
             // PicNetDO4
             // 
-            this.PicNetDO4.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.PicNetDO4.Image = global::TestHardwareDemo.WinForm.Properties.Resources.usr_io808_doclose;
-            this.PicNetDO4.Location = new System.Drawing.Point(210, 33);
-            this.PicNetDO4.Name = "PicNetDO4";
-            this.PicNetDO4.Size = new System.Drawing.Size(25, 50);
-            this.PicNetDO4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.PicNetDO4.TabIndex = 6;
-            this.PicNetDO4.TabStop = false;
-            this.PicNetDO4.Tag = "";
-            this.PicNetDO4.Click += new System.EventHandler(this.PicNetDO_Click);
+            PicNetDO4.Cursor = System.Windows.Forms.Cursors.Hand;
+            PicNetDO4.Image = Properties.Resources.usr_io808_doclose;
+            PicNetDO4.Location = new System.Drawing.Point(210, 33);
+            PicNetDO4.Name = "PicNetDO4";
+            PicNetDO4.Size = new System.Drawing.Size(25, 50);
+            PicNetDO4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            PicNetDO4.TabIndex = 6;
+            PicNetDO4.TabStop = false;
+            PicNetDO4.Tag = "";
+            PicNetDO4.Click += PicNetDO_Click;
             // 
             // LblNetDO8
             // 
-            this.LblNetDO8.AutoSize = true;
-            this.LblNetDO8.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.LblNetDO8.Location = new System.Drawing.Point(436, 86);
-            this.LblNetDO8.Name = "LblNetDO8";
-            this.LblNetDO8.Size = new System.Drawing.Size(39, 17);
-            this.LblNetDO8.TabIndex = 8;
-            this.LblNetDO8.Text = "DO-8";
-            this.LblNetDO8.Click += new System.EventHandler(this.LblNetDO_Click);
+            LblNetDO8.AutoSize = true;
+            LblNetDO8.Cursor = System.Windows.Forms.Cursors.Hand;
+            LblNetDO8.Location = new System.Drawing.Point(436, 86);
+            LblNetDO8.Name = "LblNetDO8";
+            LblNetDO8.Size = new System.Drawing.Size(39, 17);
+            LblNetDO8.TabIndex = 8;
+            LblNetDO8.Text = "DO-8";
+            LblNetDO8.Click += LblNetDO_Click;
             // 
             // PicNetDO3
             // 
-            this.PicNetDO3.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.PicNetDO3.Image = global::TestHardwareDemo.WinForm.Properties.Resources.usr_io808_doclose;
-            this.PicNetDO3.Location = new System.Drawing.Point(152, 33);
-            this.PicNetDO3.Name = "PicNetDO3";
-            this.PicNetDO3.Size = new System.Drawing.Size(25, 50);
-            this.PicNetDO3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.PicNetDO3.TabIndex = 7;
-            this.PicNetDO3.TabStop = false;
-            this.PicNetDO3.Tag = "";
-            this.PicNetDO3.Click += new System.EventHandler(this.PicNetDO_Click);
+            PicNetDO3.Cursor = System.Windows.Forms.Cursors.Hand;
+            PicNetDO3.Image = Properties.Resources.usr_io808_doclose;
+            PicNetDO3.Location = new System.Drawing.Point(152, 33);
+            PicNetDO3.Name = "PicNetDO3";
+            PicNetDO3.Size = new System.Drawing.Size(25, 50);
+            PicNetDO3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            PicNetDO3.TabIndex = 7;
+            PicNetDO3.TabStop = false;
+            PicNetDO3.Tag = "";
+            PicNetDO3.Click += PicNetDO_Click;
             // 
             // LblNetDI2
             // 
-            this.LblNetDI2.AutoSize = true;
-            this.LblNetDI2.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.LblNetDI2.Location = new System.Drawing.Point(90, 64);
-            this.LblNetDI2.Name = "LblNetDI2";
-            this.LblNetDI2.Size = new System.Drawing.Size(33, 17);
-            this.LblNetDI2.TabIndex = 3;
-            this.LblNetDI2.Text = "DI-2";
+            LblNetDI2.AutoSize = true;
+            LblNetDI2.Cursor = System.Windows.Forms.Cursors.Hand;
+            LblNetDI2.Location = new System.Drawing.Point(90, 64);
+            LblNetDI2.Name = "LblNetDI2";
+            LblNetDI2.Size = new System.Drawing.Size(33, 17);
+            LblNetDI2.TabIndex = 3;
+            LblNetDI2.Text = "DI-2";
             // 
             // PnlContent
             // 
-            this.PnlContent.Controls.Add(this.SplContent);
-            this.PnlContent.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.PnlContent.Location = new System.Drawing.Point(0, 0);
-            this.PnlContent.Name = "PnlContent";
-            this.PnlContent.Size = new System.Drawing.Size(960, 770);
-            this.PnlContent.TabIndex = 3;
+            PnlContent.Controls.Add(SplContent);
+            PnlContent.Dock = System.Windows.Forms.DockStyle.Fill;
+            PnlContent.Location = new System.Drawing.Point(0, 0);
+            PnlContent.Name = "PnlContent";
+            PnlContent.Size = new System.Drawing.Size(960, 770);
+            PnlContent.TabIndex = 3;
             // 
             // SplContent
             // 
-            this.SplContent.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.SplContent.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.SplContent.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
-            this.SplContent.IsSplitterFixed = true;
-            this.SplContent.Location = new System.Drawing.Point(0, 0);
-            this.SplContent.Name = "SplContent";
+            SplContent.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            SplContent.Dock = System.Windows.Forms.DockStyle.Fill;
+            SplContent.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+            SplContent.IsSplitterFixed = true;
+            SplContent.Location = new System.Drawing.Point(0, 0);
+            SplContent.Name = "SplContent";
             // 
             // SplContent.Panel1
             // 
-            this.SplContent.Panel1.Controls.Add(this.PnlNetControl);
-            this.SplContent.Panel1.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.SplContent.Panel1MinSize = 512;
+            SplContent.Panel1.Controls.Add(PnlNetControl);
+            SplContent.Panel1.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            SplContent.Panel1MinSize = 512;
             // 
             // SplContent.Panel2
             // 
-            this.SplContent.Panel2.Controls.Add(this.GrbTxtLogger);
-            this.SplContent.Panel2.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.SplContent.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.SplContent.Size = new System.Drawing.Size(960, 770);
-            this.SplContent.SplitterDistance = 512;
-            this.SplContent.TabIndex = 0;
+            SplContent.Panel2.Controls.Add(GrbTxtLogger);
+            SplContent.Panel2.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            SplContent.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            SplContent.Size = new System.Drawing.Size(960, 770);
+            SplContent.SplitterDistance = 512;
+            SplContent.TabIndex = 0;
             // 
             // PnlNetControl
             // 
-            this.PnlNetControl.Controls.Add(this.SplNetControl);
-            this.PnlNetControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.PnlNetControl.Location = new System.Drawing.Point(0, 0);
-            this.PnlNetControl.Name = "PnlNetControl";
-            this.PnlNetControl.Size = new System.Drawing.Size(510, 768);
-            this.PnlNetControl.TabIndex = 0;
+            PnlNetControl.Controls.Add(SplNetControl);
+            PnlNetControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            PnlNetControl.Location = new System.Drawing.Point(0, 0);
+            PnlNetControl.Name = "PnlNetControl";
+            PnlNetControl.Size = new System.Drawing.Size(510, 768);
+            PnlNetControl.TabIndex = 0;
             // 
             // SplNetControl
             // 
-            this.SplNetControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.SplNetControl.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
-            this.SplNetControl.Location = new System.Drawing.Point(0, 0);
-            this.SplNetControl.Name = "SplNetControl";
-            this.SplNetControl.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            SplNetControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            SplNetControl.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+            SplNetControl.Location = new System.Drawing.Point(0, 0);
+            SplNetControl.Name = "SplNetControl";
+            SplNetControl.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
             // SplNetControl.Panel1
             // 
-            this.SplNetControl.Panel1.AutoScroll = true;
-            this.SplNetControl.Panel1.Controls.Add(this.GrbNetConfigArea);
+            SplNetControl.Panel1.AutoScroll = true;
+            SplNetControl.Panel1.Controls.Add(GrbNetConfigArea);
             // 
             // SplNetControl.Panel2
             // 
-            this.SplNetControl.Panel2.Controls.Add(this.GrbNetInfoContent);
-            this.SplNetControl.Panel2.Controls.Add(this.GrbNetDIArea);
-            this.SplNetControl.Panel2.Controls.Add(this.GrbNetDoArea);
-            this.SplNetControl.Size = new System.Drawing.Size(510, 768);
-            this.SplNetControl.SplitterDistance = 145;
-            this.SplNetControl.TabIndex = 0;
+            SplNetControl.Panel2.Controls.Add(GrbNetInfoContent);
+            SplNetControl.Panel2.Controls.Add(GrbNetDIArea);
+            SplNetControl.Panel2.Controls.Add(GrbNetDoArea);
+            SplNetControl.Size = new System.Drawing.Size(510, 768);
+            SplNetControl.SplitterDistance = 145;
+            SplNetControl.TabIndex = 0;
             // 
             // GrbNetConfigArea
             // 
-            this.GrbNetConfigArea.Controls.Add(this.PngNetConfig);
-            this.GrbNetConfigArea.Controls.Add(this.PnlNetConfigs);
-            this.GrbNetConfigArea.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.GrbNetConfigArea.Location = new System.Drawing.Point(0, 0);
-            this.GrbNetConfigArea.Name = "GrbNetConfigArea";
-            this.GrbNetConfigArea.Size = new System.Drawing.Size(510, 145);
-            this.GrbNetConfigArea.TabIndex = 0;
-            this.GrbNetConfigArea.TabStop = false;
-            this.GrbNetConfigArea.Text = "网络控制器配置";
+            GrbNetConfigArea.Controls.Add(PngNetConfig);
+            GrbNetConfigArea.Controls.Add(PnlNetConfigs);
+            GrbNetConfigArea.Dock = System.Windows.Forms.DockStyle.Fill;
+            GrbNetConfigArea.Location = new System.Drawing.Point(0, 0);
+            GrbNetConfigArea.Name = "GrbNetConfigArea";
+            GrbNetConfigArea.Size = new System.Drawing.Size(510, 145);
+            GrbNetConfigArea.TabIndex = 0;
+            GrbNetConfigArea.TabStop = false;
+            GrbNetConfigArea.Text = "网络控制器配置";
             // 
             // PngNetConfig
             // 
-            this.PngNetConfig.Controls.Add(this.BtnNetConfigRemove);
-            this.PngNetConfig.Controls.Add(this.BtnNetConfigConnect);
-            this.PngNetConfig.Controls.Add(this.LblNetConfigPort);
-            this.PngNetConfig.Controls.Add(this.TxtNetConfigIp);
-            this.PngNetConfig.Controls.Add(this.TxtNetConfigPort);
-            this.PngNetConfig.Controls.Add(this.LblNetConfigIP);
-            this.PngNetConfig.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.PngNetConfig.Location = new System.Drawing.Point(3, 66);
-            this.PngNetConfig.Name = "PngNetConfig";
-            this.PngNetConfig.Size = new System.Drawing.Size(504, 76);
-            this.PngNetConfig.TabIndex = 6;
+            PngNetConfig.Controls.Add(BtnNetConfigRemove);
+            PngNetConfig.Controls.Add(BtnNetConfigConnect);
+            PngNetConfig.Controls.Add(LblNetConfigPort);
+            PngNetConfig.Controls.Add(TxtNetConfigIp);
+            PngNetConfig.Controls.Add(TxtNetConfigPort);
+            PngNetConfig.Controls.Add(LblNetConfigIP);
+            PngNetConfig.Dock = System.Windows.Forms.DockStyle.Fill;
+            PngNetConfig.Location = new System.Drawing.Point(3, 66);
+            PngNetConfig.Name = "PngNetConfig";
+            PngNetConfig.Size = new System.Drawing.Size(504, 76);
+            PngNetConfig.TabIndex = 6;
             // 
             // BtnNetConfigRemove
             // 
-            this.BtnNetConfigRemove.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.BtnNetConfigRemove.Location = new System.Drawing.Point(266, 32);
-            this.BtnNetConfigRemove.Name = "BtnNetConfigRemove";
-            this.BtnNetConfigRemove.Size = new System.Drawing.Size(75, 23);
-            this.BtnNetConfigRemove.TabIndex = 7;
-            this.BtnNetConfigRemove.Text = "移除";
-            this.BtnNetConfigRemove.UseVisualStyleBackColor = true;
-            this.BtnNetConfigRemove.Click += new System.EventHandler(this.BtnNetConfigRemove_Click);
+            BtnNetConfigRemove.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
+            BtnNetConfigRemove.Location = new System.Drawing.Point(266, 32);
+            BtnNetConfigRemove.Name = "BtnNetConfigRemove";
+            BtnNetConfigRemove.Size = new System.Drawing.Size(75, 23);
+            BtnNetConfigRemove.TabIndex = 7;
+            BtnNetConfigRemove.Text = "移除";
+            BtnNetConfigRemove.UseVisualStyleBackColor = true;
+            BtnNetConfigRemove.Click += BtnNetConfigRemove_Click;
             // 
             // BtnNetConfigConnect
             // 
-            this.BtnNetConfigConnect.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.BtnNetConfigConnect.Location = new System.Drawing.Point(354, 32);
-            this.BtnNetConfigConnect.Name = "BtnNetConfigConnect";
-            this.BtnNetConfigConnect.Size = new System.Drawing.Size(75, 23);
-            this.BtnNetConfigConnect.TabIndex = 6;
-            this.BtnNetConfigConnect.Text = "连接";
-            this.BtnNetConfigConnect.UseVisualStyleBackColor = true;
-            this.BtnNetConfigConnect.Click += new System.EventHandler(this.BtnNetConfigConnect_Click);
+            BtnNetConfigConnect.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
+            BtnNetConfigConnect.Location = new System.Drawing.Point(354, 32);
+            BtnNetConfigConnect.Name = "BtnNetConfigConnect";
+            BtnNetConfigConnect.Size = new System.Drawing.Size(75, 23);
+            BtnNetConfigConnect.TabIndex = 6;
+            BtnNetConfigConnect.Text = "连接";
+            BtnNetConfigConnect.UseVisualStyleBackColor = true;
+            BtnNetConfigConnect.Click += BtnNetConfigConnect_Click;
             // 
             // LblNetConfigPort
             // 
-            this.LblNetConfigPort.AutoSize = true;
-            this.LblNetConfigPort.Location = new System.Drawing.Point(141, 11);
-            this.LblNetConfigPort.Name = "LblNetConfigPort";
-            this.LblNetConfigPort.Size = new System.Drawing.Size(56, 17);
-            this.LblNetConfigPort.TabIndex = 3;
-            this.LblNetConfigPort.Text = "端口号：";
+            LblNetConfigPort.AutoSize = true;
+            LblNetConfigPort.Location = new System.Drawing.Point(141, 11);
+            LblNetConfigPort.Name = "LblNetConfigPort";
+            LblNetConfigPort.Size = new System.Drawing.Size(56, 17);
+            LblNetConfigPort.TabIndex = 3;
+            LblNetConfigPort.Text = "端口号：";
             // 
             // TxtNetConfigIp
             // 
-            this.TxtNetConfigIp.Location = new System.Drawing.Point(14, 32);
-            this.TxtNetConfigIp.Name = "TxtNetConfigIp";
-            this.TxtNetConfigIp.Size = new System.Drawing.Size(114, 23);
-            this.TxtNetConfigIp.TabIndex = 0;
-            this.TxtNetConfigIp.Text = "192.168.1.117";
+            TxtNetConfigIp.Location = new System.Drawing.Point(14, 32);
+            TxtNetConfigIp.Name = "TxtNetConfigIp";
+            TxtNetConfigIp.Size = new System.Drawing.Size(114, 23);
+            TxtNetConfigIp.TabIndex = 0;
+            TxtNetConfigIp.Text = "192.168.1.117";
             // 
             // TxtNetConfigPort
             // 
-            this.TxtNetConfigPort.Location = new System.Drawing.Point(141, 32);
-            this.TxtNetConfigPort.Name = "TxtNetConfigPort";
-            this.TxtNetConfigPort.Size = new System.Drawing.Size(56, 23);
-            this.TxtNetConfigPort.TabIndex = 2;
-            this.TxtNetConfigPort.Text = "28899";
+            TxtNetConfigPort.Location = new System.Drawing.Point(141, 32);
+            TxtNetConfigPort.Name = "TxtNetConfigPort";
+            TxtNetConfigPort.Size = new System.Drawing.Size(56, 23);
+            TxtNetConfigPort.TabIndex = 2;
+            TxtNetConfigPort.Text = "28899";
             // 
             // LblNetConfigIP
             // 
-            this.LblNetConfigIP.AutoSize = true;
-            this.LblNetConfigIP.Location = new System.Drawing.Point(14, 11);
-            this.LblNetConfigIP.Name = "LblNetConfigIP";
-            this.LblNetConfigIP.Size = new System.Drawing.Size(55, 17);
-            this.LblNetConfigIP.TabIndex = 1;
-            this.LblNetConfigIP.Text = "IP地址：";
+            LblNetConfigIP.AutoSize = true;
+            LblNetConfigIP.Location = new System.Drawing.Point(14, 11);
+            LblNetConfigIP.Name = "LblNetConfigIP";
+            LblNetConfigIP.Size = new System.Drawing.Size(55, 17);
+            LblNetConfigIP.TabIndex = 1;
+            LblNetConfigIP.Text = "IP地址：";
             // 
             // PnlNetConfigs
             // 
-            this.PnlNetConfigs.Controls.Add(this.LblNetReadSeconds);
-            this.PnlNetConfigs.Controls.Add(this.TxtNetSeconds);
-            this.PnlNetConfigs.Controls.Add(this.ChkNetReadBackground);
-            this.PnlNetConfigs.Controls.Add(this.CbxNetConfigs);
-            this.PnlNetConfigs.Dock = System.Windows.Forms.DockStyle.Top;
-            this.PnlNetConfigs.Location = new System.Drawing.Point(3, 19);
-            this.PnlNetConfigs.Name = "PnlNetConfigs";
-            this.PnlNetConfigs.Size = new System.Drawing.Size(504, 47);
-            this.PnlNetConfigs.TabIndex = 5;
+            PnlNetConfigs.Controls.Add(LblNetReadSeconds);
+            PnlNetConfigs.Controls.Add(TxtNetSeconds);
+            PnlNetConfigs.Controls.Add(ChkNetReadBackground);
+            PnlNetConfigs.Controls.Add(CbxNetConfigs);
+            PnlNetConfigs.Dock = System.Windows.Forms.DockStyle.Top;
+            PnlNetConfigs.Location = new System.Drawing.Point(3, 19);
+            PnlNetConfigs.Name = "PnlNetConfigs";
+            PnlNetConfigs.Size = new System.Drawing.Size(504, 47);
+            PnlNetConfigs.TabIndex = 5;
             // 
             // LblNetReadSeconds
             // 
-            this.LblNetReadSeconds.AutoSize = true;
-            this.LblNetReadSeconds.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.LblNetReadSeconds.Location = new System.Drawing.Point(459, 12);
-            this.LblNetReadSeconds.Name = "LblNetReadSeconds";
-            this.LblNetReadSeconds.Size = new System.Drawing.Size(26, 21);
-            this.LblNetReadSeconds.TabIndex = 3;
-            this.LblNetReadSeconds.Text = "秒";
+            LblNetReadSeconds.AutoSize = true;
+            LblNetReadSeconds.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            LblNetReadSeconds.Location = new System.Drawing.Point(459, 12);
+            LblNetReadSeconds.Name = "LblNetReadSeconds";
+            LblNetReadSeconds.Size = new System.Drawing.Size(26, 21);
+            LblNetReadSeconds.TabIndex = 3;
+            LblNetReadSeconds.Text = "秒";
             // 
             // TxtNetSeconds
             // 
-            this.TxtNetSeconds.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.TxtNetSeconds.Location = new System.Drawing.Point(417, 8);
-            this.TxtNetSeconds.MaxLength = 2;
-            this.TxtNetSeconds.Name = "TxtNetSeconds";
-            this.TxtNetSeconds.Size = new System.Drawing.Size(36, 28);
-            this.TxtNetSeconds.TabIndex = 2;
-            this.TxtNetSeconds.Text = "10";
+            TxtNetSeconds.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            TxtNetSeconds.Location = new System.Drawing.Point(417, 8);
+            TxtNetSeconds.MaxLength = 2;
+            TxtNetSeconds.Name = "TxtNetSeconds";
+            TxtNetSeconds.Size = new System.Drawing.Size(36, 28);
+            TxtNetSeconds.TabIndex = 2;
+            TxtNetSeconds.Text = "10";
             // 
             // ChkNetReadBackground
             // 
-            this.ChkNetReadBackground.AutoSize = true;
-            this.ChkNetReadBackground.Checked = true;
-            this.ChkNetReadBackground.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.ChkNetReadBackground.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.ChkNetReadBackground.Location = new System.Drawing.Point(315, 10);
-            this.ChkNetReadBackground.Name = "ChkNetReadBackground";
-            this.ChkNetReadBackground.Size = new System.Drawing.Size(93, 25);
-            this.ChkNetReadBackground.TabIndex = 1;
-            this.ChkNetReadBackground.Text = "后台读取";
-            this.ChkNetReadBackground.UseVisualStyleBackColor = true;
+            ChkNetReadBackground.AutoSize = true;
+            ChkNetReadBackground.Checked = true;
+            ChkNetReadBackground.CheckState = System.Windows.Forms.CheckState.Checked;
+            ChkNetReadBackground.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            ChkNetReadBackground.Location = new System.Drawing.Point(315, 10);
+            ChkNetReadBackground.Name = "ChkNetReadBackground";
+            ChkNetReadBackground.Size = new System.Drawing.Size(93, 25);
+            ChkNetReadBackground.TabIndex = 1;
+            ChkNetReadBackground.Text = "后台读取";
+            ChkNetReadBackground.UseVisualStyleBackColor = true;
             // 
             // CbxNetConfigs
             // 
-            this.CbxNetConfigs.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.CbxNetConfigs.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.CbxNetConfigs.FormattingEnabled = true;
-            this.CbxNetConfigs.Location = new System.Drawing.Point(14, 8);
-            this.CbxNetConfigs.Name = "CbxNetConfigs";
-            this.CbxNetConfigs.Size = new System.Drawing.Size(292, 29);
-            this.CbxNetConfigs.TabIndex = 0;
-            this.CbxNetConfigs.SelectedIndexChanged += new System.EventHandler(this.CbxNetConfigs_SelectedIndexChanged);
+            CbxNetConfigs.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            CbxNetConfigs.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            CbxNetConfigs.FormattingEnabled = true;
+            CbxNetConfigs.Location = new System.Drawing.Point(14, 8);
+            CbxNetConfigs.Name = "CbxNetConfigs";
+            CbxNetConfigs.Size = new System.Drawing.Size(292, 29);
+            CbxNetConfigs.TabIndex = 0;
+            CbxNetConfigs.SelectedIndexChanged += CbxNetConfigs_SelectedIndexChanged;
             // 
             // GrbNetInfoContent
             // 
-            this.GrbNetInfoContent.Controls.Add(this.ChkNetDoHolding);
-            this.GrbNetInfoContent.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.GrbNetInfoContent.Location = new System.Drawing.Point(0, 209);
-            this.GrbNetInfoContent.Name = "GrbNetInfoContent";
-            this.GrbNetInfoContent.Size = new System.Drawing.Size(510, 410);
-            this.GrbNetInfoContent.TabIndex = 4;
-            this.GrbNetInfoContent.TabStop = false;
-            this.GrbNetInfoContent.Text = "设备其他信息参数";
+            GrbNetInfoContent.Controls.Add(TxtNetWriteTimeout);
+            GrbNetInfoContent.Controls.Add(TxtNetRetries);
+            GrbNetInfoContent.Controls.Add(TxtNetRetryWaitout);
+            GrbNetInfoContent.Controls.Add(TxtNetReadTimeout);
+            GrbNetInfoContent.Controls.Add(label4);
+            GrbNetInfoContent.Controls.Add(label2);
+            GrbNetInfoContent.Controls.Add(label3);
+            GrbNetInfoContent.Controls.Add(label1);
+            GrbNetInfoContent.Controls.Add(ChkNetDoHolding);
+            GrbNetInfoContent.Dock = System.Windows.Forms.DockStyle.Fill;
+            GrbNetInfoContent.Location = new System.Drawing.Point(0, 209);
+            GrbNetInfoContent.Name = "GrbNetInfoContent";
+            GrbNetInfoContent.Size = new System.Drawing.Size(510, 410);
+            GrbNetInfoContent.TabIndex = 4;
+            GrbNetInfoContent.TabStop = false;
+            GrbNetInfoContent.Text = "设备其他信息参数";
+            // 
+            // TxtNetWriteTimeout
+            // 
+            TxtNetWriteTimeout.Location = new System.Drawing.Point(124, 106);
+            TxtNetWriteTimeout.Name = "TxtNetWriteTimeout";
+            TxtNetWriteTimeout.Size = new System.Drawing.Size(100, 23);
+            TxtNetWriteTimeout.TabIndex = 8;
+            TxtNetWriteTimeout.Text = "1000";
+            // 
+            // TxtNetRetries
+            // 
+            TxtNetRetries.Location = new System.Drawing.Point(124, 139);
+            TxtNetRetries.Name = "TxtNetRetries";
+            TxtNetRetries.Size = new System.Drawing.Size(100, 23);
+            TxtNetRetries.TabIndex = 7;
+            TxtNetRetries.Text = "2";
+            // 
+            // TxtNetRetryWaitout
+            // 
+            TxtNetRetryWaitout.Location = new System.Drawing.Point(124, 172);
+            TxtNetRetryWaitout.Name = "TxtNetRetryWaitout";
+            TxtNetRetryWaitout.Size = new System.Drawing.Size(100, 23);
+            TxtNetRetryWaitout.TabIndex = 6;
+            TxtNetRetryWaitout.Text = "100";
+            // 
+            // TxtNetReadTimeout
+            // 
+            TxtNetReadTimeout.Location = new System.Drawing.Point(124, 73);
+            TxtNetReadTimeout.Name = "TxtNetReadTimeout";
+            TxtNetReadTimeout.Size = new System.Drawing.Size(100, 23);
+            TxtNetReadTimeout.TabIndex = 4;
+            TxtNetReadTimeout.Text = "1000";
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Location = new System.Drawing.Point(50, 173);
+            label4.Name = "label4";
+            label4.Size = new System.Drawing.Size(68, 17);
+            label4.TabIndex = 3;
+            label4.Text = "重试间隔：";
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new System.Drawing.Point(38, 109);
+            label2.Name = "label2";
+            label2.Size = new System.Drawing.Size(80, 17);
+            label2.TabIndex = 2;
+            label2.Text = "写超时时间：";
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Location = new System.Drawing.Point(50, 139);
+            label3.Name = "label3";
+            label3.Size = new System.Drawing.Size(68, 17);
+            label3.TabIndex = 1;
+            label3.Text = "重试次数：";
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new System.Drawing.Point(38, 76);
+            label1.Name = "label1";
+            label1.Size = new System.Drawing.Size(80, 17);
+            label1.TabIndex = 1;
+            label1.Text = "读超时时间：";
             // 
             // ChkNetDoHolding
             // 
-            this.ChkNetDoHolding.AutoSize = true;
-            this.ChkNetDoHolding.Location = new System.Drawing.Point(18, 34);
-            this.ChkNetDoHolding.Name = "ChkNetDoHolding";
-            this.ChkNetDoHolding.Size = new System.Drawing.Size(389, 21);
-            this.ChkNetDoHolding.TabIndex = 0;
-            this.ChkNetDoHolding.Text = "输出状态保持(1:True保持,2:Null重启保持断电不保持,3:False不保持)";
-            this.ChkNetDoHolding.ThreeState = true;
-            this.ChkNetDoHolding.UseVisualStyleBackColor = true;
-            this.ChkNetDoHolding.Click += new System.EventHandler(this.ChkNetDoHolding_Click);
+            ChkNetDoHolding.AutoSize = true;
+            ChkNetDoHolding.Location = new System.Drawing.Point(18, 34);
+            ChkNetDoHolding.Name = "ChkNetDoHolding";
+            ChkNetDoHolding.Size = new System.Drawing.Size(389, 21);
+            ChkNetDoHolding.TabIndex = 0;
+            ChkNetDoHolding.Text = "输出状态保持(1:True保持,2:Null重启保持断电不保持,3:False不保持)";
+            ChkNetDoHolding.ThreeState = true;
+            ChkNetDoHolding.UseVisualStyleBackColor = true;
+            ChkNetDoHolding.Click += ChkNetDoHolding_Click;
             // 
             // GrbNetDIArea
             // 
-            this.GrbNetDIArea.Controls.Add(this.LblNetDI8);
-            this.GrbNetDIArea.Controls.Add(this.PicNetDI8);
-            this.GrbNetDIArea.Controls.Add(this.LblNetDI7);
-            this.GrbNetDIArea.Controls.Add(this.PicNetDI7);
-            this.GrbNetDIArea.Controls.Add(this.LblNetDI6);
-            this.GrbNetDIArea.Controls.Add(this.PicNetDI6);
-            this.GrbNetDIArea.Controls.Add(this.LblNetDI5);
-            this.GrbNetDIArea.Controls.Add(this.PicNetDI5);
-            this.GrbNetDIArea.Controls.Add(this.LblNetDI4);
-            this.GrbNetDIArea.Controls.Add(this.PicNetDI4);
-            this.GrbNetDIArea.Controls.Add(this.LblNetDI3);
-            this.GrbNetDIArea.Controls.Add(this.PicNetDI3);
-            this.GrbNetDIArea.Controls.Add(this.LblNetDI2);
-            this.GrbNetDIArea.Controls.Add(this.PicNetDI2);
-            this.GrbNetDIArea.Controls.Add(this.LblNetDI1);
-            this.GrbNetDIArea.Controls.Add(this.PicNetDI1);
-            this.GrbNetDIArea.Dock = System.Windows.Forms.DockStyle.Top;
-            this.GrbNetDIArea.Location = new System.Drawing.Point(0, 119);
-            this.GrbNetDIArea.Name = "GrbNetDIArea";
-            this.GrbNetDIArea.Size = new System.Drawing.Size(510, 90);
-            this.GrbNetDIArea.TabIndex = 3;
-            this.GrbNetDIArea.TabStop = false;
-            this.GrbNetDIArea.Text = "IO输入信号";
+            GrbNetDIArea.Controls.Add(LblNetDI8);
+            GrbNetDIArea.Controls.Add(PicNetDI8);
+            GrbNetDIArea.Controls.Add(LblNetDI7);
+            GrbNetDIArea.Controls.Add(PicNetDI7);
+            GrbNetDIArea.Controls.Add(LblNetDI6);
+            GrbNetDIArea.Controls.Add(PicNetDI6);
+            GrbNetDIArea.Controls.Add(LblNetDI5);
+            GrbNetDIArea.Controls.Add(PicNetDI5);
+            GrbNetDIArea.Controls.Add(LblNetDI4);
+            GrbNetDIArea.Controls.Add(PicNetDI4);
+            GrbNetDIArea.Controls.Add(LblNetDI3);
+            GrbNetDIArea.Controls.Add(PicNetDI3);
+            GrbNetDIArea.Controls.Add(LblNetDI2);
+            GrbNetDIArea.Controls.Add(PicNetDI2);
+            GrbNetDIArea.Controls.Add(LblNetDI1);
+            GrbNetDIArea.Controls.Add(PicNetDI1);
+            GrbNetDIArea.Dock = System.Windows.Forms.DockStyle.Top;
+            GrbNetDIArea.Location = new System.Drawing.Point(0, 119);
+            GrbNetDIArea.Name = "GrbNetDIArea";
+            GrbNetDIArea.Size = new System.Drawing.Size(510, 90);
+            GrbNetDIArea.TabIndex = 3;
+            GrbNetDIArea.TabStop = false;
+            GrbNetDIArea.Text = "IO输入信号";
             // 
             // PicNetDI2
             // 
-            this.PicNetDI2.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.PicNetDI2.Image = global::TestHardwareDemo.WinForm.Properties.Resources.usr_io808_diclose;
-            this.PicNetDI2.Location = new System.Drawing.Point(94, 31);
-            this.PicNetDI2.Name = "PicNetDI2";
-            this.PicNetDI2.Size = new System.Drawing.Size(25, 25);
-            this.PicNetDI2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.PicNetDI2.TabIndex = 2;
-            this.PicNetDI2.TabStop = false;
-            this.PicNetDI2.Click += new System.EventHandler(this.PicNetDI_Click);
+            PicNetDI2.Cursor = System.Windows.Forms.Cursors.Hand;
+            PicNetDI2.Image = Properties.Resources.usr_io808_diclose;
+            PicNetDI2.Location = new System.Drawing.Point(94, 31);
+            PicNetDI2.Name = "PicNetDI2";
+            PicNetDI2.Size = new System.Drawing.Size(25, 25);
+            PicNetDI2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            PicNetDI2.TabIndex = 2;
+            PicNetDI2.TabStop = false;
+            PicNetDI2.Click += PicNetDI_Click;
             // 
             // LblNetDI1
             // 
-            this.LblNetDI1.AutoSize = true;
-            this.LblNetDI1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.LblNetDI1.Location = new System.Drawing.Point(29, 64);
-            this.LblNetDI1.Name = "LblNetDI1";
-            this.LblNetDI1.Size = new System.Drawing.Size(33, 17);
-            this.LblNetDI1.TabIndex = 1;
-            this.LblNetDI1.Text = "DI-1";
+            LblNetDI1.AutoSize = true;
+            LblNetDI1.Cursor = System.Windows.Forms.Cursors.Hand;
+            LblNetDI1.Location = new System.Drawing.Point(29, 64);
+            LblNetDI1.Name = "LblNetDI1";
+            LblNetDI1.Size = new System.Drawing.Size(33, 17);
+            LblNetDI1.TabIndex = 1;
+            LblNetDI1.Text = "DI-1";
             // 
             // PicNetDI1
             // 
-            this.PicNetDI1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.PicNetDI1.Image = global::TestHardwareDemo.WinForm.Properties.Resources.usr_io808_diclose;
-            this.PicNetDI1.Location = new System.Drawing.Point(33, 31);
-            this.PicNetDI1.Name = "PicNetDI1";
-            this.PicNetDI1.Size = new System.Drawing.Size(25, 25);
-            this.PicNetDI1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.PicNetDI1.TabIndex = 0;
-            this.PicNetDI1.TabStop = false;
-            this.PicNetDI1.Click += new System.EventHandler(this.PicNetDI_Click);
+            PicNetDI1.Cursor = System.Windows.Forms.Cursors.Hand;
+            PicNetDI1.Image = Properties.Resources.usr_io808_diclose;
+            PicNetDI1.Location = new System.Drawing.Point(33, 31);
+            PicNetDI1.Name = "PicNetDI1";
+            PicNetDI1.Size = new System.Drawing.Size(25, 25);
+            PicNetDI1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            PicNetDI1.TabIndex = 0;
+            PicNetDI1.TabStop = false;
+            PicNetDI1.Click += PicNetDI_Click;
             // 
             // GrbNetDoArea
             // 
-            this.GrbNetDoArea.ContextMenuStrip = this.CmsrNetDoStatus;
-            this.GrbNetDoArea.Controls.Add(this.LblNetDO7);
-            this.GrbNetDoArea.Controls.Add(this.PicNetDO7);
-            this.GrbNetDoArea.Controls.Add(this.LblNetDO6);
-            this.GrbNetDoArea.Controls.Add(this.PicNetDO1);
-            this.GrbNetDoArea.Controls.Add(this.LblNetDO5);
-            this.GrbNetDoArea.Controls.Add(this.PicNetDO2);
-            this.GrbNetDoArea.Controls.Add(this.LblNetDO4);
-            this.GrbNetDoArea.Controls.Add(this.PicNetDO5);
-            this.GrbNetDoArea.Controls.Add(this.LblNetDO3);
-            this.GrbNetDoArea.Controls.Add(this.PicNetDO6);
-            this.GrbNetDoArea.Controls.Add(this.LblNetDO2);
-            this.GrbNetDoArea.Controls.Add(this.PicNetDO8);
-            this.GrbNetDoArea.Controls.Add(this.LblNetDO1);
-            this.GrbNetDoArea.Controls.Add(this.PicNetDO4);
-            this.GrbNetDoArea.Controls.Add(this.LblNetDO8);
-            this.GrbNetDoArea.Controls.Add(this.PicNetDO3);
-            this.GrbNetDoArea.Dock = System.Windows.Forms.DockStyle.Top;
-            this.GrbNetDoArea.Location = new System.Drawing.Point(0, 0);
-            this.GrbNetDoArea.Name = "GrbNetDoArea";
-            this.GrbNetDoArea.Size = new System.Drawing.Size(510, 119);
-            this.GrbNetDoArea.TabIndex = 2;
-            this.GrbNetDoArea.TabStop = false;
-            this.GrbNetDoArea.Text = "IO输入输出信号";
+            GrbNetDoArea.ContextMenuStrip = CmsrNetDoStatus;
+            GrbNetDoArea.Controls.Add(LblNetDO7);
+            GrbNetDoArea.Controls.Add(PicNetDO7);
+            GrbNetDoArea.Controls.Add(LblNetDO6);
+            GrbNetDoArea.Controls.Add(PicNetDO1);
+            GrbNetDoArea.Controls.Add(LblNetDO5);
+            GrbNetDoArea.Controls.Add(PicNetDO2);
+            GrbNetDoArea.Controls.Add(LblNetDO4);
+            GrbNetDoArea.Controls.Add(PicNetDO5);
+            GrbNetDoArea.Controls.Add(LblNetDO3);
+            GrbNetDoArea.Controls.Add(PicNetDO6);
+            GrbNetDoArea.Controls.Add(LblNetDO2);
+            GrbNetDoArea.Controls.Add(PicNetDO8);
+            GrbNetDoArea.Controls.Add(LblNetDO1);
+            GrbNetDoArea.Controls.Add(PicNetDO4);
+            GrbNetDoArea.Controls.Add(LblNetDO8);
+            GrbNetDoArea.Controls.Add(PicNetDO3);
+            GrbNetDoArea.Dock = System.Windows.Forms.DockStyle.Top;
+            GrbNetDoArea.Location = new System.Drawing.Point(0, 0);
+            GrbNetDoArea.Name = "GrbNetDoArea";
+            GrbNetDoArea.Size = new System.Drawing.Size(510, 119);
+            GrbNetDoArea.TabIndex = 2;
+            GrbNetDoArea.TabStop = false;
+            GrbNetDoArea.Text = "IO输入输出信号";
             // 
             // CmsrNetDoStatus
             // 
-            this.CmsrNetDoStatus.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.TsrmPicNetDO1,
-            this.TsrmPicNetDO2,
-            this.TsrmPicNetDO3,
-            this.TsrmPicNetDO4,
-            this.TsrmPicNetDO5,
-            this.TsrmPicNetDO6,
-            this.TsrmPicNetDO7,
-            this.TsrmPicNetDO8});
-            this.CmsrNetDoStatus.Name = "CmsrNetDoStatus";
-            this.CmsrNetDoStatus.Size = new System.Drawing.Size(156, 180);
+            CmsrNetDoStatus.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { TsrmPicNetDO1, TsrmPicNetDO2, TsrmPicNetDO3, TsrmPicNetDO4, TsrmPicNetDO5, TsrmPicNetDO6, TsrmPicNetDO7, TsrmPicNetDO8 });
+            CmsrNetDoStatus.Name = "CmsrNetDoStatus";
+            CmsrNetDoStatus.Size = new System.Drawing.Size(156, 180);
             // 
             // TsrmPicNetDO1
             // 
-            this.TsrmPicNetDO1.Name = "TsrmPicNetDO1";
-            this.TsrmPicNetDO1.Size = new System.Drawing.Size(155, 22);
-            this.TsrmPicNetDO1.Text = "设置重置DO-1";
-            this.TsrmPicNetDO1.Click += new System.EventHandler(this.PicNetDo_DoubleClick);
+            TsrmPicNetDO1.Name = "TsrmPicNetDO1";
+            TsrmPicNetDO1.Size = new System.Drawing.Size(155, 22);
+            TsrmPicNetDO1.Text = "设置重置DO-1";
+            TsrmPicNetDO1.Click += PicNetDo_DoubleClick;
             // 
             // USRIO808EWRv2211
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.PnlContent);
-            this.Name = "USRIO808EWRv2211";
-            this.Size = new System.Drawing.Size(960, 770);
-            this.Load += new System.EventHandler(this.USRIO808EWRv2211_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.PicNetDI8)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PicNetDI7)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PicNetDI6)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PicNetDI5)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PicNetDI4)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PicNetDI3)).EndInit();
-            this.CmsrLogger.ResumeLayout(false);
-            this.GrbTxtLogger.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.PicNetDO7)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PicNetDO1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PicNetDO2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PicNetDO5)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PicNetDO6)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PicNetDO8)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PicNetDO4)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PicNetDO3)).EndInit();
-            this.PnlContent.ResumeLayout(false);
-            this.SplContent.Panel1.ResumeLayout(false);
-            this.SplContent.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.SplContent)).EndInit();
-            this.SplContent.ResumeLayout(false);
-            this.PnlNetControl.ResumeLayout(false);
-            this.SplNetControl.Panel1.ResumeLayout(false);
-            this.SplNetControl.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.SplNetControl)).EndInit();
-            this.SplNetControl.ResumeLayout(false);
-            this.GrbNetConfigArea.ResumeLayout(false);
-            this.PngNetConfig.ResumeLayout(false);
-            this.PngNetConfig.PerformLayout();
-            this.PnlNetConfigs.ResumeLayout(false);
-            this.PnlNetConfigs.PerformLayout();
-            this.GrbNetInfoContent.ResumeLayout(false);
-            this.GrbNetInfoContent.PerformLayout();
-            this.GrbNetDIArea.ResumeLayout(false);
-            this.GrbNetDIArea.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.PicNetDI2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PicNetDI1)).EndInit();
-            this.GrbNetDoArea.ResumeLayout(false);
-            this.GrbNetDoArea.PerformLayout();
-            this.CmsrNetDoStatus.ResumeLayout(false);
-            this.ResumeLayout(false);
-
+            AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            Controls.Add(PnlContent);
+            Name = "USRIO808EWRv2211";
+            Size = new System.Drawing.Size(960, 770);
+            Load += USRIO808EWRv2211_Load;
+            ((System.ComponentModel.ISupportInitialize)PicNetDI8).EndInit();
+            ((System.ComponentModel.ISupportInitialize)PicNetDI7).EndInit();
+            ((System.ComponentModel.ISupportInitialize)PicNetDI6).EndInit();
+            ((System.ComponentModel.ISupportInitialize)PicNetDI5).EndInit();
+            ((System.ComponentModel.ISupportInitialize)PicNetDI4).EndInit();
+            ((System.ComponentModel.ISupportInitialize)PicNetDI3).EndInit();
+            CmsrLogger.ResumeLayout(false);
+            GrbTxtLogger.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)PicNetDO7).EndInit();
+            ((System.ComponentModel.ISupportInitialize)PicNetDO1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)PicNetDO2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)PicNetDO5).EndInit();
+            ((System.ComponentModel.ISupportInitialize)PicNetDO6).EndInit();
+            ((System.ComponentModel.ISupportInitialize)PicNetDO8).EndInit();
+            ((System.ComponentModel.ISupportInitialize)PicNetDO4).EndInit();
+            ((System.ComponentModel.ISupportInitialize)PicNetDO3).EndInit();
+            PnlContent.ResumeLayout(false);
+            SplContent.Panel1.ResumeLayout(false);
+            SplContent.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)SplContent).EndInit();
+            SplContent.ResumeLayout(false);
+            PnlNetControl.ResumeLayout(false);
+            SplNetControl.Panel1.ResumeLayout(false);
+            SplNetControl.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)SplNetControl).EndInit();
+            SplNetControl.ResumeLayout(false);
+            GrbNetConfigArea.ResumeLayout(false);
+            PngNetConfig.ResumeLayout(false);
+            PngNetConfig.PerformLayout();
+            PnlNetConfigs.ResumeLayout(false);
+            PnlNetConfigs.PerformLayout();
+            GrbNetInfoContent.ResumeLayout(false);
+            GrbNetInfoContent.PerformLayout();
+            GrbNetDIArea.ResumeLayout(false);
+            GrbNetDIArea.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)PicNetDI2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)PicNetDI1).EndInit();
+            GrbNetDoArea.ResumeLayout(false);
+            GrbNetDoArea.PerformLayout();
+            CmsrNetDoStatus.ResumeLayout(false);
+            ResumeLayout(false);
         }
 
         #endregion
@@ -1004,5 +1078,13 @@
         private System.Windows.Forms.ToolStripMenuItem TsrmPicNetDO1;
         private System.Windows.Forms.Button BtnNetConfigRemove;
         private System.Windows.Forms.Button BtnNetConfigConnect;
+        private System.Windows.Forms.TextBox TxtNetWriteTimeout;
+        private System.Windows.Forms.TextBox TxtNetRetries;
+        private System.Windows.Forms.TextBox TxtNetRetryWaitout;
+        private System.Windows.Forms.TextBox TxtNetReadTimeout;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label1;
     }
 }

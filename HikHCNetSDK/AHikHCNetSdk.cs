@@ -2152,6 +2152,7 @@ namespace System.Data.HikHCNetSDK
         #endregion
 
         static Lazy<IHikHCNetSdkProxy> _netDevSdk = new Lazy<IHikHCNetSdkProxy>(() => new HikHCNetSdkLoader(), true);
+        static Lazy<IHikPlayCtrlSdkProxy> _playCtrlSdk = new Lazy<IHikPlayCtrlSdkProxy>(() => HikPlayCtrlSdkDller.Instance, true);
         /// <summary>
         /// 静态构造
         /// </summary>
@@ -2255,6 +2256,18 @@ namespace System.Data.HikHCNetSDK
             if (!File.Exists(BaseDllFullName))
             { SdkFileComponent.TryCopyDirectory(DllFullPath, BaseDllFullPath); }
             return HikHCNetSdkDller.Instance;
+        }
+        /// <summary>
+        /// 创建PlayM4的SDK代理
+        /// </summary>
+        /// <param name="isBase"></param>
+        /// <returns></returns>
+        public static IHikPlayCtrlSdkProxy CreatePlayM4(bool isBase = false)
+        {
+            if (!isBase) { return _playCtrlSdk.Value; }
+            if (!File.Exists(BaseDllFullName))
+            { SdkFileComponent.TryCopyDirectory(DllFullPath, BaseDllFullPath); }
+            return HikPlayCtrlSdkDller.Instance;
         }
     }
 }

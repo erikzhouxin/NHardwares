@@ -13,7 +13,7 @@ namespace System.Data.VzClientSDK
     /// <param name="pUserData"></param>
     /// <param name="eNotify"></param>
     /// <param name="pStrDetail"></param>
-    public delegate void VZLPRC_COMMON_NOTIFY_CALLBACK(int handle, IntPtr pUserData, VZ_LPRC_COMMON_NOTIFY eNotify, string pStrDetail);
+    public delegate void VZLPRC_COMMON_NOTIFY_CALLBACK(IntPtr handle, IntPtr pUserData, VZ_LPRC_COMMON_NOTIFY eNotify, string pStrDetail);
     /// <summary>
     /// 车牌信息回调
     /// </summary>
@@ -25,7 +25,7 @@ namespace System.Data.VzClientSDK
     /// <param name="pImgFull"></param>
     /// <param name="pImgPlateClip"></param>
     /// <returns></returns>
-    public delegate int VZLPRC_PLATE_INFO_CALLBACK(int handle, IntPtr pUserData,
+    public delegate int VZLPRC_PLATE_INFO_CALLBACK(IntPtr handle, IntPtr pUserData,
                                                 IntPtr pResult, uint uNumPlates,
                                                 VZ_LPRC_RESULT_TYPE eResultType,
                                                 IntPtr pImgFull,
@@ -39,7 +39,7 @@ namespace System.Data.VzClientSDK
     *  @return 0表示成功，-1表示失败
     *  @ingroup group_callback
     */
-    public delegate void VZLPRC_VIDEO_FRAME_CALLBACK(int handle, IntPtr pUserData, ref VzYUV420P pFrame);
+    public delegate void VZLPRC_VIDEO_FRAME_CALLBACK(IntPtr handle, IntPtr pUserData, ref VzYUV420P pFrame);
 
     /**
     *  @brief 通过该回调函数获得透明通道接收的数据
@@ -50,7 +50,7 @@ namespace System.Data.VzClientSDK
     *  @param  [IN] pUserData	回调函数上下文
     *  @ingroup group_global
     */
-    public delegate int VZDEV_SERIAL_RECV_DATA_CALLBACK(int nSerialHandle, IntPtr pRecvData, int uRecvSize, IntPtr pUserData);
+    public delegate int VZDEV_SERIAL_RECV_DATA_CALLBACK(IntPtr nSerialHandle, IntPtr pRecvData, int uRecvSize, IntPtr pUserData);
     /// <summary>
     /// 查询回调
     /// </summary>
@@ -81,7 +81,7 @@ namespace System.Data.VzClientSDK
     /// <param name="handle"></param>
     /// <param name="pUserData"></param>
     /// <param name="pFrame"></param>
-    public delegate void VZLPRC_VIDEO_FRAME_CALLBACK_EX(int handle, IntPtr pUserData, ref VZ_LPRC_IMAGE_INFO pFrame);
+    public delegate void VZLPRC_VIDEO_FRAME_CALLBACK_EX(IntPtr handle, IntPtr pUserData, ref VZ_LPRC_IMAGE_INFO pFrame);
 
     /**
     *  @brief 喊话广播消息
@@ -89,7 +89,7 @@ namespace System.Data.VzClientSDK
     *  @param [OUT] error_msg	错误信息
     *  @param [OUT] pUserData 用户自定义数据
     */
-    public delegate void VZLPRC_REQUEST_TALK_CALLBACK(int handle, int state, string error_msg, IntPtr pUserData);
+    public delegate void VZLPRC_REQUEST_TALK_CALLBACK(IntPtr handle, int state, string error_msg, IntPtr pUserData);
 
     /**
     *  @brief GPIO输入回调函数
@@ -97,7 +97,7 @@ namespace System.Data.VzClientSDK
     *  @param [IN] nVal	GPIO输入值
     *  @param [IN] pUserData 用户自定义数据
     */
-    public delegate void VZLPRC_GPIO_RECV_CALLBACK(int handle, int nGPIOId, int nVal, IntPtr pUserData);
+    public delegate void VZLPRC_GPIO_RECV_CALLBACK(IntPtr handle, int nGPIOId, int nVal, IntPtr pUserData);
 
     internal class DCreater
     {
@@ -136,7 +136,7 @@ namespace System.Data.VzClientSDK
         *  @param [IN] pStrPassword 访问设备所需密码
         *  @return 返回设备的操作句柄，当打开失败时，返回-1
         */
-        public delegate int VzLPRClient_Open(string pStrIP, ushort wPort, string pStrUserName, string pStrPassword);
+        public delegate IntPtr VzLPRClient_Open(string pStrIP, ushort wPort, string pStrUserName, string pStrPassword);
 
         /**
          *  @brief 打开一个设备
@@ -149,14 +149,14 @@ namespace System.Data.VzClientSDK
          *  @param  [IN] sn 设备序列号
          *  @return 返回设备的操作句柄，当打开失败时，返回-1
          */
-        public delegate int VzLPRClient_OpenV2(string pStrIP, ushort wPort, string pStrUserName, string pStrPassword, ushort wRtspPort, int network_type, string sn);
+        public delegate IntPtr VzLPRClient_OpenV2(string pStrIP, ushort wPort, string pStrUserName, string pStrPassword, ushort wRtspPort, int network_type, string sn);
 
         /**
         *  @brief 关闭一个设备
         *  @param  [IN] handle 由VzLPRClient_Open函数获得的句柄
         *  @return 0表示成功，-1表示失败
         */
-        public delegate int VzLPRClient_Close(int handle);
+        public delegate int VzLPRClient_Close(IntPtr handle);
 
         /**
         *  @brief 通过IP地址关闭一个设备
@@ -171,7 +171,7 @@ namespace System.Data.VzClientSDK
         *  @param[IN/OUT] pStatus 输入获取状态的变量地址，输出内容为 1已连上，0未连上
         *  @return 0表示成功，-1表示失败
         */
-        public delegate int VzLPRClient_IsConnected(int handle, ref byte pStatus);
+        public delegate int VzLPRClient_IsConnected(IntPtr handle, ref byte pStatus);
 
         /**
         *  @brief 根据句柄获取设备的IP
@@ -180,7 +180,7 @@ namespace System.Data.VzClientSDK
         *  @param [IN] max_count IP传入长度
         *  @return 返回值为0表示成功，返回其他值表示失败。
         */
-        public delegate int VzLPRClient_GetDeviceIP(int handle, ref byte ip, int max_count);
+        public delegate int VzLPRClient_GetDeviceIP(IntPtr handle, ref byte ip, int max_count);
 
         /**
         *  @brief 播放实时视频
@@ -188,14 +188,14 @@ namespace System.Data.VzClientSDK
         *  @param  [IN] hWnd 窗口的句柄
         *  @return 播放句柄，小于0表示失败
         */
-        public delegate int VzLPRClient_StartRealPlay(int handle, IntPtr hWnd);
+        public delegate IntPtr VzLPRClient_StartRealPlay(IntPtr handle, IntPtr hWnd);
 
         /**
         *  @brief 停止正在播放的窗口上的实时视频
         *  @param  [IN] hWnd 窗口的句柄
         *  @return 0表示成功，-1表示失败
         */
-        public delegate int VzLPRClient_StopRealPlay(int hRealHandle);
+        public delegate int VzLPRClient_StopRealPlay(IntPtr hRealHandle);
 
         /**
         *  @brief 设置识别结果的回调函数
@@ -205,7 +205,7 @@ namespace System.Data.VzClientSDK
         *  @param  [IN] bEnableImage 指定识别结果的回调是否需要包含截图信息：1为需要，0为不需要
         *  @return 0表示成功，-1表示失败
         */
-        public delegate int VzLPRClient_SetPlateInfoCallBack(int handle, VZLPRC_PLATE_INFO_CALLBACK func, IntPtr pUserData, int bEnableImage);
+        public delegate int VzLPRClient_SetPlateInfoCallBack(IntPtr handle, VZLPRC_PLATE_INFO_CALLBACK func, IntPtr pUserData, int bEnableImage);
 
         /**
         *  @brief 设置实时图像数据的回调函数
@@ -215,14 +215,14 @@ namespace System.Data.VzClientSDK
         *  @return 0表示成功，-1表示失败
         *  @ingroup group_device
         */
-        public delegate int VzLPRClient_SetVideoFrameCallBack(int handle, VZLPRC_VIDEO_FRAME_CALLBACK pFunc, IntPtr pUserData);
+        public delegate int VzLPRClient_SetVideoFrameCallBack(IntPtr handle, VZLPRC_VIDEO_FRAME_CALLBACK pFunc, IntPtr pUserData);
 
         /**
         *  @brief 发送软件触发信号，强制处理当前时刻的数据并输出结果
         *  @param  [IN] handle 由VzLPRClient_Open函数获得的句柄
         *  @return 0表示成功，-1表示失败
         */
-        public delegate int VzLPRClient_ForceTrigger(int handle);
+        public delegate int VzLPRClient_ForceTrigger(IntPtr handle);
 
         /**
         *  @brief 设置虚拟线圈
@@ -230,7 +230,7 @@ namespace System.Data.VzClientSDK
         *  @param  [IN] pVirtualLoops 虚拟线圈的结构体指针
         *  @return 0表示成功，-1表示失败
         */
-        public delegate int VzLPRClient_SetVirtualLoop(int handle, ref VZ_LPRC_VIRTUAL_LOOPS pVirtualLoops);
+        public delegate int VzLPRClient_SetVirtualLoop(IntPtr handle, ref VZ_LPRC_VIRTUAL_LOOPS pVirtualLoops);
 
         /**
         *  @brief 获取已设置的虚拟线圈
@@ -238,7 +238,7 @@ namespace System.Data.VzClientSDK
         *  @param  [IN] pVirtualLoops 虚拟线圈的结构体指针
         *  @return 0表示成功，-1表示失败
         */
-        public delegate int VzLPRClient_GetVirtualLoop(int handle, ref VZ_LPRC_VIRTUAL_LOOPS pVirtualLoops);
+        public delegate int VzLPRClient_GetVirtualLoop(IntPtr handle, ref VZ_LPRC_VIRTUAL_LOOPS pVirtualLoops);
 
         /**
         *  @brief 获取已设置的识别区域
@@ -247,7 +247,7 @@ namespace System.Data.VzClientSDK
         *  @return 0表示成功，-1表示失败
         *  @ingroup group_device
         */
-        public delegate int VzLPRClient_GetRegionOfInterestEx(int handle, ref VZ_LPRC_ROI_EX pROI);
+        public delegate int VzLPRClient_GetRegionOfInterestEx(IntPtr handle, ref VZ_LPRC_ROI_EX pROI);
 
         /**
         *  @brief 获取已设置的预设省份
@@ -255,7 +255,7 @@ namespace System.Data.VzClientSDK
         *  @param  [IN] pProvInfo 预设省份信息指针
         *  @return 0表示成功，-1表示失败
         */
-        public delegate int VzLPRClient_GetSupportedProvinces(int handle, ref VZ_LPRC_PROVINCE_INFO pProvInfo);
+        public delegate int VzLPRClient_GetSupportedProvinces(IntPtr handle, ref VZ_LPRC_PROVINCE_INFO pProvInfo);
 
         /**
         *  @brief 设置预设省份
@@ -263,7 +263,7 @@ namespace System.Data.VzClientSDK
         *  @param  [IN] nIndex 设置预设省份的序号，序号需要参考VZ_LPRC_PROVINCE_INFO::strProvinces中的顺序，从0开始，如果小于0，则表示不设置预设省份
         *  @return 0表示成功，-1表示失败
         */
-        public delegate int VzLPRClient_PresetProvinceIndex(int handle, int nIndex);
+        public delegate int VzLPRClient_PresetProvinceIndex(IntPtr handle, int nIndex);
 
         /**
         *  @brief 将图像保存为JPEG到指定路径
@@ -283,7 +283,7 @@ namespace System.Data.VzClientSDK
         *  @return 返回值为0表示成功，返回-1表示失败
         *  @ingroup group_device
         */
-        public delegate int VzLPRClient_GetSerialNumber(int handle, ref VZ_DEV_SERIAL_NUM pSN);
+        public delegate int VzLPRClient_GetSerialNumber(IntPtr handle, ref VZ_DEV_SERIAL_NUM pSN);
 
         /**
         *  @brief 保存正在播放的视频的当前帧的截图到指定路径
@@ -294,7 +294,7 @@ namespace System.Data.VzClientSDK
         *  @note   使用的文件名中的路径需要存在
         *  @ingroup group_device
         */
-        public delegate int VzLPRClient_GetSnapShootToJpeg2(int nPlayHandle, string pFullPathName, int nQuality);
+        public delegate int VzLPRClient_GetSnapShootToJpeg2(IntPtr nPlayHandle, string pFullPathName, int nQuality);
 
         /// <summary>
         /// 保存抓图数据到Jpeg文件
@@ -302,7 +302,7 @@ namespace System.Data.VzClientSDK
         /// <param name="handle">由VzLPRClient_Open函数获得的句柄</param>
         /// <param name="pFullPathName">图片路径</param>
         /// <returns>返回值为0表示成功，返回其他值表示失败</returns>
-        public delegate int VzLPRClient_SaveSnapImageToJpeg(int handle, string pFullPathName);
+        public delegate int VzLPRClient_SaveSnapImageToJpeg(IntPtr handle, string pFullPathName);
         /**
         *  @brief 开启透明通道
         *  @param  [IN] handle 由VzLPRClient_Open函数获得的句柄
@@ -312,7 +312,7 @@ namespace System.Data.VzClientSDK
         *  @return 返回透明通道句柄，0表示失败
         *  @ingroup group_device
         */
-        public delegate int VzLPRClient_SerialStart(int handle, int nSerialPort, VZDEV_SERIAL_RECV_DATA_CALLBACK func, IntPtr pUserData);
+        public delegate IntPtr VzLPRClient_SerialStart(IntPtr handle, int nSerialPort, VZDEV_SERIAL_RECV_DATA_CALLBACK func, IntPtr pUserData);
 
         /**
         *  @brief 透明通道发送数据
@@ -322,7 +322,7 @@ namespace System.Data.VzClientSDK
         *  @return 0表示成功，其他值表示失败
         *  @ingroup group_device
         */
-        public delegate int VzLPRClient_SerialSend(int nSerialHandle, IntPtr pData, int uSizeData);
+        public delegate int VzLPRClient_SerialSend(IntPtr nSerialHandle, IntPtr pData, int uSizeData);
 
         /**
         *  @brief 透明通道停止发送数据
@@ -330,7 +330,7 @@ namespace System.Data.VzClientSDK
         *  @return 0表示成功，其他值表示失败
         *  @ingroup group_device
         */
-        public delegate int VzLPRClient_SerialStop(int nSerialHandle);
+        public delegate int VzLPRClient_SerialStop(IntPtr nSerialHandle);
 
         /**
         *  @brief 设置IO输出的状态
@@ -340,7 +340,7 @@ namespace System.Data.VzClientSDK
         *  @return 0表示成功，-1表示失败
         *  @ingroup group_device
         */
-        public delegate int VzLPRClient_SetIOOutput(int handle, int uChnId, int nOutput);
+        public delegate int VzLPRClient_SetIOOutput(IntPtr handle, int uChnId, int nOutput);
 
         /**
         *  @brief 获取IO输出的状态
@@ -350,7 +350,7 @@ namespace System.Data.VzClientSDK
         *  @return 0表示成功，-1表示失败
         *  @ingroup group_device
         */
-        public delegate int VzLPRClient_GetIOOutput(int handle, int uChnId, ref int pOutput);
+        public delegate int VzLPRClient_GetIOOutput(IntPtr handle, int uChnId, ref int pOutput);
 
         /**
         *  @brief 获取GPIO的状态
@@ -360,7 +360,7 @@ namespace System.Data.VzClientSDK
         *  @return 返回值为0表示成功，返回-1表示失败
         *  @ingroup group_device
         */
-        public delegate int VzLPRClient_GetGPIOValue(int handle, int gpioIn, IntPtr value);
+        public delegate int VzLPRClient_GetGPIOValue(IntPtr handle, int gpioIn, IntPtr value);
 
         /**
         *  @brief 根据ID获取车牌图片
@@ -371,7 +371,7 @@ namespace System.Data.VzClientSDK
         *  @return 返回值为0表示成功，返回-1表示失败
         *  @ingroup group_device
         */
-        public delegate int VzLPRClient_LoadImageById(int handle, int id, IntPtr pdata, IntPtr size);
+        public delegate int VzLPRClient_LoadImageById(IntPtr handle, int id, IntPtr pdata, IntPtr size);
 
         /**
         *  @brief 向白名单表导入客户和车辆记录
@@ -382,7 +382,7 @@ namespace System.Data.VzClientSDK
         *  @return 0表示成功，-1表示失败
         *  @ingroup group_database
         */
-        public delegate int VzLPRClient_WhiteListImportRows(int handle,
+        public delegate int VzLPRClient_WhiteListImportRows(IntPtr handle,
                                                           uint rowcount,
                                                           ref VZ_LPR_WLIST_ROW pRowDatas,
                                                           ref VZ_LPR_WLIST_IMPORT_RESULT pResults);
@@ -394,7 +394,7 @@ namespace System.Data.VzClientSDK
         *  @return 0表示成功，-1表示失败
         *  @ingroup group_database
         */
-        public delegate int VzLPRClient_WhiteListDeleteVehicle(int handle, string strPlateID);
+        public delegate int VzLPRClient_WhiteListDeleteVehicle(IntPtr handle, string strPlateID);
 
         /**
         *  @brief 清空数据库客户信息和车辆信息
@@ -402,7 +402,7 @@ namespace System.Data.VzClientSDK
         *  @return 0表示成功，-1表示失败
         *  @ingroup group_database
         */
-        public delegate int VzLPRClient_WhiteListClearCustomersAndVehicles(int handle);
+        public delegate int VzLPRClient_WhiteListClearCustomersAndVehicles(IntPtr handle);
 
         /**
         *  @brief 获取白名单表中所有车辆信息记录的条数
@@ -410,7 +410,7 @@ namespace System.Data.VzClientSDK
         *  @return >=0表示所有车辆信息记录的总数，-1表示失败
         *  @ingroup group_database
         */
-        public delegate int VzLPRClient_WhiteListGetVehicleCount(int handle, ref uint pCount,
+        public delegate int VzLPRClient_WhiteListGetVehicleCount(IntPtr handle, ref uint pCount,
                                                          ref VZ_LPR_WLIST_SEARCH_WHERE pSearchWhere);
 
         /**
@@ -420,7 +420,7 @@ namespace System.Data.VzClientSDK
         *  @return 0表示成功，-1表示失败
         *  @ingroup group_database
         */
-        public delegate int VzLPRClient_WhiteListLoadVehicle(int handle,
+        public delegate int VzLPRClient_WhiteListLoadVehicle(IntPtr handle,
                                                     ref VZ_LPR_WLIST_LOAD_CONDITIONS pLoadCondition);
 
         /**
@@ -431,7 +431,7 @@ namespace System.Data.VzClientSDK
         *  @return 0表示成功，-1表示失败
         *  @ingroup group_database
         */
-        public delegate int VzLPRClient_WhiteListSetQueryCallBack(int handle, VZLPRC_WLIST_QUERY_CALLBACK func, IntPtr pUserData);
+        public delegate int VzLPRClient_WhiteListSetQueryCallBack(IntPtr handle, VZLPRC_WLIST_QUERY_CALLBACK func, IntPtr pUserData);
 
         /**
         *  @brief 往白名单表中更新一个车辆信息
@@ -440,7 +440,7 @@ namespace System.Data.VzClientSDK
         *  @return 0表示成功，-1表示失败
         *  @ingroup group_database
         */
-        public delegate int VzLPRClient_WhiteListUpdateVehicleByID(int handle, ref VZ_LPR_WLIST_VEHICLE pVehicle);
+        public delegate int VzLPRClient_WhiteListUpdateVehicleByID(IntPtr handle, ref VZ_LPR_WLIST_VEHICLE pVehicle);
 
         /**
         *  @brief 查询白名单表客户和车辆记录条数
@@ -450,7 +450,7 @@ namespace System.Data.VzClientSDK
         *  @return 0表示成功，-1表示失败
         *  @ingroup group_database
         */
-        public delegate int VzLPRClient_WhiteListGetRowCount(int handle, ref int count, ref VZ_LPR_WLIST_SEARCH_WHERE pSearchWhere);
+        public delegate int VzLPRClient_WhiteListGetRowCount(IntPtr handle, ref int count, ref VZ_LPR_WLIST_SEARCH_WHERE pSearchWhere);
 
         /**
         *  @brief 设置LED控制模式
@@ -459,7 +459,7 @@ namespace System.Data.VzClientSDK
         *  @return 返回值为0表示成功，返回其他值表示失败
         *  @ingroup group_device
         */
-        public delegate int VzLPRClient_SetLEDLightControlMode(int handle, VZ_LED_CTRL eCtrl);
+        public delegate int VzLPRClient_SetLEDLightControlMode(IntPtr handle, VZ_LED_CTRL eCtrl);
         /**
         *  @brief 获取LED当前亮度等级和最大亮度等级
         *  @param [IN] handle 由VzLPRClient_Open函数获得的句柄
@@ -468,7 +468,7 @@ namespace System.Data.VzClientSDK
         *  @return 0表示成功，其他值表示失败
         *  @ingroup group_device
         */
-        public delegate int VzLPRClient_GetLEDLightStatus(int handle, ref int pLevelNow, ref int pLevelMax);
+        public delegate int VzLPRClient_GetLEDLightStatus(IntPtr handle, ref int pLevelNow, ref int pLevelMax);
 
         /**
         *  @brief 设置LED亮度等级
@@ -477,7 +477,7 @@ namespace System.Data.VzClientSDK
         *  @return 0表示成功，其他值表示失败
         *  @ingroup group_device
         */
-        public delegate int VzLPRClient_SetLEDLightLevel(int handle, int nLevel);
+        public delegate int VzLPRClient_SetLEDLightLevel(IntPtr handle, int nLevel);
 
         /**
         *  @brief 开始录像功能
@@ -486,7 +486,7 @@ namespace System.Data.VzClientSDK
         *  @return 返回值为0表示成功，返回-1表示失败
         *  @ingroup group_device
         */
-        public delegate int VzLPRClient_SaveRealData(int handle, string sFileName);
+        public delegate int VzLPRClient_SaveRealData(IntPtr handle, string sFileName);
 
         /**
         *  @brief 停止录像
@@ -494,7 +494,7 @@ namespace System.Data.VzClientSDK
         *  @return 返回值为0表示成功，返回-1表示失败
         *  @ingroup group_device
         */
-        public delegate int VzLPRClient_StopSaveRealData(int handle);
+        public delegate int VzLPRClient_StopSaveRealData(IntPtr handle);
 
         /**
         *  @brief 开启脱机功能
@@ -503,7 +503,7 @@ namespace System.Data.VzClientSDK
         *   @return 返回值为0表示成功，返回-1表示失败
         *  @ingroup group_device
         */
-        public delegate int VzLPRClient_SetOfflineCheck(int handle);
+        public delegate int VzLPRClient_SetOfflineCheck(IntPtr handle);
 
         /**
         *  @brief 关闭脱机功能
@@ -512,7 +512,7 @@ namespace System.Data.VzClientSDK
         *   @return 返回值为0表示成功，返回-1表示失败
         *  @ingroup group_device
         */
-        public delegate int VzLPRClient_CancelOfflineCheck(int handle);
+        public delegate int VzLPRClient_CancelOfflineCheck(IntPtr handle);
 
         /**
         *  @brief 开始查找设备
@@ -539,7 +539,7 @@ namespace System.Data.VzClientSDK
         *  @说明   通过回调返回数据，最多返回100条数据，超过时请调用分页查询的接口
         *  @ingroup group_device
         */
-        public delegate int VzLPRClient_QueryRecordByTimeAndPlate(int handle, string pStartTime, string pEndTime, string keyword);
+        public delegate int VzLPRClient_QueryRecordByTimeAndPlate(IntPtr handle, string pStartTime, string pEndTime, string keyword);
 
         /**
         *  @brief 根据时间和车牌号查询记录条数
@@ -550,7 +550,7 @@ namespace System.Data.VzClientSDK
         *  @return 返回值为0表示失败，大于0表示记录条数
         *  @ingroup group_device
         */
-        public delegate int VzLPRClient_QueryCountByTimeAndPlate(int handle, string pStartTime, string pEndTime, string keyword);
+        public delegate int VzLPRClient_QueryCountByTimeAndPlate(IntPtr handle, string pStartTime, string pEndTime, string keyword);
 
         /**
         *  @brief 根据时间和车牌号查询分页查询记录
@@ -563,7 +563,7 @@ namespace System.Data.VzClientSDK
         *  @return 返回值为0表示成功，返回-1表示失败
         *  @ingroup group_device
         */
-        public delegate int VzLPRClient_QueryPageRecordByTimeAndPlate(int handle, string pStartTime, string pEndTime, string keyword, int start, int end);
+        public delegate int VzLPRClient_QueryPageRecordByTimeAndPlate(IntPtr handle, string pStartTime, string pEndTime, string keyword, int start, int end);
 
         /**
         *  @brief 设置查询车牌记录的回调函数
@@ -574,7 +574,7 @@ namespace System.Data.VzClientSDK
         *  @return 0表示成功，-1表示失败
         *  @ingroup group_device
         */
-        public delegate int VzLPRClient_SetQueryPlateCallBack(int handle, VZLPRC_PLATE_INFO_CALLBACK func, IntPtr pUserData);
+        public delegate int VzLPRClient_SetQueryPlateCallBack(IntPtr handle, VZLPRC_PLATE_INFO_CALLBACK func, IntPtr pUserData);
 
         /**
         *  @brief 获取视频OSD参数；
@@ -582,7 +582,7 @@ namespace System.Data.VzClientSDK
         *  @return 返回值为0表示成功，返回-1表示失败
         *  @ingroup group_device
         */
-        public delegate int VzLPRClient_GetOsdParam(int handle, IntPtr pParam);
+        public delegate int VzLPRClient_GetOsdParam(IntPtr handle, IntPtr pParam);
 
         /**
         *  @brief 设置视频OSD参数；
@@ -590,7 +590,7 @@ namespace System.Data.VzClientSDK
         *  @return 返回值为0表示成功，返回-1表示失败
         *  @ingroup group_device
         */
-        public delegate int VzLPRClient_SetOsdParam(int handle, IntPtr pParam);
+        public delegate int VzLPRClient_SetOsdParam(IntPtr handle, IntPtr pParam);
 
         /**
         *  @brief 设置设备的日期时间
@@ -599,7 +599,7 @@ namespace System.Data.VzClientSDK
         *  @return 返回值为0表示成功，返回-1表示失败
         *  @ingroup group_device
         */
-        public delegate int VzLPRClient_SetDateTime(int handle, IntPtr IntpDTInfo);
+        public delegate int VzLPRClient_SetDateTime(IntPtr handle, IntPtr IntpDTInfo);
 
         /**
         *  @brief 读出用户私有数据，可用于二次加密
@@ -609,7 +609,7 @@ namespace System.Data.VzClientSDK
         *  @return 返回值为实际用户数据的字节数，返回-1表示失败
         *  @ingroup group_device
         */
-        public delegate int VzLPRClient_ReadUserData(int handle, IntPtr pBuffer, uint uSizeBuf);
+        public delegate int VzLPRClient_ReadUserData(IntPtr handle, IntPtr pBuffer, uint uSizeBuf);
 
         /**
         *  @brief 写入用户私有数据，可用于二次加密
@@ -619,7 +619,7 @@ namespace System.Data.VzClientSDK
         *  @return 返回值为0表示成功，返回其他值表示失败
         *  @ingroup group_device
         */
-        public delegate int VzLPRClient_WriteUserData(int handle, IntPtr pUserData, uint uSizeData);
+        public delegate int VzLPRClient_WriteUserData(IntPtr handle, IntPtr pUserData, uint uSizeData);
 
         /**
         *  @brief 将图像编码为JPEG，保存到指定内存
@@ -640,7 +640,7 @@ namespace System.Data.VzClientSDK
         *  @return 0表示成功，-1表示失败
         *  @ingroup group_device
         */
-        public delegate int VzLPRClient_SetIOOutputAuto(int handle, int uChnId, int nDuration);
+        public delegate int VzLPRClient_SetIOOutputAuto(IntPtr handle, int uChnId, int nDuration);
 
         /**
         *  @brief 获取实时视频帧，图像数据通过回调函数到用户层，用户可改动图像内容，并且显示到窗口
@@ -651,7 +651,7 @@ namespace System.Data.VzClientSDK
         *  @return 播放的句柄，-1表示失败
         *  @ingroup group_device
         */
-        public delegate int VzLPRClient_StartRealPlayFrameCallBack(int handle, IntPtr hWnd, VZLPRC_VIDEO_FRAME_CALLBACK_EX func, IntPtr pUserData);
+        public delegate IntPtr VzLPRClient_StartRealPlayFrameCallBack(IntPtr handle, IntPtr hWnd, VZLPRC_VIDEO_FRAME_CALLBACK_EX func, IntPtr pUserData);
 
         /**
         *  @brief 获取已设置的允许的车牌识别触发类型
@@ -659,7 +659,7 @@ namespace System.Data.VzClientSDK
         *  @param [OUT] pBitsTrigType 允许的车牌识别触发类型按位或的变量的地址，允许触发类型位详见定义VZ_LPRC_TRIG_ENABLE_XXX
         *  @return 返回值：返回值为0表示成功，返回其他值表示失败
         */
-        public delegate int VzLPRClient_GetPlateTrigType(int handle, ref int pBitsTrigType);
+        public delegate int VzLPRClient_GetPlateTrigType(IntPtr handle, ref int pBitsTrigType);
 
         /**
         *  @brief 设置允许的车牌识别触发类型
@@ -670,7 +670,7 @@ namespace System.Data.VzClientSDK
         *  @note  默认输出稳定触发和虚拟线圈触发
         *  @note  不会影响手动触发和IO输入触发
         */
-        public delegate int VzLPRClient_SetPlateTrigType(int handle, UInt32 uBitsTrigType);
+        public delegate int VzLPRClient_SetPlateTrigType(IntPtr handle, UInt32 uBitsTrigType);
 
         /**
         *  @brief 获取智能视频显示模式
@@ -678,7 +678,7 @@ namespace System.Data.VzClientSDK
         *  @param [OUT] pDrawMode 显示模式，参考VZ_LPRC_DRAWMODE
         *  @return 返回值为0表示成功，返回其他值表示失败。
         */
-        public delegate int VzLPRClient_GetDrawMode(int handle, ref VZ_LPRC_DRAWMODE pDrawMode);
+        public delegate int VzLPRClient_GetDrawMode(IntPtr handle, ref VZ_LPRC_DRAWMODE pDrawMode);
 
         /**
         *  @brief 设置智能视频显示模式
@@ -686,7 +686,7 @@ namespace System.Data.VzClientSDK
         *  @param [IN] pDrawMode 显示模式，参考VZ_LPRC_DRAWMODE
         *  @return 返回值为0表示成功，返回其他值表示失败。
         */
-        public delegate int VzLPRClient_SetDrawMode(int handle, ref VZ_LPRC_DRAWMODE pDrawMode);
+        public delegate int VzLPRClient_SetDrawMode(IntPtr handle, ref VZ_LPRC_DRAWMODE pDrawMode);
 
         /**
         *  @brief 获取已设置的需要识别的车牌类型位
@@ -694,7 +694,7 @@ namespace System.Data.VzClientSDK
         *  @param [OUT] pBitsRecType 需要识别的车牌类型按位或的变量的地址，车牌类型位详见定义VZ_LPRC_REC_XXX
         *  @return 返回值：返回值为0表示成功，返回其他值表示失败
         */
-        public delegate int VzLPRClient_GetPlateRecType(int handle, ref int pBitsRecType);
+        public delegate int VzLPRClient_GetPlateRecType(IntPtr handle, ref int pBitsRecType);
 
         /**
         *  @brief 设置需要识别的车牌类型
@@ -706,7 +706,7 @@ namespace System.Data.VzClientSDK
         *  @note  默认识别蓝牌和黄牌；
         *  @note  例如，需要识别蓝牌、黄牌、警牌，那么输入参数uBitsRecType = VZ_LPRC_REC_BLUE|VZ_LPRC_REC_YELLOW|VZ_LPRC_REC_POLICE
         */
-        public delegate int VzLPRClient_SetPlateRecType(int handle, UInt32 uBitsRecType);
+        public delegate int VzLPRClient_SetPlateRecType(IntPtr handle, UInt32 uBitsRecType);
 
         /**
         *  @brief 获取输出配置0
@@ -714,7 +714,7 @@ namespace System.Data.VzClientSDK
         *  @param [IN] pOutputConfig 输出配置
         *  @return 返回值为0表示成功，返回其他值表示失败。
         */
-        public delegate int VzLPRClient_GetOutputConfig(int handle, ref VZ_OutputConfigInfo pOutputConfigInfo);
+        public delegate int VzLPRClient_GetOutputConfig(IntPtr handle, ref VZ_OutputConfigInfo pOutputConfigInfo);
 
         /**
         *  @brief 设置输出配置
@@ -722,7 +722,7 @@ namespace System.Data.VzClientSDK
         *  @param [IN] pOutputConfig 输出配置
         *  @return 返回值为0表示成功，返回其他值表示失败。
         */
-        public delegate int VzLPRClient_SetOutputConfig(int handle, ref VZ_OutputConfigInfo pOutputConfigInfo);
+        public delegate int VzLPRClient_SetOutputConfig(IntPtr handle, ref VZ_OutputConfigInfo pOutputConfigInfo);
 
         /**
         *  @brief 设置车牌识别触发延迟时间
@@ -730,7 +730,7 @@ namespace System.Data.VzClientSDK
         *  @param  [IN] nDelay 触发延迟时间,时间范围[0, 10000)
         *  @return 返回值为0表示成功，返回其他值表示失败。
         */
-        public delegate int VzLPRClient_SetTriggerDelay(int handle, int nDelay);
+        public delegate int VzLPRClient_SetTriggerDelay(IntPtr handle, int nDelay);
 
         /**
         *  @brief 获取车牌识别触发延迟时间
@@ -738,7 +738,7 @@ namespace System.Data.VzClientSDK
         *  @param  [OUT] nDelay 触发延迟时间,时间范围[0, 10000)
         *  @return 返回值为0表示成功，返回其他值表示失败。
         */
-        public delegate int VzLPRClient_GetTriggerDelay(int handle, ref int nDelay);
+        public delegate int VzLPRClient_GetTriggerDelay(IntPtr handle, ref int nDelay);
 
         /**
         *  @brief 设置白名单验证模式
@@ -746,7 +746,7 @@ namespace System.Data.VzClientSDK
         *  @param [IN] nType 0 脱机自动启用;1 启用;2 不启用
         *  @return 返回值为0表示成功，返回其他值表示失败。
         */
-        public delegate int VzLPRClient_SetWLCheckMethod(int handle, int nType);
+        public delegate int VzLPRClient_SetWLCheckMethod(IntPtr handle, int nType);
 
         /**
         *  @brief 获取白名单验证模式
@@ -754,7 +754,7 @@ namespace System.Data.VzClientSDK
         *  @param [OUT]	nType 0 脱机自动启用;1 启用;2 不启用
         *  @return 返回值为0表示成功，返回其他值表示失败。
         */
-        public delegate int VzLPRClient_GetWLCheckMethod(int handle, ref int nType);
+        public delegate int VzLPRClient_GetWLCheckMethod(IntPtr handle, ref int nType);
 
         /**
         *  @brief 设置白名单模糊匹配
@@ -764,7 +764,7 @@ namespace System.Data.VzClientSDK
         *  @param [IN] nFuzzyType 忽略汉字
         *  @return 返回值为0表示成功，返回其他值表示失败。
         */
-        public delegate int VzLPRClient_SetWLFuzzy(int handle, int nFuzzyType, int nFuzzyLen, bool bFuzzyCC);
+        public delegate int VzLPRClient_SetWLFuzzy(IntPtr handle, int nFuzzyType, int nFuzzyLen, bool bFuzzyCC);
 
         /**
         *  @brief 获取白名单模糊匹配
@@ -774,7 +774,7 @@ namespace System.Data.VzClientSDK
         *  @param [IN] nFuzzyType 忽略汉字
         *  @return 返回值为0表示成功，返回其他值表示失败。
         */
-        public delegate int VzLPRClient_GetWLFuzzy(int handle, ref int nFuzzyType, ref int nFuzzyLen, ref bool bFuzzyCC);
+        public delegate int VzLPRClient_GetWLFuzzy(IntPtr handle, ref int nFuzzyType, ref int nFuzzyLen, ref bool bFuzzyCC);
 
         /**
         *  @brief 设置串口参数
@@ -784,7 +784,7 @@ namespace System.Data.VzClientSDK
         *  @return 0表示成功，-1表示失败
         *  @ingroup group_device
         */
-        public delegate int VzLPRClient_SetSerialParameter(int handle, int nSerialPort,
+        public delegate int VzLPRClient_SetSerialParameter(IntPtr handle, int nSerialPort,
                                                  ref VZ_SERIAL_PARAMETER pParameter);
 
         /**
@@ -795,7 +795,7 @@ namespace System.Data.VzClientSDK
         *  @return 0表示成功，-1表示失败
         *  @ingroup group_device
         */
-        public delegate int VzLPRClient_GetSerialParameter(int handle, int nSerialPort,
+        public delegate int VzLPRClient_GetSerialParameter(IntPtr handle, int nSerialPort,
                                                  ref VZ_SERIAL_PARAMETER pParameter);
 
         //        /**
@@ -807,7 +807,7 @@ namespace System.Data.VzClientSDK
         //        *  @note   使用的文件名中的路径需要存在
         //        *  @ingroup group_device
         //        */
-        //        public delegate int VzLPRClient_GetSnapShootToJpeg2(int nPlayHandle, string pFullPathName, int nQuality);
+        //        public delegate int VzLPRClient_GetSnapShootToJpeg2(IntPtr nPlayHandle, string pFullPathName, int nQuality);
 
         /**
         *  @brief 获取主码流分辨率；
@@ -815,7 +815,7 @@ namespace System.Data.VzClientSDK
         *  @param [OUT] sizeval 详见VZDEV_FRAMESIZE_宏定义
         *  @return 返回值为0表示成功，返回其他值表示失败。
         */
-        public delegate int VzLPRClient_GetVideoFrameSizeIndex(int handle, ref int sizeval);
+        public delegate int VzLPRClient_GetVideoFrameSizeIndex(IntPtr handle, ref int sizeval);
 
         /**
         *  @brief 设置主码流分辨率；
@@ -823,7 +823,7 @@ namespace System.Data.VzClientSDK
         *  @param [IN] sizeval 详见VZDEV_FRAMESIZE_宏定义
         *  @return 返回值为0表示成功，返回其他值表示失败。
         */
-        public delegate int VzLPRClient_SetVideoFrameSizeIndex(int handle, int sizeval);
+        public delegate int VzLPRClient_SetVideoFrameSizeIndex(IntPtr handle, int sizeval);
 
         /**
         *  @brief 获取主码流分辨率；
@@ -831,7 +831,7 @@ namespace System.Data.VzClientSDK
         *  @param [OUT] sizeval 
         *  @return 返回值为0表示成功，返回其他值表示失败。
         */
-        public delegate int VzLPRClient_GetVideoFrameSizeIndexEx(int handle, ref int sizeval);
+        public delegate int VzLPRClient_GetVideoFrameSizeIndexEx(IntPtr handle, ref int sizeval);
 
         /**
         *  @brief 设置主码流分辨率；
@@ -839,7 +839,7 @@ namespace System.Data.VzClientSDK
         *  @param [IN] sizeval 
         *  @return 返回值为0表示成功，返回其他值表示失败。
         */
-        public delegate int VzLPRClient_SetVideoFrameSizeIndexEx(int handle, int sizeval);
+        public delegate int VzLPRClient_SetVideoFrameSizeIndexEx(IntPtr handle, int sizeval);
 
         /**
         *  @brief 获取主码流帧率
@@ -847,7 +847,7 @@ namespace System.Data.VzClientSDK
         *  @param [OUT] Rateval 帧率，范围1-25
         *  @return 返回值为0表示成功，返回其他值表示失败。
         */
-        public delegate int VzLPRClient_GetVideoFrameRate(int handle, ref int Rateval);//1-25
+        public delegate int VzLPRClient_GetVideoFrameRate(IntPtr handle, ref int Rateval);//1-25
 
         /**
         *  @brief 设置主码流帧率；
@@ -855,7 +855,7 @@ namespace System.Data.VzClientSDK
         *  @param [IN] Rateval 帧率，范围1-25
         *  @return 返回值为0表示成功，返回其他值表示失败。
         */
-        public delegate int VzLPRClient_SetVideoFrameRate(int handle, int Rateval);//1-25
+        public delegate int VzLPRClient_SetVideoFrameRate(IntPtr handle, int Rateval);//1-25
 
         /**
         *  @brief 获取主码流压缩模式；
@@ -863,7 +863,7 @@ namespace System.Data.VzClientSDK
         *  @param [OUT] modeval 详见VZDEV_VIDEO_COMPRESS_宏定义
         *  @return 返回值为0表示成功，返回其他值表示失败。
         */
-        public delegate int VzLPRClient_GetVideoCompressMode(int handle, ref int modeval);//VZDEV_VIDEO_COMPRESS_XXX
+        public delegate int VzLPRClient_GetVideoCompressMode(IntPtr handle, ref int modeval);//VZDEV_VIDEO_COMPRESS_XXX
 
         /**
         *  @brief 设置主码流压缩模式；
@@ -871,7 +871,7 @@ namespace System.Data.VzClientSDK
         *  @param [IN] modeval 详见VZDEV_VIDEO_COMPRESS_宏定义
         *  @return 返回值为0表示成功，返回其他值表示失败。
         */
-        public delegate int VzLPRClient_SetVideoCompressMode(int handle, int modeval);//VZDEV_VIDEO_COMPRESS_XXX
+        public delegate int VzLPRClient_SetVideoCompressMode(IntPtr handle, int modeval);//VZDEV_VIDEO_COMPRESS_XXX
 
         /**
         *  @brief 获取主码流比特率；
@@ -880,7 +880,7 @@ namespace System.Data.VzClientSDK
         *  @param [OUT] ratelist 暂时不用
         *  @return 返回值为0表示成功，返回其他值表示失败。
         */
-        public delegate int VzLPRClient_GetVideoCBR(int handle, ref int rateval/*Kbps*/, ref int ratelist);
+        public delegate int VzLPRClient_GetVideoCBR(IntPtr handle, ref int rateval/*Kbps*/, ref int ratelist);
 
         /**
         *  @brief 设置主码流比特率；
@@ -888,7 +888,7 @@ namespace System.Data.VzClientSDK
         *  @param [OUT] rateval 当前视频比特率
         *  @return 返回值为0表示成功，返回其他值表示失败。
         */
-        public delegate int VzLPRClient_SetVideoCBR(int handle, int rateval/*Kbps*/);
+        public delegate int VzLPRClient_SetVideoCBR(IntPtr handle, int rateval/*Kbps*/);
 
         /**
         *  @brief 获取视频参数；
@@ -899,7 +899,7 @@ namespace System.Data.VzClientSDK
         *  @param [OUT] hue 色度
         *  @return 返回值为0表示成功，返回其他值表示失败。
         */
-        public delegate int VzLPRClient_GetVideoPara(int handle, ref int brt, ref int cst, ref int sat, ref int hue);
+        public delegate int VzLPRClient_GetVideoPara(IntPtr handle, ref int brt, ref int cst, ref int sat, ref int hue);
 
         /**
         *  @brief 设置视频参数；
@@ -910,7 +910,7 @@ namespace System.Data.VzClientSDK
         *  @param [IN] hue 色度
         *  @return 返回值为0表示成功，返回其他值表示失败。
         */
-        public delegate int VzLPRClient_SetVideoPara(int handle, int brt, int cst, int sat, int hue);
+        public delegate int VzLPRClient_SetVideoPara(IntPtr handle, int brt, int cst, int sat, int hue);
 
         /**
         *  @brief 设置通道主码流编码方式
@@ -918,7 +918,7 @@ namespace System.Data.VzClientSDK
         *  @param [OUT] cmd    返回的编码方式, 0->H264  1->MPEG4  2->JPEG  其他->错误
         *  @return 返回值为0表示成功，返回其他值表示失败。
         */
-        public delegate int VzLPRClient_SetVideoEncodeType(int handle, int cmd);
+        public delegate int VzLPRClient_SetVideoEncodeType(IntPtr handle, int cmd);
 
         /**
         *  @brief 获取视频的编码方式
@@ -927,7 +927,7 @@ namespace System.Data.VzClientSDK
         *  @return 返回值为0表示成功，返回-1表示失败
         *  @ingroup group_device
         */
-        public delegate int VzLPRClient_GetVideoEncodeType(int handle, ref int pEncType);
+        public delegate int VzLPRClient_GetVideoEncodeType(IntPtr handle, ref int pEncType);
 
         /**
         *  @brief 获取视频图像质量；
@@ -935,7 +935,7 @@ namespace System.Data.VzClientSDK
         *  @param [IN] levelval //0~6，6最好
         *  @return 返回值为0表示成功，返回其他值表示失败。
         */
-        public delegate int VzLPRClient_GetVideoVBR(int handle, ref int levelval);
+        public delegate int VzLPRClient_GetVideoVBR(IntPtr handle, ref int levelval);
 
         /**
         *  @brief 设置视频图像质量；
@@ -943,7 +943,7 @@ namespace System.Data.VzClientSDK
         *  @param [IN] levelval //0~6，6最好
         *  @return 返回值为0表示成功，返回其他值表示失败。
         */
-        public delegate int VzLPRClient_SetVideoVBR(int handle, int levelval);
+        public delegate int VzLPRClient_SetVideoVBR(IntPtr handle, int levelval);
 
         /**
         *  @brief 获取视频制式；
@@ -951,7 +951,7 @@ namespace System.Data.VzClientSDK
         *  @param [IN] frequency 0:MaxOrZero, 1: 50Hz, 2:60Hz
         *  @return 返回值为0表示成功，返回其他值表示失败。
         */
-        public delegate int VzLPRClient_GetFrequency(int handle, ref int frequency);
+        public delegate int VzLPRClient_GetFrequency(IntPtr handle, ref int frequency);
 
         /**
         *  @brief 设置视频制式；
@@ -959,7 +959,7 @@ namespace System.Data.VzClientSDK
         *  @param [IN] frequency 0:MaxOrZero, 1: 50Hz, 2:60Hz
         *  @return 返回值为0表示成功，返回其他值表示失败。
         */
-        public delegate int VzLPRClient_SetFrequency(int handle, int frequency);
+        public delegate int VzLPRClient_SetFrequency(IntPtr handle, int frequency);
 
         /**
         *  @brief 获取曝光时间；
@@ -967,7 +967,7 @@ namespace System.Data.VzClientSDK
         *  @param [IN] shutter 2:>0~8ms 停车场推荐, 3: 0~4ms, 4:0~2ms 卡口推荐
         *  @return 返回值为0表示成功，返回其他值表示失败。
         */
-        public delegate int VzLPRClient_GetShutter(int handle, ref int shutter);
+        public delegate int VzLPRClient_GetShutter(IntPtr handle, ref int shutter);
 
         /**
         *  @brief 设置曝光时间；
@@ -975,7 +975,7 @@ namespace System.Data.VzClientSDK
         *  @param [IN] shutter 2:>0~8ms 停车场推荐, 3: 0~4ms, 4:0~2ms 卡口推荐
         *  @return 返回值为0表示成功，返回其他值表示失败。
         */
-        public delegate int VzLPRClient_SetShutter(int handle, int shutter);
+        public delegate int VzLPRClient_SetShutter(IntPtr handle, int shutter);
 
         /**
         *  @brief 获取图像翻转；
@@ -983,7 +983,7 @@ namespace System.Data.VzClientSDK
         *  @param [IN] flip, 0: 原始图像, 1:上下翻转, 2:左右翻转, 3:中心翻转
         *  @return 返回值为0表示成功，返回其他值表示失败。
         */
-        public delegate int VzLPRClient_GetFlip(int handle, ref int flip);
+        public delegate int VzLPRClient_GetFlip(IntPtr handle, ref int flip);
 
         /**
         *  @brief 设置图像翻转；
@@ -991,7 +991,7 @@ namespace System.Data.VzClientSDK
         *  @param [IN] flip, 0: 原始图像, 1:上下翻转, 2:左右翻转, 3:中心翻转
         *  @return 返回值为0表示成功，返回其他值表示失败。
         */
-        public delegate int VzLPRClient_SetFlip(int handle, int flip);
+        public delegate int VzLPRClient_SetFlip(IntPtr handle, int flip);
 
         /**
         *  @brief 修改网络参数
@@ -1017,30 +1017,30 @@ namespace System.Data.VzClientSDK
 
         /**
         *  @brief 开始实时图像数据流，用于实时获取图像数据
-        *  @param  [IN] handle		由VzLPRClient_Open函数获得的句柄
+        *  @param  [IN] handle 由VzLPRClient_Open函数获得的句柄
         *  @return 返回值为0表示成功，返回其他值表示失败。
         *  @ingroup group_device
         */
-        public delegate int VzLPRClient_StartRealPlayDecData(int handle);
+        public delegate int VzLPRClient_StartRealPlayDecData(IntPtr handle);
 
         /**
         *  @brief 停止实时图像数据流
-        *  @param  [IN] handle		由VzLPRClient_Open函数获得的句柄
+        *  @param  [IN] handle 由VzLPRClient_Open函数获得的句柄
         *  @return 返回值为0表示成功，返回其他值表示失败。
         *  @ingroup group_device
         */
-        public delegate int VzLPRClient_StopRealPlayDecData(int handle);
+        public delegate int VzLPRClient_StopRealPlayDecData(IntPtr handle);
 
         /**
         *  @brief 从解码流中获取JPEG图像，保存到指定内存
-        *  @param  [IN] handle		由VzLPRClient_Open函数获得的句柄
+        *  @param  [IN] handle 由VzLPRClient_Open函数获得的句柄
         *  @param  [IN/OUT] pDstBuf JPEG数据的目的存储首地址
         *  @param  [IN] uSizeBuf JPEG数据地址的内存的最大尺寸；
         *  @param  [IN] nQuality JPEG压缩的质量，取值范围1~100；
         *  @return >0表示成功，即编码后的尺寸，-1表示失败，-2表示给定的压缩数据的内存尺寸不够大
         *  @ingroup group_global
         */
-        public delegate int VzLPRClient_GetJpegStreamFromRealPlayDec(int handle, IntPtr pDstBuf, uint uSizeBuf, int nQuality);
+        public delegate int VzLPRClient_GetJpegStreamFromRealPlayDec(IntPtr handle, IntPtr pDstBuf, uint uSizeBuf, int nQuality);
 
         /**
         *  @brief 设置是否输出实时结果
@@ -1048,7 +1048,7 @@ namespace System.Data.VzClientSDK
         *  @param  [IN] bOutput 是否输出
         *  @return 0表示成功，-1表示失败
         */
-        public delegate int VzLPRClient_SetIsOutputRealTimeResult(int handle, bool bOutput);
+        public delegate int VzLPRClient_SetIsOutputRealTimeResult(IntPtr handle, bool bOutput);
 
         /**
         *  @brief 获取设备加密类型和当前加密类型
@@ -1056,7 +1056,7 @@ namespace System.Data.VzClientSDK
         *  @param [IN] pData 加密信息
         *  @return 返回值为0表示成功，返回其他值表示失败。
         */
-        public delegate int VzLPRClient_GetEMS(int handle, ref VZ_LPRC_ACTIVE_ENCRYPT pData);
+        public delegate int VzLPRClient_GetEMS(IntPtr handle, ref VZ_LPRC_ACTIVE_ENCRYPT pData);
         /**
         *  @brief 设置设备加密类型
         *  @param [IN] handle 由VzLPRClient_Open函数获得的句柄
@@ -1064,7 +1064,7 @@ namespace System.Data.VzClientSDK
         *  @param [IN] nEncyptId	修改的加密类型ID 
         *  @return 返回值为0表示成功，返回其他值表示失败。
         */
-        public delegate int VzLPRClient_SetEncrypt(int handle, IntPtr pCurrentKey, UInt32 nEncyptId);
+        public delegate int VzLPRClient_SetEncrypt(IntPtr handle, IntPtr pCurrentKey, UInt32 nEncyptId);
 
         /**
         *  @brief 修改设备识别密码
@@ -1073,7 +1073,7 @@ namespace System.Data.VzClientSDK
         *  @param [IN] pNewKey	新识别密码
         *  @return 返回值为0表示成功，返回其他值表示失败。
         */
-        public delegate int VzLPRClient_ChangeEncryptKey(int handle, IntPtr pCurrentKey, IntPtr pNewKey);
+        public delegate int VzLPRClient_ChangeEncryptKey(IntPtr handle, IntPtr pCurrentKey, IntPtr pNewKey);
 
         /**
         *  @brief 重置设备识别密码
@@ -1082,7 +1082,7 @@ namespace System.Data.VzClientSDK
         *  @param [IN] pNewKey	新识别密码
         *  @return 返回值为0表示成功，返回其他值表示失败。
         */
-        public delegate int VzLPRClient_ResetEncryptKey(int handle, IntPtr pPrimeKey, IntPtr pNewKey);
+        public delegate int VzLPRClient_ResetEncryptKey(IntPtr handle, IntPtr pPrimeKey, IntPtr pNewKey);
 
         /**
         *  @brief 语音播放功能
@@ -1093,7 +1093,7 @@ namespace System.Data.VzClientSDK
         *  @param [IN] male 声音类型(男声0，女生1)
         *  @return 返回值为0表示成功，返回其他值表示失败。
         */
-        public delegate int VzLPRClient_PlayVoice(int handle, string voice, int interval, int volume, int male);
+        public delegate int VzLPRClient_PlayVoice(IntPtr handle, string voice, int interval, int volume, int male);
 
         //**************************************************************
         // 中心服务器配置
@@ -1103,7 +1103,7 @@ namespace System.Data.VzClientSDK
         *  @param [IN] pCenterServerNet  中心服务器信息结构
         *  @return 返回值为0表示成功，返回其他值表示失败。
         */
-        public delegate int VzLPRClient_SetCenterServerNet(int handle, ref VZ_LPRC_CENTER_SERVER_NET pCenterServerNet);
+        public delegate int VzLPRClient_SetCenterServerNet(IntPtr handle, ref VZ_LPRC_CENTER_SERVER_NET pCenterServerNet);
 
         /**
         *  @brief 获取中心服务器网络
@@ -1111,7 +1111,7 @@ namespace System.Data.VzClientSDK
         *  @param [IN] pCenterServerNet  中心服务器信息结构
         *  @return 返回值为0表示成功，返回其他值表示失败。
         */
-        public delegate int VzLPRClient_GetCenterServerNet(int handle, ref VZ_LPRC_CENTER_SERVER_NET pCenterServerNet);
+        public delegate int VzLPRClient_GetCenterServerNet(IntPtr handle, ref VZ_LPRC_CENTER_SERVER_NET pCenterServerNet);
 
         /**
         *  @brief 设置中心服务器设备注册
@@ -1119,7 +1119,7 @@ namespace System.Data.VzClientSDK
         *  @param [IN] pCenterServerDeviceReg  中心服务器注册结构
         *  @return 返回值为0表示成功，返回其他值表示失败。
         */
-        public delegate int VzLPRClient_SetCenterServerDeviceReg(int handle, ref VZ_LPRC_CENTER_SERVER_DEVICE_REG pCenterServerDeviceReg);
+        public delegate int VzLPRClient_SetCenterServerDeviceReg(IntPtr handle, ref VZ_LPRC_CENTER_SERVER_DEVICE_REG pCenterServerDeviceReg);
 
         /**
         *  @brief 获取中心服务器设备注册
@@ -1127,7 +1127,7 @@ namespace System.Data.VzClientSDK
         *  @param [IN] pCenterServerDeviceReg  中心服务器注册结构
         *  @return 返回值为0表示成功，返回其他值表示失败。
         */
-        public delegate int VzLPRClient_GetCenterServerDeviceReg(int handle, ref VZ_LPRC_CENTER_SERVER_DEVICE_REG pCenterServerDeviceReg);
+        public delegate int VzLPRClient_GetCenterServerDeviceReg(IntPtr handle, ref VZ_LPRC_CENTER_SERVER_DEVICE_REG pCenterServerDeviceReg);
 
         /**
         *  @brief 设置中心服务器网络车牌推送信息
@@ -1135,7 +1135,7 @@ namespace System.Data.VzClientSDK
         *  @param [IN] pCenterServerPlate  中心服务器车牌推送信息
         *  @return 返回值为0表示成功，返回其他值表示失败。
         */
-        public delegate int VzLPRClient_SetCenterServerPlate(int handle, ref VZ_LPRC_CENTER_SERVER_PLATE pCenterServerPlate);
+        public delegate int VzLPRClient_SetCenterServerPlate(IntPtr handle, ref VZ_LPRC_CENTER_SERVER_PLATE pCenterServerPlate);
 
         /**
         *  @brief 获取中心服务器网络车牌推送信息
@@ -1143,7 +1143,7 @@ namespace System.Data.VzClientSDK
         *  @param [IN] pCenterServerPlate  中心服务器车牌推送信息
         *  @return 返回值为0表示成功，返回其他值表示失败。
         */
-        public delegate int VzLPRClient_GetCenterServerPlate(int handle, ref VZ_LPRC_CENTER_SERVER_PLATE pCenterServerPlate);
+        public delegate int VzLPRClient_GetCenterServerPlate(IntPtr handle, ref VZ_LPRC_CENTER_SERVER_PLATE pCenterServerPlate);
 
         /**
         *  @brief 设置中心服务器网络
@@ -1151,7 +1151,7 @@ namespace System.Data.VzClientSDK
         *  @param [IN] pCenterServerNet  中心服务器信息
         *  @return 返回值为0表示成功，返回其他值表示失败。
         */
-        public delegate int VzLPRClient_SetCenterServerGionin(int handle, ref VZ_LPRC_CENTER_SERVER_GIONIN pCenterServerGionin);
+        public delegate int VzLPRClient_SetCenterServerGionin(IntPtr handle, ref VZ_LPRC_CENTER_SERVER_GIONIN pCenterServerGionin);
 
         /**
         *  @brief 获取中心服务器网络端口触发信息
@@ -1159,7 +1159,7 @@ namespace System.Data.VzClientSDK
         *  @param [IN] pCenterServerGionin  中心服务器端口触发信息
         *  @return 返回值为0表示成功，返回其他值表示失败。
         */
-        public delegate int VzLPRClient_GetCenterServerGionin(int handle, ref VZ_LPRC_CENTER_SERVER_GIONIN pCenterServerGionin);
+        public delegate int VzLPRClient_GetCenterServerGionin(IntPtr handle, ref VZ_LPRC_CENTER_SERVER_GIONIN pCenterServerGionin);
 
         /**
         *  @brief 设置中心服务器网络串口信息
@@ -1167,7 +1167,7 @@ namespace System.Data.VzClientSDK
         *  @param [IN] pCenterServerSerial  中心服务器串口信息
         *  @return 返回值为0表示成功，返回其他值表示失败。
         */
-        public delegate int VzLPRClient_SetCenterServerSerial(int handle, ref VZ_LPRC_CENTER_SERVER_SERIAL pCenterServerSerial);
+        public delegate int VzLPRClient_SetCenterServerSerial(IntPtr handle, ref VZ_LPRC_CENTER_SERVER_SERIAL pCenterServerSerial);
 
         /**
         *  @brief 获取中心服务器网络串口信息
@@ -1175,7 +1175,7 @@ namespace System.Data.VzClientSDK
         *  @param [IN] pCenterServerSerial  中心服务器串口信息
         *  @return 返回值为0表示成功，返回其他值表示失败。
         */
-        public delegate int VzLPRClient_GetCenterServerSerial(int handle, ref VZ_LPRC_CENTER_SERVER_SERIAL pCenterServerSerial);
+        public delegate int VzLPRClient_GetCenterServerSerial(IntPtr handle, ref VZ_LPRC_CENTER_SERVER_SERIAL pCenterServerSerial);
 
         /**
         *  @brief 设置中心服务器网络主机备份信息
@@ -1183,7 +1183,7 @@ namespace System.Data.VzClientSDK
         *  @param [IN] pCenterServerHostBak  中心服务器主机备份信息  例如:"192.168.3.5;192.168.3.6"
         *  @return 返回值为0表示成功，返回其他值表示失败。
         */
-        public delegate int VzLPRClient_SetCenterServerHostBak(int handle, string pCenterServerHostBak);
+        public delegate int VzLPRClient_SetCenterServerHostBak(IntPtr handle, string pCenterServerHostBak);
 
         /**
         *  @brief 获取中心服务器网络主机备份信息
@@ -1191,7 +1191,7 @@ namespace System.Data.VzClientSDK
         *  @param [IN] pCenterServerHostBak  中心服务器主机备份信息  例如:"192.168.3.5;192.168.3.6"
         *  @return 返回值为0表示成功，返回其他值表示失败。
         */
-        public delegate int VzLPRClient_GetCenterServerHostBak(int handle, ref string pCenterServerHostBak);
+        public delegate int VzLPRClient_GetCenterServerHostBak(IntPtr handle, ref string pCenterServerHostBak);
 
         /**
         *  @brief 获取设备硬件信息
@@ -1200,7 +1200,7 @@ namespace System.Data.VzClientSDK
         *  @param [OUT] exdataSize 额外数据长度。
         *  @return 返回值为0表示成功，返回其他值表示失败。
         */
-        public delegate int VzLPRClient_GetHwBoardVersion(int handle, ref int board_version, ref Int64 exdataSize);
+        public delegate int VzLPRClient_GetHwBoardVersion(IntPtr handle, ref int board_version, ref Int64 exdataSize);
 
         /**
         *  @brief 获取设备硬件类型
@@ -1208,7 +1208,7 @@ namespace System.Data.VzClientSDK
         *  @param [OUT] board_type  设备类型(0:3730,1:6446,2:8127)
         *  @return 返回值为0表示成功，返回其他值表示失败。
         */
-        public delegate int VzLPRClient_GetHwBoardType(int handle, ref int board_type);
+        public delegate int VzLPRClient_GetHwBoardType(IntPtr handle, ref int board_type);
 
         /**
         *  @brief 获取定焦版本相机安装距离
@@ -1216,7 +1216,7 @@ namespace System.Data.VzClientSDK
         *  @param [OUT] reco_dis安装距离 0:2-4米, 2: 4-6米, 1: 6-8米
         *  @return 返回值为0表示成功，返回其他值表示失败。
         */
-        public delegate int VzLPRClient_GetAlgResultParam(int handle, ref int reco_dis);
+        public delegate int VzLPRClient_GetAlgResultParam(IntPtr handle, ref int reco_dis);
 
         /**
         *  @brief 获取定焦版本相机安装距离
@@ -1224,7 +1224,7 @@ namespace System.Data.VzClientSDK
         *  @param [OUT] reco_dis安装距离 0:2-4米, 2: 4-6米, 1: 6-8米
         *  @return 返回值为0表示成功，返回其他值表示失败。
         */
-        public delegate int VzLPRClient_SetAlgResultParam(int handle, int reco_dis);
+        public delegate int VzLPRClient_SetAlgResultParam(IntPtr handle, int reco_dis);
 
         /**
         *  @brief 获取图像增强配置
@@ -1233,7 +1233,7 @@ namespace System.Data.VzClientSDK
         *  @param [OUT] strength 额外数据长度。
         *  @return 返回值为0表示成功，返回其他值表示失败。
         */
-        public delegate int VzLPRClient_GetDenoise(int handle, ref int mode, ref int strength);
+        public delegate int VzLPRClient_GetDenoise(IntPtr handle, ref int mode, ref int strength);
 
         /**
         *  @brief 设置图像增强配置
@@ -1242,7 +1242,7 @@ namespace System.Data.VzClientSDK
         *  @param [OUT] strength 额外数据长度。
         *  @return 返回值为0表示成功，返回其他值表示失败。
         */
-        public delegate int VzLPRClient_SetDenoise(int handle, int mode, int strength);
+        public delegate int VzLPRClient_SetDenoise(IntPtr handle, int mode, int strength);
 
         /**
         *  @brief 获取R相机的编码参数；
@@ -1252,7 +1252,7 @@ namespace System.Data.VzClientSDK
         *  @param [OUT] param 编码参数
         *  @return 返回值为0表示成功，返回其他值表示失败。
         */
-        public delegate int VzLPRClient_RGet_Encode_Param(int handle, int stream, ref VZ_LPRC_R_ENCODE_PARAM param);
+        public delegate int VzLPRClient_RGet_Encode_Param(IntPtr handle, int stream, ref VZ_LPRC_R_ENCODE_PARAM param);
 
         /**
         *  @brief 设置R相机的编码参数；
@@ -1261,7 +1261,7 @@ namespace System.Data.VzClientSDK
         *  @param [IN] stream 0主码流 1子码流
         *  @return 返回值为0表示成功，返回其他值表示失败。
         */
-        public delegate int VzLPRClient_RSet_Encode_Param(int handle, int stream, ref VZ_LPRC_R_ENCODE_PARAM param);
+        public delegate int VzLPRClient_RSet_Encode_Param(IntPtr handle, int stream, ref VZ_LPRC_R_ENCODE_PARAM param);
 
         /**
         *  @brief 获取R相机支持的编码参数；
@@ -1270,7 +1270,7 @@ namespace System.Data.VzClientSDK
         *  @param [IN] stream 0主码流 1子码流
         *  @return 返回值为0表示成功，返回其他值表示失败。
         */
-        public delegate int VzLPRClient_RGet_Encode_Param_Property(int handle, ref VZ_LPRC_R_ENCODE_PARAM_PROPERTY param);
+        public delegate int VzLPRClient_RGet_Encode_Param_Property(IntPtr handle, ref VZ_LPRC_R_ENCODE_PARAM_PROPERTY param);
 
         /**
         *  @brief 获取R相机的视频参数；
@@ -1278,7 +1278,7 @@ namespace System.Data.VzClientSDK
         *  @param [OUT] param 视频参数
         *  @return 返回值为0表示成功，返回其他值表示失败。
         */
-        public delegate int VzLPRClient_RGet_Video_Param(int handle, ref VZ_LPRC_R_VIDEO_PARAM param);
+        public delegate int VzLPRClient_RGet_Video_Param(IntPtr handle, ref VZ_LPRC_R_VIDEO_PARAM param);
 
         /**
         *  @brief 获取R相机的视频参数；
@@ -1286,7 +1286,7 @@ namespace System.Data.VzClientSDK
         *  @param [IN] iChannel 通道号
         *  @return 返回值为0表示成功，返回其他值表示失败。
         */
-        public delegate int VzLPRClient_RSet_Video_Param(int handle, ref VZ_LPRC_R_VIDEO_PARAM param);
+        public delegate int VzLPRClient_RSet_Video_Param(IntPtr handle, ref VZ_LPRC_R_VIDEO_PARAM param);
 
         /**
         *  @brief 开始喊话
@@ -1294,7 +1294,7 @@ namespace System.Data.VzClientSDK
         *  @parmm [IN] client_win_size 客户端窗口大小
         *  @return 返回值为0表示成功，返回其他值表示失败。
         */
-        public delegate int VzLPRClient_StartTalk(int handle, int client_win_size);
+        public delegate int VzLPRClient_StartTalk(IntPtr handle, int client_win_size);
 
         /**
         *  @brief 设置GPIO输入回调函数
@@ -1303,7 +1303,7 @@ namespace System.Data.VzClientSDK
         *  @param [IN] pUserData 用户自定义数据
         *  @return 返回值为0表示成功，返回其他值表示失败。
         */
-        public delegate int VzLPRClient_SetRequestTalkCallBack(int handle, VZLPRC_REQUEST_TALK_CALLBACK func, IntPtr pUserData);
+        public delegate int VzLPRClient_SetRequestTalkCallBack(IntPtr handle, VZLPRC_REQUEST_TALK_CALLBACK func, IntPtr pUserData);
 
         /**
         *  @brief 停止喊话
@@ -1311,7 +1311,7 @@ namespace System.Data.VzClientSDK
         *  @parmm [IN] device_ip 设备IP
         *  @return 返回值为0表示成功，返回其他值表示失败。
         */
-        public delegate int VzLPRClient_StopTalk(int handle);
+        public delegate int VzLPRClient_StopTalk(IntPtr handle);
 
         /**
         *  @brief 开始录音
@@ -1319,14 +1319,14 @@ namespace System.Data.VzClientSDK
         *  @parmm [IN] file_path 音频文件路径
         *  @return 返回值为0表示成功，返回其他值表示失败。
         */
-        public delegate int VzLPRClient_StartRecordAudio(int handle, string file_path);
+        public delegate int VzLPRClient_StartRecordAudio(IntPtr handle, string file_path);
 
         /**
         *  @brief 停止录音
         *  @param [IN] handle 由VzLPRClient_Open函数获得的句柄
         *  @return 返回值为0表示成功，返回其他值表示失败。
         */
-        public delegate int VzLPRClient_StopRecordAudio(int handle);
+        public delegate int VzLPRClient_StopRecordAudio(IntPtr handle);
 
         /**
         *  @brief 设置车牌图片里是否显示车牌框
@@ -1334,7 +1334,7 @@ namespace System.Data.VzClientSDK
         *  @param [IN] bShow 是否显示车牌框，输入值(0或1)，1代表显示，0代表不显示
         *  @return 返回值为0表示成功，返回其他值表示失败。
         */
-        public delegate int VzLPRClient_SetIsShowPlateRect(int handle, int bShow);
+        public delegate int VzLPRClient_SetIsShowPlateRect(IntPtr handle, int bShow);
 
         /**
         *  @brief 设置GPIO输入回调函数
@@ -1343,7 +1343,7 @@ namespace System.Data.VzClientSDK
         *  @param [IN] pUserData 用户自定义数据
         *  @return 返回值为0表示成功，返回其他值表示失败。
         */
-        public delegate int VzLPRClient_SetGPIORecvCallBack(int handle, VZLPRC_GPIO_RECV_CALLBACK func, IntPtr pUserData);
+        public delegate int VzLPRClient_SetGPIORecvCallBack(IntPtr handle, VZLPRC_GPIO_RECV_CALLBACK func, IntPtr pUserData);
 
         /**
         *  @brief 获取相机参数
@@ -1354,6 +1354,6 @@ namespace System.Data.VzClientSDK
         *  @param [IN] dwOutBufferSize 数据的长度
         *  @return 返回值为0表示成功，返回其他值表示失败。
         */
-        public delegate int VzLPRClient_GetCameraConfig(int handle, int command, short channel, IntPtr pOutBuffer, int dwOutBufferSize);
+        public delegate int VzLPRClient_GetCameraConfig(IntPtr handle, int command, short channel, IntPtr pOutBuffer, int dwOutBufferSize);
     }
 }

@@ -5,60 +5,78 @@ using System.Text;
 
 namespace System.Data.HikHCNetSDK
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="lUserID"></param>
+    /// <param name="dwResult"></param>
+    /// <param name="lpDeviceInfo"></param>
+    /// <param name="pUser"></param>
     public delegate void LOGINRESULTCALLBACK(int lUserID, int dwResult, IntPtr lpDeviceInfo, IntPtr pUser);
-    /*********************************************************
-    Function:	EXCEPYIONCALLBACK
-    Desc:		(回调函数)
-    Input:	
-    Output:	
-    Return:	
-    **********************************************************/
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="dwType"></param>
+    /// <param name="lUserID"></param>
+    /// <param name="lHandle"></param>
+    /// <param name="pUser"></param>
     public delegate void EXCEPYIONCALLBACK(uint dwType, int lUserID, int lHandle, IntPtr pUser);
-    /*********************************************************
-    Function:	MESSCALLBACK
-    Desc:		(回调函数)
-    Input:	
-    Output:	
-    Return:	
-    **********************************************************/
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="lCommand"></param>
+    /// <param name="sDVRIP"></param>
+    /// <param name="pBuf"></param>
+    /// <param name="dwBufLen"></param>
+    /// <returns></returns>
     public delegate int MESSCALLBACK(int lCommand, string sDVRIP, string pBuf, uint dwBufLen);
-
-    /*********************************************************
-    Function:	MESSCALLBACKEX
-    Desc:		(回调函数)
-    Input:	
-    Output:	
-    Return:	
-    **********************************************************/
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="iCommand"></param>
+    /// <param name="iUserID"></param>
+    /// <param name="pBuf"></param>
+    /// <param name="dwBufLen"></param>
+    /// <returns></returns>
     public delegate int MESSCALLBACKEX(int iCommand, int iUserID, string pBuf, uint dwBufLen);
-
-    /*********************************************************
-    Function:	MESSCALLBACKNEW
-    Desc:		(回调函数)
-    Input:	
-    Output:	
-    Return:	
-    **********************************************************/
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="lCommand"></param>
+    /// <param name="sDVRIP"></param>
+    /// <param name="pBuf"></param>
+    /// <param name="dwBufLen"></param>
+    /// <param name="dwLinkDVRPort"></param>
+    /// <returns></returns>
     public delegate int MESSCALLBACKNEW(int lCommand, string sDVRIP, string pBuf, uint dwBufLen, ushort dwLinkDVRPort);
-
-    /*********************************************************
-    Function:	MESSAGECALLBACK
-    Desc:		(回调函数)
-    Input:	
-    Output:	
-    Return:	
-    **********************************************************/
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="lCommand"></param>
+    /// <param name="sDVRIP"></param>
+    /// <param name="pBuf"></param>
+    /// <param name="dwBufLen"></param>
+    /// <param name="dwUser"></param>
+    /// <returns></returns>
     public delegate int MESSAGECALLBACK(int lCommand, IntPtr sDVRIP, IntPtr pBuf, uint dwBufLen, uint dwUser);
-
-    /* Alarm information callback function
-     * [out] lCommand - message type upload(user manual for more details) entrance guard device : COMM_ALARM_ACS
-     * [out] pAlarmer -  information of alarm device
-     * [out] pAlarmInfo - alarm information (NET_DVR_ACS_ALARM_INFO)
-     * [out] dwBufLen - size of pAlarmInfo
-     * [out] pUser - user data
-     */
+    /// <summary>
+    /// Alarm information callback function
+    /// </summary>
+    /// <param name="lCommand">message type upload(user manual for more details) entrance guard device : COMM_ALARM_ACS</param>
+    /// <param name="pAlarmer">information of alarm device</param>
+    /// <param name="pAlarmInfo">alarm information (NET_DVR_ACS_ALARM_INFO)</param>
+    /// <param name="dwBufLen">size of pAlarmInfo</param>
+    /// <param name="pUser">user data</param>
     public delegate void MSGCallBack(int lCommand, ref NET_DVR_ALARMER pAlarmer, IntPtr pAlarmInfo, uint dwBufLen, IntPtr pUser);
-
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="lCommand"></param>
+    /// <param name="pAlarmer"></param>
+    /// <param name="pAlarmInfo"></param>
+    /// <param name="dwBufLen"></param>
+    /// <param name="pUser"></param>
+    /// <returns></returns>
     public delegate bool MSGCallBack_V31(int lCommand, ref NET_DVR_ALARMER pAlarmer, IntPtr pAlarmInfo, uint dwBufLen, IntPtr pUser);
     /// <summary>
     /// 预览回调
@@ -71,50 +89,48 @@ namespace System.Data.HikHCNetSDK
     public delegate void REALDATACALLBACK(Int32 lRealHandle, UInt32 dwDataType, IntPtr pBuffer, UInt32 dwBufSize, IntPtr pUser);
     // public delegate void REALDATACALLBACK(Int32 lRealHandle, UInt32 dwDataType, ref byte pBuffer, UInt32 dwBufSize, IntPtr pUser);
     // public delegate void RealDataCallBack(int lPlayHandle, uint dwDataType, IntPtr pBuffer, uint dwBufSize, IntPtr pUser);
-
-    /*********************************************************
-    Function:	DRAWFUN
-    Desc:		(回调函数)
-    Input:	
-    Output:	
-    Return:	
-    **********************************************************/
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="lRealHandle"></param>
+    /// <param name="hDc"></param>
+    /// <param name="dwUser"></param>
     public delegate void DRAWFUN(int lRealHandle, IntPtr hDc, uint dwUser);
-
-    /*********************************************************
-    Function:	REALDATACALLBACK
-    Desc:		(回调函数)
-    Input:	
-    Output:	
-    Return:	
-    **********************************************************/
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="lRealHandle"></param>
+    /// <param name="dwDataType"></param>
+    /// <param name="pBuffer"></param>
+    /// <param name="dwBufSize"></param>
+    /// <param name="dwUser"></param>
     public delegate void SETREALDATACALLBACK(int lRealHandle, uint dwDataType, IntPtr pBuffer, uint dwBufSize, uint dwUser);
-
-    /*********************************************************
-    Function:	STDDATACALLBACK
-    Desc:		(回调函数)
-    Input:	
-    Output:	
-    Return:	
-    **********************************************************/
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="lRealHandle"></param>
+    /// <param name="dwDataType"></param>
+    /// <param name="pBuffer"></param>
+    /// <param name="dwBufSize"></param>
+    /// <param name="dwUser"></param>
     public delegate void STDDATACALLBACK(int lRealHandle, uint dwDataType, ref byte pBuffer, uint dwBufSize, uint dwUser);
-
-    /*********************************************************
-    Function:	PLAYDATACALLBACK
-    Desc:		(回调函数)
-    Input:	
-    Output:	
-    Return:	
-    **********************************************************/
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="lPlayHandle"></param>
+    /// <param name="dwDataType"></param>
+    /// <param name="pBuffer"></param>
+    /// <param name="dwBufSize"></param>
+    /// <param name="dwUser"></param>
     public delegate void PLAYDATACALLBACK(int lPlayHandle, uint dwDataType, IntPtr pBuffer, uint dwBufSize, uint dwUser);
-
-    /*********************************************************
-    Function:	VOICEDATACALLBACK
-    Desc:		(回调函数)
-    Input:	
-    Output:	
-    Return:	
-    **********************************************************/
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="lVoiceComHandle"></param>
+    /// <param name="pRecvDataBuffer"></param>
+    /// <param name="dwBufSize"></param>
+    /// <param name="byAudioFlag"></param>
+    /// <param name="dwUser"></param>
     public delegate void VOICEDATACALLBACK(int lVoiceComHandle, string pRecvDataBuffer, uint dwBufSize, byte byAudioFlag, uint dwUser);
     /// <summary>
     /// 声音数据回调
@@ -126,38 +142,52 @@ namespace System.Data.HikHCNetSDK
     /// <param name="pUser"></param>
     public delegate void VOICEDATACALLBACKV30(int lVoiceComHandle, IntPtr pRecvDataBuffer, uint dwBufSize, byte byAudioFlag, IntPtr pUser);
     // public delegate void VOICEDATACALLBACKV30(int lVoiceComHandle, string pRecvDataBuffer, uint dwBufSize, byte byAudioFlag, IntPtr pUser);
-    /*********************************************************
-    Function:	VOICEAUDIOSTART
-    Desc:		(回调函数)
-    Input:	
-    Output:	
-    Return:	
-    **********************************************************/
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="pRecvDataBuffer"></param>
+    /// <param name="dwBufSize"></param>
+    /// <param name="pUser"></param>
     public delegate void VOICEAUDIOSTART(string pRecvDataBuffer, uint dwBufSize, IntPtr pUser);
-
-    //透明通道设置
-    /*********************************************************
-    Function:	SERIALDATACALLBACK
-    Desc:		(回调函数)
-    Input:	
-    Output:	
-    Return:	
-    **********************************************************/
+    /// <summary>
+    /// 透明通道设置 SERIALDATACALLBACK
+    /// </summary>
+    /// <param name="lSerialHandle"></param>
+    /// <param name="pRecvDataBuffer"></param>
+    /// <param name="dwBufSize"></param>
+    /// <param name="dwUser"></param>
     public delegate void SERIALDATACALLBACK(int lSerialHandle, string pRecvDataBuffer, uint dwBufSize, uint dwUser);
-
-    /* Long connection call back function
-     * [out] dwType - refer enum NET_SDK_CALLBACK_TYPE
-     * [out] lpBuffer - pointer to data buffer(user manual for more details)
-     * [out] dwBufLen - the buffer size
-     * [out] pUserData - pointer to user input data
-     */
+    /// <summary>
+    /// Long connection call back function
+    /// </summary>
+    /// <param name="dwType">refer enum NET_SDK_CALLBACK_TYPE</param>
+    /// <param name="lpBuffer">pointer to data buffer(user manual for more details)</param>
+    /// <param name="dwBufLen">the buffer size</param>
+    /// <param name="pUserData">pointer to user input data</param>
     public delegate void RemoteConfigCallback(uint dwType, IntPtr lpBuffer, uint dwBufLen, IntPtr pUserData);
-
-    // 异常回调函数
+    /// <summary>
+    /// 异常回调函数
+    /// </summary>
+    /// <param name="hSession"></param>
+    /// <param name="dwUser"></param>
+    /// <param name="lErrorType"></param>
     public delegate void ErrorCallback(IntPtr hSession, uint dwUser, int lErrorType);
-    //帧数据回调函数
+    /// <summary>
+    /// 帧数据回调函数
+    /// </summary>
+    /// <param name="hStream"></param>
+    /// <param name="dwUser"></param>
+    /// <param name="lFrameType"></param>
+    /// <param name="pBuffer"></param>
+    /// <param name="dwSize"></param>
     public delegate void VodStreamFrameData(IntPtr hStream, uint dwUser, int lFrameType, IntPtr pBuffer, uint dwSize);
-
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="iMessageType"></param>
+    /// <param name="pBuf"></param>
+    /// <param name="iBufLen"></param>
+    /// <returns></returns>
     public delegate int CALLBACKFUN_MESSAGE(int iMessageType, IntPtr pBuf, int iBufLen);
 
     internal class DCreater

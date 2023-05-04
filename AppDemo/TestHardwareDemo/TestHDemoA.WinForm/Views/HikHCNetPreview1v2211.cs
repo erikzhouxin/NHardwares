@@ -65,11 +65,9 @@ namespace TestHardwareDemo.WinForm.Views
         #region// Preview
 
         private uint iLastErr = 0;
-        private Int32 m_lUserID = -1;
         private bool m_bInitSDK = false;
         private bool m_bRecord = false;
         private bool m_bTalk = false;
-        private Int32 m_lRealHandle = -1;
         private int lVoiceComHandle = -1;
         private string str;
 
@@ -117,13 +115,13 @@ namespace TestHardwareDemo.WinForm.Views
 
         private void BtnNetPreview_Click(object sender, System.EventArgs e)
         {
-            if (m_lUserID < 0)
+            if (_config.UserID < 0)
             {
                 MessageBox.Show("Please login the device firstly");
                 return;
             }
 
-            if (m_lRealHandle < 0)
+            if (_config.RealHandler < 0)
             {
                 NET_DVR_PREVIEWINFO lpPreviewInfo = new NET_DVR_PREVIEWINFO();
                 lpPreviewInfo.hPlayWnd = RealPlayWnd.Handle;//预览窗口
@@ -152,12 +150,12 @@ namespace TestHardwareDemo.WinForm.Views
                 IntPtr pUser = new IntPtr();//用户数据
 
                 //打开预览 Start live view 
-                m_lRealHandle = CHCNetSDK.NET_DVR_RealPlay_V40(m_lUserID, ref lpPreviewInfo, null/*RealData*/, pUser);
-                if (m_lRealHandle < 0)
+                _config.RealHandler = CHCNetSDK.NET_DVR_RealPlay_V40(_config.UserID, ref lpPreviewInfo, null/*RealData*/, pUser);
+                if (_config.RealHandler < 0)
                 {
                     iLastErr = CHCNetSDK.NET_DVR_GetLastError();
                     str = "NET_DVR_RealPlay_V40 failed, error code= " + iLastErr; //预览失败，输出错误号
-                    MessageBox.Show(str);
+                    AppendError(str);
                     return;
                 }
                 else
@@ -169,14 +167,14 @@ namespace TestHardwareDemo.WinForm.Views
             else
             {
                 //停止预览 Stop live view 
-                if (!CHCNetSDK.NET_DVR_StopRealPlay(m_lRealHandle))
+                if (!CHCNetSDK.NET_DVR_StopRealPlay(_config.RealHandler))
                 {
                     iLastErr = CHCNetSDK.NET_DVR_GetLastError();
                     str = "NET_DVR_StopRealPlay failed, error code= " + iLastErr;
-                    MessageBox.Show(str);
+                    AppendError(str);
                     return;
                 }
-                m_lRealHandle = -1;
+                _config.RealHandler = -1;
                 //btnPreview.Text = "Live View";
 
             }
@@ -200,52 +198,39 @@ namespace TestHardwareDemo.WinForm.Views
 
         private void BtnNetBmp_Click(object sender, EventArgs e)
         {
-            string sBmpPicFileName;
             //图片保存路径和文件名 the path and file name to save
-            sBmpPicFileName = "BMP_test.bmp";
+            var sBmpPicFileName = $"{Guid.NewGuid().GetString()}.bmp";
 
             //BMP抓图 Capture a BMP picture
-            if (!CHCNetSDK.NET_DVR_CapturePicture(m_lRealHandle, sBmpPicFileName))
+            if (!CHCNetSDK.NET_DVR_CapturePicture(_config.RealHandler, sBmpPicFileName))
             {
                 iLastErr = CHCNetSDK.NET_DVR_GetLastError();
                 str = "NET_DVR_CapturePicture failed, error code= " + iLastErr;
-                MessageBox.Show(str);
+                AppendError(str);
                 return;
             }
-            else
-            {
-                str = "Successful to capture the BMP file and the saved file is " + sBmpPicFileName;
-                MessageBox.Show(str);
-            }
-            return;
+            str = "Successful to capture the BMP file and the saved file is " + sBmpPicFileName;
+            AppendSuccess(str);
         }
 
         private void BtnNetJpeg_Click(object sender, EventArgs e)
         {
-            string sJpegPicFileName;
             //图片保存路径和文件名 the path and file name to save
-            sJpegPicFileName = "JPEG_test.jpg";
-
+            var sJpegPicFileName = $"{Guid.NewGuid().GetString()}.jpg";
             int lChannel = Int16.Parse(TxtNetChannel.Text); //通道号 Channel number
-
             var lpJpegPara = new NET_DVR_JPEGPARA();
             lpJpegPara.wPicQuality = 0; //图像质量 Image quality
             lpJpegPara.wPicSize = 0xff; //抓图分辨率 Picture size: 2- 4CIF，0xff- Auto(使用当前码流分辨率)，抓图分辨率需要设备支持，更多取值请参考SDK文档
-
             //JPEG抓图 Capture a JPEG picture
-            if (!CHCNetSDK.NET_DVR_CaptureJPEGPicture(m_lUserID, lChannel, ref lpJpegPara, sJpegPicFileName))
+            if (!CHCNetSDK.NET_DVR_CaptureJPEGPicture(_config.UserID, lChannel, ref lpJpegPara, sJpegPicFileName))
             {
                 iLastErr = CHCNetSDK.NET_DVR_GetLastError();
                 str = "NET_DVR_CaptureJPEGPicture failed, error code= " + iLastErr;
-                MessageBox.Show(str);
+                AppendError(str);
                 return;
             }
-            else
-            {
-                str = "Successful to capture the JPEG file and the saved file is " + sJpegPicFileName;
-                MessageBox.Show(str);
-            }
-            return;
+            str = "Successful to capture the JPEG file and the saved file is " + sJpegPicFileName;
+            AppendSuccess(str);
         }
 
         private void BtnNetRecord_Click(object sender, EventArgs e)
@@ -258,14 +243,14 @@ namespace TestHardwareDemo.WinForm.Views
             {
                 //强制I帧 Make a I frame
                 int lChannel = Int16.Parse(TxtNetChannel.Text); //通道号 Channel number
-                CHCNetSDK.NET_DVR_MakeKeyFrame(m_lUserID, lChannel);
+                CHCNetSDK.NET_DVR_MakeKeyFrame(_config.UserID, lChannel);
 
                 //开始录像 Start recording
-                if (!CHCNetSDK.NET_DVR_SaveRealData(m_lRealHandle, sVideoFileName))
+                if (!CHCNetSDK.NET_DVR_SaveRealData(_config.RealHandler, sVideoFileName))
                 {
                     iLastErr = CHCNetSDK.NET_DVR_GetLastError();
                     str = "NET_DVR_SaveRealData failed, error code= " + iLastErr;
-                    MessageBox.Show(str);
+                    AppendError(str);
                     return;
                 }
                 else
@@ -277,17 +262,17 @@ namespace TestHardwareDemo.WinForm.Views
             else
             {
                 //停止录像 Stop recording
-                if (!CHCNetSDK.NET_DVR_StopSaveRealData(m_lRealHandle))
+                if (!CHCNetSDK.NET_DVR_StopSaveRealData(_config.RealHandler))
                 {
                     iLastErr = CHCNetSDK.NET_DVR_GetLastError();
                     str = "NET_DVR_StopSaveRealData failed, error code= " + iLastErr;
-                    MessageBox.Show(str);
+                    AppendError(str);
                     return;
                 }
                 else
                 {
                     str = "Successful to stop recording and the saved file is " + sVideoFileName;
-                    MessageBox.Show(str);
+                    AppendSuccess(str);
                     //btnRecord.Text = "Start Record";
                     m_bRecord = false;
                 }
@@ -299,17 +284,17 @@ namespace TestHardwareDemo.WinForm.Views
         private void btn_Exit_Click(object sender, EventArgs e)
         {
             //停止预览 Stop live view 
-            if (m_lRealHandle >= 0)
+            if (_config.RealHandler >= 0)
             {
-                CHCNetSDK.NET_DVR_StopRealPlay(m_lRealHandle);
-                m_lRealHandle = -1;
+                CHCNetSDK.NET_DVR_StopRealPlay(_config.RealHandler);
+                _config.RealHandler = -1;
             }
 
             //注销登录 Logout the device
-            if (m_lUserID >= 0)
+            if (_config.UserID >= 0)
             {
-                CHCNetSDK.NET_DVR_Logout(m_lUserID);
-                m_lUserID = -1;
+                CHCNetSDK.NET_DVR_Logout(_config.UserID);
+                _config.UserID = -1;
             }
 
             CHCNetSDK.NET_DVR_Cleanup();
@@ -350,7 +335,7 @@ namespace TestHardwareDemo.WinForm.Views
                 //开始语音对讲 Start two-way talk
                 var VoiceData = new VOICEDATACALLBACKV30(VoiceDataCallBack);//预览实时流回调函数
 
-                lVoiceComHandle = CHCNetSDK.NET_DVR_StartVoiceCom_V30(m_lUserID, 1, true, VoiceData, IntPtr.Zero);
+                lVoiceComHandle = CHCNetSDK.NET_DVR_StartVoiceCom_V30(_config.UserID, 1, true, VoiceData, IntPtr.Zero);
                 //bNeedCBNoEncData [in]需要回调的语音数据类型：0- 编码后的语音数据，1- 编码前的PCM原始数据
 
                 if (lVoiceComHandle < 0)
@@ -429,6 +414,21 @@ namespace TestHardwareDemo.WinForm.Views
                 }
             }
         }
+
+        private void BtnNetRemove_Click(object sender, EventArgs e)
+        {
+            BtnNetLogout_Click(sender, e);
+            btn_Exit_Click(sender, e);
+            var key = this.CbxNetConfigs.Text;
+            var model = _devices.FirstOrDefault(s => s.Key == key);
+            _devices.Remove(model);
+            try
+            {
+                System.IO.File.WriteAllText(_configPath, _devices.GetJsonFormatString());
+            }
+            catch { }
+            ReadDeviceAndSetFirstOne();
+        }
         private void CbxNetConfigs_SelectedIndexChanged(object sender, EventArgs e)
         {
             var text = this.CbxNetConfigs.Text;
@@ -438,16 +438,16 @@ namespace TestHardwareDemo.WinForm.Views
                 AppendError($"小呆瓜注意：此设备已删除");
                 return;
             }
+            var pass = _config;
+            if (pass.UserID > 0)
+            {
+                NetUserLogout(pass);
+            }
             _config = model;
-            var config = model.Config;
             this.TxtNetAddress.Text = model.Config.Address;
             this.TxtNetPort.Text = model.Config.Port.ToString();
             this.TxtNetAccount.Text = model.Config.Account;
             this.TxtNetPassword.Text = model.Config.Password;
-            if (model.UserID > 0)
-            {
-                NetUserLogout(model);
-            }
             model.LoginCallBack ??= new LOGINRESULTCALLBACK(cbLoginCallBack);//注册回调函数
             var loginInfo = new NET_DVR_USER_LOGIN_INFO()
             {
@@ -481,6 +481,39 @@ namespace TestHardwareDemo.WinForm.Views
             //登录成功
             AppendSuccess($"{model.Config.Address}:{model.Config.Port}?Account={model.Config.Account}&Password=****** 登录成功");
             AppendInfo(model.DeviceInfo.GetJsonFormatString());
+
+            NET_DVR_PREVIEWINFO lpPreviewInfo = new NET_DVR_PREVIEWINFO();
+            lpPreviewInfo.hPlayWnd = RealPlayWnd.Handle;//预览窗口
+            lpPreviewInfo.lChannel = Int16.Parse(TxtNetChannel.Text);//预te览的设备通道
+            lpPreviewInfo.dwStreamType = 0;//码流类型：0-主码流，1-子码流，2-码流3，3-码流4，以此类推
+            lpPreviewInfo.dwLinkMode = 0;//连接方式：0- TCP方式，1- UDP方式，2- 多播方式，3- RTP方式，4-RTP/RTSP，5-RSTP/HTTP 
+            lpPreviewInfo.bBlocked = true; //0- 非阻塞取流，1- 阻塞取流
+            lpPreviewInfo.dwDisplayBufNum = 1; //播放库播放缓冲区最大缓冲帧数
+            lpPreviewInfo.byProtoType = 0;
+            lpPreviewInfo.byPreviewMode = 0;
+
+            if (TxtNetTarget.Text != "")
+            {
+                lpPreviewInfo.lChannel = -1;
+                byte[] byStreamID = System.Text.Encoding.Default.GetBytes(TxtNetTarget.Text);
+                lpPreviewInfo.byStreamID = new byte[32];
+                byStreamID.CopyTo(lpPreviewInfo.byStreamID, 0);
+            }
+            if (RealData == null)
+            {
+                RealData = new REALDATACALLBACK(RealDataCallBack);//预览实时流回调函数
+            }
+
+            IntPtr pUser = new IntPtr();//用户数据
+
+            //打开预览 Start live view 
+            _config.RealHandler = CHCNetSDK.NET_DVR_RealPlay_V40(_config.UserID, ref lpPreviewInfo, null/*RealData*/, pUser);
+            if (_config.RealHandler < 0)
+            {
+                iLastErr = CHCNetSDK.NET_DVR_GetLastError();
+                str = "NET_DVR_RealPlay_V40 failed, error code= " + iLastErr; //预览失败，输出错误号
+                AppendError(str);
+            }
         }
 
         private void BtnNetLogout_Click(object sender, EventArgs e)
@@ -546,7 +579,6 @@ namespace TestHardwareDemo.WinForm.Views
             /// 句柄
             /// </summary>
             public IntPtr Handle { get; set; }
-            public int Handler { get => (int)Handle; set => Handle = (IntPtr)value; }
             public int UserID { get; set; }
             public int RealHandler { get; set; }
             public LOGINRESULTCALLBACK LoginCallBack { get; set; }
@@ -560,13 +592,6 @@ namespace TestHardwareDemo.WinForm.Views
             {
                 Config = config;
             }
-        }
-        internal interface IVzLPRSDKDemoSubCtrl
-        {
-            /// <summary>
-            /// 清理返回False则不能被清理
-            /// </summary>
-            IAlertMsg Clear();
         }
         #endregion
         /// <summary>
@@ -591,6 +616,20 @@ namespace TestHardwareDemo.WinForm.Views
             }
             catch { }
             base.OnHandleDestroyed(e);
+        }
+
+        private void BtnNetChecking_Click(object sender, EventArgs e)
+        {
+            // 检查登录信息
+            var status = new NET_DVR_WORKSTATE();
+            status.Init();
+            if (CHCNetSDK.NET_DVR_GetDVRWorkState(_config.UserID, ref status))
+            {
+                AppendSuccess($"检查成功[{_config.UserID}]");
+                AppendInfo(status.GetJsonFormatString());
+                return;
+            }
+            AppendError($"检查失败[{_config.UserID}](错误码:{CHCNetSDK.NET_DVR_GetLastError()})");
         }
     }
 }

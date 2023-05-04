@@ -27,6 +27,22 @@ namespace System.Data.YouRenIoTNetIO
         /// </summary>
         Int32 PortRate { get; }
         /// <summary>
+        /// 接收超时时间(毫秒)
+        /// </summary>
+        int ReceiveTimeout { get; set; }
+        /// <summary>
+        /// 发送超时时间(毫秒)
+        /// </summary>
+        int SendTimeout { get; set; }
+        /// <summary>
+        /// 重试次数
+        /// </summary>
+        int Retries { get; set; }
+        /// <summary>
+        /// 重试等待时间(毫秒)
+        /// </summary>
+        int RetryWaitout { get; set; }
+        /// <summary>
         /// 设置寄存器地址
         /// </summary>
         void SetSlaveId(int slaveId);
@@ -103,8 +119,12 @@ namespace System.Data.YouRenIoTNetIO
     {
         IUsrIOControlProxy _proxy;
         public IOControlType ControlType { get; }
-        public string Address => _proxy?.Address;
-        public int PortRate => _proxy?.PortRate ?? 0;
+        public string Address => _proxy.Address;
+        public int PortRate => _proxy.PortRate;
+        public int ReceiveTimeout { get => _proxy.ReceiveTimeout; set => _proxy.ReceiveTimeout = value; }
+        public int SendTimeout { get => _proxy.SendTimeout; set => _proxy.SendTimeout = value; }
+        public int Retries { get => _proxy.Retries; set => _proxy.Retries = value; }
+        public int RetryWaitout { get => _proxy.RetryWaitout; set => _proxy.RetryWaitout = value; }
         public UsrIOControlProxy(IOControlType type)
         {
             switch (ControlType = type)
@@ -180,6 +200,10 @@ namespace System.Data.YouRenIoTNetIO
         public string Address => _address.ToString();
         public int PortRate => _portRate;
         private byte _slaveId = 0x11;
+        public int ReceiveTimeout { get; set; }
+        public int SendTimeout { get; set; }
+        public int Retries { get; set; }
+        public int RetryWaitout { get; set; }
         public UsrIO808Device()
         {
             _address = IPAddress.Loopback;
@@ -191,12 +215,16 @@ namespace System.Data.YouRenIoTNetIO
             try
             {
                 var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                if (ReceiveTimeout > 0) { socket.ReceiveTimeout = ReceiveTimeout; }
+                if (SendTimeout > 0) { socket.SendTimeout = SendTimeout; }
                 socket.Connect(new IPEndPoint(_address, _portRate));
-                socket.ReceiveTimeout = 1000;
-                socket.SendTimeout = 1000;
                 lock (_locker)
                 {
                     _modbus = new ModbusFactory().CreateMaster(socket);
+                    if (ReceiveTimeout > 0) { _modbus.Transport.ReadTimeout = ReceiveTimeout; }
+                    if (SendTimeout > 0) { _modbus.Transport.WriteTimeout = SendTimeout; }
+                    _modbus.Transport.Retries = Retries > 0 ? Retries : 0;
+                    _modbus.Transport.WaitToRetryMilliseconds = RetryWaitout >= 0 ? RetryWaitout : 1000;
                     _socket = socket;
                 }
                 return new AlertMsg(true, "连接成功");
@@ -329,7 +357,7 @@ namespace System.Data.YouRenIoTNetIO
                 try { _modbus?.Dispose(); }
                 finally { _modbus = null; }
                 // try { _socket?.Disconnect(false); } catch { } // 释放时会断开连接
-                try { _socket?.Dispose(); }
+                try { _socket?.Close(); _socket?.Dispose(); }
                 finally { _socket = null; }
             }
             return new AlertMsg(true, $"已关闭【{_address}:{_portRate}】的连接");

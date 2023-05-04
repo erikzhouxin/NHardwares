@@ -4,14 +4,15 @@
 		<TargetFrameworks>net40;net45;netstandard2.1;netcoreapp3.1;net6.0</TargetFrameworks>
 		<AssemblyName>NSystem.Data.ShenBanReader</AssemblyName>
 		<RootNamespace>System.Data.ShenBanReader</RootNamespace>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+        <LangVersion>latest</LangVersion>
 		<SignAssembly>true</SignAssembly>
-		<LangVersion>latest</LangVersion>
 		<GenerateAssemblyInfo>true</GenerateAssemblyInfo>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<Authors>ErikZhouXin</Authors>
-		<Version>2022.11.11</Version>
-		<AssemblyVersion>2022.11.11.711</AssemblyVersion>
-		<FileVersion>2022.11.11.711</FileVersion>
+		<Version>2022.12.12</Version>
+		<AssemblyVersion>2022.12.12.722</AssemblyVersion>
+		<FileVersion>2022.12.12.722</FileVersion>
 		<Description>针对深坂科技RFID的R600进行的操作封装</Description>
 		<Copyright>©2020 ErikZhouXin</Copyright>
 		<PackageTags>r600;r2000;rfid;射频识别</PackageTags>

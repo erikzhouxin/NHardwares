@@ -28,437 +28,443 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.PnlMainContent = new System.Windows.Forms.Panel();
-            this.TlpMainContent = new System.Windows.Forms.TableLayoutPanel();
-            this.PnlTabCnt3 = new System.Windows.Forms.Panel();
-            this.GpbTxtLoggger = new System.Windows.Forms.GroupBox();
-            this.TxtLogger = new System.Windows.Forms.RichTextBox();
-            this.CmsrTxtLoggerCtx = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.TsrmLoggerClear = new System.Windows.Forms.ToolStripMenuItem();
-            this.GrbScreenView = new System.Windows.Forms.GroupBox();
-            this.PnlScreenView = new System.Windows.Forms.Panel();
-            this.RealPlayWnd = new System.Windows.Forms.PictureBox();
-            this.CmsNetConfigs = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.TsmiNetPreviewView = new System.Windows.Forms.ToolStripMenuItem();
-            this.TsmiNetBmp = new System.Windows.Forms.ToolStripMenuItem();
-            this.TsmiNetJpeg = new System.Windows.Forms.ToolStripMenuItem();
-            this.TsmiNetTalk = new System.Windows.Forms.ToolStripMenuItem();
-            this.TsmiNetRecord = new System.Windows.Forms.ToolStripMenuItem();
-            this.TsmiNetPtz = new System.Windows.Forms.ToolStripMenuItem();
-            this.PnlTabCnt1 = new System.Windows.Forms.Panel();
-            this.GrbNetConfig = new System.Windows.Forms.GroupBox();
-            this.PnlNetConfig = new System.Windows.Forms.Panel();
-            this.GrbNetDetail = new System.Windows.Forms.GroupBox();
-            this.PnlNetDetail = new System.Windows.Forms.Panel();
-            this.BtnNetLogout = new System.Windows.Forms.Button();
-            this.BtnNetRemove = new System.Windows.Forms.Button();
-            this.BtnNetLogin = new System.Windows.Forms.Button();
-            this.LblNetAddress = new System.Windows.Forms.Label();
-            this.TxtNetAddress = new System.Windows.Forms.TextBox();
-            this.TxtNetPort = new System.Windows.Forms.TextBox();
-            this.TxtNetAccount = new System.Windows.Forms.TextBox();
-            this.TxtNetTarget = new System.Windows.Forms.TextBox();
-            this.TxtNetPassword = new System.Windows.Forms.TextBox();
-            this.TxtNetChannel = new System.Windows.Forms.TextBox();
-            this.LblNetAccount = new System.Windows.Forms.Label();
-            this.LblNetChannel = new System.Windows.Forms.Label();
-            this.PnlNetConfigs = new System.Windows.Forms.Panel();
-            this.LblNetConfigs = new System.Windows.Forms.Label();
-            this.CbxNetConfigs = new System.Windows.Forms.ComboBox();
-            this.PnlMainContent.SuspendLayout();
-            this.TlpMainContent.SuspendLayout();
-            this.GpbTxtLoggger.SuspendLayout();
-            this.CmsrTxtLoggerCtx.SuspendLayout();
-            this.GrbScreenView.SuspendLayout();
-            this.PnlScreenView.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.RealPlayWnd)).BeginInit();
-            this.CmsNetConfigs.SuspendLayout();
-            this.PnlTabCnt1.SuspendLayout();
-            this.GrbNetConfig.SuspendLayout();
-            this.PnlNetConfig.SuspendLayout();
-            this.GrbNetDetail.SuspendLayout();
-            this.PnlNetDetail.SuspendLayout();
-            this.PnlNetConfigs.SuspendLayout();
-            this.SuspendLayout();
+            components = new System.ComponentModel.Container();
+            PnlMainContent = new System.Windows.Forms.Panel();
+            TlpMainContent = new System.Windows.Forms.TableLayoutPanel();
+            PnlTabCnt3 = new System.Windows.Forms.Panel();
+            GpbTxtLoggger = new System.Windows.Forms.GroupBox();
+            TxtLogger = new System.Windows.Forms.RichTextBox();
+            CmsrTxtLoggerCtx = new System.Windows.Forms.ContextMenuStrip(components);
+            TsrmLoggerClear = new System.Windows.Forms.ToolStripMenuItem();
+            GrbScreenView = new System.Windows.Forms.GroupBox();
+            PnlScreenView = new System.Windows.Forms.Panel();
+            RealPlayWnd = new System.Windows.Forms.PictureBox();
+            CmsNetConfigs = new System.Windows.Forms.ContextMenuStrip(components);
+            TsmiNetPreviewView = new System.Windows.Forms.ToolStripMenuItem();
+            TsmiNetBmp = new System.Windows.Forms.ToolStripMenuItem();
+            TsmiNetJpeg = new System.Windows.Forms.ToolStripMenuItem();
+            TsmiNetTalk = new System.Windows.Forms.ToolStripMenuItem();
+            TsmiNetRecord = new System.Windows.Forms.ToolStripMenuItem();
+            TsmiNetPtz = new System.Windows.Forms.ToolStripMenuItem();
+            PnlTabCnt1 = new System.Windows.Forms.Panel();
+            GrbNetConfig = new System.Windows.Forms.GroupBox();
+            PnlNetConfig = new System.Windows.Forms.Panel();
+            GrbNetDetail = new System.Windows.Forms.GroupBox();
+            PnlNetDetail = new System.Windows.Forms.Panel();
+            BtnNetLogout = new System.Windows.Forms.Button();
+            BtnNetRemove = new System.Windows.Forms.Button();
+            BtnNetLogin = new System.Windows.Forms.Button();
+            LblNetAddress = new System.Windows.Forms.Label();
+            TxtNetAddress = new System.Windows.Forms.TextBox();
+            TxtNetPort = new System.Windows.Forms.TextBox();
+            TxtNetAccount = new System.Windows.Forms.TextBox();
+            TxtNetTarget = new System.Windows.Forms.TextBox();
+            TxtNetPassword = new System.Windows.Forms.TextBox();
+            TxtNetChannel = new System.Windows.Forms.TextBox();
+            LblNetAccount = new System.Windows.Forms.Label();
+            LblNetChannel = new System.Windows.Forms.Label();
+            PnlNetConfigs = new System.Windows.Forms.Panel();
+            LblNetConfigs = new System.Windows.Forms.Label();
+            CbxNetConfigs = new System.Windows.Forms.ComboBox();
+            BtnNetChecking = new System.Windows.Forms.Button();
+            PnlMainContent.SuspendLayout();
+            TlpMainContent.SuspendLayout();
+            GpbTxtLoggger.SuspendLayout();
+            CmsrTxtLoggerCtx.SuspendLayout();
+            GrbScreenView.SuspendLayout();
+            PnlScreenView.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)RealPlayWnd).BeginInit();
+            CmsNetConfigs.SuspendLayout();
+            PnlTabCnt1.SuspendLayout();
+            GrbNetConfig.SuspendLayout();
+            PnlNetConfig.SuspendLayout();
+            GrbNetDetail.SuspendLayout();
+            PnlNetDetail.SuspendLayout();
+            PnlNetConfigs.SuspendLayout();
+            SuspendLayout();
             // 
             // PnlMainContent
             // 
-            this.PnlMainContent.Controls.Add(this.TlpMainContent);
-            this.PnlMainContent.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.PnlMainContent.Location = new System.Drawing.Point(0, 0);
-            this.PnlMainContent.Name = "PnlMainContent";
-            this.PnlMainContent.Size = new System.Drawing.Size(1095, 723);
-            this.PnlMainContent.TabIndex = 0;
+            PnlMainContent.Controls.Add(TlpMainContent);
+            PnlMainContent.Dock = System.Windows.Forms.DockStyle.Fill;
+            PnlMainContent.Location = new System.Drawing.Point(0, 0);
+            PnlMainContent.Name = "PnlMainContent";
+            PnlMainContent.Size = new System.Drawing.Size(1095, 723);
+            PnlMainContent.TabIndex = 0;
             // 
             // TlpMainContent
             // 
-            this.TlpMainContent.ColumnCount = 2;
-            this.TlpMainContent.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.TlpMainContent.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.TlpMainContent.Controls.Add(this.PnlTabCnt3, 0, 1);
-            this.TlpMainContent.Controls.Add(this.GpbTxtLoggger, 1, 1);
-            this.TlpMainContent.Controls.Add(this.GrbScreenView, 1, 0);
-            this.TlpMainContent.Controls.Add(this.PnlTabCnt1, 0, 0);
-            this.TlpMainContent.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.TlpMainContent.Location = new System.Drawing.Point(0, 0);
-            this.TlpMainContent.Name = "TlpMainContent";
-            this.TlpMainContent.RowCount = 2;
-            this.TlpMainContent.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.TlpMainContent.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.TlpMainContent.Size = new System.Drawing.Size(1095, 723);
-            this.TlpMainContent.TabIndex = 0;
+            TlpMainContent.ColumnCount = 2;
+            TlpMainContent.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            TlpMainContent.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            TlpMainContent.Controls.Add(PnlTabCnt3, 0, 1);
+            TlpMainContent.Controls.Add(GpbTxtLoggger, 1, 1);
+            TlpMainContent.Controls.Add(GrbScreenView, 1, 0);
+            TlpMainContent.Controls.Add(PnlTabCnt1, 0, 0);
+            TlpMainContent.Dock = System.Windows.Forms.DockStyle.Fill;
+            TlpMainContent.Location = new System.Drawing.Point(0, 0);
+            TlpMainContent.Name = "TlpMainContent";
+            TlpMainContent.RowCount = 2;
+            TlpMainContent.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            TlpMainContent.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            TlpMainContent.Size = new System.Drawing.Size(1095, 723);
+            TlpMainContent.TabIndex = 0;
             // 
             // PnlTabCnt3
             // 
-            this.PnlTabCnt3.AutoScroll = true;
-            this.PnlTabCnt3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.PnlTabCnt3.Location = new System.Drawing.Point(3, 364);
-            this.PnlTabCnt3.Name = "PnlTabCnt3";
-            this.PnlTabCnt3.Size = new System.Drawing.Size(541, 356);
-            this.PnlTabCnt3.TabIndex = 3;
+            PnlTabCnt3.AutoScroll = true;
+            PnlTabCnt3.Dock = System.Windows.Forms.DockStyle.Fill;
+            PnlTabCnt3.Location = new System.Drawing.Point(3, 364);
+            PnlTabCnt3.Name = "PnlTabCnt3";
+            PnlTabCnt3.Size = new System.Drawing.Size(541, 356);
+            PnlTabCnt3.TabIndex = 3;
             // 
             // GpbTxtLoggger
             // 
-            this.GpbTxtLoggger.Controls.Add(this.TxtLogger);
-            this.GpbTxtLoggger.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.GpbTxtLoggger.Location = new System.Drawing.Point(550, 364);
-            this.GpbTxtLoggger.Name = "GpbTxtLoggger";
-            this.GpbTxtLoggger.Size = new System.Drawing.Size(542, 356);
-            this.GpbTxtLoggger.TabIndex = 0;
-            this.GpbTxtLoggger.TabStop = false;
-            this.GpbTxtLoggger.Text = "日志信息";
+            GpbTxtLoggger.Controls.Add(TxtLogger);
+            GpbTxtLoggger.Dock = System.Windows.Forms.DockStyle.Fill;
+            GpbTxtLoggger.Location = new System.Drawing.Point(550, 364);
+            GpbTxtLoggger.Name = "GpbTxtLoggger";
+            GpbTxtLoggger.Size = new System.Drawing.Size(542, 356);
+            GpbTxtLoggger.TabIndex = 0;
+            GpbTxtLoggger.TabStop = false;
+            GpbTxtLoggger.Text = "日志信息";
             // 
             // TxtLogger
             // 
-            this.TxtLogger.ContextMenuStrip = this.CmsrTxtLoggerCtx;
-            this.TxtLogger.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.TxtLogger.Location = new System.Drawing.Point(3, 19);
-            this.TxtLogger.Name = "TxtLogger";
-            this.TxtLogger.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
-            this.TxtLogger.Size = new System.Drawing.Size(536, 334);
-            this.TxtLogger.TabIndex = 0;
-            this.TxtLogger.Text = "";
+            TxtLogger.ContextMenuStrip = CmsrTxtLoggerCtx;
+            TxtLogger.Dock = System.Windows.Forms.DockStyle.Fill;
+            TxtLogger.Location = new System.Drawing.Point(3, 19);
+            TxtLogger.Name = "TxtLogger";
+            TxtLogger.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
+            TxtLogger.Size = new System.Drawing.Size(536, 334);
+            TxtLogger.TabIndex = 0;
+            TxtLogger.Text = "";
             // 
             // CmsrTxtLoggerCtx
             // 
-            this.CmsrTxtLoggerCtx.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.TsrmLoggerClear});
-            this.CmsrTxtLoggerCtx.Name = "CmsrTxtLoggerCtx";
-            this.CmsrTxtLoggerCtx.Size = new System.Drawing.Size(125, 26);
+            CmsrTxtLoggerCtx.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { TsrmLoggerClear });
+            CmsrTxtLoggerCtx.Name = "CmsrTxtLoggerCtx";
+            CmsrTxtLoggerCtx.Size = new System.Drawing.Size(125, 26);
             // 
             // TsrmLoggerClear
             // 
-            this.TsrmLoggerClear.Name = "TsrmLoggerClear";
-            this.TsrmLoggerClear.Size = new System.Drawing.Size(124, 22);
-            this.TsrmLoggerClear.Text = "清空日志";
+            TsrmLoggerClear.Name = "TsrmLoggerClear";
+            TsrmLoggerClear.Size = new System.Drawing.Size(124, 22);
+            TsrmLoggerClear.Text = "清空日志";
+            TsrmLoggerClear.Click += TsrmLoggerClear_Click;
             // 
             // GrbScreenView
             // 
-            this.GrbScreenView.Controls.Add(this.PnlScreenView);
-            this.GrbScreenView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.GrbScreenView.Location = new System.Drawing.Point(550, 3);
-            this.GrbScreenView.Name = "GrbScreenView";
-            this.GrbScreenView.Size = new System.Drawing.Size(542, 355);
-            this.GrbScreenView.TabIndex = 1;
-            this.GrbScreenView.TabStop = false;
-            this.GrbScreenView.Text = "视频预览";
+            GrbScreenView.Controls.Add(PnlScreenView);
+            GrbScreenView.Dock = System.Windows.Forms.DockStyle.Fill;
+            GrbScreenView.Location = new System.Drawing.Point(550, 3);
+            GrbScreenView.Name = "GrbScreenView";
+            GrbScreenView.Size = new System.Drawing.Size(542, 355);
+            GrbScreenView.TabIndex = 1;
+            GrbScreenView.TabStop = false;
+            GrbScreenView.Text = "视频预览";
             // 
             // PnlScreenView
             // 
-            this.PnlScreenView.Controls.Add(this.RealPlayWnd);
-            this.PnlScreenView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.PnlScreenView.Location = new System.Drawing.Point(3, 19);
-            this.PnlScreenView.Name = "PnlScreenView";
-            this.PnlScreenView.Size = new System.Drawing.Size(536, 333);
-            this.PnlScreenView.TabIndex = 0;
+            PnlScreenView.Controls.Add(RealPlayWnd);
+            PnlScreenView.Dock = System.Windows.Forms.DockStyle.Fill;
+            PnlScreenView.Location = new System.Drawing.Point(3, 19);
+            PnlScreenView.Name = "PnlScreenView";
+            PnlScreenView.Size = new System.Drawing.Size(536, 333);
+            PnlScreenView.TabIndex = 0;
             // 
             // RealPlayWnd
             // 
-            this.RealPlayWnd.BackColor = System.Drawing.SystemColors.WindowText;
-            this.RealPlayWnd.ContextMenuStrip = this.CmsNetConfigs;
-            this.RealPlayWnd.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.RealPlayWnd.Location = new System.Drawing.Point(0, 0);
-            this.RealPlayWnd.Name = "RealPlayWnd";
-            this.RealPlayWnd.Size = new System.Drawing.Size(536, 333);
-            this.RealPlayWnd.TabIndex = 5;
-            this.RealPlayWnd.TabStop = false;
+            RealPlayWnd.BackColor = System.Drawing.SystemColors.WindowText;
+            RealPlayWnd.ContextMenuStrip = CmsNetConfigs;
+            RealPlayWnd.Dock = System.Windows.Forms.DockStyle.Fill;
+            RealPlayWnd.Location = new System.Drawing.Point(0, 0);
+            RealPlayWnd.Name = "RealPlayWnd";
+            RealPlayWnd.Size = new System.Drawing.Size(536, 333);
+            RealPlayWnd.TabIndex = 5;
+            RealPlayWnd.TabStop = false;
             // 
             // CmsNetConfigs
             // 
-            this.CmsNetConfigs.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.TsmiNetPreviewView,
-            this.TsmiNetBmp,
-            this.TsmiNetJpeg,
-            this.TsmiNetTalk,
-            this.TsmiNetRecord,
-            this.TsmiNetPtz});
-            this.CmsNetConfigs.Name = "CmsNetConfigs";
-            this.CmsNetConfigs.Size = new System.Drawing.Size(129, 136);
+            CmsNetConfigs.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { TsmiNetPreviewView, TsmiNetBmp, TsmiNetJpeg, TsmiNetTalk, TsmiNetRecord, TsmiNetPtz });
+            CmsNetConfigs.Name = "CmsNetConfigs";
+            CmsNetConfigs.Size = new System.Drawing.Size(129, 136);
             // 
             // TsmiNetPreviewView
             // 
-            this.TsmiNetPreviewView.Name = "TsmiNetPreviewView";
-            this.TsmiNetPreviewView.Size = new System.Drawing.Size(128, 22);
-            this.TsmiNetPreviewView.Text = "实时预览";
-            this.TsmiNetPreviewView.Click += new System.EventHandler(this.BtnNetPreview_Click);
+            TsmiNetPreviewView.Name = "TsmiNetPreviewView";
+            TsmiNetPreviewView.Size = new System.Drawing.Size(128, 22);
+            TsmiNetPreviewView.Text = "实时预览";
+            TsmiNetPreviewView.Click += BtnNetPreview_Click;
             // 
             // TsmiNetBmp
             // 
-            this.TsmiNetBmp.Name = "TsmiNetBmp";
-            this.TsmiNetBmp.Size = new System.Drawing.Size(128, 22);
-            this.TsmiNetBmp.Text = "BMP抓图";
-            this.TsmiNetBmp.Click += new System.EventHandler(this.BtnNetBmp_Click);
+            TsmiNetBmp.Name = "TsmiNetBmp";
+            TsmiNetBmp.Size = new System.Drawing.Size(128, 22);
+            TsmiNetBmp.Text = "BMP抓图";
+            TsmiNetBmp.Click += BtnNetBmp_Click;
             // 
             // TsmiNetJpeg
             // 
-            this.TsmiNetJpeg.Name = "TsmiNetJpeg";
-            this.TsmiNetJpeg.Size = new System.Drawing.Size(128, 22);
-            this.TsmiNetJpeg.Text = "JPEG抓图";
-            this.TsmiNetJpeg.Click += new System.EventHandler(this.BtnNetJpeg_Click);
+            TsmiNetJpeg.Name = "TsmiNetJpeg";
+            TsmiNetJpeg.Size = new System.Drawing.Size(128, 22);
+            TsmiNetJpeg.Text = "JPEG抓图";
+            TsmiNetJpeg.Click += BtnNetJpeg_Click;
             // 
             // TsmiNetTalk
             // 
-            this.TsmiNetTalk.Name = "TsmiNetTalk";
-            this.TsmiNetTalk.Size = new System.Drawing.Size(128, 22);
-            this.TsmiNetTalk.Text = "语音对讲";
-            this.TsmiNetTalk.Click += new System.EventHandler(this.BtnNetVioceTalk_Click);
+            TsmiNetTalk.Name = "TsmiNetTalk";
+            TsmiNetTalk.Size = new System.Drawing.Size(128, 22);
+            TsmiNetTalk.Text = "语音对讲";
+            TsmiNetTalk.Click += BtnNetVioceTalk_Click;
             // 
             // TsmiNetRecord
             // 
-            this.TsmiNetRecord.Name = "TsmiNetRecord";
-            this.TsmiNetRecord.Size = new System.Drawing.Size(128, 22);
-            this.TsmiNetRecord.Text = "录像开始";
-            this.TsmiNetRecord.Click += new System.EventHandler(this.BtnNetRecord_Click);
+            TsmiNetRecord.Name = "TsmiNetRecord";
+            TsmiNetRecord.Size = new System.Drawing.Size(128, 22);
+            TsmiNetRecord.Text = "录像开始";
+            TsmiNetRecord.Click += BtnNetRecord_Click;
             // 
             // TsmiNetPtz
             // 
-            this.TsmiNetPtz.Name = "TsmiNetPtz";
-            this.TsmiNetPtz.Size = new System.Drawing.Size(128, 22);
-            this.TsmiNetPtz.Text = "云台控制";
-            this.TsmiNetPtz.Click += new System.EventHandler(this.BtnNetPtz_Click);
+            TsmiNetPtz.Name = "TsmiNetPtz";
+            TsmiNetPtz.Size = new System.Drawing.Size(128, 22);
+            TsmiNetPtz.Text = "云台控制";
+            TsmiNetPtz.Click += BtnNetPtz_Click;
             // 
             // PnlTabCnt1
             // 
-            this.PnlTabCnt1.AutoScroll = true;
-            this.PnlTabCnt1.Controls.Add(this.GrbNetConfig);
-            this.PnlTabCnt1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.PnlTabCnt1.Location = new System.Drawing.Point(3, 3);
-            this.PnlTabCnt1.Name = "PnlTabCnt1";
-            this.PnlTabCnt1.Size = new System.Drawing.Size(541, 355);
-            this.PnlTabCnt1.TabIndex = 4;
+            PnlTabCnt1.AutoScroll = true;
+            PnlTabCnt1.Controls.Add(GrbNetConfig);
+            PnlTabCnt1.Dock = System.Windows.Forms.DockStyle.Fill;
+            PnlTabCnt1.Location = new System.Drawing.Point(3, 3);
+            PnlTabCnt1.Name = "PnlTabCnt1";
+            PnlTabCnt1.Size = new System.Drawing.Size(541, 355);
+            PnlTabCnt1.TabIndex = 4;
             // 
             // GrbNetConfig
             // 
-            this.GrbNetConfig.Controls.Add(this.PnlNetConfig);
-            this.GrbNetConfig.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.GrbNetConfig.Location = new System.Drawing.Point(0, 0);
-            this.GrbNetConfig.Name = "GrbNetConfig";
-            this.GrbNetConfig.Size = new System.Drawing.Size(541, 355);
-            this.GrbNetConfig.TabIndex = 2;
-            this.GrbNetConfig.TabStop = false;
-            this.GrbNetConfig.Text = "配置信息";
+            GrbNetConfig.Controls.Add(PnlNetConfig);
+            GrbNetConfig.Dock = System.Windows.Forms.DockStyle.Fill;
+            GrbNetConfig.Location = new System.Drawing.Point(0, 0);
+            GrbNetConfig.Name = "GrbNetConfig";
+            GrbNetConfig.Size = new System.Drawing.Size(541, 355);
+            GrbNetConfig.TabIndex = 2;
+            GrbNetConfig.TabStop = false;
+            GrbNetConfig.Text = "配置信息";
             // 
             // PnlNetConfig
             // 
-            this.PnlNetConfig.AutoScroll = true;
-            this.PnlNetConfig.Controls.Add(this.GrbNetDetail);
-            this.PnlNetConfig.Controls.Add(this.PnlNetConfigs);
-            this.PnlNetConfig.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.PnlNetConfig.Location = new System.Drawing.Point(3, 19);
-            this.PnlNetConfig.Name = "PnlNetConfig";
-            this.PnlNetConfig.Size = new System.Drawing.Size(535, 333);
-            this.PnlNetConfig.TabIndex = 0;
+            PnlNetConfig.AutoScroll = true;
+            PnlNetConfig.Controls.Add(GrbNetDetail);
+            PnlNetConfig.Controls.Add(PnlNetConfigs);
+            PnlNetConfig.Dock = System.Windows.Forms.DockStyle.Fill;
+            PnlNetConfig.Location = new System.Drawing.Point(3, 19);
+            PnlNetConfig.Name = "PnlNetConfig";
+            PnlNetConfig.Size = new System.Drawing.Size(535, 333);
+            PnlNetConfig.TabIndex = 0;
             // 
             // GrbNetDetail
             // 
-            this.GrbNetDetail.Controls.Add(this.PnlNetDetail);
-            this.GrbNetDetail.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.GrbNetDetail.Location = new System.Drawing.Point(0, 51);
-            this.GrbNetDetail.MinimumSize = new System.Drawing.Size(500, 110);
-            this.GrbNetDetail.Name = "GrbNetDetail";
-            this.GrbNetDetail.Size = new System.Drawing.Size(535, 282);
-            this.GrbNetDetail.TabIndex = 70;
-            this.GrbNetDetail.TabStop = false;
-            this.GrbNetDetail.Text = "详细信息";
+            GrbNetDetail.Controls.Add(PnlNetDetail);
+            GrbNetDetail.Dock = System.Windows.Forms.DockStyle.Fill;
+            GrbNetDetail.Location = new System.Drawing.Point(0, 51);
+            GrbNetDetail.MinimumSize = new System.Drawing.Size(500, 110);
+            GrbNetDetail.Name = "GrbNetDetail";
+            GrbNetDetail.Size = new System.Drawing.Size(535, 282);
+            GrbNetDetail.TabIndex = 70;
+            GrbNetDetail.TabStop = false;
+            GrbNetDetail.Text = "详细信息";
             // 
             // PnlNetDetail
             // 
-            this.PnlNetDetail.AutoScroll = true;
-            this.PnlNetDetail.Controls.Add(this.BtnNetLogout);
-            this.PnlNetDetail.Controls.Add(this.BtnNetRemove);
-            this.PnlNetDetail.Controls.Add(this.BtnNetLogin);
-            this.PnlNetDetail.Controls.Add(this.LblNetAddress);
-            this.PnlNetDetail.Controls.Add(this.TxtNetAddress);
-            this.PnlNetDetail.Controls.Add(this.TxtNetPort);
-            this.PnlNetDetail.Controls.Add(this.TxtNetAccount);
-            this.PnlNetDetail.Controls.Add(this.TxtNetTarget);
-            this.PnlNetDetail.Controls.Add(this.TxtNetPassword);
-            this.PnlNetDetail.Controls.Add(this.TxtNetChannel);
-            this.PnlNetDetail.Controls.Add(this.LblNetAccount);
-            this.PnlNetDetail.Controls.Add(this.LblNetChannel);
-            this.PnlNetDetail.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.PnlNetDetail.Location = new System.Drawing.Point(3, 19);
-            this.PnlNetDetail.Name = "PnlNetDetail";
-            this.PnlNetDetail.Size = new System.Drawing.Size(529, 260);
-            this.PnlNetDetail.TabIndex = 68;
+            PnlNetDetail.AutoScroll = true;
+            PnlNetDetail.Controls.Add(BtnNetChecking);
+            PnlNetDetail.Controls.Add(BtnNetLogout);
+            PnlNetDetail.Controls.Add(BtnNetRemove);
+            PnlNetDetail.Controls.Add(BtnNetLogin);
+            PnlNetDetail.Controls.Add(LblNetAddress);
+            PnlNetDetail.Controls.Add(TxtNetAddress);
+            PnlNetDetail.Controls.Add(TxtNetPort);
+            PnlNetDetail.Controls.Add(TxtNetAccount);
+            PnlNetDetail.Controls.Add(TxtNetTarget);
+            PnlNetDetail.Controls.Add(TxtNetPassword);
+            PnlNetDetail.Controls.Add(TxtNetChannel);
+            PnlNetDetail.Controls.Add(LblNetAccount);
+            PnlNetDetail.Controls.Add(LblNetChannel);
+            PnlNetDetail.Dock = System.Windows.Forms.DockStyle.Fill;
+            PnlNetDetail.Location = new System.Drawing.Point(3, 19);
+            PnlNetDetail.Name = "PnlNetDetail";
+            PnlNetDetail.Size = new System.Drawing.Size(529, 260);
+            PnlNetDetail.TabIndex = 68;
             // 
             // BtnNetLogout
             // 
-            this.BtnNetLogout.Location = new System.Drawing.Point(113, 115);
-            this.BtnNetLogout.Name = "BtnNetLogout";
-            this.BtnNetLogout.Size = new System.Drawing.Size(59, 26);
-            this.BtnNetLogout.TabIndex = 66;
-            this.BtnNetLogout.Text = "断开";
-            this.BtnNetLogout.Click += new System.EventHandler(this.BtnNetLogout_Click);
+            BtnNetLogout.Location = new System.Drawing.Point(113, 115);
+            BtnNetLogout.Name = "BtnNetLogout";
+            BtnNetLogout.Size = new System.Drawing.Size(59, 26);
+            BtnNetLogout.TabIndex = 66;
+            BtnNetLogout.Text = "断开";
+            BtnNetLogout.Click += BtnNetLogout_Click;
             // 
             // BtnNetRemove
             // 
-            this.BtnNetRemove.Location = new System.Drawing.Point(199, 115);
-            this.BtnNetRemove.Name = "BtnNetRemove";
-            this.BtnNetRemove.Size = new System.Drawing.Size(59, 26);
-            this.BtnNetRemove.TabIndex = 65;
-            this.BtnNetRemove.Text = "移除";
+            BtnNetRemove.Location = new System.Drawing.Point(199, 115);
+            BtnNetRemove.Name = "BtnNetRemove";
+            BtnNetRemove.Size = new System.Drawing.Size(59, 26);
+            BtnNetRemove.TabIndex = 65;
+            BtnNetRemove.Text = "移除";
+            BtnNetRemove.Click += BtnNetRemove_Click;
             // 
             // BtnNetLogin
             // 
-            this.BtnNetLogin.Location = new System.Drawing.Point(27, 115);
-            this.BtnNetLogin.Name = "BtnNetLogin";
-            this.BtnNetLogin.Size = new System.Drawing.Size(59, 26);
-            this.BtnNetLogin.TabIndex = 64;
-            this.BtnNetLogin.Text = "连接";
-            this.BtnNetLogin.Click += new System.EventHandler(this.BtnNetLogin_Click);
+            BtnNetLogin.Location = new System.Drawing.Point(27, 115);
+            BtnNetLogin.Name = "BtnNetLogin";
+            BtnNetLogin.Size = new System.Drawing.Size(59, 26);
+            BtnNetLogin.TabIndex = 64;
+            BtnNetLogin.Text = "连接";
+            BtnNetLogin.Click += BtnNetLogin_Click;
             // 
             // LblNetAddress
             // 
-            this.LblNetAddress.AutoSize = true;
-            this.LblNetAddress.Location = new System.Drawing.Point(15, 12);
-            this.LblNetAddress.Name = "LblNetAddress";
-            this.LblNetAddress.Size = new System.Drawing.Size(68, 17);
-            this.LblNetAddress.TabIndex = 43;
-            this.LblNetAddress.Text = "地址端口：";
+            LblNetAddress.AutoSize = true;
+            LblNetAddress.Location = new System.Drawing.Point(15, 12);
+            LblNetAddress.Name = "LblNetAddress";
+            LblNetAddress.Size = new System.Drawing.Size(68, 17);
+            LblNetAddress.TabIndex = 43;
+            LblNetAddress.Text = "地址端口：";
             // 
             // TxtNetAddress
             // 
-            this.TxtNetAddress.Location = new System.Drawing.Point(89, 9);
-            this.TxtNetAddress.Name = "TxtNetAddress";
-            this.TxtNetAddress.Size = new System.Drawing.Size(114, 23);
-            this.TxtNetAddress.TabIndex = 39;
-            this.TxtNetAddress.Text = "10.18.37.120";
+            TxtNetAddress.Location = new System.Drawing.Point(89, 9);
+            TxtNetAddress.Name = "TxtNetAddress";
+            TxtNetAddress.Size = new System.Drawing.Size(114, 23);
+            TxtNetAddress.TabIndex = 39;
+            TxtNetAddress.Text = "10.18.37.120";
             // 
             // TxtNetPort
             // 
-            this.TxtNetPort.Location = new System.Drawing.Point(209, 9);
-            this.TxtNetPort.Name = "TxtNetPort";
-            this.TxtNetPort.Size = new System.Drawing.Size(65, 23);
-            this.TxtNetPort.TabIndex = 40;
-            this.TxtNetPort.Text = "8000";
+            TxtNetPort.Location = new System.Drawing.Point(209, 9);
+            TxtNetPort.Name = "TxtNetPort";
+            TxtNetPort.Size = new System.Drawing.Size(65, 23);
+            TxtNetPort.TabIndex = 40;
+            TxtNetPort.Text = "8000";
             // 
             // TxtNetAccount
             // 
-            this.TxtNetAccount.Location = new System.Drawing.Point(89, 38);
-            this.TxtNetAccount.Name = "TxtNetAccount";
-            this.TxtNetAccount.Size = new System.Drawing.Size(114, 23);
-            this.TxtNetAccount.TabIndex = 41;
-            this.TxtNetAccount.Text = "admin";
+            TxtNetAccount.Location = new System.Drawing.Point(89, 38);
+            TxtNetAccount.Name = "TxtNetAccount";
+            TxtNetAccount.Size = new System.Drawing.Size(114, 23);
+            TxtNetAccount.TabIndex = 41;
+            TxtNetAccount.Text = "admin";
             // 
             // TxtNetTarget
             // 
-            this.TxtNetTarget.Location = new System.Drawing.Point(89, 69);
-            this.TxtNetTarget.Name = "TxtNetTarget";
-            this.TxtNetTarget.Size = new System.Drawing.Size(114, 23);
-            this.TxtNetTarget.TabIndex = 63;
+            TxtNetTarget.Location = new System.Drawing.Point(89, 69);
+            TxtNetTarget.Name = "TxtNetTarget";
+            TxtNetTarget.Size = new System.Drawing.Size(114, 23);
+            TxtNetTarget.TabIndex = 63;
             // 
             // TxtNetPassword
             // 
-            this.TxtNetPassword.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.TxtNetPassword.Location = new System.Drawing.Point(210, 38);
-            this.TxtNetPassword.Name = "TxtNetPassword";
-            this.TxtNetPassword.PasswordChar = '*';
-            this.TxtNetPassword.Size = new System.Drawing.Size(64, 23);
-            this.TxtNetPassword.TabIndex = 42;
-            this.TxtNetPassword.Text = "abcd1234";
+            TxtNetPassword.Cursor = System.Windows.Forms.Cursors.IBeam;
+            TxtNetPassword.Location = new System.Drawing.Point(210, 38);
+            TxtNetPassword.Name = "TxtNetPassword";
+            TxtNetPassword.PasswordChar = '*';
+            TxtNetPassword.Size = new System.Drawing.Size(64, 23);
+            TxtNetPassword.TabIndex = 42;
+            TxtNetPassword.Text = "abcd1234";
             // 
             // TxtNetChannel
             // 
-            this.TxtNetChannel.Location = new System.Drawing.Point(209, 69);
-            this.TxtNetChannel.Name = "TxtNetChannel";
-            this.TxtNetChannel.Size = new System.Drawing.Size(65, 23);
-            this.TxtNetChannel.TabIndex = 49;
-            this.TxtNetChannel.Text = "1";
+            TxtNetChannel.Location = new System.Drawing.Point(209, 69);
+            TxtNetChannel.Name = "TxtNetChannel";
+            TxtNetChannel.Size = new System.Drawing.Size(65, 23);
+            TxtNetChannel.TabIndex = 49;
+            TxtNetChannel.Text = "1";
             // 
             // LblNetAccount
             // 
-            this.LblNetAccount.AutoSize = true;
-            this.LblNetAccount.Location = new System.Drawing.Point(15, 38);
-            this.LblNetAccount.Name = "LblNetAccount";
-            this.LblNetAccount.Size = new System.Drawing.Size(68, 17);
-            this.LblNetAccount.TabIndex = 45;
-            this.LblNetAccount.Text = "账号密码：";
+            LblNetAccount.AutoSize = true;
+            LblNetAccount.Location = new System.Drawing.Point(15, 38);
+            LblNetAccount.Name = "LblNetAccount";
+            LblNetAccount.Size = new System.Drawing.Size(68, 17);
+            LblNetAccount.TabIndex = 45;
+            LblNetAccount.Text = "账号密码：";
             // 
             // LblNetChannel
             // 
-            this.LblNetChannel.AutoSize = true;
-            this.LblNetChannel.Location = new System.Drawing.Point(12, 69);
-            this.LblNetChannel.Name = "LblNetChannel";
-            this.LblNetChannel.Size = new System.Drawing.Size(68, 17);
-            this.LblNetChannel.TabIndex = 58;
-            this.LblNetChannel.Text = "视频通道：";
+            LblNetChannel.AutoSize = true;
+            LblNetChannel.Location = new System.Drawing.Point(12, 69);
+            LblNetChannel.Name = "LblNetChannel";
+            LblNetChannel.Size = new System.Drawing.Size(68, 17);
+            LblNetChannel.TabIndex = 58;
+            LblNetChannel.Text = "视频通道：";
             // 
             // PnlNetConfigs
             // 
-            this.PnlNetConfigs.Controls.Add(this.LblNetConfigs);
-            this.PnlNetConfigs.Controls.Add(this.CbxNetConfigs);
-            this.PnlNetConfigs.Dock = System.Windows.Forms.DockStyle.Top;
-            this.PnlNetConfigs.Location = new System.Drawing.Point(0, 0);
-            this.PnlNetConfigs.Name = "PnlNetConfigs";
-            this.PnlNetConfigs.Size = new System.Drawing.Size(535, 51);
-            this.PnlNetConfigs.TabIndex = 69;
+            PnlNetConfigs.Controls.Add(LblNetConfigs);
+            PnlNetConfigs.Controls.Add(CbxNetConfigs);
+            PnlNetConfigs.Dock = System.Windows.Forms.DockStyle.Top;
+            PnlNetConfigs.Location = new System.Drawing.Point(0, 0);
+            PnlNetConfigs.Name = "PnlNetConfigs";
+            PnlNetConfigs.Size = new System.Drawing.Size(535, 51);
+            PnlNetConfigs.TabIndex = 69;
             // 
             // LblNetConfigs
             // 
-            this.LblNetConfigs.AutoSize = true;
-            this.LblNetConfigs.Location = new System.Drawing.Point(11, 12);
-            this.LblNetConfigs.Name = "LblNetConfigs";
-            this.LblNetConfigs.Size = new System.Drawing.Size(68, 17);
-            this.LblNetConfigs.TabIndex = 66;
-            this.LblNetConfigs.Text = "设备配置：";
+            LblNetConfigs.AutoSize = true;
+            LblNetConfigs.Location = new System.Drawing.Point(11, 12);
+            LblNetConfigs.Name = "LblNetConfigs";
+            LblNetConfigs.Size = new System.Drawing.Size(68, 17);
+            LblNetConfigs.TabIndex = 66;
+            LblNetConfigs.Text = "设备配置：";
             // 
             // CbxNetConfigs
             // 
-            this.CbxNetConfigs.FormattingEnabled = true;
-            this.CbxNetConfigs.Location = new System.Drawing.Point(89, 9);
-            this.CbxNetConfigs.Name = "CbxNetConfigs";
-            this.CbxNetConfigs.Size = new System.Drawing.Size(416, 25);
-            this.CbxNetConfigs.TabIndex = 65;
-            this.CbxNetConfigs.SelectedIndexChanged += new System.EventHandler(this.CbxNetConfigs_SelectedIndexChanged);
+            CbxNetConfigs.FormattingEnabled = true;
+            CbxNetConfigs.Location = new System.Drawing.Point(89, 9);
+            CbxNetConfigs.Name = "CbxNetConfigs";
+            CbxNetConfigs.Size = new System.Drawing.Size(416, 25);
+            CbxNetConfigs.TabIndex = 65;
+            CbxNetConfigs.SelectedIndexChanged += CbxNetConfigs_SelectedIndexChanged;
+            // 
+            // BtnNetChecking
+            // 
+            BtnNetChecking.Location = new System.Drawing.Point(290, 119);
+            BtnNetChecking.Name = "BtnNetChecking";
+            BtnNetChecking.Size = new System.Drawing.Size(75, 23);
+            BtnNetChecking.TabIndex = 67;
+            BtnNetChecking.Text = "检查";
+            BtnNetChecking.UseVisualStyleBackColor = true;
+            BtnNetChecking.Click += BtnNetChecking_Click;
             // 
             // HikHCNetPreview1v2211
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.PnlMainContent);
-            this.Name = "HikHCNetPreview1v2211";
-            this.Size = new System.Drawing.Size(1095, 723);
-            this.Load += new System.EventHandler(this.HikHCNetPreview1v2211_Load);
-            this.PnlMainContent.ResumeLayout(false);
-            this.TlpMainContent.ResumeLayout(false);
-            this.GpbTxtLoggger.ResumeLayout(false);
-            this.CmsrTxtLoggerCtx.ResumeLayout(false);
-            this.GrbScreenView.ResumeLayout(false);
-            this.PnlScreenView.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.RealPlayWnd)).EndInit();
-            this.CmsNetConfigs.ResumeLayout(false);
-            this.PnlTabCnt1.ResumeLayout(false);
-            this.GrbNetConfig.ResumeLayout(false);
-            this.PnlNetConfig.ResumeLayout(false);
-            this.GrbNetDetail.ResumeLayout(false);
-            this.PnlNetDetail.ResumeLayout(false);
-            this.PnlNetDetail.PerformLayout();
-            this.PnlNetConfigs.ResumeLayout(false);
-            this.PnlNetConfigs.PerformLayout();
-            this.ResumeLayout(false);
-
+            AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            Controls.Add(PnlMainContent);
+            Name = "HikHCNetPreview1v2211";
+            Size = new System.Drawing.Size(1095, 723);
+            Load += HikHCNetPreview1v2211_Load;
+            PnlMainContent.ResumeLayout(false);
+            TlpMainContent.ResumeLayout(false);
+            GpbTxtLoggger.ResumeLayout(false);
+            CmsrTxtLoggerCtx.ResumeLayout(false);
+            GrbScreenView.ResumeLayout(false);
+            PnlScreenView.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)RealPlayWnd).EndInit();
+            CmsNetConfigs.ResumeLayout(false);
+            PnlTabCnt1.ResumeLayout(false);
+            GrbNetConfig.ResumeLayout(false);
+            PnlNetConfig.ResumeLayout(false);
+            GrbNetDetail.ResumeLayout(false);
+            PnlNetDetail.ResumeLayout(false);
+            PnlNetDetail.PerformLayout();
+            PnlNetConfigs.ResumeLayout(false);
+            PnlNetConfigs.PerformLayout();
+            ResumeLayout(false);
         }
 
         #endregion
@@ -500,5 +506,6 @@
         private System.Windows.Forms.Button BtnNetLogout;
         private System.Windows.Forms.Panel PnlTabCnt3;
         private System.Windows.Forms.Panel PnlTabCnt1;
+        private System.Windows.Forms.Button BtnNetChecking;
     }
 }
