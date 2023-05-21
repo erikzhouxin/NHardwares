@@ -16,12 +16,12 @@ namespace VzClientSDK.WinForm
     {
         static IVzClientSdkProxy VzClientSDK = VzClientSdk.Create();
 
-        private int m_hLPRClient = 0;
+        private IntPtr m_hLPRClient = IntPtr.Zero;
         public SetParameter_Form()
         {
             InitializeComponent();
         }
-        public void SetLPRHandle(int m_hLPRClient_)
+        public void SetLPRHandle(IntPtr m_hLPRClient_)
         {
             m_hLPRClient = m_hLPRClient_;
             preprovince.Items.Add("无");

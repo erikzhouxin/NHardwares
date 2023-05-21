@@ -223,38 +223,133 @@ namespace System.Data.OnbonLedBxSDK
         /// </summary>
         public enum ErrorType
         {
+            /// <summary>
+            /// 无错误
+            /// </summary>
             ERR_NO = 0,
+            /// <summary>
+            /// 
+            /// </summary>
             ERR_OUTOFGROUP = 1,
+            /// <summary>
+            /// 
+            /// </summary>
             ERR_NOCMD = 2,
+            /// <summary>
+            /// 
+            /// </summary>
             ERR_BUSY = 3,
+            /// <summary>
+            /// 
+            /// </summary>
             ERR_MEMORYVOLUME = 4,
+            /// <summary>
+            /// 
+            /// </summary>
             ERR_CHECKSUM = 5,
+            /// <summary>
+            /// 
+            /// </summary>
             ERR_FILENOTEXIST = 6,
+            /// <summary>
+            /// 
+            /// </summary>
             ERR_FLASH = 7,
+            /// <summary>
+            /// 
+            /// </summary>
             ERR_FILE_DOWNLOAD = 8,
+            /// <summary>
+            /// 
+            /// </summary>
             ERR_FILE_NAME = 9,
+            /// <summary>
+            /// 
+            /// </summary>
             ERR_FILE_TYPE = 10,
+            /// <summary>
+            /// 
+            /// </summary>
             ERR_FILE_CRC16 = 11,
+            /// <summary>
+            /// 
+            /// </summary>
             ERR_FONT_NOT_EXIST = 12,
+            /// <summary>
+            /// 
+            /// </summary>
             ERR_FIRMWARE_TYPE = 13,
+            /// <summary>
+            /// 
+            /// </summary>
             ERR_DATE_TIME_FORMAT = 14,
+            /// <summary>
+            /// 
+            /// </summary>
             ERR_FILE_EXIST = 15,
+            /// <summary>
+            /// 
+            /// </summary>
             ERR_FILE_BLOCK_NUM = 16,
+            /// <summary>
+            /// 
+            /// </summary>
             ERR_CONTROLLER_TYPE = 17,
+            /// <summary>
+            /// 
+            /// </summary>
             ERR_SCREEN_PARA = 18,
+            /// <summary>
+            /// 
+            /// </summary>
             ERR_CONTROLLER_ID = 19,
+            /// <summary>
+            /// 
+            /// </summary>
             ERR_USER_SECRET = 20,
+            /// <summary>
+            /// 
+            /// </summary>
             ERR_OLD_USER_SECRET = 21,
+            /// <summary>
+            /// 
+            /// </summary>
             ERR_PHY1_NO_SECRET = 22,
+            /// <summary>
+            /// 
+            /// </summary>
             ERR_PHY1_USE_SECRET = 23,
+            /// <summary>
+            /// 
+            /// </summary>
             ERR_RTC = 24,
+            /// <summary>
+            /// 
+            /// </summary>
             ERR_CMD_PARA = 25,
+            /// <summary>
+            /// 
+            /// </summary>
             ERR_CASCADE_COMM = 26,
+            /// <summary>
+            /// 
+            /// </summary>
             ERR_NO_BATTLE_AREA = 27,
+            /// <summary>
+            /// 
+            /// </summary>
             ERR_NO_TIMER_AREA = 28,
+            /// <summary>
+            /// 
+            /// </summary>
             ERR_FPGA_COMM = 29,
+            /// <summary>
+            /// 
+            /// </summary>
             ERR_SET_MODBUS_PARA = 60,
-
+            /// <summary>
+            /// 
+            /// </summary>
             ERR_TCP = -1,
         }
         /// <summary>

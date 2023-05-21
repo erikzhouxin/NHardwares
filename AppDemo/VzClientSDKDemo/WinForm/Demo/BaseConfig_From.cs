@@ -19,8 +19,8 @@ namespace VzClientSDK.WinForm
             InitializeComponent();           
         }
 
-        private int m_hLPRClient = 0;
-        public void SetLPRHandle(int hLPRClient)
+        private IntPtr m_hLPRClient = IntPtr.Zero;
+        public void SetLPRHandle(IntPtr hLPRClient)
         {
             m_hLPRClient = hLPRClient;
         }

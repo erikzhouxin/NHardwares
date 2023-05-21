@@ -15,14 +15,14 @@ namespace VzClientSDK.WinForm
     public partial class EncryptCfg_Form : Form
     {
         static IVzClientSdkProxy VzClientSDK = VzClientSdk.Create();
-        private int m_hLPRClient = 0;
+        private IntPtr m_hLPRClient = IntPtr.Zero;
 
         public EncryptCfg_Form()
         {
             InitializeComponent();
         }
 
-        public void SetLPRHandle(int hLPRClient)
+        public void SetLPRHandle(IntPtr hLPRClient)
         {
             m_hLPRClient = hLPRClient;
         }
@@ -30,7 +30,7 @@ namespace VzClientSDK.WinForm
         //添加加密方式
         private void LoadEncryptCfg()
         {
-            if (m_hLPRClient > 0)
+            if (m_hLPRClient != IntPtr.Zero)
             {
                 VZ_LPRC_ACTIVE_ENCRYPT data = new VZ_LPRC_ACTIVE_ENCRYPT();
                 int ret = VzClientSDK.VzLPRClient_GetEMS(m_hLPRClient,ref data);//获取加密的信息

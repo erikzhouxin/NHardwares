@@ -45,7 +45,6 @@ namespace TestHardwareDemo.WinForm.Views
                 base.Initialize();
                 ReadDeviceAndSetFirstOne();
             }
-            GuardianServiceStart();
         }
 
         private void ReadDeviceAndSetFirstOne()
@@ -113,6 +112,28 @@ namespace TestHardwareDemo.WinForm.Views
             }
         }
 
+        private void UpdateReadInfo2()
+        {
+            var item = _config;
+            var taskres = item.Connect();
+            if (taskres.IsSuccess)
+            {
+                item.UpdateDOStatus();
+                item.UpdateDIStatus();
+                item.UpdateDOStatusHolding();
+            }
+            else
+            {
+                AppendError(taskres.Message);
+            }
+            if (item.Key == _config.Key)
+            {
+                this.BeginInvoke(() => UpdateDOStatus(item.DOStatus));
+                this.BeginInvoke(() => UpdateDIStatus(item.DIStatus));
+                this.BeginInvoke(() => ChkNetDoHolding.CheckState = GetCheckState(item.DOStatusHolding));
+            }
+        }
+
         private void UpdateDIStatus(bool[] status)
         {
             this.PicNetDI1.Image = status[0] ? Properties.Resources.usr_io808_diopen : Properties.Resources.usr_io808_diclose;
@@ -146,7 +167,14 @@ namespace TestHardwareDemo.WinForm.Views
                 GuardianInterval = 10 * 10;
                 return;
             }
-            UpdateReadInfo();
+            try
+            {
+                UpdateReadInfo2();
+            }
+            catch (Exception ex)
+            {
+                Append(ex);
+            }
             if (this.TxtNetSeconds.Text.TryToInt32(out int sec))
             {
                 if (sec > 5 && sec < 99)
@@ -200,18 +228,22 @@ namespace TestHardwareDemo.WinForm.Views
             model.SendTimeout = this.TxtNetWriteTimeout.Text.ToPInt32();
             model.Retries = this.TxtNetRetries.Text.ToPInt32();
             model.RetryWaitout = this.TxtNetRetryWaitout.Text.ToPInt32();
-            Task.Factory.StartNew(() => Append(model.Connect()));
             this.TxtNetConfigIp.Text = model.IPAddress;
             this.TxtNetConfigPort.Text = model.Port.ToString();
-            if (!this.ChkNetReadBackground.Checked)
+            try
             {
-                UpdateReadInfo();
+                Task.Run(() => Append(model.Connect()));
+                if (!this.ChkNetReadBackground.Checked)
+                {
+                    UpdateReadInfo();
+                }
+                else
+                {
+                    UpdateDOStatus(model.DOStatus);
+                    UpdateDIStatus(model.DIStatus);
+                }
             }
-            else
-            {
-                UpdateDOStatus(model.DOStatus);
-                UpdateDIStatus(model.DIStatus);
-            }
+            catch { }
         }
 
         private void PicNetDO_Click(object sender, EventArgs e)
@@ -448,6 +480,33 @@ namespace TestHardwareDemo.WinForm.Views
                     Logger.Append(new AlertMsg(false, "当前连接正在使用中……"));
                 }
             }
+            public void UpdateDOStatus()
+            {
+                if (Monitor.TryEnter(Locker, 1000))
+                {
+                    try
+                    {
+                        var res = Control.GetDOStatus();
+                        Logger.Append(res);
+                        if (res.IsSuccess)
+                        {
+                            var resD = res.Data.ToArray();
+                            for (int i = 0; i < 8; i++)
+                            {
+                                DOStatus[i] = resD[i];
+                            }
+                        }
+                    }
+                    finally
+                    {
+                        Monitor.Exit(Locker);
+                    }
+                }
+                else
+                {
+                    Logger.Append(new AlertMsg(false, "当前连接正在使用中……"));
+                }
+            }
             public void UpdateDOStatus(int i, bool value)
             {
                 if (Monitor.TryEnter(Locker, 1000))
@@ -568,11 +627,49 @@ namespace TestHardwareDemo.WinForm.Views
                     Logger.Append(new AlertMsg(false, "当前连接正在使用中……"));
                 }
             }
+            public void UpdateDIStatus()
+            {
+                if (Monitor.TryEnter(Locker, 1000))
+                {
+                    try
+                    {
+                        var res = Control.GetDIStatus();
+                        Logger.Append(res);
+                        if (res.IsSuccess)
+                        {
+                            var resD = res.Data.ToArray();
+                            for (int i = 0; i < 8; i++)
+                            {
+                                DIStatus[i] = resD[i];
+                            }
+                        }
+                    }
+                    catch { }
+                    finally
+                    {
+                        Monitor.Exit(Locker);
+                    }
+                }
+                else
+                {
+                    Logger.Append(new AlertMsg(false, "当前连接正在使用中……"));
+                }
+            }
         }
         #endregion
         protected override void OnHandleDestroyed(EventArgs e)
         {
             base.OnHandleDestroyed(e);
+        }
+
+        private void ChkNetReadBackground_Click(object sender, EventArgs e)
+        {
+            this.ChkNetReadBackground.Checked = !this.ChkNetReadBackground.Checked;
+        }
+
+        private void TmsrRefreshIOArea_Click(object sender, EventArgs e)
+        {
+            UpdateReadInfo();
         }
     }
 }

@@ -8,15 +8,45 @@ namespace System.Data.OnbonLedBxSDK
     [StructLayoutAttribute(LayoutKind.Sequential, CharSet = CharSet.Ansi, Pack = 1)]
     public struct EQPicAreaSoundHeader_G6
     {
-        public byte SoundPerson;           //发音人，范围0～5，共6种选择
-        public byte SoundVolum;            //音量，范围0～10
-        public byte SoundSpeed;            //语速，范围0～10
-        public byte SoundDataMode;         //语音数据的编码格式
-        public uint SoundReplayTimes;      //重播次数
-        public uint SoundReplayDelay;      //重播时间间隔
-        public byte SoundReservedParaLen;  //语音参数保留参数长度，默认0x03
-        public byte Soundnumdeal;          //详情见协议
-        public byte Soundlanguages;        //详情见协议
-        public byte Soundwordstyle;        //详情见协议
+        /// <summary>
+        /// 发音人，范围0～5，共6种选择
+        /// </summary>
+        public byte SoundPerson;
+        /// <summary>
+        /// 音量，范围0～10
+        /// </summary>
+        public byte SoundVolum;
+        /// <summary>
+        /// 语速，范围0～10
+        /// </summary>
+        public byte SoundSpeed;
+        /// <summary>
+        /// 语音数据的编码格式
+        /// </summary>
+        public byte SoundDataMode;
+        /// <summary>
+        /// 重播次数
+        /// </summary>
+        public uint SoundReplayTimes;
+        /// <summary>
+        /// 重播时间间隔
+        /// </summary>
+        public uint SoundReplayDelay;
+        /// <summary>
+        /// 语音参数保留参数长度，默认0x03
+        /// </summary>
+        public byte SoundReservedParaLen;
+        /// <summary>
+        /// 详情见协议
+        /// </summary>
+        public byte Soundnumdeal;
+        /// <summary>
+        /// 详情见协议
+        /// </summary>
+        public byte Soundlanguages;
+        /// <summary>
+        /// 详情见协议
+        /// </summary>
+        public byte Soundwordstyle;
     }
 }

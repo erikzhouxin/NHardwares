@@ -19,7 +19,7 @@ namespace VzClientSDK.WinForm
         private const int IMPORT_COUNT = 1000;
         private const int ONE_PAGE_COUNT = 20;
 
-        private int m_hLPRClient = 0;
+        private IntPtr m_hLPRClient = IntPtr.Zero;
 
         private int m_nTotalCount = 0;
         private int m_nCurPage = 0;
@@ -64,7 +64,7 @@ namespace VzClientSDK.WinForm
             m_arrImportResult = new VZ_LPR_WLIST_IMPORT_RESULT[IMPORT_COUNT];
         }
 
-        public void SetLPRHandle(int m_hLPRClient_){
+        public void SetLPRHandle(IntPtr m_hLPRClient_){
             m_hLPRClient = m_hLPRClient_;
             //SearchText();
         }

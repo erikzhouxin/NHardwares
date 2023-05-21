@@ -66,11 +66,6 @@
             TxtNetIp = new System.Windows.Forms.TextBox();
             BtnNetLogin = new System.Windows.Forms.Button();
             TxtNetPort = new System.Windows.Forms.TextBox();
-            TxtNetSerialNum = new System.Windows.Forms.TextBox();
-            LblNetAccountPass = new System.Windows.Forms.Label();
-            ChkNetPDNS = new System.Windows.Forms.CheckBox();
-            TxtNetAccount = new System.Windows.Forms.TextBox();
-            TxtNetPassword = new System.Windows.Forms.TextBox();
             PnlNetConfigList = new System.Windows.Forms.Panel();
             CbxNetConfigs = new System.Windows.Forms.ComboBox();
             PnlTabCnt2 = new System.Windows.Forms.Panel();
@@ -81,6 +76,8 @@
             PnlTabCnt4 = new System.Windows.Forms.Panel();
             GrbTxtLogger = new System.Windows.Forms.GroupBox();
             TxtLogger = new System.Windows.Forms.RichTextBox();
+            panel1 = new System.Windows.Forms.Panel();
+            flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             CmsrTxtLoggerCtx.SuspendLayout();
             CmsrNetConfigBtns.SuspendLayout();
             PnlMainContent.SuspendLayout();
@@ -97,12 +94,13 @@
             ((System.ComponentModel.ISupportInitialize)PicScreenView).BeginInit();
             PnlTabCnt4.SuspendLayout();
             GrbTxtLogger.SuspendLayout();
+            panel1.SuspendLayout();
             SuspendLayout();
             // 
             // 单步开闸ToolStripMenuItem
             // 
             单步开闸ToolStripMenuItem.Name = "单步开闸ToolStripMenuItem";
-            单步开闸ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            单步开闸ToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             单步开闸ToolStripMenuItem.Text = "单步开闸";
             // 
             // CmsrTxtLoggerCtx
@@ -122,123 +120,123 @@
             // 
             CmsrNetConfigBtns.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { TsmiForceTrigger, TmsrRealCapture, gPIOToolStripMenuItem, 连接状态ToolStripMenuItem, 预览输出ToolStripMenuItem, 开始录像ToolStripMenuItem, 车牌查询ToolStripMenuItem, 白名单ToolStripMenuItem, 控制ToolStripMenuItem, TsmiGetSetIOValue, 视频未知ToolStripMenuItem, 线圈配置ToolStripMenuItem, 基本配置ToolStripMenuItem, oSD值ToolStripMenuItem, 加密配置ToolStripMenuItem, 播放语音ToolStripMenuItem, 定焦配置ToolStripMenuItem, 语音对讲ToolStripMenuItem, 单步开闸ToolStripMenuItem, lED补光ToolStripMenuItem });
             CmsrNetConfigBtns.Name = "CmsrNetConfigBtns";
-            CmsrNetConfigBtns.Size = new System.Drawing.Size(181, 466);
+            CmsrNetConfigBtns.Size = new System.Drawing.Size(127, 444);
             // 
             // TsmiForceTrigger
             // 
             TsmiForceTrigger.Name = "TsmiForceTrigger";
-            TsmiForceTrigger.Size = new System.Drawing.Size(180, 22);
+            TsmiForceTrigger.Size = new System.Drawing.Size(126, 22);
             TsmiForceTrigger.Text = "手动识别";
             TsmiForceTrigger.Click += TsmiForceTrigger_Click;
             // 
             // TmsrRealCapture
             // 
             TmsrRealCapture.Name = "TmsrRealCapture";
-            TmsrRealCapture.Size = new System.Drawing.Size(180, 22);
+            TmsrRealCapture.Size = new System.Drawing.Size(126, 22);
             TmsrRealCapture.Text = "抓图";
             TmsrRealCapture.Click += TmsrRealCapture_Click;
             // 
             // gPIOToolStripMenuItem
             // 
             gPIOToolStripMenuItem.Name = "gPIOToolStripMenuItem";
-            gPIOToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            gPIOToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             gPIOToolStripMenuItem.Text = "GPIO";
             // 
             // 连接状态ToolStripMenuItem
             // 
             连接状态ToolStripMenuItem.Name = "连接状态ToolStripMenuItem";
-            连接状态ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            连接状态ToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             连接状态ToolStripMenuItem.Text = "连接状态";
             // 
             // 预览输出ToolStripMenuItem
             // 
             预览输出ToolStripMenuItem.Name = "预览输出ToolStripMenuItem";
-            预览输出ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            预览输出ToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             预览输出ToolStripMenuItem.Text = "预览输出";
             // 
             // 开始录像ToolStripMenuItem
             // 
             开始录像ToolStripMenuItem.Name = "开始录像ToolStripMenuItem";
-            开始录像ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            开始录像ToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             开始录像ToolStripMenuItem.Text = "开始录像";
             // 
             // 车牌查询ToolStripMenuItem
             // 
             车牌查询ToolStripMenuItem.Name = "车牌查询ToolStripMenuItem";
-            车牌查询ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            车牌查询ToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             车牌查询ToolStripMenuItem.Text = "车牌查询";
             // 
             // 白名单ToolStripMenuItem
             // 
             白名单ToolStripMenuItem.Name = "白名单ToolStripMenuItem";
-            白名单ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            白名单ToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             白名单ToolStripMenuItem.Text = "白名单";
             // 
             // 控制ToolStripMenuItem
             // 
             控制ToolStripMenuItem.Name = "控制ToolStripMenuItem";
-            控制ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            控制ToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             控制ToolStripMenuItem.Text = "485控制";
             // 
             // TsmiGetSetIOValue
             // 
             TsmiGetSetIOValue.Name = "TsmiGetSetIOValue";
-            TsmiGetSetIOValue.Size = new System.Drawing.Size(180, 22);
+            TsmiGetSetIOValue.Size = new System.Drawing.Size(126, 22);
             TsmiGetSetIOValue.Text = "输入输出";
             TsmiGetSetIOValue.Click += TsmiGetSetIOValue_Click;
             // 
             // 视频未知ToolStripMenuItem
             // 
             视频未知ToolStripMenuItem.Name = "视频未知ToolStripMenuItem";
-            视频未知ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            视频未知ToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             视频未知ToolStripMenuItem.Text = "视频配置";
             // 
             // 线圈配置ToolStripMenuItem
             // 
             线圈配置ToolStripMenuItem.Name = "线圈配置ToolStripMenuItem";
-            线圈配置ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            线圈配置ToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             线圈配置ToolStripMenuItem.Text = "线圈配置";
             // 
             // 基本配置ToolStripMenuItem
             // 
             基本配置ToolStripMenuItem.Name = "基本配置ToolStripMenuItem";
-            基本配置ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            基本配置ToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             基本配置ToolStripMenuItem.Text = "基本配置";
             // 
             // oSD值ToolStripMenuItem
             // 
             oSD值ToolStripMenuItem.Name = "oSD值ToolStripMenuItem";
-            oSD值ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            oSD值ToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             oSD值ToolStripMenuItem.Text = "OSD配置";
             // 
             // 加密配置ToolStripMenuItem
             // 
             加密配置ToolStripMenuItem.Name = "加密配置ToolStripMenuItem";
-            加密配置ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            加密配置ToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             加密配置ToolStripMenuItem.Text = "加密配置";
             // 
             // 播放语音ToolStripMenuItem
             // 
             播放语音ToolStripMenuItem.Name = "播放语音ToolStripMenuItem";
-            播放语音ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            播放语音ToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             播放语音ToolStripMenuItem.Text = "播放语音";
             // 
             // 定焦配置ToolStripMenuItem
             // 
             定焦配置ToolStripMenuItem.Name = "定焦配置ToolStripMenuItem";
-            定焦配置ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            定焦配置ToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             定焦配置ToolStripMenuItem.Text = "定焦配置";
             // 
             // 语音对讲ToolStripMenuItem
             // 
             语音对讲ToolStripMenuItem.Name = "语音对讲ToolStripMenuItem";
-            语音对讲ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            语音对讲ToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             语音对讲ToolStripMenuItem.Text = "语音对讲";
             // 
             // lED补光ToolStripMenuItem
             // 
             lED补光ToolStripMenuItem.Name = "lED补光ToolStripMenuItem";
-            lED补光ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            lED补光ToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             lED补光ToolStripMenuItem.Text = "补光设置";
             // 
             // PnlMainContent
@@ -312,18 +310,8 @@
             // PnlNetConfigDetail
             // 
             PnlNetConfigDetail.AutoScroll = true;
-            PnlNetConfigDetail.Controls.Add(BtnNetSearch);
-            PnlNetConfigDetail.Controls.Add(BtnNetRemove);
-            PnlNetConfigDetail.Controls.Add(LblNetIpPort);
-            PnlNetConfigDetail.Controls.Add(BtnNetExit);
-            PnlNetConfigDetail.Controls.Add(TxtNetIp);
-            PnlNetConfigDetail.Controls.Add(BtnNetLogin);
-            PnlNetConfigDetail.Controls.Add(TxtNetPort);
-            PnlNetConfigDetail.Controls.Add(TxtNetSerialNum);
-            PnlNetConfigDetail.Controls.Add(LblNetAccountPass);
-            PnlNetConfigDetail.Controls.Add(ChkNetPDNS);
-            PnlNetConfigDetail.Controls.Add(TxtNetAccount);
-            PnlNetConfigDetail.Controls.Add(TxtNetPassword);
+            PnlNetConfigDetail.Controls.Add(flowLayoutPanel1);
+            PnlNetConfigDetail.Controls.Add(panel1);
             PnlNetConfigDetail.Dock = System.Windows.Forms.DockStyle.Fill;
             PnlNetConfigDetail.Location = new System.Drawing.Point(3, 19);
             PnlNetConfigDetail.Name = "PnlNetConfigDetail";
@@ -332,7 +320,7 @@
             // 
             // BtnNetSearch
             // 
-            BtnNetSearch.Location = new System.Drawing.Point(31, 124);
+            BtnNetSearch.Location = new System.Drawing.Point(22, 52);
             BtnNetSearch.Name = "BtnNetSearch";
             BtnNetSearch.Size = new System.Drawing.Size(64, 31);
             BtnNetSearch.TabIndex = 11;
@@ -342,7 +330,7 @@
             // 
             // BtnNetRemove
             // 
-            BtnNetRemove.Location = new System.Drawing.Point(275, 124);
+            BtnNetRemove.Location = new System.Drawing.Point(266, 52);
             BtnNetRemove.Name = "BtnNetRemove";
             BtnNetRemove.Size = new System.Drawing.Size(64, 31);
             BtnNetRemove.TabIndex = 10;
@@ -353,7 +341,7 @@
             // LblNetIpPort
             // 
             LblNetIpPort.AutoSize = true;
-            LblNetIpPort.Location = new System.Drawing.Point(20, 19);
+            LblNetIpPort.Location = new System.Drawing.Point(21, 14);
             LblNetIpPort.Name = "LblNetIpPort";
             LblNetIpPort.Size = new System.Drawing.Size(91, 17);
             LblNetIpPort.TabIndex = 0;
@@ -361,7 +349,7 @@
             // 
             // BtnNetExit
             // 
-            BtnNetExit.Location = new System.Drawing.Point(194, 124);
+            BtnNetExit.Location = new System.Drawing.Point(185, 52);
             BtnNetExit.Name = "BtnNetExit";
             BtnNetExit.Size = new System.Drawing.Size(64, 31);
             BtnNetExit.TabIndex = 9;
@@ -371,7 +359,7 @@
             // 
             // TxtNetIp
             // 
-            TxtNetIp.Location = new System.Drawing.Point(113, 16);
+            TxtNetIp.Location = new System.Drawing.Point(114, 11);
             TxtNetIp.Name = "TxtNetIp";
             TxtNetIp.Size = new System.Drawing.Size(100, 23);
             TxtNetIp.TabIndex = 1;
@@ -379,7 +367,7 @@
             // 
             // BtnNetLogin
             // 
-            BtnNetLogin.Location = new System.Drawing.Point(113, 124);
+            BtnNetLogin.Location = new System.Drawing.Point(104, 52);
             BtnNetLogin.Name = "BtnNetLogin";
             BtnNetLogin.Size = new System.Drawing.Size(64, 31);
             BtnNetLogin.TabIndex = 8;
@@ -389,56 +377,11 @@
             // 
             // TxtNetPort
             // 
-            TxtNetPort.Location = new System.Drawing.Point(232, 16);
+            TxtNetPort.Location = new System.Drawing.Point(233, 11);
             TxtNetPort.Name = "TxtNetPort";
             TxtNetPort.Size = new System.Drawing.Size(73, 23);
             TxtNetPort.TabIndex = 2;
-            TxtNetPort.Text = "80";
-            // 
-            // TxtNetSerialNum
-            // 
-            TxtNetSerialNum.Enabled = false;
-            TxtNetSerialNum.Location = new System.Drawing.Point(232, 83);
-            TxtNetSerialNum.Name = "TxtNetSerialNum";
-            TxtNetSerialNum.Size = new System.Drawing.Size(73, 23);
-            TxtNetSerialNum.TabIndex = 7;
-            // 
-            // LblNetAccountPass
-            // 
-            LblNetAccountPass.AutoSize = true;
-            LblNetAccountPass.Location = new System.Drawing.Point(31, 51);
-            LblNetAccountPass.Name = "LblNetAccountPass";
-            LblNetAccountPass.Size = new System.Drawing.Size(80, 17);
-            LblNetAccountPass.TabIndex = 3;
-            LblNetAccountPass.Text = "账号及密码：";
-            // 
-            // ChkNetPDNS
-            // 
-            ChkNetPDNS.AutoSize = true;
-            ChkNetPDNS.Location = new System.Drawing.Point(78, 85);
-            ChkNetPDNS.Name = "ChkNetPDNS";
-            ChkNetPDNS.Size = new System.Drawing.Size(135, 21);
-            ChkNetPDNS.TabIndex = 6;
-            ChkNetPDNS.Text = "云服务器登录序列号";
-            ChkNetPDNS.UseVisualStyleBackColor = true;
-            ChkNetPDNS.Click += ChkNetPDNS_Click;
-            // 
-            // TxtNetAccount
-            // 
-            TxtNetAccount.Location = new System.Drawing.Point(113, 49);
-            TxtNetAccount.Name = "TxtNetAccount";
-            TxtNetAccount.Size = new System.Drawing.Size(100, 23);
-            TxtNetAccount.TabIndex = 4;
-            TxtNetAccount.Text = "admin";
-            // 
-            // TxtNetPassword
-            // 
-            TxtNetPassword.Location = new System.Drawing.Point(232, 50);
-            TxtNetPassword.Name = "TxtNetPassword";
-            TxtNetPassword.PasswordChar = '*';
-            TxtNetPassword.Size = new System.Drawing.Size(73, 23);
-            TxtNetPassword.TabIndex = 5;
-            TxtNetPassword.Text = "admin";
+            TxtNetPort.Text = "5005";
             // 
             // PnlNetConfigList
             // 
@@ -539,13 +482,37 @@
             TxtLogger.TabIndex = 0;
             TxtLogger.Text = "";
             // 
-            // VzLPRDemov2211
+            // panel1
+            // 
+            panel1.Controls.Add(BtnNetRemove);
+            panel1.Controls.Add(BtnNetSearch);
+            panel1.Controls.Add(TxtNetPort);
+            panel1.Controls.Add(BtnNetLogin);
+            panel1.Controls.Add(LblNetIpPort);
+            panel1.Controls.Add(TxtNetIp);
+            panel1.Controls.Add(BtnNetExit);
+            panel1.Dock = System.Windows.Forms.DockStyle.Top;
+            panel1.Location = new System.Drawing.Point(0, 0);
+            panel1.Name = "panel1";
+            panel1.Size = new System.Drawing.Size(453, 100);
+            panel1.TabIndex = 12;
+            // 
+            // flowLayoutPanel1
+            // 
+            flowLayoutPanel1.AutoScroll = true;
+            flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            flowLayoutPanel1.Location = new System.Drawing.Point(0, 100);
+            flowLayoutPanel1.Name = "flowLayoutPanel1";
+            flowLayoutPanel1.Size = new System.Drawing.Size(453, 133);
+            flowLayoutPanel1.TabIndex = 0;
+            // 
+            // OnbonLedBx6Ev2211
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             ContextMenuStrip = CmsrNetConfigBtns;
             Controls.Add(PnlMainContent);
-            Name = "VzLPRDemov2211";
+            Name = "OnbonLedBx6Ev2211";
             Size = new System.Drawing.Size(942, 644);
             Load += VzLPRSDKDemov2211_Load;
             CmsrTxtLoggerCtx.ResumeLayout(false);
@@ -557,7 +524,6 @@
             PnlNetConfig.ResumeLayout(false);
             GrbNetConfigDetail.ResumeLayout(false);
             PnlNetConfigDetail.ResumeLayout(false);
-            PnlNetConfigDetail.PerformLayout();
             PnlNetConfigList.ResumeLayout(false);
             PnlTabCnt2.ResumeLayout(false);
             GrbScreenView.ResumeLayout(false);
@@ -565,6 +531,8 @@
             ((System.ComponentModel.ISupportInitialize)PicScreenView).EndInit();
             PnlTabCnt4.ResumeLayout(false);
             GrbTxtLogger.ResumeLayout(false);
+            panel1.ResumeLayout(false);
+            panel1.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -601,11 +569,6 @@
         private System.Windows.Forms.GroupBox GrbNetConfigDetail;
         private System.Windows.Forms.Button BtnNetExit;
         private System.Windows.Forms.Button BtnNetLogin;
-        private System.Windows.Forms.TextBox TxtNetSerialNum;
-        private System.Windows.Forms.CheckBox ChkNetPDNS;
-        private System.Windows.Forms.TextBox TxtNetPassword;
-        private System.Windows.Forms.TextBox TxtNetAccount;
-        private System.Windows.Forms.Label LblNetAccountPass;
         private System.Windows.Forms.TextBox TxtNetPort;
         private System.Windows.Forms.TextBox TxtNetIp;
         private System.Windows.Forms.Label LblNetIpPort;
@@ -622,5 +585,7 @@
         private System.Windows.Forms.Panel PnlNetConfigDetail;
         private System.Windows.Forms.Button BtnNetRemove;
         private System.Windows.Forms.Button BtnNetSearch;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
     }
 }

@@ -15,18 +15,20 @@ namespace VzClientSDK.WinForm
     public partial class Form4 : Form
     {
         static IVzClientSdkProxy VzClientSDK = VzClientSdk.Create();
-        private int m_hLPRClient = 0;
+        private IntPtr m_hLPRClient = IntPtr.Zero;
         private uint Update_lVehicleID;
         Form2 form2;
         public Form4()
         {
             InitializeComponent();
         }
-        public void GetForm2(Form2 form2_){
+        public void GetForm2(Form2 form2_)
+        {
             form2 = form2_;
         }
-        public void UpdatePalate(uint lVehicleID,string PlateID,bool bEnable,
-            string strOverdule,bool bAlarm){
+        public void UpdatePalate(uint lVehicleID, string PlateID, bool bEnable,
+            string strOverdule, bool bAlarm)
+        {
             Update_lVehicleID = lVehicleID;
             ShowView(PlateID, bEnable, strOverdule, bAlarm);
         }
@@ -36,21 +38,21 @@ namespace VzClientSDK.WinForm
         public void ShowView(string PlateID, bool bEnable,
             string strOverdule, bool bAlarm)
         {
-            ShowThread ShowDelegate = delegate()
+            ShowThread ShowDelegate = delegate ()
             {
                 strPalatID.Text = PlateID;
                 if (bEnable)
                     isenable.Checked = true;
-                if(bAlarm)
+                if (bAlarm)
                     isalarm.Checked = true;
                 //DateTime dt1 = Convert.ToDateTime(strOverdule);
-                DateTime dte = Convert.ToDateTime(strOverdule); 
+                DateTime dte = Convert.ToDateTime(strOverdule);
                 datalist.Text = dte.ToString();
             };
             this.Invoke(ShowDelegate);
         }
 
-        public void Setm_hLPRClient(int m_hLPRClient_)
+        public void Setm_hLPRClient(IntPtr m_hLPRClient_)
         {
             m_hLPRClient = m_hLPRClient_;
         }

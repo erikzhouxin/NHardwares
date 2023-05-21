@@ -2,12 +2,27 @@
 
 namespace System.Data.OnbonLedBxSDK
 {
+    /// <summary>
+    /// 
+    /// </summary>
     [StructLayoutAttribute(LayoutKind.Sequential, CharSet = CharSet.Ansi, Pack = 1)]
     public struct TimingOnOff
     {
-        public byte onHour;   // 开机小时
-        public byte onMinute; // 开机分钟
-        public byte offHour;  // 关机小时
-        public byte offMinute; // 关机分钟
+        /// <summary>
+        /// 开机小时
+        /// </summary>
+        public byte onHour;
+        /// <summary>
+        /// 开机分钟
+        /// </summary>
+        public byte onMinute;
+        /// <summary>
+        /// 关机小时
+        /// </summary>
+        public byte offHour;
+        /// <summary>
+        /// 关机分钟
+        /// </summary>
+        public byte offMinute;
     }
 }

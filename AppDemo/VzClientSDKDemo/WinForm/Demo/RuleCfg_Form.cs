@@ -17,9 +17,9 @@ namespace VzClientSDK.WinForm
     public partial class RuleCfg_Form : Form
     {
         static IVzClientSdkProxy VzClientSDK = VzClientSdk.Create();
-        private int lpr_handle_ = 0;
+        private IntPtr lpr_handle_ = IntPtr.Zero;
         private uint IMG_SIZE = 1920 * 1080;
-        private byte[] pic_data_ = new byte[1920*1080];
+        private byte[] pic_data_ = new byte[1920 * 1080];
         private IntPtr img_buf_ptr_;
         private GCHandle img_object_;
 
@@ -51,9 +51,9 @@ namespace VzClientSDK.WinForm
         private Point pt_prev_ = new Point();
         private bool select_loop_ = false;
 
-        public void SetLPRHandle(int handle)
+        public void SetLPRHandle(IntPtr handle)
         {
-            lpr_handle_ = handle;
+            lpr_handle_ = (IntPtr)handle;
         }
 
         public RuleCfg_Form()
@@ -64,17 +64,17 @@ namespace VzClientSDK.WinForm
         private void RuleCfg_Form_Load(object sender, EventArgs e)
         {
             // 开启获取实时解码数据
-            if (lpr_handle_ > 0)
+            if (lpr_handle_ != IntPtr.Zero)
             {
                 VzClientSDK.VzLPRClient_StartRealPlayDecData(lpr_handle_);
             }
 
-            img_object_     = GCHandle.Alloc(pic_data_, GCHandleType.Pinned);
-            img_buf_ptr_    = img_object_.AddrOfPinnedObject();
+            img_object_ = GCHandle.Alloc(pic_data_, GCHandleType.Pinned);
+            img_buf_ptr_ = img_object_.AddrOfPinnedObject();
 
             draw_rule_timer_ = new System.Timers.Timer(80);
-            draw_rule_timer_.Elapsed += drawTimer_Elapsed;     
-            draw_rule_timer_.AutoReset = true;               
+            draw_rule_timer_.Elapsed += drawTimer_Elapsed;
+            draw_rule_timer_.AutoReset = true;
             draw_rule_timer_.Enabled = true;
 
             g_box_ = picBoxVideo.CreateGraphics();
@@ -84,7 +84,7 @@ namespace VzClientSDK.WinForm
 
         private void LoadRuleParam()
         {
-            if (lpr_handle_ > 0)
+            if (lpr_handle_ != IntPtr.Zero)
             {
                 // 加载虚拟线圈的规则
                 int ret = VzClientSDK.VzLPRClient_GetVirtualLoop(lpr_handle_, ref loops_);
@@ -94,13 +94,13 @@ namespace VzClientSDK.WinForm
                     LoadLoopParam();
 
                     uint x = 0, y = 0;
-			        for( int i = 0; i < LOOP_POINT_COUNT; i++ )
-			        {
+                    for (int i = 0; i < LOOP_POINT_COUNT; i++)
+                    {
                         x = loops_.struLoop[0].struVertex[i].X_1000 * graph_width_ / 1000;
                         y = loops_.struLoop[0].struVertex[i].Y_1000 * graph_heigh_ / 1000;
 
                         loop_point_array_[i] = new Point((int)x, (int)y);
-			        }
+                    }
 
                     zoom_x_rate = (double)picBoxVideo.Width / (double)graph_width_;
                     zoom_y_rate = (double)picBoxVideo.Height / (double)graph_heigh_;
@@ -125,7 +125,7 @@ namespace VzClientSDK.WinForm
 
                 Graphics g = Graphics.FromImage(bitmap);
 
-                if ( loops_.uNumVirtualLoop == 1 )
+                if (loops_.uNumVirtualLoop == 1)
                 {
                     g.DrawPolygon(pen_loop_, loop_point_array_);
 
@@ -137,12 +137,12 @@ namespace VzClientSDK.WinForm
                         zoom_x_rate = (double)picBoxVideo.Width / (double)graph_width_;
                         zoom_y_rate = (double)picBoxVideo.Height / (double)graph_heigh_;
 
-                        ReloadLoop( );
+                        ReloadLoop();
                     }
 
-                    for( int i = 0; i < LOOP_POINT_COUNT; i++ )
+                    for (int i = 0; i < LOOP_POINT_COUNT; i++)
                     {
-                        if ( i == active_pt_index_ )
+                        if (i == active_pt_index_)
                         {
                             g.DrawRectangle(Pens.LightGreen, loop_point_array_[i].X - SELE_BOUND_VALUE, loop_point_array_[i].Y - SELE_BOUND_VALUE, SELE_BOUND_VALUE * 2, SELE_BOUND_VALUE * 2);
                         }
@@ -161,7 +161,7 @@ namespace VzClientSDK.WinForm
             mutex_rule_.ReleaseMutex();
         }
 
-        private void ReloadLoop( )
+        private void ReloadLoop()
         {
             for (int i = 0; i < LOOP_POINT_COUNT; i++)
             {
@@ -186,25 +186,25 @@ namespace VzClientSDK.WinForm
         private int Point2PointDist(Point pt_start, Point pt_end)
         {
             double dbDist = (pt_start.X - pt_end.X) * (pt_start.X - pt_end.X) + (pt_start.Y - pt_end.Y) * (pt_start.Y - pt_end.Y);
-	        int nDist = (int)Math.Sqrt(dbDist);
+            int nDist = (int)Math.Sqrt(dbDist);
 
-	        return nDist;
+            return nDist;
         }
 
         private int GetPointIndex(Point pt, int max_dist)
         {
-	        int index = -1;
-	        int dist = 0;
-        	
-	        for( int i = 0; i < LOOP_POINT_COUNT; i++ )
-	        {
+            int index = -1;
+            int dist = 0;
+
+            for (int i = 0; i < LOOP_POINT_COUNT; i++)
+            {
                 dist = Point2PointDist(pt, loop_point_array_[i]);
                 if (dist <= max_dist)
-		        {
+                {
                     max_dist = dist;
                     index = i;
-		        }
-	        }
+                }
+            }
 
             return index;
         }
@@ -222,11 +222,11 @@ namespace VzClientSDK.WinForm
         private int GetImgX(int x)
         {
             int img_x = x;
-            if( zoom_x_rate > 0.01 )
+            if (zoom_x_rate > 0.01)
             {
                 img_x = (int)(x / zoom_x_rate);
             }
-            
+
             return img_x;
         }
 
@@ -234,11 +234,11 @@ namespace VzClientSDK.WinForm
         {
             int img_y = y;
 
-            if ( zoom_y_rate > 0.01 )
+            if (zoom_y_rate > 0.01)
             {
                 img_y = (int)(y / zoom_y_rate);
             }
-           
+
             return img_y;
         }
 
@@ -253,8 +253,8 @@ namespace VzClientSDK.WinForm
                 return;
             }
 
-	        if( lpr_handle_ > 0 )
-	        {
+            if (lpr_handle_ != IntPtr.Zero)
+            {
                 if (loops_.uNumVirtualLoop == 1)
                 {
                     for (int i = 0; i < LOOP_POINT_COUNT; i++)
@@ -297,7 +297,7 @@ namespace VzClientSDK.WinForm
                 {
                     MessageBox.Show("保存线圈参数失败！");
                 }
-	        }
+            }
         }
 
         private void picBoxVideo_MouseMove(object sender, MouseEventArgs e)
@@ -309,19 +309,19 @@ namespace VzClientSDK.WinForm
 
             if (mouse_down_)
             {
-                if ( active_pt_index_ >= 0 && active_pt_index_ < LOOP_POINT_COUNT )
+                if (active_pt_index_ >= 0 && active_pt_index_ < LOOP_POINT_COUNT)
                 {
                     Point ptNow = GetInBoundPoint(pt_img);
                     if (!GetEditIsCross(active_pt_index_, ptNow))
-					{
+                    {
                         // 移动点
                         loop_point_array_[active_pt_index_] = ptNow;
-					}
+                    }
                 }
                 else
                 {
                     // 移动整个图形
-                    if( select_loop_ )
+                    if (select_loop_)
                     {
                         // 获取当前位置与之前位置的坐标差
                         dis_x = pt_img.X - pt_prev_.X;
@@ -351,12 +351,12 @@ namespace VzClientSDK.WinForm
 
         private void MoveAllPoints(int dis_x, int dis_y)
         {
-	       
-	        for( int i = 0; i < LOOP_POINT_COUNT; i++ )
-	        {
+
+            for (int i = 0; i < LOOP_POINT_COUNT; i++)
+            {
                 loop_point_array_[i].X += dis_x;
                 loop_point_array_[i].Y += dis_y;
-	        }
+            }
         }
 
         private void picBoxVideo_MouseDown(object sender, MouseEventArgs e)
@@ -367,7 +367,7 @@ namespace VzClientSDK.WinForm
             Point pt_img = PointToImgPoint(pt_mouse_down_);
 
             select_loop_ = PointIsInPolygen(pt_img);
-            if ( select_loop_ )
+            if (select_loop_)
             {
                 pt_prev_ = pt_img;
             }
@@ -383,221 +383,222 @@ namespace VzClientSDK.WinForm
         bool PointIsInPolygen(Point pt)
         {
             Point pt0, pt1;
-	        int dist = 0;
-	        int counter = 0;
+            int dist = 0;
+            int counter = 0;
 
-	        bool result = false;
-	      
-	        for ( int i = 0; i < LOOP_POINT_COUNT - 1; i++ )
-	        {
-		        pt0 = loop_point_array_[i];
+            bool result = false;
+
+            for (int i = 0; i < LOOP_POINT_COUNT - 1; i++)
+            {
+                pt0 = loop_point_array_[i];
                 pt1 = loop_point_array_[i + 1];
 
                 if ((pt0.Y <= pt.Y && pt1.Y <= pt.Y) ||
                         (pt0.Y > pt.Y && pt1.Y > pt.Y) ||
-                        (pt0.X < pt.X && pt1.X < pt.X) )
-                    {
-                        if( pt.Y == pt1.Y && (pt.X == pt1.X || (pt.Y == pt0.Y &&
-                            ((pt0.X <= pt.X && pt.X <= pt1.X) || (pt1.X <= pt.X && pt.X <= pt0.X)))) )
-                            return true;
-                        continue;
-                    }
+                        (pt0.X < pt.X && pt1.X < pt.X))
+                {
+                    if (pt.Y == pt1.Y && (pt.X == pt1.X || (pt.Y == pt0.Y &&
+                        ((pt0.X <= pt.X && pt.X <= pt1.X) || (pt1.X <= pt.X && pt.X <= pt0.X)))))
+                        return true;
+                    continue;
+                }
 
-        	
-                dist = (pt.Y - pt0.Y)*(pt1.X - pt0.X) - (pt.X - pt0.X)*(pt1.Y - pt0.Y);
-                if( dist == 0 )
+
+                dist = (pt.Y - pt0.Y) * (pt1.X - pt0.X) - (pt.X - pt0.X) * (pt1.Y - pt0.Y);
+                if (dist == 0)
                     return true;
-                if( pt1.Y < pt0.Y )
+                if (pt1.Y < pt0.Y)
                     dist = -dist;
-                
+
                 if (dist > 0)
                 {
-                    counter ++;
+                    counter++;
                 }
                 // counter += dist > 0;
-	        }
+            }
 
-	        result = (counter % 2) == 0 ? false : true;
-	        return result;
+            result = (counter % 2) == 0 ? false : true;
+            return result;
         }
 
         private void MoveBoundLimit(ref int nDisX, ref int nDisY)
         {
-	        int nCurX = 0;
-	        int nCurY = 0;
+            int nCurX = 0;
+            int nCurY = 0;
 
-	        for( int i = 0; i < LOOP_POINT_COUNT; i++ )
-	        {
-		        nCurX = loop_point_array_[i].X + nDisX;
-		        nCurY = loop_point_array_[i].Y + nDisY;
+            for (int i = 0; i < LOOP_POINT_COUNT; i++)
+            {
+                nCurX = loop_point_array_[i].X + nDisX;
+                nCurY = loop_point_array_[i].Y + nDisY;
 
                 if (nCurX > ((int)graph_width_ - CONTROL_BORDER))
                 {
                     nCurX = ((int)graph_width_ - CONTROL_BORDER);
-		        }
-		        else if( nCurX < 0 ){
-			        nCurX = 0;
-		        }
+                }
+                else if (nCurX < 0)
+                {
+                    nCurX = 0;
+                }
                 nDisX = nCurX - loop_point_array_[i].X;
 
                 if (nCurY > ((int)graph_heigh_ - CONTROL_BORDER))
                 {
                     nCurY = ((int)graph_heigh_ - CONTROL_BORDER);
-		        }
-		        else if( nCurY < 0 )
+                }
+                else if (nCurY < 0)
                 {
-			        nCurY = 0 ;
-		        }
-                nDisY = nCurY -loop_point_array_[i].Y;
-	        }
+                    nCurY = 0;
+                }
+                nDisY = nCurY - loop_point_array_[i].Y;
+            }
         }
 
-        private bool GetEditIsCross( int nPtIndex, Point ptMouse )
+        private bool GetEditIsCross(int nPtIndex, Point ptMouse)
         {
-	        int nMaxIndex = LOOP_POINT_COUNT - 1;
+            int nMaxIndex = LOOP_POINT_COUNT - 1;
 
-	        bool bCross = false;
-	        bool bCross1, bCross2;
+            bool bCross = false;
+            bool bCross1, bCross2;
 
-	        Point ptEdge1Start, ptEdge1End;
-	        Point ptEdge2Start, ptEdge2End;
+            Point ptEdge1Start, ptEdge1End;
+            Point ptEdge2Start, ptEdge2End;
 
-	        Point ptStart, ptEnd;
+            Point ptStart, ptEnd;
 
-	        // 移动起点
-	        if( nPtIndex == 0 )
-	        {
-		        ptStart = loop_point_array_[1];
-		        ptEnd = ptStart;
+            // 移动起点
+            if (nPtIndex == 0)
+            {
+                ptStart = loop_point_array_[1];
+                ptEnd = ptStart;
 
-		        // 第一条边
-		        ptEdge1Start = ptMouse;
-		        ptEdge1End   = loop_point_array_[1];
+                // 第一条边
+                ptEdge1Start = ptMouse;
+                ptEdge1End = loop_point_array_[1];
 
                 for (int i = 2; i < LOOP_POINT_COUNT; i++)
-		        {
-			        ptEnd = loop_point_array_[i];
-			        bCross = GetLineIsCross(ptEdge1Start, ptEdge1End, ptStart, ptEnd);
+                {
+                    ptEnd = loop_point_array_[i];
+                    bCross = GetLineIsCross(ptEdge1Start, ptEdge1End, ptStart, ptEnd);
 
-			        if( bCross )
-			        {
-				        break;
-			        }
+                    if (bCross)
+                    {
+                        break;
+                    }
 
-			        ptStart = ptEnd;
-		        }
-	        } // 移动终点
-	        else if( nPtIndex == nMaxIndex )
-	        {
-		        ptStart = loop_point_array_[0];
-		        ptEnd = ptStart;
+                    ptStart = ptEnd;
+                }
+            } // 移动终点
+            else if (nPtIndex == nMaxIndex)
+            {
+                ptStart = loop_point_array_[0];
+                ptEnd = ptStart;
 
-		        // 第一条边
-		        ptEdge1Start = loop_point_array_[nMaxIndex - 1];
-		        ptEdge1End   = ptMouse;
+                // 第一条边
+                ptEdge1Start = loop_point_array_[nMaxIndex - 1];
+                ptEdge1End = ptMouse;
 
-		        for( int i = 1; i < nMaxIndex; i++ )
-		        {
-			        ptEnd = loop_point_array_[i];
-			        bCross = GetLineIsCross(ptEdge1Start, ptEdge1End, ptStart, ptEnd);
+                for (int i = 1; i < nMaxIndex; i++)
+                {
+                    ptEnd = loop_point_array_[i];
+                    bCross = GetLineIsCross(ptEdge1Start, ptEdge1End, ptStart, ptEnd);
 
-			        if( bCross )
-			        {
-				        break;
-			        }
+                    if (bCross)
+                    {
+                        break;
+                    }
 
-			        ptStart = ptEnd;
-		        }
-	        }
-	        else
-	        {
-		        ptStart = loop_point_array_[0];
-		        ptEnd = ptStart;
+                    ptStart = ptEnd;
+                }
+            }
+            else
+            {
+                ptStart = loop_point_array_[0];
+                ptEnd = ptStart;
 
-		        // 第一条边
-		        ptEdge1Start = loop_point_array_[nPtIndex-1];
-		        ptEdge1End   = ptMouse;
+                // 第一条边
+                ptEdge1Start = loop_point_array_[nPtIndex - 1];
+                ptEdge1End = ptMouse;
 
-		        // 第二条边
-		        ptEdge2Start = ptMouse;
-		        ptEdge2End   = loop_point_array_[nPtIndex + 1];
+                // 第二条边
+                ptEdge2Start = ptMouse;
+                ptEdge2End = loop_point_array_[nPtIndex + 1];
 
                 for (int i = 1; i < LOOP_POINT_COUNT; i++)
-		        {
+                {
                     ptEnd = loop_point_array_[i];
 
-			        if( (i == nPtIndex) || (i == (nPtIndex + 1)) )
-			        {
-				        ptStart = ptEnd;
-				        continue;
-			        }
-        			
-			        bCross1 = GetLineIsCross(ptEdge1Start, ptEdge1End, ptStart, ptEnd);
-			        bCross2 = GetLineIsCross(ptEdge2Start, ptEdge2End, ptStart, ptEnd);
+                    if ((i == nPtIndex) || (i == (nPtIndex + 1)))
+                    {
+                        ptStart = ptEnd;
+                        continue;
+                    }
 
-			        if( bCross1 || bCross2 )
-			        {
-				        bCross = true;
-				        break;
-			        }
+                    bCross1 = GetLineIsCross(ptEdge1Start, ptEdge1End, ptStart, ptEnd);
+                    bCross2 = GetLineIsCross(ptEdge2Start, ptEdge2End, ptStart, ptEnd);
 
-			        ptStart = ptEnd;
-		        }
-	        }
+                    if (bCross1 || bCross2)
+                    {
+                        bCross = true;
+                        break;
+                    }
 
-	        return bCross;
+                    ptStart = ptEnd;
+                }
+            }
+
+            return bCross;
         }
 
         private bool GetLineIsCross(Point ptMa, Point ptMb, Point ptNa, Point ptNb)
         {
-	        double dbV1, dbV2, dbV3, dbV4;
+            double dbV1, dbV2, dbV3, dbV4;
 
             dbV1 = (ptMb.X - ptMa.X) * (ptNb.Y - ptMa.Y) - (ptMb.Y - ptMa.Y) * (ptNb.X - ptMa.X);
             dbV2 = (ptMb.X - ptMa.X) * (ptNa.Y - ptMa.Y) - (ptMb.Y - ptMa.Y) * (ptNa.X - ptMa.X);
 
-	        double dbResult1 = dbV1 * dbV2;
-	        if( dbResult1 >= 0 )
-	        {
-		        return false;
-	        }
+            double dbResult1 = dbV1 * dbV2;
+            if (dbResult1 >= 0)
+            {
+                return false;
+            }
 
             dbV3 = (ptNb.X - ptNa.X) * (ptMb.Y - ptNa.Y) - (ptNb.Y - ptNa.Y) * (ptMb.X - ptNa.X);
             dbV4 = (ptNb.X - ptNa.X) * (ptMa.Y - ptNa.Y) - (ptNb.Y - ptNa.Y) * (ptMa.X - ptNa.X);
 
-	        double dbResult2 = dbV3 * dbV4;
-	        if( dbResult2 >= 0 )
-	        {
-		        return false;
-	        }
+            double dbResult2 = dbV3 * dbV4;
+            if (dbResult2 >= 0)
+            {
+                return false;
+            }
 
-	        return true;
+            return true;
         }
 
-        private Point GetInBoundPoint( Point pt )
+        private Point GetInBoundPoint(Point pt)
         {
-	        Point ptResult = pt;
-        	
-	        if( ptResult.X < 0 )
-	        {
-		        ptResult.X = 0;
-	        }
+            Point ptResult = pt;
 
-	        if( ptResult.X > ((int)graph_width_ - CONTROL_BORDER) )
-	        {
-		        ptResult.X = (int)graph_width_ - CONTROL_BORDER;
-	        }
+            if (ptResult.X < 0)
+            {
+                ptResult.X = 0;
+            }
 
-	        if( ptResult.Y < 0 )
-	        {
+            if (ptResult.X > ((int)graph_width_ - CONTROL_BORDER))
+            {
+                ptResult.X = (int)graph_width_ - CONTROL_BORDER;
+            }
+
+            if (ptResult.Y < 0)
+            {
                 ptResult.Y = 0;
-	        }
+            }
 
             if (ptResult.Y > ((int)graph_heigh_ - CONTROL_BORDER))
-	        {
+            {
                 ptResult.Y = (int)graph_heigh_ - CONTROL_BORDER;
-	        }
+            }
 
-	        return ptResult;
+            return ptResult;
         }
 
         private void EnableLoopParamCtrl(bool enable)
@@ -615,7 +616,7 @@ namespace VzClientSDK.WinForm
         {
             loops_.uNumVirtualLoop = 0;
 
-            for ( int i = 0; i < LOOP_POINT_COUNT; i++ )
+            for (int i = 0; i < LOOP_POINT_COUNT; i++)
             {
                 loop_point_array_[i].X = 0;
                 loop_point_array_[i].Y = 0;
@@ -626,7 +627,7 @@ namespace VzClientSDK.WinForm
 
         private void LoadLoopParam()
         {
-            
+
 
             string rule_name = loops_.struLoop[0].strName;
             txtRuleName.Text = rule_name;
@@ -678,8 +679,8 @@ namespace VzClientSDK.WinForm
             int nMaxWidth = nWidth - RULE_GRAPH_BORDER;
             int nMaxHeight = nHeight - RULE_GRAPH_BORDER;
 
-            Point pt1 = new Point(RULE_GRAPH_BORDER,RULE_GRAPH_BORDER + nMaxHeight / 2  );
-            Point pt2 = new Point(nWidth - RULE_GRAPH_BORDER, RULE_GRAPH_BORDER + nMaxHeight/2);
+            Point pt1 = new Point(RULE_GRAPH_BORDER, RULE_GRAPH_BORDER + nMaxHeight / 2);
+            Point pt2 = new Point(nWidth - RULE_GRAPH_BORDER, RULE_GRAPH_BORDER + nMaxHeight / 2);
             Point pt3 = new Point(nWidth - RULE_GRAPH_BORDER, nHeight - RULE_GRAPH_BORDER);
             Point pt4 = new Point(RULE_GRAPH_BORDER, nMaxHeight);
 
@@ -715,7 +716,7 @@ namespace VzClientSDK.WinForm
             }
 
         }
-           
+
 
     }
 }

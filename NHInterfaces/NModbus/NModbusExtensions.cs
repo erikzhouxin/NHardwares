@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace System.Data.NModbus
 {
@@ -12,62 +13,87 @@ namespace System.Data.NModbus
     public static class EnronModbus
     {
         /// <summary>
-        ///     Read contiguous block of 32 bit holding registers.
+        ///    Reads contiguous block of input registers with 32 bit register size.
         /// </summary>
         /// <param name="master">The Modbus master.</param>
         /// <param name="slaveAddress">Address of device to read values from.</param>
         /// <param name="startAddress">Address to begin reading.</param>
         /// <param name="numberOfPoints">Number of holding registers to read.</param>
-        /// <returns>Holding registers status</returns>
-        public static uint[] ReadHoldingRegisters32(
-            this IModbusMaster master,
-            byte slaveAddress,
-            ushort startAddress,
-            ushort numberOfPoints)
+        /// <returns>Input registers status.</returns>
+        public static uint[] ReadInputRegisters32(this IModbusMaster master, byte slaveAddress, ushort startAddress, ushort numberOfPoints)
         {
-            if (master == null)
-            {
-                throw new ArgumentNullException(nameof(master));
-            }
+            ValidateNumberOfPoints("numberOfPoints", numberOfPoints, 62);
 
-            ValidateNumberOfPoints(numberOfPoints, 62);
-
-            // read 16 bit chunks and perform conversion
-            var rawRegisters = master.ReadHoldingRegisters(
+            var request = new ReadHoldingInputRegisters32Request(
+                ModbusFunctionCodes.ReadInputRegisters,
                 slaveAddress,
                 startAddress,
-                (ushort)(numberOfPoints * 2));
+                numberOfPoints);
 
-            return Convert(rawRegisters).ToArray();
+            return PerformReadRegisters(master, request);
         }
 
         /// <summary>
-        ///     Read contiguous block of 32 bit input registers.
+        ///    Reads contiguous block of holding registers.
         /// </summary>
         /// <param name="master">The Modbus master.</param>
         /// <param name="slaveAddress">Address of device to read values from.</param>
         /// <param name="startAddress">Address to begin reading.</param>
         /// <param name="numberOfPoints">Number of holding registers to read.</param>
-        /// <returns>Input registers status</returns>
-        public static uint[] ReadInputRegisters32(
-            this IModbusMaster master,
-            byte slaveAddress,
-            ushort startAddress,
-            ushort numberOfPoints)
+        /// <returns>Holding registers status.</returns>
+        public static uint[] ReadHoldingRegisters32(this IModbusMaster master, byte slaveAddress, ushort startAddress, ushort numberOfPoints)
         {
-            if (master == null)
-            {
-                throw new ArgumentNullException(nameof(master));
-            }
+            ValidateNumberOfPoints("numberOfPoints", numberOfPoints, 62);
 
-            ValidateNumberOfPoints(numberOfPoints, 62);
-
-            var rawRegisters = master.ReadInputRegisters(
+            var request = new ReadHoldingInputRegisters32Request(
+                ModbusFunctionCodes.ReadHoldingRegisters,
                 slaveAddress,
                 startAddress,
-                (ushort)(numberOfPoints * 2));
+                numberOfPoints);
 
-            return Convert(rawRegisters).ToArray();
+            return PerformReadRegisters(master, request);
+        }
+
+        /// <summary>
+        ///    Asynchronously reads contiguous block of input registers with 32 bit register size.
+        /// </summary>
+        /// <param name="master">The Modbus master.</param>
+        /// <param name="slaveAddress">Address of device to read values from.</param>
+        /// <param name="startAddress">Address to begin reading.</param>
+        /// <param name="numberOfPoints">Number of holding registers to read.</param>
+        /// <returns>A task that represents the asynchronous read operation.</returns>
+        public static Task<uint[]> ReadInputRegisters32Async(this IModbusMaster master, byte slaveAddress, ushort startAddress, ushort numberOfPoints)
+        {
+            ValidateNumberOfPoints("numberOfPoints", numberOfPoints, 125);
+
+            var request = new ReadHoldingInputRegisters32Request(
+                ModbusFunctionCodes.ReadInputRegisters,
+                slaveAddress,
+                startAddress,
+                numberOfPoints);
+
+            return PerformReadRegistersAsync(master, request);
+        }
+
+        /// <summary>
+        ///    Asynchronously reads contiguous block of holding registers.
+        /// </summary>
+        /// <param name="master">The Modbus master.</param>
+        /// <param name="slaveAddress">Address of device to read values from.</param>
+        /// <param name="startAddress">Address to begin reading.</param>
+        /// <param name="numberOfPoints">Number of holding registers to read.</param>
+        /// <returns>A task that represents the asynchronous read operation.</returns>
+        public static Task<uint[]> ReadHoldingRegisters32Async(this IModbusMaster master, byte slaveAddress, ushort startAddress, ushort numberOfPoints)
+        {
+            ValidateNumberOfPoints("numberOfPoints", numberOfPoints, 125);
+
+            var request = new ReadHoldingInputRegisters32Request(
+                ModbusFunctionCodes.ReadHoldingRegisters,
+                slaveAddress,
+                startAddress,
+                numberOfPoints);
+
+            return PerformReadRegistersAsync(master, request);
         }
 
         /// <summary>
@@ -122,6 +148,37 @@ namespace System.Data.NModbus
             master.WriteMultipleRegisters(slaveAddress, startAddress, Convert(data).ToArray());
         }
 
+        private static Task<uint[]> PerformReadRegistersAsync(IModbusMaster master, ReadHoldingInputRegisters32Request request)
+        {
+            return Task.Factory.StartNew(() => PerformReadRegisters(master, request));
+        }
+
+        private static uint[] PerformReadRegisters(IModbusMaster master, ReadHoldingInputRegisters32Request request)
+        {
+            ReadHoldingInputRegistersResponse response = master.Transport.UnicastMessage<ReadHoldingInputRegistersResponse>(request);
+
+            uint[] registers = new uint[request.NumberOfPoints];
+
+            if (response.Data is IModbusMessageDataCollection data)
+            {
+                for (int i = 0; i < response.Data.ByteCount; i += 4)
+                {
+                    registers[i / 4] = (uint)(data.NetworkBytes[i + 0] << 24 | data.NetworkBytes[i + 1] << 16 | data.NetworkBytes[i + 2] << 8 | data.NetworkBytes[i + 3]);
+                }
+            }
+
+            return registers.Take(request.NumberOfPoints).ToArray();
+        }
+
+        private static void ValidateNumberOfPoints(string argumentName, ushort numberOfPoints, ushort maxNumberOfPoints)
+        {
+            if (numberOfPoints < 1 || numberOfPoints > maxNumberOfPoints)
+            {
+                string msg = $"Argument {argumentName} must be between 1 and {maxNumberOfPoints} inclusive.";
+                throw new ArgumentException(msg);
+            }
+        }
+
         /// <summary>
         ///     Convert the 32 bit registers to two 16 bit values.
         /// </summary>
@@ -130,31 +187,10 @@ namespace System.Data.NModbus
             foreach (var register in registers)
             {
                 // low order value
-                yield return BitConverter.ToUInt16(BitConverter.GetBytes(register), 0);
+                yield return BitConverter.ToUInt16(BitConverter.GetBytes(register), 2);
 
                 // high order value
-                yield return BitConverter.ToUInt16(BitConverter.GetBytes(register), 2);
-            }
-        }
-
-        /// <summary>
-        ///     Convert the 16 bit registers to 32 bit registers.
-        /// </summary>
-        private static IEnumerable<uint> Convert(ushort[] registers)
-        {
-            for (int i = 0; i < registers.Length; i++)
-            {
-                yield return ModbusUtility.GetUInt32(registers[i + 1], registers[i]);
-                i++;
-            }
-        }
-
-        private static void ValidateNumberOfPoints(ushort numberOfPoints, ushort maxNumberOfPoints)
-        {
-            if (numberOfPoints < 1 || numberOfPoints > maxNumberOfPoints)
-            {
-                string msg = $"Argument numberOfPoints must be between 1 and {maxNumberOfPoints} inclusive.";
-                throw new ArgumentException(msg);
+                yield return BitConverter.ToUInt16(BitConverter.GetBytes(register), 0);
             }
         }
     }

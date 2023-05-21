@@ -13,21 +13,21 @@ namespace VzClientSDK.WinForm
     public partial class PlayVoice : Form
     {
         static IVzClientSdkProxy VzClientSDK = VzClientSdk.Create();
-        private int m_hLPRClient = 0;
+        private IntPtr m_hLPRClient = IntPtr.Zero;
 
         public PlayVoice()
         {
             InitializeComponent();
         }
 
-        public void SetLPRHandle(int hLPRClient)
+        public void SetLPRHandle(IntPtr hLPRClient)
         {
             m_hLPRClient = hLPRClient;
         }
 
         private void btnPlayVoice_Click(object sender, EventArgs e)
         {
-            if (m_hLPRClient > 0)
+            if (m_hLPRClient != IntPtr.Zero)
             {
                 int ret = VzClientSDK.VzLPRClient_PlayVoice(m_hLPRClient, txtContent.Text, 0, 100, 1);
             }

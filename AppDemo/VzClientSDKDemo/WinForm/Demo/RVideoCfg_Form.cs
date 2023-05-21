@@ -41,9 +41,9 @@ namespace VzClientSDK.WinForm
             {
                 return Text;
             }
-        } 
+        }
 
-        private int m_hLPRClient = 0;
+        private IntPtr m_hLPRClient = IntPtr.Zero;
         private int m_nMinDataRate;
         private int m_nMaxDataRate;
         private VZ_LPRC_R_VIDEO_PARAM m_video_param = new VZ_LPRC_R_VIDEO_PARAM();
@@ -53,7 +53,7 @@ namespace VzClientSDK.WinForm
             InitializeComponent();
         }
 
-        public void SetLPRHandle(int hLPRClient)
+        public void SetLPRHandle(IntPtr hLPRClient)
         {
             m_hLPRClient = hLPRClient;
         }
@@ -96,7 +96,7 @@ namespace VzClientSDK.WinForm
 
             while (param_property.resolution[index].resolution_type > 0)
             {
-                cmb_frame_size.Items.Add(new ComboxItem(param_property.resolution[index].resolution_content,param_property.resolution[index].resolution_type.ToString()));
+                cmb_frame_size.Items.Add(new ComboxItem(param_property.resolution[index].resolution_content, param_property.resolution[index].resolution_type.ToString()));
 
                 if (resolution_cur == param_property.resolution[index].resolution_type)
                 {
@@ -113,7 +113,7 @@ namespace VzClientSDK.WinForm
 
             if (encode_param.frame_rate >= 1 && encode_param.frame_rate <= 25)
             {
-                cmb_frame_rate.SelectedIndex  = encode_param.frame_rate - 1;
+                cmb_frame_rate.SelectedIndex = encode_param.frame_rate - 1;
             }
 
             if (encode_param.video_quality >= 0 && encode_param.video_quality <= 6)
@@ -130,7 +130,7 @@ namespace VzClientSDK.WinForm
 
             //码流控制
             modeval = encode_param.rate_type;
-            cmb_compress_mode.SelectedIndex  = modeval;
+            cmb_compress_mode.SelectedIndex = modeval;
 
             cmb_encode_type.SelectedIndex = 0;
 
@@ -138,7 +138,7 @@ namespace VzClientSDK.WinForm
             cmb_img_quality.Enabled = (modeval == 0) ? false : true;
         }
 
-        private void LoadVideoSource( )
+        private void LoadVideoSource()
         {
             int brt = 0, cst = 0, sat = 0, hue = 0;
             int ret = VzClientSDK.VzLPRClient_GetVideoPara(m_hLPRClient, ref brt, ref cst, ref sat, ref hue);

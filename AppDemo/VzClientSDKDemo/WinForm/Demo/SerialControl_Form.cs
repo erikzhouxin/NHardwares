@@ -18,8 +18,8 @@ namespace VzClientSDK.WinForm
         static IVzClientSdkProxy VzClientSDK = VzClientSdk.Create();
         private const int MSG_SERIAL_RECV = 0x913;
 
-        private int lpr_handle_ = 0;
-        private int serial_handle_ = 0;
+        private IntPtr lpr_handle_ = IntPtr.Zero;
+        private IntPtr serial_handle_ = IntPtr.Zero;
         private VZDEV_SERIAL_RECV_DATA_CALLBACK serial_recv_ = null;
         private byte[] recv_data_ = new byte[10240];
         private int size_serial_recv_ = 0;
@@ -31,18 +31,18 @@ namespace VzClientSDK.WinForm
             InitializeComponent();
         }
 
-        public void SetLPRHandle(int handle)
+        public void SetLPRHandle(IntPtr handle)
         {
             lpr_handle_ = handle;
         }
 
         private void btnStart_Click(object sender, EventArgs e)
         {
-            if ( lpr_handle_ > 0 )
+            if (lpr_handle_ != IntPtr.Zero)
             {
                 int port = cmbPort.SelectedIndex;
                 serial_handle_ = VzClientSDK.VzLPRClient_SerialStart(lpr_handle_, port, serial_recv_, IntPtr.Zero);
-                if ( serial_handle_ == 0 )
+                if (serial_handle_ == IntPtr.Zero)
                 {
                     MessageBox.Show("打开串口失败，请重试!");
                 }
@@ -51,12 +51,12 @@ namespace VzClientSDK.WinForm
 
         private void btnStop_Click(object sender, EventArgs e)
         {
-            if ( serial_handle_ != 0 )
+            if (serial_handle_ != IntPtr.Zero)
             {
                 int ret = VzClientSDK.VzLPRClient_SerialStop(serial_handle_);
-                if ( ret == 0 )
+                if (ret == 0)
                 {
-                    serial_handle_ = 0;
+                    serial_handle_ = IntPtr.Zero;
                 }
             }
         }
@@ -73,13 +73,13 @@ namespace VzClientSDK.WinForm
 
         private void ShowSerialData()
         {
-            if ( size_serial_recv_ > 0 )
+            if (size_serial_recv_ > 0)
             {
                 byte[] buf_data = new byte[size_serial_recv_];
                 System.Buffer.BlockCopy(recv_data_, 0, buf_data, 0, size_serial_recv_);
 
                 string str = "";
-                if(chkBoxHex.Checked)
+                if (chkBoxHex.Checked)
                 {
                     StringBuilder sb = new StringBuilder();
                     for (int i = 0; i < size_serial_recv_; i++)
@@ -101,9 +101,9 @@ namespace VzClientSDK.WinForm
             }
         }
 
-        private int OnserialRECV(int nSerialHandle, IntPtr pRecvData, int uRecvSize, IntPtr pUserData)
+        private int OnserialRECV(IntPtr nSerialHandle, IntPtr pRecvData, int uRecvSize, IntPtr pUserData)
         {
-            if ( nSerialHandle == serial_handle_ && pRecvData != IntPtr.Zero && uRecvSize > 0 )
+            if (nSerialHandle == serial_handle_ && pRecvData != IntPtr.Zero && uRecvSize > 0)
             {
                 byte[] cur_recv = new byte[uRecvSize];
                 Marshal.Copy(pRecvData, cur_recv, 0, uRecvSize);
@@ -117,7 +117,7 @@ namespace VzClientSDK.WinForm
             return 0;
         }
 
-        private void SendTextSerial( )
+        private void SendTextSerial()
         {
             string text_content = txtSend.Text;
             char[] txt_buf = text_content.ToCharArray();
@@ -136,7 +136,7 @@ namespace VzClientSDK.WinForm
         {
             const int max_send_size = 1024;
             byte[] send_buf = new byte[max_send_size];
-            
+
             string text_content = txtSend.Text;
             string new_content = text_content.Insert(text_content.Length, " ");
             int txt_len = new_content.Length;
@@ -148,14 +148,14 @@ namespace VzClientSDK.WinForm
             byte uc;
             for (int i = 0; i < txt_len - 2; i += 3)
             {
-                if ( txt_buf[i + 2] != ' ')
+                if (txt_buf[i + 2] != ' ')
                 {
                     MessageBox.Show("16 进制数据输入格式不正确");
                     return;
                 }
 
                 strHex[0] = txt_buf[i];
-                strHex[1] = txt_buf[i+1];
+                strHex[1] = txt_buf[i + 1];
                 strHex[2] = (char)0;
 
                 for (int j = 0; j < 2; j++)
@@ -185,9 +185,9 @@ namespace VzClientSDK.WinForm
 
         private void btnSend_Click(object sender, EventArgs e)
         {
-            if ( serial_handle_ != 0 )
+            if (serial_handle_ != IntPtr.Zero)
             {
-                if( chkSendHex.Checked )
+                if (chkSendHex.Checked)
                 {
                     SendHexSerial();
                 }
@@ -195,7 +195,7 @@ namespace VzClientSDK.WinForm
                 {
                     SendTextSerial();
                 }
-                
+
             }
             else
             {
@@ -205,12 +205,12 @@ namespace VzClientSDK.WinForm
 
         private void SerialControl_Form_FormClosed(object sender, FormClosedEventArgs e)
         {
-            if (serial_handle_ != 0)
+            if (serial_handle_ != IntPtr.Zero)
             {
                 int ret = VzClientSDK.VzLPRClient_SerialStop(serial_handle_);
                 if (ret == 0)
                 {
-                    serial_handle_ = 0;
+                    serial_handle_ = IntPtr.Zero;
                 }
             }
         }
@@ -228,7 +228,7 @@ namespace VzClientSDK.WinForm
                     break;
             }
         }
-        
+
 
         private void btnClean_Click(object sender, EventArgs e)
         {

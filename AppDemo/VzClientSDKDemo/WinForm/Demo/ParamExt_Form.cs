@@ -16,12 +16,12 @@ namespace VzClientSDK.WinForm
     {
         static IVzClientSdkProxy VzClientSDK = VzClientSdk.Create();
         private uint VZ_LPRC_USER_DATA_MAX_LEN = 128;
-        private int m_hLPRClient = 0;
+        private IntPtr m_hLPRClient = IntPtr.Zero;
         public ParamExt_Form()
         {
             InitializeComponent();
         }
-        public void SetLPRHandle(int m_hLPRClient_)
+        public void SetLPRHandle(IntPtr m_hLPRClient_)
         {
             m_hLPRClient = m_hLPRClient_;
         }

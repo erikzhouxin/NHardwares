@@ -15,7 +15,7 @@ namespace VzClientSDK.WinForm
     public partial class OSDSET_Form : Form
     {
         static IVzClientSdkProxy VzClientSDK = VzClientSdk.Create();
-        private int m_hLPRClient = 0;
+        private IntPtr m_hLPRClient = IntPtr.Zero;
         private int m_nDateX;
         private int m_nDateY;
         private int m_nTimeX;
@@ -43,7 +43,7 @@ namespace VzClientSDK.WinForm
             return result;
         }
 
-        public void SetLPRHandle(int m_hLPRClient_)
+        public void SetLPRHandle(IntPtr m_hLPRClient_)
         {
             m_hLPRClient = m_hLPRClient_;
 

@@ -276,6 +276,16 @@ namespace System.Data.VzClientSDK
         */
         public delegate int VzLPRClient_ImageSaveToJpeg(IntPtr pImgInfo, string pFullPathName, int nQuality);
 
+        /// <summary>
+        /// 将图像保存为JPEG到指定路径，可指定图像尺寸的模式
+        /// </summary>
+        /// <param name="pImgInfo">图像结构体，目前只支持默认的格式，即ImageFormatRGB</param>
+        /// <param name="pFullPathName">设带绝对路径和JPG后缀名的文件名字符串</param>
+        /// <param name="nQuality">JPEG压缩的质量，取值范围1~100</param>
+        /// <param name="sizeMode">图像大小的模式</param>
+        /// <returns></returns>
+        public delegate int VzLPRClient_ImageSaveToJpegEx(VZ_LPRC_IMAGE_INFO pImgInfo, string pFullPathName, int nQuality, IMG_SIZE_MODE sizeMode);
+
         /**
         *  @brief 读出设备序列号，可用于二次加密
         *  @param [IN] handle 由VzLPRClient_Open函数获得的句柄
@@ -360,7 +370,7 @@ namespace System.Data.VzClientSDK
         *  @return 返回值为0表示成功，返回-1表示失败
         *  @ingroup group_device
         */
-        public delegate int VzLPRClient_GetGPIOValue(IntPtr handle, int gpioIn, IntPtr value);
+        public delegate int VzLPRClient_GetGPIOValue(IntPtr handle, int gpioIn, out int value);
 
         /**
         *  @brief 根据ID获取车牌图片

@@ -17,8 +17,8 @@ namespace VzClientSDK.WinForm
     public partial class Form1 : Form
     {
         static IVzClientSdkProxy VzClientSDK = VzClientSdk.Create();
-        private int m_hLPRClient = 0;
-        private int m_nPlayHandle = 0;
+        private IntPtr m_hLPRClient = IntPtr.Zero;
+        private IntPtr m_nPlayHandle = IntPtr.Zero;
 
         private VZLPRC_PLATE_INFO_CALLBACK m_PlateResultCB = null;
 
@@ -40,14 +40,14 @@ namespace VzClientSDK.WinForm
         {
             short nPort = Int16.Parse(txtPort.Text);
 
-            if (m_hLPRClient > 0)
+            if (m_hLPRClient != IntPtr.Zero)
             {
                 MessageBox.Show("当前窗口已打开设备！");
                 return;
             }
 
             m_hLPRClient = VzClientSDK.VzLPRClient_Open(txtIP.Text, (ushort)nPort, txtUserName.Text, txtPwd.Text);
-            if (m_hLPRClient == 0)
+            if (m_hLPRClient == IntPtr.Zero)
             {
                 MessageBox.Show("打开设备失败！");
                 return;
@@ -61,7 +61,7 @@ namespace VzClientSDK.WinForm
             VzClientSDK.VzLPRClient_SetPlateInfoCallBack(m_hLPRClient, m_PlateResultCB, IntPtr.Zero, 1);
         }
 
-        private int OnPlateResult(int handle, IntPtr pUserData,
+        private int OnPlateResult(IntPtr handle, IntPtr pUserData,
                                                   IntPtr pResult, uint uNumPlates,
                                                   VZ_LPRC_RESULT_TYPE eResultType,
                                                   IntPtr pImgFull,
@@ -123,18 +123,18 @@ namespace VzClientSDK.WinForm
 
         private void btnClose_Click(object sender, EventArgs e)
         {
-            if (m_hLPRClient > 0)
+            if (m_hLPRClient != IntPtr.Zero)
             {
-                if (m_nPlayHandle > 0)
+                if (m_nPlayHandle != IntPtr.Zero)
                 {
                     int ret = VzClientSDK.VzLPRClient_StopRealPlay(m_nPlayHandle);
-                    m_nPlayHandle = -1;
+                    m_nPlayHandle = IntPtr.Zero;
                 }
 
                 pictureBox1.Refresh();
 
                 VzClientSDK.VzLPRClient_Close(m_hLPRClient);
-                m_hLPRClient = 0;
+                m_hLPRClient = IntPtr.Zero;
             }
         }
 
@@ -152,12 +152,12 @@ namespace VzClientSDK.WinForm
         // 发送485数据
         private void btnSend_Click(object sender, EventArgs e)
         {
-            if (m_hLPRClient > 0)
+            if (m_hLPRClient != IntPtr.Zero)
             {
                 // 开始485通道
                 VZDEV_SERIAL_RECV_DATA_CALLBACK serialRECV = null;
-                int nSerialHandle = VzClientSDK.VzLPRClient_SerialStart(m_hLPRClient, 0, serialRECV, IntPtr.Zero);
-                if (nSerialHandle > 0)
+                var nSerialHandle = VzClientSDK.VzLPRClient_SerialStart(m_hLPRClient, 0, serialRECV, IntPtr.Zero);
+                if (nSerialHandle != IntPtr.Zero)
                 {
                     byte[] test = new byte[100];
                     GCHandle hObject = GCHandle.Alloc(test, GCHandleType.Pinned);
@@ -175,7 +175,7 @@ namespace VzClientSDK.WinForm
 
                     // 停止485通道
                     VzClientSDK.VzLPRClient_SerialStop(nSerialHandle);
-                    nSerialHandle = 0;
+                    nSerialHandle = IntPtr.Zero;
                 }
             }
         }
@@ -183,7 +183,7 @@ namespace VzClientSDK.WinForm
         private void btnSerial_Click(object sender, EventArgs e)
         {
             // 获取设备的序列号
-            if (m_hLPRClient > 0)
+            if (m_hLPRClient != IntPtr.Zero)
             {
                 int size = Marshal.SizeOf(typeof(VZ_DEV_SERIAL_NUM));
                 IntPtr pBuff = Marshal.AllocHGlobal(size);
@@ -199,7 +199,7 @@ namespace VzClientSDK.WinForm
         // 手动触发识别
         private void btnManual_Click(object sender, EventArgs e)
         {
-            if (m_hLPRClient > 0)
+            if (m_hLPRClient != IntPtr.Zero)
             {
                 VzClientSDK.VzLPRClient_ForceTrigger(m_hLPRClient);
             }
@@ -208,7 +208,7 @@ namespace VzClientSDK.WinForm
         // 抓图功能
         private void btnCap_Click(object sender, EventArgs e)
         {
-            if (m_nPlayHandle > 0)
+            if (m_nPlayHandle != IntPtr.Zero)
             {
                 VzClientSDK.VzLPRClient_GetSnapShootToJpeg2(m_nPlayHandle, "D:\\test_1.jpg", 90);
             }
@@ -216,7 +216,7 @@ namespace VzClientSDK.WinForm
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (m_hLPRClient > 0)
+            if (m_hLPRClient != IntPtr.Zero)
             {
                 VzClientSDK.VzLPRClient_SetIOOutput(m_hLPRClient, 0, 1);
                 Thread.Sleep(300);
@@ -227,14 +227,7 @@ namespace VzClientSDK.WinForm
 
         private void button3_Click(object sender, EventArgs e)
         {
-            byte[] test = new byte[1];
-            GCHandle hObject = GCHandle.Alloc(test, GCHandleType.Pinned);
-            IntPtr pObject = hObject.AddrOfPinnedObject();
-
-            int ret = VzClientSDK.VzLPRClient_GetGPIOValue(m_hLPRClient, 0, pObject);
-
-            if (hObject.IsAllocated)
-                hObject.Free();
+            int ret = VzClientSDK.VzLPRClient_GetGPIOValue(m_hLPRClient, 0, out int num0);
         }
 
         private void pictureBox1_Click(object sender, EventArgs e)

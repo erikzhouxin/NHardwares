@@ -26,7 +26,7 @@ namespace VzClientSDK.WinForm
         int m_nTotalCount;
         int m_nCurPage;
         int m_nPageCount;
-        private int m_hLPRClient = 0;
+        private IntPtr m_hLPRClient = IntPtr.Zero;
         private int ONE_PAGE_COUNT = 50;
 
         private VZLPRC_PLATE_INFO_CALLBACK OnQueryPlateInfo = null;
@@ -56,7 +56,7 @@ namespace VzClientSDK.WinForm
             listView1.Columns[4].Width = 85;
         }
 
-        private int gOnQueryPlateInfo(int handle, IntPtr pUserData,
+        private int gOnQueryPlateInfo(IntPtr handle, IntPtr pUserData,
                                                     IntPtr pResult, uint uNumPlates,
                                                     VZ_LPRC_RESULT_TYPE eResultType,
                                                     IntPtr pImgFull,
@@ -140,7 +140,7 @@ namespace VzClientSDK.WinForm
             listView1.Invoke(ListViewShowDelegate);
         }
 
-        public void SetLPRHandle(int m_hLPRClient_,string picpath)
+        public void SetLPRHandle(IntPtr m_hLPRClient_,string picpath)
         {
             txtPicPath = picpath;
             m_hLPRClient = m_hLPRClient_;

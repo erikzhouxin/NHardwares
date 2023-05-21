@@ -9,6 +9,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Security.Policy;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -431,12 +432,7 @@ namespace TestHardwareDemo.WinForm.Views
                     }
                     if (isOpen)
                     {
-                        int[] test = new int[1];
-                        GCHandle hObject = GCHandle.Alloc(test, GCHandleType.Pinned);
-                        IntPtr pObject = hObject.AddrOfPinnedObject();
-                        int ret = VzClientSDK.VzLPRClient_GetGPIOValue(config.Handler, isNum2 ? 1 : 0, pObject);
-                        var outVal = test[0];
-                        if (hObject.IsAllocated) { hObject.Free(); }
+                        int ret = VzClientSDK.VzLPRClient_GetGPIOValue(config.Handler, isNum2 ? 1 : 0, out int outVal);
                         if (ret == 0)
                         {
                             AppendSuccess($"获取开关量输入{(isNum2 ? 2 : 1)}值为{outVal}成功");
@@ -457,6 +453,34 @@ namespace TestHardwareDemo.WinForm.Views
                 };
             }
             TryAddConfigContent(this.PnlTabCnt3, model);
+        }
+        VZLPRC_VIDEO_FRAME_CALLBACK_EX frameCallback;
+        long count = 0;
+        private void TmsrRealFrameCallback_Click(object sender, EventArgs e)
+        {
+            var config = GetContentModel();
+            if (config.Handler == IntPtr.Zero)
+            {
+                AppendError("请连接设备进行操作");
+                return;
+            }
+            frameCallback ??= new VZLPRC_VIDEO_FRAME_CALLBACK_EX(FrameCallback);
+            var call = VzClientSDK.VzLPRClient_StartRealPlayFrameCallBack(config.Handler, IntPtr.Zero, frameCallback, IntPtr.Zero);
+        }
+
+        private void FrameCallback(IntPtr handle, IntPtr pUserData, ref VZ_LPRC_IMAGE_INFO pFrame)
+        {
+            if (count++ % 100 == 0)
+            {
+                AppendInfo($"句柄->{handle},用户->{pUserData}");
+                AppendInfo($"{pFrame.GetJsonFormatString()}");
+                //int nSize = (int)(pFrame.uWidth * pFrame.uHeight);
+                //var pBuf = pFrame.pBuffer;
+                //byte[] data = new byte[nSize];
+                //Marshal.Copy(pBuf, data, 0, nSize);
+                //File.WriteAllBytes("Test.jpg", data);
+                VzClientSDK.VzLPRClient_ImageSaveToJpegEx(pFrame, Path.GetFullPath("Test123.jpg"), 100, IMG_SIZE_MODE.IMG_MODE_NONE);
+            }
         }
     }
 }

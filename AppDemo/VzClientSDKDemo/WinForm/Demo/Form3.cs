@@ -15,7 +15,7 @@ namespace VzClientSDK.WinForm
     public partial class Form3 : Form
     {
         static IVzClientSdkProxy VzClientSDK = VzClientSdk.Create();
-        private int m_hLPRClient = 0;
+        private IntPtr m_hLPRClient = IntPtr.Zero;
         Form2 form2;
         public Form3()
         {
@@ -26,7 +26,7 @@ namespace VzClientSDK.WinForm
         {
             form2 = form2_;
         }
-        public void Setm_hLPRClient(int m_hLPRClient_)
+        public void Setm_hLPRClient(IntPtr m_hLPRClient_)
         {
             m_hLPRClient = m_hLPRClient_;
         }

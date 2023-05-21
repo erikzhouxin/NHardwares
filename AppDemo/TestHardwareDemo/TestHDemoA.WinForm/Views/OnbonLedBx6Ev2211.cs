@@ -72,12 +72,9 @@ namespace TestHardwareDemo.WinForm.Views
             var model = _devices.FirstOrDefault(s => s.Key == key);
             if (model == null)
             {
-                model = new ContentModel(new ConfigModel(outVal.Item1, outVal.Item2));
+                model = new ContentModel(new Tuble<string, int>(outVal.Item1, outVal.Item2));
                 _devices.Add(model);
             }
-            model.Config.SerialNum = this.TxtNetSerialNum.Text?.Trim() ?? string.Empty;
-            model.Config.Account = this.TxtNetAccount.Text?.Trim() ?? string.Empty;
-            model.Config.Password = this.TxtNetPassword.Text?.Trim() ?? string.Empty;
             try
             {
                 System.IO.File.WriteAllText(_configPath, _devices.Select(s => s.Config).GetJsonFormatString());
@@ -95,7 +92,7 @@ namespace TestHardwareDemo.WinForm.Views
             {
                 try
                 {
-                    list = System.IO.File.ReadAllText(_configPath).GetJsonObject<List<ConfigModel>>()
+                    list = System.IO.File.ReadAllText(_configPath).GetJsonObject<List<Tuble<string, int>>>()
                         .Select(s => new ContentModel(s)).ToList();
                 }
                 catch { list = new List<ContentModel>(); }
@@ -137,39 +134,25 @@ namespace TestHardwareDemo.WinForm.Views
             }
             _config = model;
             var config = model.Config;
-            this.TxtNetIp.Text = model.Config.Address;
-            this.TxtNetPort.Text = model.Config.PortRate.ToString();
-            this.TxtNetSerialNum.Text = model.Config.SerialNum;
-            this.TxtNetAccount.Text = model.Config.Account;
-            this.TxtNetPassword.Text = model.Config.Password;
+            this.TxtNetIp.Text = model.Config.Item1;
+            this.TxtNetPort.Text = model.Config.Item2.ToString();
 
-            //Ping_data data = new Ping_data();
-            //var err = bxdualsdk.BxDual_cmd_uart_searchController(ref data, config.Address.GetBytes());
-
-            //AppendInfo("ControllerType:0x" + data.ControllerType.ToString("X2"));
-            //AppendInfo("FirmwareVersion:V" + data.FirmwareVersion.GetString());
-            //AppendInfo("ipAdder:" + data.ipAdder.GetString());
-            //common_56.Net_Bright(2);
-            //Ping_data data = new Ping_data();
-            //err = bxdualsdk.BxDual_cmd_tcpPing(config.Address.GetBytes(), config.PortRate, ref data);
-
-            //Console.WriteLine("ControllerType:0x" + data.ControllerType.ToString("X2"));
-            //Console.WriteLine("FirmwareVersion:V" + System.Text.Encoding.Default.GetString(data.FirmwareVersion));
-            //Console.WriteLine("ipAdder:" + System.Text.Encoding.Default.GetString(data.ipAdder));
-            //Console.WriteLine("ScreenWidth:" + data.ScreenWidth.ToString());
-            //Console.WriteLine("ScreenHeight:" + data.ScreenHeight.ToString());
-            //Console.WriteLine("cmb_ping_Color:" + data.Color.ToString());
-            //Console.WriteLine("\r\n");
-            //common_56.sendConfigFile();
-            //Console.Write("请输入串口：");
-            //com = Encoding.GetEncoding("GBK").GetBytes(Console.ReadLine());
-            //err = bxdualsdk.BxDual_cmd_check_time(ip, port);
-            //if (err == 0) { Console.WriteLine("校时成功"); } else { Console.WriteLine("校时失败"); }
-        }
-
-        private void ChkNetPDNS_Click(object sender, EventArgs e)
-        {
-            this.TxtNetSerialNum.Enabled = this.ChkNetPDNS.Checked;
+            Ping_data data = new Ping_data();
+            int err;
+            if (config.Item1.StartsWith("COM"))
+            {
+                err = bxdualsdk.BxDual_cmd_uart_searchController(ref data, config.Item1.GetBytes());
+            }
+            else
+            {
+                err = bxdualsdk.BxDual_cmd_tcpPing(config.Item1.GetBytes(), (ushort)config.Item2, ref data);
+            }
+            AppendInfo("ControllerType:0x" + data.ControllerType.ToString("X2"));
+            AppendInfo("FirmwareVersion:V" + System.Text.Encoding.Default.GetString(data.FirmwareVersion));
+            AppendInfo("ipAdder:" + System.Text.Encoding.Default.GetString(data.ipAdder));
+            AppendInfo("ScreenWidth:" + data.ScreenWidth.ToString());
+            AppendInfo("ScreenHeight:" + data.ScreenHeight.ToString());
+            AppendInfo("cmb_ping_Color:" + data.Color.ToString());
         }
 
         private void BtnNetExit_Click(object sender, EventArgs e)
@@ -180,7 +163,7 @@ namespace TestHardwareDemo.WinForm.Views
 
         private ContentModel GetContentModel()
         {
-            return _config ?? new ContentModel(new ConfigModel());
+            return _config ?? new ContentModel(new Tuble<string, int>("192.1680.1.110", 5005));
         }
 
         private void BtnNetRemove_Click(object sender, EventArgs e)
@@ -195,37 +178,21 @@ namespace TestHardwareDemo.WinForm.Views
             ReadDeviceAndSetFirstOne();
         }
         #region // 内部类
-        internal class ConfigModel
-        {
-            public string Key { get => $"{Address}:{PortRate}"; }
-            public string Address { get; set; }
-            public int PortRate { get; set; }
-            public bool IsCom { get => Address.StartsWith("COM"); }
-            public string SerialNum { get; set; }
-            public string Account { get; set; }
-            public string Password { get; set; }
-            public ConfigModel() : this("192.168.1.100", 80) { }
-            public ConfigModel(string address, int port)
-            {
-                Address = address;
-                PortRate = port;
-            }
-        }
         internal class ContentModel
         {
             /// <summary>
             /// 键
             /// </summary>
-            public string Key { get => Config.Key; }
+            public string Key { get => $"{Config.Item1}:{Config.Item2}"; }
             /// <summary>
             /// 配置
             /// </summary>
-            public ConfigModel Config { get; set; }
+            public Tuble<string, int> Config { get; set; }
             /// <summary>
             /// 构造
             /// </summary>
             /// <param name="config"></param>
-            public ContentModel(ConfigModel config)
+            public ContentModel(Tuble<string, int> config)
             {
                 Config = config;
             }

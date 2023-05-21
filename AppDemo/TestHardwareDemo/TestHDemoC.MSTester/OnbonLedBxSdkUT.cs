@@ -58,8 +58,9 @@ namespace TestHDemoC.MSTester
         [TestMethod]
         public void TestSendProgramTxt6()
         {
-            Send_program_txt_6(); // 发送节目文本
-            // Send_program_areas_6(); // 多区域发送节目文本
+            //Send_program_txt_6(); // 发送节目文本
+            //Send_program_areas_6(); // 多区域发送节目文本
+            Send_program_txt_6_1();
         }
         /// <summary>
         /// BX-6代控制卡发送节目文本
@@ -149,15 +150,17 @@ namespace TestHDemoC.MSTester
                 Console.WriteLine("program_addPlayPeriodGrp:" + err);
             }
             //节目添加边框
-            if (false)
+            if (true)
             {
-                EQscreenframeHeader_G6 sfheader;
-                sfheader.FrameDispStype = 0x01;    //边框显示方式
-                sfheader.FrameDispSpeed = 0x3B;    //边框显示速度
-                sfheader.FrameMoveStep = 0x01;     //边框移动步长
-                sfheader.FrameUnitLength = 2;   //边框组元长度
-                sfheader.FrameUnitWidth = 2;    //边框组元宽度
-                sfheader.FrameDirectDispBit = 0;//上下左右边框显示标志位，目前只支持6QX-M卡 
+                EQscreenframeHeader_G6 sfheader = new EQscreenframeHeader_G6
+                {
+                    FrameDispStype = 0x01,    //边框显示方式
+                    FrameDispSpeed = 0x3B,    //边框显示速度
+                    FrameMoveStep = 0x01,     //边框移动步长
+                    FrameUnitLength = 2,   //边框组元长度
+                    FrameUnitWidth = 2,    //边框组元宽度
+                    FrameDirectDispBit = 0//上下左右边框显示标志位，目前只支持6QX-M卡 
+                };
                 byte[] img = Encoding.Default.GetBytes("F:\\cenIdea.git\\drive-pc\\LED显示SDK\\BX_05_06_SDK_20221107\\bx.dual.C#\\lib\\黄10.png\0");
                 bxdualsdk.BxDual_program_addFrame_G6(ref sfheader, img);
             }
@@ -201,25 +204,27 @@ namespace TestHDemoC.MSTester
             byte[] strAreaTxtContent = Encoding.GetEncoding("GBK").GetBytes("测试发送1\0");
             IntPtr str = Marshal.AllocHGlobal(strAreaTxtContent.Length);
             Marshal.Copy(strAreaTxtContent, 0, str, strAreaTxtContent.Length);
-            EQpageHeader_G6 pheader;
-            pheader.PageStyle = 0x00;
-            pheader.DisplayMode = 0x4;//移动模式
-            pheader.ClearMode = 0x01;
-            pheader.Speed = 60;//速度
-            pheader.StayTime = 0;//停留时间
-            pheader.RepeatTime = 1;
-            pheader.ValidLen = 0;
-            pheader.CartoonFrameRate = 0x00;
-            pheader.BackNotValidFlag = 0x00;
-            pheader.arrMode = E_arrMode.eSINGLELINE;
-            pheader.fontSize = 10;
-            pheader.color = (uint)0x01;
-            pheader.fontBold = 1;
-            pheader.fontItalic = 0;
-            pheader.tdirection = E_txtDirection.pNORMAL;
-            pheader.txtSpace = 0;
-            pheader.Valign = 2;
-            pheader.Halign = 2;
+            EQpageHeader_G6 pheader = new EQpageHeader_G6
+            {
+                PageStyle = 0x00,
+                DisplayMode = 0x4,//移动模式
+                ClearMode = 0x01,
+                Speed = 60,//速度
+                StayTime = 0,//停留时间
+                RepeatTime = 1,
+                ValidLen = 0,
+                CartoonFrameRate = 0x00,
+                BackNotValidFlag = 0x00,
+                arrMode = E_arrMode.eSINGLELINE,
+                fontSize = 50,
+                color = (uint)0x01,
+                fontBold = 1,
+                fontItalic = 0,
+                tdirection = E_txtDirection.pROTATERIGHT,
+                txtSpace = 0,
+                Valign = 0,
+                Halign = 0
+            };
             err = bxdualsdk.BxDual_program_picturesAreaAddTxt_G6(0, strAreaTxtContent, Font, ref pheader);
             if (err != 0) { return; }
             Console.WriteLine("bxDual_program_picturesAreaAddTxt_G6:" + err);
@@ -793,14 +798,10 @@ namespace TestHDemoC.MSTester
             int err = bxdualsdk.BxDual_cmd_tcpPing(OnbonLedBxSdkUT.address, OnbonLedBxSdkUT.portRate, ref data);
 
             //显示屏屏基色
-            byte cmb_ping_Color = 1;
-            if (data.Color == 1) { cmb_ping_Color = 1; }
-            else if (data.Color == 3) { cmb_ping_Color = 2; }
-            else if (data.Color == 7) { cmb_ping_Color = 3; }
-            else { cmb_ping_Color = 4; }
+            var cmb_ping_Color = LedBxDualSdk.GetEScreenColor(data.Color);
 
             //设置屏幕参数相关  发送节目必要接口，发送动态区可忽略
-            err = bxdualsdk.BxDual_program_setScreenParams_G56((E_ScreenColor_G56)cmb_ping_Color, data.ControllerType, E_DoubleColorPixel_G56.eDOUBLE_COLOR_PIXTYPE_1);
+            err = bxdualsdk.BxDual_program_setScreenParams_G56(cmb_ping_Color, data.ControllerType, E_DoubleColorPixel_G56.eDOUBLE_COLOR_PIXTYPE_1);
             Console.WriteLine("bxDual_program_setScreenParams_G56:" + err);
 
             //创建节目，设置节目属性
@@ -2409,51 +2410,57 @@ namespace TestHDemoC.MSTester
         /// </summary>
         public static void dynamicArea_str_2()
         {
-            EQareaHeader_G6 aheader;
-            aheader.AreaType = 0x10;
-            aheader.AreaX = AreaX;
-            aheader.AreaY = AreaY;
-            aheader.AreaWidth = Width;
-            aheader.AreaHeight = Height;
-            aheader.BackGroundFlag = 0x00;
-            aheader.Transparency = 101;
-            aheader.AreaEqual = 0x00;
-            EQSound_6G stSoundData = new EQSound_6G();
+            EQareaHeader_G6 aheader = new EQareaHeader_G6
+            {
+                AreaType = 0x10,
+                AreaX = AreaX,
+                AreaY = AreaY,
+                AreaWidth = Width,
+                AreaHeight = Height,
+                BackGroundFlag = 0x00,
+                Transparency = 101,
+                AreaEqual = 0x00
+            };
             byte[] strSoundTxt = Encoding.GetEncoding("GB2312").GetBytes("插入ab34测试语音");
-            stSoundData.SoundFlag = 0x00;
-            stSoundData.SoundPerson = 0x01;
-            stSoundData.SoundVolum = 6;
-            stSoundData.SoundSpeed = 0x2;
-            stSoundData.SoundDataMode = 0x00;
-            stSoundData.SoundReplayTimes = 0x01;
-            stSoundData.SoundReplayDelay = 200;
-            stSoundData.SoundReservedParaLen = 0x03;
-            stSoundData.Soundnumdeal = 0x00;
-            stSoundData.Soundlanguages = 0x00;
-            stSoundData.Soundwordstyle = 0x00;
-            stSoundData.SoundDataLen = strSoundTxt.Length;
-            stSoundData.SoundData = LedBxDualSdk.BytesToIntptr(strSoundTxt);
+            EQSound_6G stSoundData = new EQSound_6G
+            {
+                SoundFlag = 0x00,
+                SoundPerson = 0x01,
+                SoundVolum = 6,
+                SoundSpeed = 0x2,
+                SoundDataMode = 0x00,
+                SoundReplayTimes = 0x01,
+                SoundReplayDelay = 200,
+                SoundReservedParaLen = 0x03,
+                Soundnumdeal = 0x00,
+                Soundlanguages = 0x00,
+                Soundwordstyle = 0x00,
+                SoundDataLen = strSoundTxt.Length,
+                SoundData = LedBxDualSdk.BytesToIntptr(strSoundTxt)
+            };
             aheader.stSoundData = stSoundData;
 
-            EQpageHeader_G6 pheader;
-            pheader.PageStyle = 0x00;
-            pheader.DisplayMode = 2;
-            pheader.ClearMode = 0x00;
-            pheader.Speed = 15;
-            pheader.StayTime = 100;
-            pheader.RepeatTime = 1;
-            pheader.ValidLen = 0;
-            pheader.CartoonFrameRate = 0x00;
-            pheader.BackNotValidFlag = 0x00;
-            pheader.arrMode = E_arrMode.eMULTILINE;
-            pheader.fontSize = 12;
-            pheader.color = (uint)0x01;
-            pheader.fontBold = 0;
-            pheader.fontItalic = 0;
-            pheader.tdirection = E_txtDirection.pNORMAL;
-            pheader.txtSpace = 0;
-            pheader.Valign = 1;
-            pheader.Halign = 1;
+            EQpageHeader_G6 pheader = new EQpageHeader_G6
+            {
+                PageStyle = 0x00,
+                DisplayMode = 2,
+                ClearMode = 0x00,
+                Speed = 15,
+                StayTime = 100,
+                RepeatTime = 1,
+                ValidLen = 0,
+                CartoonFrameRate = 0x00,
+                BackNotValidFlag = 0x00,
+                arrMode = E_arrMode.eMULTILINE,
+                fontSize = 12,
+                color = (uint)0x01,
+                fontBold = 0,
+                fontItalic = 0,
+                tdirection = E_txtDirection.pNORMAL,
+                txtSpace = 0,
+                Valign = 1,
+                Halign = 1
+            };
             byte[] Font = Encoding.GetEncoding("GBK").GetBytes("宋体");
             IntPtr fontName1 = Marshal.AllocHGlobal(Font.Length);
             Marshal.Copy(Font, 0, fontName1, Font.Length);
@@ -3158,18 +3165,21 @@ namespace TestHDemoC.MSTester
             stSoundData.SoundDataLen = 0;
             stSoundData.SoundData = IntPtr.Zero;
 
-            BxAreaFrmae_Dynamic_G6 Frame;
-            EQscreenframeHeader_G6 oFrame;//暂时不支持
-            Frame.AreaFFlag = 0;
-            oFrame.FrameDispStype = 0x03;    //边框显示方式0x00 –闪烁 0x01 –顺时针转动 0x02 –逆时针转动 0x03 –闪烁加顺时针转动 0x04 –闪烁加逆时针转动 0x05 –红绿交替闪烁 0x06 –红绿交替转动 0x07 –静止打出
-            oFrame.FrameDispSpeed = 0x10;    //边框显示速度
-            oFrame.FrameMoveStep = 0x01;     //边框移动步长，单位为点，此参 数范围为 1~16 
-            oFrame.FrameUnitLength = 2;   //边框组元长度
-            oFrame.FrameUnitWidth = 2;    //边框组元宽度
-            oFrame.FrameDirectDispBit = 0;//上下左右边框显示标志位，目前只支持6QX-M卡 
-            Frame.oAreaFrame = oFrame;
-            Frame.pStrFramePathFile = Encoding.Default.GetBytes("F:\\黄10.png");//Class1.BytesToIntptr(Encoding.Default.GetBytes("F:\\黄10.png"));
-
+            EQscreenframeHeader_G6 oFrame = new EQscreenframeHeader_G6
+            {
+                FrameDispStype = 0x03,    //边框显示方式0x00 –闪烁 0x01 –顺时针转动 0x02 –逆时针转动 0x03 –闪烁加顺时针转动 0x04 –闪烁加逆时针转动 0x05 –红绿交替闪烁 0x06 –红绿交替转动 0x07 –静止打出
+                FrameDispSpeed = 0x10,    //边框显示速度
+                FrameMoveStep = 0x01,     //边框移动步长，单位为点，此参 数范围为 1~16 
+                FrameUnitLength = 2,   //边框组元长度
+                FrameUnitWidth = 2,    //边框组元宽度
+                FrameDirectDispBit = 0//上下左右边框显示标志位，目前只支持6QX-M卡 
+            };//暂时不支持
+            BxAreaFrmae_Dynamic_G6 Frame = new BxAreaFrmae_Dynamic_G6
+            {
+                AreaFFlag = 0,
+                oAreaFrame = oFrame,
+                pStrFramePathFile = Encoding.Default.GetBytes("F:\\黄10.png")//Class1.BytesToIntptr(Encoding.Default.GetBytes("F:\\黄10.png"));
+            };
             DynamicAreaBaseInfo_5G pheader = new DynamicAreaBaseInfo_5G();
             pheader.nType = 0x01;
             pheader.DisplayMode = DisplayMode;

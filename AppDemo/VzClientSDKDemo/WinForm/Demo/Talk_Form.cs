@@ -16,17 +16,17 @@ namespace VzClientSDK.WinForm
         static IVzClientSdkProxy VzClientSDK = VzClientSdk.Create();
         public class DeviceVoice
         {
-            public   int handle;
-            public   String ip;
-            public   bool talking;
+            public IntPtr handle;
+            public String ip;
+            public bool talking;
             public bool recording;
             public TreeNode node;
             public bool calling;
             public long callingtime;    //呼叫时间，单位:s
         };
-        Dictionary<String, int> m_deviceInfo=null;
-        public int m_talkHandle=0;
-        public DeviceVoice m_currentVoice=null;
+        Dictionary<String, IntPtr> m_deviceInfo = null;
+        public IntPtr m_talkHandle = IntPtr.Zero;
+        public DeviceVoice m_currentVoice = null;
         public SoundPlayer sound = null;
         private VZLPRC_REQUEST_TALK_CALLBACK talk_requstCB = null;
         public static int CALLING_TIME = 10;    //单位:s
@@ -38,12 +38,12 @@ namespace VzClientSDK.WinForm
 
         private void Talk_Form_Load(object sender, EventArgs e)
         {
-            sound = new SoundPlayer(Application.StartupPath+"\\testring.wav");
+            sound = new SoundPlayer(Application.StartupPath + "\\testring.wav");
             timer_call.Start();
             EnableControl(false);
-            
+
         }
-        public  void  REQUEST_TALK_CALLBACK(int handle, int state, string error_msg, IntPtr pUserData)
+        public void REQUEST_TALK_CALLBACK(IntPtr handle, int state, string error_msg, IntPtr pUserData)
         {
             DeviceVoice dv = GetDeviceVoice(handle);
             if (dv != null)
@@ -53,25 +53,25 @@ namespace VzClientSDK.WinForm
             }
 
         }
-        private DeviceVoice GetDeviceVoice(int handle)
+        private DeviceVoice GetDeviceVoice(IntPtr handle)
         {
-            DeviceVoice dv=null;
-             TreeNode node;
+            DeviceVoice dv = null;
+            TreeNode node;
             int rowcount = treeView_Talk.Nodes.Count;
             for (int i = 0; i < rowcount; i++)
             {
-              node  = treeView_Talk.Nodes[i];
+                node = treeView_Talk.Nodes[i];
 
-              DeviceVoice item = (DeviceVoice)node.Tag;
-              if ((item != null) && (item.handle == handle))
-              { 
-                  dv = item;
-                  break;
-               }
+                DeviceVoice item = (DeviceVoice)node.Tag;
+                if ((item != null) && (item.handle == handle))
+                {
+                    dv = item;
+                    break;
+                }
             }
             return dv;
         }
-        public void SetDeviceInfo(Dictionary<String, int> deviceInfo)
+        public void SetDeviceInfo(Dictionary<String, IntPtr> deviceInfo)
         {
             talk_requstCB = new VZLPRC_REQUEST_TALK_CALLBACK(REQUEST_TALK_CALLBACK);
 
@@ -96,28 +96,28 @@ namespace VzClientSDK.WinForm
                 VzClientSDK.VzLPRClient_SetRequestTalkCallBack(dv.handle, talk_requstCB, IntPtr.Zero);
             }
             treeView_Talk.SelectedNode = node;
- 
+
         }
 
         private void button_TalkRecive_Click(object sender, EventArgs e)
         {
-             TreeNode node = treeView_Talk.SelectedNode;
-             if (node == null)
-             {
-                 MessageBox.Show("请先选中一个设备");
-                 return;
-             }
+            TreeNode node = treeView_Talk.SelectedNode;
+            if (node == null)
+            {
+                MessageBox.Show("请先选中一个设备");
+                return;
+            }
 
-             DeviceVoice dv = (DeviceVoice)node.Tag;
-               
-            if(dv != null)
+            DeviceVoice dv = (DeviceVoice)node.Tag;
+
+            if (dv != null)
             {
                 m_talkHandle = dv.handle;
                 int ret = VzClientSDK.VzLPRClient_StartTalk(m_talkHandle, 640);
 
                 if (ret == -2)
                 {
-                    m_talkHandle = 0;
+                    m_talkHandle = IntPtr.Zero;
                     MessageBox.Show("开始通话失败");
                     return;
                 }
@@ -130,22 +130,22 @@ namespace VzClientSDK.WinForm
                     EnableControl(true);
                 }
             }
-            
+
         }
 
         private void button_TalkClose_Click(object sender, EventArgs e)
         {
-            if (m_talkHandle == 0)
+            if (m_talkHandle == IntPtr.Zero)
             {
                 MessageBox.Show("请先选中一个设备");
                 return;
             }
 
             int ret = VzClientSDK.VzLPRClient_StopTalk(m_talkHandle);
-            
+
 
             if (m_currentVoice.node != null)
-            { 
+            {
                 m_currentVoice.node.Text = m_currentVoice.ip;
             }
             if (m_currentVoice.recording)
@@ -158,14 +158,14 @@ namespace VzClientSDK.WinForm
             m_currentVoice.talking = false;
             m_currentVoice.calling = false;
             m_currentVoice = null;
-            m_talkHandle = 0;
+            m_talkHandle = IntPtr.Zero;
             EnableControl(false);
 
         }
 
         private void button_Record_Click(object sender, EventArgs e)
         {
-            if (m_talkHandle == 0)
+            if (m_talkHandle == IntPtr.Zero)
             {
                 MessageBox.Show("请先选中一个设备");
                 return;
@@ -189,15 +189,15 @@ namespace VzClientSDK.WinForm
         {
             if (talking)
             {
-                button_TalkRecive.Enabled=false;
-                button_TalkClose.Enabled=true ;
-                button_Record.Enabled = true ;
+                button_TalkRecive.Enabled = false;
+                button_TalkClose.Enabled = true;
+                button_Record.Enabled = true;
             }
             else
             {
-                button_TalkRecive.Enabled = true ;
-                button_TalkClose.Enabled = false ;
-                button_Record.Enabled  = false ;
+                button_TalkRecive.Enabled = true;
+                button_TalkClose.Enabled = false;
+                button_Record.Enabled = false;
             }
         }
         private int GetCallingCount()
@@ -219,7 +219,7 @@ namespace VzClientSDK.WinForm
             return callingcount;
 
         }
-         private void UpdateCalingFlag()
+        private void UpdateCalingFlag()
         {
             int now = Environment.TickCount;
             TreeNode node;
@@ -229,12 +229,12 @@ namespace VzClientSDK.WinForm
                 node = treeView_Talk.Nodes[i];
 
                 DeviceVoice item = (DeviceVoice)node.Tag;
-                if ((item != null) )
+                if ((item != null))
                 {
                     if ((((now - item.callingtime) / 1000) > CALLING_TIME))
-                      item.calling = false;
+                        item.calling = false;
 
-                     if (!item.talking)
+                    if (!item.talking)
                     {
                         if (item.calling)
                         {
@@ -248,10 +248,10 @@ namespace VzClientSDK.WinForm
 
                     }
                 }
-                
+
             }
- 
-         }
+
+        }
 
         private void timer_call_Tick(object sender, EventArgs e)
         {
@@ -270,19 +270,19 @@ namespace VzClientSDK.WinForm
                     {
                         Console.WriteLine(exp);
                     }
-                    
+
                 }
                 playNum++;
                 if (playNum > 2)
                     playNum = 0;
             }
-               
+
             UpdateCalingFlag();
         }
 
         private void Talk_Form_FormClosed(object sender, FormClosedEventArgs e)
         {
-            if (m_talkHandle != 0)
+            if (m_talkHandle != IntPtr.Zero)
             {
 
                 VzClientSDK.VzLPRClient_StopTalk(m_talkHandle);
@@ -302,9 +302,9 @@ namespace VzClientSDK.WinForm
                 m_currentVoice.talking = false;
                 m_currentVoice.calling = false;
                 m_currentVoice = null;
-                m_talkHandle = 0;
+                m_talkHandle = IntPtr.Zero;
             }
-           
+
         }
     }
 }

@@ -418,7 +418,7 @@ namespace System.Data.NModbus
             return msg;
         }
 
-        public void ValidateResponse(IModbusMessage response)
+        public virtual void ValidateResponse(IModbusMessage response)
         {
             var typedResponse = response as ReadHoldingInputRegistersResponse;
             Debug.Assert(typedResponse != null, "Argument response should be of type ReadHoldingInputRegistersResponse.");
@@ -435,6 +435,35 @@ namespace System.Data.NModbus
         {
             StartAddress = (ushort)IPAddress.NetworkToHostOrder(BitConverter.ToInt16(frame, 2));
             NumberOfPoints = (ushort)IPAddress.NetworkToHostOrder(BitConverter.ToInt16(frame, 4));
+        }
+    }
+    /// <summary>
+    /// 2023年05月06日升级迁移内容添加
+    /// </summary>
+    internal class ReadHoldingInputRegisters32Request : ReadHoldingInputRegistersRequest
+    {
+        public ReadHoldingInputRegisters32Request()
+        {
+        }
+
+        public ReadHoldingInputRegisters32Request(byte functionCode, byte slaveAddress, ushort startAddress, ushort numberOfPoints)
+            : base(functionCode, slaveAddress, startAddress, numberOfPoints)
+        {
+            StartAddress = startAddress;
+            NumberOfPoints = numberOfPoints;
+        }
+
+        public override void ValidateResponse(IModbusMessage response)
+        {
+            var typedResponse = response as ReadHoldingInputRegistersResponse;
+            Debug.Assert(typedResponse != null, "Argument response should be of type ReadHoldingInputRegistersResponse.");
+            var expectedByteCount = NumberOfPoints * 4;
+
+            if (expectedByteCount != typedResponse.ByteCount)
+            {
+                string msg = $"Unexpected byte count. Expected {expectedByteCount}, received {typedResponse.ByteCount}.";
+                throw new IOException(msg);
+            }
         }
     }
     internal class ReadHoldingInputRegistersResponse : AbstractModbusMessageWithData<RegisterCollection>, IModbusMessage
@@ -709,7 +738,7 @@ namespace System.Data.NModbus
             return msg;
         }
     }
-    class WriteFileRecordResponse : AbstractModbusMessageWithData<FileRecordCollection>, IModbusMessage
+    internal class WriteFileRecordResponse : AbstractModbusMessageWithData<FileRecordCollection>, IModbusMessage
     {
         public WriteFileRecordResponse()
         {

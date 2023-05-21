@@ -216,8 +216,8 @@ namespace VzClientSDK.WinForm.Views
         private const int MSG_PLATE_INFO = 0x901;
         private const int MSG_DEVICE_INFO = 0x902;
 
-        private int m_nPlayHandle = 0;
-        private int m_nPlayHandle2 = 0;
+        private IntPtr m_nPlayHandle = IntPtr.Zero;
+        private IntPtr m_nPlayHandle2 = IntPtr.Zero;
 
         private string m_sAppPath;
 
@@ -288,8 +288,8 @@ namespace VzClientSDK.WinForm.Views
 
         public void RecordReset(object source, System.Timers.ElapsedEventArgs e)
         {
-            int lprHandle = GetSeleHandle();
-            if (lprHandle == 0)
+            var lprHandle = GetSeleHandle();
+            if (lprHandle == IntPtr.Zero)
             {
                 MessageBox.Show("请选择一台列表中的设备");
                 return;
@@ -305,7 +305,7 @@ namespace VzClientSDK.WinForm.Views
 
         }
 
-        private int OnPlateResult(int handle, IntPtr pUserData,
+        private int OnPlateResult(IntPtr handle, IntPtr pUserData,
                                                   IntPtr pResult, uint uNumPlates,
                                                   VZ_LPRC_RESULT_TYPE eResultType,
                                                   IntPtr pImgFull,
@@ -337,13 +337,13 @@ namespace VzClientSDK.WinForm.Views
                 IntPtr intptr = Marshal.AllocHGlobal(size);
                 Marshal.StructureToPtr(plateInfo, intptr, true);
 
-                Win32API.PostMessage(hwndMain, MSG_PLATE_INFO, (int)intptr, handle);
+                Win32API.PostMessage(hwndMain, MSG_PLATE_INFO, (int)intptr, (long)handle);
             }
 
             return 0;
         }
 
-        private void OnGPIORecv(int handle, int nGPIOId, int nVal, IntPtr pUserData)
+        private void OnGPIORecv(IntPtr handle, int nGPIOId, int nVal, IntPtr pUserData)
         {
             int value = nVal;
         }
@@ -351,18 +351,18 @@ namespace VzClientSDK.WinForm.Views
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
             //关闭视频播放句柄以及关闭设备
-            int lprHandle = GetSeleHandle();
-            if (lprHandle == 0)
+            var lprHandle = GetSeleHandle();
+            if (lprHandle == IntPtr.Zero)
             {
                 return;
             }
 
             if (lprHandle == GetPicBox1Handle())
             {
-                if (m_nPlayHandle > 0)
+                if (m_nPlayHandle != IntPtr.Zero)
                 {
                     int ret = VzClientSDK.VzLPRClient_StopRealPlay(m_nPlayHandle);
-                    m_nPlayHandle = 0;
+                    m_nPlayHandle = IntPtr.Zero;
                 }
 
                 Pic1Close();
@@ -370,10 +370,10 @@ namespace VzClientSDK.WinForm.Views
             }
             else
             {
-                if (m_nPlayHandle2 > 0)
+                if (m_nPlayHandle2 != IntPtr.Zero)
                 {
                     int ret = VzClientSDK.VzLPRClient_StopRealPlay(m_nPlayHandle2);
-                    m_nPlayHandle2 = 0;
+                    m_nPlayHandle2 = IntPtr.Zero;
                 }
 
                 Pic3Close();
@@ -447,8 +447,8 @@ namespace VzClientSDK.WinForm.Views
 
         private void btnClose_Click(object sender, EventArgs e)
         {
-            int lprHandle = GetSeleHandle();
-            if (lprHandle == 0)
+            var lprHandle = GetSeleHandle();
+            if (lprHandle == IntPtr.Zero)
             {
                 MessageBox.Show("请选择一台列表中的设备");
                 return;
@@ -456,10 +456,10 @@ namespace VzClientSDK.WinForm.Views
 
             if (lprHandle == GetPicBox1Handle())
             {
-                if (m_nPlayHandle > 0)
+                if (m_nPlayHandle != IntPtr.Zero)
                 {
                     int ret = VzClientSDK.VzLPRClient_StopRealPlay(m_nPlayHandle);
-                    m_nPlayHandle = 0;
+                    m_nPlayHandle = IntPtr.Zero;
                 }
 
                 Pic1Close();
@@ -467,10 +467,10 @@ namespace VzClientSDK.WinForm.Views
             }
             else
             {
-                if (m_nPlayHandle2 > 0)
+                if (m_nPlayHandle2 != IntPtr.Zero)
                 {
                     int ret = VzClientSDK.VzLPRClient_StopRealPlay(m_nPlayHandle2);
-                    m_nPlayHandle2 = 0;
+                    m_nPlayHandle2 = IntPtr.Zero;
                 }
 
                 Pic3Close();
@@ -484,24 +484,21 @@ namespace VzClientSDK.WinForm.Views
         // 手动触发识别
         private void btnManual_Click(object sender, EventArgs e)
         {
-            int lprHandle = GetSeleHandle();
-            if (lprHandle == 0)
+            var lprHandle = GetSeleHandle();
+            if (lprHandle == IntPtr.Zero)
             {
                 MessageBox.Show("请选择一台列表中的设备");
                 return;
             }
 
-            if (lprHandle > 0)
-            {
-                VzClientSDK.VzLPRClient_ForceTrigger(lprHandle);
-            }
+            VzClientSDK.VzLPRClient_ForceTrigger(lprHandle);
         }
 
         // 抓图功能
         private void btnCap_Click(object sender, EventArgs e)
         {
-            int lprHandle = GetSeleHandle();
-            if (lprHandle == 0)
+            var lprHandle = GetSeleHandle();
+            if (lprHandle == IntPtr.Zero)
             {
                 MessageBox.Show("请选择一台列表中的设备");
                 return;
@@ -524,17 +521,17 @@ namespace VzClientSDK.WinForm.Views
 
             if (m_bFirst)
             {
-                if (m_nPlayHandle > 0)
+                if (m_nPlayHandle != IntPtr.Zero)
                 {
                     ret = VzClientSDK.VzLPRClient_GetSnapShootToJpeg2(m_nPlayHandle, path, 90);
                 }
             }
             else
             {
-                if (m_nPlayHandle2 > 0)
+                if (m_nPlayHandle2 != IntPtr.Zero)
                 {
                     ret = VzClientSDK.VzLPRClient_GetSnapShootToJpeg2(m_nPlayHandle, path, 90); ;
-                    m_nPlayHandle2 = 0;
+                    m_nPlayHandle2 = IntPtr.Zero;
                 }
             }
 
@@ -550,35 +547,28 @@ namespace VzClientSDK.WinForm.Views
 
         private void btngpio_Click(object sender, EventArgs e)
         {
-            int lprHandle = GetSeleHandle();
-            if (lprHandle == 0)
+            var lprHandle = GetSeleHandle();
+            if (lprHandle == IntPtr.Zero)
             {
                 MessageBox.Show("请选择一台列表中的设备");
                 return;
             }
 
-            int[] test = new int[1];
-            GCHandle hObject = GCHandle.Alloc(test, GCHandleType.Pinned);
-            IntPtr pObject = hObject.AddrOfPinnedObject();
-
-            int ret = VzClientSDK.VzLPRClient_GetGPIOValue(lprHandle, 0, pObject);
-            if (test[0] == 0)
+            int ret = VzClientSDK.VzLPRClient_GetGPIOValue(lprHandle, 0, out int num0);
+            if (num0 == 0)
             {
                 MessageBox.Show("IOInput is [短路]");
             }
-            else if (test[0] == 1)
+            else if (num0 == 1)
             {
                 MessageBox.Show("IOInput is [开路]");
             }
-
-            if (hObject.IsAllocated)
-                hObject.Free();
         }
 
         private void listbt_Click(object sender, EventArgs e)
         {
-            int lprHandle = GetSeleHandle();
-            if (lprHandle == 0)
+            var lprHandle = GetSeleHandle();
+            if (lprHandle == IntPtr.Zero)
             {
                 MessageBox.Show("请选择一台列表中的设备");
                 return;
@@ -630,8 +620,8 @@ namespace VzClientSDK.WinForm.Views
 
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
         {
-            int lprHandle = GetSeleHandle();
-            if (lprHandle == 0)
+            var lprHandle = GetSeleHandle();
+            if (lprHandle == IntPtr.Zero)
             {
                 MessageBox.Show("请选择一台列表中的设备");
                 return;
@@ -642,8 +632,8 @@ namespace VzClientSDK.WinForm.Views
 
         private void radioButton2_CheckedChanged(object sender, EventArgs e)
         {
-            int lprHandle = GetSeleHandle();
-            if (lprHandle == 0)
+            var lprHandle = GetSeleHandle();
+            if (lprHandle == IntPtr.Zero)
             {
                 MessageBox.Show("请选择一台列表中的设备");
                 return;
@@ -654,8 +644,8 @@ namespace VzClientSDK.WinForm.Views
 
         private void radioButton3_CheckedChanged(object sender, EventArgs e)
         {
-            int lprHandle = GetSeleHandle();
-            if (lprHandle == 0)
+            var lprHandle = GetSeleHandle();
+            if (lprHandle == IntPtr.Zero)
             {
                 MessageBox.Show("请选择一台列表中的设备");
                 return;
@@ -666,8 +656,8 @@ namespace VzClientSDK.WinForm.Views
 
         private void trackBar1_Scroll(object sender, EventArgs e)
         {
-            int lprHandle = GetSeleHandle();
-            if (lprHandle == 0)
+            var lprHandle = GetSeleHandle();
+            if (lprHandle == IntPtr.Zero)
             {
                 MessageBox.Show("请选择一台列表中的设备");
                 return;
@@ -689,8 +679,8 @@ namespace VzClientSDK.WinForm.Views
 
         private void recordbtn_Click(object sender, EventArgs e)
         {
-            int lprHandle = GetSeleHandle();
-            if (lprHandle == 0)
+            var lprHandle = GetSeleHandle();
+            if (lprHandle == IntPtr.Zero)
             {
                 MessageBox.Show("请选择一台列表中的设备");
                 return;
@@ -717,8 +707,8 @@ namespace VzClientSDK.WinForm.Views
 
         private void stoprecordbtn_Click(object sender, EventArgs e)
         {
-            int lprHandle = GetSeleHandle();
-            if (lprHandle == 0)
+            var lprHandle = GetSeleHandle();
+            if (lprHandle == IntPtr.Zero)
             {
                 MessageBox.Show("请选择一台列表中的设备");
                 return;
@@ -734,14 +724,14 @@ namespace VzClientSDK.WinForm.Views
         {
             if (m_bFirst)
             {
-                if (m_nPlayHandle > 0)
+                if (m_nPlayHandle != IntPtr.Zero)
                 {
                     int ret = VzClientSDK.VzLPRClient_StopRealPlay(m_nPlayHandle);
-                    m_nPlayHandle = 0;
+                    m_nPlayHandle = IntPtr.Zero;
                 }
 
-                int lprHandle = GetPicBox1Handle();
-                if (lprHandle > 0)
+                var lprHandle = GetPicBox1Handle();
+                if (lprHandle != IntPtr.Zero)
                 {
                     VzClientSDK.VzLPRClient_SetPlateInfoCallBack(lprHandle, null, IntPtr.Zero, 0);
                 }
@@ -751,14 +741,14 @@ namespace VzClientSDK.WinForm.Views
             }
             else
             {
-                if (m_nPlayHandle2 > 0)
+                if (m_nPlayHandle2 != IntPtr.Zero)
                 {
                     int ret = VzClientSDK.VzLPRClient_StopRealPlay(m_nPlayHandle2);
-                    m_nPlayHandle2 = 0;
+                    m_nPlayHandle2 = IntPtr.Zero;
                 }
 
-                int lprHandle2 = GetPicBox3Handle();
-                if (lprHandle2 > 0)
+                var lprHandle2 = GetPicBox3Handle();
+                if (lprHandle2 != IntPtr.Zero)
                 {
                     VzClientSDK.VzLPRClient_SetPlateInfoCallBack(lprHandle2, null, IntPtr.Zero, 0);
                 }
@@ -770,8 +760,8 @@ namespace VzClientSDK.WinForm.Views
 
         private void checkBox2_CheckedChanged(object sender, EventArgs e)
         {
-            int lprHandle = GetSeleHandle();
-            if (lprHandle == 0)
+            var lprHandle = GetSeleHandle();
+            if (lprHandle == IntPtr.Zero)
             {
                 MessageBox.Show("请选择一台列表中的设备");
                 return;
@@ -798,8 +788,8 @@ namespace VzClientSDK.WinForm.Views
 
         private void querybtn_Click(object sender, EventArgs e)
         {
-            int lprHandle = GetSeleHandle();
-            if (lprHandle == 0)
+            var lprHandle = GetSeleHandle();
+            if (lprHandle == IntPtr.Zero)
             {
                 MessageBox.Show("请选择一台列表中的设备");
                 return;
@@ -813,8 +803,8 @@ namespace VzClientSDK.WinForm.Views
 
         private void snapshootbtn_Click(object sender, EventArgs e)
         {
-            int lprHandle = GetSeleHandle();
-            if (lprHandle == 0)
+            var lprHandle = GetSeleHandle();
+            if (lprHandle == IntPtr.Zero)
             {
                 MessageBox.Show("请选择一台列表中的设备");
                 return;
@@ -829,14 +819,14 @@ namespace VzClientSDK.WinForm.Views
             if (m_bFirst)
             {
                 //pictureBox1.Image = null;
-                if (m_nPlayHandle > 0)
+                if (m_nPlayHandle != IntPtr.Zero)
                 {
                     VzClientSDK.VzLPRClient_StopRealPlay(m_nPlayHandle);
-                    m_nPlayHandle = 0;
+                    m_nPlayHandle = IntPtr.Zero;
                 }
 
-                int lprHandle1 = GetPicBox1Handle();
-                if (lprHandle1 > 0)
+                var lprHandle1 = GetPicBox1Handle();
+                if (lprHandle1 != IntPtr.Zero)
                 {
                     VzClientSDK.VzLPRClient_SetPlateInfoCallBack(lprHandle1, null, IntPtr.Zero, 0);
                 }
@@ -853,14 +843,14 @@ namespace VzClientSDK.WinForm.Views
             else
             {
                 //pictureBox3.Image = null;
-                if (m_nPlayHandle2 > 0)
+                if (m_nPlayHandle2 != IntPtr.Zero)
                 {
                     VzClientSDK.VzLPRClient_StopRealPlay(m_nPlayHandle2);
-                    m_nPlayHandle2 = 0;
+                    m_nPlayHandle2 = IntPtr.Zero;
                 }
 
-                int lprHandle2 = GetPicBox3Handle();
-                if (lprHandle2 > 0)
+                var lprHandle2 = GetPicBox3Handle();
+                if (lprHandle2 != IntPtr.Zero)
                 {
                     VzClientSDK.VzLPRClient_SetPlateInfoCallBack(lprHandle2, null, IntPtr.Zero, 0);
                 }
@@ -878,8 +868,8 @@ namespace VzClientSDK.WinForm.Views
 
         private void osdbtn_Click(object sender, EventArgs e)
         {
-            int lprHandle = GetSeleHandle();
-            if (lprHandle == 0)
+            var lprHandle = GetSeleHandle();
+            if (lprHandle == IntPtr.Zero)
             {
                 MessageBox.Show("请选择一台列表中的设备");
                 return;
@@ -894,8 +884,8 @@ namespace VzClientSDK.WinForm.Views
 
         private void setvloopbtn_Click(object sender, EventArgs e)
         {
-            int lprHandle = GetSeleHandle();
-            if (lprHandle == 0)
+            var lprHandle = GetSeleHandle();
+            if (lprHandle == IntPtr.Zero)
             {
                 MessageBox.Show("请选择一台列表中的设备");
                 return;
@@ -909,8 +899,8 @@ namespace VzClientSDK.WinForm.Views
 
         private void checkBox3_CheckedChanged(object sender, EventArgs e)
         {
-            int lprHandle = GetSeleHandle();
-            if (lprHandle == 0)
+            var lprHandle = GetSeleHandle();
+            if (lprHandle == IntPtr.Zero)
             {
                 MessageBox.Show("请选择一台列表中的设备");
                 return;
@@ -921,8 +911,8 @@ namespace VzClientSDK.WinForm.Views
 
         private void outputbox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            int lprHandle = GetSeleHandle();
-            if (lprHandle == 0)
+            var lprHandle = GetSeleHandle();
+            if (lprHandle == IntPtr.Zero)
             {
                 return;
             }
@@ -947,13 +937,13 @@ namespace VzClientSDK.WinForm.Views
             VZ_LPR_MSG_PLATE_INFO plateInfo;
             VZ_LPR_DEVICE_INFO deviceInfo;
 
-            int handle = 0;
+            var handle = IntPtr.Zero;
 
             switch (m.Msg)
             {
                 case MSG_PLATE_INFO:
                     intptr = (IntPtr)m.WParam.ToInt32();
-                    handle = m.LParam.ToInt32();
+                    handle = (IntPtr)m.LParam.ToInt32();
                     if (intptr != null)
                     {
                         // VzClientSDK.VzLPRClient_SetIOOutputAuto(m_hLPRClient, 0, 500);
@@ -1021,8 +1011,8 @@ namespace VzClientSDK.WinForm.Views
 
         private void btnConnStat_Click(object sender, EventArgs e)
         {
-            int lprHandle = GetSeleHandle();
-            if (lprHandle == 0)
+            var lprHandle = GetSeleHandle();
+            if (lprHandle == IntPtr.Zero)
             {
                 MessageBox.Show("请选择一台列表中的设备");
                 return;
@@ -1070,9 +1060,9 @@ namespace VzClientSDK.WinForm.Views
             sw.Close();
         }
 
-        private int GetSeleHandle()
+        private IntPtr GetSeleHandle()
         {
-            int handle = 0;
+            IntPtr handle = IntPtr.Zero;
 
             //if (treeDevice.SelectedNode != null)
             //{
@@ -1101,9 +1091,9 @@ namespace VzClientSDK.WinForm.Views
             m_bFirst = false;
         }
 
-        private int GetPicBox1Handle()
+        private IntPtr GetPicBox1Handle()
         {
-            int handle = 0;
+            IntPtr handle = IntPtr.Zero;
 
             //if (pictureBox1.Tag != null)
             //{
@@ -1114,9 +1104,9 @@ namespace VzClientSDK.WinForm.Views
             return handle;
         }
 
-        private int GetPicBox3Handle()
+        private IntPtr GetPicBox3Handle()
         {
-            int handle = 0;
+            IntPtr handle = IntPtr.Zero;
 
             //if (pictureBox3.Tag != null)
             //{
@@ -1130,8 +1120,8 @@ namespace VzClientSDK.WinForm.Views
         // 485控制的功能
         private void btnSerial_Click(object sender, EventArgs e)
         {
-            int lprHandle = GetSeleHandle();
-            if (lprHandle == 0)
+            var lprHandle = GetSeleHandle();
+            if (lprHandle == IntPtr.Zero)
             {
                 MessageBox.Show("请选择一台列表中的设备");
                 return;
@@ -1145,8 +1135,8 @@ namespace VzClientSDK.WinForm.Views
 
         private void m_btnBaseConfig_Click(object sender, EventArgs e)
         {
-            int lprHandle = GetSeleHandle();
-            if (lprHandle == 0)
+            var lprHandle = GetSeleHandle();
+            if (lprHandle == IntPtr.Zero)
             {
                 MessageBox.Show("请选择一台列表中的设备");
                 return;
@@ -1160,8 +1150,8 @@ namespace VzClientSDK.WinForm.Views
 
         private void InOutBtn_Click(object sender, EventArgs e)
         {
-            int lprHandle = GetSeleHandle();
-            if (lprHandle == 0)
+            var lprHandle = GetSeleHandle();
+            if (lprHandle == IntPtr.Zero)
             {
                 MessageBox.Show("请选择一台列表中的设备");
                 return;
@@ -1176,8 +1166,8 @@ namespace VzClientSDK.WinForm.Views
 
         private void btnIOOut_Click(object sender, EventArgs e)
         {
-            int lprHandle = GetSeleHandle();
-            if (lprHandle == 0)
+            var lprHandle = GetSeleHandle();
+            if (lprHandle == IntPtr.Zero)
             {
                 MessageBox.Show("请选择一台列表中的设备");
                 return;
@@ -1188,8 +1178,8 @@ namespace VzClientSDK.WinForm.Views
 
         private void btnVideoCfg_Click(object sender, EventArgs e)
         {
-            int lprHandle = GetSeleHandle();
-            if (lprHandle == 0)
+            var lprHandle = GetSeleHandle();
+            if (lprHandle == IntPtr.Zero)
             {
                 MessageBox.Show("请选择一台列表中的设备");
                 return;
@@ -1242,8 +1232,8 @@ namespace VzClientSDK.WinForm.Views
         // 线圈配置的功能
         private void btnRuleCfg_Click(object sender, EventArgs e)
         {
-            int lprHandle = GetSeleHandle();
-            if (lprHandle == 0)
+            var lprHandle = GetSeleHandle();
+            if (lprHandle == IntPtr.Zero)
             {
                 MessageBox.Show("请选择一台列表中的设备");
                 return;
@@ -1257,8 +1247,8 @@ namespace VzClientSDK.WinForm.Views
 
         private void btnEncryptCfg_Click(object sender, EventArgs e)
         {
-            int lprHandle = GetSeleHandle();
-            if (lprHandle == 0)
+            var lprHandle = GetSeleHandle();
+            if (lprHandle == IntPtr.Zero)
             {
                 MessageBox.Show("请选择一台列表中的设备");
                 return;
@@ -1271,8 +1261,8 @@ namespace VzClientSDK.WinForm.Views
 
         private void btnPlayVoice_Click(object sender, EventArgs e)
         {
-            int lprHandle = GetSeleHandle();
-            if (lprHandle == 0)
+            var lprHandle = GetSeleHandle();
+            if (lprHandle == IntPtr.Zero)
             {
                 MessageBox.Show("请选择一台列表中的设备");
                 return;
@@ -1291,8 +1281,8 @@ namespace VzClientSDK.WinForm.Views
         /// <param name="e"></param>
         private void BtnFixedCfg_Click(object sender, EventArgs e)
         {
-            int lprHandle = GetSeleHandle();
-            if (lprHandle == 0)
+            var lprHandle = GetSeleHandle();
+            if (lprHandle == IntPtr.Zero)
             {
                 MessageBox.Show("请选择一台列表中的设备");
                 return;
@@ -1343,7 +1333,7 @@ namespace VzClientSDK.WinForm.Views
             if (deviceInfo.Count == 0) { MessageBox.Show("请先打开设备"); return; }
             Talk_Form from = new Talk_Form();
             from.StartPosition = FormStartPosition.CenterScreen;
-            from.SetDeviceInfo(deviceInfo.ToDictionary(s => s.Key, s => (int)s.Value));
+            from.SetDeviceInfo(deviceInfo.ToDictionary(s => s.Key, s => s.Value));
             from.Show();
         }
         #endregion VzLPRSDKDemo_Form

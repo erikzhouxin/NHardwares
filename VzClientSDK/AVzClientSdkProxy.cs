@@ -165,6 +165,15 @@ namespace System.Data.VzClientSDK
         /// <returns>0表示成功，-1表示失败</returns>
         int VzLPRClient_ImageSaveToJpeg(IntPtr pImgInfo, string pFullPathName, int nQuality);
         /// <summary>
+        /// 将图像保存为JPEG到指定路径，可指定图像尺寸的模式
+        /// </summary>
+        /// <param name="pImgInfo">图像结构体，目前只支持默认的格式，即ImageFormatRGB</param>
+        /// <param name="pFullPathName">设带绝对路径和JPG后缀名的文件名字符串</param>
+        /// <param name="nQuality">JPEG压缩的质量，取值范围1~100</param>
+        /// <param name="sizeMode">图像大小的模式</param>
+        /// <returns></returns>
+        int VzLPRClient_ImageSaveToJpegEx(VZ_LPRC_IMAGE_INFO pImgInfo, string pFullPathName, int nQuality, IMG_SIZE_MODE sizeMode);
+        /// <summary>
         /// 读出设备序列号，可用于二次加密
         /// @ingroup group_device
         /// </summary>
@@ -236,7 +245,7 @@ namespace System.Data.VzClientSDK
         /// <param name="gpioIn">数据为0或1</param>
         /// <param name="value">0代表短路，1代表开路</param>
         /// <returns>返回值为0表示成功，返回-1表示失败</returns>
-        int VzLPRClient_GetGPIOValue(IntPtr handle, int gpioIn, IntPtr value);
+        int VzLPRClient_GetGPIOValue(IntPtr handle, int gpioIn, out int value);
         /// <summary>
         /// 根据ID获取车牌图片
         /// </summary>
@@ -496,24 +505,21 @@ namespace System.Data.VzClientSDK
         /// <param name="nDuration">延时时间，取值范围[500, 5000]毫秒</param>
         /// <returns>0表示成功，-1表示失败</returns>
         int VzLPRClient_SetIOOutputAuto(IntPtr handle, int uChnId, int nDuration);
-
-        /**
-        *  @brief 获取实时视频帧，图像数据通过回调函数到用户层，用户可改动图像内容，并且显示到窗口
-        *  @param  [IN] handle		由VzLPRClient_Open函数获得的句柄
-        *  @param  [IN] hWnd		窗口的句柄，如果为有效值，则视频图像会显示到该窗口上，如果为空，则不显示视频图像
-        *  @param  [IN] func		实时图像数据函数
-        *  @param  [IN] pUserData	回调函数中的上下文
-        *  @return 播放的句柄，-1表示失败
-        *  @ingroup group_device
-        */
+        /// <summary>
+        /// 获取实时视频帧，图像数据通过回调函数到用户层，用户可改动图像内容，并且显示到窗口
+        /// </summary>
+        /// <param name="handle">由VzLPRClient_Open函数获得的句柄</param>
+        /// <param name="hWnd">窗口的句柄，如果为有效值，则视频图像会显示到该窗口上，如果为空，则不显示视频图像</param>
+        /// <param name="func">实时图像数据函数</param>
+        /// <param name="pUserData">回调函数中的上下文</param>
+        /// <returns>播放的句柄，-1表示失败</returns>
         IntPtr VzLPRClient_StartRealPlayFrameCallBack(IntPtr handle, IntPtr hWnd, VZLPRC_VIDEO_FRAME_CALLBACK_EX func, IntPtr pUserData);
-
-        /**
-        *  @brief 获取已设置的允许的车牌识别触发类型
-        *  @param [IN] handle 由VzLPRClient_Open函数获得的句柄
-        *  @param [OUT] pBitsTrigType 允许的车牌识别触发类型按位或的变量的地址，允许触发类型位详见定义VZ_LPRC_TRIG_ENABLE_XXX
-        *  @return 返回值：返回值为0表示成功，返回其他值表示失败
-        */
+        /// <summary>
+        /// 获取已设置的允许的车牌识别触发类型
+        /// </summary>
+        /// <param name="handle">由VzLPRClient_Open函数获得的句柄</param>
+        /// <param name="pBitsTrigType">允许的车牌识别触发类型按位或的变量的地址，允许触发类型位详见定义VZ_LPRC_TRIG_ENABLE_XXX</param>
+        /// <returns>返回值为0表示成功，返回其他值表示失败</returns>
         int VzLPRClient_GetPlateTrigType(IntPtr handle, ref int pBitsTrigType);
 
         /**
@@ -826,15 +832,13 @@ namespace System.Data.VzClientSDK
         *  @return 返回值为0表示成功，返回其他值表示失败。
         */
         int VzLPRClient_GetFlip(IntPtr handle, ref int flip);
-
-        /**
-        *  @brief 设置图像翻转；
-        *  @param [IN] handle 由VzLPRClient_Open函数获得的句柄
-        *  @param [IN] flip, 0: 原始图像, 1:上下翻转, 2:左右翻转, 3:中心翻转
-        *  @return 返回值为0表示成功，返回其他值表示失败。
-        */
+        /// <summary>
+        /// 设置图像翻转
+        /// </summary>
+        /// <param name="handle">由VzLPRClient_Open函数获得的句柄</param>
+        /// <param name="flip">0: 原始图像, 1:上下翻转, 2:左右翻转, 3:中心翻转</param>
+        /// <returns>返回值为0表示成功，返回其他值表示失败。</returns>
         int VzLPRClient_SetFlip(IntPtr handle, int flip);
-
         /// <summary>
         /// 修改网络参数 原方法有误
         /// </summary>
@@ -845,42 +849,35 @@ namespace System.Data.VzClientSDK
         /// <param name="strNetmask">子网掩码 格式如"255.255.255.0"</param>
         /// <returns></returns>
         int VzLPRClient_UpdateNetworkParam(uint sh, uint sl, string strNewIP, string strGateway, string strNetmask);
-
-        /**
-        *  @brief 获取设备序列号；
-        *  @param [IN] ip ip统一使用字符串的形式传入
-        *  @param [IN] port 使用和登录时相同的端口
-        *  @param [OUT] SerHi 序列号高位
-        *  @param [OUT] SerLo 序列号低位
-        *  @return 返回值为0表示成功，返回其他值表示失败。
-        */
+        /// <summary>
+        /// 获取设备序列号
+        /// </summary>
+        /// <param name="ip">ip统一使用字符串的形式传入</param>
+        /// <param name="port">使用和登录时相同的端口</param>
+        /// <param name="SerHi">序列号高位</param>
+        /// <param name="SerLo">序列号低位</param>
+        /// <returns>返回值为0表示成功，返回其他值表示失败。</returns>
         int VzLPRClient_GetSerialNo(string ip, short port, ref int SerHi, ref int SerLo);
-
-        /**
-        *  @brief 开始实时图像数据流，用于实时获取图像数据
-        *  @param  [IN] handle		由VzLPRClient_Open函数获得的句柄
-        *  @return 返回值为0表示成功，返回其他值表示失败。
-        *  @ingroup group_device
-        */
+        /// <summary>
+        /// 开始实时图像数据流，用于实时获取图像数据
+        /// </summary>
+        /// <param name="handle">由VzLPRClient_Open函数获得的句柄</param>
+        /// <returns>返回值为0表示成功，返回其他值表示失败。</returns>
         int VzLPRClient_StartRealPlayDecData(IntPtr handle);
-
-        /**
-        *  @brief 停止实时图像数据流
-        *  @param  [IN] handle		由VzLPRClient_Open函数获得的句柄
-        *  @return 返回值为0表示成功，返回其他值表示失败。
-        *  @ingroup group_device
-        */
+        /// <summary>
+        /// 停止实时图像数据流
+        /// </summary>
+        /// <param name="handle">由VzLPRClient_Open函数获得的句柄</param>
+        /// <returns>返回值为0表示成功，返回其他值表示失败。</returns>
         int VzLPRClient_StopRealPlayDecData(IntPtr handle);
-
-        /**
-        *  @brief 从解码流中获取JPEG图像，保存到指定内存
-        *  @param  [IN] handle		由VzLPRClient_Open函数获得的句柄
-        *  @param  [IN/OUT] pDstBuf JPEG数据的目的存储首地址
-        *  @param  [IN] uSizeBuf JPEG数据地址的内存的最大尺寸；
-        *  @param  [IN] nQuality JPEG压缩的质量，取值范围1~100；
-        *  @return >0表示成功，即编码后的尺寸，-1表示失败，-2表示给定的压缩数据的内存尺寸不够大
-        *  @ingroup group_global
-        */
+        /// <summary>
+        /// 从解码流中获取JPEG图像，保存到指定内存
+        /// </summary>
+        /// <param name="handle">由VzLPRClient_Open函数获得的句柄</param>
+        /// <param name="pDstBuf">JPEG数据的目的存储首地址</param>
+        /// <param name="uSizeBuf">JPEG数据地址的内存的最大尺寸；</param>
+        /// <param name="nQuality">JPEG压缩的质量，取值范围1~100；</param>
+        /// <returns>0表示成功，即编码后的尺寸，-1表示失败，-2表示给定的压缩数据的内存尺寸不够大</returns>
         int VzLPRClient_GetJpegStreamFromRealPlayDec(IntPtr handle, IntPtr pDstBuf, uint uSizeBuf, int nQuality);
 
         /**
@@ -1391,6 +1388,16 @@ namespace System.Data.VzClientSDK
         */
         [DllImport(VzClientSdk.DllFileName)]
         public static extern int VzLPRClient_ImageSaveToJpeg(IntPtr pImgInfo, string pFullPathName, int nQuality);
+        /// <summary>
+        /// 将图像保存为JPEG到指定路径，可指定图像尺寸的模式
+        /// </summary>
+        /// <param name="pImgInfo">图像结构体，目前只支持默认的格式，即ImageFormatRGB</param>
+        /// <param name="pFullPathName">设带绝对路径和JPG后缀名的文件名字符串</param>
+        /// <param name="nQuality">JPEG压缩的质量，取值范围1~100</param>
+        /// <param name="sizeMode">图像大小的模式</param>
+        /// <returns></returns>
+        [DllImport(VzClientSdk.DllFileName)]
+        public static extern int VzLPRClient_ImageSaveToJpegEx(VZ_LPRC_IMAGE_INFO pImgInfo, string pFullPathName, int nQuality, IMG_SIZE_MODE sizeMode);
 
         /**
         *  @brief 读出设备序列号，可用于二次加密
@@ -1486,7 +1493,7 @@ namespace System.Data.VzClientSDK
         *  @ingroup group_device
         */
         [DllImport(VzClientSdk.DllFileName)]
-        public static extern int VzLPRClient_GetGPIOValue(IntPtr handle, int gpioIn, IntPtr value);
+        public static extern int VzLPRClient_GetGPIOValue(IntPtr handle, int gpioIn, out int value);
 
         /**
         *  @brief 根据ID获取车牌图片
@@ -2601,7 +2608,7 @@ namespace System.Data.VzClientSDK
         int IVzClientSdkProxy.VzLPRClient_GetEMS(IntPtr handle, ref VZ_LPRC_ACTIVE_ENCRYPT pData) => VzLPRClient_GetEMS(handle, ref pData);
         int IVzClientSdkProxy.VzLPRClient_GetFlip(IntPtr handle, ref int flip) => VzLPRClient_GetFlip(handle, ref flip);
         int IVzClientSdkProxy.VzLPRClient_GetFrequency(IntPtr handle, ref int frequency) => VzLPRClient_GetFrequency(handle, ref frequency);
-        int IVzClientSdkProxy.VzLPRClient_GetGPIOValue(IntPtr handle, int gpioIn, IntPtr value) => VzLPRClient_GetGPIOValue(handle, gpioIn, value);
+        int IVzClientSdkProxy.VzLPRClient_GetGPIOValue(IntPtr handle, int gpioIn, out int value) => VzLPRClient_GetGPIOValue(handle, gpioIn, out value);
         int IVzClientSdkProxy.VzLPRClient_GetHwBoardType(IntPtr handle, ref int board_type) => VzLPRClient_GetHwBoardType(handle, ref board_type);
         int IVzClientSdkProxy.VzLPRClient_GetHwBoardVersion(IntPtr handle, ref int board_version, ref long exdataSize) => VzLPRClient_GetHwBoardVersion(handle, ref board_version, ref exdataSize);
         int IVzClientSdkProxy.VzLPRClient_GetIOOutput(IntPtr handle, int uChnId, ref int pOutput) => VzLPRClient_GetIOOutput(handle, uChnId, ref pOutput);
@@ -2633,6 +2640,7 @@ namespace System.Data.VzClientSDK
         int IVzClientSdkProxy.VzLPRClient_GetWLFuzzy(IntPtr handle, ref int nFuzzyType, ref int nFuzzyLen, ref bool bFuzzyCC) => VzLPRClient_GetWLFuzzy(handle, ref nFuzzyType, ref nFuzzyLen, ref bFuzzyCC);
         int IVzClientSdkProxy.VzLPRClient_ImageEncodeToJpeg(IntPtr pImgInfo, IntPtr pDstBuf, int uSizeBuf, int nQuality) => VzLPRClient_ImageEncodeToJpeg(pImgInfo, pDstBuf, uSizeBuf, nQuality);
         int IVzClientSdkProxy.VzLPRClient_ImageSaveToJpeg(IntPtr pImgInfo, string pFullPathName, int nQuality) => VzLPRClient_ImageSaveToJpeg(pImgInfo, pFullPathName, nQuality);
+        int IVzClientSdkProxy.VzLPRClient_ImageSaveToJpegEx(VZ_LPRC_IMAGE_INFO pImgInfo, string pFullPathName, int nQuality, IMG_SIZE_MODE sizeMode) => VzLPRClient_ImageSaveToJpegEx(pImgInfo, pFullPathName, nQuality, sizeMode);
         int IVzClientSdkProxy.VzLPRClient_IsConnected(IntPtr handle, ref byte pStatus) => VzLPRClient_IsConnected(handle, ref pStatus);
         int IVzClientSdkProxy.VzLPRClient_LoadImageById(IntPtr handle, int id, IntPtr pdata, IntPtr size) => VzLPRClient_LoadImageById(handle, id, pdata, size);
         IntPtr IVzClientSdkProxy.VzLPRClient_Open(string pStrIP, ushort wPort, string pStrUserName, string pStrPassword) => VzLPRClient_Open(pStrIP, wPort, pStrUserName, pStrPassword);
@@ -2777,6 +2785,7 @@ namespace System.Data.VzClientSDK
         private DCreater.VzLPRClient_GetWLFuzzy _VzLPRClient_GetWLFuzzy;
         private DCreater.VzLPRClient_ImageEncodeToJpeg _VzLPRClient_ImageEncodeToJpeg;
         private DCreater.VzLPRClient_ImageSaveToJpeg _VzLPRClient_ImageSaveToJpeg;
+        private DCreater.VzLPRClient_ImageSaveToJpegEx _VzLPRClient_ImageSaveToJpegEx;
         private DCreater.VzLPRClient_IsConnected _VzLPRClient_IsConnected;
         private DCreater.VzLPRClient_LoadImageById _VzLPRClient_LoadImageById;
         private DCreater.VzLPRClient_Open _VzLPRClient_Open;
@@ -2919,6 +2928,7 @@ namespace System.Data.VzClientSDK
             _VzLPRClient_GetWLFuzzy = GetDelegate<DCreater.VzLPRClient_GetWLFuzzy>(nameof(DCreater.VzLPRClient_GetWLFuzzy));
             _VzLPRClient_ImageEncodeToJpeg = GetDelegate<DCreater.VzLPRClient_ImageEncodeToJpeg>(nameof(DCreater.VzLPRClient_ImageEncodeToJpeg));
             _VzLPRClient_ImageSaveToJpeg = GetDelegate<DCreater.VzLPRClient_ImageSaveToJpeg>(nameof(DCreater.VzLPRClient_ImageSaveToJpeg));
+            _VzLPRClient_ImageSaveToJpegEx = GetDelegate<DCreater.VzLPRClient_ImageSaveToJpegEx>(nameof(DCreater.VzLPRClient_ImageSaveToJpegEx));
             _VzLPRClient_IsConnected = GetDelegate<DCreater.VzLPRClient_IsConnected>(nameof(DCreater.VzLPRClient_IsConnected));
             _VzLPRClient_LoadImageById = GetDelegate<DCreater.VzLPRClient_LoadImageById>(nameof(DCreater.VzLPRClient_LoadImageById));
             _VzLPRClient_Open = GetDelegate<DCreater.VzLPRClient_Open>(nameof(DCreater.VzLPRClient_Open));
@@ -3041,7 +3051,7 @@ namespace System.Data.VzClientSDK
         int IVzClientSdkProxy.VzLPRClient_GetEMS(IntPtr handle, ref VZ_LPRC_ACTIVE_ENCRYPT pData) => _VzLPRClient_GetEMS.Invoke(handle, ref pData);
         int IVzClientSdkProxy.VzLPRClient_GetFlip(IntPtr handle, ref int flip) => _VzLPRClient_GetFlip.Invoke(handle, ref flip);
         int IVzClientSdkProxy.VzLPRClient_GetFrequency(IntPtr handle, ref int frequency) => _VzLPRClient_GetFrequency.Invoke(handle, ref frequency);
-        int IVzClientSdkProxy.VzLPRClient_GetGPIOValue(IntPtr handle, int gpioIn, IntPtr value) => _VzLPRClient_GetGPIOValue.Invoke(handle, gpioIn, value);
+        int IVzClientSdkProxy.VzLPRClient_GetGPIOValue(IntPtr handle, int gpioIn, out int value) => _VzLPRClient_GetGPIOValue.Invoke(handle, gpioIn, out value);
         int IVzClientSdkProxy.VzLPRClient_GetHwBoardType(IntPtr handle, ref int board_type) => _VzLPRClient_GetHwBoardType.Invoke(handle, ref board_type);
         int IVzClientSdkProxy.VzLPRClient_GetHwBoardVersion(IntPtr handle, ref int board_version, ref long exdataSize) => _VzLPRClient_GetHwBoardVersion.Invoke(handle, ref board_version, ref exdataSize);
         int IVzClientSdkProxy.VzLPRClient_GetIOOutput(IntPtr handle, int uChnId, ref int pOutput) => _VzLPRClient_GetIOOutput.Invoke(handle, uChnId, ref pOutput);
@@ -3073,6 +3083,7 @@ namespace System.Data.VzClientSDK
         int IVzClientSdkProxy.VzLPRClient_GetWLFuzzy(IntPtr handle, ref int nFuzzyType, ref int nFuzzyLen, ref bool bFuzzyCC) => _VzLPRClient_GetWLFuzzy.Invoke(handle, ref nFuzzyType, ref nFuzzyLen, ref bFuzzyCC);
         int IVzClientSdkProxy.VzLPRClient_ImageEncodeToJpeg(IntPtr pImgInfo, IntPtr pDstBuf, int uSizeBuf, int nQuality) => _VzLPRClient_ImageEncodeToJpeg.Invoke(pImgInfo, pDstBuf, uSizeBuf, nQuality);
         int IVzClientSdkProxy.VzLPRClient_ImageSaveToJpeg(IntPtr pImgInfo, string pFullPathName, int nQuality) => _VzLPRClient_ImageSaveToJpeg.Invoke(pImgInfo, pFullPathName, nQuality);
+        int IVzClientSdkProxy.VzLPRClient_ImageSaveToJpegEx(VZ_LPRC_IMAGE_INFO pImgInfo, string pFullPathName, int nQuality, IMG_SIZE_MODE sizeMode) => _VzLPRClient_ImageSaveToJpegEx.Invoke(pImgInfo, pFullPathName, nQuality, sizeMode);
         int IVzClientSdkProxy.VzLPRClient_IsConnected(IntPtr handle, ref byte pStatus) => _VzLPRClient_IsConnected.Invoke(handle, ref pStatus);
         int IVzClientSdkProxy.VzLPRClient_LoadImageById(IntPtr handle, int id, IntPtr pdata, IntPtr size) => _VzLPRClient_LoadImageById.Invoke(handle, id, pdata, size);
         IntPtr IVzClientSdkProxy.VzLPRClient_Open(string pStrIP, ushort wPort, string pStrUserName, string pStrPassword) => _VzLPRClient_Open.Invoke(pStrIP, wPort, pStrUserName, pStrPassword);

@@ -82,9 +82,6 @@
             TxtNetConfigPort = new System.Windows.Forms.TextBox();
             LblNetConfigIP = new System.Windows.Forms.Label();
             PnlNetConfigs = new System.Windows.Forms.Panel();
-            LblNetReadSeconds = new System.Windows.Forms.Label();
-            TxtNetSeconds = new System.Windows.Forms.TextBox();
-            ChkNetReadBackground = new System.Windows.Forms.CheckBox();
             CbxNetConfigs = new System.Windows.Forms.ComboBox();
             GrbNetInfoContent = new System.Windows.Forms.GroupBox();
             TxtNetWriteTimeout = new System.Windows.Forms.TextBox();
@@ -103,6 +100,10 @@
             GrbNetDoArea = new System.Windows.Forms.GroupBox();
             CmsrNetDoStatus = new System.Windows.Forms.ContextMenuStrip(components);
             TsrmPicNetDO1 = new System.Windows.Forms.ToolStripMenuItem();
+            toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            TmsrRefreshIOArea = new System.Windows.Forms.ToolStripMenuItem();
+            ChkNetReadBackground = new System.Windows.Forms.ToolStripMenuItem();
+            TxtNetSeconds = new System.Windows.Forms.ToolStripTextBox();
             ((System.ComponentModel.ISupportInitialize)PicNetDI8).BeginInit();
             ((System.ComponentModel.ISupportInitialize)PicNetDI7).BeginInit();
             ((System.ComponentModel.ISupportInitialize)PicNetDI6).BeginInit();
@@ -143,7 +144,7 @@
             // TsrmPicNetDO3
             // 
             TsrmPicNetDO3.Name = "TsrmPicNetDO3";
-            TsrmPicNetDO3.Size = new System.Drawing.Size(155, 22);
+            TsrmPicNetDO3.Size = new System.Drawing.Size(180, 22);
             TsrmPicNetDO3.Text = "设置重置DO-3";
             TsrmPicNetDO3.Click += PicNetDo_DoubleClick;
             // 
@@ -226,7 +227,7 @@
             // TsrmPicNetDO8
             // 
             TsrmPicNetDO8.Name = "TsrmPicNetDO8";
-            TsrmPicNetDO8.Size = new System.Drawing.Size(155, 22);
+            TsrmPicNetDO8.Size = new System.Drawing.Size(180, 22);
             TsrmPicNetDO8.Text = "设置重置DO-8";
             TsrmPicNetDO8.Click += PicNetDo_DoubleClick;
             // 
@@ -279,28 +280,28 @@
             // TsrmPicNetDO7
             // 
             TsrmPicNetDO7.Name = "TsrmPicNetDO7";
-            TsrmPicNetDO7.Size = new System.Drawing.Size(155, 22);
+            TsrmPicNetDO7.Size = new System.Drawing.Size(180, 22);
             TsrmPicNetDO7.Text = "设置重置DO-7";
             TsrmPicNetDO7.Click += PicNetDo_DoubleClick;
             // 
             // TsrmPicNetDO6
             // 
             TsrmPicNetDO6.Name = "TsrmPicNetDO6";
-            TsrmPicNetDO6.Size = new System.Drawing.Size(155, 22);
+            TsrmPicNetDO6.Size = new System.Drawing.Size(180, 22);
             TsrmPicNetDO6.Text = "设置重置DO-6";
             TsrmPicNetDO6.Click += PicNetDo_DoubleClick;
             // 
             // TsrmPicNetDO5
             // 
             TsrmPicNetDO5.Name = "TsrmPicNetDO5";
-            TsrmPicNetDO5.Size = new System.Drawing.Size(155, 22);
+            TsrmPicNetDO5.Size = new System.Drawing.Size(180, 22);
             TsrmPicNetDO5.Text = "设置重置DO-5";
             TsrmPicNetDO5.Click += PicNetDo_DoubleClick;
             // 
             // TsrmPicNetDO4
             // 
             TsrmPicNetDO4.Name = "TsrmPicNetDO4";
-            TsrmPicNetDO4.Size = new System.Drawing.Size(155, 22);
+            TsrmPicNetDO4.Size = new System.Drawing.Size(180, 22);
             TsrmPicNetDO4.Text = "设置重置DO-4";
             TsrmPicNetDO4.Click += PicNetDo_DoubleClick;
             // 
@@ -317,7 +318,7 @@
             // TsrmPicNetDO2
             // 
             TsrmPicNetDO2.Name = "TsrmPicNetDO2";
-            TsrmPicNetDO2.Size = new System.Drawing.Size(155, 22);
+            TsrmPicNetDO2.Size = new System.Drawing.Size(180, 22);
             TsrmPicNetDO2.Text = "设置重置DO-2";
             TsrmPicNetDO2.Click += PicNetDo_DoubleClick;
             // 
@@ -706,48 +707,12 @@
             // 
             // PnlNetConfigs
             // 
-            PnlNetConfigs.Controls.Add(LblNetReadSeconds);
-            PnlNetConfigs.Controls.Add(TxtNetSeconds);
-            PnlNetConfigs.Controls.Add(ChkNetReadBackground);
             PnlNetConfigs.Controls.Add(CbxNetConfigs);
             PnlNetConfigs.Dock = System.Windows.Forms.DockStyle.Top;
             PnlNetConfigs.Location = new System.Drawing.Point(3, 19);
             PnlNetConfigs.Name = "PnlNetConfigs";
             PnlNetConfigs.Size = new System.Drawing.Size(504, 47);
             PnlNetConfigs.TabIndex = 5;
-            // 
-            // LblNetReadSeconds
-            // 
-            LblNetReadSeconds.AutoSize = true;
-            LblNetReadSeconds.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            LblNetReadSeconds.Location = new System.Drawing.Point(459, 12);
-            LblNetReadSeconds.Name = "LblNetReadSeconds";
-            LblNetReadSeconds.Size = new System.Drawing.Size(26, 21);
-            LblNetReadSeconds.TabIndex = 3;
-            LblNetReadSeconds.Text = "秒";
-            // 
-            // TxtNetSeconds
-            // 
-            TxtNetSeconds.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            TxtNetSeconds.Location = new System.Drawing.Point(417, 8);
-            TxtNetSeconds.MaxLength = 2;
-            TxtNetSeconds.Name = "TxtNetSeconds";
-            TxtNetSeconds.Size = new System.Drawing.Size(36, 28);
-            TxtNetSeconds.TabIndex = 2;
-            TxtNetSeconds.Text = "10";
-            // 
-            // ChkNetReadBackground
-            // 
-            ChkNetReadBackground.AutoSize = true;
-            ChkNetReadBackground.Checked = true;
-            ChkNetReadBackground.CheckState = System.Windows.Forms.CheckState.Checked;
-            ChkNetReadBackground.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            ChkNetReadBackground.Location = new System.Drawing.Point(315, 10);
-            ChkNetReadBackground.Name = "ChkNetReadBackground";
-            ChkNetReadBackground.Size = new System.Drawing.Size(93, 25);
-            ChkNetReadBackground.TabIndex = 1;
-            ChkNetReadBackground.Text = "后台读取";
-            ChkNetReadBackground.UseVisualStyleBackColor = true;
             // 
             // CbxNetConfigs
             // 
@@ -756,7 +721,7 @@
             CbxNetConfigs.FormattingEnabled = true;
             CbxNetConfigs.Location = new System.Drawing.Point(14, 8);
             CbxNetConfigs.Name = "CbxNetConfigs";
-            CbxNetConfigs.Size = new System.Drawing.Size(292, 29);
+            CbxNetConfigs.Size = new System.Drawing.Size(458, 29);
             CbxNetConfigs.TabIndex = 0;
             CbxNetConfigs.SelectedIndexChanged += CbxNetConfigs_SelectedIndexChanged;
             // 
@@ -948,16 +913,42 @@
             // 
             // CmsrNetDoStatus
             // 
-            CmsrNetDoStatus.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { TsrmPicNetDO1, TsrmPicNetDO2, TsrmPicNetDO3, TsrmPicNetDO4, TsrmPicNetDO5, TsrmPicNetDO6, TsrmPicNetDO7, TsrmPicNetDO8 });
+            CmsrNetDoStatus.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { TsrmPicNetDO1, TsrmPicNetDO2, TsrmPicNetDO3, TsrmPicNetDO4, TsrmPicNetDO5, TsrmPicNetDO6, TsrmPicNetDO7, TsrmPicNetDO8, toolStripSeparator1, TmsrRefreshIOArea, ChkNetReadBackground });
             CmsrNetDoStatus.Name = "CmsrNetDoStatus";
-            CmsrNetDoStatus.Size = new System.Drawing.Size(156, 180);
+            CmsrNetDoStatus.Size = new System.Drawing.Size(181, 252);
             // 
             // TsrmPicNetDO1
             // 
             TsrmPicNetDO1.Name = "TsrmPicNetDO1";
-            TsrmPicNetDO1.Size = new System.Drawing.Size(155, 22);
+            TsrmPicNetDO1.Size = new System.Drawing.Size(180, 22);
             TsrmPicNetDO1.Text = "设置重置DO-1";
             TsrmPicNetDO1.Click += PicNetDo_DoubleClick;
+            // 
+            // toolStripSeparator1
+            // 
+            toolStripSeparator1.Name = "toolStripSeparator1";
+            toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
+            // 
+            // TmsrRefreshIOArea
+            // 
+            TmsrRefreshIOArea.Name = "TmsrRefreshIOArea";
+            TmsrRefreshIOArea.Size = new System.Drawing.Size(180, 22);
+            TmsrRefreshIOArea.Text = "逐个刷新DO";
+            TmsrRefreshIOArea.Click += TmsrRefreshIOArea_Click;
+            // 
+            // ChkNetReadBackground
+            // 
+            ChkNetReadBackground.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { TxtNetSeconds });
+            ChkNetReadBackground.Name = "ChkNetReadBackground";
+            ChkNetReadBackground.Size = new System.Drawing.Size(180, 22);
+            ChkNetReadBackground.Text = "定时读取IO";
+            ChkNetReadBackground.Click += ChkNetReadBackground_Click;
+            // 
+            // TxtNetSeconds
+            // 
+            TxtNetSeconds.Name = "TxtNetSeconds";
+            TxtNetSeconds.Size = new System.Drawing.Size(100, 23);
+            TxtNetSeconds.Text = "10";
             // 
             // USRIO808EWRv2211
             // 
@@ -997,7 +988,6 @@
             PngNetConfig.ResumeLayout(false);
             PngNetConfig.PerformLayout();
             PnlNetConfigs.ResumeLayout(false);
-            PnlNetConfigs.PerformLayout();
             GrbNetInfoContent.ResumeLayout(false);
             GrbNetInfoContent.PerformLayout();
             GrbNetDIArea.ResumeLayout(false);
@@ -1063,9 +1053,6 @@
         private System.Windows.Forms.TextBox TxtNetConfigPort;
         private System.Windows.Forms.Label LblNetConfigIP;
         private System.Windows.Forms.Panel PnlNetConfigs;
-        private System.Windows.Forms.Label LblNetReadSeconds;
-        private System.Windows.Forms.TextBox TxtNetSeconds;
-        private System.Windows.Forms.CheckBox ChkNetReadBackground;
         private System.Windows.Forms.ComboBox CbxNetConfigs;
         private System.Windows.Forms.GroupBox GrbNetInfoContent;
         private System.Windows.Forms.CheckBox ChkNetDoHolding;
@@ -1086,5 +1073,9 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripMenuItem TmsrRefreshIOArea;
+        private System.Windows.Forms.ToolStripMenuItem ChkNetReadBackground;
+        private System.Windows.Forms.ToolStripTextBox TxtNetSeconds;
     }
 }

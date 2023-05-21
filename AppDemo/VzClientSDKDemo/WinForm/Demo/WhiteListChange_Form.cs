@@ -15,7 +15,7 @@ namespace VzClientSDK.WinForm
     public partial class WhiteListChange_Form : Form
     {
         static IVzClientSdkProxy VzClientSDK = VzClientSdk.Create();
-        private int m_hLPRClient = 0;
+        private IntPtr m_hLPRClient = IntPtr.Zero;
         private int m_nCurPage = 0;
 
         private uint Update_lVehicleID;
@@ -55,7 +55,7 @@ namespace VzClientSDK.WinForm
             this.Invoke(ShowDelegate);
         }
 
-        public void SetLPRHandle(int m_hLPRClient_)
+        public void SetLPRHandle(IntPtr m_hLPRClient_)
         {
             m_hLPRClient = m_hLPRClient_;
         }

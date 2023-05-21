@@ -15,7 +15,7 @@ namespace VzClientSDK.WinForm
     public partial class WhiteListAdd_Form : Form
     {
         static IVzClientSdkProxy VzClientSDK = VzClientSdk.Create();
-        private int m_hLPRClient = 0;
+        private IntPtr m_hLPRClient = IntPtr.Zero;
         private int m_nAddPage = 0;
         WhiteList_Form form2;
         public WhiteListAdd_Form()
@@ -27,7 +27,7 @@ namespace VzClientSDK.WinForm
         {
             form2 = form2_;
         }
-        public void SetLPRHandle(int m_hLPRClient_)
+        public void SetLPRHandle(IntPtr m_hLPRClient_)
         {
             m_hLPRClient = m_hLPRClient_;
         }

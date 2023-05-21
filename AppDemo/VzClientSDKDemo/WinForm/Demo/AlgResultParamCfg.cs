@@ -13,9 +13,9 @@ namespace VzClientSDK.WinForm
     public partial class AlgResultParamCfg : Form
     {
         static IVzClientSdkProxy VzClientSDK = VzClientSdk.Create();
-        private int m_hLPRClient = 0;
+        private IntPtr m_hLPRClient = IntPtr.Zero;
 
-        public void SetLPRHandle(int hLPRClient)
+        public void SetLPRHandle(IntPtr hLPRClient)
         {
             m_hLPRClient = hLPRClient;
         }
@@ -32,15 +32,15 @@ namespace VzClientSDK.WinForm
 
             VzClientSDK.VzLPRClient_GetAlgResultParam(m_hLPRClient, ref reco_dis);
 
-            if( reco_dis == 0 )
+            if (reco_dis == 0)
             {
                 radled2.Select();
             }
-            else if(reco_dis == 1)
+            else if (reco_dis == 1)
             {
                 radled6.Select();
             }
-            else if( reco_dis == 2)
+            else if (reco_dis == 2)
             {
                 radled4.Select();
             }

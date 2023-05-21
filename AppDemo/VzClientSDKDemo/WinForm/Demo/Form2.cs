@@ -16,7 +16,7 @@ namespace VzClientSDK.WinForm
     {
         static IVzClientSdkProxy VzClientSDK = VzClientSdk.Create();
 
-        private int m_hLPRClient = 0;
+        private IntPtr m_hLPRClient = IntPtr.Zero;
         private int m_nPlayHandle = 0;
 
         private VZLPRC_WLIST_QUERY_CALLBACK m_wlistCB = null;
@@ -26,7 +26,7 @@ namespace VzClientSDK.WinForm
             InitializeComponent();
         }
         
-        public void Setm_hLPRClient(int m_hLPRClient_){
+        public void Setm_hLPRClient(IntPtr m_hLPRClient_){
             m_hLPRClient = m_hLPRClient_;
             SearchText();
         }

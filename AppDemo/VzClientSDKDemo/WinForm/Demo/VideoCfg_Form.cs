@@ -13,7 +13,7 @@ namespace VzClientSDK.WinForm
     public partial class VideoCfg_Form : Form
     {
         static IVzClientSdkProxy VzClientSDK = VzClientSdk.Create();
-        private int m_hLPRClient = 0;
+        private IntPtr m_hLPRClient = IntPtr.Zero;
         private int m_board_type = 0;
 
         public VideoCfg_Form()
@@ -21,7 +21,7 @@ namespace VzClientSDK.WinForm
             InitializeComponent();
         }
 
-        public void SetLPRHandle(int hLPRClient)
+        public void SetLPRHandle(IntPtr hLPRClient)
         {
             m_hLPRClient = hLPRClient;
         }
@@ -146,7 +146,7 @@ namespace VzClientSDK.WinForm
         {
             string strRateval = "512";
 
-            if (m_hLPRClient > 0)
+            if (m_hLPRClient != IntPtr.Zero)
             {
                 int nSizeVal = 0, nRateval = 0, nEncodeType = 0, modeval = 0, bitval = 0, ratelist = 0, levelval = 0;
                 int ret = -1; 

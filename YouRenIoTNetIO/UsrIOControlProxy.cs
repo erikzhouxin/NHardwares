@@ -1,5 +1,8 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
+using System.Data.Cobber;
+using System.Data.Extter;
 using System.Data.NHInterfaces;
 using System.Data.NModbus;
 using System.Linq;
@@ -62,6 +65,21 @@ namespace System.Data.YouRenIoTNetIO
         /// <returns></returns>
         IAlertMsg Disconnect();
         /// <summary>
+        /// 检查状态(如果无法连接进行一次重连)
+        /// </summary>
+        /// <returns></returns>
+        IAlertMsg Checking();
+        /// <summary>
+        /// 检查状态(如果无法连接进行一次重连)
+        /// </summary>
+        /// <returns></returns>
+        IAlertMsg Connect();
+        /// <summary>
+        /// 连接并设置
+        /// </summary>
+        /// <returns></returns>
+        IAlertMsg Connect(IPEndPoint ipRes);
+        /// <summary>
         /// 连接并设置
         /// </summary>
         /// <param name="address"></param>
@@ -69,25 +87,66 @@ namespace System.Data.YouRenIoTNetIO
         /// <returns></returns>
         IAlertMsg Connect(IPAddress address, int port);
         /// <summary>
+        /// 获取全部序号状态
+        /// </summary>
+        /// <returns></returns>
+        IAlertMsgs<bool> GetDOStatus();
+        /// <summary>
+        /// 获取起始后的一组序号状态
+        /// </summary>
+        /// <returns></returns>
+        IAlertMsgs<bool> GetDOStatus(int start, int num);
+        /// <summary>
         /// 获取序号状态
         /// </summary>
         /// <param name="num"></param>
         /// <returns></returns>
         IAlertMsg<bool> GetDOStatus(int num);
         /// <summary>
-        /// 设置序号状态
+        /// 设置一个序号状态
         /// </summary>
         /// <param name="num"></param>
         /// <param name="value"></param>
         /// <returns></returns>
         IAlertMsg<bool> SetDOStatus(int num, bool value);
         /// <summary>
+        /// 设置从0开始的所有序号状态
+        /// </summary>
+        /// <returns></returns>
+        IAlertMsgs<bool> SetDOStatus(bool value);
+        /// <summary>
+        /// 设置从0开始的长度序号状态
+        /// </summary>
+        /// <param name="num"></param>
+        /// <returns></returns>
+        IAlertMsgs<bool> SetDOStatus(bool[] num);
+        /// <summary>
+        /// 设置开始及之后长度的序号状态
+        /// </summary>
+        /// <returns></returns>
+        IAlertMsgs<bool> SetDOStatus(int start, bool[] values);
+        /// <summary>
         /// 设置和重置序号状态
         /// </summary>
         /// <param name="num"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        void SetResetDOStatus(int num, bool value);
+        IAlertMsg<bool> SetResetDOStatus(int num, bool value);
+        /// <summary>
+        /// 设置和重置开始及之后的长度的序号状态
+        /// </summary>
+        /// <returns></returns>
+        IAlertMsgs<bool> SetResetDOStatus(int start, bool[] values);
+        /// <summary>
+        /// 设置和重置从0开始长度的序号状态
+        /// </summary>
+        /// <returns></returns>
+        IAlertMsgs<bool> SetResetDOStatus(bool[] values);
+        /// <summary>
+        /// 设置和重置序号状态
+        /// </summary>
+        /// <returns></returns>
+        IAlertMsgs<bool> SetResetDOStatus(bool value);
         /// <summary>
         /// 获取DO状态保持
         /// </summary>
@@ -100,17 +159,27 @@ namespace System.Data.YouRenIoTNetIO
         /// <returns></returns>
         IAlertMsg<bool?> SetDOStatusHolding(bool? value);
         /// <summary>
-        /// 
+        /// 设置DO状态保持
         /// </summary>
         /// <param name="value">2:重启保持断电不保持,1:一直保持,3:一直不保持</param>
         /// <returns></returns>
         IAlertMsg<int> SetDOStatusHolding(int value);
+        /// <summary>
+        /// 获取从0开始的序号状态
+        /// </summary>
+        /// <returns></returns>
+        IAlertMsgs<bool> GetDIStatus();
         /// <summary>
         /// 获取序号状态
         /// </summary>
         /// <param name="num"></param>
         /// <returns></returns>
         IAlertMsg<bool> GetDIStatus(int num);
+        /// <summary>
+        /// 获取指定开始及之后长度的序号状态
+        /// </summary>
+        /// <returns></returns>
+        IAlertMsgs<bool> GetDIStatus(int start, int num);
     }
     /// <summary>
     /// IO控制器代理实现类
@@ -133,61 +202,32 @@ namespace System.Data.YouRenIoTNetIO
                 default: throw new NotSupportedException("不支持的设备类型");
             }
         }
-        public IAlertMsg Reconnect()
-        {
-            return _proxy.Reconnect();
-        }
-
-        public IAlertMsg Connect(IPAddress address, int port)
-        {
-            return _proxy.Connect(address, port);
-        }
-        public void Dispose()
-        {
-            _proxy?.Dispose();
-        }
-        public IAlertMsg<bool> GetDOStatus(int num)
-        {
-            return _proxy.GetDOStatus(num);
-        }
-        public IAlertMsg<bool> SetDOStatus(int num, bool value)
-        {
-            return _proxy.SetDOStatus(num, value);
-        }
-        public void SetResetDOStatus(int num, bool value)
-        {
-            _proxy.SetResetDOStatus(num, value);
-        }
-        public IAlertMsg<int> GetDOStatusHolding()
-        {
-            return _proxy.GetDOStatusHolding();
-        }
-        public IAlertMsg<bool?> SetDOStatusHolding(bool? value)
-        {
-            return _proxy.SetDOStatusHolding(value);
-        }
-        public IAlertMsg<int> SetDOStatusHolding(int value)
-        {
-            return _proxy.SetDOStatusHolding(value);
-        }
-        public IAlertMsg<bool> GetDIStatus(int num)
-        {
-            return _proxy.GetDIStatus(num);
-        }
-        public void SetSlaveId(int slaveId)
-        {
-            _proxy.SetSlaveId(slaveId);
-        }
-
-        public IAlertMsg GetConnectStatus()
-        {
-            return _proxy.GetConnectStatus();
-        }
-
-        public IAlertMsg Disconnect()
-        {
-            return _proxy.Disconnect();
-        }
+        public IAlertMsg Reconnect() => _proxy.Reconnect();
+        public IAlertMsg Connect(IPAddress address, int port) => _proxy.Connect(address, port);
+        public IAlertMsg Connect(IPEndPoint ip) => _proxy.Connect(ip);
+        public IAlertMsg Connect() => _proxy.Connect();
+        public IAlertMsg Checking() => _proxy.Checking();
+        public void Dispose() => _proxy.Dispose();
+        public IAlertMsg<bool> GetDOStatus(int num) => _proxy.GetDOStatus(num);
+        public IAlertMsg<bool> SetDOStatus(int num, bool value) => _proxy.SetDOStatus(num, value);
+        public IAlertMsg<bool> SetResetDOStatus(int num, bool value) => _proxy.SetResetDOStatus(num, value);
+        public IAlertMsg<int> GetDOStatusHolding() => _proxy.GetDOStatusHolding();
+        public IAlertMsg<bool?> SetDOStatusHolding(bool? value) => _proxy.SetDOStatusHolding(value);
+        public IAlertMsg<int> SetDOStatusHolding(int value) => _proxy.SetDOStatusHolding(value);
+        public IAlertMsg<bool> GetDIStatus(int num) => _proxy.GetDIStatus(num);
+        public void SetSlaveId(int slaveId) => _proxy.SetSlaveId(slaveId);
+        public IAlertMsg GetConnectStatus() => _proxy.GetConnectStatus();
+        public IAlertMsg Disconnect() => _proxy.Disconnect();
+        public IAlertMsgs<bool> GetDOStatus() => _proxy.GetDOStatus();
+        public IAlertMsgs<bool> GetDOStatus(int start, int num) => _proxy.GetDOStatus(start, num);
+        public IAlertMsgs<bool> SetDOStatus(bool value) => _proxy.SetDOStatus(value);
+        public IAlertMsgs<bool> SetDOStatus(bool[] num) => _proxy.SetDOStatus(num);
+        public IAlertMsgs<bool> SetDOStatus(int start, bool[] values) => _proxy.SetDOStatus(start, values);
+        public IAlertMsgs<bool> SetResetDOStatus(int start, bool[] values) => _proxy.SetResetDOStatus(start, values);
+        public IAlertMsgs<bool> SetResetDOStatus(bool[] values) => _proxy.SetResetDOStatus(values);
+        public IAlertMsgs<bool> SetResetDOStatus(bool value) => _proxy.SetResetDOStatus(value);
+        public IAlertMsgs<bool> GetDIStatus() => _proxy.GetDIStatus();
+        public IAlertMsgs<bool> GetDIStatus(int start, int num) => _proxy.GetDIStatus(start, num);
     }
     internal class UsrIO808Device : IUsrIOControlProxy
     {
@@ -229,11 +269,15 @@ namespace System.Data.YouRenIoTNetIO
                 }
                 return new AlertMsg(true, "连接成功");
             }
-            catch (Exception ex)
-            {
-                return new AlertException(ex);
-            }
+            catch (Exception ex) { return new AlertException(ex); }
         }
+        public IAlertMsg Connect()
+        {
+            var status = GetConnectStatus();
+            if (status.IsSuccess) { return status; }
+            return Reconnect();
+        }
+        public IAlertMsg Connect(IPEndPoint ip) => Connect(ip.Address, ip.Port);
         public IAlertMsg Connect(IPAddress address, int port)
         {
             if (_address == address && port == _portRate)
@@ -245,13 +289,16 @@ namespace System.Data.YouRenIoTNetIO
             _portRate = port;
             return Reconnect();
         }
+        public IAlertMsg Checking()
+        {
+            var status = GetConnectStatus();
+            if (status.IsSuccess) { return status; }
+            return Reconnect();
+        }
         /// <summary>
         /// 释放
         /// </summary>
-        public void Dispose()
-        {
-            Disconnect();
-        }
+        public void Dispose() { Disconnect(); }
         public IAlertMsg<bool> GetDOStatus(int num)
         {
             bool[] res;
@@ -274,17 +321,18 @@ namespace System.Data.YouRenIoTNetIO
                 if (modbus == null) { return UnconnectedDevice<bool>(); }
                 modbus.WriteSingleCoil(_slaveId, (ushort)num, value);
             }
-            return GetDOStatus(num);
+            return new AlertMsg<bool>(true, $"查询到主从机地址{_slaveId}的第{num + 1}路输出信号的状态为【{(value ? "开" : "关")}】") { Data = value };
         }
-        public void SetResetDOStatus(int num, bool value)
+        public IAlertMsg<bool> SetResetDOStatus(int num, bool value)
         {
             lock (_locker)
             {
                 var modbus = _modbus;
-                if (modbus == null) { return; }
+                if (modbus == null) { return UnconnectedDevice<bool>(); }
                 modbus.WriteSingleCoil(_slaveId, (ushort)num, value);
                 modbus.WriteSingleCoil(_slaveId, (ushort)num, !value);
             }
+            return new AlertMsg<bool>(true, $"查询到主从机地址{_slaveId}的第{num + 1}路输出信号的状态为【{(value ? "开" : "关")}】") { Data = value };
         }
         public IAlertMsg<int> GetDOStatusHolding()
         {
@@ -320,7 +368,7 @@ namespace System.Data.YouRenIoTNetIO
                 if (modbus == null) { return UnconnectedDevice<int>(); }
                 modbus.WriteSingleRegister(_slaveId, (ushort)182, (ushort)value);
             }
-            return GetDOStatusHolding();
+            return new AlertMsg<int>(true, $"查询到主从机地址{_slaveId}的输出信号的状态保持为【{value}】") { Data = value };
         }
         public IAlertMsg<bool> GetDIStatus(int num)
         {
@@ -362,9 +410,72 @@ namespace System.Data.YouRenIoTNetIO
             }
             return new AlertMsg(true, $"已关闭【{_address}:{_portRate}】的连接");
         }
-        private AlertMsg<T> UnconnectedDevice<T>()
+        public IAlertMsgs<bool> GetDOStatus() => GetDOStatus(0, 8);
+        public IAlertMsgs<bool> GetDOStatus(int start, int num)
         {
-            return new AlertMsg<T>(false, $"未连接到【{_address}:{_portRate}】");
+            if (start < 0 || start > 7 || num < 1 || start + num > 8) { return OverflowRanges<bool>(start, num); }
+            bool[] res;
+            lock (_locker)
+            {
+                var modbus = _modbus;
+                if (modbus == null) { return UnconnectedDevices<bool>(); }
+                res = modbus.ReadCoils(_slaveId, (ushort)start, (ushort)num);
+            }
+            if (res == null || res.Length != num)
+            { return new AlertMsgs<bool>(false, $"未查询到主从机地址{_slaveId}的第{start + 1}路到{start + num}路输入信号的状态"); }
+            return new AlertMsgs<bool>(true, $"查询到主从机地址{_slaveId}的第{num + 1}路到{start + num}路输入信号的状态为：{GetStatusString(res)}") { Data = res };
         }
+        public IAlertMsgs<bool> SetDOStatus(bool value) => SetDOStatus(0, new bool[] { value, value, value, value, value, value, value, value });
+        public IAlertMsgs<bool> SetDOStatus(bool[] num) => SetDOStatus(0, num);
+        public IAlertMsgs<bool> SetDOStatus(int start, bool[] values)
+        {
+            var num = values.Length;
+            if (start < 0 || start > 7 || num < 1 || start + num > 8) { return OverflowRanges<bool>(start, num); }
+            lock (_locker)
+            {
+                var modbus = _modbus;
+                if (modbus == null) { return UnconnectedDevices<bool>(); }
+                modbus.WriteMultipleCoils(_slaveId, (ushort)num, values);
+            }
+            return new AlertMsgs<bool>(true, $"查询到主从机地址{_slaveId}的第{num + 1}路到{start + num}路输入信号的状态为：{GetStatusString(values)}") { Data = values };
+        }
+        public IAlertMsgs<bool> SetResetDOStatus(int start, bool[] values)
+        {
+            var num = values.Length;
+            if (start < 0 || start > 7 || num < 1 || start + num > 8) { return OverflowRanges<bool>(start, num); }
+            var res = new bool[num];
+            for (int i = 0; i < num; i++) { res[i] = !values[i]; }
+            lock (_locker)
+            {
+                var modbus = _modbus;
+                if (modbus == null) { return UnconnectedDevices<bool>(); }
+                modbus.WriteMultipleCoils(_slaveId, (ushort)num, values);
+                modbus.WriteMultipleCoils(_slaveId, (ushort)num, res);
+            }
+            return new AlertMsgs<bool>(true, $"查询到主从机地址{_slaveId}的第{num + 1}路到{start + num}路输入信号的状态为：{GetStatusString(res)}") { Data = res };
+        }
+        public IAlertMsgs<bool> SetResetDOStatus(bool[] values) => SetResetDOStatus(0, values);
+        public IAlertMsgs<bool> SetResetDOStatus(bool value) => SetResetDOStatus(0, new bool[] { value, value, value, value, value, value, value, value });
+        public IAlertMsgs<bool> GetDIStatus() => GetDIStatus(0, 8);
+        public IAlertMsgs<bool> GetDIStatus(int start, int num)
+        {
+            if (start < 0 || start > 7 || num < 1 || start + num > 8) { return OverflowRanges<bool>(start, num); }
+            bool[] res;
+            lock (_locker)
+            {
+                var modbus = _modbus;
+                if (modbus == null) { return UnconnectedDevices<bool>(); }
+                res = modbus.ReadInputs(_slaveId, (ushort)(start + 0x20), (ushort)num);
+            }
+            if (res == null || res.Length != num)
+            { return new AlertMsgs<bool>(false, $"未查询到主从机地址{_slaveId}的第{num + 1}路输入信号的状态"); }
+            return new AlertMsgs<bool>(true, $"查询到主从机地址{_slaveId}的第{num + 1}路输入信号的状态为：{GetStatusString(res)}") { Data = res };
+        }
+        #region // 辅助内容
+        private AlertMsg<T> UnconnectedDevice<T>() => new AlertMsg<T>(false, $"未连接到【{_address}:{_portRate}】");
+        private AlertMsgs<T> UnconnectedDevices<T>() => new AlertMsgs<T>(false, $"未连接到【{_address}:{_portRate}】");
+        private static AlertMsgs<T> OverflowRanges<T>(int start, int num) => new AlertMsgs<T>(false, $"当前设备序号范围是【0-7】，起始{start}到{start + num}超出范围");
+        private static string GetStatusString(bool[] res) => res.Select(s => s ? "开" : "关").JoinString("、");
+        #endregion 辅助内容
     }
 }

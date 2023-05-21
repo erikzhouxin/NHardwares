@@ -6,7 +6,7 @@
 		<UseWPF>true</UseWPF>
 		<UseWindowsForms>true</UseWindowsForms>
 		<AssemblyName>TestHDemoB.Wpf</AssemblyName>
-		<RootNamespace>TestHardwareDemo.WinForm</RootNamespace>
+		<RootNamespace>TestHardwareDemo.Wpf</RootNamespace>
 		<LangVersion>latest</LangVersion>
 		<NeutralLanguage>zh</NeutralLanguage>
 	</PropertyGroup>
