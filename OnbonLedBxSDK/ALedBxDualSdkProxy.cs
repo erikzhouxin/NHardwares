@@ -824,7 +824,7 @@ namespace System.Data.OnbonLedBxSDK
         /// <returns>0 成功， 其他值为错误</returns>
         int BxDual_program_deleteProgram();
         /// <summary>
-        /// 
+        /// 释放缓存
         /// </summary>
         /// <param name="program"></param>
         /// <returns></returns>
@@ -1418,7 +1418,14 @@ namespace System.Data.OnbonLedBxSDK
         /// <param name="RelateAllPro">当该字节为 1 时，所有异步节目播放时都允许播放该动态区域；为 0 时，由接下来的规则来决定</param>
         /// <param name="RelateProNum">动态区域关联了多少个异步节目一旦关联了某个异步节目，则当该异步节目播放时允许播放该动态区域，否则，不允许播放该动态区域</param>
         /// <param name="RelateProSerial"> 动态区域关联的节目编号；</param>
-        /// <param name="ImmePlay"></param>
+        /// <param name="ImmePlay">
+        /// 是否覆盖该字节为 0 时，该动态区域与异步节目一起播放，
+        /// 注意：异步节目和动态区不能重叠，重叠情况下，某些特技组合会导致花屏。所以，要保证区域没有重叠。
+        /// 该字节为 1 时，异步节目停止播放，仅播放该动态区域
+        /// 注意：当该字节为 0 时，RelateAllPro 到RelateProSerialN-1 的参数才有效，否则无效
+        /// 当该参数为 1 时，由于不与异步节目同时播放，为控制该动态区域能及时结束，
+        /// 可选择 RunMode参数为 2 或 4，当然也可通过删除该区域来实现
+        /// </param>
         /// <param name="uAreaX"></param>
         /// <param name="uAreaY"></param>
         /// <param name="uWidth"></param>

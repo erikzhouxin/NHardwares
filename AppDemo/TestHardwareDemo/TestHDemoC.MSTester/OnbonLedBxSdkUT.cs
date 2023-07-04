@@ -56,16 +56,7 @@ namespace TestHDemoC.MSTester
         /// BX-6代控制卡发送节目文本
         /// </summary>
         [TestMethod]
-        public void TestSendProgramTxt6()
-        {
-            //Send_program_txt_6(); // 发送节目文本
-            //Send_program_areas_6(); // 多区域发送节目文本
-            Send_program_txt_6_1();
-        }
-        /// <summary>
-        /// BX-6代控制卡发送节目文本
-        /// </summary>
-        public static void Send_program_txt_6()
+        public void Send_program_txt_6()
         {
             Console.WriteLine("开始编辑节目" + DateTime.Now.ToString());
             //指定IP ping控制卡获取控制卡数据，屏参相关参数已知的情况可省略该步骤
@@ -150,29 +141,28 @@ namespace TestHDemoC.MSTester
                 Console.WriteLine("program_addPlayPeriodGrp:" + err);
             }
             //节目添加边框
-            if (true)
-            {
-                EQscreenframeHeader_G6 sfheader = new EQscreenframeHeader_G6
-                {
-                    FrameDispStype = 0x01,    //边框显示方式
-                    FrameDispSpeed = 0x3B,    //边框显示速度
-                    FrameMoveStep = 0x01,     //边框移动步长
-                    FrameUnitLength = 2,   //边框组元长度
-                    FrameUnitWidth = 2,    //边框组元宽度
-                    FrameDirectDispBit = 0//上下左右边框显示标志位，目前只支持6QX-M卡 
-                };
-                byte[] img = Encoding.Default.GetBytes("F:\\cenIdea.git\\drive-pc\\LED显示SDK\\BX_05_06_SDK_20221107\\bx.dual.C#\\lib\\黄10.png\0");
-                bxdualsdk.BxDual_program_addFrame_G6(ref sfheader, img);
-            }
+            //if (true)
+            //{
+            //    EQscreenframeHeader_G6 sfheader = new EQscreenframeHeader_G6
+            //    {
+            //        FrameDispStype = 0x01,    //边框显示方式
+            //        FrameDispSpeed = 0x3B,    //边框显示速度
+            //        FrameMoveStep = 0x01,     //边框移动步长
+            //        FrameUnitLength = 2,   //边框组元长度
+            //        FrameUnitWidth = 2,    //边框组元宽度
+            //        FrameDirectDispBit = 0//上下左右边框显示标志位，目前只支持6QX-M卡 
+            //    };
+            //    bxdualsdk.BxDual_program_addFrame_G6(ref sfheader, OnbonLedSdkTestConfig.SideFrame);
+            //}
 
             //第三步，创建显示分区，设置区域显示位置，示例创建一个区域编号为0，区域大小64*32的图文分区
             EQareaHeader_G6 aheader = new EQareaHeader_G6
             {
                 AreaType = 0,
-                AreaX = 0,
-                AreaY = 0,
-                AreaWidth = data.ScreenWidth,
-                AreaHeight = data.ScreenHeight,
+                AreaX = 2,
+                AreaY = 2,
+                AreaWidth =(ushort) (data.ScreenWidth-4),
+                AreaHeight = (ushort) (data.ScreenHeight-4),
                 BackGroundFlag = 0x00,
                 Transparency = 101,
                 AreaEqual = 0x00,
@@ -182,19 +172,18 @@ namespace TestHDemoC.MSTester
             if (err != 0) { return; }
             Console.WriteLine("bxDual_program_addArea_G6:" + err);
             //区域添加边框
-            if (false)
+            if (true)
             {
                 EQscreenframeHeader_G6 sfheader = new EQscreenframeHeader_G6
                 {
-                    FrameDispStype = 0x01,    //边框显示方式0x00 –闪烁 0x01 –顺时针转动 0x02 –逆时针转动 0x03 –闪烁加顺时针转动 0x04 –闪烁加逆时针转动 0x05 –红绿交替闪烁 0x06 –红绿交替转动 0x07 –静止打出
+                    FrameDispStype = 0x01,
                     FrameDispSpeed = 0x10,    //边框显示速度
                     FrameMoveStep = 0x01,     //边框移动步长，单位为点，此参 数范围为 1~16 
-                    FrameUnitLength = 2,   //边框组元长度
-                    FrameUnitWidth = 2,    //边框组元宽度
+                    FrameUnitLength = 11,   //边框组元长度
+                    FrameUnitWidth = 1,    //边框组元宽度
                     FrameDirectDispBit = 0//上下左右边框显示标志位，目前只支持6QX-M卡 
                 };
-                byte[] img = Encoding.Default.GetBytes("F:\\cenIdea.git\\drive-pc\\LED显示SDK\\BX_05_06_SDK_20221107\\bx.dual.C#\\lib\\黄10.png\0");
-                bxdualsdk.BxDual_program_picturesAreaAddFrame_G6(0, ref sfheader, img);
+                bxdualsdk.BxDual_program_picturesAreaAddFrame_G6(0, ref sfheader, OnbonLedSdkTestConfig.SideFrame);
             }
 
             //第四步，添加显示内容，此处为图文分区0添加字符串
@@ -220,7 +209,7 @@ namespace TestHDemoC.MSTester
                 color = (uint)0x01,
                 fontBold = 1,
                 fontItalic = 0,
-                tdirection = E_txtDirection.pROTATERIGHT,
+                tdirection = E_txtDirection.pNORMAL,
                 txtSpace = 0,
                 Valign = 0,
                 Halign = 0
@@ -805,99 +794,93 @@ namespace TestHDemoC.MSTester
             Console.WriteLine("bxDual_program_setScreenParams_G56:" + err);
 
             //创建节目，设置节目属性
-            EQprogramHeader_G6 header;
-            header.FileType = 0x00;
-            header.ProgramID = 0;
-            header.ProgramStyle = 0x00;
-            header.ProgramPriority = 0x00;
-            header.ProgramPlayTimes = 1;
-            header.ProgramTimeSpan = 0;
-            header.SpecialFlag = 0;
-            header.CommExtendParaLen = 0x00;
-            header.ScheduNum = 0;
-            header.LoopValue = 0;
-            header.Intergrate = 0x00;
-            header.TimeAttributeNum = 0x00;
-            header.TimeAttribute0Offset = 0x0000;
-            header.ProgramWeek = 0xff;
-            header.ProgramLifeSpan_sy = 0xffff;
-            header.ProgramLifeSpan_sm = 0x03;
-            header.ProgramLifeSpan_sd = 0x14;
-            header.ProgramLifeSpan_ey = 0xffff;
-            header.ProgramLifeSpan_em = 0x03;
-            header.ProgramLifeSpan_ed = 0x14;
-            header.PlayPeriodGrpNum = 0;
+            EQprogramHeader_G6 header = new EQprogramHeader_G6
+            {
+                FileType = 0x00,
+                ProgramID = 0,
+                ProgramStyle = 0x00,
+                ProgramPriority = 0x00,
+                ProgramPlayTimes = 1,
+                ProgramTimeSpan = 0,
+                SpecialFlag = 0,
+                CommExtendParaLen = 0x00,
+                ScheduNum = 0,
+                LoopValue = 0,
+                Intergrate = 0x00,
+                TimeAttributeNum = 0x00,
+                TimeAttribute0Offset = 0x0000,
+                ProgramWeek = 0xff,
+                ProgramLifeSpan_sy = 0xffff,
+                ProgramLifeSpan_sm = 0x03,
+                ProgramLifeSpan_sd = 0x14,
+                ProgramLifeSpan_ey = 0xffff,
+                ProgramLifeSpan_em = 0x03,
+                ProgramLifeSpan_ed = 0x14,
+                PlayPeriodGrpNum = 0
+            };
             err = bxdualsdk.BxDual_program_addProgram_G6(ref header);
             Console.WriteLine("bxDual_program_addProgram_G6:" + err);
 
             //创建显示分区，设置区域显示位置，示例创建一个区域编号为0，区域大小64*32的图文分区
-            EQareaHeader_G6 aheader;
-            aheader.AreaType = 0;
-            aheader.AreaX = 0;
-            aheader.AreaY = 0;
-            aheader.AreaWidth = 64;
-            aheader.AreaHeight = 16;
-            aheader.BackGroundFlag = 0x00;
-            aheader.Transparency = 101;
-            aheader.AreaEqual = 0x00;
-            EQSound_6G stSoundData = new EQSound_6G();
-            stSoundData.SoundFlag = 0;
-            stSoundData.SoundVolum = 0;
-            stSoundData.SoundSpeed = 0;
-            stSoundData.SoundDataMode = 0;
-            stSoundData.SoundReplayTimes = 0;
-            stSoundData.SoundReplayDelay = 0;
-            stSoundData.SoundReservedParaLen = 0;
-            stSoundData.Soundnumdeal = 0;
-            stSoundData.Soundlanguages = 0;
-            stSoundData.Soundwordstyle = 0;
-            stSoundData.SoundDataLen = 0;
-            stSoundData.SoundData = IntPtr.Zero;
-
-            aheader.stSoundData = stSoundData;
+            EQareaHeader_G6 aheader = new EQareaHeader_G6
+            {
+                AreaType = 0,
+                AreaX = 0,
+                AreaY = 0,
+                AreaWidth = 64,
+                AreaHeight = 16,
+                BackGroundFlag = 0x00,
+                Transparency = 101,
+                AreaEqual = 0x00,
+                stSoundData = new EQSound_6G() { SoundData = IntPtr.Zero }
+            };
             err = bxdualsdk.BxDual_program_addArea_G6(0, ref aheader);  //添加图文区域
             Console.WriteLine("bxDual_program_addArea_G6:" + err);
 
             //添加显示内容，此处为图文分区0添加字符串
-            byte[] Font = Encoding.GetEncoding("GBK").GetBytes("宋体");
+            byte[] Font = Encoding.GetEncoding("GBK").GetBytes("宋体\0");
             IntPtr font = Marshal.AllocHGlobal(Font.Length);
             Marshal.Copy(Font, 0, font, Font.Length);
             byte[] strAreaTxtContent = Encoding.GetEncoding("GBK").GetBytes("111111\0");
             IntPtr str = Marshal.AllocHGlobal(strAreaTxtContent.Length);
             Marshal.Copy(strAreaTxtContent, 0, str, strAreaTxtContent.Length);
-            EQpageHeader_G6 pheader;
-            pheader.PageStyle = 0x00;
-            pheader.DisplayMode = 0x04;//移动模式
-            pheader.ClearMode = 0x01;
-            pheader.Speed = 60;//速度
-            pheader.StayTime = 0;//停留时间
-            pheader.RepeatTime = 1;
-            pheader.ValidLen = 10;
-            pheader.CartoonFrameRate = 0x00;
-            pheader.BackNotValidFlag = 0x00;
-            pheader.arrMode = E_arrMode.eSINGLELINE;
-            pheader.fontSize = 10;
-            pheader.color = (uint)0x01;
-            pheader.fontBold = 0;
-            pheader.fontItalic = 0;
-            pheader.tdirection = E_txtDirection.pNORMAL;
-            pheader.txtSpace = 0;
-            pheader.Valign = 1;
-            pheader.Halign = 0;
+            EQpageHeader_G6 pheader = new EQpageHeader_G6
+            {
+                PageStyle = 0x00,
+                DisplayMode = 0x04,//移动模式
+                ClearMode = 0x01,
+                Speed = 60,//速度
+                StayTime = 0,//停留时间
+                RepeatTime = 1,
+                ValidLen = 10,
+                CartoonFrameRate = 0x00,
+                BackNotValidFlag = 0x00,
+                arrMode = E_arrMode.eSINGLELINE,
+                fontSize = 10,
+                color = (uint)0x01,
+                fontBold = 0,
+                fontItalic = 0,
+                tdirection = E_txtDirection.pNORMAL,
+                txtSpace = 0,
+                Valign = 1,
+                Halign = 0
+            };
             err = bxdualsdk.BxDual_program_picturesAreaAddTxt_G6(0, strAreaTxtContent, Font, ref pheader);
             Console.WriteLine("bxDual_program_picturesAreaAddTxt_G6:" + err);
 
             //创建显示分区，设置区域显示位置，示例创建一个区域编号为1，区域大小64 * 32的时间分区，Y轴64，区域之间不可重叠
-            EQareaHeader_G6 aheader1;
-            aheader1.AreaType = 2;
-            aheader1.AreaX = 0;
-            aheader1.AreaY = 16;
-            aheader1.AreaWidth = 64;
-            aheader1.AreaHeight = 16;
-            aheader1.BackGroundFlag = 0x00;
-            aheader1.Transparency = 101;
-            aheader1.AreaEqual = 0x00;
-            aheader1.stSoundData = stSoundData;
+            EQareaHeader_G6 aheader1 = new EQareaHeader_G6
+            {
+                AreaType = 2,
+                AreaX = 0,
+                AreaY = 16,
+                AreaWidth = 64,
+                AreaHeight = 16,
+                BackGroundFlag = 0x00,
+                Transparency = 101,
+                AreaEqual = 0x00,
+                stSoundData = new EQSound_6G { SoundData = IntPtr.Zero }
+            };
             err = bxdualsdk.BxDual_program_addArea_G6(1, ref aheader1);
             Console.WriteLine("bxDual_program_addArea_G6:" + err);
 
@@ -1032,7 +1015,7 @@ namespace TestHDemoC.MSTester
                 //common_56.deleteprogram();
 
                 //Program_Send_png图片调用示例代码
-                Program_Send_png.Send_program_png_6();
+                //Program_Send_png.Send_program_png_6();
 
                 //Program_Send_time时间调用示例代码
                 //Program_Send_time.Send_program_time_6();
@@ -1063,6 +1046,7 @@ namespace TestHDemoC.MSTester
             //bxdualsdk.BxDual_ReleaseSdk();
             Console.ReadKey();
         }
+
     }
     public class common_56
     {
@@ -3746,7 +3730,8 @@ namespace TestHDemoC.MSTester
         /// <summary>
         /// BX-6代控制卡发送节目图片
         /// </summary>
-        public static void Send_program_png_6()
+        [TestMethod]
+        public void Send_program_png_6()
         {
             //指定IP ping控制卡获取控制卡数据，屏参相关参数已知的情况可省略该步骤
             Ping_data data = new Ping_data();

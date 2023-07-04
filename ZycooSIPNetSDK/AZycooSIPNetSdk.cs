@@ -10,5 +10,21 @@ namespace System.Data.ZycooSIPNetSDK
     /// </summary>
     public static partial class ZycooSIPNetSdk
     {
+        /// <summary>
+        /// 创建代理
+        /// </summary>
+        /// <returns></returns>
+        public static IZycooSIPNetApiProxyV1 Create()
+        {
+            return new ZycooSIPNetApiProxyV1();
+        }
+        /// <summary>
+        /// 创建代理
+        /// </summary>
+        /// <returns></returns>
+        public static IZycooSIPNetApiProxyV1 Create(this ZycooConfigModelV1 config)
+        {
+            return new ZycooSIPNetApiProxyV1(config);
+        }
     }
 }

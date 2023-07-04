@@ -49,6 +49,7 @@ namespace System.Data.OnbonLedBxSDK
         /// 0x05 –红绿交替闪烁 
         /// 0x06 –红绿交替转动 
         /// 0x07 –静止打出
+        /// <see cref="E_FrameDisplayMode"/>
         /// </summary>
         public byte FrameDispStype;
         /// <summary>

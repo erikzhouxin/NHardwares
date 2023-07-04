@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <TargetFrameworks>net40;net45;netstandard2.1;netcoreapp3.1;net6.0</TargetFrameworks>
+        <TargetFrameworks>net45;netstandard2.1;netcoreapp3.1;net6.0</TargetFrameworks>
         <AssemblyName>NSystem.Data.ZycooSIPNetSDK</AssemblyName>
         <RootNamespace>System.Data.ZycooSIPNetSDK</RootNamespace>
         <PackageId>NSystem.Data.ZycooSIPNetSDK</PackageId>
@@ -75,8 +75,10 @@
         </EmbeddedResource>
     </ItemGroup>
     <ItemGroup Condition="'$(TargetFramework)' == 'net40'">
+        <PackageReference Include="HttpClient" Version="0.6.0" />
     </ItemGroup>
     <ItemGroup Condition="'$(TargetFramework)' == 'net45'">
+        <Reference Include="System.Net.Http" />
     </ItemGroup>
     <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.1'">
     </ItemGroup>

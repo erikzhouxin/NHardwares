@@ -459,4 +459,68 @@ namespace System.Data.OnbonLedBxSDK
         /// </summary>
         Static = 0x07,
     }
+    /// <summary>
+    /// 区域类型
+    /// </summary>
+    public enum E_AreaType
+    {
+        /// <summary>
+        /// 图文字幕
+        /// </summary>
+        PicTxt = 0x00,
+        /// <summary>
+        /// 字库区域
+        /// </summary>
+        Font = 0x01,
+        /// <summary>
+        /// 时间区
+        /// </summary>
+        Time = 0x02,
+        /// <summary>
+        /// 温度区
+        /// </summary>
+        Temperature = 0x03,
+        /// <summary>
+        /// 湿度区
+        /// </summary>
+        Humidity = 0x04,
+        /// <summary>
+        /// 噪声区
+        /// </summary>
+        Noise = 0x05,
+        /// <summary>
+        /// 透明文本
+        /// </summary>
+        TransTxt = 0x06,
+        /// <summary>
+        /// 霓虹区
+        /// </summary>
+        Neon = 0x08,
+        /// <summary>
+        /// 战斗时间
+        /// </summary>
+        ActTime = 0x09,
+    }
+    /// <summary>
+    /// 文字对齐方式
+    /// </summary>
+    public enum E_TextAlignType
+    {
+        /// <summary>
+        /// 0系统自适应
+        /// </summary>
+        Auto = 0,
+        /// <summary>
+        /// 1左对齐
+        /// </summary>
+        Left = 1,
+        /// <summary>
+        /// 2居中
+        /// </summary>
+        Center = 2,
+        /// <summary>
+        /// 3右对齐
+        /// </summary>
+        Right = 3,
+    }
 }

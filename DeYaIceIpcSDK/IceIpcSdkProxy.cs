@@ -172,156 +172,139 @@ namespace System.Data.DeYaIceIpcSDK
            [InAttribute()][MarshalAsAttribute(UnmanagedType.LPStr)] string pcPasswd,
            byte u8OverTCP, ushort u16RTSPPort, ushort u16ICEPort, ushort u16OnvifPort, byte u8MainStream,
            uint pfOnStream, IntPtr pvStreamParam, uint pfOnFrame, IntPtr pvFrameParam);
-
-        /**
-         *  @brief  断开连接
-         *  @param  [IN] hSDK   连接相机时返回的句柄值
-         *  @return void
-         */
+        /// <summary>
+        /// 断开连接
+        /// </summary>
+        /// <param name="hSDK">连接相机时返回的句柄值</param>
         void ICE_IPCSDK_Close(IntPtr hSDK);
-
-        /**
-         *  @brief  连接视频
-         *  @param  [IN] hSDK           连接相机时返回的句柄值
-         *  @param  [IN] u8MainStream   是否请求主码流（1：主码流 0：子码流）
-         *  @param  [IN] hWnd           预览视频的窗口句柄
-         *  @return 1表示成功，0表示失败
-         */
+        /// <summary>
+        /// 连接视频
+        /// </summary>
+        /// <param name="hSDK">连接相机时返回的句柄值</param>
+        /// <param name="u8MainStream">是否请求主码流（1：主码流 0：子码流）</param>
+        /// <param name="hWnd">预览视频的窗口句柄</param>
+        /// <returns>1表示成功，0表示失败</returns>
         uint ICE_IPCSDK_StartStream(IntPtr hSDK, byte u8MainStream, uint hWnd);
-
-        /**
-         *  @brief  断开视频
-         *  @param  [IN] hSDK   连接相机时返回的句柄值
-         *  @return void
-         */
+        /// <summary>
+        /// 断开视频
+        /// </summary>
+        /// <param name="hSDK">连接相机时返回的句柄值</param>
         void ICE_IPCSDK_StopStream(IntPtr hSDK);
-
-        /**
-         *  @brief   打开道闸
-         *  @param   [IN] hSDK 由连接相机接口获得的句柄
-         *  @return  1表示成功，0表示失败
-         */
+        /// <summary>
+        /// 打开道闸
+        /// </summary>
+        /// <param name="hSDK">由连接相机接口获得的句柄</param>
+        /// <returns>1表示成功，0表示失败</returns>
         uint ICE_IPCSDK_OpenGate(IntPtr hSDK);
-
-        /**
-         *  @brief   控制开关量输出
-         *  @param   [IN] hSDK      由连接相机接口获得的句柄
-         *  @param   [IN] u32Index  控制的IO口(0:表示IO1 1:表示IO2)
-         *  @return  1表示成功，0表示失败
-         */
+        /// <summary>
+        /// 控制开关量输出
+        /// </summary>
+        /// <param name="hSDK">由连接相机接口获得的句柄</param>
+        /// <param name="u32Index">控制的IO口(0:表示IO1 1:表示IO2)</param>
+        /// <returns>1表示成功，0表示失败</returns>
         uint ICE_IPCSDK_ControlAlarmOut(IntPtr hSDK, uint u32Index);
-
-        /**
-         *  @brief  获取开关量输出配置
-         *  @param  [IN] hSDK             由连接相机接口获得的句柄
-         *  @parame [IN] u32Index         IO口（0：IO1 1：IO2）
-         *  @param  [OUT] pu32IdleState   常开常闭状态的配置（0 是常开，1是常闭）
-         *  @param  [OUT] pu32DelayTime   切换状态的时间（-1表示不恢复 单位：s）
-         *  @param  [OUT] pu32Reserve     预留参数
-         *  @return 1表示成功，0表示失败
-         */
+        /// <summary>
+        /// 获取开关量输出配置
+        /// </summary>
+        /// <param name="hSDK">由连接相机接口获得的句柄</param>
+        /// <param name="u32Index">IO口（0：IO1 1：IO2）</param>
+        /// <param name="pu32IdleState">常开常闭状态的配置（0 是常开，1是常闭）</param>
+        /// <param name="pu32DelayTime">切换状态的时间（-1表示不恢复 单位：s）</param>
+        /// <param name="pu32Reserve">预留参数</param>
+        /// <returns></returns>
         uint ICE_IPCSDK_GetAlarmOutConfig(IntPtr hSDK, uint u32Index, ref uint pu32IdleState,
                                                                ref uint pu32DelayTime, ref uint pu32Reserve);
-
-        /**
-         *  @brief  设置开关量输出配置
-         *  @param  [IN] hSDK             由连接相机接口获得的句柄
-         *  @parame [IN] u32Index         IO口（0：IO1 1：IO2）
-         *  @param  [IN] pu32IdleState    常开常闭状态的配置（0 是常开，1是常闭）
-         *  @param  [IN] pu32DelayTime    切换状态的时间（-1表示不恢复 单位：s）
-         *  @param  [IN] pu32Reserve      预留参数
-         *  @return 1表示成功，0表示失败
-         */
+        /// <summary>
+        /// 设置开关量输出配置
+        /// </summary>
+        /// <param name="hSDK">由连接相机接口获得的句柄</param>
+        /// <param name="u32Index">IO口（0：IO1 1：IO2）</param>
+        /// <param name="u32IdleState">常开常闭状态的配置（0 是常开，1是常闭）</param>
+        /// <param name="u32DelayTime">切换状态的时间（-1表示不恢复 单位：s）</param>
+        /// <param name="u32Reserve">预留参数</param>
+        /// <returns>1表示成功，0表示失败</returns>
         uint ICE_IPCSDK_SetAlarmOutConfig(IntPtr hSDK, uint u32Index, uint u32IdleState,
                                                                uint u32DelayTime, uint u32Reserve);
-        /**
-         *  @brief  开始对讲
-         *  @param  [IN] hSDK 由连接相机接口获得的句柄
-         *  @return 1表示成功，0表示失败
-         */
+        /// <summary>
+        /// 开始对讲
+        /// </summary>
+        /// <param name="hSDK">由连接相机接口获得的句柄</param>
+        /// <returns>1表示成功，0表示失败</returns>
         uint ICE_IPCSDK_BeginTalk(IntPtr hSDK);
-
-        /**
-         *  @brief  结束对讲
-         *  @param  [IN] hSDK 由连接相机接口获得的句柄
-         *  @return 1表示成功，0表示失败
-         */
+        /// <summary>
+        /// 结束对讲
+        /// </summary>
+        /// <param name="hSDK">由连接相机接口获得的句柄</param>
+        /// <returns>1表示成功，0表示失败</returns>
         void ICE_IPCSDK_EndTalk(IntPtr hSDK);
-
-        /**
-         *  @brief  软触发
-         *  @param  [IN]  hSDK          由连接相机接口获得的句柄
-         *  @param  [OUT] pcNumber      车牌号
-         *  @param  [OUT] pcColor       车牌颜色（"蓝色","黄色","白色","黑色",“绿色”）
-         *  @param  [OUT] pcPicData     抓拍图片数据
-         *  @param  [OUT] u32PicSize    抓拍图片缓冲区大小
-         *  @param  [OUT] pu32PicLen    抓拍图片实际长度
-         *  @return 1表示成功，0表示失败
-         */
+        /// <summary>
+        /// 软触发
+        /// </summary>
+        /// <param name="hSDK">由连接相机接口获得的句柄</param>
+        /// <param name="pcNumber">车牌号</param>
+        /// <param name="pcColor">车牌颜色（"蓝色","黄色","白色","黑色",“绿色”）</param>
+        /// <param name="pcPicData">抓拍图片数据</param>
+        /// <param name="u32PicSize">抓拍图片缓冲区大小</param>
+        /// <param name="pu32PicLen">抓拍图片实际长度</param>
+        /// <returns>1表示成功，0表示失败</returns>
         uint ICE_IPCSDK_Trigger(IntPtr hSDK, StringBuilder pcNumber, StringBuilder pcColor,
                                                    byte[] pcPicData, uint u32PicSize, ref uint pu32PicLen);
 
-        /**
-         *  @brief  软触发扩展接口
-         *  @param  [IN]  hSDK          由连接相机接口获得的句柄
-         *  @return 1表示成功，0表示失败
-         */
+        /// <summary>
+        /// 软触发扩展接口
+        /// </summary>
+        /// <param name="hSDK">由连接相机接口获得的句柄</param>
+        /// <returns>1表示成功，0表示失败</returns>
         uint ICE_IPCSDK_TriggerExt(IntPtr hSDK);
-
-        /**
-         *  @brief  手动抓拍，不做识别，直接抓拍一张码流的图片
-         *  @param  [IN]  hSDK          由连接相机接口获得的句柄
-         *  @param  [OUT] pcPicData     抓拍图片数据
-         *  @param  [OUT] u32PicSize    抓拍图片缓冲区大小
-         *  @param  [OUT] pu32PicLen    抓拍图片实际长度
-         *  @return 1表示成功，0表示失败
-         */
+        /// <summary>
+        /// 手动抓拍，不做识别，直接抓拍一张码流的图片
+        /// </summary>
+        /// <param name="hSDK">由连接相机接口获得的句柄</param>
+        /// <param name="pcPicData">抓拍图片数据</param>
+        /// <param name="u32PicSize">抓拍图片缓冲区大小</param>
+        /// <param name="pu32PicLen">抓拍图片实际长度</param>
+        /// <returns>1表示成功，0表示失败</returns>
         uint ICE_IPCSDK_Capture(IntPtr hSDK, byte[] pcPicData, uint u32PicSize, ref uint pu32PicLen);
-
-        /**
-         *  @brief  获取相机连接状态
-         *  @param  [IN] hSDK   由连接相机接口获得的句柄
-         *  @return 1表示在线，0表示离线
-         */
+        /// <summary>
+        /// 获取相机连接状态
+        /// </summary>
+        /// <param name="hSDK">由连接相机接口获得的句柄</param>
+        /// <returns>1表示在线，0表示离线</returns>
         uint ICE_IPCSDK_GetStatus(IntPtr hSDK);
-
-        /**
-         *  @brief  重启相机
-         *  @param  [IN] hSDK   由连接相机接口获得的句柄
-         *  @return 1表示成功，0表示失败
-         */
+        /// <summary>
+        /// 重启相机
+        /// </summary>
+        /// <param name="hSDK">由连接相机接口获得的句柄</param>
+        /// <returns>1表示成功，0表示失败</returns>
         uint ICE_IPCSDK_Reboot(IntPtr hSDK);
-
-        /**
-         *  @brief  时间同步
-         *  @param  [IN] hSDK       由连接相机接口获得的句柄
-         *  @param  [IN] u16Year    年
-         *  @param  [IN] u8Month    月
-         *  @param  [IN] u8Day      日
-         *  @param  [IN] u8Hour     时
-         *  @param  [IN] u8Min      分
-         *  @param  [IN] u8Sec      秒
-         *  @return 1表示成功，0表示失败
-         */
+        /// <summary>
+        /// 时间同步
+        /// </summary>
+        /// <param name="hSDK">由连接相机接口获得的句柄</param>
+        /// <param name="u16Year">年</param>
+        /// <param name="u8Month">月</param>
+        /// <param name="u8Day">日</param>
+        /// <param name="u8Hour">时</param>
+        /// <param name="u8Min">分</param>
+        /// <param name="u8Sec">秒</param>
+        /// <returns>1表示成功，0表示失败</returns>
         uint ICE_IPCSDK_SyncTime(IntPtr hSDK, ushort u16Year, byte u8Month, byte u8Day,
                                                        byte u8Hour, byte u8Min, byte u8Sec);
-
-        /**
-         *  @brief  发送RS485串口数据
-         *  @param  [IN] hSDK      由连接相机接口获得的句柄
-         *  @param  [IN] pcData    RS485串口数据
-         *  @param  [IN] u32Len    串口数据长度
-         *  @return 1表示成功，0表示失败
-         */
+        /// <summary>
+        /// 发送RS485串口数据
+        /// </summary>
+        /// <param name="hSDK">由连接相机接口获得的句柄</param>
+        /// <param name="pcData">RS485串口数据</param>
+        /// <param name="u32Len">串口数据长度</param>
+        /// <returns>1表示成功，0表示失败</returns>
         uint ICE_IPCSDK_TransSerialPort(IntPtr hSDK, byte[] pcData, uint u32Len);
-
-        /**
-         *  @brief  发送RS232串口数据
-         *  @param  [IN] hSDK      由连接相机接口获得的句柄
-         *  @param  [IN] pcData    RS232串口数据
-         *  @param  [IN] u32Len    串口数据长度
-         *  @return 1表示成功，0表示失败
-         */
+        /// <summary>
+        /// 发送RS232串口数据
+        /// </summary>
+        /// <param name="hSDK">由连接相机接口获得的句柄</param>
+        /// <param name="pcData">RS232串口数据</param>
+        /// <param name="u32Len">串口数据长度</param>
+        /// <returns>1表示成功，0表示失败</returns>
         uint ICE_IPCSDK_TransSerialPort_RS232(IntPtr hSDK, byte[] pcData, uint u32Len);
 
         /**

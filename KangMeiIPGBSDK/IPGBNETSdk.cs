@@ -1,4 +1,6 @@
-﻿using System;
+﻿using NAudio.MediaFoundation;
+using NAudio.Wave;
+using System;
 using System.Collections.Generic;
 using System.Data.NHInterfaces;
 using System.IO;
@@ -117,6 +119,7 @@ namespace System.Data.KangMeiIPGBSDK
         /// </summary>
         static IPGBNETSdk()
         {
+            MediaFoundationApi.Startup();
             Directory.CreateDirectory(DllFullPath);
             if (Environment.Is64BitProcess)
             {
@@ -189,6 +192,23 @@ namespace System.Data.KangMeiIPGBSDK
                 res.Add(GetElement(item));
             }
             return res.ToArray();
+        }
+        /// <summary>
+        /// 转换成Mp3格式
+        /// </summary>
+        /// <param name="memory"></param>
+        /// <param name="fileName"></param>
+        public static void ConvertToMp3(Stream memory, string fileName)
+        {
+            using (var reader = new WaveFileReader(memory))
+            {
+                // MediaFoundationEncoder.EncodeToMp3(reader, filePath, 128000);
+                var mediaType = MediaFoundationEncoder.SelectMediaType(AudioSubtypes.MFAudioFormat_MP3, new WaveFormat(44100, 2), 128000);
+                using (var mediaEncoder = new MediaFoundationEncoder(mediaType))
+                {
+                    mediaEncoder.Encode(fileName, reader);
+                }
+            }
         }
     }
 }

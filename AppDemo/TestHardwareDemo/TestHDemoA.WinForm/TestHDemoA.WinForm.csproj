@@ -35,5 +35,6 @@
         <ProjectReference Include="..\..\..\ShenBanReader\ShenBanReader.csproj" />
         <ProjectReference Include="..\..\..\VzClientSDK\VzClientSDK.csproj" />
         <ProjectReference Include="..\..\..\YouRenIoTNetIO\YouRenIoTNetIO.csproj" />
+        <ProjectReference Include="..\..\..\ZycooSIPNetSDK\ZycooSIPNetSDK.csproj" />
     </ItemGroup>
 </Project>

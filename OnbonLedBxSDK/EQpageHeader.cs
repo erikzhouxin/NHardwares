@@ -194,11 +194,13 @@ namespace System.Data.OnbonLedBxSDK
         /// </summary>
         public ushort txtSpace;
         /// <summary>
-        /// 
+        /// 0系统自适应、1左对齐、2居中、3右对齐
+        /// <see cref="E_TextAlignType"/>
         /// </summary>
         public byte Valign;
         /// <summary>
-        /// 
+        /// 0系统自适应、1上对齐、2居中、3下对齐
+        /// <see cref="E_TextAlignType"/>
         /// </summary>
         public byte Halign;
     }
