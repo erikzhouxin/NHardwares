@@ -192,18 +192,18 @@ namespace ZycooSIPNetSDK.CmdConsole
         #region // 方法代理
         private string AccountAdd(string key)
         {
-            var args = GetArgs<ZycooAccountModel>(key);
+            var args = GetArgs<ZycooAccountAddModel>(key);
             return _proxy.AccountAdd(args).GetJsonFormatString();
         }
 
         private string AccountDelete(string key)
         {
-            var args = GetArgs<ZycooAccountModel>(key);
+            var args = GetArgs<int>(key);
             return _proxy.AccountDelete(args).GetJsonFormatString();
         }
         private string AccountEdit(string key)
         {
-            var args = GetArgs<ZycooAccountModel>(key);
+            var args = GetArgs<ZycooAccountEditModel>(key);
             return _proxy.AccountEdit(args).GetJsonFormatString();
         }
         private string AccountSearch(string key)

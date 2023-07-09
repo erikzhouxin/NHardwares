@@ -75,6 +75,12 @@ namespace System.Data.ZycooSIPNetSDK
         /// </summary>
         public virtual String ZApiAccountDelete { get; set; } = "coocenter-api/plugin-config/extensions";
         /// <summary>
+        /// 创建定时任务（常规）
+        /// POST => http://192.168.11.109:8000/coocenter-api/plugin-coopaging/task
+        /// <see cref="IZycooSIPNetApiProxyV1.TaskAdd(ZycooTaskTimerModel)"/>
+        /// </summary>
+        public virtual String ZApiTaskAddTimer { get; set; } = "coocenter-api/plugin-coopaging/task";
+        /// <summary>
         /// 成功状态名称
         /// </summary>
         public static String ZStatusSuccess { get; set; } = "success";

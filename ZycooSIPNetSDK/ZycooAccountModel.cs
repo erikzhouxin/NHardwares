@@ -162,6 +162,9 @@ namespace System.Data.ZycooSIPNetSDK
         /// </summary>
         public virtual Int32 G729 { get; set; }
     }
+    /// <summary>
+    /// 账号编辑模型
+    /// </summary>
     public class ZycooAccountEditModel : ZycooAccountAddModel
     {
         /// <summary>
@@ -169,3 +172,4 @@ namespace System.Data.ZycooSIPNetSDK
         /// </summary>
         public int Id { get; set; }
     }
+}

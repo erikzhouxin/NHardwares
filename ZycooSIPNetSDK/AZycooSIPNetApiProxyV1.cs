@@ -1813,6 +1813,19 @@ namespace System.Data.ZycooSIPNetSDK
         /// extensions [String] 是 广播终端号码数组
         /// times int 否 循环次数，-1 为无限循环
         /// volume int 否 播放音量，范围为 0~100
+        /// 请求示例
+        /// {
+        ///     "task":{
+        ///         "name":"107",
+        ///         "type": "realtimerule",
+        ///         "paging_type":"normal",
+        ///         "sound_type": "music", 
+        ///         "source_info": {
+        ///             "sourceId": "sourceId-41"
+        ///         },
+        ///         "extensions": ["1004"]
+        ///     }
+        /// }
         /// 返回请求结果
         /// {"status":"success","message":"executed"}
         /// </summary>
@@ -1857,13 +1870,13 @@ namespace System.Data.ZycooSIPNetSDK
         ///         "paging_type":"normal",
         ///         "sound_type": "music", 
         ///         "source_info": {
-        ///             "sourceId": "sourceId-43"},
-        ///             "extensions": ["1004"],
-        ///             "conditions":{
-        ///                 "mode":"loop",
-        ///                 "time": ["10:08:00","10:13:00"],
-        ///                 "weekDays": ["thur","fri"]
-        ///             }
+        ///             "sourceId": "sourceId-43"
+        ///         },
+        ///         "extensions": ["1004"],
+        ///         "conditions":{
+        ///             "mode":"loop",
+        ///             "time": ["10:08:00","10:13:00"],
+        ///             "weekDays": ["thur","fri"]
         ///         }
         ///     }
         /// }
@@ -1933,7 +1946,7 @@ namespace System.Data.ZycooSIPNetSDK
         /// </summary>
         /// <param name="task"></param>
         /// <returns></returns>
-        IAlertMsg<IZycooDataModel> TaskAdd(ZycooTaskTimerModel task);
+        IAlertMsg<ZycooTaskAddResModel> TaskAdd(ZycooTaskTimerModel task);
         /// <summary>
         /// 创建定时任务（循环模式一）
         /// POST => http://192.168.11.109:8000/coocenter-api/plugin-coopaging/task
@@ -2965,9 +2978,29 @@ namespace System.Data.ZycooSIPNetSDK
             throw new NotImplementedException();
         }
         /// <inheritdoc/>
-        public IAlertMsg<IZycooDataModel> TaskAdd(ZycooTaskTimerModel task)
+        public IAlertMsg<ZycooTaskAddResModel> TaskAdd(ZycooTaskTimerModel task)
         {
-            throw new NotImplementedException();
+            return TryWeb<ZycooTaskAddResModel>((post) =>
+            {
+                var res = post.GetResponseJsonString();
+                Console.WriteLine(res);
+                var resJson = post.GetJsonFromJsonp(res);
+                var data = resJson.GetJsonObject<ZycooTaskAddResModel>();
+                if (data != null)
+                {
+                    return new AlertMsg<ZycooTaskAddResModel>(true, "创建成功") { Data = data };
+                }
+                return new AlertMsg<ZycooTaskAddResModel>(false, "创建失败") { Data = data };
+            }, new HttpClientPostModel(GetRequestUrl(Center.ZApiTaskAddTimer))
+            {
+                Accept = Center.DefaultAccept,
+                ContentType = Center.DefaultAccept,
+                Authorization = GetAuthorization(Center.Token),
+                BodyArgs = new
+                {
+                    task = task
+                },
+            }, TryException<ZycooTaskAddResModel>);
         }
         /// <inheritdoc/>
         public IAlertMsg<IZycooDataModel> TaskLoopMode(ZycooTaskLoopM1Model task)
