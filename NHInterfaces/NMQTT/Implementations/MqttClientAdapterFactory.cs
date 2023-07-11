@@ -28,7 +28,11 @@ namespace MQTTnet.Implementations
 
                 case MqttClientWebSocketOptions webSocketOptions:
                     {
+#if NET40
+                        throw new NotSupportedException();
+#else
                         channel = new MqttWebSocketChannel(webSocketOptions);
+#endif
                         break;
                     }
 

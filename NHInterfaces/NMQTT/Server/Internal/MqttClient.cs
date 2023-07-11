@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using MQTTnet.Adapter;
@@ -356,8 +357,9 @@ namespace MQTTnet.Server
                 // own exception in the reading loop!
                 while (!cancellationToken.IsCancellationRequested)
                 {
+#if !NET40
                     await Task.Yield();
-
+#endif
                     currentPacket = await ChannelAdapter.ReceivePacketAsync(cancellationToken).ConfigureAwait(false);
                     if (currentPacket == null)
                     {
@@ -508,7 +510,9 @@ namespace MQTTnet.Server
                     }
                     finally
                     {
+#if !NET40
                         await Task.Yield();
+#endif
                     }
                 }
             }
@@ -556,9 +560,14 @@ namespace MQTTnet.Server
                 _disconnectPacketSent = true;
 
                 var disconnectPacket = MqttPacketFactories.Disconnect.Create(reasonCode);
-
+#if NET40
+                using (var timeout = new CancellationTokenSource())
+                {
+                    timeout.CancelAfter(_serverOptions.DefaultCommunicationTimeout);
+#else
                 using (var timeout = new CancellationTokenSource(_serverOptions.DefaultCommunicationTimeout))
                 {
+#endif
                     await SendPacketAsync(disconnectPacket, timeout.Token).ConfigureAwait(false);
                 }
             }

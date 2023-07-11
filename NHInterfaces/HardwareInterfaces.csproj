@@ -59,11 +59,11 @@
     </PropertyGroup>
     <ItemGroup>
         <Compile Remove="beans\**" />
-        <Compile Remove="NMQTT\**" Condition="'$(TargetFramework)' == 'net40'" />
         <EmbeddedResource Remove="beans\**" />
-        <EmbeddedResource Remove="NMQTT\**" Condition="'$(TargetFramework)' == 'net40'" />
         <None Remove="beans\**" />
-        <None Remove="NMQTT\**" Condition="'$(TargetFramework)' == 'net40'" />
+        <!--<None Remove="NMQTT\**" Condition="'$(TargetFramework)' == 'net40'" />
+        <EmbeddedResource Remove="NMQTT\**" Condition="'$(TargetFramework)' == 'net40'" />
+        <Compile Remove="NMQTT\**" Condition="'$(TargetFramework)' == 'net40'" />-->
         <None Include="..\AppDoc\HardwareInterfaces\Readme.md" Link="Resources\Readme.md" Pack="true" PackagePath="Resources\Readme.md" />
     </ItemGroup>
     <ItemGroup>
@@ -91,9 +91,6 @@
         <PackageReference Include="System.IO.Ports" Version="6.0.0" />
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="NSystem.Data.Dabber" Version="2022.9.9" />
-    </ItemGroup>
-    <ItemGroup>
-      <Folder Include="NDesktop\" />
+        <PackageReference Include="NSystem.Data.Dabber" Version="2022.12.12" />
     </ItemGroup>
 </Project>

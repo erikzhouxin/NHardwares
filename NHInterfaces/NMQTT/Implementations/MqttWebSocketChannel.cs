@@ -4,7 +4,6 @@
 
 using System;
 using System.Net;
-using System.Net.WebSockets;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
@@ -14,6 +13,8 @@ using MQTTnet.Internal;
 
 namespace MQTTnet.Implementations
 {
+#if !NET40
+    using System.Net.WebSockets;
     public sealed class MqttWebSocketChannel : IMqttChannel
     {
         readonly MqttClientWebSocketOptions _options;
@@ -242,4 +243,5 @@ namespace MQTTnet.Implementations
             }
         }
     }
+#endif
 }

@@ -35,7 +35,11 @@ namespace MQTTnet.Implementations
         {
             // Having this constructor is important because avoiding the address family as parameter
             // will make use of dual mode in the .net framework.
+#if NET40
+            _socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+#else
             _socket = new Socket(SocketType.Stream, ProtocolType.Tcp);
+#endif
 
 #if !NET5_0_OR_GREATER
             _socketDisposeAction = _socket.Dispose;
@@ -51,13 +55,13 @@ namespace MQTTnet.Implementations
             _socketDisposeAction = _socket.Dispose;
 #endif
         }
-
+#if !NET40
         public bool DualMode
         {
             get => _socket.DualMode;
             set => _socket.DualMode = value;
         }
-
+#endif
         public bool IsConnected => _socket.Connected;
 
         public bool KeepAlive
