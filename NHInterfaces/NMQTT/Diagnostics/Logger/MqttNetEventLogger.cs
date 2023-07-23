@@ -1,10 +1,7 @@
-// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
-
 using System;
+using System.Threading;
 
-namespace MQTTnet.Diagnostics
+namespace System.Data.NMQTT
 {
     /// <summary>
     ///     This logger fires an event when a new message was published.
@@ -52,7 +49,11 @@ namespace MQTTnet.Diagnostics
                 LogId = LogId,
                 Timestamp = DateTime.UtcNow,
                 Source = source,
+#if NET40
+                ThreadId = Thread.CurrentThread.ManagedThreadId,
+#else
                 ThreadId = Environment.CurrentManagedThreadId,
+#endif
                 Level = level,
                 Message = message,
                 Exception = exception

@@ -150,7 +150,7 @@ namespace TestHDemoC.MSTester
                 BackNotValidFlag = 0x00,
                 arrMode = E_arrMode.eSINGLELINE,
                 fontSize = 17,
-                color = (uint)0x01,
+                color = (uint)E_Color_G56.eRED,
                 fontBold = 1,
                 fontItalic = 0,
                 tdirection = E_txtDirection.pNORMAL,

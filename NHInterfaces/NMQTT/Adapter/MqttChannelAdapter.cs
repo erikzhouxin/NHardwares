@@ -1,7 +1,3 @@
-// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
-
 using System;
 using System.IO;
 using System.Net.Sockets;
@@ -9,14 +5,8 @@ using System.Runtime.InteropServices;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
-using MQTTnet.Channel;
-using MQTTnet.Diagnostics;
-using MQTTnet.Exceptions;
-using MQTTnet.Formatter;
-using MQTTnet.Internal;
-using MQTTnet.Packets;
 
-namespace MQTTnet.Adapter
+namespace System.Data.NMQTT
 {
     public sealed class MqttChannelAdapter : Disposable, IMqttChannelAdapter
     {
@@ -83,7 +73,7 @@ namespace MQTTnet.Adapter
                 var timeout = new TaskCompletionSource<object>();
                 using (cancellationToken.Register(() => timeout.TrySetResult(null)))
                 {
-                    await Task.WhenAny(connectTask, timeout.Task).ConfigureAwait(false);
+                    await TestTry.TaskWhenAny(connectTask, timeout.Task).ConfigureAwait(false);
                     if (timeout.Task.IsCompleted && !connectTask.IsCompleted)
                     {
                         throw new OperationCanceledException("MQTT connect canceled.", cancellationToken);
@@ -451,10 +441,12 @@ namespace MQTTnet.Adapter
 
             if (exception is COMException comException)
             {
+#if !NET40
                 if ((uint)comException.HResult == ErrorOperationAborted)
                 {
                     throw new OperationCanceledException();
                 }
+#endif
             }
 
             throw new MqttCommunicationException(exception);

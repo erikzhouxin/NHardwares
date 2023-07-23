@@ -58,13 +58,11 @@
         <DefineConstants>TRACE;NETFx;NET60</DefineConstants>
     </PropertyGroup>
     <ItemGroup>
-        <Compile Remove="beans\**" />
-        <EmbeddedResource Remove="beans\**" />
-        <None Remove="beans\**" />
-        <!--<None Remove="NMQTT\**" Condition="'$(TargetFramework)' == 'net40'" />
-        <EmbeddedResource Remove="NMQTT\**" Condition="'$(TargetFramework)' == 'net40'" />
-        <Compile Remove="NMQTT\**" Condition="'$(TargetFramework)' == 'net40'" />-->
-        <None Include="..\AppDoc\HardwareInterfaces\Readme.md" Link="Resources\Readme.md" Pack="true" PackagePath="Resources\Readme.md" />
+        <None Include="..\AppDoc\HardwareInterfaces\Readme.md">
+            <Link>Resources\Readme.md</Link>
+            <Pack>True</Pack>
+            <PackagePath>Resources\Readme.md</PackagePath>
+        </None>
     </ItemGroup>
     <ItemGroup>
         <Compile Update="Properties\Resources.Designer.cs">

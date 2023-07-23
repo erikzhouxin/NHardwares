@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.GZip;
 
 namespace ConsoleTester
 {
@@ -8,8 +9,9 @@ namespace ConsoleTester
         {
             //Console.WriteLine("Hello World!");
             //TestCheckModel.Test();
-            new TestJwtToken().TestCreateToken();
-            Console.ReadKey();
+            //new TestJwtToken().TestCreateToken();
+            //Console.ReadKey();
+            GZipCompression.CreateSdks(); // 创建SDK的bat文件
         }
     }
 }

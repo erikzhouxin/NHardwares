@@ -1,12 +1,6 @@
-// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
+using System;
 
-using MQTTnet.Exceptions;
-using MQTTnet.Protocol;
-using MQTTnet.Packets;
-
-namespace MQTTnet
+namespace System.Data.NMQTT
 {
     public sealed class MqttTopicFilterBuilder
     {

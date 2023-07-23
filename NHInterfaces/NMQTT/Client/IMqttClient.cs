@@ -1,9 +1,8 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using MQTTnet.Diagnostics;
 
-namespace MQTTnet.Client
+namespace System.Data.NMQTT
 {
     public interface IMqttClient : IDisposable
     {

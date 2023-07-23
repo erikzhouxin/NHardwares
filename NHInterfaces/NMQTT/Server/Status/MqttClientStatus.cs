@@ -1,19 +1,13 @@
-// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
-
 using System;
 using System.Threading.Tasks;
-using MQTTnet.Formatter;
-using MQTTnet.Protocol;
 
-namespace MQTTnet.Server
+namespace System.Data.NMQTT
 {
     public sealed class MqttClientStatus
     {
-        readonly MqttClient _client;
+        readonly MqttServerClient _client;
 
-        public MqttClientStatus(MqttClient client)
+        public MqttClientStatus(MqttServerClient client)
         {
             _client = client ?? throw new ArgumentNullException(nameof(client));
         }

@@ -1,7 +1,7 @@
 using System;
 using System.Runtime.CompilerServices;
 
-namespace MQTTnet.Internal
+namespace System.Data.NMQTT
 {
     public static class MqttMemoryHelper
     {

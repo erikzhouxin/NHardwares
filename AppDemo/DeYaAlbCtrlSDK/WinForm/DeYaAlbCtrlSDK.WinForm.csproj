@@ -6,6 +6,7 @@
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 		<AppConfig Condition="'$(TargetFramework)' == 'net40'">app.net40.config</AppConfig>
 		<AutoUnifyAssemblyReferences Condition="'$(TargetFramework)' == 'net40'">false</AutoUnifyAssemblyReferences>
+        <PlatformTarget>$(Platform)</PlatformTarget>
 	</PropertyGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\..\..\DeYaAlbCtrlSDK\DeYaAlbCtrlSDK.csproj" />

@@ -59,25 +59,5 @@ namespace System.Data.DeYaLpnrSDK.Properties {
                 resourceCulture = value;
             }
         }
-        
-        /// <summary>
-        ///   查找 System.Byte[] 类型的本地化资源。
-        /// </summary>
-        internal static byte[] X64_RWLPNRAPI {
-            get {
-                object obj = ResourceManager.GetObject("X64_RWLPNRAPI", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   查找 System.Byte[] 类型的本地化资源。
-        /// </summary>
-        internal static byte[] X86_RWLPNRAPI {
-            get {
-                object obj = ResourceManager.GetObject("X86_RWLPNRAPI", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
     }
 }

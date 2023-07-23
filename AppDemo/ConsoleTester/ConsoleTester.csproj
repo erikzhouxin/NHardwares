@@ -1,7 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <OutputType>Exe</OutputType>
-        <TargetFrameworks>net40;net45;netstandard2.1;netcoreapp3.1;net6.0</TargetFrameworks>
+        <!--<TargetFrameworks>net40;net45;netstandard2.1;netcoreapp3.1;net6.0</TargetFrameworks>-->
+        <TargetFrameworks>netcoreapp3.1</TargetFrameworks>
         <AssemblyName>NSystem.Data.ConsoleTester</AssemblyName>
         <PackageId>NSystem.Data.ConsoleTester</PackageId>
         <RootNamespace>System.Data</RootNamespace>
@@ -76,9 +77,13 @@
     <ItemGroup>
       <Compile Remove="TestCheckModel.cs" />
       <Compile Remove="TestEmitFunction.cs" />
+      <Compile Remove="TestJwtToken.cs" />
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="JWT" Version="10.0.2" />
-        <PackageReference Include="NSystem.Data.Dabber" Version="2022.9.9" />
+        <!--<PackageReference Include="JWT" Version="10.0.2" />
+        <PackageReference Include="NSystem.Data.Dabber" Version="2022.9.9" />-->
+    </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\..\NHInterfaces\HardwareInterfaces.csproj" />
     </ItemGroup>
 </Project>

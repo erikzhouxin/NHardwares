@@ -1919,39 +1919,38 @@ namespace TestHDemoC.MSTester
             for (int i = 0; i < 1024; i++) { data[i] = 0; }
             err = bxdualsdk.BxDual_cmd_ofsReedFileBlock(OnbonLedBxSdkUT.address, OnbonLedBxSdkUT.portRate, fileName, data);
         }
-        /// <summary>
-        /// 开始读文件
-        /// </summary>
-        public static void confStartReedFile()
-        {
-            byte[] fileName = Encoding.GetEncoding("GBK").GetBytes("S000");//C000.S000
-            uint fileSize = 0;
-            uint fileCrc = 0;
-            err = bxdualsdk.BxDual_cmd_confStartReedFile(OnbonLedBxSdkUT.address, OnbonLedBxSdkUT.portRate, fileName, ref fileSize, ref fileCrc);
+        ///// <summary>
+        ///// 开始读文件
+        ///// </summary>
+        //public static void confStartReedFile()
+        //{
+        //    byte[] fileName = Encoding.GetEncoding("GBK").GetBytes("S000");//C000.S000
+        //    uint fileSize = 0;
+        //    uint fileCrc = 0;
+        //    err = bxdualsdk.BxDual_cmd_confStartReedFile(OnbonLedBxSdkUT.address, OnbonLedBxSdkUT.portRate, fileName, ref fileSize, ref fileCrc);
 
-            byte[] data = new byte[fileSize];
-            for (int i = 0; i < fileSize; i++) { data[i] = 0; }
-            err = bxdualsdk.BxDual_cmd_confReedFileBlock(OnbonLedBxSdkUT.address, OnbonLedBxSdkUT.portRate, fileName, data);
-            //5代
-            if (false)
-            {
-                IntPtr dec = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(ConfigFile)));
-                Marshal.Copy(data, Marshal.SizeOf(typeof(ConfigFile)), dec, Marshal.SizeOf(typeof(ConfigFile)));
-                ConfigFile configData = (ConfigFile)Marshal.PtrToStructure(dec, typeof(ConfigFile));
-                Marshal.FreeHGlobal(dec);
-                err = bxdualsdk.BxDual_cmd_sendConfigFile(OnbonLedBxSdkUT.address, OnbonLedBxSdkUT.portRate, ref configData);
-            }
-            //6代
-            else
-            {
-                //IntPtr dec = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(bxdualsdk.ConfigFile_G6)));
-                //Marshal.Copy(data, Marshal.SizeOf(typeof(bxdualsdk.ConfigFile_G6)), dec, Marshal.SizeOf(typeof(bxdualsdk.ConfigFile_G6)));
-                //bxdualsdk.ConfigFile_G6 configData = (bxdualsdk.ConfigFile_G6)Marshal.PtrToStructure(dec, typeof(bxdualsdk.ConfigFile_G6));
-                //Marshal.FreeHGlobal(dec);
-                ConfigFile_G6 configData = new ConfigFile_G6();
-                err = bxdualsdk.BxDual_cmd_sendConfigFile_G6(OnbonLedBxSdkUT.address, OnbonLedBxSdkUT.portRate, ref configData);
-            }
-        }
+        //    byte[] data = new byte[fileSize];
+        //    for (int i = 0; i < fileSize; i++) { data[i] = 0; }
+        //    err = bxdualsdk.BxDual_cmd_confReedFileBlock(OnbonLedBxSdkUT.address, OnbonLedBxSdkUT.portRate, fileName, data);
+        //    //5代
+        //    if (false)
+        //    {
+        //        IntPtr dec = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(ConfigFile)));
+        //        Marshal.Copy(data, Marshal.SizeOf(typeof(ConfigFile)), dec, Marshal.SizeOf(typeof(ConfigFile)));
+        //        ConfigFile configData = (ConfigFile)Marshal.PtrToStructure(dec, typeof(ConfigFile));
+        //        Marshal.FreeHGlobal(dec);
+        //        err = bxdualsdk.BxDual_cmd_sendConfigFile(OnbonLedBxSdkUT.address, OnbonLedBxSdkUT.portRate, ref configData);
+        //    }
+        //    //6代
+        //    else
+        //    {
+        //        IntPtr dec = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(ConfigFile_G6)));
+        //        Marshal.Copy(data, Marshal.SizeOf(typeof(ConfigFile_G6)), dec, Marshal.SizeOf(typeof(ConfigFile_G6)));
+        //        ConfigFile_G6 configData = (ConfigFile_G6)Marshal.PtrToStructure(dec, typeof(ConfigFile_G6));
+        //        Marshal.FreeHGlobal(dec);
+        //        err = bxdualsdk.BxDual_cmd_sendConfigFile_G6(OnbonLedBxSdkUT.address, OnbonLedBxSdkUT.portRate, ref configData);
+        //    }
+        //}
         /// <summary>
         /// 读文件接口测试
         /// </summary>

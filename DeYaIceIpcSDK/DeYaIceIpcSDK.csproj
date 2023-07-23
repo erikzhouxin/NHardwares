@@ -21,15 +21,195 @@
 		<PackageTags>德亚;德亚SDK;车牌识别;IceIpcSDK;</PackageTags>
 		<RepositoryUrl>https://www.gitee.com/erikzhouxin/nhardwares</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
-        <NoWarn>1701;1702;IDE0057;IDE0066;IDE0079;IDE0063;CS0618</NoWarn>
+        <NoWarn>1701;1702;IDE0057;IDE0066;IDE0079;IDE0063;CS0618;NU5100</NoWarn>
         <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+        <PlatformTarget>$(Platform)</PlatformTarget>
 	</PropertyGroup>
-	<ItemGroup>
-		<Compile Remove="beans\**" />
-		<EmbeddedResource Remove="beans\**" />
-		<None Remove="beans\**" />
-	</ItemGroup>
+    <ItemGroup>
+        <None Include=".\..\AppBeans\DeYaIceIpcSDK\x64\ice_ipcsdk.dll">
+            <Visible>False</Visible>
+            <Link>plugins\deyaiceipcsdk\x64\ice_ipcsdk.dll</Link>
+            <TargetPath>plugins\deyaiceipcsdk\x64\ice_ipcsdk.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\deyaiceipcsdk\x64\ice_ipcsdk.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\DeYaIceIpcSDK\x64\avutil-52.dll">
+            <Visible>False</Visible>
+            <Link>plugins\deyaiceipcsdk\x64\avutil-52.dll</Link>
+            <TargetPath>plugins\deyaiceipcsdk\x64\avutil-52.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\deyaiceipcsdk\x64\avutil-52.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\DeYaIceIpcSDK\x64\draw.dll">
+            <Visible>False</Visible>
+            <Link>plugins\deyaiceipcsdk\x64\draw.dll</Link>
+            <TargetPath>plugins\deyaiceipcsdk\x64\draw.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\deyaiceipcsdk\x64\draw.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\DeYaIceIpcSDK\x64\hi_h264dec_w64.dll">
+            <Visible>False</Visible>
+            <Link>plugins\deyaiceipcsdk\x64\hi_h264dec_w64.dll</Link>
+            <TargetPath>plugins\deyaiceipcsdk\x64\hi_h264dec_w64.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\deyaiceipcsdk\x64\hi_h264dec_w64.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\DeYaIceIpcSDK\x64\ice_p2p.dll">
+            <Visible>False</Visible>
+            <Link>plugins\deyaiceipcsdk\x64\ice_p2p.dll</Link>
+            <TargetPath>plugins\deyaiceipcsdk\x64\ice_p2p.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\deyaiceipcsdk\x64\ice_p2p.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\DeYaIceIpcSDK\x64\Packet.dll">
+            <Visible>False</Visible>
+            <Link>plugins\deyaiceipcsdk\x64\Packet.dll</Link>
+            <TargetPath>plugins\deyaiceipcsdk\x64\Packet.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\deyaiceipcsdk\x64\Packet.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\DeYaIceIpcSDK\x64\swscale-2.dll">
+            <Visible>False</Visible>
+            <Link>plugins\deyaiceipcsdk\x64\swscale-2.dll</Link>
+            <TargetPath>plugins\deyaiceipcsdk\x64\swscale-2.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\deyaiceipcsdk\x64\swscale-2.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\DeYaIceIpcSDK\x64\wpcap.dll">
+            <Visible>False</Visible>
+            <Link>plugins\deyaiceipcsdk\x64\wpcap.dll</Link>
+            <TargetPath>plugins\deyaiceipcsdk\x64\wpcap.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\deyaiceipcsdk\x64\wpcap.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\DeYaIceIpcSDK\x64\zlibwapi.dll">
+            <Visible>False</Visible>
+            <Link>plugins\deyaiceipcsdk\x64\zlibwapi.dll</Link>
+            <TargetPath>plugins\deyaiceipcsdk\x64\zlibwapi.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\deyaiceipcsdk\x64\zlibwapi.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+    </ItemGroup>
+    <ItemGroup>
+        <None Include=".\..\AppBeans\DeYaIceIpcSDK\x86\ice_ipcsdk.dll">
+            <Visible>False</Visible>
+            <Link>plugins\deyaiceipcsdk\x86\ice_ipcsdk.dll</Link>
+            <TargetPath>plugins\deyaiceipcsdk\x86\ice_ipcsdk.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\deyaiceipcsdk\x86\ice_ipcsdk.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\DeYaIceIpcSDK\x86\avutil-52.dll">
+            <Visible>False</Visible>
+            <Link>plugins\deyaiceipcsdk\x86\avutil-52.dll</Link>
+            <TargetPath>plugins\deyaiceipcsdk\x86\avutil-52.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\deyaiceipcsdk\x86\avutil-52.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\DeYaIceIpcSDK\x86\draw.dll">
+            <Visible>False</Visible>
+            <Link>plugins\deyaiceipcsdk\x86\draw.dll</Link>
+            <TargetPath>plugins\deyaiceipcsdk\x86\draw.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\deyaiceipcsdk\x86\draw.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\DeYaIceIpcSDK\x86\hi_h264dec_w.dll">
+            <Visible>False</Visible>
+            <Link>plugins\deyaiceipcsdk\x86\hi_h264dec_w.dll</Link>
+            <TargetPath>plugins\deyaiceipcsdk\x86\hi_h264dec_w.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\deyaiceipcsdk\x86\hi_h264dec_w.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\DeYaIceIpcSDK\x86\ice_p2p.dll">
+            <Visible>False</Visible>
+            <Link>plugins\deyaiceipcsdk\x86\ice_p2p.dll</Link>
+            <TargetPath>plugins\deyaiceipcsdk\x86\ice_p2p.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\deyaiceipcsdk\x86\ice_p2p.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\DeYaIceIpcSDK\x86\Packet.dll">
+            <Visible>False</Visible>
+            <Link>plugins\deyaiceipcsdk\x86\Packet.dll</Link>
+            <TargetPath>plugins\deyaiceipcsdk\x86\Packet.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\deyaiceipcsdk\x86\Packet.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\DeYaIceIpcSDK\x86\swscale-2.dll">
+            <Visible>False</Visible>
+            <Link>plugins\deyaiceipcsdk\x86\swscale-2.dll</Link>
+            <TargetPath>plugins\deyaiceipcsdk\x86\swscale-2.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\deyaiceipcsdk\x86\swscale-2.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\DeYaIceIpcSDK\x86\wpcap.dll">
+            <Visible>False</Visible>
+            <Link>plugins\deyaiceipcsdk\x86\wpcap.dll</Link>
+            <TargetPath>plugins\deyaiceipcsdk\x86\wpcap.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\deyaiceipcsdk\x86\wpcap.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\DeYaIceIpcSDK\x86\zlibwapi.dll">
+            <Visible>False</Visible>
+            <Link>plugins\deyaiceipcsdk\x86\zlibwapi.dll</Link>
+            <TargetPath>plugins\deyaiceipcsdk\x86\zlibwapi.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\deyaiceipcsdk\x86\zlibwapi.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+    </ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="NSystem.Data.HardwareInterfaces" Version="2022.9.9" />
 	</ItemGroup>

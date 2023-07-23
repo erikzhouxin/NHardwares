@@ -1,23 +1,15 @@
-// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
-
 #if !WINDOWS_UWP
-using MQTTnet.Adapter;
-using MQTTnet.Diagnostics;
-using MQTTnet.Formatter;
-using MQTTnet.Internal;
-using MQTTnet.Server;
 using System;
 using System.IO;
 using System.Net;
 using System.Net.Security;
 using System.Net.Sockets;
+using System.Security.Authentication;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace MQTTnet.Implementations
+namespace System.Data.NMQTT
 {
     public sealed class MqttTcpServerListener : IDisposable
     {
@@ -87,17 +79,17 @@ namespace MQTTnet.Implementations
                 }
 
                 _socket.Bind(_localEndPoint);
-                
+
                 // Get the local endpoint back from the socket. The port may have changed.
                 // This can happen when port 0 is used. Then the OS will choose the next free port.
                 _localEndPoint = (IPEndPoint)_socket.LocalEndPoint;
                 _options.Port = _localEndPoint.Port;
-                
+
                 _socket.Listen(_options.ConnectionBacklog);
-                
+
                 _logger.Verbose("TCP listener started (Endpoint='{0}'.", _localEndPoint);
-                
-                Task.Run(() => AcceptClientConnectionsAsync(cancellationToken), cancellationToken).RunInBackground(_logger);
+
+                TestTry.TaskRun(() => AcceptClientConnectionsAsync(cancellationToken), cancellationToken).RunInBackground(_logger);
 
                 return true;
             }
@@ -152,7 +144,7 @@ namespace MQTTnet.Implementations
                     }
 
                     _logger.Error(exception, "Error while accepting connection at TCP listener {0} TLS={1}.", _localEndPoint, _tlsCertificate != null);
-                    await Task.Delay(TimeSpan.FromSeconds(1), cancellationToken).ConfigureAwait(false);
+                    await TestTry.TaskDelay(TimeSpan.FromSeconds(1), cancellationToken).ConfigureAwait(false);
                 }
             }
         }
@@ -179,7 +171,7 @@ namespace MQTTnet.Implementations
                 {
                     var sslStream = new SslStream(stream, false, _tlsOptions.RemoteCertificateValidationCallback);
 
-                    #if NETCOREAPP3_1 || NET5_0_OR_GREATER
+#if NETCOREAPP3_1 || NET5_0_OR_GREATER
                         await sslStream.AuthenticateAsServerAsync(
                             new SslServerAuthenticationOptions()
                             {
@@ -190,13 +182,23 @@ namespace MQTTnet.Implementations
                                 EncryptionPolicy = EncryptionPolicy.RequireEncryption,
                                 CipherSuitesPolicy = _tlsOptions.CipherSuitesPolicy
                             }).ConfigureAwait(false);
-                    #else
-                        await sslStream.AuthenticateAsServerAsync(
+#elif NET40
+                    await AuthenticateAsServerAsync(sslStream,
                             _tlsCertificate,
                             _tlsOptions.ClientCertificateRequired,
                             _tlsOptions.SslProtocol,
                             _tlsOptions.CheckCertificateRevocation).ConfigureAwait(false);
-                    #endif
+                    Task AuthenticateAsServerAsync(SslStream _sslStream, X509Certificate serverCertificate, bool clientCertificateRequired, SslProtocols enabledSslProtocols, bool checkCertificateRevocation)
+                    {
+                        return Task.Factory.FromAsync((AsyncCallback callback, object state) => _sslStream.BeginAuthenticateAsServer(serverCertificate, clientCertificateRequired, enabledSslProtocols, checkCertificateRevocation, callback, state), _sslStream.EndAuthenticateAsServer, null);
+                    }
+#else
+                    await sslStream.AuthenticateAsServerAsync(
+                            _tlsCertificate,
+                            _tlsOptions.ClientCertificateRequired,
+                            _tlsOptions.SslProtocol,
+                            _tlsOptions.CheckCertificateRevocation).ConfigureAwait(false);
+#endif
 
                     stream = sslStream;
 
@@ -214,7 +216,7 @@ namespace MQTTnet.Implementations
                     var tcpChannel = new MqttTcpChannel(stream, remoteEndPoint, clientCertificate);
                     var bufferWriter = new MqttBufferWriter(_serverOptions.WriterBufferSize, _serverOptions.WriterBufferSizeMax);
                     var packetFormatterAdapter = new MqttPacketFormatterAdapter(bufferWriter);
-                    
+
                     using (var clientAdapter = new MqttChannelAdapter(tcpChannel, packetFormatterAdapter, null, _rootLogger))
                     {
                         await clientHandler(clientAdapter).ConfigureAwait(false);

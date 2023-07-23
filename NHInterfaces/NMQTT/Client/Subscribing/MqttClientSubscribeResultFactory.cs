@@ -1,18 +1,15 @@
-// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
-
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
-using MQTTnet.Exceptions;
-using MQTTnet.Packets;
 
-namespace MQTTnet.Client
+namespace System.Data.NMQTT
 {
     public sealed class MqttClientSubscribeResultFactory
     {
+#if !NET40
         static readonly IReadOnlyCollection<MqttUserProperty> EmptyUserProperties = new List<MqttUserProperty>();
+#endif
 
         public MqttClientSubscribeResult Create(MqttSubscribePacket subscribePacket, MqttSubAckPacket subAckPacket)
         {
@@ -36,8 +33,13 @@ namespace MQTTnet.Client
             {
                 PacketIdentifier = subAckPacket.PacketIdentifier,
                 ReasonString = subAckPacket.ReasonString,
+#if NET40
+                UserProperties = new EReadOnlyCollection<MqttUserProperty>(subAckPacket.UserProperties ?? new List<MqttUserProperty>()),
+                Items = new EReadOnlyCollection<MqttClientSubscribeResultItem>(items)
+#else
                 UserProperties = subAckPacket.UserProperties ?? EmptyUserProperties,
                 Items = items
+#endif
             };
             
             return result;

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.NHInterfaces;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -18,6 +19,18 @@ namespace System.Data.DeYaAlbCtrlSDK
         /// </summary>
         public const String DllFileName = "ALBCtrlDll.dll";
         /// <summary>
+        /// 相对路径
+        /// </summary>
+        public const string DllVirtualPath = @"plugins\albctrlsdk";
+        /// <summary>
+        /// x86的dll目录
+        /// </summary>
+        public const String DllFileNameX86 = $@".\{DllVirtualPath}\x86\{DllFileName}";
+        /// <summary>
+        /// x86的dll目录
+        /// </summary>
+        public const String DllFileNameX64 = $@".\{DllVirtualPath}\x64\{DllFileName}";
+        /// <summary>
         /// 基础全路径
         /// </summary>
         public static string BaseDllFullPath { get; } = Path.GetFullPath(".");
@@ -26,10 +39,6 @@ namespace System.Data.DeYaAlbCtrlSDK
         /// </summary>
         public static String BaseDllFullName { get; } = Path.GetFullPath(DllFileName);
         /// <summary>
-        /// 相对路径
-        /// </summary>
-        public const string DllVirtualPath = @"plugins\albctrlsdk";
-        /// <summary>
         /// 全路径
         /// </summary>
         public static string DllFullPath { get; } = Path.GetFullPath(DllVirtualPath);
@@ -37,29 +46,7 @@ namespace System.Data.DeYaAlbCtrlSDK
         /// 文件全路径
         /// </summary>
         public static String DllFullName { get; } = Path.Combine(DllFullPath, DllFileName);
-
         static Lazy<IAlbCtrlSdkProxy> _albCtrlSdk = new Lazy<IAlbCtrlSdkProxy>(() => new AlbCtrlSdkLoader(), true);
-        /// <summary>
-        /// 静态构造
-        /// </summary>
-        static AlbCtrlSdk()
-        {
-            Directory.CreateDirectory(DllFullPath);
-            if (Environment.Is64BitProcess)
-            {
-                if (!SdkFileComponent.CompareResourceFile(DllFullName, Properties.Resources.X64_ALBCtrlDll))
-                {
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_ALBCtrlDll, Path.Combine(DllFullPath, "ALBCtrlDll.dll"));
-                }
-            }
-            else
-            {
-                if (!SdkFileComponent.CompareResourceFile(DllFullName, Properties.Resources.X86_ALBCtrlDll))
-                {
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_ALBCtrlDll, Path.Combine(DllFullPath, "ALBCtrlDll.dll"));
-                }
-            }
-        }
         /// <summary>
         /// plugins内容实例
         /// </summary>
@@ -72,9 +59,7 @@ namespace System.Data.DeYaAlbCtrlSDK
         public static IAlbCtrlSdkProxy Create(bool isBase = false)
         {
             if (!isBase) { return _albCtrlSdk.Value; }
-            if (!File.Exists(BaseDllFullName))
-            { SdkFileComponent.TryCopyDirectory(DllFullPath, BaseDllFullPath); }
-            return AlbCtrlSdkDller.Instance;
+            return Environment.Is64BitProcess ? AlbCtrlSdkDllerX64.Instance : AlbCtrlSdkDllerX86.Instance;
         }
     }
 }

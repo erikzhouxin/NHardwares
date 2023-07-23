@@ -59,25 +59,5 @@ namespace System.Data.DeYaAlbCtrlSDK.Properties {
                 resourceCulture = value;
             }
         }
-        
-        /// <summary>
-        ///   查找 System.Byte[] 类型的本地化资源。
-        /// </summary>
-        internal static byte[] X64_ALBCtrlDll {
-            get {
-                object obj = ResourceManager.GetObject("X64_ALBCtrlDll", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   查找 System.Byte[] 类型的本地化资源。
-        /// </summary>
-        internal static byte[] X86_ALBCtrlDll {
-            get {
-                object obj = ResourceManager.GetObject("X86_ALBCtrlDll", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
     }
 }

@@ -1,88 +1,230 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-	<PropertyGroup>
-		<TargetFrameworks>net40;net45;netstandard2.1;netcoreapp3.1;net6.0</TargetFrameworks>
-		<AssemblyName>NSystem.Data.OnbonLedBxSDK</AssemblyName>
-		<PackageId>NSystem.Data.OnbonLedBxSDK</PackageId>
-		<RootNamespace>System.Data.OnbonLedBxSDK</RootNamespace>
+    <PropertyGroup>
+        <TargetFrameworks>net40;net45;netstandard2.1;netcoreapp3.1;net6.0</TargetFrameworks>
+        <AssemblyName>NSystem.Data.OnbonLedBxSDK</AssemblyName>
+        <PackageId>NSystem.Data.OnbonLedBxSDK</PackageId>
+        <RootNamespace>System.Data.OnbonLedBxSDK</RootNamespace>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
         <LangVersion>latest</LangVersion>
-		<NoBuild>false</NoBuild>
-		<GenerateDocumentationFile>true</GenerateDocumentationFile>
-		<Copyright>Copyright 2020-2022</Copyright>
-		<Company>EZhouXin</Company>
-		<Authors>ErikZhouXin</Authors>
-		<Version>2022.12.12</Version>
-		<AssemblyVersion>2022.12.12.722</AssemblyVersion>
-		<FileVersion>2022.12.12.722</FileVersion>
-		<Description>仰邦科技LED显示组件</Description>
-		<GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
-		<PackageLicenseExpression>MIT</PackageLicenseExpression>
-		<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-		<PackageTags>硬件;硬件SDK;仰邦LED;LED显示;</PackageTags>
-		<RepositoryUrl>https://www.gitee.com/erikzhouxin/nhardwares</RepositoryUrl>
-		<RepositoryType>git</RepositoryType>
-		<NoWarn>1701;1702;IDE0057;IDE0066;IDE0079;IDE0063</NoWarn>
-		<IncludeSymbols>true</IncludeSymbols>
-		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)'=='Debug|net40'">
-		<DefineConstants>TRACE;DEBUG;NETFrame;NET40</DefineConstants>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)'=='Debug|net45'">
-		<DefineConstants>TRACE;DEBUG;NETFrame;NET45</DefineConstants>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)'=='Debug|netstandard2.1'">
-		<DefineConstants>TRACE;DEBUG;NETFx;NETStd</DefineConstants>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)'=='Debug|netcoreapp3.1'">
-		<DefineConstants>TRACE;DEBUG;NETFx;NETCore</DefineConstants>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)'=='Debug|net6.0'">
-		<DefineConstants>TRACE;DEBUG;NETFx;NET60</DefineConstants>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)'=='Release|net40'">
-		<DefineConstants>TRACE;NETFrame;NET40</DefineConstants>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)'=='Release|net45'">
-		<DefineConstants>TRACE;NETFrame;NET45</DefineConstants>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)'=='Release|netstandard2.1'">
-		<DefineConstants>TRACE;NETFx;NETStd</DefineConstants>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)'=='Release|netcoreapp3.1'">
-		<DefineConstants>TRACE;NETFx;NETCore</DefineConstants>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)'=='Release|net6.0'">
-		<DefineConstants>TRACE;NETFx;NET60</DefineConstants>
-	</PropertyGroup>
-	<ItemGroup>
-		<Compile Remove="beans\**" />
-		<EmbeddedResource Remove="beans\**" />
-		<None Remove="beans\**" />
-	</ItemGroup>
-	<ItemGroup>
-		<Compile Update="Properties\Resources.Designer.cs">
-			<DesignTime>True</DesignTime>
-			<AutoGen>True</AutoGen>
-			<DependentUpon>Resources.resx</DependentUpon>
-		</Compile>
-		<EmbeddedResource Update="Properties\Resources.resx">
-			<Generator>ResXFileCodeGenerator</Generator>
-			<LastGenOutput>Resources.Designer.cs</LastGenOutput>
-		</EmbeddedResource>
-	</ItemGroup>
-	<ItemGroup Condition="'$(TargetFramework)' == 'net40'">
-	</ItemGroup>
-	<ItemGroup Condition="'$(TargetFramework)' == 'net45'">
-	</ItemGroup>
-	<ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.1'">
-	</ItemGroup>
-	<ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp3.1'">
-	</ItemGroup>
-	<ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
-	</ItemGroup>
-	<ItemGroup>
-		<PackageReference Include="NSystem.Data.HardwareInterfaces" Version="2022.9.9" />
-	  <!--<ProjectReference Include="..\NHInterfaces\HardwareInterfaces.csproj" />-->
-	</ItemGroup>
+        <NoBuild>false</NoBuild>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <Copyright>Copyright 2020-2022</Copyright>
+        <Company>EZhouXin</Company>
+        <Authors>ErikZhouXin</Authors>
+        <Version>2022.12.12</Version>
+        <AssemblyVersion>2022.12.12.722</AssemblyVersion>
+        <FileVersion>2022.12.12.722</FileVersion>
+        <Description>仰邦科技LED显示组件</Description>
+        <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+        <PackageTags>硬件;硬件SDK;仰邦LED;LED显示;</PackageTags>
+        <RepositoryUrl>https://www.gitee.com/erikzhouxin/nhardwares</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <NoWarn>1701;1702;NU5100;IDE0057;IDE0066;IDE0079;IDE0063</NoWarn>
+        <IncludeSymbols>true</IncludeSymbols>
+        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+        <IncludeContentFilesProjectOutputGroup>true</IncludeContentFilesProjectOutputGroup>
+        <!--<IncludeBuildOutput>true</IncludeBuildOutput>-->
+        <PlatformTarget>$(Platform)</PlatformTarget>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)'=='Debug|net40'">
+        <DefineConstants>TRACE;DEBUG;NETFrame;NET40</DefineConstants>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)'=='Debug|net45'">
+        <DefineConstants>TRACE;DEBUG;NETFrame;NET45</DefineConstants>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)'=='Debug|netstandard2.1'">
+        <DefineConstants>TRACE;DEBUG;NETFx;NETStd</DefineConstants>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)'=='Debug|netcoreapp3.1'">
+        <DefineConstants>TRACE;DEBUG;NETFx;NETCore</DefineConstants>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)'=='Debug|net6.0'">
+        <DefineConstants>TRACE;DEBUG;NETFx;NET60</DefineConstants>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)'=='Release|net40'">
+        <DefineConstants>TRACE;NETFrame;NET40</DefineConstants>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)'=='Release|net45'">
+        <DefineConstants>TRACE;NETFrame;NET45</DefineConstants>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)'=='Release|netstandard2.1'">
+        <DefineConstants>TRACE;NETFx;NETStd</DefineConstants>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)'=='Release|netcoreapp3.1'">
+        <DefineConstants>TRACE;NETFx;NETCore</DefineConstants>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)'=='Release|net6.0'">
+        <DefineConstants>TRACE;NETFx;NET60</DefineConstants>
+    </PropertyGroup>
+    <ItemGroup>
+        <None Include=".\..\AppBeans\OnbonLedBxSDK\x64\bx_sdk_dual.dll">
+            <Visible>False</Visible>
+            <Link>plugins\onbonledbxsdk\x64\bx_sdk_dual.dll</Link>
+            <TargetPath>plugins\onbonledbxsdk\x64\bx_sdk_dual.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\onbonledbxsdk\x64\bx_sdk_dual.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\OnbonLedBxSDK\x64\bx_sdk_dual_server.dll">
+            <Visible>False</Visible>
+            <Link>plugins\onbonledbxsdk\x64\bx_sdk_dual_server.dll</Link>
+            <TargetPath>plugins\onbonledbxsdk\x64\bx_sdk_dual_server.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\onbonledbxsdk\x64\bx_sdk_dual_server.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\OnbonLedBxSDK\x64\cairo-1.14.6.dll">
+            <Visible>False</Visible>
+            <Link>plugins\onbonledbxsdk\x64\cairo-1.14.6.dll</Link>
+            <TargetPath>plugins\onbonledbxsdk\x64\cairo-1.14.6.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\onbonledbxsdk\x64\cairo-1.14.6.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\OnbonLedBxSDK\x64\freetype265.dll">
+            <Visible>False</Visible>
+            <Link>plugins\onbonledbxsdk\x64\freetype265.dll</Link>
+            <TargetPath>plugins\onbonledbxsdk\x64\freetype265.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\onbonledbxsdk\x64\freetype265.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\OnbonLedBxSDK\x64\libpng16.dll">
+            <Visible>False</Visible>
+            <Link>plugins\onbonledbxsdk\x64\libpng16.dll</Link>
+            <TargetPath>plugins\onbonledbxsdk\x64\libpng16.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\onbonledbxsdk\x64\libpng16.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\OnbonLedBxSDK\x64\pixman-0.34.0.dll">
+            <Visible>False</Visible>
+            <Link>plugins\onbonledbxsdk\x64\pixman-0.34.0.dll</Link>
+            <TargetPath>plugins\onbonledbxsdk\x64\pixman-0.34.0.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\onbonledbxsdk\x64\pixman-0.34.0.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\OnbonLedBxSDK\x64\zlibwapi.dll">
+            <Visible>False</Visible>
+            <Link>plugins\onbonledbxsdk\x64\zlibwapi.dll</Link>
+            <TargetPath>plugins\onbonledbxsdk\x64\zlibwapi.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\onbonledbxsdk\x64\zlibwapi.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+    </ItemGroup>
+    <ItemGroup>
+        <None Include=".\..\AppBeans\OnbonLedBxSDK\x86\bx_sdk_dual.dll">
+            <Visible>False</Visible>
+            <Link>plugins\onbonledbxsdk\x86\bx_sdk_dual.dll</Link>
+            <TargetPath>plugins\onbonledbxsdk\x86\bx_sdk_dual.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\onbonledbxsdk\x86\bx_sdk_dual.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\OnbonLedBxSDK\x86\bx_sdk_dual_server.dll">
+            <Visible>False</Visible>
+            <Link>plugins\onbonledbxsdk\x86\bx_sdk_dual_server.dll</Link>
+            <TargetPath>plugins\onbonledbxsdk\x86\bx_sdk_dual_server.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\onbonledbxsdk\x86\bx_sdk_dual_server.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\OnbonLedBxSDK\x86\cairo-1.14.6.dll">
+            <Visible>False</Visible>
+            <Link>plugins\onbonledbxsdk\x86\cairo-1.14.6.dll</Link>
+            <TargetPath>plugins\onbonledbxsdk\x86\cairo-1.14.6.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\onbonledbxsdk\x86\cairo-1.14.6.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\OnbonLedBxSDK\x86\freetype.dll">
+            <Visible>False</Visible>
+            <Link>plugins\onbonledbxsdk\x86\freetype.dll</Link>
+            <TargetPath>plugins\onbonledbxsdk\x86\freetype.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\onbonledbxsdk\x86\freetype.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\OnbonLedBxSDK\x86\freetype265.dll">
+            <Visible>False</Visible>
+            <Link>plugins\onbonledbxsdk\x86\freetype265.dll</Link>
+            <TargetPath>plugins\onbonledbxsdk\x86\freetype265.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\onbonledbxsdk\x86\freetype265.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\OnbonLedBxSDK\x86\libpng16.dll">
+            <Visible>False</Visible>
+            <Link>plugins\onbonledbxsdk\x86\libpng16.dll</Link>
+            <TargetPath>plugins\onbonledbxsdk\x86\libpng16.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\onbonledbxsdk\x86\libpng16.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\OnbonLedBxSDK\x86\zlibwapi.dll">
+            <Visible>False</Visible>
+            <Link>plugins\onbonledbxsdk\x86\zlibwapi.dll</Link>
+            <TargetPath>plugins\onbonledbxsdk\x86\zlibwapi.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\onbonledbxsdk\x86\zlibwapi.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+    </ItemGroup>
+    <ItemGroup>
+        <Compile Update="Properties\Resources.Designer.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>Resources.resx</DependentUpon>
+        </Compile>
+        <EmbeddedResource Update="Properties\Resources.resx">
+            <Generator>ResXFileCodeGenerator</Generator>
+            <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
+    </ItemGroup>
+    <ItemGroup Condition="'$(TargetFramework)' == 'net40'">
+    </ItemGroup>
+    <ItemGroup Condition="'$(TargetFramework)' == 'net45'">
+    </ItemGroup>
+    <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.1'">
+    </ItemGroup>
+    <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp3.1'">
+    </ItemGroup>
+    <ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
+    </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="NSystem.Data.HardwareInterfaces" Version="2022.9.9" />
+        <!--<ProjectReference Include="..\NHInterfaces\HardwareInterfaces.csproj" />-->
+    </ItemGroup>
 </Project>

@@ -21,12 +21,35 @@
 		<PackageTags>德亚;德亚SDK;车牌识别;LpnrSDK;</PackageTags>
 		<RepositoryUrl>https://www.gitee.com/erikzhouxin/nhardwares</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
+        <NoWarn>1701;1702;NU5100</NoWarn>
+        <IncludeSymbols>true</IncludeSymbols>
+        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+        <PlatformTarget>$(Platform)</PlatformTarget>
 	</PropertyGroup>
-	<ItemGroup>
-		<Compile Remove="beans\**" />
-		<EmbeddedResource Remove="beans\**" />
-		<None Remove="beans\**" />
-	</ItemGroup>
+    <ItemGroup>
+        <None Include=".\..\AppBeans\DeYaLpnrSDK\x64\RWLPNRAPI.dll">
+            <Visible>False</Visible>
+            <Link>plugins\deyalpnrsdk\x64\RWLPNRAPI.dll</Link>
+            <TargetPath>plugins\deyalpnrsdk\x64\RWLPNRAPI.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\deyalpnrsdk\x64\RWLPNRAPI.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+    </ItemGroup>
+    <ItemGroup>
+        <None Include=".\..\AppBeans\DeYaLpnrSDK\x86\RWLPNRAPI.dll">
+            <Visible>False</Visible>
+            <Link>plugins\deyalpnrsdk\x86\RWLPNRAPI.dll</Link>
+            <TargetPath>plugins\deyalpnrsdk\x86\RWLPNRAPI.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\deyalpnrsdk\x86\RWLPNRAPI.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+    </ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="NSystem.Data.HardwareInterfaces" Version="2022.9.9" />
 	</ItemGroup>

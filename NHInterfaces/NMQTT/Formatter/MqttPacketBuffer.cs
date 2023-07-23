@@ -1,13 +1,7 @@
-// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
-
 using System;
 using System.Linq;
-using MQTTnet.Implementations;
-using MQTTnet.Internal;
 
-namespace MQTTnet.Formatter
+namespace System.Data.NMQTT
 {
     public readonly struct MqttPacketBuffer
     {
@@ -39,7 +33,7 @@ namespace MQTTnet.Formatter
         {
             if (Payload.Count == 0)
             {
-                return Packet.ToArray();
+                return Packet.Array.ToArray();
             }
 
             var buffer = new byte[Length];

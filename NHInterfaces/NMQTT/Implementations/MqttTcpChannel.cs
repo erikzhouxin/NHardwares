@@ -1,11 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
-
 #if !WINDOWS_UWP
-using MQTTnet.Channel;
-using MQTTnet.Client;
-using MQTTnet.Exceptions;
 using System;
 using System.IO;
 using System.Net.Security;
@@ -14,9 +7,9 @@ using System.Runtime.ExceptionServices;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
-using MQTTnet.Internal;
+using System.Security.Authentication;
 
-namespace MQTTnet.Implementations
+namespace System.Data.NMQTT
 {
     public sealed class MqttTcpChannel : IMqttChannel
     {
@@ -73,7 +66,7 @@ namespace MQTTnet.Implementations
                 {
                     socket.Bind(_tcpOptions.LocalEndpoint);
                 }
-                
+
                 socket.ReceiveBufferSize = _tcpOptions.BufferSize;
                 socket.SendBufferSize = _tcpOptions.BufferSize;
                 socket.SendTimeout = (int)_clientOptions.Timeout.TotalMilliseconds;
@@ -89,7 +82,9 @@ namespace MQTTnet.Implementations
                     // It is important to avoid setting the flag if no specific value is set by the user
                     // because on IPv4 only networks the setter will always throw an exception. Regardless
                     // of the actual value.
+#if !NET40
                     socket.DualMode = _tcpOptions.DualMode.Value;
+#endif
                 }
 
                 await socket.ConnectAsync(_tcpOptions.Server, _tcpOptions.GetPort(), cancellationToken).ConfigureAwait(false);
@@ -116,6 +111,17 @@ namespace MQTTnet.Implementations
                         };
 
                         await sslStream.AuthenticateAsClientAsync(sslOptions, cancellationToken).ConfigureAwait(false);
+#elif NET40
+                        await AuthenticateAsClientAsync(sslStream,
+                                _tcpOptions.Server,
+                                LoadCertificates(),
+                                _tcpOptions.TlsOptions.SslProtocol,
+                                !_tcpOptions.TlsOptions.IgnoreCertificateRevocationErrors)
+                            .ConfigureAwait(false);
+                        Task AuthenticateAsClientAsync(SslStream _SslState, string targetHost, X509CertificateCollection clientCertificates, SslProtocols enabledSslProtocols, bool checkCertificateRevocation)
+                        {
+                            return Task.Factory.FromAsync((AsyncCallback callback, object state) => _SslState.BeginAuthenticateAsClient(targetHost, clientCertificates, enabledSslProtocols, checkCertificateRevocation, callback, state), _SslState.EndAuthenticateAsClient, null);
+                        }
 #else
                         await sslStream.AuthenticateAsClientAsync(
                                 _tcpOptions.Server,
@@ -219,7 +225,11 @@ namespace MQTTnet.Implementations
             {
                 if (exception.InnerException is SocketException socketException)
                 {
+#if NET40
+                    throw socketException;
+#else
                     ExceptionDispatchInfo.Capture(socketException).Throw();
+#endif
                 }
 
                 throw;
@@ -257,7 +267,11 @@ namespace MQTTnet.Implementations
             {
                 if (exception.InnerException is SocketException socketException)
                 {
+#if NET40 
+                    throw socketException;
+#else
                     ExceptionDispatchInfo.Capture(socketException).Throw();
+#endif
                 }
 
                 throw;

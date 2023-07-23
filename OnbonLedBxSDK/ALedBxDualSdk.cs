@@ -26,6 +26,22 @@ namespace System.Data.OnbonLedBxSDK
         /// </summary>
         public const string DllVirtualPath = @"plugins\onbonledbxsdk";
         /// <summary>
+        /// SDK文件名称
+        /// </summary>
+        public const String DllFileNameX64 = $@".\{DllVirtualPath}\x64\{DllFileName}";
+        /// <summary>
+        /// 服务SDK文件名称
+        /// </summary>
+        public const string ServerFileNameX64 = $@".\{DllVirtualPath}\x64\{ServerFileName}";
+        /// <summary>
+        /// SDK文件名称
+        /// </summary>
+        public const String DllFileNameX86 = $@".\{DllVirtualPath}\x86\{DllFileName}";
+        /// <summary>
+        /// 服务SDK文件名称
+        /// </summary>
+        public const string ServerFileNameX86 = $@".\{DllVirtualPath}\x86\{ServerFileName}";
+        /// <summary>
         /// 全路径
         /// </summary>
         public static string BaseDllFullPath { get; } = Path.GetFullPath(".");
@@ -52,44 +68,6 @@ namespace System.Data.OnbonLedBxSDK
         static Lazy<ILedBxDualSdkProxy> _bxDualSdk = new Lazy<ILedBxDualSdkProxy>(() => new LedBxDualSdkLoader(), true);
         static Lazy<ILedBxServerSdkProxy> _bxServerSdk = new Lazy<ILedBxServerSdkProxy>(() => new LedBxServerSdkLoader(), true);
         /// <summary>
-        /// 静态构造
-        /// </summary>
-        static LedBxDualSdk()
-        {
-            Directory.CreateDirectory(DllFullPath);
-            if (Environment.Is64BitProcess)
-            {
-                if (!SdkFileComponent.CompareResourceFile(DllFullName, Properties.Resources.X64_bx_sdk_dual))
-                {
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_bx_sdk_dual, Path.Combine(DllFullPath, "bx_sdk_dual.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_bx_sdk_dual_server, Path.Combine(DllFullPath, "bx_sdk_dual_server.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_cairo_1_14_6, Path.Combine(DllFullPath, "cairo-1.14.6.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_freetype265, Path.Combine(DllFullPath, "freetype265.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_libpng16, Path.Combine(DllFullPath, "libpng16.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_pixman_0_34_0, Path.Combine(DllFullPath, "pixman-0.34.0.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_zlibwapi, Path.Combine(DllFullPath, "zlibwapi.dll"));
-                }
-            }
-            else
-            {
-                if (!SdkFileComponent.CompareResourceFile(DllFullName, Properties.Resources.X86_bx_sdk_dual))
-                {
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_bx_sdk_dual, Path.Combine(DllFullPath, "bx_sdk_dual.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_bx_sdk_dual_server, Path.Combine(DllFullPath, "bx_sdk_dual_server.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_cairo_1_14_6, Path.Combine(DllFullPath, "cairo-1.14.6.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_freetype, Path.Combine(DllFullPath, "freetype.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_freetype265, Path.Combine(DllFullPath, "freetype265.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_libpng16, Path.Combine(DllFullPath, "libpng16.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_zlibwapi, Path.Combine(DllFullPath, "zlibwapi.dll"));
-
-                    //SdkFileComponent.WriteResourceFile(Properties.Resources.X86_msvcp100, Path.Combine(DllFullPath, "msvcp100.dll"));
-                    //SdkFileComponent.WriteResourceFile(Properties.Resources.X86_msvcp100d, Path.Combine(DllFullPath, "msvcp100d.dll"));
-                    //SdkFileComponent.WriteResourceFile(Properties.Resources.X86_msvcr100, Path.Combine(DllFullPath, "msvcr100.dll"));
-                    //SdkFileComponent.WriteResourceFile(Properties.Resources.X86_msvcr110, Path.Combine(DllFullPath, "msvcr110.dll"));
-                }
-            }
-        }
-        /// <summary>
         /// 创建SDK代理
         /// </summary>
         /// <param name="isBase"></param>
@@ -97,9 +75,7 @@ namespace System.Data.OnbonLedBxSDK
         public static ILedBxDualSdkProxy Create(bool isBase = false)
         {
             if (!isBase) { return _bxDualSdk.Value; }
-            if (!File.Exists(BaseDllFullName))
-            { SdkFileComponent.TryCopyDirectory(DllFullPath, BaseDllFullPath); }
-            return LedBxDualSdkDller.Instance;
+            return Environment.Is64BitProcess ? LedBxDualSdkDllerX64.Instance : LedBxDualSdkDllerX86.Instance;
         }
         /// <summary>
         /// 创建SDK代理
@@ -109,10 +85,8 @@ namespace System.Data.OnbonLedBxSDK
         public static ILedBxServerSdkProxy CreateServer(bool isBase = false)
         {
             if (!isBase) { return _bxServerSdk.Value; }
-            if (!File.Exists(BaseServerFullName)) { SdkFileComponent.TryCopyDirectory(DllFullPath, BaseDllFullPath); }
-            return LedBxServerSdkDller.Instance;
+            return Environment.Is64BitProcess ? LedBxServerSdkDllerX64.Instance : LedBxServerSdkDllerX86.Instance;
         }
-
         #region // 辅助方法
         /// <summary>
         /// struct转换为byte[]
@@ -433,7 +407,6 @@ namespace System.Data.OnbonLedBxSDK
             return value;
         }
         #endregion
-
         #region // 获取内容
         /// <summary>
         /// 显示屏的屏基色

@@ -1,24 +1,12 @@
-// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
-
 using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
-using MQTTnet.Adapter;
-using MQTTnet.Client;
-using MQTTnet.Diagnostics;
-using MQTTnet.Exceptions;
-using MQTTnet.Formatter;
-using MQTTnet.Internal;
-using MQTTnet.Packets;
-using MQTTnet.Protocol;
 
-namespace MQTTnet.Server
+namespace System.Data.NMQTT
 {
-    public sealed class MqttClient : IDisposable
+    public sealed class MqttServerClient : IDisposable
     {
         readonly MqttConnectPacket _connectPacket;
         readonly MqttServerEventContainer _eventContainer;
@@ -30,7 +18,7 @@ namespace MQTTnet.Server
         CancellationTokenSource _cancellationToken = new CancellationTokenSource();
         bool _disconnectPacketSent;
 
-        public MqttClient(
+        public MqttServerClient(
             MqttConnectPacket connectPacket,
             IMqttChannelAdapter channelAdapter,
             MqttSession session,
@@ -53,7 +41,7 @@ namespace MQTTnet.Server
                 throw new ArgumentNullException(nameof(logger));
             }
 
-            _logger = logger.WithSource(nameof(MqttClient));
+            _logger = logger.WithSource(nameof(MqttServerClient));
         }
 
         public IMqttChannelAdapter ChannelAdapter { get; }

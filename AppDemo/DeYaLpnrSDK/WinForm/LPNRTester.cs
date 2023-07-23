@@ -18,7 +18,7 @@ namespace LPNRTest
 {
     public partial class LPNRTester : Form
     {
-        IRWLPNRSdkProxy sdkClient = RWLPNRSdk.Create();
+        IRWLPNRSdkProxy sdkClient = RWLPNRSdk.Create(true);
         private string byteToString(byte[] data)
         {
             if (data.Length == 0)

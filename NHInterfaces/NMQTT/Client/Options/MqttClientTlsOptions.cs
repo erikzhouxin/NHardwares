@@ -1,13 +1,9 @@
-// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
-
 using System;
 using System.Collections.Generic;
 using System.Security.Authentication;
 using System.Security.Cryptography.X509Certificates;
 
-namespace MQTTnet.Client
+namespace System.Data.NMQTT
 {
     public sealed class MqttClientTlsOptions
     {
@@ -35,10 +31,10 @@ namespace MQTTnet.Client
         public System.Net.Security.CipherSuitesPolicy CipherSuitesPolicy { get; set; }
 #endif
 
-#if NET48 || NETCOREAPP3_1 || NET5 || NET6
-        public SslProtocols SslProtocol { get; set; } = SslProtocols.Tls12 | SslProtocols.Tls13;
+#if NET40 || NET45 || NETStd
+        public SslProtocols SslProtocol { get; set; } = (SslProtocols)0xC00 /*Tls12*/ | (SslProtocols)0x00003000 /*Tls13*/;
 #else
-        public SslProtocols SslProtocol { get; set; } = SslProtocols.Tls12 | (SslProtocols)0x00003000 /*Tls13*/;
+        public SslProtocols SslProtocol { get; set; } = SslProtocols.Tls12 | SslProtocols.Tls13;
 #endif
     }
 }

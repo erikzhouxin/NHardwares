@@ -1,17 +1,14 @@
-// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
-
 using System.Collections.Generic;
-using MQTTnet.Packets;
-using MQTTnet.Protocol;
+using System.Collections.ObjectModel;
 
-namespace MQTTnet.Client
+namespace System.Data.NMQTT
 {
     public sealed class MqttClientPublishResultFactory
     {
         static readonly MqttClientPublishResult EmptySuccessResult = new MqttClientPublishResult();
+#if !NET40
         static readonly IReadOnlyCollection<MqttUserProperty> EmptyUserProperties = new List<MqttUserProperty>();
+#endif
 
         public MqttClientPublishResult Create(MqttPubAckPacket pubAckPacket)
         {
@@ -27,7 +24,11 @@ namespace MQTTnet.Client
                 ReasonCode = (MqttClientPublishReasonCode)(int)pubAckPacket.ReasonCode,
                 PacketIdentifier = pubAckPacket.PacketIdentifier,
                 ReasonString = pubAckPacket.ReasonString,
+#if NET40
+                UserProperties = new EReadOnlyCollection<MqttUserProperty>(pubAckPacket.UserProperties ?? new List<MqttUserProperty>())
+#else
                 UserProperties = pubAckPacket.UserProperties ?? EmptyUserProperties
+#endif
             };
 
             return result;
@@ -53,7 +54,11 @@ namespace MQTTnet.Client
                     PacketIdentifier = pubCompPacket.PacketIdentifier,
                     ReasonCode = MqttClientPublishReasonCode.UnspecifiedError,
                     ReasonString = pubCompPacket.ReasonString,
+#if NET40
+                    UserProperties = new EReadOnlyCollection<MqttUserProperty>(pubCompPacket.UserProperties ?? new List<MqttUserProperty>())
+#else
                     UserProperties = pubCompPacket.UserProperties ?? EmptyUserProperties
+#endif
                 };
 
                 return result;
@@ -64,7 +69,11 @@ namespace MQTTnet.Client
                 PacketIdentifier = pubCompPacket.PacketIdentifier,
                 ReasonCode = MqttClientPublishReasonCode.Success,
                 ReasonString = pubCompPacket.ReasonString,
+#if NET40
+                UserProperties = new EReadOnlyCollection<MqttUserProperty>(pubCompPacket.UserProperties ?? new List<MqttUserProperty>())
+#else
                 UserProperties = pubCompPacket.UserProperties ?? EmptyUserProperties
+#endif
             };
 
             if (pubRecPacket.ReasonCode != MqttPubRecReasonCode.Success)

@@ -1,12 +1,8 @@
-// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
-
 using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace MQTTnet.Internal
+namespace System.Data.NMQTT
 {
     public sealed class AsyncTaskCompletionSource<TResult>
     {
@@ -31,7 +27,7 @@ namespace MQTTnet.Internal
             // a new thread automatically (due to await). Furthermore _this_ thread will
             // do it. But _this_ thread is also reading incoming packets -> deadlock.
             // NET452 does not support RunContinuationsAsynchronously
-            System.Threading.Tasks.Task.Run(() => _taskCompletionSource.TrySetCanceled());
+            TestTry.TaskRun(() => _taskCompletionSource.TrySetCanceled());
             SpinWait.SpinUntil(() => _taskCompletionSource.Task.IsCompleted);
 #else
             _taskCompletionSource.TrySetCanceled();
@@ -46,7 +42,7 @@ namespace MQTTnet.Internal
             // a new thread automatically (due to await). Furthermore _this_ thread will
             // do it. But _this_ thread is also reading incoming packets -> deadlock.
             // NET452 does not support RunContinuationsAsynchronously
-            System.Threading.Tasks.Task.Run(() => _taskCompletionSource.TrySetException(exception));
+            TestTry.TaskRun(() => _taskCompletionSource.TrySetException(exception));
             SpinWait.SpinUntil(() => _taskCompletionSource.Task.IsCompleted);
 #else
             _taskCompletionSource.TrySetException(exception);
@@ -65,8 +61,8 @@ namespace MQTTnet.Internal
             {
                 return false;
             }
-            
-            System.Threading.Tasks.Task.Run(() => _taskCompletionSource.TrySetResult(result));
+
+            TestTry.TaskRun(() => _taskCompletionSource.TrySetResult(result));
             SpinWait.SpinUntil(() => _taskCompletionSource.Task.IsCompleted);
 
             return true;
