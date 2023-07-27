@@ -21,14 +21,704 @@
         <PackageTags>海康威视;海康威视SDK;设备网络SDK;HCNetSDK;</PackageTags>
         <RepositoryUrl>https://www.gitee.com/erikzhouxin/nhardwares</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
+        <NoWarn>1701;1702;IDE0057;IDE0066;IDE0079;IDE0063;CS0618;NU5100</NoWarn>
+        <IncludeSymbols>true</IncludeSymbols>
+        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+        <PlatformTarget>$(Platform)</PlatformTarget>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)'=='Debug|net40'">
+        <DefineConstants>TRACE;DEBUG;NETFrame;NET40</DefineConstants>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)'=='Debug|net45'">
+        <DefineConstants>TRACE;DEBUG;NETFrame;NET45</DefineConstants>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)'=='Debug|netstandard2.1'">
+        <DefineConstants>TRACE;DEBUG;NETFx;NETStd</DefineConstants>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)'=='Debug|netcoreapp3.1'">
+        <DefineConstants>TRACE;DEBUG;NETFx;NETCore</DefineConstants>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)'=='Debug|net6.0'">
+        <DefineConstants>TRACE;DEBUG;NETFx;NET60</DefineConstants>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)'=='Release|net40'">
+        <DefineConstants>TRACE;NETFrame;NET40</DefineConstants>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)'=='Release|net45'">
+        <DefineConstants>TRACE;NETFrame;NET45</DefineConstants>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)'=='Release|netstandard2.1'">
+        <DefineConstants>TRACE;NETFx;NETStd</DefineConstants>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)'=='Release|netcoreapp3.1'">
+        <DefineConstants>TRACE;NETFx;NETCore</DefineConstants>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)'=='Release|net6.0'">
+        <DefineConstants>TRACE;NETFx;NET60</DefineConstants>
     </PropertyGroup>
     <ItemGroup>
-        <Compile Remove="beans\**" />
-        <EmbeddedResource Remove="beans\**" />
-        <None Remove="beans\**" />
+        <None Include=".\..\AppBeans\HikHCNetSDK\x64\HCNetSDK.dll">
+            <Visible>False</Visible>
+            <Link>plugins\hikhcnetsdk\x64\HCNetSDK.dll</Link>
+            <TargetPath>plugins\hikhcnetsdk\x64\HCNetSDK.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\hikhcnetsdk\x64\HCNetSDK.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\HikHCNetSDK\x64\PlayCtrl.dll">
+            <Visible>False</Visible>
+            <Link>plugins\hikhcnetsdk\x64\PlayCtrl.dll</Link>
+            <TargetPath>plugins\hikhcnetsdk\x64\PlayCtrl.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\hikhcnetsdk\x64\PlayCtrl.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\HikHCNetSDK\x64\AudioRender.dll">
+            <Visible>False</Visible>
+            <Link>plugins\hikhcnetsdk\x64\AudioRender.dll</Link>
+            <TargetPath>plugins\hikhcnetsdk\x64\AudioRender.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\hikhcnetsdk\x64\AudioRender.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\HikHCNetSDK\x64\GdiPlus.dll">
+            <Visible>False</Visible>
+            <Link>plugins\hikhcnetsdk\x64\GdiPlus.dll</Link>
+            <TargetPath>plugins\hikhcnetsdk\x64\GdiPlus.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\hikhcnetsdk\x64\GdiPlus.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\HikHCNetSDK\x64\HCCore.dll">
+            <Visible>False</Visible>
+            <Link>plugins\hikhcnetsdk\x64\HCCore.dll</Link>
+            <TargetPath>plugins\hikhcnetsdk\x64\HCCore.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\hikhcnetsdk\x64\HCCore.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\HikHCNetSDK\x64\hlog.dll">
+            <Visible>False</Visible>
+            <Link>plugins\hikhcnetsdk\x64\hlog.dll</Link>
+            <TargetPath>plugins\hikhcnetsdk\x64\hlog.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\hikhcnetsdk\x64\hlog.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\HikHCNetSDK\x64\HmMerge.dll">
+            <Visible>False</Visible>
+            <Link>plugins\hikhcnetsdk\x64\HmMerge.dll</Link>
+            <TargetPath>plugins\hikhcnetsdk\x64\HmMerge.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\hikhcnetsdk\x64\HmMerge.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\HikHCNetSDK\x64\hpr.dll">
+            <Visible>False</Visible>
+            <Link>plugins\hikhcnetsdk\x64\hpr.dll</Link>
+            <TargetPath>plugins\hikhcnetsdk\x64\hpr.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\hikhcnetsdk\x64\hpr.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\HikHCNetSDK\x64\HXVA.dll">
+            <Visible>False</Visible>
+            <Link>plugins\hikhcnetsdk\x64\HXVA.dll</Link>
+            <TargetPath>plugins\hikhcnetsdk\x64\HXVA.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\hikhcnetsdk\x64\HXVA.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\HikHCNetSDK\x64\libcrypto-1_1-x64.dll">
+            <Visible>False</Visible>
+            <Link>plugins\hikhcnetsdk\x64\libcrypto-1_1-x64.dll</Link>
+            <TargetPath>plugins\hikhcnetsdk\x64\libcrypto-1_1-x64.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\hikhcnetsdk\x64\libcrypto-1_1-x64.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\HikHCNetSDK\x64\libmmd.dll">
+            <Visible>False</Visible>
+            <Link>plugins\hikhcnetsdk\x64\libmmd.dll</Link>
+            <TargetPath>plugins\hikhcnetsdk\x64\libmmd.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\hikhcnetsdk\x64\libmmd.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\HikHCNetSDK\x64\libssl-1_1-x64.dll">
+            <Visible>False</Visible>
+            <Link>plugins\hikhcnetsdk\x64\libssl-1_1-x64.dll</Link>
+            <TargetPath>plugins\hikhcnetsdk\x64\libssl-1_1-x64.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\hikhcnetsdk\x64\libssl-1_1-x64.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\HikHCNetSDK\x64\MP_Render.dll">
+            <Visible>False</Visible>
+            <Link>plugins\hikhcnetsdk\x64\MP_Render.dll</Link>
+            <TargetPath>plugins\hikhcnetsdk\x64\MP_Render.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\hikhcnetsdk\x64\MP_Render.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\HikHCNetSDK\x64\NPQos.dll">
+            <Visible>False</Visible>
+            <Link>plugins\hikhcnetsdk\x64\NPQos.dll</Link>
+            <TargetPath>plugins\hikhcnetsdk\x64\NPQos.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\hikhcnetsdk\x64\NPQos.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\HikHCNetSDK\x64\OpenAL32.dll">
+            <Visible>False</Visible>
+            <Link>plugins\hikhcnetsdk\x64\OpenAL32.dll</Link>
+            <TargetPath>plugins\hikhcnetsdk\x64\OpenAL32.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\hikhcnetsdk\x64\OpenAL32.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\HikHCNetSDK\x64\SuperRender.dll">
+            <Visible>False</Visible>
+            <Link>plugins\hikhcnetsdk\x64\SuperRender.dll</Link>
+            <TargetPath>plugins\hikhcnetsdk\x64\SuperRender.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\hikhcnetsdk\x64\SuperRender.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\HikHCNetSDK\x64\YUVProcess.dll">
+            <Visible>False</Visible>
+            <Link>plugins\hikhcnetsdk\x64\YUVProcess.dll</Link>
+            <TargetPath>plugins\hikhcnetsdk\x64\YUVProcess.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\hikhcnetsdk\x64\YUVProcess.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\HikHCNetSDK\x64\zlib1.dll">
+            <Visible>False</Visible>
+            <Link>plugins\hikhcnetsdk\x64\zlib1.dll</Link>
+            <TargetPath>plugins\hikhcnetsdk\x64\zlib1.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\hikhcnetsdk\x64\zlib1.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\HikHCNetSDK\x64\HCNetSDKCom\AnalyzeData.dll">
+            <Visible>False</Visible>
+            <Link>plugins\hikhcnetsdk\x64\HCNetSDKCom\AnalyzeData.dll</Link>
+            <TargetPath>plugins\hikhcnetsdk\x64\HCNetSDKCom\AnalyzeData.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\hikhcnetsdk\x64\HCNetSDKCom\AnalyzeData.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\HikHCNetSDK\x64\HCNetSDKCom\AudioRender.dll">
+            <Visible>False</Visible>
+            <Link>plugins\hikhcnetsdk\x64\HCNetSDKCom\AudioRender.dll</Link>
+            <TargetPath>plugins\hikhcnetsdk\x64\HCNetSDKCom\AudioRender.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\hikhcnetsdk\x64\HCNetSDKCom\AudioRender.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\HikHCNetSDK\x64\HCNetSDKCom\HCAlarm.dll">
+            <Visible>False</Visible>
+            <Link>plugins\hikhcnetsdk\x64\HCNetSDKCom\HCAlarm.dll</Link>
+            <TargetPath>plugins\hikhcnetsdk\x64\HCNetSDKCom\HCAlarm.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\hikhcnetsdk\x64\HCNetSDKCom\HCAlarm.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\HikHCNetSDK\x64\HCNetSDKCom\HCCoreDevCfg.dll">
+            <Visible>False</Visible>
+            <Link>plugins\hikhcnetsdk\x64\HCNetSDKCom\HCCoreDevCfg.dll</Link>
+            <TargetPath>plugins\hikhcnetsdk\x64\HCNetSDKCom\HCCoreDevCfg.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\hikhcnetsdk\x64\HCNetSDKCom\HCCoreDevCfg.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\HikHCNetSDK\x64\HCNetSDKCom\HCDisplay.dll">
+            <Visible>False</Visible>
+            <Link>plugins\hikhcnetsdk\x64\HCNetSDKCom\HCDisplay.dll</Link>
+            <TargetPath>plugins\hikhcnetsdk\x64\HCNetSDKCom\HCDisplay.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\hikhcnetsdk\x64\HCNetSDKCom\HCDisplay.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\HikHCNetSDK\x64\HCNetSDKCom\HCGeneralCfgMgr.dll">
+            <Visible>False</Visible>
+            <Link>plugins\hikhcnetsdk\x64\HCNetSDKCom\HCGeneralCfgMgr.dll</Link>
+            <TargetPath>plugins\hikhcnetsdk\x64\HCNetSDKCom\HCGeneralCfgMgr.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\hikhcnetsdk\x64\HCNetSDKCom\HCGeneralCfgMgr.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\HikHCNetSDK\x64\HCNetSDKCom\HCIndustry.dll">
+            <Visible>False</Visible>
+            <Link>plugins\hikhcnetsdk\x64\HCNetSDKCom\HCIndustry.dll</Link>
+            <TargetPath>plugins\hikhcnetsdk\x64\HCNetSDKCom\HCIndustry.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\hikhcnetsdk\x64\HCNetSDKCom\HCIndustry.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\HikHCNetSDK\x64\HCNetSDKCom\HCPlayBack.dll">
+            <Visible>False</Visible>
+            <Link>plugins\hikhcnetsdk\x64\HCNetSDKCom\HCPlayBack.dll</Link>
+            <TargetPath>plugins\hikhcnetsdk\x64\HCNetSDKCom\HCPlayBack.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\hikhcnetsdk\x64\HCNetSDKCom\HCPlayBack.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\HikHCNetSDK\x64\HCNetSDKCom\HCPreview.dll">
+            <Visible>False</Visible>
+            <Link>plugins\hikhcnetsdk\x64\HCNetSDKCom\HCPreview.dll</Link>
+            <TargetPath>plugins\hikhcnetsdk\x64\HCNetSDKCom\HCPreview.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\hikhcnetsdk\x64\HCNetSDKCom\HCPreview.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\HikHCNetSDK\x64\HCNetSDKCom\HCVoiceTalk.dll">
+            <Visible>False</Visible>
+            <Link>plugins\hikhcnetsdk\x64\HCNetSDKCom\HCVoiceTalk.dll</Link>
+            <TargetPath>plugins\hikhcnetsdk\x64\HCNetSDKCom\HCVoiceTalk.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\hikhcnetsdk\x64\HCNetSDKCom\HCVoiceTalk.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\HikHCNetSDK\x64\HCNetSDKCom\libiconv2.dll">
+            <Visible>False</Visible>
+            <Link>plugins\hikhcnetsdk\x64\HCNetSDKCom\libiconv2.dll</Link>
+            <TargetPath>plugins\hikhcnetsdk\x64\HCNetSDKCom\libiconv2.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\hikhcnetsdk\x64\HCNetSDKCom\libiconv2.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\HikHCNetSDK\x64\HCNetSDKCom\OpenAL32.dll">
+            <Visible>False</Visible>
+            <Link>plugins\hikhcnetsdk\x64\HCNetSDKCom\OpenAL32.dll</Link>
+            <TargetPath>plugins\hikhcnetsdk\x64\HCNetSDKCom\OpenAL32.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\hikhcnetsdk\x64\HCNetSDKCom\OpenAL32.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\HikHCNetSDK\x64\HCNetSDKCom\StreamTransClient.dll">
+            <Visible>False</Visible>
+            <Link>plugins\hikhcnetsdk\x64\HCNetSDKCom\StreamTransClient.dll</Link>
+            <TargetPath>plugins\hikhcnetsdk\x64\HCNetSDKCom\StreamTransClient.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\hikhcnetsdk\x64\HCNetSDKCom\StreamTransClient.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\HikHCNetSDK\x64\HCNetSDKCom\SystemTransform.dll">
+            <Visible>False</Visible>
+            <Link>plugins\hikhcnetsdk\x64\HCNetSDKCom\SystemTransform.dll</Link>
+            <TargetPath>plugins\hikhcnetsdk\x64\HCNetSDKCom\SystemTransform.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\hikhcnetsdk\x64\HCNetSDKCom\SystemTransform.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="NSystem.Data.HardwareInterfaces" Version="2022.9.9" />
+        <None Include=".\..\AppBeans\hikhcnetsdk\x86\HCNetSDK.dll">
+            <Visible>False</Visible>
+            <Link>plugins\hikhcnetsdk\x86\HCNetSDK.dll</Link>
+            <TargetPath>plugins\hikhcnetsdk\x86\HCNetSDK.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\hikhcnetsdk\x86\HCNetSDK.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\hikhcnetsdk\x86\PlayCtrl.dll">
+            <Visible>False</Visible>
+            <Link>plugins\hikhcnetsdk\x86\PlayCtrl.dll</Link>
+            <TargetPath>plugins\hikhcnetsdk\x86\PlayCtrl.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\hikhcnetsdk\x86\PlayCtrl.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\hikhcnetsdk\x86\AudioRender.dll">
+            <Visible>False</Visible>
+            <Link>plugins\hikhcnetsdk\x86\AudioRender.dll</Link>
+            <TargetPath>plugins\hikhcnetsdk\x86\AudioRender.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\hikhcnetsdk\x86\AudioRender.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\hikhcnetsdk\x86\gdiplus.dll">
+            <Visible>False</Visible>
+            <Link>plugins\hikhcnetsdk\x86\gdiplus.dll</Link>
+            <TargetPath>plugins\hikhcnetsdk\x86\gdiplus.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\hikhcnetsdk\x86\gdiplus.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\hikhcnetsdk\x86\HCCore.dll">
+            <Visible>False</Visible>
+            <Link>plugins\hikhcnetsdk\x86\HCCore.dll</Link>
+            <TargetPath>plugins\hikhcnetsdk\x86\HCCore.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\hikhcnetsdk\x86\HCCore.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\hikhcnetsdk\x86\hlog.dll">
+            <Visible>False</Visible>
+            <Link>plugins\hikhcnetsdk\x86\hlog.dll</Link>
+            <TargetPath>plugins\hikhcnetsdk\x86\hlog.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\hikhcnetsdk\x86\hlog.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\hikhcnetsdk\x86\HmMerge.dll">
+            <Visible>False</Visible>
+            <Link>plugins\hikhcnetsdk\x86\HmMerge.dll</Link>
+            <TargetPath>plugins\hikhcnetsdk\x86\HmMerge.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\hikhcnetsdk\x86\HmMerge.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\hikhcnetsdk\x86\hpr.dll">
+            <Visible>False</Visible>
+            <Link>plugins\hikhcnetsdk\x86\hpr.dll</Link>
+            <TargetPath>plugins\hikhcnetsdk\x86\hpr.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\hikhcnetsdk\x86\hpr.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\hikhcnetsdk\x86\HXVA.dll">
+            <Visible>False</Visible>
+            <Link>plugins\hikhcnetsdk\x86\HXVA.dll</Link>
+            <TargetPath>plugins\hikhcnetsdk\x86\HXVA.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\hikhcnetsdk\x86\HXVA.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\hikhcnetsdk\x86\libcrypto-1_1.dll">
+            <Visible>False</Visible>
+            <Link>plugins\hikhcnetsdk\x86\libcrypto-1_1.dll</Link>
+            <TargetPath>plugins\hikhcnetsdk\x86\libcrypto-1_1.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\hikhcnetsdk\x86\libcrypto-1_1.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\hikhcnetsdk\x86\libssl-1_1.dll">
+            <Visible>False</Visible>
+            <Link>plugins\hikhcnetsdk\x86\libssl-1_1.dll</Link>
+            <TargetPath>plugins\hikhcnetsdk\x86\libssl-1_1.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\hikhcnetsdk\x86\libssl-1_1.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\hikhcnetsdk\x86\MP_Render.dll">
+            <Visible>False</Visible>
+            <Link>plugins\hikhcnetsdk\x86\MP_Render.dll</Link>
+            <TargetPath>plugins\hikhcnetsdk\x86\MP_Render.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\hikhcnetsdk\x86\MP_Render.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\hikhcnetsdk\x86\MP_VIE.dll">
+            <Visible>False</Visible>
+            <Link>plugins\hikhcnetsdk\x86\MP_VIE.dll</Link>
+            <TargetPath>plugins\hikhcnetsdk\x86\MP_VIE.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\hikhcnetsdk\x86\MP_VIE.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\hikhcnetsdk\x86\NPQos.dll">
+            <Visible>False</Visible>
+            <Link>plugins\hikhcnetsdk\x86\NPQos.dll</Link>
+            <TargetPath>plugins\hikhcnetsdk\x86\NPQos.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\hikhcnetsdk\x86\NPQos.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\hikhcnetsdk\x86\OpenAL32.dll">
+            <Visible>False</Visible>
+            <Link>plugins\hikhcnetsdk\x86\OpenAL32.dll</Link>
+            <TargetPath>plugins\hikhcnetsdk\x86\OpenAL32.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\hikhcnetsdk\x86\OpenAL32.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\hikhcnetsdk\x86\SuperRender.dll">
+            <Visible>False</Visible>
+            <Link>plugins\hikhcnetsdk\x86\SuperRender.dll</Link>
+            <TargetPath>plugins\hikhcnetsdk\x86\SuperRender.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\hikhcnetsdk\x86\SuperRender.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\hikhcnetsdk\x86\YUVProcess.dll">
+            <Visible>False</Visible>
+            <Link>plugins\hikhcnetsdk\x86\YUVProcess.dll</Link>
+            <TargetPath>plugins\hikhcnetsdk\x86\YUVProcess.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\hikhcnetsdk\x86\YUVProcess.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\hikhcnetsdk\x86\zlib1.dll">
+            <Visible>False</Visible>
+            <Link>plugins\hikhcnetsdk\x86\zlib1.dll</Link>
+            <TargetPath>plugins\hikhcnetsdk\x86\zlib1.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\hikhcnetsdk\x86\zlib1.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\hikhcnetsdk\x86\HCNetSDKCom\AnalyzeData.dll">
+            <Visible>False</Visible>
+            <Link>plugins\hikhcnetsdk\x86\HCNetSDKCom\AnalyzeData.dll</Link>
+            <TargetPath>plugins\hikhcnetsdk\x86\HCNetSDKCom\AnalyzeData.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\hikhcnetsdk\x86\HCNetSDKCom\AnalyzeData.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\hikhcnetsdk\x86\HCNetSDKCom\AudioIntercom.dll">
+            <Visible>False</Visible>
+            <Link>plugins\hikhcnetsdk\x86\HCNetSDKCom\AudioIntercom.dll</Link>
+            <TargetPath>plugins\hikhcnetsdk\x86\HCNetSDKCom\AudioIntercom.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\hikhcnetsdk\x86\HCNetSDKCom\AudioIntercom.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\hikhcnetsdk\x86\HCNetSDKCom\AudioRender.dll">
+            <Visible>False</Visible>
+            <Link>plugins\hikhcnetsdk\x86\HCNetSDKCom\AudioRender.dll</Link>
+            <TargetPath>plugins\hikhcnetsdk\x86\HCNetSDKCom\AudioRender.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\hikhcnetsdk\x86\HCNetSDKCom\AudioRender.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\hikhcnetsdk\x86\HCNetSDKCom\HCAlarm.dll">
+            <Visible>False</Visible>
+            <Link>plugins\hikhcnetsdk\x86\HCNetSDKCom\HCAlarm.dll</Link>
+            <TargetPath>plugins\hikhcnetsdk\x86\HCNetSDKCom\HCAlarm.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\hikhcnetsdk\x86\HCNetSDKCom\HCAlarm.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\hikhcnetsdk\x86\HCNetSDKCom\HCCoreDevCfg.dll">
+            <Visible>False</Visible>
+            <Link>plugins\hikhcnetsdk\x86\HCNetSDKCom\HCCoreDevCfg.dll</Link>
+            <TargetPath>plugins\hikhcnetsdk\x86\HCNetSDKCom\HCCoreDevCfg.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\hikhcnetsdk\x86\HCNetSDKCom\HCCoreDevCfg.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\hikhcnetsdk\x86\HCNetSDKCom\HCDisplay.dll">
+            <Visible>False</Visible>
+            <Link>plugins\hikhcnetsdk\x86\HCNetSDKCom\HCDisplay.dll</Link>
+            <TargetPath>plugins\hikhcnetsdk\x86\HCNetSDKCom\HCDisplay.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\hikhcnetsdk\x86\HCNetSDKCom\HCDisplay.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\hikhcnetsdk\x86\HCNetSDKCom\HCGeneralCfgMgr.dll">
+            <Visible>False</Visible>
+            <Link>plugins\hikhcnetsdk\x86\HCNetSDKCom\HCGeneralCfgMgr.dll</Link>
+            <TargetPath>plugins\hikhcnetsdk\x86\HCNetSDKCom\HCGeneralCfgMgr.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\hikhcnetsdk\x86\HCNetSDKCom\HCGeneralCfgMgr.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\hikhcnetsdk\x86\HCNetSDKCom\HCIndustry.dll">
+            <Visible>False</Visible>
+            <Link>plugins\hikhcnetsdk\x86\HCNetSDKCom\HCIndustry.dll</Link>
+            <TargetPath>plugins\hikhcnetsdk\x86\HCNetSDKCom\HCIndustry.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\hikhcnetsdk\x86\HCNetSDKCom\HCIndustry.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\hikhcnetsdk\x86\HCNetSDKCom\HCPlayBack.dll">
+            <Visible>False</Visible>
+            <Link>plugins\hikhcnetsdk\x86\HCNetSDKCom\HCPlayBack.dll</Link>
+            <TargetPath>plugins\hikhcnetsdk\x86\HCNetSDKCom\HCPlayBack.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\hikhcnetsdk\x86\HCNetSDKCom\HCPlayBack.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\hikhcnetsdk\x86\HCNetSDKCom\HCPreview.dll">
+            <Visible>False</Visible>
+            <Link>plugins\hikhcnetsdk\x86\HCNetSDKCom\HCPreview.dll</Link>
+            <TargetPath>plugins\hikhcnetsdk\x86\HCNetSDKCom\HCPreview.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\hikhcnetsdk\x86\HCNetSDKCom\HCPreview.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\hikhcnetsdk\x86\HCNetSDKCom\HCVoiceTalk.dll">
+            <Visible>False</Visible>
+            <Link>plugins\hikhcnetsdk\x86\HCNetSDKCom\HCVoiceTalk.dll</Link>
+            <TargetPath>plugins\hikhcnetsdk\x86\HCNetSDKCom\HCVoiceTalk.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\hikhcnetsdk\x86\HCNetSDKCom\HCVoiceTalk.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\hikhcnetsdk\x86\HCNetSDKCom\libiconv2.dll">
+            <Visible>False</Visible>
+            <Link>plugins\hikhcnetsdk\x86\HCNetSDKCom\libiconv2.dll</Link>
+            <TargetPath>plugins\hikhcnetsdk\x86\HCNetSDKCom\libiconv2.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\hikhcnetsdk\x86\HCNetSDKCom\libiconv2.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\hikhcnetsdk\x86\HCNetSDKCom\msvcr90.dll">
+            <Visible>False</Visible>
+            <Link>plugins\hikhcnetsdk\x86\HCNetSDKCom\msvcr90.dll</Link>
+            <TargetPath>plugins\hikhcnetsdk\x86\HCNetSDKCom\msvcr90.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\hikhcnetsdk\x86\HCNetSDKCom\msvcr90.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\hikhcnetsdk\x86\HCNetSDKCom\OpenAL32.dll">
+            <Visible>False</Visible>
+            <Link>plugins\hikhcnetsdk\x86\HCNetSDKCom\OpenAL32.dll</Link>
+            <TargetPath>plugins\hikhcnetsdk\x86\HCNetSDKCom\OpenAL32.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\hikhcnetsdk\x86\HCNetSDKCom\OpenAL32.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\hikhcnetsdk\x86\HCNetSDKCom\StreamTransClient.dll">
+            <Visible>False</Visible>
+            <Link>plugins\hikhcnetsdk\x86\HCNetSDKCom\StreamTransClient.dll</Link>
+            <TargetPath>plugins\hikhcnetsdk\x86\HCNetSDKCom\StreamTransClient.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\hikhcnetsdk\x86\HCNetSDKCom\StreamTransClient.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\hikhcnetsdk\x86\HCNetSDKCom\SystemTransform.dll">
+            <Visible>False</Visible>
+            <Link>plugins\hikhcnetsdk\x86\HCNetSDKCom\SystemTransform.dll</Link>
+            <TargetPath>plugins\hikhcnetsdk\x86\HCNetSDKCom\SystemTransform.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\hikhcnetsdk\x86\HCNetSDKCom\SystemTransform.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
     </ItemGroup>
     <ItemGroup>
         <Compile Update="Properties\Resources.Designer.cs">
@@ -40,5 +730,8 @@
             <Generator>ResXFileCodeGenerator</Generator>
             <LastGenOutput>Resources.Designer.cs</LastGenOutput>
         </EmbeddedResource>
+    </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="NSystem.Data.HardwareInterfaces" Version="2022.12.12" />
     </ItemGroup>
 </Project>

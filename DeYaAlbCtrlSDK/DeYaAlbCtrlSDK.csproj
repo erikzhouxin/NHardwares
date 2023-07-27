@@ -28,27 +28,57 @@
         <!--<IncludeBuildOutput>true</IncludeBuildOutput>-->
         <PlatformTarget>$(Platform)</PlatformTarget>
     </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)'=='Debug|net40'">
+        <DefineConstants>TRACE;DEBUG;NETFrame;NET40</DefineConstants>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)'=='Debug|net45'">
+        <DefineConstants>TRACE;DEBUG;NETFrame;NET45</DefineConstants>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)'=='Debug|netstandard2.1'">
+        <DefineConstants>TRACE;DEBUG;NETFx;NETStd</DefineConstants>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)'=='Debug|netcoreapp3.1'">
+        <DefineConstants>TRACE;DEBUG;NETFx;NETCore</DefineConstants>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)'=='Debug|net6.0'">
+        <DefineConstants>TRACE;DEBUG;NETFx;NET60</DefineConstants>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)'=='Release|net40'">
+        <DefineConstants>TRACE;NETFrame;NET40</DefineConstants>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)'=='Release|net45'">
+        <DefineConstants>TRACE;NETFrame;NET45</DefineConstants>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)'=='Release|netstandard2.1'">
+        <DefineConstants>TRACE;NETFx;NETStd</DefineConstants>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)'=='Release|netcoreapp3.1'">
+        <DefineConstants>TRACE;NETFx;NETCore</DefineConstants>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)'=='Release|net6.0'">
+        <DefineConstants>TRACE;NETFx;NET60</DefineConstants>
+    </PropertyGroup>
     <ItemGroup>
         <None Include=".\..\AppBeans\DeYaAlbCtrlSDK\x64\ALBCtrlDll.dll">
             <Visible>False</Visible>
-            <Link>plugins\albctrlsdk\x64\ALBCtrlDll.dll</Link>
-            <TargetPath>plugins\albctrlsdk\x64\ALBCtrlDll.dll</TargetPath>
+            <Link>plugins\deyaalbctrlsdk\x64\ALBCtrlDll.dll</Link>
+            <TargetPath>plugins\deyaalbctrlsdk\x64\ALBCtrlDll.dll</TargetPath>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
             <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
             <Pack>True</Pack>
-            <PackagePath>contentFiles\any\any\plugins\albctrlsdk\x64\ALBCtrlDll.dll</PackagePath>
+            <PackagePath>contentFiles\any\any\plugins\deyaalbctrlsdk\x64\ALBCtrlDll.dll</PackagePath>
             <PackageCopyToOutput>True</PackageCopyToOutput>
         </None>
     </ItemGroup>
     <ItemGroup>
         <None Include=".\..\AppBeans\DeYaAlbCtrlSDK\x86\ALBCtrlDll.dll">
             <Visible>False</Visible>
-            <Link>plugins\albctrlsdk\x86\ALBCtrlDll.dll</Link>
-            <TargetPath>plugins\albctrlsdk\x86\ALBCtrlDll.dll</TargetPath>
+            <Link>plugins\deyaalbctrlsdk\x86\ALBCtrlDll.dll</Link>
+            <TargetPath>plugins\deyaalbctrlsdk\x86\ALBCtrlDll.dll</TargetPath>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
             <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
             <Pack>True</Pack>
-            <PackagePath>contentFiles\any\any\plugins\albctrlsdk\x86\ALBCtrlDll.dll</PackagePath>
+            <PackagePath>contentFiles\any\any\plugins\deyaalbctrlsdk\x86\ALBCtrlDll.dll</PackagePath>
             <PackageCopyToOutput>True</PackageCopyToOutput>
         </None>
     </ItemGroup>

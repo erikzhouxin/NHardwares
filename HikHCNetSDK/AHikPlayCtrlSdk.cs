@@ -17,29 +17,25 @@ namespace System.Data.HikHCNetSDK
         /// </summary>
         public const string DllFileName = "PlayCtrl.dll";
         /// <summary>
-        /// 
+        /// SDK虚拟路径
         /// </summary>
-        public const String DllVirtualFileName = $"{DllVirtualPath}\\{DllFileName}";
+        public const String DllVirtualPath = HikHCNetSdk.DllVirtualPath;
+        /// <summary>
+        /// x86的dll目录
+        /// </summary>
+        public const String DllFileNameX86 = $@".\{DllVirtualPath}\x86\{DllFileName}";
+        /// <summary>
+        /// x64的dll目录
+        /// </summary>
+        public const String DllFileNameX64 = $@".\{DllVirtualPath}\x64\{DllFileName}";
         /// <summary>
         /// 基路径
         /// </summary>
-        public static String BaseDllFullPath { get; } = Path.GetFullPath(".");
-        /// <summary>
-        /// 基路径全称
-        /// </summary>
-        public static String BaseDllFullName { get; } = Path.GetFullPath(DllFileName);
-        /// <summary>
-        /// SDK虚拟路径
-        /// </summary>
-        public const String DllVirtualPath = @"plugins\haikanghcnetsdk";
+        public static String BaseFullPath { get; } = Path.GetFullPath(".");
         /// <summary>
         /// SDK全路径
         /// </summary>
         public static String DllFullPath { get; } = Path.GetFullPath(DllVirtualPath);
-        /// <summary>
-        /// SDK全名称
-        /// </summary>
-        public static String DllFullName { get; } = Path.Combine(DllFullPath, DllFileName);
         /// <summary>
         /// 时间一
         /// </summary>

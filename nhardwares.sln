@@ -81,7 +81,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestHDemoB.Wpf", "AppDemo\T
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2.道闸组件Barrier", "2.道闸组件Barrier", "{A406B2E3-D781-469D-A5E9-1A5802D7F791}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.图像识别Recognition", "3.图像识别Recognition", "{F71396B6-204F-48F8-81F9-96590D87ED3F}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.内容识别Recognition", "3.内容识别Recognition", "{F71396B6-204F-48F8-81F9-96590D87ED3F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.摄像监控Monitor", "4.摄像监控Monitor", "{C64C5380-1EAD-45ED-A64F-F919B2EE8899}"
 EndProject
@@ -103,7 +103,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestIDesktopDemo.SWpf", "Ap
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZycooSIPNetSDK.Cmd", "AppDemo\ZycooSIPNetSDK\Console\ZycooSIPNetSDK.Cmd.csproj", "{F9FF7C52-7479-4C6E-8A6A-1BF6CA7EA8F7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnbonLedBxSDK.Cls", "AppDemo\OnbonLedBxSDK\Console\OnbonLedBxSDK.Cls.csproj", "{BA2B4AAF-0868-4A1C-900A-9A55FCAF8EB5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnbonLedBxSDK.Cls", "AppDemo\OnbonLedBxSDK\Console\OnbonLedBxSDK.Cls.csproj", "{BA2B4AAF-0868-4A1C-900A-9A55FCAF8EB5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

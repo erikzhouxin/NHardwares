@@ -12,59 +12,31 @@ namespace System.Data.WeiGuangCodeBarSDK
     /// </summary>
     public static class SimpleVBarSdk
     {
-        static Lazy<ISimpleVBarSdkProxy> _RWLPNRSdk = new Lazy<ISimpleVBarSdkProxy>(() => new SimpleVBarSdkLoader(), true);
         /// <summary>
-        /// 静态构造
+        /// 动态链接库文件名
         /// </summary>
-        static SimpleVBarSdk()
-        {
-            Directory.CreateDirectory(SimpleVBarSdkLoader.DllFullPath);
-            if (Environment.Is64BitProcess)
-            {
-                bool isExists = CompareFile(SimpleVBarSdkLoader.DllFullName, Properties.Resources.X64_vbar);
-                if (!isExists)
-                {
-                    WriteFile(Properties.Resources.X64_vbar, Path.Combine(SimpleVBarSdkLoader.DllFullPath, "vbar.dll"));
-                }
-            }
-            else
-            {
-                bool isExists = CompareFile(SimpleVBarSdkLoader.DllFullName, Properties.Resources.X86_vbar);
-                if (!isExists)
-                {
-                    WriteFile(Properties.Resources.X86_vbar, Path.Combine(SimpleVBarSdkLoader.DllFullPath, "vbar.dll"));
-                }
-            }
-        }
-
-        private static void WriteFile(byte[] dllFile, string fullName)
-        {
-            try
-            {
-                if (File.Exists(fullName)) { File.Delete(fullName); }
-                File.WriteAllBytes(fullName, dllFile);
-            }
-            catch (Exception ex) { Console.WriteLine(ex); }
-        }
-
-        private static bool CompareFile(string file, byte[] res)
-        {
-            if (!File.Exists(file)) { return false; }
-            using (var hash = SHA1.Create())
-            {
-                using (var distFile = new FileStream(file, FileMode.Open, FileAccess.Read, FileShare.Read))
-                {
-                    var resHash = hash.ComputeHash(res);
-                    var distHash = hash.ComputeHash(distFile);
-                    if (resHash.Length != distHash.Length) { return false; }
-                    for (int i = 0; i < resHash.Length; i++)
-                    {
-                        if (resHash[i] != distHash[i]) { return false; }
-                    }
-                    return true;
-                }
-            }
-        }
+        public const String DllFileName = "vbar.dll";
+        /// <summary>
+        /// 动态链接库文件名
+        /// </summary>
+        public const String DllVirtualPath = @"plugins\weiguangcodebarsdk";
+        /// <summary>
+        /// x86的dll目录
+        /// </summary>
+        public const String DllFileNameX86 = $@".\{DllVirtualPath}\x86\{DllFileName}";
+        /// <summary>
+        /// x64的dll目录
+        /// </summary>
+        public const String DllFileNameX64 = $@".\{DllVirtualPath}\x64\{DllFileName}";
+        /// <summary>
+        /// 全路径
+        /// </summary>
+        public static string DllFullPath { get; } = Path.GetFullPath(".");
+        /// <summary>
+        /// 文件全路径
+        /// </summary>
+        public static String DllFullName { get; } = Path.GetFullPath(DllFileName);
+        static Lazy<ISimpleVBarSdkProxy> _vbarSdk = new Lazy<ISimpleVBarSdkProxy>(() => new SimpleVBarSdkLoader(), true);
         /// <summary>
         /// 创建SDK代理
         /// </summary>
@@ -72,44 +44,8 @@ namespace System.Data.WeiGuangCodeBarSDK
         /// <returns></returns>
         public static ISimpleVBarSdkProxy Create(bool isBase = false)
         {
-            var currentDir = SimpleVBarSdkDller.DllFullPath;
-            var pluginDir = SimpleVBarSdkLoader.DllFullPath;
-            if (isBase)
-            {
-                if (!File.Exists(SimpleVBarSdkDller.DllFullName))
-                {
-                    if (Directory.Exists(pluginDir))
-                    {
-                        try
-                        {
-                            CopyDirectory(pluginDir, currentDir);
-                        }
-                        catch { }
-                    }
-                }
-                return SimpleVBarSdkDller.Instance;
-            }
-            if (!Directory.Exists(pluginDir)) { return SimpleVBarSdkDller.Instance; }
-            return _RWLPNRSdk.Value;
-        }
-        /// <summary>
-        /// 复制目录
-        /// </summary>
-        /// <param name="src"></param>
-        /// <param name="tag"></param>
-        public static void CopyDirectory(string src, string tag)
-        {
-            foreach (var item in new DirectoryInfo(src).GetFileSystemInfos())
-            {
-                if (item is DirectoryInfo dir)
-                {
-                    var tagDir = Path.Combine(tag, dir.Name);
-                    if (!Directory.Exists(tagDir)) { Directory.CreateDirectory(tagDir); }
-                    CopyDirectory(dir.FullName, tagDir);
-                    continue;
-                }
-                File.Copy(item.FullName, Path.Combine(tag, item.Name), false);
-            }
+            if (!isBase) { return _vbarSdk.Value; }
+            return Environment.Is64BitProcess ? SimpleVBarSdkDllerX64.Instance : SimpleVBarSdkDllerX86.Instance;
         }
     }
 }

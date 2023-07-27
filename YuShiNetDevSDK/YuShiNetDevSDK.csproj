@@ -21,15 +21,765 @@
 		<PackageTags>宇视;宇视SDK;IPC/NVR/VMS/显控/摄像头;NETDEV;</PackageTags>
 		<RepositoryUrl>https://www.gitee.com/erikzhouxin/nhardwares</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
+        <NoWarn>1701;1702;IDE0057;IDE0066;IDE0079;IDE0063;CS0618;NU5100</NoWarn>
+        <IncludeSymbols>true</IncludeSymbols>
+        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+        <PlatformTarget>$(Platform)</PlatformTarget>
 	</PropertyGroup>
-	<ItemGroup>
-		<Compile Remove="beans\**" />
-		<EmbeddedResource Remove="beans\**" />
-		<None Remove="beans\**" />
-	</ItemGroup>
-	<ItemGroup>
-		<PackageReference Include="NSystem.Data.HardwareInterfaces" Version="2022.9.9" />
-	</ItemGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)'=='Debug|net40'">
+        <DefineConstants>TRACE;DEBUG;NETFrame;NET40</DefineConstants>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)'=='Debug|net45'">
+        <DefineConstants>TRACE;DEBUG;NETFrame;NET45</DefineConstants>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)'=='Debug|netstandard2.1'">
+        <DefineConstants>TRACE;DEBUG;NETFx;NETStd</DefineConstants>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)'=='Debug|netcoreapp3.1'">
+        <DefineConstants>TRACE;DEBUG;NETFx;NETCore</DefineConstants>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)'=='Debug|net6.0'">
+        <DefineConstants>TRACE;DEBUG;NETFx;NET60</DefineConstants>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)'=='Release|net40'">
+        <DefineConstants>TRACE;NETFrame;NET40</DefineConstants>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)'=='Release|net45'">
+        <DefineConstants>TRACE;NETFrame;NET45</DefineConstants>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)'=='Release|netstandard2.1'">
+        <DefineConstants>TRACE;NETFx;NETStd</DefineConstants>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)'=='Release|netcoreapp3.1'">
+        <DefineConstants>TRACE;NETFx;NETCore</DefineConstants>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)'=='Release|net6.0'">
+        <DefineConstants>TRACE;NETFx;NET60</DefineConstants>
+    </PropertyGroup>
+    <ItemGroup>
+        <None Include=".\..\AppBeans\YuShiNetDevSDK\x64\NetDEVSDK.dll">
+            <Visible>False</Visible>
+            <Link>plugins\yushinetdevsdk\x64\NetDEVSDK.dll</Link>
+            <TargetPath>plugins\yushinetdevsdk\x64\NetDEVSDK.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\yushinetdevsdk\x64\NetDEVSDK.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\YuShiNetDevSDK\x64\avutil_audio_aac.dll">
+            <Visible>False</Visible>
+            <Link>plugins\yushinetdevsdk\x64\avutil_audio_aac.dll</Link>
+            <TargetPath>plugins\yushinetdevsdk\x64\avutil_audio_aac.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\yushinetdevsdk\x64\avutil_audio_aac.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\YuShiNetDevSDK\x64\dsp_audio_aac.dll">
+            <Visible>False</Visible>
+            <Link>plugins\yushinetdevsdk\x64\dsp_audio_aac.dll</Link>
+            <TargetPath>plugins\yushinetdevsdk\x64\dsp_audio_aac.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\yushinetdevsdk\x64\dsp_audio_aac.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\YuShiNetDevSDK\x64\dsp_audio_aac_enc.dll">
+            <Visible>False</Visible>
+            <Link>plugins\yushinetdevsdk\x64\dsp_audio_aac_enc.dll</Link>
+            <TargetPath>plugins\yushinetdevsdk\x64\dsp_audio_aac_enc.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\yushinetdevsdk\x64\dsp_audio_aac_enc.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\YuShiNetDevSDK\x64\dsp_audio_g711.dll">
+            <Visible>False</Visible>
+            <Link>plugins\yushinetdevsdk\x64\dsp_audio_g711.dll</Link>
+            <TargetPath>plugins\yushinetdevsdk\x64\dsp_audio_g711.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\yushinetdevsdk\x64\dsp_audio_g711.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\YuShiNetDevSDK\x64\dsp_h264_gpu_dec.dll">
+            <Visible>False</Visible>
+            <Link>plugins\yushinetdevsdk\x64\dsp_h264_gpu_dec.dll</Link>
+            <TargetPath>plugins\yushinetdevsdk\x64\dsp_h264_gpu_dec.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\yushinetdevsdk\x64\dsp_h264_gpu_dec.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\YuShiNetDevSDK\x64\dsp_video_h264_1.dll">
+            <Visible>False</Visible>
+            <Link>plugins\yushinetdevsdk\x64\dsp_video_h264_1.dll</Link>
+            <TargetPath>plugins\yushinetdevsdk\x64\dsp_video_h264_1.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\yushinetdevsdk\x64\dsp_video_h264_1.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\YuShiNetDevSDK\x64\dsp_video_mjpeg.dll">
+            <Visible>False</Visible>
+            <Link>plugins\yushinetdevsdk\x64\dsp_video_mjpeg.dll</Link>
+            <TargetPath>plugins\yushinetdevsdk\x64\dsp_video_mjpeg.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\yushinetdevsdk\x64\dsp_video_mjpeg.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\YuShiNetDevSDK\x64\fisheye_rectify.dll">
+            <Visible>False</Visible>
+            <Link>plugins\yushinetdevsdk\x64\fisheye_rectify.dll</Link>
+            <TargetPath>plugins\yushinetdevsdk\x64\fisheye_rectify.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\yushinetdevsdk\x64\fisheye_rectify.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\YuShiNetDevSDK\x64\libcloud.dll">
+            <Visible>False</Visible>
+            <Link>plugins\yushinetdevsdk\x64\libcloud.dll</Link>
+            <TargetPath>plugins\yushinetdevsdk\x64\libcloud.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\yushinetdevsdk\x64\libcloud.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\YuShiNetDevSDK\x64\libcloudclient.dll">
+            <Visible>False</Visible>
+            <Link>plugins\yushinetdevsdk\x64\libcloudclient.dll</Link>
+            <TargetPath>plugins\yushinetdevsdk\x64\libcloudclient.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\yushinetdevsdk\x64\libcloudclient.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\YuShiNetDevSDK\x64\libcloudhttpcurl.dll">
+            <Visible>False</Visible>
+            <Link>plugins\yushinetdevsdk\x64\libcloudhttpcurl.dll</Link>
+            <TargetPath>plugins\yushinetdevsdk\x64\libcloudhttpcurl.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\yushinetdevsdk\x64\libcloudhttpcurl.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\YuShiNetDevSDK\x64\libcurl.dll">
+            <Visible>False</Visible>
+            <Link>plugins\yushinetdevsdk\x64\libcurl.dll</Link>
+            <TargetPath>plugins\yushinetdevsdk\x64\libcurl.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\yushinetdevsdk\x64\libcurl.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\YuShiNetDevSDK\x64\libstun.dll">
+            <Visible>False</Visible>
+            <Link>plugins\yushinetdevsdk\x64\libstun.dll</Link>
+            <TargetPath>plugins\yushinetdevsdk\x64\libstun.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\yushinetdevsdk\x64\libstun.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\YuShiNetDevSDK\x64\libwinpthread-1.dll">
+            <Visible>False</Visible>
+            <Link>plugins\yushinetdevsdk\x64\libwinpthread-1.dll</Link>
+            <TargetPath>plugins\yushinetdevsdk\x64\libwinpthread-1.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\yushinetdevsdk\x64\libwinpthread-1.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\YuShiNetDevSDK\x64\mfc90.dll">
+            <Visible>False</Visible>
+            <Link>plugins\yushinetdevsdk\x64\mfc90.dll</Link>
+            <TargetPath>plugins\yushinetdevsdk\x64\mfc90.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\yushinetdevsdk\x64\mfc90.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\YuShiNetDevSDK\x64\mfc90u.dll">
+            <Visible>False</Visible>
+            <Link>plugins\yushinetdevsdk\x64\mfc90u.dll</Link>
+            <TargetPath>plugins\yushinetdevsdk\x64\mfc90u.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\yushinetdevsdk\x64\mfc90u.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\YuShiNetDevSDK\x64\mfcm90.dll">
+            <Visible>False</Visible>
+            <Link>plugins\yushinetdevsdk\x64\mfcm90.dll</Link>
+            <TargetPath>plugins\yushinetdevsdk\x64\mfcm90.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\yushinetdevsdk\x64\mfcm90.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\YuShiNetDevSDK\x64\mfcm90u.dll">
+            <Visible>False</Visible>
+            <Link>plugins\yushinetdevsdk\x64\mfcm90u.dll</Link>
+            <TargetPath>plugins\yushinetdevsdk\x64\mfcm90u.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\yushinetdevsdk\x64\mfcm90u.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\YuShiNetDevSDK\x64\msvcm90.dll">
+            <Visible>False</Visible>
+            <Link>plugins\yushinetdevsdk\x64\msvcm90.dll</Link>
+            <TargetPath>plugins\yushinetdevsdk\x64\msvcm90.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\yushinetdevsdk\x64\msvcm90.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\YuShiNetDevSDK\x64\msvcp90.dll">
+            <Visible>False</Visible>
+            <Link>plugins\yushinetdevsdk\x64\msvcp90.dll</Link>
+            <TargetPath>plugins\yushinetdevsdk\x64\msvcp90.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\yushinetdevsdk\x64\msvcp90.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\YuShiNetDevSDK\x64\msvcp120.dll">
+            <Visible>False</Visible>
+            <Link>plugins\yushinetdevsdk\x64\msvcp120.dll</Link>
+            <TargetPath>plugins\yushinetdevsdk\x64\msvcp120.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\yushinetdevsdk\x64\msvcp120.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\YuShiNetDevSDK\x64\msvcr90.dll">
+            <Visible>False</Visible>
+            <Link>plugins\yushinetdevsdk\x64\msvcr90.dll</Link>
+            <TargetPath>plugins\yushinetdevsdk\x64\msvcr90.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\yushinetdevsdk\x64\msvcr90.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\YuShiNetDevSDK\x64\msvcr120.dll">
+            <Visible>False</Visible>
+            <Link>plugins\yushinetdevsdk\x64\msvcr120.dll</Link>
+            <TargetPath>plugins\yushinetdevsdk\x64\msvcr120.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\yushinetdevsdk\x64\msvcr120.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\YuShiNetDevSDK\x64\mxml1.dll">
+            <Visible>False</Visible>
+            <Link>plugins\yushinetdevsdk\x64\mxml1.dll</Link>
+            <TargetPath>plugins\yushinetdevsdk\x64\mxml1.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\yushinetdevsdk\x64\mxml1.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\YuShiNetDevSDK\x64\NDAO.dll">
+            <Visible>False</Visible>
+            <Link>plugins\yushinetdevsdk\x64\NDAO.dll</Link>
+            <TargetPath>plugins\yushinetdevsdk\x64\NDAO.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\yushinetdevsdk\x64\NDAO.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\YuShiNetDevSDK\x64\NDFace.dll">
+            <Visible>False</Visible>
+            <Link>plugins\yushinetdevsdk\x64\NDFace.dll</Link>
+            <TargetPath>plugins\yushinetdevsdk\x64\NDFace.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\yushinetdevsdk\x64\NDFace.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\YuShiNetDevSDK\x64\NDPlayer.dll">
+            <Visible>False</Visible>
+            <Link>plugins\yushinetdevsdk\x64\NDPlayer.dll</Link>
+            <TargetPath>plugins\yushinetdevsdk\x64\NDPlayer.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\yushinetdevsdk\x64\NDPlayer.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\YuShiNetDevSDK\x64\NDRM_Module.dll">
+            <Visible>False</Visible>
+            <Link>plugins\yushinetdevsdk\x64\NDRM_Module.dll</Link>
+            <TargetPath>plugins\yushinetdevsdk\x64\NDRM_Module.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\yushinetdevsdk\x64\NDRM_Module.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\YuShiNetDevSDK\x64\NDRSA.dll">
+            <Visible>False</Visible>
+            <Link>plugins\yushinetdevsdk\x64\NDRSA.dll</Link>
+            <TargetPath>plugins\yushinetdevsdk\x64\NDRSA.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\yushinetdevsdk\x64\NDRSA.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\YuShiNetDevSDK\x64\NDRtmp.dll">
+            <Visible>False</Visible>
+            <Link>plugins\yushinetdevsdk\x64\NDRtmp.dll</Link>
+            <TargetPath>plugins\yushinetdevsdk\x64\NDRtmp.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\yushinetdevsdk\x64\NDRtmp.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\YuShiNetDevSDK\x64\NetCloudSDK.dll">
+            <Visible>False</Visible>
+            <Link>plugins\yushinetdevsdk\x64\NetCloudSDK.dll</Link>
+            <TargetPath>plugins\yushinetdevsdk\x64\NetCloudSDK.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\yushinetdevsdk\x64\NetCloudSDK.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\YuShiNetDevSDK\x64\NetDEVDiscovery.dll">
+            <Visible>False</Visible>
+            <Link>plugins\yushinetdevsdk\x64\NetDEVDiscovery.dll</Link>
+            <TargetPath>plugins\yushinetdevsdk\x64\NetDEVDiscovery.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\yushinetdevsdk\x64\NetDEVDiscovery.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\YuShiNetDevSDK\x64\nvidia_gpu_dec.dll">
+            <Visible>False</Visible>
+            <Link>plugins\yushinetdevsdk\x64\nvidia_gpu_dec.dll</Link>
+            <TargetPath>plugins\yushinetdevsdk\x64\nvidia_gpu_dec.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\yushinetdevsdk\x64\nvidia_gpu_dec.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\YuShiNetDevSDK\x64\pthreadVC2.dll">
+            <Visible>False</Visible>
+            <Link>plugins\yushinetdevsdk\x64\pthreadVC2.dll</Link>
+            <TargetPath>plugins\yushinetdevsdk\x64\pthreadVC2.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\yushinetdevsdk\x64\pthreadVC2.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\YuShiNetDevSDK\x64\RSA.dll">
+            <Visible>False</Visible>
+            <Link>plugins\yushinetdevsdk\x64\RSA.dll</Link>
+            <TargetPath>plugins\yushinetdevsdk\x64\RSA.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\yushinetdevsdk\x64\RSA.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+    </ItemGroup>
+    <ItemGroup>
+        <None Include=".\..\AppBeans\YuShiNetDevSDK\x86\NetDEVSDK.dll">
+            <Visible>False</Visible>
+            <Link>plugins\yushinetdevsdk\x86\NetDEVSDK.dll</Link>
+            <TargetPath>plugins\yushinetdevsdk\x86\NetDEVSDK.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\yushinetdevsdk\x86\NetDEVSDK.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\YuShiNetDevSDK\x86\dsp_audio_aac.dll">
+            <Visible>False</Visible>
+            <Link>plugins\yushinetdevsdk\x86\dsp_audio_aac.dll</Link>
+            <TargetPath>plugins\yushinetdevsdk\x86\dsp_audio_aac.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\yushinetdevsdk\x86\dsp_audio_aac.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\YuShiNetDevSDK\x86\dsp_audio_aac_enc.dll">
+            <Visible>False</Visible>
+            <Link>plugins\yushinetdevsdk\x86\dsp_audio_aac_enc.dll</Link>
+            <TargetPath>plugins\yushinetdevsdk\x86\dsp_audio_aac_enc.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\yushinetdevsdk\x86\dsp_audio_aac_enc.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\YuShiNetDevSDK\x86\dsp_audio_g711.dll">
+            <Visible>False</Visible>
+            <Link>plugins\yushinetdevsdk\x86\dsp_audio_g711.dll</Link>
+            <TargetPath>plugins\yushinetdevsdk\x86\dsp_audio_g711.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\yushinetdevsdk\x86\dsp_audio_g711.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\YuShiNetDevSDK\x86\dsp_h264_gpu_dec.dll">
+            <Visible>False</Visible>
+            <Link>plugins\yushinetdevsdk\x86\dsp_h264_gpu_dec.dll</Link>
+            <TargetPath>plugins\yushinetdevsdk\x86\dsp_h264_gpu_dec.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\yushinetdevsdk\x86\dsp_h264_gpu_dec.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\YuShiNetDevSDK\x86\dsp_video_h264_1.dll">
+            <Visible>False</Visible>
+            <Link>plugins\yushinetdevsdk\x86\dsp_video_h264_1.dll</Link>
+            <TargetPath>plugins\yushinetdevsdk\x86\dsp_video_h264_1.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\yushinetdevsdk\x86\dsp_video_h264_1.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\YuShiNetDevSDK\x86\dsp_video_h265_32.dll">
+            <Visible>False</Visible>
+            <Link>plugins\yushinetdevsdk\x86\dsp_video_h265_32.dll</Link>
+            <TargetPath>plugins\yushinetdevsdk\x86\dsp_video_h265_32.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\yushinetdevsdk\x86\dsp_video_h265_32.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\YuShiNetDevSDK\x86\dsp_video_mjpeg.dll">
+            <Visible>False</Visible>
+            <Link>plugins\yushinetdevsdk\x86\dsp_video_mjpeg.dll</Link>
+            <TargetPath>plugins\yushinetdevsdk\x86\dsp_video_mjpeg.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\yushinetdevsdk\x86\dsp_video_mjpeg.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\YuShiNetDevSDK\x86\fisheye_rectify.dll">
+            <Visible>False</Visible>
+            <Link>plugins\yushinetdevsdk\x86\fisheye_rectify.dll</Link>
+            <TargetPath>plugins\yushinetdevsdk\x86\fisheye_rectify.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\yushinetdevsdk\x86\fisheye_rectify.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\YuShiNetDevSDK\x86\libcloud.dll">
+            <Visible>False</Visible>
+            <Link>plugins\yushinetdevsdk\x86\libcloud.dll</Link>
+            <TargetPath>plugins\yushinetdevsdk\x86\libcloud.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\yushinetdevsdk\x86\libcloud.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\YuShiNetDevSDK\x86\libcloudclient.dll">
+            <Visible>False</Visible>
+            <Link>plugins\yushinetdevsdk\x86\libcloudclient.dll</Link>
+            <TargetPath>plugins\yushinetdevsdk\x86\libcloudclient.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\yushinetdevsdk\x86\libcloudclient.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\YuShiNetDevSDK\x86\libcloudhttpcurl.dll">
+            <Visible>False</Visible>
+            <Link>plugins\yushinetdevsdk\x86\libcloudhttpcurl.dll</Link>
+            <TargetPath>plugins\yushinetdevsdk\x86\libcloudhttpcurl.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\yushinetdevsdk\x86\libcloudhttpcurl.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\YuShiNetDevSDK\x86\libcurl.dll">
+            <Visible>False</Visible>
+            <Link>plugins\yushinetdevsdk\x86\libcurl.dll</Link>
+            <TargetPath>plugins\yushinetdevsdk\x86\libcurl.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\yushinetdevsdk\x86\libcurl.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\YuShiNetDevSDK\x86\libstun.dll">
+            <Visible>False</Visible>
+            <Link>plugins\yushinetdevsdk\x86\libstun.dll</Link>
+            <TargetPath>plugins\yushinetdevsdk\x86\libstun.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\yushinetdevsdk\x86\libstun.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\YuShiNetDevSDK\x86\mfc90.dll">
+            <Visible>False</Visible>
+            <Link>plugins\yushinetdevsdk\x86\mfc90.dll</Link>
+            <TargetPath>plugins\yushinetdevsdk\x86\mfc90.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\yushinetdevsdk\x86\mfc90.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\YuShiNetDevSDK\x86\mfc90u.dll">
+            <Visible>False</Visible>
+            <Link>plugins\yushinetdevsdk\x86\mfc90u.dll</Link>
+            <TargetPath>plugins\yushinetdevsdk\x86\mfc90u.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\yushinetdevsdk\x86\mfc90u.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\YuShiNetDevSDK\x86\mfcm90.dll">
+            <Visible>False</Visible>
+            <Link>plugins\yushinetdevsdk\x86\mfcm90.dll</Link>
+            <TargetPath>plugins\yushinetdevsdk\x86\mfcm90.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\yushinetdevsdk\x86\mfcm90.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\YuShiNetDevSDK\x86\mfcm90u.dll">
+            <Visible>False</Visible>
+            <Link>plugins\yushinetdevsdk\x86\mfcm90u.dll</Link>
+            <TargetPath>plugins\yushinetdevsdk\x86\mfcm90u.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\yushinetdevsdk\x86\mfcm90u.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\YuShiNetDevSDK\x86\msvcm90.dll">
+            <Visible>False</Visible>
+            <Link>plugins\yushinetdevsdk\x86\msvcm90.dll</Link>
+            <TargetPath>plugins\yushinetdevsdk\x86\msvcm90.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\yushinetdevsdk\x86\msvcm90.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\YuShiNetDevSDK\x86\msvcp90.dll">
+            <Visible>False</Visible>
+            <Link>plugins\yushinetdevsdk\x86\msvcp90.dll</Link>
+            <TargetPath>plugins\yushinetdevsdk\x86\msvcp90.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\yushinetdevsdk\x86\msvcp90.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\YuShiNetDevSDK\x86\msvcp120.dll">
+            <Visible>False</Visible>
+            <Link>plugins\yushinetdevsdk\x86\msvcp120.dll</Link>
+            <TargetPath>plugins\yushinetdevsdk\x86\msvcp120.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\yushinetdevsdk\x86\msvcp120.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\YuShiNetDevSDK\x86\msvcr90.dll">
+            <Visible>False</Visible>
+            <Link>plugins\yushinetdevsdk\x86\msvcr90.dll</Link>
+            <TargetPath>plugins\yushinetdevsdk\x86\msvcr90.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\yushinetdevsdk\x86\msvcr90.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\YuShiNetDevSDK\x86\msvcr120.dll">
+            <Visible>False</Visible>
+            <Link>plugins\yushinetdevsdk\x86\msvcr120.dll</Link>
+            <TargetPath>plugins\yushinetdevsdk\x86\msvcr120.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\yushinetdevsdk\x86\msvcr120.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\YuShiNetDevSDK\x86\mxml1.dll">
+            <Visible>False</Visible>
+            <Link>plugins\yushinetdevsdk\x86\mxml1.dll</Link>
+            <TargetPath>plugins\yushinetdevsdk\x86\mxml1.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\yushinetdevsdk\x86\mxml1.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\YuShiNetDevSDK\x86\NDAO.dll">
+            <Visible>False</Visible>
+            <Link>plugins\yushinetdevsdk\x86\NDAO.dll</Link>
+            <TargetPath>plugins\yushinetdevsdk\x86\NDAO.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\yushinetdevsdk\x86\NDAO.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\YuShiNetDevSDK\x86\NDFace.dll">
+            <Visible>False</Visible>
+            <Link>plugins\yushinetdevsdk\x86\NDFace.dll</Link>
+            <TargetPath>plugins\yushinetdevsdk\x86\NDFace.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\yushinetdevsdk\x86\NDFace.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\YuShiNetDevSDK\x86\NDPlayer.dll">
+            <Visible>False</Visible>
+            <Link>plugins\yushinetdevsdk\x86\NDPlayer.dll</Link>
+            <TargetPath>plugins\yushinetdevsdk\x86\NDPlayer.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\yushinetdevsdk\x86\NDPlayer.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\YuShiNetDevSDK\x86\NDRM_Module.dll">
+            <Visible>False</Visible>
+            <Link>plugins\yushinetdevsdk\x86\NDRM_Module.dll</Link>
+            <TargetPath>plugins\yushinetdevsdk\x86\NDRM_Module.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\yushinetdevsdk\x86\NDRM_Module.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\YuShiNetDevSDK\x86\NDRSA.dll">
+            <Visible>False</Visible>
+            <Link>plugins\yushinetdevsdk\x86\NDRSA.dll</Link>
+            <TargetPath>plugins\yushinetdevsdk\x86\NDRSA.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\yushinetdevsdk\x86\NDRSA.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\YuShiNetDevSDK\x86\NDRtmp.dll">
+            <Visible>False</Visible>
+            <Link>plugins\yushinetdevsdk\x86\NDRtmp.dll</Link>
+            <TargetPath>plugins\yushinetdevsdk\x86\NDRtmp.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\yushinetdevsdk\x86\NDRtmp.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\YuShiNetDevSDK\x86\NetCloudSDK.dll">
+            <Visible>False</Visible>
+            <Link>plugins\yushinetdevsdk\x86\NetCloudSDK.dll</Link>
+            <TargetPath>plugins\yushinetdevsdk\x86\NetCloudSDK.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\yushinetdevsdk\x86\NetCloudSDK.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\YuShiNetDevSDK\x86\NetDEVDiscovery.dll">
+            <Visible>False</Visible>
+            <Link>plugins\yushinetdevsdk\x86\NetDEVDiscovery.dll</Link>
+            <TargetPath>plugins\yushinetdevsdk\x86\NetDEVDiscovery.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\yushinetdevsdk\x86\NetDEVDiscovery.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\YuShiNetDevSDK\x86\nvidia_gpu_dec.dll">
+            <Visible>False</Visible>
+            <Link>plugins\yushinetdevsdk\x86\nvidia_gpu_dec.dll</Link>
+            <TargetPath>plugins\yushinetdevsdk\x86\nvidia_gpu_dec.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\yushinetdevsdk\x86\nvidia_gpu_dec.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\YuShiNetDevSDK\x86\pthreadGC2.dll">
+            <Visible>False</Visible>
+            <Link>plugins\yushinetdevsdk\x86\pthreadGC2.dll</Link>
+            <TargetPath>plugins\yushinetdevsdk\x86\pthreadGC2.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\yushinetdevsdk\x86\pthreadGC2.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\YuShiNetDevSDK\x86\pthreadVC2.dll">
+            <Visible>False</Visible>
+            <Link>plugins\yushinetdevsdk\x86\pthreadVC2.dll</Link>
+            <TargetPath>plugins\yushinetdevsdk\x86\pthreadVC2.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\yushinetdevsdk\x86\pthreadVC2.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\YuShiNetDevSDK\x86\RSA.dll">
+            <Visible>False</Visible>
+            <Link>plugins\yushinetdevsdk\x86\RSA.dll</Link>
+            <TargetPath>plugins\yushinetdevsdk\x86\RSA.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\yushinetdevsdk\x86\RSA.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+    </ItemGroup>
 	<ItemGroup>
 		<Compile Update="Properties\Resources.Designer.cs">
 			<DesignTime>True</DesignTime>
@@ -40,5 +790,8 @@
 			<Generator>ResXFileCodeGenerator</Generator>
 			<LastGenOutput>Resources.Designer.cs</LastGenOutput>
 		</EmbeddedResource>
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="NSystem.Data.HardwareInterfaces" Version="2022.12.12" />
 	</ItemGroup>
 </Project>

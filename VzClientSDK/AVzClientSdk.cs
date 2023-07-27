@@ -20,6 +20,18 @@ namespace System.Data.VzClientSDK
         /// </summary>
         public const String DllFileName = "VzLPRSDK.dll";
         /// <summary>
+        /// 相对路径
+        /// </summary>
+        public const string DllVirtualPath = @"plugins\vzclientsdk";
+        /// <summary>
+        /// x86的dll目录
+        /// </summary>
+        public const String DllFileNameX86 = $@".\{DllVirtualPath}\x86\{DllFileName}";
+        /// <summary>
+        /// x64的dll目录
+        /// </summary>
+        public const String DllFileNameX64 = $@".\{DllVirtualPath}\x64\{DllFileName}";
+        /// <summary>
         /// 全路径
         /// </summary>
         public static string BaseDllFullPath { get; } = Path.GetFullPath(".");
@@ -27,10 +39,6 @@ namespace System.Data.VzClientSDK
         /// 文件全路径
         /// </summary>
         public static String BaseDllFullName { get; } = Path.GetFullPath(DllFileName);
-        /// <summary>
-        /// 相对路径
-        /// </summary>
-        public const string DllVirtualPath = @"plugins\vzclientsdk";
         /// <summary>
         /// 全路径
         /// </summary>
@@ -197,6 +205,7 @@ namespace System.Data.VzClientSDK
         /// </summary>
         public const int VZ_LPRC_REC_NO_PLATE = (1 << (LI_NO_PLATE));
         #endregion 可配置的识别类型
+        #region // 参数值
         /// <summary>
         /// 最大输出配置长度
         /// </summary>
@@ -257,47 +266,8 @@ namespace System.Data.VzClientSDK
         /// URL长度
         /// </summary>
         public const int URLLENGTH = 1000;
-
+        #endregion 参数值
         static Lazy<IVzClientSdkProxy> _vzClientSdk = new Lazy<IVzClientSdkProxy>(() => new VzClientSdkLoader(), true);
-        /// <summary>
-        /// 静态构造
-        /// </summary>
-        static VzClientSdk()
-        {
-            Directory.CreateDirectory(DllFullPath);
-            if (Environment.Is64BitProcess)
-            {
-                if (!SdkFileComponent.CompareResourceFile(DllFullName, Properties.Resources.X64_VzLPRSDK))
-                {
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_VzLPRSDK, Path.Combine(DllFullPath, "VzLPRSDK.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_avcodec_57, Path.Combine(DllFullPath, "avcodec-57.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_avformat_57, Path.Combine(DllFullPath, "avformat-57.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_avutil_54, Path.Combine(DllFullPath, "avutil-54.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_avutil_55, Path.Combine(DllFullPath, "avutil-55.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_libwinpthread_1, Path.Combine(DllFullPath, "libwinpthread-1.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_swscale_3, Path.Combine(DllFullPath, "swscale-3.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_VzAudioDataPlayer, Path.Combine(DllFullPath, "VzAudioDataPlayer.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_VzDrawsLib, Path.Combine(DllFullPath, "VzDrawsLib.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_VzPlayer2, Path.Combine(DllFullPath, "VzPlayer2.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_VzStreamClient, Path.Combine(DllFullPath, "VzStreamClient.dll"));
-                }
-            }
-            else
-            {
-                if (!SdkFileComponent.CompareResourceFile(DllFullName, Properties.Resources.X86_VzLPRSDK))
-                {
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_VzLPRSDK, Path.Combine(DllFullPath, "VzLPRSDK.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_avcodec_57, Path.Combine(DllFullPath, "avcodec-57.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_avformat_57, Path.Combine(DllFullPath, "avformat-57.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_avutil_55, Path.Combine(DllFullPath, "avutil-55.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_msvcr90, Path.Combine(DllFullPath, "msvcr90.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_VzAudioDataPlayer, Path.Combine(DllFullPath, "VzAudioDataPlayer.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_VzDrawsLib, Path.Combine(DllFullPath, "VzDrawsLib.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_VzPlayer2, Path.Combine(DllFullPath, "VzPlayer2.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_VzStreamClient, Path.Combine(DllFullPath, "VzStreamClient.dll"));
-                }
-            }
-        }
         /// <summary>
         /// plugins内容实例
         /// </summary>
@@ -310,9 +280,7 @@ namespace System.Data.VzClientSDK
         public static IVzClientSdkProxy Create(bool isBase = false)
         {
             if (!isBase) { return _vzClientSdk.Value; }
-            if (!File.Exists(DllFullName))
-            { SdkFileComponent.TryCopyDirectory(DllFullPath, BaseDllFullPath); }
-            return VzClientSdkDller.Instance;
+            return Environment.Is64BitProcess ? VzClientSdkDllerX64.Instance : VzClientSdkDllerX86.Instance;
         }
         #region // 日期时间转换
         /// <summary>

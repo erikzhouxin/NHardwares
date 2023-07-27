@@ -226,6 +226,7 @@ namespace System.Data.NHInterfaces
         }
 
         #region // 文件自定义
+
         /// <summary>
         /// 单文件压缩（生成的压缩包和第三方的解压软件兼容）
         /// </summary>
@@ -234,11 +235,12 @@ namespace System.Data.NHInterfaces
         public static string FileGZipCompress(string sourceFilePath)
         {
             string zipFileName = sourceFilePath + ".gz";
-            using (FileStream sourceFileStream = new FileInfo(sourceFilePath).OpenRead())
+            if (!File.Exists(sourceFilePath)) { return zipFileName; }
+            using (FileStream zipFileStream = File.Create(zipFileName))
             {
-                using (FileStream zipFileStream = File.Create(zipFileName))
+                using (GZipStream zipStream = new GZipStream(zipFileStream, CompressionMode.Compress))
                 {
-                    using (GZipStream zipStream = new GZipStream(zipFileStream, CompressionMode.Compress))
+                    using (FileStream sourceFileStream = File.OpenRead(sourceFilePath))
                     {
                         sourceFileStream.CopyTo(zipStream);
                     }
@@ -247,178 +249,160 @@ namespace System.Data.NHInterfaces
             return zipFileName;
         }
         /// <summary>
-        /// 自定义压缩SDK
+        /// 单文件解压缩（生成的压缩包和第三方的解压软件兼容）
         /// </summary>
-        /// <param name="map"></param>
+        /// <param name="sourceFilePath"></param>
         /// <param name="savePath"></param>
-        public static void FileGZipCompress(Dictionary<string, string> map, string savePath)
+        /// <returns></returns>
+        public static string FileGZipDecompress(string sourceFilePath, string savePath)
         {
-            using MemoryStream ms = new MemoryStream();
-            foreach (var kv in map)
+            if (!File.Exists(sourceFilePath)) { return savePath; }
+            using (FileStream sourceFileStream = File.OpenRead(sourceFilePath))
             {
-                var filePath = kv.Key;
-                var fileName = kv.Value;
-                if (File.Exists(filePath))
+                using (GZipStream zipStream = new GZipStream(sourceFileStream, CompressionMode.Decompress))
                 {
-                    byte[] fileNameBytes = System.Text.Encoding.UTF8.GetBytes(fileName);
-                    byte[] sizeBytes = BitConverter.GetBytes(fileNameBytes.Length);
-                    ms.Write(sizeBytes, 0, sizeBytes.Length);
-                    ms.Write(fileNameBytes, 0, fileNameBytes.Length);
-                    byte[] fileContentBytes = System.IO.File.ReadAllBytes(filePath);
-                    ms.Write(BitConverter.GetBytes(fileContentBytes.Length), 0, 4);
-                    ms.Write(fileContentBytes, 0, fileContentBytes.Length);
+                    using (FileStream zipFileStream = File.Create(savePath))
+                    {
+                        zipStream.CopyTo(zipFileStream);
+                    }
                 }
             }
-            ms.Flush();
-            ms.Position = 0;
-            using (FileStream zipFileStream = File.Create(savePath))
-            {
-                using (GZipStream zipStream = new GZipStream(zipFileStream, CompressionMode.Compress))
-                {
-                    ms.Position = 0;
-                    ms.CopyTo(zipStream);
-                    zipFileStream.Flush();
-                }
-            }
-            ms.Close();
+            return savePath;
         }
         /// <summary>
-        /// 自定义解压SDK
+        /// 自定义压缩SDK(不兼容解压工具)
+        /// [名称长度4][名称][文件长度8][文件]
         /// </summary>
-        /// <param name="zipFile"></param>
-        /// <param name="tagDir"></param>
-        public static void FileGZipDecompress(string zipFile, string tagDir)
+        /// <param name="map">文件压缩路径为Key,对应的物理路径为Value</param>
+        /// <param name="savePath"></param>
+        public static IAlertMsg FileGZipCompress(Dictionary<string, string> map, string savePath)
         {
-            if (!File.Exists(zipFile)) { return; }
-            byte[] fileSize = new byte[4];
-            using (FileStream fStream = File.Open(zipFile, FileMode.Open))
+            try
             {
-                using (MemoryStream ms = new MemoryStream())
+                using (var zipFileStream = File.Create(savePath))
                 {
-                    using (GZipStream zipStream = new GZipStream(fStream, CompressionMode.Decompress))
+                    using (var zipStream = new GZipStream(zipFileStream, CompressionMode.Compress))
                     {
-                        zipStream.CopyTo(ms);
-                    }
-                    ms.Position = 0;
-                    while (ms.Position != ms.Length)
-                    {
-                        ms.Read(fileSize, 0, fileSize.Length);
-                        int fileNameLength = BitConverter.ToInt32(fileSize, 0);
-                        byte[] fileNameBytes = new byte[fileNameLength];
-                        ms.Read(fileNameBytes, 0, fileNameBytes.Length);
-                        string fileName = System.Text.Encoding.UTF8.GetString(fileNameBytes);
-                        ms.Read(fileSize, 0, 4);
-                        int fileContentLength = BitConverter.ToInt32(fileSize, 0);
-                        string fileFullName = System.IO.Path.Combine(tagDir, fileName);
-                        var currDir = Path.GetDirectoryName(fileFullName);
-                        if (!Directory.Exists(currDir)) { Directory.CreateDirectory(currDir); }
-                        byte[] fileContentBytes = new byte[fileContentLength];
-                        ms.Read(fileContentBytes, 0, fileContentBytes.Length);
-                        using (FileStream childFileStream = File.Create(fileFullName))
+                        foreach (var kv in map)
                         {
-                            childFileStream.Write(fileContentBytes, 0, fileContentBytes.Length);
-                            childFileStream.Flush();
+                            var filePath = kv.Value;
+                            var fileName = kv.Key;
+                            if (File.Exists(filePath))
+                            {
+                                byte[] fileNameBytes = System.Text.Encoding.UTF8.GetBytes(fileName);
+                                byte[] sizeBytes = BitConverter.GetBytes(fileNameBytes.Length);
+                                zipStream.Write(sizeBytes, 0, sizeBytes.Length);
+                                zipStream.Write(fileNameBytes, 0, fileNameBytes.Length);
+                                using (var fsRead = File.OpenRead(filePath))
+                                {
+                                    zipStream.Write(BitConverter.GetBytes(fsRead.Length), 0, 8);
+                                    byte[] byts = new byte[1024];
+                                    int len = 0;
+                                    //4.通过读取文件流读取数据
+                                    while ((len = fsRead.Read(byts, 0, byts.Length)) > 0)
+                                    {
+                                        //通过压缩流写入数据
+                                        zipStream.Write(byts, 0, len);
+                                    }
+                                }
+                            }
+                            zipStream.Flush();
                         }
                     }
                 }
+                return (AlertMsg<string>)(true, "操作成功", savePath);
+            }
+            catch (Exception ex)
+            {
+                return new AlertException(ex);
+            }
+        }
+        /// <summary>
+        /// 自定义解压SDK(不兼容解压工具)
+        /// </summary>
+        /// <param name="zipFile"></param>
+        /// <param name="tagDir"></param>
+        /// <param name="Fillter"></param>
+        public static IAlertMsg FileGZipDecompress(string zipFile, string tagDir, Func<string, bool> Fillter)
+        {
+            if (!File.Exists(zipFile)) { return AlertMsg.NotFound; }
+            Fillter ??= (s) => true;
+            try
+            {
+                using (FileStream fStream = File.Open(zipFile, FileMode.Open))
+                {
+                    using (GZipStream zipStream = new GZipStream(fStream, CompressionMode.Decompress))
+                    {
+                        while (zipStream.Position != zipStream.Length)
+                        {
+                            byte[] fileNameSize = new byte[4];
+                            zipStream.Read(fileNameSize, 0, fileNameSize.Length);
+                            int fileNameLength = BitConverter.ToInt32(fileNameSize, 0);
+                            byte[] fileNameBytes = new byte[fileNameLength];
+                            zipStream.Read(fileNameBytes, 0, fileNameBytes.Length);
+                            string fileName = System.Text.Encoding.UTF8.GetString(fileNameBytes);
+                            var fileSize = new byte[8];
+                            zipStream.Read(fileSize, 0, 8);
+                            var fileContentLength = BitConverter.ToInt64(fileSize, 0);
+                            if (!Fillter.Invoke(fileName))
+                            {
+                                zipStream.Position += fileContentLength;
+                                continue;
+                            }
+                            string fileFullName = System.IO.Path.Combine(tagDir, fileName);
+                            var currDir = Path.GetDirectoryName(fileFullName);
+                            if (!Directory.Exists(currDir)) { Directory.CreateDirectory(currDir); }
+                            using (FileStream childFileStream = File.Create(fileFullName))
+                            {
+                                long readLen = 0;
+                                while (readLen < fileContentLength)
+                                {
+                                    var takeLen = fileContentLength - readLen;
+                                    if (takeLen > 1024) { takeLen = 1024; }
+                                    readLen += takeLen;
+                                    var content = new byte[takeLen];
+                                    zipStream.Read(content, 0, content.Length);
+                                    //通过文件流写入文件
+                                    childFileStream.Write(content, 0, (int)takeLen);//读取的长度为len，这样不会造成数据的错误
+                                }
+                                childFileStream.Flush();
+                            }
+                        }
+                    }
+                }
+                return (AlertMsg<String>)(true, "操作成功", tagDir);
+            }
+            catch (Exception ex)
+            {
+                return new AlertException(ex);
             }
         }
         /// <summary>
         /// 自定义压缩SDK
         /// </summary>
-        /// <param name="map"></param>
+        /// <param name="map">文件压缩路径为Key,对应的物理路径为Value</param>
         /// <param name="savePath"></param>
-        public static void FileGZipCompressSDK(Dictionary<string, string> map, string savePath)
-        {
-            using MemoryStream ms = new MemoryStream();
-            foreach (var kv in map)
-            {
-                var filePath = kv.Key;
-                var fileName = kv.Value;
-                if (File.Exists(filePath))
-                {
-                    byte[] fileNameBytes = System.Text.Encoding.UTF8.GetBytes(fileName);
-                    byte[] sizeBytes = BitConverter.GetBytes(fileNameBytes.Length);
-                    ms.Write(sizeBytes, 0, sizeBytes.Length);
-                    ms.Write(fileNameBytes, 0, fileNameBytes.Length);
-                    byte[] fileContentBytes = System.IO.File.ReadAllBytes(filePath);
-                    ms.Write(BitConverter.GetBytes(fileContentBytes.Length), 0, 4);
-                    ms.Write(fileContentBytes, 0, fileContentBytes.Length);
-                }
-            }
-            ms.Flush();
-            ms.Position = 0;
-            using (FileStream zipFileStream = File.Create(savePath))
-            {
-                using (GZipStream zipStream = new GZipStream(zipFileStream, CompressionMode.Compress))
-                {
-                    ms.Position = 0;
-                    ms.CopyTo(zipStream);
-                    zipFileStream.Flush();
-                }
-            }
-            ms.Close();
-        }
+        public static void FileGZipCompressSDK(Dictionary<string, string> map, string savePath) => FileGZipCompress(map, savePath);
         /// <summary>
         /// 自定义解压SDK
         /// </summary>
         /// <param name="zipFile"></param>
         /// <param name="tagDir"></param>
         /// <param name="isX86"></param>
-        public static void FileGZipDecompressSDK(string zipFile, string tagDir, bool? isX86 = null)
+        public static void FileGZipDecompressSDK(string zipFile, string tagDir, bool? isX86 = null) 
+            => FileGZipDecompress(zipFile, tagDir, f => IsPlatformTargetPath(f, isX86));
+        /// <summary>
+        /// 是平台标记开头的路径
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <param name="isX86"></param>
+        /// <returns></returns>
+        public static bool IsPlatformTargetPath(string fileName, bool? isX86)
         {
-            if (!File.Exists(zipFile)) { return; }
-            byte[] fileSize = new byte[4];
-            using (FileStream fStream = File.Open(zipFile, FileMode.Open))
-            {
-                using (MemoryStream ms = new MemoryStream())
-                {
-                    using (GZipStream zipStream = new GZipStream(fStream, CompressionMode.Decompress))
-                    {
-                        zipStream.CopyTo(ms);
-                    }
-                    ms.Position = 0;
-                    while (ms.Position != ms.Length)
-                    {
-                        ms.Read(fileSize, 0, fileSize.Length);
-                        int fileNameLength = BitConverter.ToInt32(fileSize, 0);
-                        byte[] fileNameBytes = new byte[fileNameLength];
-                        ms.Read(fileNameBytes, 0, fileNameBytes.Length);
-                        string fileName = System.Text.Encoding.UTF8.GetString(fileNameBytes);
-                        ms.Read(fileSize, 0, 4);
-                        int fileContentLength = BitConverter.ToInt32(fileSize, 0);
-                        if (isX86.HasValue)
-                        {
-                            if (isX86.Value)
-                            {
-                                if (!fileName.StartsWith("x86", StringComparison.OrdinalIgnoreCase))
-                                {
-                                    ms.Position = ms.Position + 4 + fileContentLength;
-                                    continue;
-                                }
-                            }
-                            else
-                            {
-                                if (!fileName.StartsWith("x64", StringComparison.OrdinalIgnoreCase))
-                                {
-                                    ms.Position = ms.Position + 4 + fileContentLength;
-                                    continue;
-                                }
-                            }
-                        }
-                        string fileFullName = System.IO.Path.Combine(tagDir, fileName);
-                        var currDir = Path.GetDirectoryName(fileFullName);
-                        if (!Directory.Exists(currDir)) { Directory.CreateDirectory(currDir); }
-                        byte[] fileContentBytes = new byte[fileContentLength];
-                        ms.Read(fileContentBytes, 0, fileContentBytes.Length);
-                        using (FileStream childFileStream = File.Create(fileFullName))
-                        {
-                            childFileStream.Write(fileContentBytes, 0, fileContentBytes.Length);
-                            childFileStream.Flush();
-                        }
-                    }
-                }
-            }
+            if (!isX86.HasValue) { return true; }
+            return isX86.Value
+                ? fileName.StartsWith("x86", StringComparison.OrdinalIgnoreCase)
+                : fileName.StartsWith("x64", StringComparison.OrdinalIgnoreCase);
         }
         #endregion 文件自定义
     }

@@ -27,25 +27,17 @@ namespace System.Data.DeYaIceIpcSDK
         /// </summary>
         public const String DllFileNameX86 = $@".\{DllVirtualPath}\x86\{DllFileName}";
         /// <summary>
-        /// x86的dll目录
+        /// x64的dll目录
         /// </summary>
         public const String DllFileNameX64 = $@".\{DllVirtualPath}\x64\{DllFileName}";
         /// <summary>
         /// 全路径
         /// </summary>
-        public static string BaseDllFullPath { get; } = Path.GetFullPath(".");
-        /// <summary>
-        /// 文件全路径
-        /// </summary>
-        public static String BaseDllFullName { get; } = Path.GetFullPath(DllFileName);
+        public static string BaseFullPath { get; } = Path.GetFullPath(".");
         /// <summary>
         /// 全路径
         /// </summary>
         public static string DllFullPath { get; } = Path.GetFullPath(DllVirtualPath);
-        /// <summary>
-        /// 文件全路径
-        /// </summary>
-        public static String DllFullName { get; } = Path.Combine(DllFullPath, DllFileName);
         static Lazy<IIceIpcSdkProxy> _iceIpcSdk = new Lazy<IIceIpcSdkProxy>(() => new IceIpcSdkLoader(), true);
         /// <summary>
         /// plugins内容实例

@@ -115,6 +115,7 @@ namespace OnbonLedBxSDK.Cls
             };
             err = bxdualsdk.BxDual_program_addProgram_G6(ref header);
             if (err != 0) { return; }
+
             Console.WriteLine("7.添加节目边框");
             //EQscreenframeHeader_G6 sfheader = new EQscreenframeHeader_G6
             //{
@@ -129,6 +130,7 @@ namespace OnbonLedBxSDK.Cls
             //bxdualsdk.BxDual_program_removeFrame_G6();
             ushort areaId = 0;
             Console.WriteLine("8.添加节目区域");
+
             #region // 第一段
             //创建显示分区，设置区域显示位置，示例创建一个区域编号为0，区域大小64*32的图文分区
             EQareaHeader_G6 aheader = new EQareaHeader_G6

@@ -90,5 +90,6 @@
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="NSystem.Data.Dabber" Version="2022.12.12" />
+        <PackageReference Include="System.ValueTuple" Version="4.5.0" />
     </ItemGroup>
 </Project>

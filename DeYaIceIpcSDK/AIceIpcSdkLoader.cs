@@ -1,4 +1,5 @@
 ﻿using System.Data.NHInterfaces;
+using System.IO;
 using System.Text;
 
 namespace System.Data.DeYaIceIpcSDK
@@ -160,7 +161,7 @@ namespace System.Data.DeYaIceIpcSDK
         }
         public override string GetFileFullName()
         {
-            return Environment.Is64BitProcess ? IceIpcSdk.DllFileNameX64 : IceIpcSdk.DllFileNameX64;
+            return Path.GetFullPath(Environment.Is64BitProcess ? IceIpcSdk.DllFileNameX64 : IceIpcSdk.DllFileNameX64);
         }
         #region // 显示实现接口
         uint IIceIpcSdkProxy.ICE_IPCSDK_BeginTalk(IntPtr hSDK) => _ICE_IPCSDK_BeginTalk.Invoke(hSDK);

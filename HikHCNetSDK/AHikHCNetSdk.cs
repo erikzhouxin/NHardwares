@@ -18,25 +18,25 @@ namespace System.Data.HikHCNetSDK
         /// </summary>
         public const string DllFileName = "HCNetSDK.dll";
         /// <summary>
-        /// 基路径
-        /// </summary>
-        public static String BaseDllFullPath { get; } = Path.GetFullPath(".");
-        /// <summary>
-        /// 基路径全称
-        /// </summary>
-        public static String BaseDllFullName { get; } = Path.GetFullPath(DllFileName);
-        /// <summary>
         /// SDK虚拟路径
         /// </summary>
-        public const String DllVirtualPath = @"plugins\haikanghcnetsdk";
+        public const String DllVirtualPath = @"plugins\hikhcnetsdk";
+        /// <summary>
+        /// x86的dll目录
+        /// </summary>
+        public const String DllFileNameX86 = $@".\{DllVirtualPath}\x86\{DllFileName}";
+        /// <summary>
+        /// x64的dll目录
+        /// </summary>
+        public const String DllFileNameX64 = $@".\{DllVirtualPath}\x64\{DllFileName}";
+        /// <summary>
+        /// 基路径
+        /// </summary>
+        public static String BaseFullPath { get; } = Path.GetFullPath(".");
         /// <summary>
         /// SDK全路径
         /// </summary>
         public static String DllFullPath { get; } = Path.GetFullPath(DllVirtualPath);
-        /// <summary>
-        /// SDK全名称
-        /// </summary>
-        public static String DllFullName { get; } = Path.Combine(DllFullPath, DllFileName);
         #region // 参数定义
         #region // 公共参数
         //SDK类型
@@ -2152,95 +2152,7 @@ namespace System.Data.HikHCNetSDK
         #endregion
 
         static Lazy<IHikHCNetSdkProxy> _netDevSdk = new Lazy<IHikHCNetSdkProxy>(() => new HikHCNetSdkLoader(), true);
-        static Lazy<IHikPlayCtrlSdkProxy> _playCtrlSdk = new Lazy<IHikPlayCtrlSdkProxy>(() => HikPlayCtrlSdkDller.Instance, true);
-        /// <summary>
-        /// 静态构造
-        /// </summary>
-        static HikHCNetSdk()
-        {
-            Directory.CreateDirectory(DllFullPath);
-            if (Environment.Is64BitProcess)
-            {
-                if (!SdkFileComponent.CompareResourceFile(DllFullName, Properties.Resources.X64_HCNetSDK))
-                {
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_HCNetSDK, Path.Combine(DllFullPath, "HCNetSDK.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_AudioRender, Path.Combine(DllFullPath, "AudioRender.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_GdiPlus, Path.Combine(DllFullPath, "GdiPlus.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_HCCore, Path.Combine(DllFullPath, "HCCore.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_hlog, Path.Combine(DllFullPath, "hlog.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_HmMerge, Path.Combine(DllFullPath, "HmMerge.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_hpr, Path.Combine(DllFullPath, "hpr.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_HXVA, Path.Combine(DllFullPath, "HXVA.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_libcrypto_1_1, Path.Combine(DllFullPath, "libcrypto-1_1-x64.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_libmmd, Path.Combine(DllFullPath, "libmmd.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_libssl_1_1, Path.Combine(DllFullPath, "libssl-1_1-x64.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_MP_Render, Path.Combine(DllFullPath, "MP_Render.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_NPQos, Path.Combine(DllFullPath, "NPQos.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_OpenAL32, Path.Combine(DllFullPath, "OpenAL32.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_PlayCtrl, Path.Combine(DllFullPath, "PlayCtrl.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_SuperRender, Path.Combine(DllFullPath, "SuperRender.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_YUVProcess, Path.Combine(DllFullPath, "YUVProcess.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_zlib1, Path.Combine(DllFullPath, "zlib1.dll"));
-                    Directory.CreateDirectory(Path.Combine(DllFullPath, "HCNetSDKCom"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_AnalyzeData, Path.Combine(DllFullPath, "HCNetSDKCom", "AnalyzeData.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_AudioIntercom, Path.Combine(DllFullPath, "HCNetSDKCom", "AudioIntercom.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_AudioRender, Path.Combine(DllFullPath, "HCNetSDKCom", "AudioRender.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_HCAlarm, Path.Combine(DllFullPath, "HCNetSDKCom", "HCAlarm.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_HCCoreDevCfg, Path.Combine(DllFullPath, "HCNetSDKCom", "HCCoreDevCfg.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_HCDisplay, Path.Combine(DllFullPath, "HCNetSDKCom", "HCDisplay.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_HCGeneralCfgMgr, Path.Combine(DllFullPath, "HCNetSDKCom", "HCGeneralCfgMgr.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_HCIndustry, Path.Combine(DllFullPath, "HCNetSDKCom", "HCIndustry.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_HCPlayBack, Path.Combine(DllFullPath, "HCNetSDKCom", "HCPlayBack.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_HCPreview, Path.Combine(DllFullPath, "HCNetSDKCom", "HCPreview.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_HCVoiceTalk, Path.Combine(DllFullPath, "HCNetSDKCom", "HCVoiceTalk.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_libiconv2, Path.Combine(DllFullPath, "HCNetSDKCom", "libiconv2.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_OpenAL32, Path.Combine(DllFullPath, "HCNetSDKCom", "OpenAL32.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_StreamTransClient, Path.Combine(DllFullPath, "HCNetSDKCom", "StreamTransClient.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_SystemTransform, Path.Combine(DllFullPath, "HCNetSDKCom", "SystemTransform.dll"));
-                }
-            }
-            else
-            {
-                if (!SdkFileComponent.CompareResourceFile(DllFullName, Properties.Resources.X86_HCNetSDK))
-                {
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_HCNetSDK, Path.Combine(DllFullPath, "HCNetSDK.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_AudioRender, Path.Combine(DllFullPath, "AudioRender.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_gdiplus, Path.Combine(DllFullPath, "gdiplus.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_HCCore, Path.Combine(DllFullPath, "HCCore.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_hlog, Path.Combine(DllFullPath, "hlog.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_HmMerge, Path.Combine(DllFullPath, "HmMerge.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_hpr, Path.Combine(DllFullPath, "hpr.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_HXVA, Path.Combine(DllFullPath, "HXVA.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_libcrypto_1_1, Path.Combine(DllFullPath, "libcrypto-1_1.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_libssl_1_1, Path.Combine(DllFullPath, "libssl-1_1.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_MP_Render, Path.Combine(DllFullPath, "MP_Render.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_MP_VIE, Path.Combine(DllFullPath, "MP_VIE.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_NPQos, Path.Combine(DllFullPath, "NPQos.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_OpenAL32, Path.Combine(DllFullPath, "OpenAL32.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_PlayCtrl, Path.Combine(DllFullPath, "PlayCtrl.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_SuperRender, Path.Combine(DllFullPath, "SuperRender.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_YUVProcess, Path.Combine(DllFullPath, "YUVProcess.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_zlib1, Path.Combine(DllFullPath, "zlib1.dll"));
-                    Directory.CreateDirectory(Path.Combine(DllFullPath, "HCNetSDKCom"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_AnalyzeData, Path.Combine(DllFullPath, "HCNetSDKCom", "AnalyzeData.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_AudioIntercom, Path.Combine(DllFullPath, "HCNetSDKCom", "AudioIntercom.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_AudioRender, Path.Combine(DllFullPath, "HCNetSDKCom", "AudioRender.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_HCAlarm, Path.Combine(DllFullPath, "HCNetSDKCom", "HCAlarm.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_HCCoreDevCfg, Path.Combine(DllFullPath, "HCNetSDKCom", "HCCoreDevCfg.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_HCDisplay, Path.Combine(DllFullPath, "HCNetSDKCom", "HCDisplay.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_HCGeneralCfgMgr, Path.Combine(DllFullPath, "HCNetSDKCom", "HCGeneralCfgMgr.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_HCIndustry, Path.Combine(DllFullPath, "HCNetSDKCom", "HCIndustry.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_HCPlayBack, Path.Combine(DllFullPath, "HCNetSDKCom", "HCPlayBack.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_HCPreview, Path.Combine(DllFullPath, "HCNetSDKCom", "HCPreview.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_HCVoiceTalk, Path.Combine(DllFullPath, "HCNetSDKCom", "HCVoiceTalk.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_libiconv2, Path.Combine(DllFullPath, "HCNetSDKCom", "libiconv2.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_msvcr90, Path.Combine(DllFullPath, "HCNetSDKCom", "msvcr90.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_OpenAL32, Path.Combine(DllFullPath, "HCNetSDKCom", "OpenAL32.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_StreamTransClient, Path.Combine(DllFullPath, "HCNetSDKCom", "StreamTransClient.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_SystemTransform, Path.Combine(DllFullPath, "HCNetSDKCom", "SystemTransform.dll"));
-                }
-            }
-        }
+        static Lazy<IHikPlayCtrlSdkProxy> _playCtrlSdk = new Lazy<IHikPlayCtrlSdkProxy>(() => new HikPlayCtrlSdkLoader(), true);
         /// <summary>
         /// plugins内容实例
         /// </summary>
@@ -2253,9 +2165,7 @@ namespace System.Data.HikHCNetSDK
         public static IHikHCNetSdkProxy Create(bool isBase = false)
         {
             if (!isBase) { return _netDevSdk.Value; }
-            if (!File.Exists(BaseDllFullName))
-            { SdkFileComponent.TryCopyDirectory(DllFullPath, BaseDllFullPath); }
-            return HikHCNetSdkDller.Instance;
+            return Environment.Is64BitProcess ? HikHCNetSdkDllerX64.Instance : HikHCNetSdkDllerX86.Instance;
         }
         /// <summary>
         /// 创建PlayM4的SDK代理
@@ -2265,9 +2175,7 @@ namespace System.Data.HikHCNetSDK
         public static IHikPlayCtrlSdkProxy CreatePlayM4(bool isBase = false)
         {
             if (!isBase) { return _playCtrlSdk.Value; }
-            if (!File.Exists(BaseDllFullName))
-            { SdkFileComponent.TryCopyDirectory(DllFullPath, BaseDllFullPath); }
-            return HikPlayCtrlSdkDller.Instance;
+            return Environment.Is64BitProcess ? HikPlayCtrlSdkDllerX64.Instance : HikPlayCtrlSdkDllerX86.Instance;
         }
     }
 }

@@ -190,7 +190,7 @@ namespace System.Data.HikHCNetSDK
     /// <returns></returns>
     public delegate int CALLBACKFUN_MESSAGE(int iMessageType, IntPtr pBuf, int iBufLen);
 
-    internal class DCreater
+    internal partial class DCreater
     {
         public delegate bool NET_DVR_AddDVR(int lUserID);
 

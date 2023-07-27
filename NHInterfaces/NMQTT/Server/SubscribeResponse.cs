@@ -2,6 +2,9 @@ using System.Collections.Generic;
 
 namespace System.Data.NMQTT
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public sealed class SubscribeResponse
     {
         /// <summary>
@@ -10,9 +13,13 @@ namespace System.Data.NMQTT
         /// MQTTv5 only.
         /// </summary>
         public MqttSubscribeReasonCode ReasonCode { get; set; }
-        
+        /// <summary>
+        /// 
+        /// </summary>
         public List<MqttUserProperty> UserProperties { get; } = new List<MqttUserProperty>();
-        
+        /// <summary>
+        /// 
+        /// </summary>
         public string ReasonString { get; set; }
     }
 }

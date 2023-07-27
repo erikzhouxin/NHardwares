@@ -59,25 +59,5 @@ namespace System.Data.WeiGuangCodeBarSDK.Properties {
                 resourceCulture = value;
             }
         }
-        
-        /// <summary>
-        ///   查找 System.Byte[] 类型的本地化资源。
-        /// </summary>
-        internal static byte[] X64_vbar {
-            get {
-                object obj = ResourceManager.GetObject("X64_vbar", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   查找 System.Byte[] 类型的本地化资源。
-        /// </summary>
-        internal static byte[] X86_vbar {
-            get {
-                object obj = ResourceManager.GetObject("X86_vbar", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
     }
 }
