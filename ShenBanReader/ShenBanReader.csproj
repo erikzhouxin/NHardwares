@@ -22,6 +22,10 @@
 		<NeutralLanguage>zh</NeutralLanguage>
 		<RepositoryUrl>https://www.gitee.com/erikzhouxin/nhardwares</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
+        <NoWarn>1701;1702;IDE0057;IDE0066;IDE0079;IDE0063;CS0618;NU5100</NoWarn>
+        <IncludeSymbols>true</IncludeSymbols>
+        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+        <PlatformTarget>$(Platform)</PlatformTarget>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)'=='Debug|net40'">
 		<DefineConstants>TRACE;DEBUG;NETFrame;NET40</DefineConstants>

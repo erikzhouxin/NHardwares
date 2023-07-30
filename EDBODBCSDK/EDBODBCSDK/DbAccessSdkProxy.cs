@@ -106,9 +106,13 @@ namespace System.Data.EDBODBCSDK
         /// </summary>
         public const string ExeFile = "NSystem.Data.EDBODBCEXE.exe";
         /// <summary>
+        /// x86的dll目录
+        /// </summary>
+        public const String ExeTarget = $@".\{DbAccessSdk.DllVirtualPath}\x86\EDBODBCEXE.exe";
+        /// <summary>
         /// 执行文件全名
         /// </summary>
-        public static String ExeFileName { get; } = Path.Combine(DbAccessSdk.DllFullPath, ExeFile);
+        public static String ExeFileName { get; } = Path.Combine(DbAccessSdk.DllFullPath, "x86", ExeFile);
         /// <summary>
         /// 单一实例
         /// </summary>
@@ -118,8 +122,9 @@ namespace System.Data.EDBODBCSDK
         /// </summary>
         static DbAccessSdkApi64()
         {
-            if (!SdkFileComponent.CompareResourceFile(ExeFileName, Properties.Resources.X86_EDBODBCEXE))
-            { SdkFileComponent.WriteResourceFile(Properties.Resources.X86_EDBODBCEXE, ExeFileName); }
+            var res = File.ReadAllBytes(Path.GetFullPath(ExeTarget));
+            if (!SdkFileComponent.CompareResourceFile(ExeFileName, res))
+            { SdkFileComponent.WriteResourceFile(res, ExeFileName); }
             Instance = new DbAccessSdkApi64();
         }
 
@@ -136,7 +141,7 @@ namespace System.Data.EDBODBCSDK
             _key = Guid.NewGuid().ToString("N");
             _process = new Process();
             _process.StartInfo.FileName = ExeFileName;
-            _process.StartInfo.WorkingDirectory = DbAccessSdk.DllFullPath;
+            _process.StartInfo.WorkingDirectory = Path.GetDirectoryName(ExeFileName);
             _process.StartInfo.Arguments = _key;
             _process.StartInfo.CreateNoWindow = true;
             _process.StartInfo.UseShellExecute = false;
@@ -169,7 +174,7 @@ namespace System.Data.EDBODBCSDK
 
         internal IAlertJson GetAlert(PiperSwapModel resObj)
         {
-            if(resObj.C == PiperSwapModel.ResponseCmd)
+            if (resObj.C == PiperSwapModel.ResponseCmd)
             {
                 return new AlertJson(true, resObj.M) { Data = resObj.R };
             }

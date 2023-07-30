@@ -21,6 +21,10 @@
         <PackageTags>微光;微光SDK;二维码识别;CodeBar;</PackageTags>
         <RepositoryUrl>https://www.gitee.com/erikzhouxin/nhardwares</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
+        <NoWarn>1701;1702;IDE0057;IDE0066;IDE0079;IDE0063;CS0618;NU5100</NoWarn>
+        <IncludeSymbols>true</IncludeSymbols>
+        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+        <PlatformTarget>$(Platform)</PlatformTarget>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)'=='Debug|net40'">
         <DefineConstants>TRACE;DEBUG;NETFrame;NET40</DefineConstants>
@@ -52,6 +56,30 @@
     <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)'=='Release|net6.0'">
         <DefineConstants>TRACE;NETFx;NET60</DefineConstants>
     </PropertyGroup>
+    <ItemGroup>
+        <None Include=".\..\AppBeans\WeiGuangCodeBarSDK\x64\vbar.dll">
+            <Visible>False</Visible>
+            <Link>plugins\weiguangcodebarsdk\x64\vbar.dll</Link>
+            <TargetPath>plugins\weiguangcodebarsdk\x64\vbar.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\weiguangcodebarsdk\x64\vbar.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+    </ItemGroup>
+    <ItemGroup>
+        <None Include=".\..\AppBeans\WeiGuangCodeBarSDK\x86\vbar.dll">
+            <Visible>False</Visible>
+            <Link>plugins\weiguangcodebarsdk\x86\vbar.dll</Link>
+            <TargetPath>plugins\weiguangcodebarsdk\x86\vbar.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\weiguangcodebarsdk\x86\vbar.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+    </ItemGroup>
     <ItemGroup>
         <Compile Update="Properties\Resources.Designer.cs">
             <DesignTime>True</DesignTime>

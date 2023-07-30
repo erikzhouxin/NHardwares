@@ -13,25 +13,21 @@ namespace System.Data.EDBODBCSDK
         /// <summary>
         /// 全路径
         /// </summary>
-        public static string BaseDllFullPath { get; } = Path.GetFullPath(".");
+        public static string BaseFullPath { get; } = Path.GetFullPath(".");
         /// <summary>
         /// 相对路径
         /// </summary>
-        public const string DllVirtualPath = @"plugins\edbodbcexe";
+        public const string DllVirtualPath = @"plugins\edbodbcsdk";
         /// <summary>
         /// 全路径
         /// </summary>
         public static string DllFullPath { get; } = Path.GetFullPath(DllVirtualPath);
 
-        static Lazy<IDbAccessSdkProxy> _hd100Card = new Lazy<IDbAccessSdkProxy>(() => new DbAccessSdkApi(), true);
-        static DbAccessSdk()
-        {
-            Directory.CreateDirectory(DllFullPath);
-        }
+        static Lazy<IDbAccessSdkProxy> _dbAccess = new Lazy<IDbAccessSdkProxy>(() => new DbAccessSdkApi(), true);
         /// <summary>
         /// plugins内容实例
         /// </summary>
-        public static IDbAccessSdkProxy Instance { get => Environment.Is64BitProcess ? DbAccessSdkApi64.Instance : _hd100Card.Value; }
+        public static IDbAccessSdkProxy Instance { get => Environment.Is64BitProcess ? DbAccessSdkApi64.Instance : _dbAccess.Value; }
         /// <summary>
         /// 创建SDK代理,SDK原生不支持64位,所以64位可能有性能损耗
         /// </summary>
@@ -40,7 +36,7 @@ namespace System.Data.EDBODBCSDK
         public static IDbAccessSdkProxy Create(bool isBase = false)
         {
             if (Environment.Is64BitProcess) { return DbAccessSdkApi64.Instance; }
-            return isBase ? new DbAccessSdkApi() : _hd100Card.Value;
+            return isBase ? new DbAccessSdkApi() : _dbAccess.Value;
         }
     }
 }

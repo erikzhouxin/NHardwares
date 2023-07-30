@@ -1,43 +1,121 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-	<PropertyGroup>
-		<TargetFrameworks>net40;net45;netstandard2.1;netcoreapp3.1;net6.0</TargetFrameworks>
-		<AssemblyName>NSystem.Data.HDSSSESDK</AssemblyName>
-		<RootNamespace>System.Data.HDSSSESDK</RootNamespace>
+    <PropertyGroup>
+        <TargetFrameworks>net40;net45;netstandard2.1;netcoreapp3.1;net6.0</TargetFrameworks>
+        <AssemblyName>NSystem.Data.HDSSSESDK</AssemblyName>
+        <RootNamespace>System.Data.HDSSSESDK</RootNamespace>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
         <LangVersion>latest</LangVersion>
-		<NoBuild>false</NoBuild>
-		<GenerateDocumentationFile>true</GenerateDocumentationFile>
-		<IncludeBuildOutput>true</IncludeBuildOutput>
-		<Copyright>Copyright 2020-2022</Copyright>
-		<Company>EZhouXin</Company>
-		<Authors>ErikZhouXin</Authors>
-		<Version>2022.12.12</Version>
-		<AssemblyVersion>2022.12.12.722</AssemblyVersion>
-		<FileVersion>2022.12.12.722</FileVersion>
-		<Description>华大HD100的HDSSSE32读写器命名管道实现64位使用32位SDK</Description>
-		<GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
-		<PackageLicenseExpression>MIT</PackageLicenseExpression>
-		<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-		<PackageTags>华大;HD-100;HDSSSE;</PackageTags>
-		<RepositoryUrl>https://github.com/ErikZhouXin/nhardwares</RepositoryUrl>
-		<RepositoryType>git</RepositoryType>
-	</PropertyGroup>
-	<ItemGroup>
-		<Compile Include="..\HDSSSEEXE\HD100CardSdkDller.cs" Link="HD100CardSdkDller.cs" />
-		<Compile Include="..\HDSSSEEXE\PipeSwapperModel.cs" Link="PipeSwapperModel.cs" />
-	</ItemGroup>
-	<ItemGroup>
-		<PackageReference Include="NSystem.Data.HardwareInterfaces" Version="2022.9.9" />
-	</ItemGroup>
-	<ItemGroup>
-		<Compile Update="Properties\Resources.Designer.cs">
-			<DesignTime>True</DesignTime>
-			<AutoGen>True</AutoGen>
-			<DependentUpon>Resources.resx</DependentUpon>
-		</Compile>
-		<EmbeddedResource Update="Properties\Resources.resx">
-			<Generator>ResXFileCodeGenerator</Generator>
-			<LastGenOutput>Resources.Designer.cs</LastGenOutput>
-		</EmbeddedResource>
-	</ItemGroup>
+        <NoBuild>false</NoBuild>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <IncludeBuildOutput>true</IncludeBuildOutput>
+        <Copyright>Copyright 2020-2022</Copyright>
+        <Company>EZhouXin</Company>
+        <Authors>ErikZhouXin</Authors>
+        <Version>2022.12.12</Version>
+        <AssemblyVersion>2022.12.12.722</AssemblyVersion>
+        <FileVersion>2022.12.12.722</FileVersion>
+        <Description>华大HD100的HDSSSE32读写器命名管道实现64位使用32位SDK</Description>
+        <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+        <PackageTags>华大;HD-100;HDSSSE;</PackageTags>
+        <RepositoryUrl>https://github.com/ErikZhouXin/nhardwares</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <NoWarn>1701;1702;IDE0057;IDE0066;IDE0079;IDE0063;CS0618;NU5100</NoWarn>
+        <IncludeSymbols>true</IncludeSymbols>
+        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+        <PlatformTarget>$(Platform)</PlatformTarget>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)'=='Debug|net40'">
+        <DefineConstants>TRACE;DEBUG;NETFrame;NET40</DefineConstants>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)'=='Debug|net45'">
+        <DefineConstants>TRACE;DEBUG;NETFrame;NET45</DefineConstants>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)'=='Debug|netstandard2.1'">
+        <DefineConstants>TRACE;DEBUG;NETFx;NETStd</DefineConstants>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)'=='Debug|netcoreapp3.1'">
+        <DefineConstants>TRACE;DEBUG;NETFx;NETCore</DefineConstants>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)'=='Debug|net6.0'">
+        <DefineConstants>TRACE;DEBUG;NETFx;NET60</DefineConstants>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)'=='Release|net40'">
+        <DefineConstants>TRACE;NETFrame;NET40</DefineConstants>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)'=='Release|net45'">
+        <DefineConstants>TRACE;NETFrame;NET45</DefineConstants>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)'=='Release|netstandard2.1'">
+        <DefineConstants>TRACE;NETFx;NETStd</DefineConstants>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)'=='Release|netcoreapp3.1'">
+        <DefineConstants>TRACE;NETFx;NETCore</DefineConstants>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)'=='Release|net6.0'">
+        <DefineConstants>TRACE;NETFx;NET60</DefineConstants>
+    </PropertyGroup>
+    <ItemGroup>
+        <None Include=".\..\beans\net40\HDSSSEEXE.exe">
+            <Visible>False</Visible>
+            <Link>plugins\hdsssesdk\x86\HDSSSEEXE.exe</Link>
+            <TargetPath>plugins\hdsssesdk\x86\HDSSSEEXE.exe</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\hdsssesdk\x86\HDSSSEEXE.exe</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+    </ItemGroup>
+    <ItemGroup>
+        <None Include=".\..\beans\BmpToJpg.dll">
+            <Visible>False</Visible>
+            <Link>plugins\hdsssesdk\x86\BmpToJpg.dll</Link>
+            <TargetPath>plugins\hdsssesdk\x86\BmpToJpg.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\hdsssesdk\x86\BmpToJpg.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\beans\HDSSSE32.dll">
+            <Visible>False</Visible>
+            <Link>plugins\hdsssesdk\x86\HDSSSE32.dll</Link>
+            <TargetPath>plugins\hdsssesdk\x86\HDSSSE32.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\hdsssesdk\x86\HDSSSE32.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\beans\UnPack.dll">
+            <Visible>False</Visible>
+            <Link>plugins\hdsssesdk\x86\UnPack.dll</Link>
+            <TargetPath>plugins\hdsssesdk\x86\UnPack.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\hdsssesdk\x86\UnPack.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+    </ItemGroup>
+    <ItemGroup>
+        <Compile Include="..\HDSSSEEXE\HD100CardSdkDller.cs" Link="HD100CardSdkDller.cs" />
+        <Compile Include="..\HDSSSEEXE\PipeSwapperModel.cs" Link="PipeSwapperModel.cs" />
+    </ItemGroup>
+    <ItemGroup>
+        <Compile Update="Properties\Resources.Designer.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>Resources.resx</DependentUpon>
+        </Compile>
+        <EmbeddedResource Update="Properties\Resources.resx">
+            <Generator>ResXFileCodeGenerator</Generator>
+            <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
+    </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="NSystem.Data.HardwareInterfaces" Version="2022.12.12" />
+    </ItemGroup>
 </Project>

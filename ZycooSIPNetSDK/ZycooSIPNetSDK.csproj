@@ -21,7 +21,7 @@
         <PackageTags>智科通信;SIP;网络电话;融合通信;</PackageTags>
         <RepositoryUrl>https://www.gitee.com/erikzhouxin/nhardwares</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
-        <NoWarn>1701;1702;IDE0057;IDE0066;IDE0079;IDE0063</NoWarn>
+        <NoWarn>1701;1702;IDE0057;IDE0066;IDE0079;IDE0063;CS0618;NU5100</NoWarn>
         <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     </PropertyGroup>

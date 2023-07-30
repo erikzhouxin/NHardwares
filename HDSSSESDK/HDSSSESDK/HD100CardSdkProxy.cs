@@ -514,7 +514,7 @@ namespace System.Data.HDSSSESDK
         }
         public override string GetFileFullName()
         {
-            return HD100CardSdk.DllFullName;
+            return Path.GetFullPath(HD100CardSdk.DllFileNameX86);
         }
         #region // 显示实现
         int IHD100CardSdkProxy.GetAddress(StringBuilder Address) => _GetAddress.Invoke(Address);

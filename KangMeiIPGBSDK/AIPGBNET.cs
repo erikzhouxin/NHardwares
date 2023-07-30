@@ -81,6 +81,14 @@ namespace System.Data.KangMeiIPGBSDK
         /// </summary>
         public const String DllFileName = "IPGBNET.dll";
         /// <summary>
+        /// x86的dll目录
+        /// </summary>
+        public const String DllFileNameX86 = $@".\{IPGBNETSdk.DllVirtualPath}\x86\{DllFileName}";
+        /// <summary>
+        /// x64的dll目录
+        /// </summary>
+        public const String DllFileNameX64 = $@".\{IPGBNETSdk.DllVirtualPath}\x64\{DllFileName}";
+        /// <summary>
         /// 全路径
         /// </summary>
         public static string DllFullPath { get; }
@@ -100,12 +108,8 @@ namespace System.Data.KangMeiIPGBSDK
         {
             _pLocker = new object();
             IPGBNETSdk.Create();
-            DllFullPath = IPGBNETSdk.DllFullPath;
-            DllFullName = Path.Combine(IPGBNETSdk.DllFullPath, DllFileName);
-            if (!File.Exists(DllFullName))
-            {
-                SdkFileComponent.WriteResourceFile(Environment.Is64BitProcess ? Properties.Resources.X64_IPGBNET : Properties.Resources.X86_IPGBNET, DllFullName);
-            }
+            DllFullName = Path.GetFullPath(Environment.Is64BitProcess ? DllFileNameX64 : DllFileNameX86);
+            DllFullPath = Path.GetDirectoryName(DllFullName);
             _pAssembly = Assembly.LoadFile(DllFullName);
             _pType = _pAssembly.GetType(typeof(IPGB.NET.IPGBNET).FullName);
             Instance = new IPGBNET(_pType.GetProperty(nameof(Instance)).GetValue(null, null));

@@ -22,9 +22,10 @@
         <RepositoryUrl>https://www.gitee.com/erikzhouxin/nhardwares</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <ApplicationIcon>Resources\favicon.ico</ApplicationIcon>
-        <NoWarn>1701;1702;IDE0057;IDE0066;IDE0079;IDE0063</NoWarn>
+        <NoWarn>1701;1702;IDE0057;IDE0066;IDE0079;IDE0063;CS0618;NU5100</NoWarn>
         <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+        <PlatformTarget>$(Platform)</PlatformTarget>
         <PackageReadmeFile>Resources\Readme.md</PackageReadmeFile>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)'=='Debug|net40'">

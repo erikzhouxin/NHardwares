@@ -2,7 +2,7 @@
 
 	<PropertyGroup>
 		<OutputType>WinExe</OutputType>
-		<TargetFrameworks>netcoreapp3.1</TargetFrameworks>
+		<TargetFrameworks>netcoreapp3.1;net45;net6.0-windows</TargetFrameworks>
 		<UseWindowsForms>true</UseWindowsForms>
 		<AssemblyName>HDSSSESDK.WinForm</AssemblyName>
 		<RootNamespace>System.Data.HDSSSESDK.WinForm</RootNamespace>

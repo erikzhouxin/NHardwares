@@ -21,7 +21,10 @@
 		<PackageTags>康美;康美SDK;音柱;IPGBNET;</PackageTags>
 		<RepositoryUrl>https://www.gitee.com/erikzhouxin/nhardwares</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
-		<NoWarn>1701;1702;IDE0057;IDE0066;IDE0079;IDE0063</NoWarn>
+        <NoWarn>1701;1702;IDE0057;IDE0066;IDE0079;IDE0063;CS0618;NU5100</NoWarn>
+        <IncludeSymbols>true</IncludeSymbols>
+        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+        <PlatformTarget>$(Platform)</PlatformTarget>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)'=='Debug|net40'">
 		<DefineConstants>TRACE;DEBUG;NETFrame;NET40</DefineConstants>
@@ -53,15 +56,250 @@
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)'=='Release|net6.0'">
 		<DefineConstants>TRACE;NETFx;NET60</DefineConstants>
 	</PropertyGroup>
-	<ItemGroup>
-		<Compile Remove="beans\**" />
-		<EmbeddedResource Remove="beans\**" />
-		<None Remove="beans\**" />
-	</ItemGroup>
-	<ItemGroup>
-		<PackageReference Include="NSystem.Data.HardwareInterfaces" Version="2022.9.9" />
-		<PackageReference Include="NAudio" Version="1.10.0" />
-	</ItemGroup>
+    <ItemGroup>
+        <None Include=".\..\AppBeans\KangMeiIPGBSDK\x64\IPGBNET.dll">
+            <Visible>False</Visible>
+            <Link>plugins\kangmeiipgbsdk\x64\IPGBNET.dll</Link>
+            <TargetPath>plugins\kangmeiipgbsdk\x64\IPGBNET.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\kangmeiipgbsdk\x64\IPGBNET.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\KangMeiIPGBSDK\x64\IPGBNETPush.dll">
+            <Visible>False</Visible>
+            <Link>plugins\kangmeiipgbsdk\x64\IPGBNETPush.dll</Link>
+            <TargetPath>plugins\kangmeiipgbsdk\x64\IPGBNETPush.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\kangmeiipgbsdk\x64\IPGBNETPush.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\KangMeiIPGBSDK\x64\IPGBNETSDK.dll">
+            <Visible>False</Visible>
+            <Link>plugins\kangmeiipgbsdk\x64\IPGBNETSDK.dll</Link>
+            <TargetPath>plugins\kangmeiipgbsdk\x64\IPGBNETSDK.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\kangmeiipgbsdk\x64\IPGBNETSDK.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\KangMeiIPGBSDK\x64\CtlAudioDrv.dll">
+            <Visible>False</Visible>
+            <Link>plugins\kangmeiipgbsdk\x64\CtlAudioDrv.dll</Link>
+            <TargetPath>plugins\kangmeiipgbsdk\x64\CtlAudioDrv.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\kangmeiipgbsdk\x64\CtlAudioDrv.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\KangMeiIPGBSDK\x64\IPGBPushStream.dll">
+            <Visible>False</Visible>
+            <Link>plugins\kangmeiipgbsdk\x64\IPGBPushStream.dll</Link>
+            <TargetPath>plugins\kangmeiipgbsdk\x64\IPGBPushStream.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\kangmeiipgbsdk\x64\IPGBPushStream.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\KangMeiIPGBSDK\x64\lame_enc_dll.dll">
+            <Visible>False</Visible>
+            <Link>plugins\kangmeiipgbsdk\x64\lame_enc_dll.dll</Link>
+            <TargetPath>plugins\kangmeiipgbsdk\x64\lame_enc_dll.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\kangmeiipgbsdk\x64\lame_enc_dll.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\KangMeiIPGBSDK\x64\libmp3lame.dll">
+            <Visible>False</Visible>
+            <Link>plugins\kangmeiipgbsdk\x64\libmp3lame.dll</Link>
+            <TargetPath>plugins\kangmeiipgbsdk\x64\libmp3lame.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\kangmeiipgbsdk\x64\libmp3lame.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\KangMeiIPGBSDK\x64\mfc100.dll">
+            <Visible>False</Visible>
+            <Link>plugins\kangmeiipgbsdk\x64\mfc100.dll</Link>
+            <TargetPath>plugins\kangmeiipgbsdk\x64\mfc100.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\kangmeiipgbsdk\x64\mfc100.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\KangMeiIPGBSDK\x64\mfc100u.dll">
+            <Visible>False</Visible>
+            <Link>plugins\kangmeiipgbsdk\x64\mfc100u.dll</Link>
+            <TargetPath>plugins\kangmeiipgbsdk\x64\mfc100u.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\kangmeiipgbsdk\x64\mfc100u.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\KangMeiIPGBSDK\x64\msvcp100.dll">
+            <Visible>False</Visible>
+            <Link>plugins\kangmeiipgbsdk\x64\msvcp100.dll</Link>
+            <TargetPath>plugins\kangmeiipgbsdk\x64\msvcp100.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\kangmeiipgbsdk\x64\msvcp100.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\KangMeiIPGBSDK\x64\msvcr100.dll">
+            <Visible>False</Visible>
+            <Link>plugins\kangmeiipgbsdk\x64\msvcr100.dll</Link>
+            <TargetPath>plugins\kangmeiipgbsdk\x64\msvcr100.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\kangmeiipgbsdk\x64\msvcr100.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\KangMeiIPGBSDK\x64\zlibwapi.dll">
+            <Visible>False</Visible>
+            <Link>plugins\kangmeiipgbsdk\x64\zlibwapi.dll</Link>
+            <TargetPath>plugins\kangmeiipgbsdk\x64\zlibwapi.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\kangmeiipgbsdk\x64\zlibwapi.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+    </ItemGroup>
+    <ItemGroup>
+        <None Include=".\..\AppBeans\KangMeiIPGBSDK\x86\IPGBNET.dll">
+            <Visible>False</Visible>
+            <Link>plugins\kangmeiipgbsdk\x86\IPGBNET.dll</Link>
+            <TargetPath>plugins\kangmeiipgbsdk\x86\IPGBNET.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\kangmeiipgbsdk\x86\IPGBNET.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\KangMeiIPGBSDK\x86\IPGBNETPush.dll">
+            <Visible>False</Visible>
+            <Link>plugins\kangmeiipgbsdk\x86\IPGBNETPush.dll</Link>
+            <TargetPath>plugins\kangmeiipgbsdk\x86\IPGBNETPush.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\kangmeiipgbsdk\x86\IPGBNETPush.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\KangMeiIPGBSDK\x86\IPGBNETSDK.dll">
+            <Visible>False</Visible>
+            <Link>plugins\kangmeiipgbsdk\x86\IPGBNETSDK.dll</Link>
+            <TargetPath>plugins\kangmeiipgbsdk\x86\IPGBNETSDK.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\kangmeiipgbsdk\x86\IPGBNETSDK.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\KangMeiIPGBSDK\x86\CtlAudioDrv.dll">
+            <Visible>False</Visible>
+            <Link>plugins\kangmeiipgbsdk\x86\CtlAudioDrv.dll</Link>
+            <TargetPath>plugins\kangmeiipgbsdk\x86\CtlAudioDrv.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\kangmeiipgbsdk\x86\CtlAudioDrv.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\KangMeiIPGBSDK\x86\IPGBPushStream.dll">
+            <Visible>False</Visible>
+            <Link>plugins\kangmeiipgbsdk\x86\IPGBPushStream.dll</Link>
+            <TargetPath>plugins\kangmeiipgbsdk\x86\IPGBPushStream.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\kangmeiipgbsdk\x86\IPGBPushStream.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\KangMeiIPGBSDK\x86\lame_enc_dll.dll">
+            <Visible>False</Visible>
+            <Link>plugins\kangmeiipgbsdk\x86\lame_enc_dll.dll</Link>
+            <TargetPath>plugins\kangmeiipgbsdk\x86\lame_enc_dll.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\kangmeiipgbsdk\x86\lame_enc_dll.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\KangMeiIPGBSDK\x86\libmp3lame.dll">
+            <Visible>False</Visible>
+            <Link>plugins\kangmeiipgbsdk\x86\libmp3lame.dll</Link>
+            <TargetPath>plugins\kangmeiipgbsdk\x86\libmp3lame.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\kangmeiipgbsdk\x86\libmp3lame.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\KangMeiIPGBSDK\x86\mfc100.dll">
+            <Visible>False</Visible>
+            <Link>plugins\kangmeiipgbsdk\x86\mfc100.dll</Link>
+            <TargetPath>plugins\kangmeiipgbsdk\x86\mfc100.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\kangmeiipgbsdk\x86\mfc100.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\KangMeiIPGBSDK\x86\mfc100u.dll">
+            <Visible>False</Visible>
+            <Link>plugins\kangmeiipgbsdk\x86\mfc100u.dll</Link>
+            <TargetPath>plugins\kangmeiipgbsdk\x86\mfc100u.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\kangmeiipgbsdk\x86\mfc100u.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\KangMeiIPGBSDK\x86\msvcp100.dll">
+            <Visible>False</Visible>
+            <Link>plugins\kangmeiipgbsdk\x86\msvcp100.dll</Link>
+            <TargetPath>plugins\kangmeiipgbsdk\x86\msvcp100.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\kangmeiipgbsdk\x86\msvcp100.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\KangMeiIPGBSDK\x86\msvcr100.dll">
+            <Visible>False</Visible>
+            <Link>plugins\kangmeiipgbsdk\x86\msvcr100.dll</Link>
+            <TargetPath>plugins\kangmeiipgbsdk\x86\msvcr100.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\kangmeiipgbsdk\x86\msvcr100.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+        <None Include=".\..\AppBeans\KangMeiIPGBSDK\x86\zlibwapi.dll">
+            <Visible>False</Visible>
+            <Link>plugins\kangmeiipgbsdk\x86\zlibwapi.dll</Link>
+            <TargetPath>plugins\kangmeiipgbsdk\x86\zlibwapi.dll</TargetPath>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+            <Pack>True</Pack>
+            <PackagePath>contentFiles\any\any\plugins\kangmeiipgbsdk\x86\zlibwapi.dll</PackagePath>
+            <PackageCopyToOutput>True</PackageCopyToOutput>
+        </None>
+    </ItemGroup>
 	<ItemGroup>
 		<Compile Update="Properties\Resources.Designer.cs">
 			<DesignTime>True</DesignTime>
@@ -73,18 +311,8 @@
 			<LastGenOutput>Resources.Designer.cs</LastGenOutput>
 		</EmbeddedResource>
 	</ItemGroup>
-	<ItemGroup Condition="'$(TargetFramework)' == 'net40'">
-	</ItemGroup>
-	<ItemGroup Condition="'$(TargetFramework)' == 'net45'">
-	</ItemGroup>
-	<ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.1'">
-	</ItemGroup>
-	<ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp3.1'">
-	</ItemGroup>
-	<ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
-	</ItemGroup>
-	<ItemGroup Condition="'$(TargetFramework)' == 'net40'">
-	</ItemGroup>
-	<ItemGroup Condition="'$(TargetFramework)' != 'net40'">
+	<ItemGroup>
+		<PackageReference Include="NSystem.Data.HardwareInterfaces" Version="2022.9.9" />
+		<PackageReference Include="NAudio" Version="1.10.0" />
 	</ItemGroup>
 </Project>

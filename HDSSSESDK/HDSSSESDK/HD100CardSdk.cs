@@ -18,40 +18,23 @@ namespace System.Data.HDSSSESDK
         /// </summary>
         public const String DllFileName = "HDSSSE32.dll";
         /// <summary>
-        /// 全路径
-        /// </summary>
-        public static string BaseDllFullPath { get; } = Path.GetFullPath(".");
-        /// <summary>
-        /// 文件全路径
-        /// </summary>
-        public static String BaseDllFullName { get; } = Path.GetFullPath(DllFileName);
-        /// <summary>
         /// 相对路径
         /// </summary>
-        public const string DllVirtualPath = @"plugins\hdssseexe";
+        public const string DllVirtualPath = @"plugins\hdsssesdk";
+        /// <summary>
+        /// x86的dll目录
+        /// </summary>
+        public const String DllFileNameX86 = $@".\{DllVirtualPath}\x86\{DllFileName}";
+        /// <summary>
+        /// 全路径
+        /// </summary>
+        public static string BaseFullPath { get; } = Path.GetFullPath(".");
         /// <summary>
         /// 全路径
         /// </summary>
         public static string DllFullPath { get; } = Path.GetFullPath(DllVirtualPath);
-        /// <summary>
-        /// 文件全路径
-        /// </summary>
-        public static String DllFullName { get; } = Path.Combine(DllFullPath, DllFileName);
 
         static Lazy<IHD100CardSdkProxy> _hd100Card = new Lazy<IHD100CardSdkProxy>(() => new HD100CardSdkLoader(), true);
-        /// <summary>
-        /// 静态构造
-        /// </summary>
-        static HD100CardSdk()
-        {
-            Directory.CreateDirectory(DllFullPath);
-            if (!SdkFileComponent.CompareResourceFile(DllFullName, Properties.Resources.X86_HDSSSE32))
-            {
-                SdkFileComponent.WriteResourceFile(Properties.Resources.X86_HDSSSE32, Path.Combine(DllFullPath, "HDSSSE32.dll"));
-                SdkFileComponent.WriteResourceFile(Properties.Resources.X86_UnPack, Path.Combine(DllFullPath, "UnPack.dll"));
-                SdkFileComponent.WriteResourceFile(Properties.Resources.X86_BmpToJpg, Path.Combine(DllFullPath, "BmpToJpg.dll"));
-            }
-        }
         /// <summary>
         /// plugins内容实例
         /// </summary>
@@ -65,16 +48,12 @@ namespace System.Data.HDSSSESDK
         {
             if (Environment.Is64BitProcess) { return HD100CardApi64.Instance; }
             if (!isBase) { return _hd100Card.Value; }
-            if (!File.Exists(DllFullName))
-            { SdkFileComponent.TryCopyDirectory(DllFullPath, BaseDllFullPath); }
             return HD100CardSdkDller.Instance;
         }
         [Obsolete("替代方案:HD100CardSdk.Create")]
         internal static IHD100CardApi CreateApi()
         {
             if (Environment.Is64BitProcess) { return HD100CardApi64.Instance; }
-            if (!File.Exists(DllFullName))
-            { SdkFileComponent.TryCopyDirectory(DllFullPath, BaseDllFullPath); }
             return new HD100CardApi();
         }
     }

@@ -16,25 +16,26 @@ namespace System.Data.KangMeiIPGBSDK
         /// </summary>
         public const String DllFileName = "IPGBPushStream.dll";
         /// <summary>
-        /// 全路径
-        /// </summary>
-        public static string BaseDllFullPath { get; } = Path.GetFullPath(".");
-        /// <summary>
-        /// 文件全路径
-        /// </summary>
-        public static String BaseDllFullName { get; } = Path.GetFullPath(DllFileName);
-        /// <summary>
         /// 相对路径
         /// </summary>
-        public const string DllVirtualPath = @"plugins\kangmeiipgbsdk";
+        public const string DllVirtualPath = IPGBNETSdk.DllVirtualPath;
+        /// <summary>
+        /// x86的dll目录
+        /// </summary>
+        public const String DllFileNameX86 = $@".\{DllVirtualPath}\x86\{DllFileName}";
+        /// <summary>
+        /// x64的dll目录
+        /// </summary>
+        public const String DllFileNameX64 = $@".\{DllVirtualPath}\x64\{DllFileName}";
+        /// <summary>
+        /// 全路径
+        /// </summary>
+        public static string BaseFullPath { get; } = Path.GetFullPath(".");
         /// <summary>
         /// 全路径
         /// </summary>
         public static string DllFullPath { get; } = Path.GetFullPath(DllVirtualPath);
-        /// <summary>
-        /// 文件全路径
-        /// </summary>
-        public static String DllFullName { get; } = Path.Combine(DllFullPath, DllFileName);
+        #region // 参数定义
         /// <summary>
         /// 声卡名称
         /// </summary>
@@ -63,6 +64,7 @@ namespace System.Data.KangMeiIPGBSDK
         /// 本地文件计数
         /// </summary>
         public const int IPGBPUSH_MAX_LCAFILECOUT = 60;
+        #endregion 参数定义
         /// <summary>
         /// 创建SDK代理
         /// </summary>

@@ -20,25 +20,26 @@ namespace System.Data.KangMeiIPGBSDK
         /// </summary>
         public const String DllFileName = "IPGBNETSDK.dll";
         /// <summary>
-        /// 全路径
-        /// </summary>
-        public static string BaseDllFullPath { get; } = Path.GetFullPath(".");
-        /// <summary>
-        /// 文件全路径
-        /// </summary>
-        public static String BaseDllFullName { get; } = Path.GetFullPath(DllFileName);
-        /// <summary>
         /// 相对路径
         /// </summary>
         public const string DllVirtualPath = @"plugins\kangmeiipgbsdk";
         /// <summary>
+        /// x86的dll目录
+        /// </summary>
+        public const String DllFileNameX86 = $@".\{DllVirtualPath}\x86\{DllFileName}";
+        /// <summary>
+        /// x64的dll目录
+        /// </summary>
+        public const String DllFileNameX64 = $@".\{DllVirtualPath}\x64\{DllFileName}";
+        /// <summary>
+        /// 全路径
+        /// </summary>
+        public static string BaseFullPath { get; } = Path.GetFullPath(".");
+        /// <summary>
         /// 全路径
         /// </summary>
         public static string DllFullPath { get; } = Path.GetFullPath(DllVirtualPath);
-        /// <summary>
-        /// 文件全路径
-        /// </summary>
-        public static String DllFullName { get; } = Path.Combine(DllFullPath, DllFileName);
+        #region // 参数定义
         /// <summary>
         /// 最大IP地址长度
         /// </summary>
@@ -111,7 +112,7 @@ namespace System.Data.KangMeiIPGBSDK
         /// 第三方消防系统信号一次输入触发数
         /// </summary>
         public const int IPGB_MAX_THREEFIRCOUT = 32;
-
+        #endregion 参数定义
         static Lazy<IIPGBNETSdkProxy> _IPGBNETSdk = new Lazy<IIPGBNETSdkProxy>(() => new IPGBNETSdkLoader(), true);
         static Lazy<IIPGBPUSHSdkProxy> _IPGBPUSHSdk = new Lazy<IIPGBPUSHSdkProxy>(() => new IPGBPUSHSdkLoader(), true);
         /// <summary>
@@ -120,43 +121,6 @@ namespace System.Data.KangMeiIPGBSDK
         static IPGBNETSdk()
         {
             MediaFoundationApi.Startup();
-            Directory.CreateDirectory(DllFullPath);
-            if (Environment.Is64BitProcess)
-            {
-                if (!SdkFileComponent.CompareResourceFile(DllFullName, Properties.Resources.X64_IPGBNETSDK))
-                {
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_IPGBNET, Path.Combine(DllFullPath, "IPGBNET.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_IPGBNETPush, Path.Combine(DllFullPath, "IPGBNETPush.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_IPGBNETSDK, Path.Combine(DllFullPath, "IPGBNETSDK.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_CtlAudioDrv, Path.Combine(DllFullPath, "CtlAudioDrv.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_IPGBPushStream, Path.Combine(DllFullPath, "IPGBPushStream.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_lame_enc_dll, Path.Combine(DllFullPath, "lame_enc_dll.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_libmp3lame, Path.Combine(DllFullPath, "libmp3lame.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_mfc100, Path.Combine(DllFullPath, "mfc100.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_mfc100u, Path.Combine(DllFullPath, "mfc100u.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_msvcp100, Path.Combine(DllFullPath, "msvcp100.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_msvcr100, Path.Combine(DllFullPath, "msvcr100.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X64_zlibwapi, Path.Combine(DllFullPath, "zlibwapi.dll"));
-                }
-            }
-            else
-            {
-                if (!SdkFileComponent.CompareResourceFile(DllFullName, Properties.Resources.X86_IPGBNETSDK))
-                {
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_IPGBNET, Path.Combine(DllFullPath, "IPGBNET.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_IPGBNETPush, Path.Combine(DllFullPath, "IPGBNETPush.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_IPGBNETSDK, Path.Combine(DllFullPath, "IPGBNETSDK.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_CtlAudioDrv, Path.Combine(DllFullPath, "CtlAudioDrv.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_IPGBPushStream, Path.Combine(DllFullPath, "IPGBPushStream.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_lame_enc_dll, Path.Combine(DllFullPath, "lame_enc_dll.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_libmp3lame, Path.Combine(DllFullPath, "libmp3lame.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_mfc100, Path.Combine(DllFullPath, "mfc100.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_mfc100u, Path.Combine(DllFullPath, "mfc100u.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_msvcp100, Path.Combine(DllFullPath, "msvcp100.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_msvcr100, Path.Combine(DllFullPath, "msvcr100.dll"));
-                    SdkFileComponent.WriteResourceFile(Properties.Resources.X86_zlibwapi, Path.Combine(DllFullPath, "zlibwapi.dll"));
-                }
-            }
         }
         /// <summary>
         /// 创建SDK代理
@@ -166,9 +130,7 @@ namespace System.Data.KangMeiIPGBSDK
         public static IIPGBNETSdkProxy Create(bool isBase = false)
         {
             if (!isBase) { return _IPGBNETSdk.Value; }
-            if (!File.Exists(BaseDllFullName))
-            { SdkFileComponent.TryCopyDirectory(DllFullPath, BaseDllFullPath); }
-            return IPGBNETSdkDller.Instance;
+            return Environment.Is64BitProcess ? IPGBNETSdkDllerX64.Instance : IPGBNETSdkDllerX86.Instance;
         }
         /// <summary>
         /// 创建推流代理
@@ -178,9 +140,7 @@ namespace System.Data.KangMeiIPGBSDK
         public static IIPGBPUSHSdkProxy CreatePush(bool isBase = false)
         {
             if (!isBase) { return _IPGBPUSHSdk.Value; }
-            if (!File.Exists(IPGBPUSHSdk.BaseDllFullName))
-            { SdkFileComponent.TryCopyDirectory(IPGBPUSHSdk.DllFullPath, IPGBPUSHSdk.BaseDllFullPath); }
-            return IPGBPUSHSdkDller.Instance;
+            return Environment.Is64BitProcess ? IPGBPUSHSdkDllerX64.Instance : IPGBPUSHSdkDllerX86.Instance;
         }
         internal static TE[] SelectArray<TM, TE>(this TM[] tms, Func<TM, TE> GetElement)
         {

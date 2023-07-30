@@ -59,15 +59,5 @@ namespace System.Data.EDBODBCSDK.Properties {
                 resourceCulture = value;
             }
         }
-        
-        /// <summary>
-        ///   查找 System.Byte[] 类型的本地化资源。
-        /// </summary>
-        internal static byte[] X86_EDBODBCEXE {
-            get {
-                object obj = ResourceManager.GetObject("X86_EDBODBCEXE", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
     }
 }
