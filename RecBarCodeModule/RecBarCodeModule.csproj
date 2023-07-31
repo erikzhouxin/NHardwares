@@ -11,9 +11,9 @@
 		<Copyright>Copyright 2020-2023</Copyright>
 		<Company>EZhouXin</Company>
 		<Authors>ErikZhouXin</Authors>
-		<Version>2022.12.12</Version>
-		<AssemblyVersion>2022.12.12.722</AssemblyVersion>
-		<FileVersion>2022.12.12.722</FileVersion>
+		<Version>2023.1.1</Version>
+		<AssemblyVersion>2023.1.1.733</AssemblyVersion>
+		<FileVersion>2023.1.1.733</FileVersion>
 		<Description>条码/二维码识别模块</Description>
 		<GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
@@ -25,7 +25,6 @@
         <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
         <PlatformTarget>$(Platform)</PlatformTarget>
-		<PackageReadmeFile>Resources\Readme.md</PackageReadmeFile>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)'=='Debug|net40'">
 		<DefineConstants>TRACE;DEBUG;NETFrame;NET40</DefineConstants>
