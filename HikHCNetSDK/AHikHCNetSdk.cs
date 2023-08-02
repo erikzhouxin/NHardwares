@@ -30,6 +30,14 @@ namespace System.Data.HikHCNetSDK
         /// </summary>
         public const String DllFileNameX64 = $@".\{DllVirtualPath}\x64\{DllFileName}";
         /// <summary>
+        /// SDK包相对路径
+        /// </summary>
+        public const String DllPackFile = $"{DllVirtualPath}.cswin";
+        /// <summary>
+        /// SDK全路径
+        /// </summary>
+        public static string DllSdkFile { get; } = Path.GetFullPath(DllPackFile);
+        /// <summary>
         /// 基路径
         /// </summary>
         public static String BaseFullPath { get; } = Path.GetFullPath(".");
@@ -2153,6 +2161,18 @@ namespace System.Data.HikHCNetSDK
 
         static Lazy<IHikHCNetSdkProxy> _netDevSdk = new Lazy<IHikHCNetSdkProxy>(() => new HikHCNetSdkLoader(), true);
         static Lazy<IHikPlayCtrlSdkProxy> _playCtrlSdk = new Lazy<IHikPlayCtrlSdkProxy>(() => new HikPlayCtrlSdkLoader(), true);
+        static HikHCNetSdk()
+        {
+            var res = new SdkFileLoaderModel()
+            {
+                BasePath = DllFullPath,
+                PlatformPath = Environment.Is64BitProcess ? "x64" : "x86",
+                VersionFile = $"{nameof(HikHCNetSDK)}.version",
+                SdkFileName = DllSdkFile
+            }.Build();
+            if (res.IsSuccess) { return; }
+            throw new Exception(res.Message, (res as IAlertException)?.Exception);
+        }
         /// <summary>
         /// plugins内容实例
         /// </summary>

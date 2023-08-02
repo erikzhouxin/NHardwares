@@ -32,6 +32,14 @@ namespace System.Data.VzClientSDK
         /// </summary>
         public const String DllFileNameX64 = $@".\{DllVirtualPath}\x64\{DllFileName}";
         /// <summary>
+        /// SDK包相对路径
+        /// </summary>
+        public const String DllPackFile = $"{DllVirtualPath}.cswin";
+        /// <summary>
+        /// SDK全路径
+        /// </summary>
+        public static string DllSdkFile { get; } = Path.GetFullPath(DllPackFile);
+        /// <summary>
         /// 全路径
         /// </summary>
         public static string BaseDllFullPath { get; } = Path.GetFullPath(".");
@@ -268,6 +276,18 @@ namespace System.Data.VzClientSDK
         public const int URLLENGTH = 1000;
         #endregion 参数值
         static Lazy<IVzClientSdkProxy> _vzClientSdk = new Lazy<IVzClientSdkProxy>(() => new VzClientSdkLoader(), true);
+        static VzClientSdk()
+        {
+            var res = new SdkFileLoaderModel()
+            {
+                BasePath = DllFullPath,
+                PlatformPath = Environment.Is64BitProcess ? "x64" : "x86",
+                VersionFile = $"{nameof(VzClientSDK)}.version",
+                SdkFileName = DllSdkFile
+            }.Build();
+            if (res.IsSuccess) { return; }
+            throw new Exception(res.Message, (res as IAlertException)?.Exception);
+        }
         /// <summary>
         /// plugins内容实例
         /// </summary>

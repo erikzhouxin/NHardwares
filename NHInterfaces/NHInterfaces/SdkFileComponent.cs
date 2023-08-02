@@ -226,157 +226,33 @@ namespace System.Data.NHInterfaces
         }
 
         #region // 文件自定义
-
         /// <summary>
         /// 单文件压缩（生成的压缩包和第三方的解压软件兼容）
         /// </summary>
         /// <param name="sourceFilePath"></param>
         /// <returns></returns>
-        public static string FileGZipCompress(string sourceFilePath)
-        {
-            string zipFileName = sourceFilePath + ".gz";
-            if (!File.Exists(sourceFilePath)) { return zipFileName; }
-            using (FileStream zipFileStream = File.Create(zipFileName))
-            {
-                using (GZipStream zipStream = new GZipStream(zipFileStream, CompressionMode.Compress))
-                {
-                    using (FileStream sourceFileStream = File.OpenRead(sourceFilePath))
-                    {
-                        sourceFileStream.CopyTo(zipStream);
-                    }
-                }
-            }
-            return zipFileName;
-        }
+        public static string FileGZipCompress(string sourceFilePath) => ExtterCaller.FileGZipCompress(sourceFilePath);
         /// <summary>
         /// 单文件解压缩（生成的压缩包和第三方的解压软件兼容）
         /// </summary>
         /// <param name="sourceFilePath"></param>
         /// <param name="savePath"></param>
         /// <returns></returns>
-        public static string FileGZipDecompress(string sourceFilePath, string savePath)
-        {
-            if (!File.Exists(sourceFilePath)) { return savePath; }
-            using (FileStream sourceFileStream = File.OpenRead(sourceFilePath))
-            {
-                using (GZipStream zipStream = new GZipStream(sourceFileStream, CompressionMode.Decompress))
-                {
-                    using (FileStream zipFileStream = File.Create(savePath))
-                    {
-                        zipStream.CopyTo(zipFileStream);
-                    }
-                }
-            }
-            return savePath;
-        }
+        public static string FileGZipDecompress(string sourceFilePath, string savePath) => ExtterCaller.FileGZipDecompress(sourceFilePath, savePath);
         /// <summary>
         /// 自定义压缩SDK(不兼容解压工具)
         /// [名称长度4][名称][文件长度8][文件]
         /// </summary>
         /// <param name="map">文件压缩路径为Key,对应的物理路径为Value</param>
         /// <param name="savePath"></param>
-        public static IAlertMsg FileGZipCompress(Dictionary<string, string> map, string savePath)
-        {
-            try
-            {
-                using (var zipFileStream = File.Create(savePath))
-                {
-                    using (var zipStream = new GZipStream(zipFileStream, CompressionMode.Compress))
-                    {
-                        foreach (var kv in map)
-                        {
-                            var filePath = kv.Value;
-                            var fileName = kv.Key;
-                            if (File.Exists(filePath))
-                            {
-                                byte[] fileNameBytes = System.Text.Encoding.UTF8.GetBytes(fileName);
-                                byte[] sizeBytes = BitConverter.GetBytes(fileNameBytes.Length);
-                                zipStream.Write(sizeBytes, 0, sizeBytes.Length);
-                                zipStream.Write(fileNameBytes, 0, fileNameBytes.Length);
-                                using (var fsRead = File.OpenRead(filePath))
-                                {
-                                    zipStream.Write(BitConverter.GetBytes(fsRead.Length), 0, 8);
-                                    byte[] byts = new byte[1024];
-                                    int len = 0;
-                                    //4.通过读取文件流读取数据
-                                    while ((len = fsRead.Read(byts, 0, byts.Length)) > 0)
-                                    {
-                                        //通过压缩流写入数据
-                                        zipStream.Write(byts, 0, len);
-                                    }
-                                }
-                            }
-                            zipStream.Flush();
-                        }
-                    }
-                }
-                return (AlertMsg<string>)(true, "操作成功", savePath);
-            }
-            catch (Exception ex)
-            {
-                return new AlertException(ex);
-            }
-        }
+        public static IAlertMsg FileGZipCompress(Dictionary<string, string> map, string savePath) => ExtterCaller.FileGZipCompress(map, savePath);
         /// <summary>
         /// 自定义解压SDK(不兼容解压工具)
         /// </summary>
         /// <param name="zipFile"></param>
         /// <param name="tagDir"></param>
         /// <param name="Fillter"></param>
-        public static IAlertMsg FileGZipDecompress(string zipFile, string tagDir, Func<string, bool> Fillter)
-        {
-            if (!File.Exists(zipFile)) { return AlertMsg.NotFound; }
-            Fillter ??= (s) => true;
-            try
-            {
-                using (FileStream fStream = File.Open(zipFile, FileMode.Open))
-                {
-                    using (GZipStream zipStream = new GZipStream(fStream, CompressionMode.Decompress))
-                    {
-                        while (zipStream.Position != zipStream.Length)
-                        {
-                            byte[] fileNameSize = new byte[4];
-                            zipStream.Read(fileNameSize, 0, fileNameSize.Length);
-                            int fileNameLength = BitConverter.ToInt32(fileNameSize, 0);
-                            byte[] fileNameBytes = new byte[fileNameLength];
-                            zipStream.Read(fileNameBytes, 0, fileNameBytes.Length);
-                            string fileName = System.Text.Encoding.UTF8.GetString(fileNameBytes);
-                            var fileSize = new byte[8];
-                            zipStream.Read(fileSize, 0, 8);
-                            var fileContentLength = BitConverter.ToInt64(fileSize, 0);
-                            if (!Fillter.Invoke(fileName))
-                            {
-                                zipStream.Position += fileContentLength;
-                                continue;
-                            }
-                            string fileFullName = System.IO.Path.Combine(tagDir, fileName);
-                            var currDir = Path.GetDirectoryName(fileFullName);
-                            if (!Directory.Exists(currDir)) { Directory.CreateDirectory(currDir); }
-                            using (FileStream childFileStream = File.Create(fileFullName))
-                            {
-                                long readLen = 0;
-                                while (readLen < fileContentLength)
-                                {
-                                    var takeLen = fileContentLength - readLen;
-                                    if (takeLen > 1024) { takeLen = 1024; }
-                                    readLen += takeLen;
-                                    var content = new byte[takeLen];
-                                    zipStream.Read(content, 0, content.Length);
-                                    //通过文件流写入文件
-                                    childFileStream.Write(content, 0, (int)takeLen);//读取的长度为len，这样不会造成数据的错误
-                                }
-                                childFileStream.Flush();
-                            }
-                        }
-                    }
-                }
-                return (AlertMsg<String>)(true, "操作成功", tagDir);
-            }
-            catch (Exception ex)
-            {
-                return new AlertException(ex);
-            }
-        }
+        public static IAlertMsg FileGZipDecompress(string zipFile, string tagDir, Func<string, bool> Fillter) => ExtterCaller.FileGZipDecompress(zipFile, tagDir, Fillter);
         /// <summary>
         /// 自定义压缩SDK
         /// </summary>
@@ -389,7 +265,7 @@ namespace System.Data.NHInterfaces
         /// <param name="zipFile"></param>
         /// <param name="tagDir"></param>
         /// <param name="isX86"></param>
-        public static void FileGZipDecompressSDK(string zipFile, string tagDir, bool? isX86 = null) 
+        public static void FileGZipDecompressSDK(string zipFile, string tagDir, bool? isX86 = null)
             => FileGZipDecompress(zipFile, tagDir, f => IsPlatformTargetPath(f, isX86));
         /// <summary>
         /// 是平台标记开头的路径

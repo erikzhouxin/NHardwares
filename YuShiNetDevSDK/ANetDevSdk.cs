@@ -30,6 +30,14 @@ namespace System.Data.YuShiNetDevSDK
         /// </summary>
         public const String DllFileNameX64 = $@".\{DllVirtualPath}\x64\{DllFileName}";
         /// <summary>
+        /// SDK包相对路径
+        /// </summary>
+        public const String DllPackFile = $"{DllVirtualPath}.cswin";
+        /// <summary>
+        /// SDK全路径
+        /// </summary>
+        public static string DllSdkFile { get; } = Path.GetFullPath(DllPackFile);
+        /// <summary>
         /// 基路径
         /// </summary>
         public static String BaseFullPath { get; } = Path.GetFullPath(".");
@@ -627,6 +635,18 @@ namespace System.Data.YuShiNetDevSDK
         };
         #endregion 参数定义
         static Lazy<INetDevSdkProxy> _netDevSdk = new Lazy<INetDevSdkProxy>(() => new NetDevSdkLoader(), true);
+        static NetDevSdk()
+        {
+            var res = new SdkFileLoaderModel()
+            {
+                BasePath = DllFullPath,
+                PlatformPath = Environment.Is64BitProcess ? "x64" : "x86",
+                VersionFile = $"{nameof(YuShiNetDevSDK)}.version",
+                SdkFileName = DllSdkFile
+            }.Build();
+            if (res.IsSuccess) { return; }
+            throw new Exception(res.Message, (res as IAlertException)?.Exception);
+        }
         /// <summary>
         /// plugins内容实例
         /// </summary>

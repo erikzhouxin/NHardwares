@@ -26,6 +26,14 @@ namespace System.Data.OnbonLedBxSDK
         /// </summary>
         public const string DllVirtualPath = @"plugins\onbonledbxsdk";
         /// <summary>
+        /// SDK包相对路径
+        /// </summary>
+        public const String DllPackFile = $"{DllVirtualPath}.cswin";
+        /// <summary>
+        /// SDK全路径
+        /// </summary>
+        public static string DllSdkFile { get; } = Path.GetFullPath(DllPackFile);
+        /// <summary>
         /// SDK文件名称
         /// </summary>
         public const String DllFileNameX64 = $@".\{DllVirtualPath}\x64\{DllFileName}";
@@ -67,6 +75,18 @@ namespace System.Data.OnbonLedBxSDK
         public static String ServerFullName { get; } = Path.Combine(DllFullPath, ServerFileName);
         static Lazy<ILedBxDualSdkProxy> _bxDualSdk = new Lazy<ILedBxDualSdkProxy>(() => new LedBxDualSdkLoader(), true);
         static Lazy<ILedBxServerSdkProxy> _bxServerSdk = new Lazy<ILedBxServerSdkProxy>(() => new LedBxServerSdkLoader(), true);
+        static LedBxDualSdk()
+        {
+            var res = new SdkFileLoaderModel()
+            {
+                BasePath = DllFullPath,
+                PlatformPath = Environment.Is64BitProcess ? "x64" : "x86",
+                VersionFile = $"{nameof(OnbonLedBxSDK)}.version",
+                SdkFileName = DllSdkFile
+            }.Build();
+            if (res.IsSuccess) { return; }
+            throw new Exception(res.Message, (res as IAlertException)?.Exception);
+        }
         /// <summary>
         /// 创建SDK代理
         /// </summary>

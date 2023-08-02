@@ -31,6 +31,14 @@ namespace System.Data.DeYaAlbCtrlSDK
         /// </summary>
         public const String DllFileNameX64 = $@".\{DllVirtualPath}\x64\{DllFileName}";
         /// <summary>
+        /// SDK包相对路径
+        /// </summary>
+        public const String DllPackFile = $"{DllVirtualPath}.cswin";
+        /// <summary>
+        /// SDK全路径
+        /// </summary>
+        public static string DllSdkFile { get; } = Path.GetFullPath(DllPackFile);
+        /// <summary>
         /// 基础全路径
         /// </summary>
         public static string BaseFullPath { get; } = Path.GetFullPath(".");
@@ -39,6 +47,18 @@ namespace System.Data.DeYaAlbCtrlSDK
         /// </summary>
         public static string DllFullPath { get; } = Path.GetFullPath(DllVirtualPath);
         static Lazy<IAlbCtrlSdkProxy> _albCtrlSdk = new Lazy<IAlbCtrlSdkProxy>(() => new AlbCtrlSdkLoader(), true);
+        static AlbCtrlSdk()
+        {
+            var res = new SdkFileLoaderModel()
+            {
+                BasePath = DllFullPath,
+                PlatformPath = Environment.Is64BitProcess ? "x64" : "x86",
+                VersionFile = $"{nameof(DeYaAlbCtrlSDK)}.version",
+                SdkFileName = DllSdkFile
+            }.Build();
+            if (res.IsSuccess) { return; }
+            throw new Exception(res.Message, (res as IAlertException)?.Exception);
+        }
         /// <summary>
         /// plugins内容实例
         /// </summary>

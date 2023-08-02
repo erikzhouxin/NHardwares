@@ -57,26 +57,14 @@
         <DefineConstants>TRACE;NETFx;NET60</DefineConstants>
     </PropertyGroup>
     <ItemGroup>
-        <None Include=".\..\AppBeans\DeYaAlbCtrlSDK\x64\ALBCtrlDll.dll">
+        <None Include=".\..\AppBeans\DeYaAlbCtrlSDK\deyaalbctrlsdk.cswin">
             <Visible>False</Visible>
-            <Link>plugins\deyaalbctrlsdk\x64\ALBCtrlDll.dll</Link>
-            <TargetPath>plugins\deyaalbctrlsdk\x64\ALBCtrlDll.dll</TargetPath>
+            <Link>plugins\deyaalbctrlsdk.cswin</Link>
+            <TargetPath>plugins\deyaalbctrlsdk.cswin</TargetPath>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
             <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
             <Pack>True</Pack>
-            <PackagePath>contentFiles\any\any\plugins\deyaalbctrlsdk\x64\ALBCtrlDll.dll</PackagePath>
-            <PackageCopyToOutput>True</PackageCopyToOutput>
-        </None>
-    </ItemGroup>
-    <ItemGroup>
-        <None Include=".\..\AppBeans\DeYaAlbCtrlSDK\x86\ALBCtrlDll.dll">
-            <Visible>False</Visible>
-            <Link>plugins\deyaalbctrlsdk\x86\ALBCtrlDll.dll</Link>
-            <TargetPath>plugins\deyaalbctrlsdk\x86\ALBCtrlDll.dll</TargetPath>
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-            <Pack>True</Pack>
-            <PackagePath>contentFiles\any\any\plugins\deyaalbctrlsdk\x86\ALBCtrlDll.dll</PackagePath>
+            <PackagePath>contentFiles\any\any\plugins\deyaalbctrlsdk.cswin</PackagePath>
             <PackageCopyToOutput>True</PackageCopyToOutput>
         </None>
     </ItemGroup>
@@ -92,6 +80,7 @@
         </EmbeddedResource>
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="NSystem.Data.HardwareInterfaces" Version="2022.12.12" />
+        <!--<PackageReference Include="NSystem.Data.HardwareInterfaces" Version="2023.1.1" />-->
+        <ProjectReference Include="..\NHInterfaces\HardwareInterfaces.csproj" />
     </ItemGroup>
 </Project>

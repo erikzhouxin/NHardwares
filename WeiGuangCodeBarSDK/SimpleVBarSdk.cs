@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.NHInterfaces;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
@@ -29,6 +30,14 @@ namespace System.Data.WeiGuangCodeBarSDK
         /// </summary>
         public const String DllFileNameX64 = $@".\{DllVirtualPath}\x64\{DllFileName}";
         /// <summary>
+        /// SDK包相对路径
+        /// </summary>
+        public const String DllPackFile = $"{DllVirtualPath}.cswin";
+        /// <summary>
+        /// SDK全路径
+        /// </summary>
+        public static string DllSdkFile { get; } = Path.GetFullPath(DllPackFile);
+        /// <summary>
         /// 全路径
         /// </summary>
         public static string DllFullPath { get; } = Path.GetFullPath(".");
@@ -37,6 +46,18 @@ namespace System.Data.WeiGuangCodeBarSDK
         /// </summary>
         public static String DllFullName { get; } = Path.GetFullPath(DllFileName);
         static Lazy<ISimpleVBarSdkProxy> _vbarSdk = new Lazy<ISimpleVBarSdkProxy>(() => new SimpleVBarSdkLoader(), true);
+        static SimpleVBarSdk()
+        {
+            var res = new SdkFileLoaderModel()
+            {
+                BasePath = DllFullPath,
+                PlatformPath = Environment.Is64BitProcess ? "x64" : "x86",
+                VersionFile = $"{nameof(WeiGuangCodeBarSDK)}.version",
+                SdkFileName = DllSdkFile
+            }.Build();
+            if (res.IsSuccess) { return; }
+            throw new Exception(res.Message, (res as IAlertException)?.Exception);
+        }
         /// <summary>
         /// 创建SDK代理
         /// </summary>

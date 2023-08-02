@@ -57,206 +57,14 @@
         <DefineConstants>TRACE;NETFx;NET60</DefineConstants>
     </PropertyGroup>
     <ItemGroup>
-        <None Include=".\..\AppBeans\VzClientSDK\x64\VzLPRSDK.dll">
+        <None Include=".\..\AppBeans\VzClientSDK\vzclientsdk.cswin">
             <Visible>False</Visible>
-            <Link>plugins\vzclientsdk\x64\VzLPRSDK.dll</Link>
-            <TargetPath>plugins\vzclientsdk\x64\VzLPRSDK.dll</TargetPath>
+            <Link>plugins\vzclientsdk.cswin</Link>
+            <TargetPath>plugins\vzclientsdk.cswin</TargetPath>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
             <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
             <Pack>True</Pack>
-            <PackagePath>contentFiles\any\any\plugins\vzclientsdk\x64\VzLPRSDK.dll</PackagePath>
-            <PackageCopyToOutput>True</PackageCopyToOutput>
-        </None>
-        <None Include=".\..\AppBeans\VzClientSDK\x64\avcodec-57.dll">
-            <Visible>False</Visible>
-            <Link>plugins\vzclientsdk\x64\avcodec-57.dll</Link>
-            <TargetPath>plugins\vzclientsdk\x64\avcodec-57.dll</TargetPath>
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-            <Pack>True</Pack>
-            <PackagePath>contentFiles\any\any\plugins\vzclientsdk\x64\avcodec-57.dll</PackagePath>
-            <PackageCopyToOutput>True</PackageCopyToOutput>
-        </None>
-        <None Include=".\..\AppBeans\VzClientSDK\x64\avformat-57.dll">
-            <Visible>False</Visible>
-            <Link>plugins\vzclientsdk\x64\avformat-57.dll</Link>
-            <TargetPath>plugins\vzclientsdk\x64\avformat-57.dll</TargetPath>
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-            <Pack>True</Pack>
-            <PackagePath>contentFiles\any\any\plugins\vzclientsdk\x64\avformat-57.dll</PackagePath>
-            <PackageCopyToOutput>True</PackageCopyToOutput>
-        </None>
-        <None Include=".\..\AppBeans\VzClientSDK\x64\avutil-54.dll">
-            <Visible>False</Visible>
-            <Link>plugins\vzclientsdk\x64\avutil-54.dll</Link>
-            <TargetPath>plugins\vzclientsdk\x64\avutil-54.dll</TargetPath>
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-            <Pack>True</Pack>
-            <PackagePath>contentFiles\any\any\plugins\vzclientsdk\x64\avutil-54.dll</PackagePath>
-            <PackageCopyToOutput>True</PackageCopyToOutput>
-        </None>
-        <None Include=".\..\AppBeans\VzClientSDK\x64\avutil-55.dll">
-            <Visible>False</Visible>
-            <Link>plugins\vzclientsdk\x64\avutil-55.dll</Link>
-            <TargetPath>plugins\vzclientsdk\x64\avutil-55.dll</TargetPath>
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-            <Pack>True</Pack>
-            <PackagePath>contentFiles\any\any\plugins\vzclientsdk\x64\avutil-55.dll</PackagePath>
-            <PackageCopyToOutput>True</PackageCopyToOutput>
-        </None>
-        <None Include=".\..\AppBeans\VzClientSDK\x64\libwinpthread-1.dll">
-            <Visible>False</Visible>
-            <Link>plugins\vzclientsdk\x64\libwinpthread-1.dll</Link>
-            <TargetPath>plugins\vzclientsdk\x64\libwinpthread-1.dll</TargetPath>
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-            <Pack>True</Pack>
-            <PackagePath>contentFiles\any\any\plugins\vzclientsdk\x64\libwinpthread-1.dll</PackagePath>
-            <PackageCopyToOutput>True</PackageCopyToOutput>
-        </None>
-        <None Include=".\..\AppBeans\VzClientSDK\x64\swscale-3.dll">
-            <Visible>False</Visible>
-            <Link>plugins\vzclientsdk\x64\swscale-3.dll</Link>
-            <TargetPath>plugins\vzclientsdk\x64\swscale-3.dll</TargetPath>
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-            <Pack>True</Pack>
-            <PackagePath>contentFiles\any\any\plugins\vzclientsdk\x64\swscale-3.dll</PackagePath>
-            <PackageCopyToOutput>True</PackageCopyToOutput>
-        </None>
-        <None Include=".\..\AppBeans\VzClientSDK\x64\VzAudioDataPlayer.dll">
-            <Visible>False</Visible>
-            <Link>plugins\vzclientsdk\x64\VzAudioDataPlayer.dll</Link>
-            <TargetPath>plugins\vzclientsdk\x64\VzAudioDataPlayer.dll</TargetPath>
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-            <Pack>True</Pack>
-            <PackagePath>contentFiles\any\any\plugins\vzclientsdk\x64\VzAudioDataPlayer.dll</PackagePath>
-            <PackageCopyToOutput>True</PackageCopyToOutput>
-        </None>
-        <None Include=".\..\AppBeans\VzClientSDK\x64\VzDrawsLib.dll">
-            <Visible>False</Visible>
-            <Link>plugins\vzclientsdk\x64\VzDrawsLib.dll</Link>
-            <TargetPath>plugins\vzclientsdk\x64\VzDrawsLib.dll</TargetPath>
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-            <Pack>True</Pack>
-            <PackagePath>contentFiles\any\any\plugins\vzclientsdk\x64\VzDrawsLib.dll</PackagePath>
-            <PackageCopyToOutput>True</PackageCopyToOutput>
-        </None>
-        <None Include=".\..\AppBeans\VzClientSDK\x64\VzPlayer2.dll">
-            <Visible>False</Visible>
-            <Link>plugins\vzclientsdk\x64\VzPlayer2.dll</Link>
-            <TargetPath>plugins\vzclientsdk\x64\VzPlayer2.dll</TargetPath>
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-            <Pack>True</Pack>
-            <PackagePath>contentFiles\any\any\plugins\vzclientsdk\x64\VzPlayer2.dll</PackagePath>
-            <PackageCopyToOutput>True</PackageCopyToOutput>
-        </None>
-        <None Include=".\..\AppBeans\VzClientSDK\x64\VzStreamClient.dll">
-            <Visible>False</Visible>
-            <Link>plugins\vzclientsdk\x64\VzStreamClient.dll</Link>
-            <TargetPath>plugins\vzclientsdk\x64\VzStreamClient.dll</TargetPath>
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-            <Pack>True</Pack>
-            <PackagePath>contentFiles\any\any\plugins\vzclientsdk\x64\VzStreamClient.dll</PackagePath>
-            <PackageCopyToOutput>True</PackageCopyToOutput>
-        </None>
-    </ItemGroup>
-    <ItemGroup>
-        <None Include=".\..\AppBeans\VzClientSDK\x86\VzLPRSDK.dll">
-            <Visible>False</Visible>
-            <Link>plugins\vzclientsdk\x86\VzLPRSDK.dll</Link>
-            <TargetPath>plugins\vzclientsdk\x86\VzLPRSDK.dll</TargetPath>
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-            <Pack>True</Pack>
-            <PackagePath>contentFiles\any\any\plugins\vzclientsdk\x86\VzLPRSDK.dll</PackagePath>
-            <PackageCopyToOutput>True</PackageCopyToOutput>
-        </None>
-        <None Include=".\..\AppBeans\VzClientSDK\x86\avcodec-57.dll">
-            <Visible>False</Visible>
-            <Link>plugins\vzclientsdk\x86\avcodec-57.dll</Link>
-            <TargetPath>plugins\vzclientsdk\x86\avcodec-57.dll</TargetPath>
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-            <Pack>True</Pack>
-            <PackagePath>contentFiles\any\any\plugins\vzclientsdk\x86\avcodec-57.dll</PackagePath>
-            <PackageCopyToOutput>True</PackageCopyToOutput>
-        </None>
-        <None Include=".\..\AppBeans\VzClientSDK\x86\avformat-57.dll">
-            <Visible>False</Visible>
-            <Link>plugins\vzclientsdk\x86\avformat-57.dll</Link>
-            <TargetPath>plugins\vzclientsdk\x86\avformat-57.dll</TargetPath>
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-            <Pack>True</Pack>
-            <PackagePath>contentFiles\any\any\plugins\vzclientsdk\x86\avformat-57.dll</PackagePath>
-            <PackageCopyToOutput>True</PackageCopyToOutput>
-        </None>
-        <None Include=".\..\AppBeans\VzClientSDK\x86\avutil-55.dll">
-            <Visible>False</Visible>
-            <Link>plugins\vzclientsdk\x86\avutil-55.dll</Link>
-            <TargetPath>plugins\vzclientsdk\x86\avutil-55.dll</TargetPath>
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-            <Pack>True</Pack>
-            <PackagePath>contentFiles\any\any\plugins\vzclientsdk\x86\avutil-55.dll</PackagePath>
-            <PackageCopyToOutput>True</PackageCopyToOutput>
-        </None>
-        <None Include=".\..\AppBeans\VzClientSDK\x86\msvcr90.dll">
-            <Visible>False</Visible>
-            <Link>plugins\vzclientsdk\x86\msvcr90.dll</Link>
-            <TargetPath>plugins\vzclientsdk\x86\msvcr90.dll</TargetPath>
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-            <Pack>True</Pack>
-            <PackagePath>contentFiles\any\any\plugins\vzclientsdk\x86\msvcr90.dll</PackagePath>
-            <PackageCopyToOutput>True</PackageCopyToOutput>
-        </None>
-        <None Include=".\..\AppBeans\VzClientSDK\x86\VzAudioDataPlayer.dll">
-            <Visible>False</Visible>
-            <Link>plugins\vzclientsdk\x86\VzAudioDataPlayer.dll</Link>
-            <TargetPath>plugins\vzclientsdk\x86\VzAudioDataPlayer.dll</TargetPath>
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-            <Pack>True</Pack>
-            <PackagePath>contentFiles\any\any\plugins\vzclientsdk\x86\VzAudioDataPlayer.dll</PackagePath>
-            <PackageCopyToOutput>True</PackageCopyToOutput>
-        </None>
-        <None Include=".\..\AppBeans\VzClientSDK\x86\VzDrawsLib.dll">
-            <Visible>False</Visible>
-            <Link>plugins\vzclientsdk\x86\VzDrawsLib.dll</Link>
-            <TargetPath>plugins\vzclientsdk\x86\VzDrawsLib.dll</TargetPath>
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-            <Pack>True</Pack>
-            <PackagePath>contentFiles\any\any\plugins\vzclientsdk\x86\VzDrawsLib.dll</PackagePath>
-            <PackageCopyToOutput>True</PackageCopyToOutput>
-        </None>
-        <None Include=".\..\AppBeans\VzClientSDK\x86\VzPlayer2.dll">
-            <Visible>False</Visible>
-            <Link>plugins\vzclientsdk\x86\VzPlayer2.dll</Link>
-            <TargetPath>plugins\vzclientsdk\x86\VzPlayer2.dll</TargetPath>
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-            <Pack>True</Pack>
-            <PackagePath>contentFiles\any\any\plugins\vzclientsdk\x86\VzPlayer2.dll</PackagePath>
-            <PackageCopyToOutput>True</PackageCopyToOutput>
-        </None>
-        <None Include=".\..\AppBeans\VzClientSDK\x86\VzStreamClient.dll">
-            <Visible>False</Visible>
-            <Link>plugins\vzclientsdk\x86\VzStreamClient.dll</Link>
-            <TargetPath>plugins\vzclientsdk\x86\VzStreamClient.dll</TargetPath>
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-            <Pack>True</Pack>
-            <PackagePath>contentFiles\any\any\plugins\vzclientsdk\x86\VzStreamClient.dll</PackagePath>
+            <PackagePath>contentFiles\any\any\plugins\vzclientsdk.cswin</PackagePath>
             <PackageCopyToOutput>True</PackageCopyToOutput>
         </None>
     </ItemGroup>
@@ -272,6 +80,7 @@
         </EmbeddedResource>
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="NSystem.Data.HardwareInterfaces" Version="2022.12.12" />
+        <!--<PackageReference Include="NSystem.Data.HardwareInterfaces" Version="2023.1.1" />-->
+        <ProjectReference Include="..\NHInterfaces\HardwareInterfaces.csproj" />
     </ItemGroup>
 </Project>

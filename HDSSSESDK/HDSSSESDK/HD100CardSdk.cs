@@ -26,6 +26,14 @@ namespace System.Data.HDSSSESDK
         /// </summary>
         public const String DllFileNameX86 = $@".\{DllVirtualPath}\x86\{DllFileName}";
         /// <summary>
+        /// SDK包相对路径
+        /// </summary>
+        public const String DllPackFile = $"{DllVirtualPath}.cswin";
+        /// <summary>
+        /// SDK全路径
+        /// </summary>
+        public static string DllSdkFile { get; } = Path.GetFullPath(DllPackFile);
+        /// <summary>
         /// 全路径
         /// </summary>
         public static string BaseFullPath { get; } = Path.GetFullPath(".");
@@ -35,6 +43,18 @@ namespace System.Data.HDSSSESDK
         public static string DllFullPath { get; } = Path.GetFullPath(DllVirtualPath);
 
         static Lazy<IHD100CardSdkProxy> _hd100Card = new Lazy<IHD100CardSdkProxy>(() => new HD100CardSdkLoader(), true);
+        static HD100CardSdk()
+        {
+            var res = new SdkFileLoaderModel()
+            {
+                BasePath = DllFullPath,
+                PlatformPath = "x86",
+                VersionFile = $"{nameof(HDSSSESDK)}.version",
+                SdkFileName = DllSdkFile
+            }.Build();
+            if (res.IsSuccess) { return; }
+            throw new Exception(res.Message, (res as IAlertException)?.Exception);
+        }
         /// <summary>
         /// plugins内容实例
         /// </summary>

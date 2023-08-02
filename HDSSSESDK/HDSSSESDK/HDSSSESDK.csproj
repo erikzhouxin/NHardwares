@@ -57,46 +57,14 @@
         <DefineConstants>TRACE;NETFx;NET60</DefineConstants>
     </PropertyGroup>
     <ItemGroup>
-        <None Include=".\..\beans\net40\HDSSSEEXE.exe">
+        <None Include=".\..\..\AppBeans\HDSSSESDK\hdsssesdk.cswin">
             <Visible>False</Visible>
-            <Link>plugins\hdsssesdk\x86\HDSSSEEXE.exe</Link>
-            <TargetPath>plugins\hdsssesdk\x86\HDSSSEEXE.exe</TargetPath>
+            <Link>plugins\hdsssesdk.cswin</Link>
+            <TargetPath>plugins\hdsssesdk.cswin</TargetPath>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
             <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
             <Pack>True</Pack>
-            <PackagePath>contentFiles\any\any\plugins\hdsssesdk\x86\HDSSSEEXE.exe</PackagePath>
-            <PackageCopyToOutput>True</PackageCopyToOutput>
-        </None>
-    </ItemGroup>
-    <ItemGroup>
-        <None Include=".\..\beans\BmpToJpg.dll">
-            <Visible>False</Visible>
-            <Link>plugins\hdsssesdk\x86\BmpToJpg.dll</Link>
-            <TargetPath>plugins\hdsssesdk\x86\BmpToJpg.dll</TargetPath>
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-            <Pack>True</Pack>
-            <PackagePath>contentFiles\any\any\plugins\hdsssesdk\x86\BmpToJpg.dll</PackagePath>
-            <PackageCopyToOutput>True</PackageCopyToOutput>
-        </None>
-        <None Include=".\..\beans\HDSSSE32.dll">
-            <Visible>False</Visible>
-            <Link>plugins\hdsssesdk\x86\HDSSSE32.dll</Link>
-            <TargetPath>plugins\hdsssesdk\x86\HDSSSE32.dll</TargetPath>
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-            <Pack>True</Pack>
-            <PackagePath>contentFiles\any\any\plugins\hdsssesdk\x86\HDSSSE32.dll</PackagePath>
-            <PackageCopyToOutput>True</PackageCopyToOutput>
-        </None>
-        <None Include=".\..\beans\UnPack.dll">
-            <Visible>False</Visible>
-            <Link>plugins\hdsssesdk\x86\UnPack.dll</Link>
-            <TargetPath>plugins\hdsssesdk\x86\UnPack.dll</TargetPath>
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-            <Pack>True</Pack>
-            <PackagePath>contentFiles\any\any\plugins\hdsssesdk\x86\UnPack.dll</PackagePath>
+            <PackagePath>contentFiles\any\any\plugins\hdsssesdk.cswin</PackagePath>
             <PackageCopyToOutput>True</PackageCopyToOutput>
         </None>
     </ItemGroup>
@@ -116,6 +84,7 @@
         </EmbeddedResource>
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="NSystem.Data.HardwareInterfaces" Version="2022.12.12" />
+        <!--<PackageReference Include="NSystem.Data.HardwareInterfaces" Version="2023.1.1" />-->
+        <ProjectReference Include="..\..\NHInterfaces\HardwareInterfaces.csproj" />
     </ItemGroup>
 </Project>

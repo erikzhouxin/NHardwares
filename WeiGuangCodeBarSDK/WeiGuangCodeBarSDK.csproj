@@ -57,26 +57,14 @@
         <DefineConstants>TRACE;NETFx;NET60</DefineConstants>
     </PropertyGroup>
     <ItemGroup>
-        <None Include=".\..\AppBeans\WeiGuangCodeBarSDK\x64\vbar.dll">
+        <None Include=".\..\AppBeans\WeiGuangCodeBarSDK\weiguangcodebarsdk.cswin">
             <Visible>False</Visible>
-            <Link>plugins\weiguangcodebarsdk\x64\vbar.dll</Link>
-            <TargetPath>plugins\weiguangcodebarsdk\x64\vbar.dll</TargetPath>
+            <Link>plugins\weiguangcodebarsdk.cswin</Link>
+            <TargetPath>plugins\weiguangcodebarsdk.cswin</TargetPath>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
             <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
             <Pack>True</Pack>
-            <PackagePath>contentFiles\any\any\plugins\weiguangcodebarsdk\x64\vbar.dll</PackagePath>
-            <PackageCopyToOutput>True</PackageCopyToOutput>
-        </None>
-    </ItemGroup>
-    <ItemGroup>
-        <None Include=".\..\AppBeans\WeiGuangCodeBarSDK\x86\vbar.dll">
-            <Visible>False</Visible>
-            <Link>plugins\weiguangcodebarsdk\x86\vbar.dll</Link>
-            <TargetPath>plugins\weiguangcodebarsdk\x86\vbar.dll</TargetPath>
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-            <Pack>True</Pack>
-            <PackagePath>contentFiles\any\any\plugins\weiguangcodebarsdk\x86\vbar.dll</PackagePath>
+            <PackagePath>contentFiles\any\any\plugins\weiguangcodebarsdk.cswin</PackagePath>
             <PackageCopyToOutput>True</PackageCopyToOutput>
         </None>
     </ItemGroup>
@@ -92,6 +80,7 @@
         </EmbeddedResource>
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="NSystem.Data.HardwareInterfaces" Version="2022.12.12" />
+        <!--<PackageReference Include="NSystem.Data.HardwareInterfaces" Version="2023.1.1" />-->
+        <ProjectReference Include="..\NHInterfaces\HardwareInterfaces.csproj" />
     </ItemGroup>
 </Project>
