@@ -125,6 +125,7 @@ namespace System.Data.KangMeiIPGBSDK
         static Lazy<IIPGBPUSHSdkProxy> _IPGBPUSHSdk = new Lazy<IIPGBPUSHSdkProxy>(() => new IPGBPUSHSdkLoader(), true);
         static IPGBNETSdk()
         {
+            MediaFoundationApi.Startup();
             var res = new SdkFileLoaderModel()
             {
                 BasePath = DllFullPath,
@@ -134,13 +135,6 @@ namespace System.Data.KangMeiIPGBSDK
             }.Build();
             if (res.IsSuccess) { return; }
             throw new Exception(res.Message, (res as IAlertException)?.Exception);
-        }
-        /// <summary>
-        /// 静态构造
-        /// </summary>
-        static IPGBNETSdk()
-        {
-            MediaFoundationApi.Startup();
         }
         /// <summary>
         /// 创建SDK代理
