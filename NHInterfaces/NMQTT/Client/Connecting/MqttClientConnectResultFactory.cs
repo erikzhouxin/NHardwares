@@ -2,8 +2,18 @@ using System;
 
 namespace System.Data.NMQTT
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public sealed class MqttClientConnectResultFactory
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="connAckPacket"></param>
+        /// <param name="protocolVersion"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
         public MqttClientConnectResult Create(MqttConnAckPacket connAckPacket, MqttProtocolVersion protocolVersion)
         {
             if (connAckPacket == null) throw new ArgumentNullException(nameof(connAckPacket));

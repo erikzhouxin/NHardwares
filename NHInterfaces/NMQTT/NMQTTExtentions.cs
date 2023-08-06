@@ -1,12 +1,65 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
 namespace System.Data.NMQTT
 {
+    /// <summary>
+    /// MQTT应用消息扩展
+    /// </summary>
+    public static class MqttApplicationMessageExtensions
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="applicationMessage"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        public static string ConvertPayloadToString(this MqttApplicationMessage applicationMessage)
+        {
+            if (applicationMessage == null) throw new ArgumentNullException(nameof(applicationMessage));
+
+            if (applicationMessage.Payload == null)
+            {
+                return null;
+            }
+
+            if (applicationMessage.Payload.Length == 0)
+            {
+                return string.Empty;
+            }
+
+            return Encoding.UTF8.GetString(applicationMessage.Payload, 0, applicationMessage.Payload.Length);
+        }
+    }
+    /// <summary>
+    /// MQTT主题过滤比较
+    /// </summary>
     public static class MqttTopicFilterComparer
     {
+        /// <summary>
+        /// /符号
+        /// </summary>
         public const char LevelSeparator = '/';
+        /// <summary>
+        /// #符号
+        /// </summary>
         public const char MultiLevelWildcard = '#';
+        /// <summary>
+        /// +符号
+        /// </summary>
         public const char SingleLevelWildcard = '+';
+        /// <summary>
+        /// $符号
+        /// </summary>
         public const char ReservedTopicPrefix = '$';
-
+        /// <summary>
+        /// 比较
+        /// </summary>
+        /// <param name="topic">主题</param>
+        /// <param name="filter">过滤字符</param>
+        /// <returns></returns>
         public static unsafe MqttTopicFilterCompareResult Compare(string topic, string filter)
         {
             if (string.IsNullOrEmpty(topic))
@@ -24,7 +77,7 @@ namespace System.Data.NMQTT
 
             var topicOffset = 0;
             var topicLength = topic.Length;
-           
+
             fixed (char* topicPointer = topic)
             fixed (char* filterPointer = filter)
             {
@@ -39,10 +92,10 @@ namespace System.Data.NMQTT
                     var lastFilterChar = filterPointer[filterLength - 1];
                     if (lastFilterChar != MultiLevelWildcard && lastFilterChar != SingleLevelWildcard)
                     {
-                        return MqttTopicFilterCompareResult.NoMatch;    
+                        return MqttTopicFilterCompareResult.NoMatch;
                     }
                 }
-                
+
                 var isMultiLevelFilter = filterPointer[filterLength - 1] == MultiLevelWildcard;
                 var isReservedTopic = topicPointer[0] == ReservedTopicPrefix;
 

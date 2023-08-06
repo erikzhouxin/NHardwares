@@ -5,7 +5,9 @@ using System.Text;
 
 namespace System.Data.NMQTT
 {
-    internal class MqttCaller
-    {
-    }
+
+}
+namespace System.Net.WebSockets
+{
+
 }

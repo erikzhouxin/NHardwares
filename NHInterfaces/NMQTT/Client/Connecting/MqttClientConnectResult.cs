@@ -2,6 +2,9 @@ using System.Collections.Generic;
 
 namespace System.Data.NMQTT
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public sealed class MqttClientConnectResult
     {
         /// <summary>
@@ -45,7 +48,9 @@ namespace System.Data.NMQTT
         /// MQTTv5 only.
         /// </summary>
         public byte[] AuthenticationData { get; internal set; }
-
+        /// <summary>
+        /// 
+        /// </summary>
         public uint? MaximumPacketSize { get; internal set; }
 
         /// <summary>
@@ -53,7 +58,9 @@ namespace System.Data.NMQTT
         /// MQTTv5 only.
         /// </summary>
         public string ReasonString { get; internal set; }
-
+        /// <summary>
+        /// 
+        /// </summary>
         public ushort? ReceiveMaximum { get; internal set; }
 
         /// <summary>
@@ -87,7 +94,9 @@ namespace System.Data.NMQTT
         /// A value of 0 indicates that the feature is not used.
         /// </summary>
         public ushort ServerKeepAlive { get; internal set; }
-
+        /// <summary>
+        /// 
+        /// </summary>
         public uint? SessionExpiryInterval { get; internal set; }
 
         /// <summary>
