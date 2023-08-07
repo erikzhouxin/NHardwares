@@ -118,4 +118,58 @@ namespace System.Data.NMQTT
         public MqttClientConnectResultCode ResultCode => Result?.ResultCode ?? MqttClientConnectResultCode.UnspecifiedError;
     }
     #endregion Adapter
+    #region // Client
+    /// <summary>
+    /// 
+    /// </summary>
+    public sealed class MqttClientDisconnectedException : MqttCommunicationException
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="innerException"></param>
+        public MqttClientDisconnectedException(Exception innerException) : base("The MQTT client is disconnected.", innerException)
+        {
+        }
+    }
+    /// <summary>
+    /// 
+    /// </summary>
+    public sealed class MqttClientUnexpectedDisconnectReceivedException : MqttCommunicationException
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="disconnectPacket"></param>
+        public MqttClientUnexpectedDisconnectReceivedException(MqttDisconnectPacket disconnectPacket)
+            : base($"Unexpected DISCONNECT (Reason code={disconnectPacket.ReasonCode}) received.")
+        {
+            ReasonCode = disconnectPacket.ReasonCode;
+            SessionExpiryInterval = disconnectPacket.SessionExpiryInterval;
+            ReasonString = disconnectPacket.ReasonString;
+            ServerReference = disconnectPacket.ServerReference;
+            UserProperties = disconnectPacket.UserProperties;
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        public MqttDisconnectReasonCode? ReasonCode { get; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public uint? SessionExpiryInterval { get; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string ReasonString { get; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public List<MqttUserProperty> UserProperties { get; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string ServerReference { get; }
+    }
+    #endregion Client
 }
