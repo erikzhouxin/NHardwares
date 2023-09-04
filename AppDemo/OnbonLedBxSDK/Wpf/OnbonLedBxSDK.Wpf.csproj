@@ -2,8 +2,13 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
-    <UseWPF>true</UseWPF>
+    <TargetFrameworks>netcoreapp3.1;net6.0-windows</TargetFrameworks>
+      <UseWindowsForms>true</UseWindowsForms>
+      <UseWPF>true</UseWPF>
   </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\OnbonLedBxSDK\OnbonLedBxSDK.csproj" />
+  </ItemGroup>
 
 </Project>

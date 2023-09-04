@@ -45,9 +45,7 @@ namespace System.Data.NHInterfaces
                 var versionPath = Path.GetFullPath(Path.Combine(platformPath, VersionFile));
                 string versionContent = string.Empty;
                 using (var stream = new FileStream(sdkFileName, FileMode.Open, FileAccess.Read))
-                {
-                    versionContent = SHA512.Create().ComputeHash(stream).GetHexString(true);
-                }
+                { versionContent = SHA512.Create().ComputeHash(stream).GetHexString(true); }
                 if (File.Exists(versionPath))
                 {
                     var versionId = File.ReadAllText(versionPath);
@@ -55,8 +53,8 @@ namespace System.Data.NHInterfaces
                 }
                 if (Directory.Exists(platformPath)) { Directory.Delete(platformPath, true); }
                 Directory.CreateDirectory(platformPath);
-                var result = ExtterCaller.FileGZipDecompress(sdkFileName, basePath, f => f.StartsWith(platformTag));
-                File.WriteAllText(versionPath, versionContent);
+                var result = SdkFileComponent.FileZipDecompress(sdkFileName, basePath, f => f.StartsWith(platformTag));
+                if (result.IsSuccess) { File.WriteAllText(versionPath, versionContent); }
                 return result;
             }, (ex) => new AlertException(ex));
         }

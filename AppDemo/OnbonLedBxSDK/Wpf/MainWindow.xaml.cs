@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.OnbonLedBxSDK;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,6 +23,7 @@ namespace OnbonLedBxSDK.Wpf
     {
         public MainWindow()
         {
+            var proxy = LedBxDualSdk.Create();
             InitializeComponent();
         }
     }

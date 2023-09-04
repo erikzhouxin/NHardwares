@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Data.Cobber;
 using System.Data.Extter;
+using System.Data.SharpZipLib;
 using System.IO;
 using System.IO.Compression;
+using System.IO.Pipes;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices.ComTypes;
@@ -171,7 +173,7 @@ namespace System.Data.NHInterfaces
             if (count != 1) { throw new ArgumentOutOfRangeException($"找到不唯一的'{name}'的资源文件"); }
             var ms = new MemoryStream();
             assembly.GetManifestResourceStream(res.First()).CopyTo(ms);
-            ms.Position = 0;
+            //ms.Position = 0;
             ms.Seek(0, SeekOrigin.Begin);
             return ms;
         }
@@ -217,7 +219,7 @@ namespace System.Data.NHInterfaces
             else { fileFullName = savePath; }
             using (var fs = File.Create(fileFullName))
             {
-                stream.Position = 0;
+                //stream.Position = 0;
                 stream.Seek(0, SeekOrigin.Begin);
                 stream.CopyTo(fs);
                 fs.Flush();
@@ -267,6 +269,89 @@ namespace System.Data.NHInterfaces
         /// <param name="isX86"></param>
         public static void FileGZipDecompressSDK(string zipFile, string tagDir, bool? isX86 = null)
             => FileGZipDecompress(zipFile, tagDir, f => IsPlatformTargetPath(f, isX86));
+        /// <summary>
+        /// Zip压缩文件
+        /// </summary>
+        /// <param name="map">文件压缩路径为Key,对应的物理路径为Value</param>
+        /// <param name="savePath"></param>
+        public static IAlertMsg FileZipCompress(Dictionary<string, string> map, string savePath)
+        {
+            try
+            {
+                using (var outStream = new ZipOutputStream(File.Create(savePath)))
+                {
+                    outStream.SetLevel(-1);
+                    byte[] buffer = new byte[4096];
+                    foreach (var kv in map)
+                    {
+                        var filePath = kv.Value;
+                        var fileName = kv.Key;
+                        if (File.Exists(filePath))
+                        {
+                            var entry = new ZipEntry(fileName);
+                            outStream.PutNextEntry(entry);
+                            using (var inStream = File.OpenRead(filePath))
+                            {
+                                int sizeRead = 0;
+                                do
+                                {
+                                    // 从流中读取字节，将该数据写入缓冲区
+                                    sizeRead = inStream.Read(buffer, 0, buffer.Length);
+                                    outStream.Write(buffer, 0, sizeRead);
+
+                                } while (sizeRead > 0);
+                            }
+                        }
+                    }
+                }
+                return (AlertMsg<string>)(true, "操作成功", savePath);
+            }
+            catch (Exception ex)
+            {
+                return new AlertException(ex);
+            }
+        }
+        /// <summary>
+        /// zip解压缩并过滤
+        /// </summary>
+        /// <param name="zipFile"></param>
+        /// <param name="tagDir"></param>
+        /// <param name="Fillter"></param>
+        public static IAlertMsg FileZipDecompress(string zipFile, string tagDir, Func<string, bool> Fillter = null)
+        {
+            if (!File.Exists(zipFile)) { return AlertMsg.NotFound; }
+            Fillter ??= (s) => true;
+            try
+            {
+                using (var inStream = new ZipInputStream(File.OpenRead(zipFile)))
+                {
+                    ZipEntry theEntry;
+                    while ((theEntry = inStream.GetNextEntry()) != null)
+                    {
+                        string fileName = Path.GetFullPath(Path.Combine(tagDir, theEntry.Name));
+                        var dir = Path.GetDirectoryName(fileName);
+                        if (!Directory.Exists(dir)) { Directory.CreateDirectory(dir); }
+                        if (Path.GetFileName(theEntry.Name) == "") { continue; }
+                        using (var fs = File.Create(fileName))
+                        {
+                            byte[] data = new byte[4096];
+                            int size;
+                            do
+                            {
+                                size = inStream.Read(data, 0, data.Length);
+                                fs.Write(data, 0, size);
+                            } while (size > 0);
+                            fs.Flush();
+                        }
+                    }
+                }
+                return (AlertMsg<String>)(true, "操作成功", tagDir);
+            }
+            catch (Exception ex)
+            {
+                return new AlertException(ex);
+            }
+        }
         /// <summary>
         /// 是平台标记开头的路径
         /// </summary>

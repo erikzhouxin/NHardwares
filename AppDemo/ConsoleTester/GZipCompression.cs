@@ -442,7 +442,7 @@ namespace System.Data.GZip
             var sdkPath = Path.Combine(baseDir, sdkDir);
             var sdkMap = fileList.ToDictionary(s => s, s => Path.Combine(sdkPath, s));
             var fileDat = Path.Combine(sdkPath, $"{sdkDir.ToLower()}.cswin");
-            ExtterCaller.FileGZipCompress(sdkMap, fileDat);
+            SdkFileComponent.FileZipCompress(sdkMap, fileDat);
             return fileDat;
         }
     }
